@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<project name="org.strategoxt.StrategoXT.strategofront" default="all">
+	<!-- Import Ant contrib -->
+	<!--<taskdef resource="net/sf/antcontrib/antlib.xml" />-->
+	<!-- Import Stratego/XT Ant contributions -->
+	<import file="../../ant-contrib/strategoxt-contrib.xml" />
+
+	<property name="install-prefix" location="dist" />
+	<property name="install-location" location="${install-prefix}/share/strategoxt/stratego-front" />
+
+	<property name="syn" value="syn" />
+	<property name="bin" value="bin" />
+
+	<target name="all" depends="build" />
+
+	<target name="build" depends="build-syntax" />
+
+	<target name="build-syntax">
+		<mkdir dir="${bin}/${syn}" />
+		<sdf2generated base="${syn}/Stratego" main="Stratego" output="${bin}">
+			<deps>
+				<srcfiles dir="${syn}" includes="**/*.sdf">
+					<exclude name="**/*Renamed.sdf" />
+					<exclude name="**/*Mix.sdf" />
+				</srcfiles>
+			</deps>
+		</sdf2generated>
+		<sdf2generated base="${syn}/Stratego-Core" main="Stratego-Core" output="${bin}">
+			<deps>
+				<srcfiles dir="${syn}" includes="**/*.sdf">
+					<exclude name="**/*Renamed.sdf" />
+					<exclude name="**/*Mix.sdf" />
+				</srcfiles>
+			</deps>
+		</sdf2generated>
+		<sdf2generated base="${syn}/Stratego-Sugar" main="Stratego-Sugar" output="${bin}">
+			<deps>
+				<srcfiles dir="${syn}" includes="**/*.sdf">
+					<exclude name="**/*Renamed.sdf" />
+					<exclude name="**/*Mix.sdf" />
+				</srcfiles>
+			</deps>
+		</sdf2generated>
+		<sdf2generated base="${syn}/Stratego-Amb" main="Stratego-Amb" output="${bin}">
+			<deps>
+				<srcfiles dir="${syn}" includes="**/*.sdf">
+					<exclude name="**/*Renamed.sdf" />
+					<exclude name="**/*Mix.sdf" />
+				</srcfiles>
+			</deps>
+		</sdf2generated>
+		<pack-sdf input="${syn}/EmbeddedStratego.sdf" output="${bin}/${syn}/EmbeddedStratego.def">
+			<sdf-deps>
+				<srcfiles dir="${syn}" includes="**/*.sdf">
+					<exclude name="**/*Renamed.sdf" />
+					<exclude name="**/*Mix.sdf" />
+				</srcfiles>
+			</sdf-deps>
+		</pack-sdf>
+		<gen-sdf-mix input="${bin}/${syn}/Stratego.def"
+		             output="${bin}/${syn}/StrategoMix.sdf"
+		             main="Stratego"
+		             name="StrategoMix" />
+		<pack-sdf input="${bin}/${syn}/StrategoMix.sdf" output="${bin}/${syn}/StrategoMix.def">
+			<args>
+				<arg value="-I" />
+				<arg value="${syn}" />
+			</args>
+			<sdf-deps>
+				<srcfiles dir="${syn}" includes="**/*.sdf">
+					<exclude name="**/*Renamed.sdf" />
+					<exclude name="**/*Mix.sdf" />
+				</srcfiles>
+			</sdf-deps>
+		</pack-sdf>
+		<gen-sdf-mix input="${bin}/${syn}/EmbeddedStratego.def"
+		             output="${bin}/${syn}/EmbeddedStrategoMix.sdf"
+		             main="EmbeddedStratego"
+		             name="EmbeddedStrategoMix" />
+		<gen-renamed-sdf-module input="${bin}/${syn}/Stratego.def"
+		                        output="${bin}/${syn}/StrategoRenamed.sdf"
+		                        prefix="Stratego"
+		                        main="Stratego"
+		                        name="StrategoRenamed" />
+		<sdf2generated base="${syn}/StrategoStratego" main="StrategoStratego" output="${bin}">
+			<includeargs>
+				<args>
+					<arg value="-I" />
+					<arg value="${bin}/${syn}" />
+				</args>
+			</includeargs>
+		</sdf2generated>
+		<sdf2generated base="${syn}/Stratego-Sugar-in-Stratego" main="Stratego-Sugar-in-Stratego" output="${bin}">
+			<includeargs>
+				<args>
+					<arg value="-I" />
+					<arg value="${bin}/${syn}" />
+				</args>
+			</includeargs>
+		</sdf2generated>
+		<mkdir dir="${bin}/strc/lib/stratego/strc/pp" />
+		<sdf2parenthesize input="${bin}/${syn}/Stratego.tbl"
+		                  output="${bin}/strc/lib/stratego/strc/pp/stratego-parenthesize.str"
+		                  main="Stratego"
+		                  language="Stratego"
+		                  outputmodule="stratego-parenthesize" />
+	</target>
+
+	<target name="install">
+		<mkdir dir="${install-location}" />
+		<copy todir="${install-location}/syn">
+			<fileset dir="${bin}/syn" />
+		</copy>
+		<copy todir="${install-location}/strc">
+			<fileset dir="${bin}/strc" />
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin}" />
+	</target>
+</project>

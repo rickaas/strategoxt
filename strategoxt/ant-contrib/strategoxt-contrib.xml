@@ -154,26 +154,27 @@
 		<attribute name="base" />
 		<attribute name="main" />
 		<attribute name="pp" default="true" />
+		<attribute name="output" default="." />
 		<element name="includeargs" optional="true" />
 		<element name="deps" optional="true" />
 		<sequential>
-			<pack-sdf input="@{base}.sdf" output="@{base}.def">
+			<pack-sdf input="@{base}.sdf" output="@{output}/@{base}.def">
 				<includeargs />
 				<sdf-deps>
 					<deps />
 				</sdf-deps>
 			</pack-sdf>
-			<sdf2table input="@{base}.def" output="@{base}.tbl" main="@{main}" />
+			<sdf2table input="@{output}/@{base}.def" output="@{output}/@{base}.tbl" main="@{main}" />
 
 			<if>
 				<equals arg1="@{pp}" arg2="true" />
 				<then>
-					<ppgen input="@{base}.def" output="@{base}.pp" />
+					<ppgen input="@{output}/@{base}.def" output="@{output}/@{base}.pp" />
 				</then>
 			</if>
 
-			<sdf2rtg input="@{base}.def" output="@{base}.rtg" main="@{main}" />
-			<rtg2sig input="@{base}.rtg" output="@{base}.str" main="@{main}" />
+			<sdf2rtg input="@{output}/@{base}.def" output="@{output}/@{base}.rtg" main="@{main}" />
+			<rtg2sig input="@{output}/@{base}.rtg" output="@{output}/@{base}.str" main="@{main}" />
 		</sequential>
 	</macrodef>
 
