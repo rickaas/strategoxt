@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project name="org.strategoxt.StrategoXT.rtg" default="all">
+	<!-- Import Stratego/XT Ant contributions -->
+	<import file="../../ant-contrib/strategoxt-contrib.xml" />
+
+	<property name="install-prefix" location="dist" />
+	<property name="install-location" location="${install-prefix}/share/strategoxt/rtg" />
+	<property name="syn.str" location="../stratego-front/dist/share/strategoxt/stratego-front/syn" />
+
+	<property name="syn" value="syn" />
+	<property name="bin" value="bin" />
+
+	<target name="all" depends="build, install" />
+
+	<target name="build" depends="build-syntax-rtg, build-syntax-str-rtg" />
+
+	<target name="build-syntax-rtg">
+		<mkdir dir="${bin}/${syn}" />
+		<sdf2generated base="${syn}/rtg" main="rtg" pp="false" output="${bin}" />
+	</target>
+
+	<target name="build-syntax-str-rtg">
+		<mkdir dir="${bin}/${syn}" />
+		<sdf2generated base="${syn}/Stratego-rtg" main="Stratego-rtg" output="${bin}">
+			<includeargs>
+				<args>
+					<arg value="-I" />
+					<arg value="${syn.str}" />
+				</args>
+			</includeargs>
+		</sdf2generated>
+	</target>
+
+	<target name="install">
+		<mkdir dir="${install-location}" />
+		<copy todir="${install-location}/syn">
+			<fileset dir="${bin}/syn" />
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin}" />
+	</target>
+</project>
