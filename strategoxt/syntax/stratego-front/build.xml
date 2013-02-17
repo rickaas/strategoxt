@@ -11,7 +11,7 @@
 	<property name="syn" value="syn" />
 	<property name="bin" value="bin" />
 
-	<target name="all" depends="build" />
+	<target name="all" depends="build, install" />
 
 	<target name="build" depends="build-syntax" />
 
@@ -110,6 +110,7 @@
 		<mkdir dir="${install-location}" />
 		<copy todir="${install-location}/syn">
 			<fileset dir="${bin}/syn" />
+			<fileset dir="${syn}" includes="*.sdf" />
 		</copy>
 		<copy todir="${install-location}/strc">
 			<fileset dir="${bin}/strc" />
