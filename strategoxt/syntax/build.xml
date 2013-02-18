@@ -1,224 +1,86 @@
 <?xml version="1.0"?>
 <project name="org.strategoxt.StrategoXT.syntax" default="all">
-	<!-- Import Ant contrib -->
-	<taskdef resource="net/sf/antcontrib/antlib.xml" />
 	<!-- Import Stratego/XT Ant contributions -->
 	<import file="../ant-contrib/strategoxt-contrib.xml" />
 
 	<!-- Define where syntax files are located -->
-	<property name="syn.str" value="stratego-front/syn" />
+	<!--<property name="syn.str" value="stratego-front/syn" />
 	<property name="syn.box" value="gpp/syn/box" />
 	<property name="str-rtg" value="stratego-regular" />
 	<property name="syn.rtg" value="${str-rtg}/syn" />
 	<property name="syn.pp" value="gpp/syn/pp-table" />
 	<property name="sdf-front" value="sdf-front" />
 	<property name="syn.sdf" value="${sdf-front}/syn" />
-	<property name="syn.aterm" value="aterm-front/syn" />
+	<property name="syn.aterm" value="aterm-front/syn" />-->
 	<property name="java-front" value="java-front" />
 	<property name="syn.java" value="${java-front}/syntax/src" />
 	<property name="syn.javaemb" value="${java-front}/syntax-embedding" />
 
-	<target name="all" depends="
-		create-dirs,
-		stratego-syntax,
-		aterm-syntax,
-		sdf-syntax,
-		box-syntax,
-		pp-syntax,
-		rtg-syntax,
-		java-syntax,
-		parse-pp-tables
+	<property name="install-prefix" location="dist" />
+
+	<target name="all"
+	        depends="
+		stratego-front,
+		gpp,
+		aterm-front,
+		sdf-front,
+		stratego-regular,
+		java-syntax
 		" />
-	
-	<target name="create-dirs">
-		<mkdir dir="${lib}/org/strategoxt/java_front" />
-	</target>
 
 	<target name="clean">
-		<delete file="../strc/lib/stratego/strc/pp/stratego-parenthesize.str" />
-		<delete>
-			<fileset dir="${syn.str}" includes="*.def" />
-			<fileset dir="${syn.str}" includes="*.tbl" />
-			<fileset dir="${syn.str}" includes="*.pp" />
-			<fileset dir="${syn.str}" includes="*.pp.af" />
-			<fileset dir="${syn.str}" includes="*.str" excludes="Stratego-MetaTransition.str, Stratego-Sugar-MetaTransition.str"/>
-			<fileset dir="${syn.str}" includes="*.rtg" />
-		</delete>
-		<delete file="${syn.str}/EmbeddedStrategoMix.sdf" />
-		<delete file="${syn.str}/StrategoMix.sdf" />
-		<delete file="${syn.str}/StrategoRenamed.sdf" />
-		<delete file="../${libraries-dir}/strc/lib/stratego/strc/pp/stratego-parenthesize.str" />
-		<delete>
-			<fileset dir="${syn.aterm}" includes="*.def" />
-			<fileset dir="${syn.aterm}" includes="*.tbl" />
-			<fileset dir="${syn.aterm}" includes="*.pp" />
-			<fileset dir="${syn.aterm}" includes="*.pp.af" />
-			<fileset dir="${syn.aterm}" includes="*.str" />
-			<fileset dir="${syn.aterm}" includes="*.rtg" />
-		</delete>
-		<delete>
-			<fileset dir="${syn.box}" includes="*.def" />
-			<fileset dir="${syn.box}" includes="*.tbl" />
-			<fileset dir="${syn.box}" includes="*.pp" excludes="Box.pp" />
-			<fileset dir="${syn.box}" includes="*.pp.af" />
-			<fileset dir="${syn.box}" includes="*.str" />
-			<fileset dir="${syn.box}" includes="*.rtg" />
-		</delete>
-		<delete>
-			<fileset dir="${syn.pp}" includes="*.def" />
-			<fileset dir="${syn.pp}" includes="*.tbl" />
-			<fileset dir="${syn.pp}" includes="*.pp" excludes="pp-table-pretty.pp" />
-			<fileset dir="${syn.pp}" includes="*.pp.af" />
-			<fileset dir="${syn.pp}" includes="*.str" />
-			<fileset dir="${syn.pp}" includes="*.rtg" />
-		</delete>
-		<delete>
-			<fileset dir="${syn.sdf}" includes="*.def" />
-			<fileset dir="${syn.sdf}" includes="*.tbl" />
-			<fileset dir="${syn.sdf}" includes="*.pp" />
-			<fileset dir="${syn.sdf}" includes="*.pp.af" />
-			<fileset dir="${syn.sdf}" includes="*.str" />
-			<fileset dir="${syn.sdf}" includes="*.rtg" />
-		</delete>
-		<delete>
-			<fileset dir="${syn.rtg}" includes="*.def" />
-			<fileset dir="${syn.rtg}" includes="*.tbl" />
-			<fileset dir="${syn.rtg}" includes="*.pp" />
-			<fileset dir="${syn.rtg}" includes="*.pp.af" />
-			<fileset dir="${syn.rtg}" includes="*.str" />
-			<fileset dir="${syn.rtg}" includes="*.rtg" />
-		</delete>
-		<delete dir="${lib}/org/strategoxt/java_front" />
+		<subant target="clean">
+			<fileset dir="." includes="*/build.xml"/>
+		</subant>
 	</target>
 
-	<target name="stratego-syntax">
-		<sdf2generated base="${syn.str}/Stratego" main="Stratego">
-			<deps>
-				<srcfiles dir="${syn.str}" includes="**/*.sdf">
-					<exclude name="**/*Renamed.sdf" />
-					<exclude name="**/*Mix.sdf" />
-				</srcfiles>
-			</deps>
-		</sdf2generated>
-		<sdf2generated base="${syn.str}/Stratego-Core" main="Stratego-Core">
-			<deps>
-				<srcfiles dir="${syn.str}" includes="**/*.sdf">
-					<exclude name="**/*Renamed.sdf" />
-					<exclude name="**/*Mix.sdf" />
-				</srcfiles>
-			</deps>
-		</sdf2generated>
-		<sdf2generated base="${syn.str}/Stratego-Sugar" main="Stratego-Sugar">
-			<deps>
-				<srcfiles dir="${syn.str}" includes="**/*.sdf">
-					<exclude name="**/*Renamed.sdf" />
-					<exclude name="**/*Mix.sdf" />
-				</srcfiles>
-			</deps>
-		</sdf2generated>
-		<sdf2generated base="${syn.str}/Stratego-Amb" main="Stratego-Amb">
-			<deps>
-				<srcfiles dir="${syn.str}" includes="**/*.sdf">
-					<exclude name="**/*Renamed.sdf" />
-					<exclude name="**/*Mix.sdf" />
-				</srcfiles>
-			</deps>
-		</sdf2generated>
-		<pack-sdf input="${syn.str}/EmbeddedStratego.sdf" output="${syn.str}/EmbeddedStratego.def">
-			<sdf-deps>
-				<srcfiles dir="${syn.str}" includes="**/*.sdf">
-					<exclude name="**/*Renamed.sdf" />
-					<exclude name="**/*Mix.sdf" />
-				</srcfiles>
-			</sdf-deps>
-		</pack-sdf>
-		<gen-sdf-mix input="${syn.str}/Stratego.def" output="${syn.str}/StrategoMix.sdf" main="Stratego" name="StrategoMix" />
-		<pack-sdf input="${syn.str}/StrategoMix.sdf" output="${syn.str}/StrategoMix.def">
-			<sdf-deps>
-				<srcfiles dir="${syn.str}" includes="**/*.sdf">
-					<exclude name="**/*Renamed.sdf" />
-					<exclude name="**/*Mix.sdf" />
-				</srcfiles>
-			</sdf-deps>
-		</pack-sdf>
-		<gen-sdf-mix input="${syn.str}/EmbeddedStratego.def" output="${syn.str}/EmbeddedStrategoMix.sdf" main="EmbeddedStratego" name="EmbeddedStrategoMix" />
-		<gen-renamed-sdf-module input="${syn.str}/Stratego.def" output="${syn.str}/StrategoRenamed.sdf" prefix="Stratego" main="Stratego" name="StrategoRenamed" />
-		<sdf2generated base="${syn.str}/StrategoStratego" main="StrategoStratego" />
-		<sdf2generated base="${syn.str}/Stratego-Sugar-in-Stratego" main="Stratego-Sugar-in-Stratego" />
-		<sdf2parenthesize input="${syn.str}/Stratego.tbl" output="../${libraries-dir}/strc/lib/stratego/strc/pp/stratego-parenthesize.str" main="Stratego" language="Stratego" outputmodule="stratego-parenthesize" />
+	<target name="stratego-front">
+		<subant target="all">
+			<property name="install-prefix" value="${install-prefix}" />
+			<fileset dir="stratego-front" includes="build.xml" />
+		</subant>
 	</target>
 
-	<target name="aterm-syntax">
-		<sdf2generated base="${syn.aterm}/ATerms" main="ATerms">
-			<includeargs>
-				<args>
-					<arg value="-I" />
-					<arg value="${sdf2bundle}/share/sdf-library/library" />
-				</args>
-			</includeargs>
-		</sdf2generated>
+	<target name="gpp">
+		<subant target="all">
+			<property name="install-prefix" value="${install-prefix}" />
+			<property name="syn.str" location="${install-prefix}/share/strategoxt/stratego-front/syn" />
+			<fileset dir="gpp" includes="build.xml" />
+		</subant>
 	</target>
 
-	<target name="sdf-syntax">
-		<sdf2generated base="${syn.sdf}/Sdf2" main="Sdf2" pp="false">
-			<includeargs>
-				<args>
-					<arg value="-I" />
-					<arg value="${sdf2bundle}/share/sdf-library/library" />
-				</args>
-			</includeargs>
-		</sdf2generated>
-		<sdf2generated base="${syn.sdf}/Stratego-Sdf2" main="Stratego-Sdf2">
-			<includeargs>
-				<args>
-					<arg value="-I" />
-					<arg value="${sdf2bundle}/share/sdf-library/library" />
-					<arg value="-I" />
-					<arg value="${basedir}/${syn.str}" />
-				</args>
-			</includeargs>
-		</sdf2generated>
+	<target name="aterm-front">
+		<subant target="all">
+			<property name="install-prefix" value="${install-prefix}" />
+			<fileset dir="aterm-front" includes="build.xml" />
+		</subant>
 	</target>
 
-	<target name="box-syntax">
-		<sdf2generated base="${syn.box}/Box" main="Box" pp="false" />
-		<sdf2generated base="${syn.box}/Stratego-Box" main="Stratego-Box">
-			<includeargs>
-				<args>
-					<arg value="-I" />
-					<arg value="${basedir}/${syn.str}" />
-				</args>
-			</includeargs>
-		</sdf2generated>
+	<target name="sdf-front" depends="stratego-front">
+		<subant target="all">
+			<property name="install-prefix" value="${install-prefix}" />
+			<property name="syn.str" location="${install-prefix}/share/strategoxt/stratego-front/syn" />
+			<property name="syn.pp" location="${install-prefix}/share/strategoxt/gpp/syn/pp-table" />
+			<fileset dir="sdf-front" includes="build.xml" />
+		</subant>
 	</target>
 
-	<target name="pp-syntax">
-		<sdf2generated base="${syn.pp}/pp-table" main="pp-table">
-			<includeargs>
-				<args>
-					<arg value="-I" />
-					<arg value="${basedir}/${syn.box}" />
-				</args>
-			</includeargs>
-		</sdf2generated>
-	</target>
-
-	<target name="rtg-syntax">
-		<sdf2generated base="${syn.rtg}/rtg" main="rtg" pp="false" />
-		<sdf2generated base="${syn.rtg}/Stratego-rtg" main="Stratego-rtg">
-			<includeargs>
-				<args>
-					<arg value="-I" />
-					<arg value="${basedir}/${syn.str}" />
-				</args>
-			</includeargs>
-		</sdf2generated>
+	<target name="stratego-regular">
+		<subant target="all">
+			<property name="install-prefix" value="${install-prefix}" />
+			<property name="syn.str" location="${install-prefix}/share/strategoxt/stratego-front/syn" />
+			<property name="syn.pp" location="${install-prefix}/share/strategoxt/gpp/syn/pp-table" />
+			<fileset dir="stratego-regular" includes="build.xml" />
+		</subant>
 	</target>
 
 	<target name="java-syntax">
 		<sdf2generated base="${syn.java}/Java-15" main="Java-15" />
 		<sdf2generated base="${syn.java}/JavaCompilationUnit-15" main="JavaCompilationUnit-15" />
-		<gen-sdf-mix input="${syn.java}/Java-15.def" output="${syn.java}/languages/java-15/JavaMix.sdf" main="languages/java-15/Main" name="languages/java-15/JavaMix" />
+		<gen-sdf-mix input="${syn.java}/Java-15.def"
+		             output="${syn.java}/languages/java-15/JavaMix.sdf"
+		             main="languages/java-15/Main"
+		             name="languages/java-15/JavaMix" />
 
 		<pack-sdf input="${syn.java}/languages/java-15/JavaMix.sdf" output="${syn.java}/JavaMix.def">
 			<args>
@@ -249,10 +111,16 @@
 			</args>
 		</pack-sdf>
 
-		<gen-sdf-mix input="${syn.javaemb}/EmbeddedJava.def" output="${syn.java}/languages/java/EmbeddedJavaMix.sdf" main="languages/java/EmbeddedJava" name="languages/java/EmbeddedJavaMix" />
+		<gen-sdf-mix input="${syn.javaemb}/EmbeddedJava.def"
+		             output="${syn.java}/languages/java/EmbeddedJavaMix.sdf"
+		             main="languages/java/EmbeddedJava"
+		             name="languages/java/EmbeddedJavaMix" />
 
 		<mkdir dir="${syn.java}/languages/java/eblock" />
-		<gen-sdf-mix input="${syn.javaemb}/Java-EBlock.def" output="${syn.java}/languages/java/eblock/JavaEBlockMix.sdf" main="languages/java/eblock/Main" name="languages/java/eblock/JavaEBlockMix" />
+		<gen-sdf-mix input="${syn.javaemb}/Java-EBlock.def"
+		             output="${syn.java}/languages/java/eblock/JavaEBlockMix.sdf"
+		             main="languages/java/eblock/Main"
+		             name="languages/java/eblock/JavaEBlockMix" />
 
 		<pack-sdf input="${syn.java}/languages/java/EmbeddedJavaMix.sdf" output="${syn.java}/EmbeddedJavaMix.def">
 			<args>
@@ -273,7 +141,8 @@
 			<includeargs>
 				<args>
 					<arg value="-Idef" />
-					<arg value="${basedir}/${syn.str}/StrategoMix.def" />
+					<arg value="${install-prefix}/share/strategoxt/stratego-front/syn/StrategoMix.def" />
+					<!--<arg value="${basedir}/${syn.str}/StrategoMix.def" />-->
 					<arg value="-Idef" />
 					<arg value="${basedir}/${syn.java}/JavaMix.def" />
 					<arg value="-I" />
@@ -286,7 +155,8 @@
 			<includeargs>
 				<args>
 					<arg value="-Idef" />
-					<arg value="${basedir}/${syn.str}/StrategoMix.def" />
+					<arg value="${install-prefix}/share/strategoxt/stratego-front/syn/StrategoMix.def" />
+					<!--<arg value="${basedir}/${syn.str}/StrategoMix.def" />-->
 					<arg value="-Idef" />
 					<arg value="${basedir}/${syn.java}/JavaMix.def" />
 					<arg value="-I" />
@@ -294,12 +164,18 @@
 				</args>
 			</includeargs>
 		</sdf2generated>
-		
+
 		<mkdir dir="${java-front}/lib/java/signature" />
 		<rtg2sig input="${syn.java}/Java-15.rtg" output="${java-front}/lib/java/signature/v5.str" main="Java-15" />
-		<rtg2sig input="${syn.javaemb}/Java-EBlock.rtg" output="${java-front}/lib/java/signature/eblock.str" main="Java-EBlock" />
+		<rtg2sig input="${syn.javaemb}/Java-EBlock.rtg"
+		         output="${java-front}/lib/java/signature/eblock.str"
+		         main="Java-EBlock" />
 
-		<sdf2parenthesize input="${syn.java}/Java-15.tbl" output="${java-front}/lib/java/pp/parenthesize.str" main="Java" language="Java5" outputmodule="java/pp/parenthesize">
+		<sdf2parenthesize input="${syn.java}/Java-15.tbl"
+		                  output="${java-front}/lib/java/pp/parenthesize.str"
+		                  main="Java"
+		                  language="Java5"
+		                  outputmodule="java/pp/parenthesize">
 			<args>
 				<arg value="--sig-module" />
 				<arg value="java/signature/v5" />
@@ -309,15 +185,11 @@
 		</sdf2parenthesize>
 	</target>
 
-	<target name="parse-pp-tables">
-		<sglri input="${sdf-front}/pp/Sdf2.pp" output="${syn.sdf}/Sdf2.pp.af" parsetable="${syn.pp}/pp-table.tbl" />
-		<sglri input="${syn.pp}/pp-table-pretty.pp" output="${syn.pp}/pp-table-pretty.pp.af" parsetable="${syn.pp}/pp-table.tbl" />
-		<sglri input="${str-rtg}/pp/rtg.pp" output="${syn.rtg}/rtg.pp.af" parsetable="${syn.pp}/pp-table.tbl" />
-	</target>
-
 	<!-- TODO: this should be done with a build-file inside the Java-front package. -->
 	<target name="java-front-java">
-		<strj-lib input="${java-front}/lib/javafront.str" output="${lib}/org/strategoxt/java_front/Main.java" package="org.strategoxt.java_front">
+		<strj-lib input="${java-front}/lib/javafront.str"
+		          output="${lib}/org/strategoxt/java_front/Main.java"
+		          package="org.strategoxt.java_front">
 			<strjlibargs>
 				<arg value="-la" />
 				<arg value="stratego-lib" />

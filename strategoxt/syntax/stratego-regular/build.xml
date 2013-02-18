@@ -6,11 +6,12 @@
 	<property name="install-prefix" location="dist" />
 	<property name="install-location" location="${install-prefix}/share/strategoxt/rtg" />
 	<property name="syn.str" location="../stratego-front/dist/share/strategoxt/stratego-front/syn" />
-
+	<property name="syn.pp" value="../gpp/dist/share/strategoxt/gpp/syn/pp-table" />
+	
 	<property name="syn" value="syn" />
 	<property name="bin" value="bin" />
 
-	<target name="all" depends="build, install" />
+	<target name="all" depends="build, parse-pp-table, install" />
 
 	<target name="build" depends="build-syntax-rtg, build-syntax-str-rtg" />
 
@@ -29,6 +30,10 @@
 				</args>
 			</includeargs>
 		</sdf2generated>
+	</target>
+
+	<target name="parse-pp-table">
+		<sglri input="pp/rtg.pp" output="${bin}/${syn}/rtg.pp.af" parsetable="${syn.pp}/pp-table.tbl" />
 	</target>
 
 	<target name="install">

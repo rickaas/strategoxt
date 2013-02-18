@@ -9,9 +9,13 @@
 
 	<property name="syn.box" value="syn/box" />
 	<property name="syn.pp" value="syn/pp-table" />
-	<property name="bin" value="bin" />
+	<property name="syn.box.abs" location="${syn.box}" />
+	<property name="syn.pp.abs" location="${syn.pp}" />
 
-	<target name="all" depends="build, install" />
+	<property name="bin" value="bin" />
+	<property name="bin.abs" location="${bin}" />
+
+	<target name="all" depends="build, parse-pp-table, install" />
 
 	<target name="build" depends="build-syntax-box, build-syntax-pp" />
 
@@ -34,10 +38,16 @@
 			<includeargs>
 				<args>
 					<arg value="-I" />
-					<arg value="${syn.box}" />
+					<arg value="${syn.box.abs}" />
 				</args>
 			</includeargs>
 		</sdf2generated>
+	</target>
+
+	<target name="parse-pp-table">
+		<sglri input="${syn.pp}/pp-table-pretty.pp"
+		       output="${bin}/${syn.pp}/pp-table-pretty.pp.af"
+		       parsetable="${bin.abs}/${syn.pp}/pp-table.tbl" />
 	</target>
 
 	<target name="install">
