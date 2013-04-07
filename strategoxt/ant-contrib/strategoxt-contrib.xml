@@ -248,6 +248,7 @@
 					<if>
 						<equals arg1="${str.instrumentation.enabled}" arg2="true" />
 						<then>
+							<echo message="INPUT: @{input} " />
 							<strj-debug input="@{input}" output="@{output}">
 							</strj-debug>
 						</then>
@@ -289,9 +290,9 @@
 			<dirname file="@{output}" property="@{output}.dirname" />
 			<uptodate-mio input="@{input}" output="@{output}" type="strj-debug">
 				<action>
-					<strategoxt-dsldi input-dir="${@{input}.dirname}" output-dir="@{output}.dirname" >
+					<strategoxt-dsldi input-dir="${@{input}.dirname}" output-dir="${@{output}.dirname}" >
 						<str-dsldi-args>
-						<strj-dsldi-args />
+							<strj-dsldi-args />
 						</str-dsldi-args>
 					</strategoxt-dsldi>
 				</action>
