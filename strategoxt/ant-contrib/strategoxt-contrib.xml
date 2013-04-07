@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="org.strategoxt.ant">
 	<import file="strategoxt-contrib-util.xml" />
+	<import file="dsldi-contrib.xml" />
 
 	<!-- This will be nicer when SDF is reimplemented in Stratego -->
 	<property name="sdf2bundle" value="${user.home}/.nix-profile" />
@@ -241,8 +242,19 @@
 		<sequential>
 			<property name="@{input}.abs" location="@{input}" />
 			<property name="@{output}.abs" location="@{output}" />
+			<echo message="INSTR: ${str.instrumentation.enabled}" />
 			<uptodate-mio input="@{input}" output="@{output}" type="strj">
 				<action>
+					<if>
+						<equals arg1="${str.instrumentation.enabled}" arg2="true" />
+						<then>
+							<strj-debug input="${@{input}.abs}" output="${@{output}.abs}">
+								<str-dsldi-args>
+									<arg value="--fake-run" />
+								</str-dsldi-args>
+							</strj-debug>
+						</then>
+					</if>
 					<java classname="org.strategoxt.strj.Main" failonerror="true">
 						<arg value="-i" />
 						<arg value="${@{input}.abs}" />
@@ -259,6 +271,33 @@
 				</action>
 				<deps>
 					<str-deps />
+				</deps>
+			</uptodate-mio>
+		</sequential>
+	</macrodef>
+
+	<!-- Instrument strategoxt source with debug events before calling strj -->
+	<!-- All .str files will be overwritten, make sure you commit/stash your local modification -->
+	<macrodef name="strj-debug">
+		<!-- arguments for strj -->
+		<attribute name="input" />
+		<attribute name="output" />
+		<!-- arguments for instrumentation -->
+		<element name="str-dsldi-args" optional="true" />
+		<element name="str-dsldi-deps" optional="true" />
+		<sequential>
+			<!-- The directory of the input file will be used as the "input-dir" argument -->
+			<!-- The "output-dir" is the same as the "input-dir", all .str-files will be overwritten -->
+			<dirname file="@{input}" property="@{input}.dirname" />
+			<dirname file="@{output}" property="@{output}.dirname" />
+			<uptodate-mio input="@{input}" output="@{output}" type="strj-debug">
+				<action>
+					<strategoxt-dsldi input-dir="${@{input}.dirname}" output-dir="@{output}.dirname" >
+						<str-dsldi-args />
+					</strategoxt-dsldi>
+				</action>
+				<deps>
+					<str-dsldi-deps />
 				</deps>
 			</uptodate-mio>
 		</sequential>

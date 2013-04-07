@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="org.strategoxt.ant.instrument">
+	
+	<!-- instrument stratego files with debug events -->
+	<macrodef name="strategoxt-dsldi">
+		<attribute name="input-dir" />
+		<attribute name="output-dir" />
+		<element name="str-dsldi-args" optional="true" />
+		<element name="str-dsldi-deps" optional="true" />
+		<sequential>
+			<property name="@{input-dir}.abs" location="@{input-dir}" />
+			<property name="@{output-dir}.abs" location="@{output-dir}" />
+			<uptodate-mio input="@{input-dir}" output="@{output-dir}" type="strategoxt-dsldi">
+				<action>
+					<java classname="org.strategoxt.imp.debuggers.stratego.instrumentation.Main" 
+						failonerror="true">
+						<arg value="--input-dir" />
+						<arg value="${@{input-dir}.abs}" />
+						<arg value="--output-dir" />
+						<arg value="${@{output-dir}.abs}" />
+						<str-dsldi-args />
+					</java>
+				</action>
+				<deps>
+					<str-dsldi-deps />
+				</deps>
+			</uptodate-mio>
+		</sequential>
+	</macrodef>
+
+	<target name="instrument-stuff">
+		<strategoxt-dsldi input-dir="" output-dir="">
+		</strategoxt-dsldi>
+	</target>
+</project>
