@@ -248,10 +248,7 @@
 					<if>
 						<equals arg1="${str.instrumentation.enabled}" arg2="true" />
 						<then>
-							<strj-debug input="${@{input}.abs}" output="${@{output}.abs}">
-								<str-dsldi-args>
-									<arg value="--fake-run" />
-								</str-dsldi-args>
+							<strj-debug input="@{input}" output="@{output}">
 							</strj-debug>
 						</then>
 					</if>
@@ -283,8 +280,8 @@
 		<attribute name="input" />
 		<attribute name="output" />
 		<!-- arguments for instrumentation -->
-		<element name="str-dsldi-args" optional="true" />
-		<element name="str-dsldi-deps" optional="true" />
+		<element name="strj-dsldi-args" optional="true" />
+		<element name="strj-dsldi-deps" optional="true" />
 		<sequential>
 			<!-- The directory of the input file will be used as the "input-dir" argument -->
 			<!-- The "output-dir" is the same as the "input-dir", all .str-files will be overwritten -->
@@ -293,11 +290,13 @@
 			<uptodate-mio input="@{input}" output="@{output}" type="strj-debug">
 				<action>
 					<strategoxt-dsldi input-dir="${@{input}.dirname}" output-dir="@{output}.dirname" >
-						<str-dsldi-args />
+						<str-dsldi-args>
+						<strj-dsldi-args />
+						</str-dsldi-args>
 					</strategoxt-dsldi>
 				</action>
 				<deps>
-					<str-dsldi-deps />
+					<strj-dsldi-deps />
 				</deps>
 			</uptodate-mio>
 		</sequential>
