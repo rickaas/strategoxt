@@ -251,6 +251,23 @@
 							</strj-debug>
 						</then>
 					</if>
+					<if>
+						<equals arg1="${str.debug.compile.enabled}" arg2="true" />
+						<then>
+							<!-- put the stratego library on the path -->
+							<property name="strj.java.args" value="-I ${str.debug.runtime.library} -la org.strategoxt.imp.debuggers.stratego.runtime"/>
+							<!--  Cannot nest if in java
+							<arg value="-I" />
+							<arg value="${str.debug.runtime.library}" />
+							-->
+							<!-- add import in generated java code-->
+							<!--
+							<arg value="-la" />
+							<arg value="org.strategoxt.imp.debuggers.stratego.runtime" />
+							-->
+						</then>
+					</if>
+					<property name="strj.java.args" value=""/> <!-- if the property is already set; setting it again has no effect -->
 					<java classname="org.strategoxt.strj.Main" failonerror="true">
 						<arg value="-i" />
 						<arg value="${@{input}.abs}" />
@@ -262,6 +279,7 @@
 						<arg value="VERSION_TERM=&quot;${version}&quot;" />
 						<arg value="-D" />
 						<arg value="SVN_REVISION_TERM=&quot;${revision}&quot;" />
+						<arg line="${strj.java.args}" />
 						<strjargs />
 					</java>
 				</action>
