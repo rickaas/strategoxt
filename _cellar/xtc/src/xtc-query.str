@@ -1,47 +1,173 @@
 module xtc-query
-imports xtc-lib
-strategies
 
-  xtc-query = 
-    repository-query
-    <+ all-query
-    <+ tool-query
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  xtc-lib
+
+
+strategies
+  xtc-query =
+    s-enter(|"_cellar/xtc/src/xtc-query.str", "xtc-query", "5,2,8,16")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "6,4,8,16")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "6,4,6,19") ; repository-query
+       <+ s-step(|"_cellar/xtc/src/xtc-query.str", "7,7,8,16")
+          ; (s-step(|"_cellar/xtc/src/xtc-query.str", "7,7,7,15") ; all-query
+             <+ s-step(|"_cellar/xtc/src/xtc-query.str", "8,7,8,16") ; tool-query))
+    < s-exit(|"_cellar/xtc/src/xtc-query.str", "xtc-query", "5,2,8,16")
+    + s-exit(|"_cellar/xtc/src/xtc-query.str", "xtc-query", "5,2,8,16")
+      ; fail
 
   repository-query =
-    <get-config> "-R"
-    ; xtc-location
-    ; <fprint> (stdout(), ["XTC_REPOSITORY=", <id>, "\n"])
+    s-enter(|"_cellar/xtc/src/xtc-query.str", "repository-query", "10,2,13,57")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "11,4,13,57")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "11,4,11,20")
+       ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "11,5,11,14") ; get-config)> "-R")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "12,6,13,57")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "12,6,12,17") ; xtc-location)
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "13,6,13,57")
+    ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "13,7,13,12") ; fprint)> ( stdout()
+                                                                          , [ "XTC_REPOSITORY="
+                                                                            , <s-step(|"_cellar/xtc/src/xtc-query.str", "13,47,13,48") ; id>
+                                                                            , "\n"
+                                                                            ]
+                                                                          )
+    < s-exit(|"_cellar/xtc/src/xtc-query.str", "repository-query", "10,2,13,57")
+    + s-exit(|"_cellar/xtc/src/xtc-query.str", "repository-query", "10,2,13,57")
+      ; fail
 
   all-query =
-    <get-config> "-a"
-    ; xtc-import
-    ; <table-getlist> XTC()
-    ; map(try((Tool(id),id); list-tool))
+    s-enter(|"_cellar/xtc/src/xtc-query.str", "all-query", "15,2,19,39")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "16,4,19,39")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "16,4,16,20")
+       ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "16,5,16,14") ; get-config)> "-a")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "17,6,19,39")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "17,6,17,15") ; xtc-import)
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "18,6,19,39")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "18,6,18,26")
+       ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "18,7,18,19") ; table-getlist)> XTC())
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "19,6,19,39")
+    ; map(
+        s-step(|"_cellar/xtc/src/xtc-query.str", "19,10,19,38")
+        ; try(
+            s-step(|"_cellar/xtc/src/xtc-query.str", "19,14,19,37")
+            ; (s-step(|"_cellar/xtc/src/xtc-query.str", "19,14,19,26")
+               ; ( s-step(|"_cellar/xtc/src/xtc-query.str", "19,15,19,22")
+                   ; Tool(
+                       s-step(|"_cellar/xtc/src/xtc-query.str", "19,20,19,21") ; id
+                     )
+                 , s-step(|"_cellar/xtc/src/xtc-query.str", "19,24,19,25") ; id
+                 ))
+            ; s-step(|"_cellar/xtc/src/xtc-query.str", "19,29,19,37")
+            ; list-tool
+          )
+      )
+    < s-exit(|"_cellar/xtc/src/xtc-query.str", "all-query", "15,2,19,39")
+    + s-exit(|"_cellar/xtc/src/xtc-query.str", "all-query", "15,2,19,39")
+      ; fail
 
   list-tool =
-    ?(Tool(tool), <id>)
-    ; map({version,loc:
-        ?(version, loc)
-        ; ( <get-config> "-l"
-            ; <fprint> (stdout(), [loc, "\n"])
-            <+ <fprint> (stdout(), [tool, " (", version, ") : ", loc, "\n"])
-          )
-      })
+    s-enter(|"_cellar/xtc/src/xtc-query.str", "list-tool", "21,2,29,7")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "22,4,29,7")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "22,4,22,22")
+       ; ?( Tool(tool)
+          , <s-step(|"_cellar/xtc/src/xtc-query.str", "22,19,22,20") ; id>
+          ))
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "23,6,29,7")
+    ; map(
+        s-step(|"_cellar/xtc/src/xtc-query.str", "23,10,29,6")
+        ; {version, loc:
+            s-step(|"_cellar/xtc/src/xtc-query.str", "24,8,28,10")
+            ; (s-step(|"_cellar/xtc/src/xtc-query.str", "24,8,24,22")
+               ; ?(version, loc))
+            ; s-step(|"_cellar/xtc/src/xtc-query.str", "25,12,27,75")
+            ; (s-step(|"_cellar/xtc/src/xtc-query.str", "25,12,26,45")
+               ; (s-step(|"_cellar/xtc/src/xtc-query.str", "25,12,25,28")
+                  ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "25,13,25,22") ; get-config)> "-l")
+               ; s-step(|"_cellar/xtc/src/xtc-query.str", "26,14,26,45")
+               ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "26,15,26,20") ; fprint)> (stdout(), [loc, "\n"])
+               <+ s-step(|"_cellar/xtc/src/xtc-query.str", "27,15,27,75")
+                  ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "27,16,27,21") ; fprint)> ( stdout()
+                                                                                         , [ tool
+                                                                                           , " ("
+                                                                                           , version
+                                                                                           , ") : "
+                                                                                           , loc
+                                                                                           , "\n"
+                                                                                           ]
+                                                                                         ))
+          }
+      )
+    < s-exit(|"_cellar/xtc/src/xtc-query.str", "list-tool", "21,2,29,7")
+    + s-exit(|"_cellar/xtc/src/xtc-query.str", "list-tool", "21,2,29,7")
+      ; fail
 
   tool-query =
-    <get-config> "-t"
-    ; xtc-import
-    ; map({tool:
-        ?tool
-        ; (  log(|Vomit(),<conc-strings>("Retrieving ",<id>))
-          ; <table-get> (XTC(), Tool(tool)) => entries
-          ; <version-query <+ list-tool> (Tool(tool), entries)
-          <+ <fprint> (stderr(), [tool, " : no registration", "\n"])
-             ; <set-config> ("--exit-code", 1)
-          )
-      })
+    s-enter(|"_cellar/xtc/src/xtc-query.str", "tool-query", "31,2,42,7")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "32,4,42,7")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "32,4,32,20")
+       ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "32,5,32,14") ; get-config)> "-t")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "33,6,42,7")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "33,6,33,15") ; xtc-import)
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "34,6,42,7")
+    ; map(
+        s-step(|"_cellar/xtc/src/xtc-query.str", "34,10,42,6")
+        ; {tool:
+            s-step(|"_cellar/xtc/src/xtc-query.str", "35,8,41,10")
+            ; (s-step(|"_cellar/xtc/src/xtc-query.str", "35,8,35,12") ; ?tool)
+            ; s-step(|"_cellar/xtc/src/xtc-query.str", "36,13,40,45")
+            ; (s-step(|"_cellar/xtc/src/xtc-query.str", "36,13,38,61")
+               ; (s-step(|"_cellar/xtc/src/xtc-query.str", "36,13,36,60")
+                  ; log(
+                    | Vomit()
+                    , <s-step(|"_cellar/xtc/src/xtc-query.str", "36,27,36,38") ; conc-strings> ( "Retrieving "
+                                                                                               , <s-step(|"_cellar/xtc/src/xtc-query.str", "36,56,36,57") ; id>
+                                                                                               )
+                    ))
+               ; s-step(|"_cellar/xtc/src/xtc-query.str", "37,12,38,61")
+               ; (s-step(|"_cellar/xtc/src/xtc-query.str", "37,12,37,53")
+                  ; (s-step(|"_cellar/xtc/src/xtc-query.str", "37,12,37,42")
+                     ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "37,13,37,21") ; table-get)> (XTC(), Tool(tool))) => entries)
+               ; s-step(|"_cellar/xtc/src/xtc-query.str", "38,12,38,61")
+               ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "38,13,38,38")
+                   ; (s-step(|"_cellar/xtc/src/xtc-query.str", "38,13,38,25") ; version-query
+                      <+ s-step(|"_cellar/xtc/src/xtc-query.str", "38,30,38,38") ; list-tool))> (Tool(tool), entries)
+               <+ s-step(|"_cellar/xtc/src/xtc-query.str", "39,13,40,45")
+                  ; (s-step(|"_cellar/xtc/src/xtc-query.str", "39,13,39,67")
+                     ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "39,14,39,19") ; fprint)> ( stderr()
+                                                                                            , [tool, " : no registration", "\n"]
+                                                                                            ))
+                  ; s-step(|"_cellar/xtc/src/xtc-query.str", "40,15,40,45")
+                  ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "40,16,40,25") ; set-config)> ("--exit-code", 1))
+          }
+      )
+    < s-exit(|"_cellar/xtc/src/xtc-query.str", "tool-query", "31,2,42,7")
+    + s-exit(|"_cellar/xtc/src/xtc-query.str", "tool-query", "31,2,42,7")
+      ; fail
 
   version-query =
-    where(<get-config> "-V" => version)
-    ; (?Tool(tool), fetch(?(version, loc)))
-    ; <list-tool> (Tool(tool), [(version,loc)])
+    s-enter(|"_cellar/xtc/src/xtc-query.str", "version-query", "44,2,47,46")
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "45,4,47,46")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "45,4,45,38")
+       ; where(s-step(|"_cellar/xtc/src/xtc-query.str", "45,10,45,37")
+               ; (s-step(|"_cellar/xtc/src/xtc-query.str", "45,10,45,26")
+                  ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "45,11,45,20") ; get-config)> "-V") => version))
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "46,6,47,46")
+    ; (s-step(|"_cellar/xtc/src/xtc-query.str", "46,6,46,42")
+       ; ( s-step(|"_cellar/xtc/src/xtc-query.str", "46,7,46,17")
+           ; ?Tool(tool)
+         , s-step(|"_cellar/xtc/src/xtc-query.str", "46,20,46,41")
+           ; fetch(
+               s-step(|"_cellar/xtc/src/xtc-query.str", "46,26,46,40")
+               ; ?(version, loc)
+             )
+         ))
+    ; s-step(|"_cellar/xtc/src/xtc-query.str", "47,6,47,46")
+    ; <(s-step(|"_cellar/xtc/src/xtc-query.str", "47,7,47,15") ; list-tool)> ( Tool(tool)
+                                                                             , [(version, loc)]
+                                                                             )
+    < s-exit(|"_cellar/xtc/src/xtc-query.str", "version-query", "44,2,47,46")
+    + s-exit(|"_cellar/xtc/src/xtc-query.str", "version-query", "44,2,47,46")
+      ; fail

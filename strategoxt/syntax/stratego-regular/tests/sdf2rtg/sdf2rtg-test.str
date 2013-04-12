@@ -1,40 +1,161 @@
 module sdf2rtg-test
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc xtc-debug
+  libstratego-xtc
+  xtc-debug
 
-strategies 
-
-  main-sdf2rtg-test = 
-    xtc-temp-files(
-      test-suite(!"sdf to rtg",
-        full-applications
-//      ; productions
-      )
-    )
-
-  full-applications =
-      apply-and-check(!"Exp1.def", xtc-transform(!"sdf2rtg", !["--main", "Expression"]), !FILE("Exp1.def"), xtc-debug-text)
-    ; apply-and-check(!"Exp2.def", xtc-transform(!"sdf2rtg", !["--main", "Expression"]), !FILE("Exp1.def"), xtc-debug-text)
-    ; apply-and-check(!"Exp3.def", xtc-transform(!"sdf2rtg", !["--main", "Expression"]), !FILE("Exp1.def"), xtc-debug-text)
-    ; apply-and-check(!"Cycle.def", xtc-transform(!"sdf2rtg", !["--main", "Cycle"]), !FILE("Cycle.def"), xtc-debug-text)
-    ; apply-and-check(!"FunProgram.def", xtc-transform(!"sdf2rtg", !["--main", "FunProgram"]), !FILE("FunProgram.def"), xtc-debug-text)
-    ; apply-and-check(!"Tuple.def", xtc-transform(!"sdf2rtg", !["--main", "Tuple"]), !FILE("Tuple.def"), xtc-debug-text)
-    ; apply-and-check(!"OptAlt.def", xtc-transform(!"sdf2rtg", !["--main", "OptAlt"]), !FILE("OptAlt.def"), xtc-debug-text)
-    ; apply-and-check(!"Literals.def", xtc-transform(!"sdf2rtg"), !FILE("Literals.def"), xtc-debug-text)
-
-/** TODO: restore after the introduction of user definable desugarings
-  productions =
-      apply-test(!"Plus production", test-prod2prodrule
-      , !|[ <Exp-CF> LAYOUT? "+" LAYOUT? <Exp-CF> -> <Exp-CF> {cons("Plus")} ]|
-      , !|[ Exp -> Plus (Exp, Exp) ]|
-      )
-*/
 
 strategies
+  main-sdf2rtg-test =
+    s-enter(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "main-sdf2rtg-test", "8,2,14,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "9,4,14,4")
+    ; xtc-temp-files(
+        s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "10,6,13,6")
+        ; test-suite(
+            s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "10,17,10,29")
+            ; !"sdf to rtg"
+          , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "11,8,11,24") ; full-applications
+          )
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "main-sdf2rtg-test", "8,2,14,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "main-sdf2rtg-test", "8,2,14,4")
+      ; fail
 
-//  test-prod2prodrule =
-//      prod2prodrule
-//    ; rtg-normalize-prodrule
+  full-applications =
+    s-enter(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "full-applications", "16,2,24,103")
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,6,17,122")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,22,17,32")
+           ; !"Exp1.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,35,17,86")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,49,17,58")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,61,17,85")
+               ; !["--main", "Expression"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,89,17,105")
+           ; !FILE("Exp1.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "17,108,17,121") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,6,18,122")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,22,18,32")
+           ; !"Exp2.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,35,18,86")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,49,18,58")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,61,18,85")
+               ; !["--main", "Expression"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,89,18,105")
+           ; !FILE("Exp1.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "18,108,18,121") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,6,19,122")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,22,19,32")
+           ; !"Exp3.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,35,19,86")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,49,19,58")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,61,19,85")
+               ; !["--main", "Expression"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,89,19,105")
+           ; !FILE("Exp1.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "19,108,19,121") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,6,20,119")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,22,20,33")
+           ; !"Cycle.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,36,20,82")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,50,20,59")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,62,20,81")
+               ; !["--main", "Cycle"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,85,20,102")
+           ; !FILE("Cycle.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "20,105,20,118") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,6,21,134")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,22,21,38")
+           ; !"FunProgram.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,41,21,92")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,55,21,64")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,67,21,91")
+               ; !["--main", "FunProgram"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,95,21,117")
+           ; !FILE("FunProgram.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "21,120,21,133") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,6,22,119")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,22,22,33")
+           ; !"Tuple.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,36,22,82")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,50,22,59")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,62,22,81")
+               ; !["--main", "Tuple"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,85,22,102")
+           ; !FILE("Tuple.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "22,105,22,118") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,6,24,103")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,6,23,122")
+       ; apply-and-check(
+           s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,22,23,34")
+           ; !"OptAlt.def"
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,37,23,84")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,51,23,60")
+               ; !"sdf2rtg"
+             , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,63,23,83")
+               ; !["--main", "OptAlt"]
+             )
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,87,23,105")
+           ; !FILE("OptAlt.def")
+         , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "23,108,23,121") ; xtc-debug-text
+         ))
+    ; s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "24,6,24,103")
+    ; apply-and-check(
+        s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "24,22,24,36")
+        ; !"Literals.def"
+      , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "24,39,24,63")
+        ; xtc-transform(
+            s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "24,53,24,62")
+            ; !"sdf2rtg"
+          )
+      , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "24,66,24,86")
+        ; !FILE("Literals.def")
+      , s-step(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "24,89,24,102") ; xtc-debug-text
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "full-applications", "16,2,24,103")
+    + s-exit(|"strategoxt/syntax/stratego-regular/tests/sdf2rtg/sdf2rtg-test.str", "full-applications", "16,2,24,103")
+      ; fail
 
 
+strategies

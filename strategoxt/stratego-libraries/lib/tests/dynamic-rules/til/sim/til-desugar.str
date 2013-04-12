@@ -1,41 +1,116 @@
 module til-desugar
-imports TIL 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  TIL
+
+
 rules
 
   ForToWhile :
-    For(x, e1, e2, st*) ->
-      Block([
-        DeclarationTyped(y, TypeName("int")), 
-        Assign(x, e1), 
-        Assign(y, e2), 
-        While(Leq(Var(x), Var(y)), 
-          <conc>(st*, [Assign(x, Add(Var(x), Int("1")))])
-        )
-      ])
-    where new => y
+    For(x, e1, e2, st*) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ForToWhile", "5,2,15,17")> Block(
+                                                                                                                                                   [ DeclarationTyped(y, TypeName("int"))
+                                                                                                                                                   , Assign(x, e1)
+                                                                                                                                                   , Assign(y, e2)
+                                                                                                                                                   , While(
+                                                                                                                                                       Leq(Var(x), Var(y))
+                                                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "12,11,12,14") ; conc> ( st*
+                                                                                                                                                                                                                                                                        , [ Assign(
+                                                                                                                                                                                                                                                                              x
+                                                                                                                                                                                                                                                                            , Add(
+                                                                                                                                                                                                                                                                                Var(x)
+                                                                                                                                                                                                                                                                              , Int("1")
+                                                                                                                                                                                                                                                                              )
+                                                                                                                                                                                                                                                                            )
+                                                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                                                        )
+                                                                                                                                                     )
+                                                                                                                                                   ]
+                                                                                                                                                 )
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ForToWhile", "5,2,15,17")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ForToWhile", "5,2,15,17")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "15,10,15,17")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "15,10,15,12") ; new) => y
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ForToWhile", "5,2,15,17")
+             ; fail
 
   IfThenToIfElse :
-    IfThen(e, st*) -> IfElse(e, st*, [])
+    IfThen(e, st*) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "IfThenToIfElse", "17,2,18,39")> IfElse(e, st*, [])
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "IfThenToIfElse", "17,2,18,39")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "IfThenToIfElse", "17,2,18,39")
+             ; fail
 
   DefaultDeclaration :
-    Declaration(x) -> DeclarationTyped(x, TypeName("int"))
+    Declaration(x) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "DefaultDeclaration", "20,2,21,57")> DeclarationTyped(x, TypeName("int"))
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "DefaultDeclaration", "20,2,21,57")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "DefaultDeclaration", "20,2,21,57")
+             ; fail
 
   WriteInt :
-    ProcCall("writeint", [e]) -> 
-    ProcCall("write", [FunCall("int2string", [e])])
-    
+    ProcCall("writeint", [e]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "WriteInt", "23,2,25,50")> ProcCall(
+                                                                                                                                                        "write"
+                                                                                                                                                      , [FunCall("int2string", [e])]
+                                                                                                                                                      )
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "WriteInt", "23,2,25,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "WriteInt", "23,2,25,50")
+             ; fail
+
   ReadInt :
-    FunCall("readint", []) -> 
-    FunCall("string2int", [FunCall("read", [])])
- 
+    FunCall("readint", []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ReadInt", "27,2,29,47")> FunCall(
+                                                                                                                                                    "string2int"
+                                                                                                                                                  , [FunCall("read", [])]
+                                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ReadInt", "27,2,29,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "ReadInt", "27,2,29,47")
+             ; fail
+
   BinOpToFunCall :
-    op#([e1,e2]){t*} -> FunCall(op, [e1,e2]){t*}
-    where <is-bin-op> op
-    
+    op#([e1, e2]){t*} -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "BinOpToFunCall", "31,2,33,23")> FunCall(op, [e1, e2]){t*}
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "BinOpToFunCall", "31,2,33,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "BinOpToFunCall", "31,2,33,23")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "33,10,33,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "33,11,33,19") ; is-bin-op)> op
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "BinOpToFunCall", "31,2,33,23")
+             ; fail
+
   FunCallToBinOp :
-    FunCall(op, [e1,e2]){t*} -> op#([e1,e2]){t*}
-    where <is-bin-op> op
-     
+    FunCall(op, [e1, e2]){t*} -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "FunCallToBinOp", "35,2,37,23")> op#([e1, e2]){t*}
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "FunCallToBinOp", "35,2,37,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "FunCallToBinOp", "35,2,37,23")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "37,10,37,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "37,11,37,19") ; is-bin-op)> op
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "FunCallToBinOp", "35,2,37,23")
+             ; fail
+
   is-bin-op =
-    "Add" <+ "Mul" <+ "Subt" <+ "Div" <+ "Mod"
-    <+ "Geq" <+ "Leq" <+ "Gt" <+ "Lt" <+ "Equ" <+ "Neq"
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "is-bin-op", "39,2,41,54")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,4,41,54")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,4,40,8") ; "Add"
+       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,13,41,54")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,13,40,17") ; "Mul"
+             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,22,41,54")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,22,40,27") ; "Subt"
+                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,32,41,54")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,32,40,36") ; "Div"
+                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,41,41,54")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "40,41,40,45") ; "Mod"
+                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,7,41,54")
+                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,7,41,11") ; "Geq"
+                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,16,41,54")
+                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,16,41,20") ; "Leq"
+                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,25,41,54")
+                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,25,41,28") ; "Gt"
+                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,33,41,54")
+                                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,33,41,36") ; "Lt"
+                                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,41,41,54")
+                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,41,41,45") ; "Equ"
+                                                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "41,50,41,54") ; "Neq"))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "is-bin-op", "39,2,41,54")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-desugar.str", "is-bin-op", "39,2,41,54")
+      ; fail

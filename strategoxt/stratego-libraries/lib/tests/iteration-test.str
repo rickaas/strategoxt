@@ -1,157 +1,511 @@
-/**
- * Test iteration strategies.
- *
- * Various ideas for tests have been contributed by Program
- * Transformation students.
- *
- */
 module iteration-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
-  main-iteration-test = 
-    test-suite(!"iteration test",
-      repeat-tests
-    ; repeatc-tests
-    ; repeat1-tests
-    ; repeat1c-tests
-    ; while-tests
-    ; do-while-tests
-    ; while-not-tests
-    ; for-tests
-    )
+  main-iteration-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "main-iteration-test", "13,2,23,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "14,4,23,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "14,15,14,31")
+        ; !"iteration test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "15,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "15,6,15,17") ; repeat-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "16,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "16,6,16,18") ; repeatc-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "17,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "17,6,17,18") ; repeat1-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "18,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "18,6,18,19") ; repeat1c-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "19,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "19,6,19,16") ; while-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "20,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "20,6,20,19") ; do-while-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "21,6,22,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "21,6,21,20") ; while-not-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "22,6,22,14")
+        ; for-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "main-iteration-test", "13,2,23,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "main-iteration-test", "13,2,23,4")
+      ; fail
 
   repeat-tests =
-      apply-test( !"repeat: tail"
-      , repeat(Tl)
-      , ![1,2,3,4,5]
-      , ![]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat-tests", "25,2,40,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "26,6,40,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "26,6,30,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "26,18,26,32")
+           ; !"repeat: tail"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "27,8,27,17")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "27,15,27,16") ; Tl
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "28,8,28,19")
+           ; ![ 1
+              , 2
+              , 3
+              , 4
+              , 5
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "29,8,29,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "31,6,40,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "31,6,35,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "31,18,31,38")
+           ; !"repeat: fail is ok"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "32,8,32,19")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "32,15,32,18") ; fail
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "33,8,33,19")
+           ; ![ 1
+              , 2
+              , 3
+              , 4
+              , 5
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "34,8,34,19")
+           ; ![ 1
+              , 2
+              , 3
+              , 4
+              , 5
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "36,6,40,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "36,17,36,34")
+        ; !"repeat: counter"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "37,8,37,28")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "37,15,37,27")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "37,15,37,16") ; lt)
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "37,19,37,27")
+            ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "37,20,37,22") ; inc
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "37,25,37,26") ; id
+              )
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "38,8,38,14")
+        ; !(1, 10)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "39,8,39,15")
+        ; !(10, 10)
       )
-    ; apply-test( !"repeat: fail is ok"
-      , repeat(fail)
-      , ![1,2,3,4,5]
-      , ![1,2,3,4,5]
-      )
-    ; apply-test(!"repeat: counter"
-      , repeat(lt; (inc, id))
-      , !(1,10)
-      , !(10,10)
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat-tests", "25,2,40,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat-tests", "25,2,40,6")
+      ; fail
 
   repeatc-tests =
-      apply-test(!"repeat(s,c) test 1"
-      , repeat(Tl, ?[])
-      , ![1,2,3,4,5]
-      , ![]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeatc-tests", "42,2,56,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "43,6,56,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "43,6,47,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "43,17,43,37")
+           ; !"repeat(s,c) test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "44,8,44,22")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "44,15,44,16") ; Tl
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "44,19,44,21")
+               ; ?[]
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "45,8,45,19")
+           ; ![ 1
+              , 2
+              , 3
+              , 4
+              , 5
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "46,8,46,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "48,6,56,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "48,6,51,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "48,21,48,41")
+           ; !"repeat(s,c) test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "49,8,49,24")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "49,15,49,18") ; fail
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "49,21,49,23")
+               ; ?[]
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "50,8,50,19")
+           ; ![ 1
+              , 2
+              , 3
+              , 4
+              , 5
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "52,6,56,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "52,17,52,37")
+        ; !"repeat(s,c) test 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,8,53,33")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,15,53,27")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,15,53,16") ; lt)
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,19,53,27")
+            ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,20,53,22") ; inc
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,25,53,26") ; id
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "53,30,53,32") ; add
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "54,8,54,14")
+        ; !(1, 10)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "55,8,55,10")
+        ; !20
       )
-    ; apply-and-fail(!"repeat(s,c) test 2"
-      , repeat(fail, ?[])
-      , ![1,2,3,4,5]
-      )
-    ; apply-test(!"repeat(s,c) test 3"
-      , repeat(lt; (inc, id), add)
-      , !(1,10)
-      , !20
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeatc-tests", "42,2,56,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeatc-tests", "42,2,56,6")
+      ; fail
 
   repeat1-tests =
-      apply-and-fail(!"repeat1: must succeed at least once"
-      , repeat1(Tl)
-      , ![]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat1-tests", "58,2,66,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "59,6,66,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "59,6,62,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "59,21,59,58")
+           ; !"repeat1: must succeed at least once"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "60,8,60,18")
+           ; repeat1(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "60,16,60,17") ; Tl
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "61,8,61,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "63,6,66,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "63,17,63,32")
+        ; !"repeat1: tail"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "63,35,63,45")
+        ; repeat1(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "63,43,63,44") ; Tl
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "64,8,64,11")
+        ; ![1]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "65,8,65,10")
+        ; ![]
       )
-    ; apply-test(!"repeat1: tail", repeat1(Tl)
-      , ![1]
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat1-tests", "58,2,66,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat1-tests", "58,2,66,6")
+      ; fail
 
   repeat1c-tests =
-      apply-and-fail(!"repeat1(s,c): must succeed at least once"
-      , repeat1(Tl, ?[])
-      , ![]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat1c-tests", "68,2,77,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "69,6,77,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "69,6,72,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "69,21,69,63")
+           ; !"repeat1(s,c): must succeed at least once"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "70,8,70,23")
+           ; repeat1(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "70,16,70,17") ; Tl
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "70,20,70,22")
+               ; ?[]
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "71,8,71,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "73,6,77,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "73,17,73,37")
+        ; !"repeat1(s,c): tail"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "74,8,74,23")
+        ; repeat1(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "74,16,74,17") ; Tl
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "74,20,74,22")
+            ; ?[]
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "75,8,75,11")
+        ; ![1]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "76,8,76,10")
+        ; ![]
       )
-    ; apply-test(!"repeat1(s,c): tail"
-      , repeat1(Tl, ?[])
-      , ![1]
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat1c-tests", "68,2,77,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "repeat1c-tests", "68,2,77,6")
+      ; fail
 
-  while-tests = 
-      apply-test(!"while: condition failes, strategy fails"
-      , while(fail,fail)
-      , ![1,2]
-      , ![1,2]
+  while-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "while-tests", "79,2,104,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "80,6,104,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "80,6,84,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "80,17,80,58")
+           ; !"while: condition failes, strategy fails"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "81,8,81,23")
+           ; while(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "81,14,81,17") ; fail
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "81,19,81,22") ; fail
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "82,8,82,13")
+           ; ![1, 2]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "83,8,83,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "85,6,104,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "85,6,89,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "85,17,85,60")
+           ; !"while: condition succeeds, strategy fails"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "86,8,86,21")
+           ; while(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "86,14,86,15") ; id
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "86,17,86,20") ; fail
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "87,8,87,13")
+           ; ![1, 2]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "88,8,88,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "90,6,104,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "90,6,94,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "90,17,90,61")
+           ; !"while: condition failes, strategy succeeds"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "91,8,91,22")
+           ; while(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "91,14,91,17") ; fail
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "91,20,91,21") ; id
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "92,8,92,13")
+           ; ![1, 2]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "93,8,93,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "95,6,104,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "95,6,99,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "95,17,95,60")
+           ; !"while: condition tail, strategie succeeds"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "96,8,96,20")
+           ; while(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "96,14,96,15") ; Tl
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "96,18,96,19") ; id
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "97,8,97,13")
+           ; ![1, 2]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "98,8,98,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "100,6,104,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "100,17,100,59")
+        ; !"while: condition succeed, strategie tail"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "101,8,101,20")
+        ; while(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "101,14,101,15") ; id
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "101,18,101,19") ; Tl
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "102,8,102,13")
+        ; ![1, 2]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "103,8,103,10")
+        ; ![]
       )
-    ; apply-test(!"while: condition succeeds, strategy fails"
-      , while(id,fail)
-      , ![1,2]
-      , ![1,2]
-      )
-    ; apply-test(!"while: condition failes, strategy succeeds"
-      , while(fail, id)
-      , ![1,2]
-      , ![1,2]
-      )
-    ; apply-test(!"while: condition tail, strategie succeeds"
-      , while(Tl, id)
-      , ![1,2]
-      , ![]
-      )
-    ; apply-test(!"while: condition succeed, strategie tail"
-      , while(id, Tl)
-      , ![1,2]
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "while-tests", "79,2,104,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "while-tests", "79,2,104,6")
+      ; fail
 
-  do-while-tests = 
-      apply-test(!"do-while: tail"
-      , do-while(Tl, not([]))
-      , ![1,2]
-      , ![]
+  do-while-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "do-while-tests", "106,2,115,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "107,6,115,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "107,6,111,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "107,17,107,33")
+           ; !"do-while: tail"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "108,8,108,28")
+           ; do-while(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "108,17,108,18") ; Tl
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "108,21,108,27")
+               ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "108,25,108,26") ; [])
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "109,8,109,13")
+           ; ![1, 2]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "110,8,110,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "112,6,115,6")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "112,21,112,59")
+        ; !"do-while: must succeed at least once"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "113,8,113,28")
+        ; do-while(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "113,17,113,18") ; Tl
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "113,21,113,27")
+            ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "113,25,113,26") ; [])
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "114,8,114,10")
+        ; ![]
       )
-    ; apply-and-fail(!"do-while: must succeed at least once"
-      , do-while(Tl, not([]))
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "do-while-tests", "106,2,115,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "do-while-tests", "106,2,115,6")
+      ; fail
 
   while-not-tests =
-      apply-and-fail(!"while-not: while-not(s,c) not equal to while(s, not(c))"
-      , while-not(fail, fail)
-      , ![1,2]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "while-not-tests", "117,2,135,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "118,6,135,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "118,6,121,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "118,21,118,78")
+           ; !"while-not: while-not(s,c) not equal to while(s, not(c))"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "119,8,119,28")
+           ; while-not(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "119,18,119,21") ; fail
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "119,24,119,27") ; fail
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "120,8,120,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "122,6,135,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "122,6,126,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "122,17,122,48")
+           ; !"while-not: condition succeeds"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "123,8,123,24")
+           ; while-not(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "123,18,123,19") ; id
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "123,22,123,23") ; Tl
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "124,8,124,13")
+           ; ![1, 2]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "125,8,125,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "127,6,135,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "127,6,130,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "127,21,127,68")
+           ; !"while-not: body succeeds, but condition never"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "128,8,128,26")
+           ; while-not(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "128,18,128,21") ; fail
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "128,24,128,25") ; Tl
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "129,8,129,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "131,6,135,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "131,18,131,66")
+        ; !"while-not: body succeeds, stopped by condition"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "132,8,132,24")
+        ; while-not(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "132,18,132,19") ; []
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "132,22,132,23") ; Tl
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "133,8,133,13")
+        ; ![1, 2]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "134,8,134,10")
+        ; ![]
       )
-    ; apply-test(!"while-not: condition succeeds"
-      , while-not(id, Tl)
-      , ![1,2]
-      , ![1,2]
-      )
-    ; apply-and-fail(!"while-not: body succeeds, but condition never"
-      , while-not(fail, Tl)
-      , ![1,2]
-      )
-    ; apply-test( !"while-not: body succeeds, stopped by condition"
-      , while-not([], Tl)
-      , ![1,2]
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "while-not-tests", "117,2,135,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "while-not-tests", "117,2,135,6")
+      ; fail
 
-  for-tests = 
-      apply-test(!"for: drop 3 items"
-      , for( !(0,<id>), where(<geq>(<Fst>,3)); Snd, (inc,Tl))
-      , ![1,2,3,4,5,6]
-      , ![4,5,6]
+  for-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "for-tests", "137,2,156,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "138,6,156,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "138,6,142,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "138,17,138,36")
+           ; !"for: drop 3 items"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,8,139,60")
+           ; for(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,13,139,21")
+               ; !( 0
+                  , <s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,18,139,19") ; id>
+                  )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,24,139,49")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,24,139,44")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,30,139,43")
+                          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,31,139,33") ; geq)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,37,139,39") ; Fst>
+                                                                                                                             , 3
+                                                                                                                             )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,47,139,49")
+               ; Snd
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,52,139,59")
+               ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,53,139,55") ; inc
+                 , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "139,57,139,58") ; Tl
+                 )
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "140,8,140,21")
+           ; ![ 1
+              , 2
+              , 3
+              , 4
+              , 5
+              , 6
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "141,8,141,15")
+           ; ![4, 5, 6]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "143,6,156,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "143,6,146,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "143,22,143,41")
+           ; !"for: body failure"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,8,144,60")
+           ; for(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,13,144,21")
+               ; !( 0
+                  , <s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,18,144,19") ; id>
+                  )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,24,144,49")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,24,144,44")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,30,144,43")
+                          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,31,144,33") ; geq)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,37,144,39") ; Fst>
+                                                                                                                             , 3
+                                                                                                                             )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,47,144,49")
+               ; Snd
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,52,144,59")
+               ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,53,144,55") ; inc
+                 , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "144,57,144,58") ; Tl
+                 )
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "145,8,145,13")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "147,6,156,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "147,6,151,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "147,17,147,45")
+           ; !"for: condition before body"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "148,8,148,25")
+           ; for(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "148,13,148,14") ; id
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "148,17,148,18") ; id
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "148,21,148,24") ; fail
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "149,8,149,9")
+           ; !1
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "150,8,150,9")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "152,6,156,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "152,17,152,40")
+        ; !"for: initialize first"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "153,8,153,25")
+        ; for(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "153,13,153,14")
+            ; !3
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "153,17,153,18") ; id
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "153,21,153,24") ; fail
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "154,8,154,9")
+        ; !1
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "155,8,155,9")
+        ; !3
       )
-    ; apply-and-fail( !"for: body failure"
-      , for( !(0,<id>), where(<geq>(<Fst>,3)); Snd, (inc,Tl))
-      , ![1,2]
-      )
-    ; apply-test(!"for: condition before body"
-      , for( id, id, fail)
-      , !1
-      , !1
-      )
-    ; apply-test(!"for: initialize first"
-      , for( !3, id, fail)
-      , !1
-      , !3
-      )
-
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "for-tests", "137,2,156,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/iteration-test.str", "for-tests", "137,2,156,6")
+      ; fail

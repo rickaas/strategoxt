@@ -1,6 +1,19 @@
 module test15
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-  main : a -> a with 1
+  main :
+    a -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test15.str", "main", "6,2,6,21")> a
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test15.str", "main", "6,2,6,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test15.str", "main", "6,2,6,21")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test15.str", "6,21,6,21") ; 1
+         <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test15.str", "main", "6,2,6,21")
+            ; fail

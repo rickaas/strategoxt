@@ -1,14 +1,64 @@
 module test45
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
 
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "main", "6,3,6,25")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "6,11,6,25")
+    ; foo(
+      | [1, 2, 3]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "main", "6,3,6,25")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "main", "6,3,6,25")
+      ; fail
 
-   main =  foo(|[1, 2, 3]) 
+  foo(|xs*) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foo", "8,3,8,18")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "8,15,8,18")
+    ; !xs*
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foo", "8,3,8,18")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foo", "8,3,8,18")
+      ; fail
 
-   foo(|xs*) = !xs*
+  bar(|xs*):
+    _ -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "bar", "10,3,10,25")> [xs*]
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "bar", "10,3,10,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "bar", "10,3,10,25")
+             ; fail
 
-   bar(|xs*) :  _ -> [xs*]
+  foobar(|x) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foobar", "12,3,12,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "12,16,12,38")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "12,16,12,17") ; !x)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "12,21,12,38")
+    ; {xs*:
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "12,28,12,37")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "12,28,12,31")
+           ; ?xs*)
+        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "12,34,12,37")
+        ; !xs*
+      }
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foobar", "12,3,12,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foobar", "12,3,12,38")
+      ; fail
 
-   foobar(|x) = !x ; {xs* : ?xs*; !xs*}
-
-   foobar(|x) = !x ; ?xs*; !xs*
+  foobar(|x) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foobar", "14,3,14,30")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "14,16,14,30")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "14,16,14,17") ; !x)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "14,21,14,30")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "14,21,14,24")
+       ; ?xs*)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "14,27,14,30")
+    ; !xs*
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foobar", "14,3,14,30")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test45.str", "foobar", "14,3,14,30")
+      ; fail

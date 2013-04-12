@@ -1,367 +1,848 @@
 module parse-options-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main-parse-options-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "main-parse-options-test", "6,2,13,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "7,4,13,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "7,15,7,35")
+        ; !"parse-options-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "8,6,12,23")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "8,6,8,24") ; simple-option-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "9,6,12,23")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "9,6,9,25") ; default-option-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "10,6,12,23")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "10,6,10,22") ; init-option-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "11,6,12,23")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "11,6,11,23") ; check-option-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "12,6,12,23")
+        ; extra-option-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "main-parse-options-test", "6,2,13,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "main-parse-options-test", "6,2,13,4")
+      ; fail
 
-  main-parse-options-test = 
-    test-suite(!"parse-options-test",
-      simple-option-tests
-    ; default-option-tests
-    ; init-option-tests
-    ; check-option-tests
-    ; extra-option-tests
-    )
 
 strategies
-
   option-test-wrap(s) =
-      where(
-        lookup-table(|"config") => config
-        ; <hashtable-clear> config
-      )
-    ; s
-    ; where(
-        <hashtable-clear> config
-      )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "option-test-wrap", "17,2,25,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "18,6,25,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "18,6,21,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "19,8,20,33")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "19,8,19,40")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "19,8,19,30")
+                     ; lookup-table(|"config")) => config)
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "20,10,20,33")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "20,11,20,25") ; hashtable-clear)> config))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "22,6,25,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "22,6,22,6") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "23,6,25,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "24,8,24,31")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "24,9,24,23") ; hashtable-clear)> config)
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "option-test-wrap", "17,2,25,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "option-test-wrap", "17,2,25,6")
+      ; fail
 
   test-parse-options(s) =
-    parse-options'(s)
-    ; not(fetch(?Undefined(_)))
-    ; not(<get-config> "--help")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "test-parse-options", "27,2,30,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "28,4,30,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "28,4,28,20")
+       ; parse-options'(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "28,19,28,19") ; s
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "29,6,30,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "29,6,29,30")
+       ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "29,10,29,29")
+             ; fetch(
+                 s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "29,16,29,28")
+                 ; ?Undefined(_)
+               )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "30,6,30,31")
+    ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "30,10,30,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "30,11,30,20") ; get-config)> "--help")
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "test-parse-options", "27,2,30,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "test-parse-options", "27,2,30,31")
+      ; fail
 
   help-wanted =
-    <set-config> ("--help", ())
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "help-wanted", "32,2,33,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "33,4,33,30")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "33,5,33,14") ; set-config)> ("--help", ())
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "help-wanted", "32,2,33,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "help-wanted", "32,2,33,30")
+      ; fail
+
 
 strategies
-
   foo-option =
-    Option("--foo"
-    , OptionHandler(<set-config> ("--foo", ()))
-    | "--foo Foo option"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "foo-option", "37,2,41,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "38,4,41,4")
+    ; Option(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "38,11,38,17") ; "--foo"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "39,6,39,46")
+        ; OptionHandler(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "39,20,39,45")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "39,21,39,30") ; set-config)> ("--foo", ())
+          )
+      | "--foo Foo option"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "foo-option", "37,2,41,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "foo-option", "37,2,41,4")
+      ; fail
 
   bar-option =
-    Option("--bar"
-    , OptionHandler(<set-config> ("--bar", ()))
-    | "--bar Foo option"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "bar-option", "43,2,47,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "44,4,47,4")
+    ; Option(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "44,11,44,17") ; "--bar"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "45,6,45,46")
+        ; OptionHandler(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "45,20,45,45")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "45,21,45,30") ; set-config)> ("--bar", ())
+          )
+      | "--bar Foo option"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "bar-option", "43,2,47,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "bar-option", "43,2,47,4")
+      ; fail
 
   fooarg-option =
-    ArgOption("--foo"
-    , OptionHandler(<set-config> ("--foo", <id>))
-    | "--foo <string> Foo option"
-    )
-
-  simple-option-tests = id
-    ; option-test-wrap(
-        apply-and-check(!"Simple command line option"
-        , test-parse-options(foo-option)
-        , !["./bla", "--foo"]
-        , <get-config> "--foo"
-        )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "fooarg-option", "49,2,53,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "50,4,53,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "50,14,50,20") ; "--foo"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "51,6,51,48")
+        ; OptionHandler(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "51,20,51,47")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "51,21,51,30") ; set-config)> ( "--foo"
+                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "51,44,51,45") ; id>
+                                                                                                                        )
+          )
+      | "--foo <string> Foo option"
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "fooarg-option", "49,2,53,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "fooarg-option", "49,2,53,4")
+      ; fail
 
+  simple-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "simple-option-tests", "55,2,98,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "55,24,98,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "55,24,55,25") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "56,6,98,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "56,6,62,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "57,8,61,8")
+           ; apply-and-check(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "57,24,57,52")
+               ; !"Simple command line option"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "58,10,58,39")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "58,29,58,38") ; foo-option
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "59,10,59,28")
+               ; !["./bla", "--foo"]
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "60,10,60,29")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "60,11,60,20") ; get-config)> "--foo"
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "64,6,98,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "64,6,70,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "65,8,69,8")
+           ; apply-and-check(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "65,24,65,69")
+               ; !"Simple command line option with an argument"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "66,10,66,42")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "66,29,66,41") ; fooarg-option
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "67,10,67,35")
+               ; !["./bla", "--foo", "bar"]
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "68,10,68,38")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "68,10,68,29")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "68,11,68,20") ; get-config)> "--foo") => "bar"
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "72,6,98,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "72,6,77,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "73,8,76,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "73,19,73,44")
+               ; !"No command line options"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "74,10,74,33")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "74,29,74,32") ; fail
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "75,10,75,19")
+               ; !["./bla"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "79,6,98,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "79,6,84,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "80,8,83,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "80,23,80,48")
+               ; !"No command line options"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "81,10,81,33")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "81,29,81,32") ; fail
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "82,10,82,28")
+               ; !["./bla", "--bar"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "86,6,98,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "86,6,91,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "87,8,90,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "87,23,87,54")
+               ; !"Undefined command line option"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "88,10,88,39")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "88,29,88,38") ; foo-option
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "89,10,89,28")
+               ; !["./bla", "--bar"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "93,6,98,6")
     ; option-test-wrap(
-        apply-and-check(!"Simple command line option with an argument"
-        , test-parse-options(fooarg-option)
-        , !["./bla", "--foo", "bar"]
-        , <get-config> "--foo" => "bar"
-        )
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "94,8,97,8")
+        ; apply-and-fail(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "94,23,94,68")
+            ; !"Simple command line option with an argument"
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "95,10,95,42")
+            ; test-parse-options(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "95,29,95,41") ; fooarg-option
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "96,10,96,28")
+            ; !["./bla", "--foo"]
+          )
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "simple-option-tests", "55,2,98,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "simple-option-tests", "55,2,98,6")
+      ; fail
 
-    ; option-test-wrap(
-        apply-test(!"No command line options"
-        , test-parse-options(fail)
-        , !["./bla"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"No command line options"
-        , test-parse-options(fail)
-        , !["./bla", "--bar"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Undefined command line option"
-        , test-parse-options(foo-option)
-        , !["./bla", "--bar"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Simple command line option with an argument"
-        , test-parse-options(fooarg-option)
-        , !["./bla", "--foo"]
-        )
-      )
 
 strategies
-
   default-fooarg-option =
-    ArgOption("--foo"
-    , OptionHandler(
-        id
-      , <set-config> ("--foo", <id>)
-      , <set-config> ("--foo", "default")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "default-fooarg-option", "102,2,110,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "103,4,110,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "103,14,103,20") ; "--foo"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "104,6,108,6")
+        ; OptionHandler(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "105,8,105,9") ; id
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "106,8,106,35")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "106,9,106,18") ; set-config)> ( "--foo"
+                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "106,32,106,33") ; id>
+                                                                                                                         )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "107,8,107,40")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "107,9,107,18") ; set-config)> ("--foo", "default")
+          )
+      | "--foo <string> Foo option"
       )
-    | "--foo <string> Foo option"
-    )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "default-fooarg-option", "102,2,110,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "default-fooarg-option", "102,2,110,4")
+      ; fail
 
-  default-option-tests = id
+  default-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "default-option-tests", "112,2,127,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "112,25,127,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "112,25,112,26") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "113,6,127,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "113,6,119,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "114,8,118,8")
+           ; apply-and-check(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "114,24,114,58")
+               ; !"Command line option with default"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "115,10,115,50")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "115,29,115,49") ; default-fooarg-option
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "116,10,116,19")
+               ; !["./bla"]
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "117,10,117,42")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "117,10,117,29")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "117,11,117,20") ; get-config)> "--foo") => "default"
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "121,6,127,6")
     ; option-test-wrap(
-        apply-and-check(!"Command line option with default"
-        , test-parse-options(default-fooarg-option)
-        , !["./bla"]
-        , <get-config> "--foo" => "default"
-        )
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "122,8,126,8")
+        ; apply-and-check(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "122,24,122,58")
+            ; !"Command line option with default"
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "123,10,123,50")
+            ; test-parse-options(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "123,29,123,49") ; default-fooarg-option
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "124,10,124,37")
+            ; !["./bla", "--foo", "value"]
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "125,10,125,40")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "125,10,125,29")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "125,11,125,20") ; get-config)> "--foo") => "value"
+          )
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "default-option-tests", "112,2,127,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "default-option-tests", "112,2,127,6")
+      ; fail
 
-    ; option-test-wrap(
-        apply-and-check(!"Command line option with default"
-        , test-parse-options(default-fooarg-option)
-        , !["./bla", "--foo", "value"]
-        , <get-config> "--foo" => "value"
-        )
-      )
 
 strategies
-
   init-fooarg-option =
-    ArgOption("--foo"
-    , OptionHandler(
-        <set-config> ("--foo", ["init"])
-      , <post-extend-config> ("--foo", [<id>])
-      , <set-config> ("--foo", ["default"])
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "init-fooarg-option", "131,2,139,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "132,4,139,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "132,14,132,20") ; "--foo"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "133,6,137,6")
+        ; OptionHandler(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "134,8,134,39")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "134,9,134,18") ; set-config)> ("--foo", ["init"])
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "135,8,135,45")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "135,9,135,26") ; post-extend-config)> ( "--foo"
+                                                                                                                                 , [<s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "135,41,135,42") ; id>]
+                                                                                                                                 )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "136,8,136,42")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "136,9,136,18") ; set-config)> ("--foo", ["default"])
+          )
+      | "--foo <string> Foo option"
       )
-    | "--foo <string> Foo option"
-    )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "init-fooarg-option", "131,2,139,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "init-fooarg-option", "131,2,139,4")
+      ; fail
 
-  init-option-tests = id
+  init-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "init-option-tests", "141,2,156,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "141,22,156,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "141,22,141,23") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "142,6,156,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "142,6,148,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "143,8,147,8")
+           ; apply-and-check(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "143,24,143,55")
+               ; !"Command line option with init"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "144,10,144,47")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "144,29,144,46") ; init-fooarg-option
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "145,10,145,37")
+               ; !["./bla", "--foo", "value"]
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "146,10,146,50")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "146,10,146,29")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "146,11,146,20") ; get-config)> "--foo") => ["init", "value"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "150,6,156,6")
     ; option-test-wrap(
-        apply-and-check(!"Command line option with init"
-        , test-parse-options(init-fooarg-option)
-        , !["./bla", "--foo", "value"]
-        , <get-config> "--foo" => ["init", "value"]
-        )
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "151,8,155,8")
+        ; apply-and-check(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "151,24,151,55")
+            ; !"Command line option with init"
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "152,10,152,47")
+            ; test-parse-options(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "152,29,152,46") ; init-fooarg-option
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "153,10,153,19")
+            ; !["./bla"]
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "154,10,154,44")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "154,10,154,29")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "154,11,154,20") ; get-config)> "--foo") => ["default"]
+          )
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "init-option-tests", "141,2,156,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "init-option-tests", "141,2,156,6")
+      ; fail
 
-    ; option-test-wrap(
-        apply-and-check(!"Command line option with init"
-        , test-parse-options(init-fooarg-option)
-        , !["./bla"]
-        , <get-config> "--foo" => ["default"]
-        )
-      )
 
 strategies
-
   one-foo =
-    OptionCheck(<set-config> ("--help", ()),
-      OptionOneCheck("--foo")
-    | "error: option --foo is required"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-foo", "160,2,164,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "161,4,164,4")
+    ; OptionCheck(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "161,16,161,42")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "161,17,161,26") ; set-config)> ("--help", ())
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "162,6,162,28")
+        ; OptionOneCheck(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "162,21,162,27") ; "--foo"
+          )
+      | "error: option --foo is required"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-foo", "160,2,164,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-foo", "160,2,164,4")
+      ; fail
 
   one-foo-bar =
-    OptionCheck(<set-config> ("--help", ()),
-      OptionOneCheck("--foo")
-      ; OptionOneCheck("--bar")
-    | "error: option --foo and --bar are required"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-foo-bar", "166,2,171,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "167,4,171,4")
+    ; OptionCheck(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "167,16,167,42")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "167,17,167,26") ; set-config)> ("--help", ())
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "168,6,169,30")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "168,6,168,28")
+           ; OptionOneCheck(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "168,21,168,27") ; "--foo"
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "169,8,169,30")
+        ; OptionOneCheck(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "169,23,169,29") ; "--bar"
+          )
+      | "error: option --foo and --bar are required"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-foo-bar", "166,2,171,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-foo-bar", "166,2,171,4")
+      ; fail
 
   foo-or-bar =
-    OptionCheck(<set-config> ("--help", ()),
-      OptionOneCheck("--foo")
-      + OptionOneCheck("--bar")
-    | "error: option --foo or --bar is required"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "foo-or-bar", "173,2,178,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "174,4,178,4")
+    ; OptionCheck(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "174,16,174,42")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "174,17,174,26") ; set-config)> ("--help", ())
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "175,6,176,30")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "175,6,175,28")
+           ; OptionOneCheck(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "175,21,175,27") ; "--foo"
+             )
+           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "176,8,176,30")
+             ; OptionOneCheck(
+                 s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "176,23,176,29") ; "--bar"
+               ))
+      | "error: option --foo or --bar is required"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "foo-or-bar", "173,2,178,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "foo-or-bar", "173,2,178,4")
+      ; fail
 
   one-or-more-foo =
-    OptionCheck(<set-config> ("--help", ()),
-      OptionOneOrMoreCheck("--foo")
-    | "error: option --foo is required"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-or-more-foo", "180,2,184,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "181,4,184,4")
+    ; OptionCheck(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "181,16,181,42")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "181,17,181,26") ; set-config)> ("--help", ())
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "182,6,182,34")
+        ; OptionOneOrMoreCheck(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "182,27,182,33") ; "--foo"
+          )
+      | "error: option --foo is required"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-or-more-foo", "180,2,184,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "one-or-more-foo", "180,2,184,4")
+      ; fail
 
-  check-option-tests = id
-    ; check-one-option-tests
+  check-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-option-tests", "186,2,188,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "186,23,188,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "186,23,186,24") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "187,6,188,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "187,6,187,27") ; check-one-option-tests)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "188,6,188,35")
     ; check-one-or-more-option-tests
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-option-tests", "186,2,188,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-option-tests", "186,2,188,35")
+      ; fail
+
 
 strategies
-
-  check-one-option-tests = id
+  check-one-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-one-option-tests", "192,2,307,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "192,27,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "192,27,192,28") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "193,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "193,6,202,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "194,8,201,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "194,23,194,56")
+               ; !"Command line option check one 1"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "195,10,199,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "196,12,198,18")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "196,12,196,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "197,12,198,18")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "197,12,197,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "198,12,198,18") ; one-foo))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "200,10,200,19")
+               ; !["./bla"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "204,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "204,6,215,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "205,8,214,8")
+           ; apply-and-check(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "205,24,205,58")
+               ; !"Command line option check one 2 "
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,10,211,10")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,10,206,63")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,16,206,62")
+                          ; try(
+                              s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,20,206,61")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,20,206,40")
+                                 ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,21,206,30") ; get-config)> "--help")
+                              ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,43,206,61")
+                              ; debug(
+                                  s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "206,49,206,60")
+                                  ; !"help --- "
+                                )
+                            )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "207,10,211,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "208,12,210,18")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "208,12,208,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "209,12,210,18")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "209,12,209,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "210,12,210,18") ; one-foo))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "212,10,212,28")
+               ; !["./bla", "--foo"]
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "213,10,213,29")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "213,11,213,20") ; get-config)> "--foo"
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "217,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "217,6,226,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "218,8,225,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "218,23,218,56")
+               ; !"Command line option check one 3"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "219,10,223,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "220,12,222,18")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "220,12,220,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "221,12,222,18")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "221,12,221,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "222,12,222,18") ; one-foo))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "224,10,224,37")
+               ; !["./bla", "--foo", "--foo"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "228,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "228,6,237,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "229,8,236,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "229,23,229,56")
+               ; !"Command line option check one 1"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "230,10,234,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "231,12,233,22")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "231,12,231,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "232,12,233,22")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "232,12,232,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "233,12,233,22") ; one-foo-bar))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "235,10,235,19")
+               ; !["./bla"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "239,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "239,6,249,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "240,8,248,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "240,19,240,53")
+               ; !"Command line option check one 2 "
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,10,246,10")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,10,241,63")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,16,241,62")
+                          ; try(
+                              s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,20,241,61")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,20,241,40")
+                                 ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,21,241,30") ; get-config)> "--help")
+                              ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,43,241,61")
+                              ; debug(
+                                  s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "241,49,241,60")
+                                  ; !"help --- "
+                                )
+                            )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "242,10,246,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "243,12,245,22")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "243,12,243,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "244,12,245,22")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "244,12,244,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "245,12,245,22") ; one-foo-bar))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "247,10,247,37")
+               ; !["./bla", "--foo", "--bar"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "251,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "251,6,260,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "252,8,259,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "252,23,252,56")
+               ; !"Command line option check one 3"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "253,10,257,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "254,12,256,22")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "254,12,254,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "255,12,256,22")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "255,12,255,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "256,12,256,22") ; one-foo-bar))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "258,10,258,37")
+               ; !["./bla", "--foo", "--foo"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "262,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "262,6,271,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "263,8,270,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "263,23,263,56")
+               ; !"Command line option check one 1"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "264,10,268,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "265,12,267,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "265,12,265,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "266,12,267,21")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "266,12,266,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "267,12,267,21") ; foo-or-bar))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "269,10,269,19")
+               ; !["./bla"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "273,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "273,6,283,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "274,8,282,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "274,19,274,53")
+               ; !"Command line option check one 2 "
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,10,280,10")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,10,275,63")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,16,275,62")
+                          ; try(
+                              s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,20,275,61")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,20,275,40")
+                                 ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,21,275,30") ; get-config)> "--help")
+                              ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,43,275,61")
+                              ; debug(
+                                  s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "275,49,275,60")
+                                  ; !"help --- "
+                                )
+                            )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "276,10,280,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "277,12,279,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "277,12,277,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "278,12,279,21")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "278,12,278,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "279,12,279,21") ; foo-or-bar))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "281,10,281,37")
+               ; !["./bla", "--foo", "--bar"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "286,6,307,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "286,6,296,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "287,8,295,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "287,19,287,53")
+               ; !"Command line option check one 3 "
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,10,293,10")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,10,288,63")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,16,288,62")
+                          ; try(
+                              s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,20,288,61")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,20,288,40")
+                                 ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,21,288,30") ; get-config)> "--help")
+                              ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,43,288,61")
+                              ; debug(
+                                  s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "288,49,288,60")
+                                  ; !"help --- "
+                                )
+                            )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "289,10,293,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "290,12,292,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "290,12,290,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "291,12,292,21")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "291,12,291,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "292,12,292,21") ; foo-or-bar))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "294,10,294,46")
+               ; !["./bla", "--foo", "--bar", "--bar"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "298,6,307,6")
     ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 1"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + one-foo
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "299,8,306,8")
+        ; apply-and-fail(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "299,23,299,56")
+            ; !"Command line option check one 4"
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "300,10,304,10")
+            ; test-parse-options(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "301,12,303,21")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "301,12,301,21") ; foo-option
+                   + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "302,12,303,21")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "302,12,302,21") ; bar-option
+                        + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "303,12,303,21") ; foo-or-bar))
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "305,10,305,37")
+            ; !["./bla", "--foo", "--foo"]
           )
-        , !["./bla"]
-        )
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-one-option-tests", "192,2,307,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-one-option-tests", "192,2,307,6")
+      ; fail
 
-    ; option-test-wrap(
-        apply-and-check(!"Command line option check one 2 "
-        , where(try(<get-config> "--help"; debug(!"help --- ")));
-          test-parse-options(
-            foo-option
-          + bar-option
-          + one-foo
-          )
-        , !["./bla", "--foo"]
-        , <get-config> "--foo"
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 3"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + one-foo
-          )
-        , !["./bla", "--foo", "--foo"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 1"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + one-foo-bar
-          )
-        , !["./bla"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-test(!"Command line option check one 2 "
-        , where(try(<get-config> "--help"; debug(!"help --- ")));
-          test-parse-options(
-            foo-option
-          + bar-option
-          + one-foo-bar
-          )
-        , !["./bla", "--foo", "--bar"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 3"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + one-foo-bar
-          )
-        , !["./bla", "--foo", "--foo"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 1"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + foo-or-bar
-          )
-        , !["./bla"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-test(!"Command line option check one 2 "
-        , where(try(<get-config> "--help"; debug(!"help --- ")));
-          test-parse-options(
-            foo-option
-          + bar-option
-          + foo-or-bar
-          )
-        , !["./bla", "--foo", "--bar"]
-        )
-      )
-
-
-    ; option-test-wrap(
-        apply-test(!"Command line option check one 3 "
-        , where(try(<get-config> "--help"; debug(!"help --- ")));
-          test-parse-options(
-            foo-option
-          + bar-option
-          + foo-or-bar
-          )
-        , !["./bla", "--foo", "--bar", "--bar"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 4"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + foo-or-bar
-          )
-        , !["./bla", "--foo", "--foo"]
-        )
-      )
 
 strategies
-
-  check-one-or-more-option-tests = id
+  check-one-or-more-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-one-or-more-option-tests", "311,2,344,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "311,35,344,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "311,35,311,36") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "312,6,344,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "312,6,321,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "313,8,320,8")
+           ; apply-and-fail(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "313,23,313,56")
+               ; !"Command line option check one 1"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "314,10,318,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "315,12,317,26")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "315,12,315,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "316,12,317,26")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "316,12,316,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "317,12,317,26") ; one-or-more-foo))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "319,10,319,19")
+               ; !["./bla"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "323,6,344,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "323,6,333,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "324,8,332,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "324,19,324,53")
+               ; !"Command line option check one 2 "
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,10,330,10")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,10,325,63")
+                  ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,16,325,62")
+                          ; try(
+                              s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,20,325,61")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,20,325,40")
+                                 ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,21,325,30") ; get-config)> "--help")
+                              ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,43,325,61")
+                              ; debug(
+                                  s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "325,49,325,60")
+                                  ; !"help --- "
+                                )
+                            )))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "326,10,330,10")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "327,12,329,26")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "327,12,327,21") ; foo-option
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "328,12,329,26")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "328,12,328,21") ; bar-option
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "329,12,329,26") ; one-or-more-foo))
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "331,10,331,28")
+               ; !["./bla", "--foo"]
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "335,6,344,6")
     ; option-test-wrap(
-        apply-and-fail(!"Command line option check one 1"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + one-or-more-foo
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "336,8,343,8")
+        ; apply-test(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "336,19,336,52")
+            ; !"Command line option check one 3"
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "337,10,341,10")
+            ; test-parse-options(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "338,12,340,26")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "338,12,338,21") ; foo-option
+                   + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "339,12,340,26")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "339,12,339,21") ; bar-option
+                        + s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "340,12,340,26") ; one-or-more-foo))
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "342,10,342,37")
+            ; !["./bla", "--foo", "--foo"]
           )
-        , !["./bla"]
-        )
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-one-or-more-option-tests", "311,2,344,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "check-one-or-more-option-tests", "311,2,344,6")
+      ; fail
 
-    ; option-test-wrap(
-        apply-test(!"Command line option check one 2 "
-        , where(try(<get-config> "--help"; debug(!"help --- ")));
-          test-parse-options(
-            foo-option
-          + bar-option
-          + one-or-more-foo
-          )
-        , !["./bla", "--foo"]
-        )
-      )
-
-    ; option-test-wrap(
-        apply-test(!"Command line option check one 3"
-        , test-parse-options(
-            foo-option
-          + bar-option
-          + one-or-more-foo
-          )
-        , !["./bla", "--foo", "--foo"]
-        )
-      )
 
 strategies
-
-  extra-option-tests = id
+  extra-option-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "extra-option-tests", "348,2,364,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "348,23,364,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "348,23,348,24") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "349,6,364,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "349,6,354,6")
+       ; option-test-wrap(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "350,8,353,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "350,19,350,64")
+               ; !"General command line option without options"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "351,10,351,44")
+               ; test-parse-options(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "351,29,351,43") ; general-options
+                 )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "352,10,352,26")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "352,10,352,19")
+                  ; !["./bla"])
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "352,22,352,26")
+               ; debug
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "356,6,364,6")
     ; option-test-wrap(
-        apply-test(!"General command line option without options"
-        , test-parse-options(general-options)
-        , !["./bla"]; debug
-        )
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "357,8,363,8")
+        ; apply-and-check(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "357,24,357,66")
+            ; !"General command line option with options"
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "358,10,358,44")
+            ; test-parse-options(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "358,29,358,43") ; general-options
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "359,10,359,80")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "359,10,359,73")
+               ; ![ "./bla"
+                  , "--verbose"
+                  , "1"
+                  , "--keep"
+                  , "2"
+                  , "--statistics"
+                  , "3"
+                  ])
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "359,76,359,80")
+            ; debug
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "360,10,362,28")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "360,10,360,23")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "360,10,360,18") ; verbosity) => 1)
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "361,10,362,28")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "361,10,361,22")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "361,10,361,17") ; get-keep) => 2)
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "362,10,362,28")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "362,10,362,23") ; get-statistics) => 3
+          )
       )
-
-    ; option-test-wrap(
-        apply-and-check(!"General command line option with options"
-        , test-parse-options(general-options)
-        , !["./bla", "--verbose", "1", "--keep", "2", "--statistics", "3"]; debug
-        , verbosity => 1
-        ; get-keep => 2
-        ; get-statistics => 3
-        )
-      )
-
-//  OptionNotCombinedCheck(is-flag, other-flags | msg) =
-//  OptionZeroOrOneCheck(is-flag | msg) =
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "extra-option-tests", "348,2,364,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parse-options-test.str", "extra-option-tests", "348,2,364,6")
+      ; fail

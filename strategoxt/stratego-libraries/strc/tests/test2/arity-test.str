@@ -1,23 +1,71 @@
 module arity-test
-imports libstratego-lib
-signature
-  sorts Term
-  constructors
 
-    Zero: Term    
-    Six: Term * Term * Term * Term * Term * Term  -> Term
-    Seven: Term * Term * Term * Term * Term * Term * Term -> Term
-    Eight: Term * Term * Term * Term * Term * Term * Term * Term -> Term
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+signature
+  sorts
+    Term
+
+  constructors
+    Zero  : Term
+    Six   : Term * Term * Term * Term * Term * Term -> Term
+    Seven : Term * Term * Term * Term * Term * Term * Term -> Term
+    Eight : Term * Term * Term * Term * Term * Term * Term * Term -> Term
+
 
 rules
 
-  r6: [6] -> Six(Zero, Zero, Zero, Zero, Zero, Zero)
+  r6 :
+    [6] -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r6", "14,2,14,51")> Six(Zero, Zero, Zero, Zero, Zero, Zero)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r6", "14,2,14,51")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r6", "14,2,14,51")
+             ; fail
 
-  r7: [7] -> Seven(Zero, Zero, Zero, Zero, Zero, Zero, Zero)
+  r7 :
+    [7] -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r7", "16,2,16,59")> Seven(
+                                                                                                            Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r7", "16,2,16,59")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r7", "16,2,16,59")
+             ; fail
 
-  r8: [8] -> Eight(Zero, Zero, Zero, Zero, Zero, Zero, Zero, Zero) 
+  r8 :
+    [8] -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r8", "18,2,18,65")> Eight(
+                                                                                                            Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          , Zero
+                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r8", "18,2,18,65")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "r8", "18,2,18,65")
+             ; fail
+
 
 strategies
-
-  main = <(r6 + r7 + r8)> [8]
-
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "main", "22,2,22,28")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "22,9,22,28")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "22,11,22,22")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "22,11,22,12") ; r6
+           + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "22,16,22,22")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "22,16,22,17") ; r7
+                + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "22,21,22,22") ; r8)))> [8]
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "main", "22,2,22,28")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/arity-test.str", "main", "22,2,22,28")
+      ; fail

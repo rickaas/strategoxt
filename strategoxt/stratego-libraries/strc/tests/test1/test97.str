@@ -1,16 +1,45 @@
 module test97
-imports collection/list/cons collection/tuple/cons
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
+strategies
   main =
-    test1
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "main", "5,2,6,8")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "6,4,6,8")
+    ; test1
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "main", "5,2,6,8")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "main", "5,2,6,8")
+      ; fail
 
   test1 =
-    <FooBar> "aa"
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "test1", "8,2,9,16")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "9,4,9,16")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "9,5,9,10") ; FooBar)> "aa"
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "test1", "8,2,9,16")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "test1", "8,2,9,16")
+      ; fail
 
-  FooBar : 
-    x -> y 
-    where y := <foobar> x
+  FooBar :
+    x -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "FooBar", "11,2,13,24")> y
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "FooBar", "11,2,13,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "FooBar", "11,2,13,24")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "13,10,13,24")
+          ; y := <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "13,16,13,21") ; foobar> x
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "FooBar", "11,2,13,24")
+             ; fail
 
-  foobar = id
-
+  foobar =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "foobar", "15,2,15,12")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "15,11,15,12")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "foobar", "15,2,15,12")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test97.str", "foobar", "15,2,15,12")
+      ; fail

@@ -1,5 +1,12 @@
 module as-pattern
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
@@ -10,30 +17,71 @@ signature
     H : S * S * S -> S
     G : S * S -> S
 
+
 rules
 
-  R1 : F(x, y @ G(A, z)) -> H(x, y, z)
- 
-  R2 : F(x, G(y, B)) -> H(x, y, B)
+  R1 :
+    F(
+      x
+    , y@G(A, z)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "R1", "15,2,15,37")> H(x, y, z)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "R1", "15,2,15,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "R1", "15,2,15,37")
+             ; fail
+
+  R2 :
+    F(x, G(y, B)) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "R2", "17,2,17,33")> H(x, y, B)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "R2", "17,2,17,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "R2", "17,2,17,33")
+             ; fail
+
 
 strategies
+  main-as_pattern =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "main-as_pattern", "21,2,25,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "22,4,25,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "22,15,22,32")
+        ; !"as-pattern-test"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "23,1,24,11")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "23,1,23,11") ; as-pattern1)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "24,1,24,11")
+        ; as-pattern2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "main-as_pattern", "21,2,25,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "main-as_pattern", "21,2,25,4")
+      ; fail
 
-  main-as_pattern = 
-    test-suite(!"as-pattern-test",
-	as-pattern1;
-	as-pattern2
-    )
-	
-  as-pattern1 = 
-    apply-test(!"as-pattern1"
-	      ,R1
-              ,!F(B,G(A,C))
-              ,!H(B,G(A,C),C)
-              )
+  as-pattern1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "as-pattern1", "27,2,32,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "28,4,32,14")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "28,15,28,28")
+        ; !"as-pattern1"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "29,8,29,9") ; R1
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "30,15,30,26")
+        ; !F(B, G(A, C))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "31,15,31,28")
+        ; !H(B, G(A, C), C)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "as-pattern1", "27,2,32,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "as-pattern1", "27,2,32,14")
+      ; fail
 
-  as-pattern2 = 
-    apply-test(!"as-pattern2"
-	      ,R1 + R2
-              ,!F(B,G(C,B))
-              ,!H(B, C, B)
-              )
+  as-pattern2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "as-pattern2", "34,2,39,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "35,4,39,14")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "35,15,35,28")
+        ; !"as-pattern2"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "36,8,36,14")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "36,8,36,9") ; R1
+           + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "36,13,36,14") ; R2)
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "37,15,37,26")
+        ; !F(B, G(C, B))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "38,15,38,25")
+        ; !H(B, C, B)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "as-pattern2", "34,2,39,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/as_pattern.str", "as-pattern2", "34,2,39,14")
+      ; fail

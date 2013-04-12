@@ -1,76 +1,150 @@
-/**
- * sdf-desugar implements the following desugarings:
- *
- *   - remove double quotes in String literals: cons, lit
- *   - replace no-attrs by attrs([])
- *
- * @author Martin Bravenboer
- */
 module stratego/sdf/desugar
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/sdf/syntax
   libstratego-lib
   libstratego-aterm
 
-strategies
 
+strategies
   sdf-parsefix =
-    topdown(repeat(sdf-ParseFix); try(sdf-ParseFixOnce))
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-parsefix", "17,2,18,55")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "18,4,18,55")
+    ; topdown(
+        s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "18,12,18,54")
+        ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "18,12,18,31")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "18,19,18,30") ; sdf-ParseFix
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "18,34,18,54")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "18,38,18,53") ; sdf-ParseFixOnce
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-parsefix", "17,2,18,55")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-parsefix", "17,2,18,55")
+      ; fail
 
   sdf-ppfix =
-    topdown(repeat(sdf-PpFix); try(sdf-PpFixOnce))
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ppfix", "20,2,21,49")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "21,4,21,49")
+    ; topdown(
+        s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "21,12,21,48")
+        ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "21,12,21,28")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "21,19,21,27") ; sdf-PpFix
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "21,31,21,48")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "21,35,21,47") ; sdf-PpFixOnce
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ppfix", "20,2,21,49")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ppfix", "20,2,21,49")
+      ; fail
 
   sdf-ParseFix :
-    no-attrs() -> attrs([])
+    no-attrs() -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFix", "23,2,24,26")> attrs([])
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFix", "23,2,24,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFix", "23,2,24,26")
+             ; fail
 
   sdf-PpFix :
-    attrs([]) -> no-attrs()
+    attrs([]) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "26,2,27,26")> no-attrs()
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "26,2,27,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "26,2,27,26")
+             ; fail
 
   sdf-ParseFix :
-    term(default(t)) -> term(t)
+    term(default(t)) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFix", "29,2,30,30")> term(t)
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFix", "29,2,30,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFix", "29,2,30,30")
+             ; fail
+
 
 rules
 
   sdf-ParseFixOnce =
-    term(implode-aterm)
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "34,2,35,22")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "35,4,35,22")
+    ; term(
+        s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "35,9,35,21") ; implode-aterm
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "34,2,35,22")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "34,2,35,22")
+      ; fail
 
   sdf-PpFixOnce =
-    term(explode-aterm)
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "37,2,38,22")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "38,4,38,22")
+    ; term(
+        s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "38,9,38,21") ; explode-aterm
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "37,2,38,22")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "37,2,38,22")
+      ; fail
 
   sdf-ParseFixOnce :
-    lit(s) -> lit(<un-double-quote> s)
+    lit(s) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "40,2,41,37")> lit(
+                                                                                                                              <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "41,19,41,33") ; un-double-quote> s
+                                                                                                                            )
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "40,2,41,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "40,2,41,37")
+             ; fail
 
   sdf-PpFixOnce :
-    lit(s) -> lit(<double-quote> s)
+    lit(s) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "43,2,44,34")> lit(
+                                                                                                                           <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "44,19,44,30") ; double-quote> s
+                                                                                                                         )
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "43,2,44,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "43,2,44,34")
+             ; fail
 
   sdf-ParseFixOnce :
-    ci-lit(s) -> ci-lit(<un-single-quote> s)
+    ci-lit(s) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "46,2,47,43")> ci-lit(
+                                                                                                                                 <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "47,25,47,39") ; un-single-quote> s
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "46,2,47,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-ParseFixOnce", "46,2,47,43")
+             ; fail
 
   sdf-PpFixOnce :
-    ci-lit(s) -> ci-lit(<single-quote> s)
+    ci-lit(s) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "49,2,50,40")> ci-lit(
+                                                                                                                              <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "50,25,50,36") ; single-quote> s
+                                                                                                                            )
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "49,2,50,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFixOnce", "49,2,50,40")
+             ; fail
 
-/**
- * Workaround problem with pretty-printing seq.
- */
+
 strategies
-
-  /**
-   * A seq where the second element is not a list, is a lookahead seq.
-   */
   sdf-PpFix :
-    seq(a,b) -> seq-lookahead(a,b)
-    where
-      <not(is-list)> b
+    seq(a, b) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "60,2,63,21")> seq-lookahead(a, b)
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "60,2,63,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "60,2,63,21")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "63,6,63,21")
+          ; <(s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "63,7,63,18")
+              ; not(s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "63,11,63,17") ; is-list))> b
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "60,2,63,21")
+             ; fail
 
-  /**
-   * A seq where the second element is a list, is a symbol
-   */
   sdf-PpFix :
-    seq(a, b) -> seq-symbol(a,b)
-    where
-      <is-list> b
+    seq(a, b) -> <r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "68,2,71,16")> seq-symbol(a, b)
+    where r-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "68,2,71,16")
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "68,2,71,16")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "71,6,71,16")
+          ; <(s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "71,7,71,13") ; is-list)> b
+          <+ r-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/desugar.str", "sdf-PpFix", "68,2,71,16")
+             ; fail
+
 
 signature
   constructors
-    seq-symbol : a * a -> a
+    seq-symbol    : a * a -> a
     seq-lookahead : a * a -> a

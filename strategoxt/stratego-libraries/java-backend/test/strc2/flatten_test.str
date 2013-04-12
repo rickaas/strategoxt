@@ -1,5 +1,12 @@
 module flatten-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
@@ -7,24 +14,78 @@ signature
     Module  : String * List(a) -> Module(a)
     Content : String -> Section
 
+
 strategies
+  flatten-terms =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "flatten-terms", "12,2,15,54")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "13,4,15,54")
+    ; flatten(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "13,12,13,32")
+        ; \ Imports(xs) -> xs \
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "14,5,14,28")
+        ; {n:
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "14,10,14,27")
+            ; ?(n, Module(n, _))
+          }
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "15,5,15,52")
+        ; \ Module(n, c) -> <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "15,24,15,47")
+                             ; filter(
+                                 s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "15,31,15,46")
+                                 ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "15,35,15,45")
+                                       ; Imports(
+                                           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "15,43,15,44") ; id
+                                         ))
+                               )> c \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "flatten-terms", "12,2,15,54")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "flatten-terms", "12,2,15,54")
+      ; fail
 
-  flatten-terms = 
-    flatten(\ Imports(xs) -> xs \, 
-	    {n : ?(n, Module(n, _))},
-	    \ Module(n, c) -> <filter(not(Imports(id)))> c \ )
+  main-flatten_test =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "main-flatten_test", "17,2,20,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "18,4,20,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "18,15,18,29")
+        ; !"flatten-test"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "19,1,19,5") ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "main-flatten_test", "17,2,20,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "main-flatten_test", "17,2,20,4")
+      ; fail
 
-  main-flatten_test = 
-    test-suite(!"flatten-test",
-	test1
-    )
-
-  test1 = 
-    apply-test(!"test1"
-	, flatten-terms
-	, !("module1", 
-            [Module("module3",[Imports(["module1"]),Content("module3")]),
-             Module("module2",[Imports([]),Content("module2")]),
-             Module("module1",[Imports(["module2","module3"]),Content("module1")])])
-	, ![Content("module3"),Content("module2"),Content("module1")]
-	)
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "test1", "22,2,30,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "23,4,30,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "23,15,23,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "24,3,24,15") ; flatten-terms
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "25,3,28,83")
+        ; !( "module1"
+           , [ Module(
+                 "module3"
+               , [ Imports(["module1"])
+                 , Content("module3")
+                 ]
+               )
+             , Module(
+                 "module2"
+               , [Imports([]), Content("module2")]
+               )
+             , Module(
+                 "module1"
+               , [ Imports(["module2", "module3"])
+                 , Content("module1")
+                 ]
+               )
+             ]
+           )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "29,3,29,61")
+        ; ![ Content("module3")
+           , Content("module2")
+           , Content("module1")
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "test1", "22,2,30,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/flatten_test.str", "test1", "22,2,30,1")
+      ; fail

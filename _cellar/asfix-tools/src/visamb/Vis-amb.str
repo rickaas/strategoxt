@@ -1,173 +1,306 @@
-/*
-	Usage: Vis-amb -i parsetree.asfix -o parsetree.ambs
-
-	This module defines a strategy to extract and display the
-	ambiguities in a parse tree represented in AsFix.  Ambiguities
-	are displayed by printing the non-terminals of the nodes of
-	the parse trees in the ambiguities. For instance, consider
-	the syntax definition
-
-\begin{verbatim}
-definition
-module Main
-exports
-  sorts Exp
-  lexical syntax
-    [\ \t\n] -> LAYOUT
-  context-free syntax
-    "id"    -> Exp
-    Exp Exp -> Exp
-\end{verbatim}
-
-	The following displays the ambiguity caused by the phrase
-	\verb|id id id|:
-
-\begin{verbatim}
-# ambiguities = 1
-* id id id
-+ <Exp-CF>
-    <Exp-CF>
-      "id"
-    <LAYOUT?-CF>
-      <LAYOUT-CF>
-        " "
-    <Exp-CF>
-      <Exp-CF>
-        "id"
-      <LAYOUT?-CF>
-        <LAYOUT-CF>
-          " "
-      <Exp-CF>
-        "id"
-+ <Exp-CF>
-    <Exp-CF>
-      <Exp-CF>
-        "id"
-      <LAYOUT?-CF>
-        <LAYOUT-CF>
-          " "
-      <Exp-CF>
-        "id"
-    <LAYOUT?-CF>
-      <LAYOUT-CF>
-        " "
-    <Exp-CF>
-      "id"
-\end{verbatim}
-	
-	Note: Only the inner ambiguities are displayed, i.e., if a
-	phrase \emph{and} one of its sub-phrases are ambiguous, only
-	the ambiguities of the sub-phrase is displayed.
-
-	\paragraph{Main}
-
-	The strategy first collects the ambiguities, then abbreviates
-	them to the tree format shown above, and finally pretty-prints
-	the tree using the text module.
-
-*/
 module Vis-amb
-imports libstratego-lib AsFix
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  AsFix
+
+
 signature
   constructors
     amb-abbr : String * AbbrTree -> AmbAbbr
+
+
 strategies
-
-/*
-  short-description(p) = !["Usage: ", <p>(), " [options]"]
-  long-description(p)  = ![
-        "The SDF2 implementation caters for arbitrary context-free grammars. That is,\n",
-        "even for ambiguous grammars the parser will produce a parse trees containing\n",
-        "a concise encoding of allpossible parses. Ambiguities are represented by\n",
-        "means of amb nodes that contain a list of possible parse trees at that\n",
-        "point. For most applications, however, it is desirable to develop\n",
-        "unambiguous grammars. To aid the grammar writer in detecting and solving the\n",
-        "ambiguities, the visamb tool extracts the ambiguities from a parse tree and\n",
-        "displays them in a readable format.\n"]
-*/
-
   Vis-amb =
-    io-wrap(visamb)
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Vis-amb", "89,2,90,18")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "90,4,90,18")
+    ; io-wrap(
+        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "90,12,90,17") ; visamb
+      )
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Vis-amb", "89,2,90,18")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Vis-amb", "89,2,90,18")
+      ; fail
 
-  visamb = 
-	collect-ambs;
-        abbrev-ambs
+  visamb =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "visamb", "92,2,94,18")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "93,1,94,18")
+    ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "93,1,93,12") ; collect-ambs)
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "94,8,94,18")
+    ; abbrev-ambs
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "visamb", "92,2,94,18")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "visamb", "92,2,94,18")
+      ; fail
 
-//	Ambiguity nodes are collected bottom-up.
 
 strategies
+  collect-ambs =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "collect-ambs", "100,2,100,50")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "100,17,100,50")
+    ; parsetree(
+        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "100,27,100,45")
+        ; bu-collect(
+            s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "100,38,100,44")
+            ; amb(
+                s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "100,42,100,43") ; id
+              )
+          )
+      , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "100,48,100,49") ; id
+      )
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "collect-ambs", "100,2,100,50")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "collect-ambs", "100,2,100,50")
+      ; fail
 
-  collect-ambs = parsetree(bu-collect(amb(id)), id)
-/*
 
-	\paragraph{Term Format}
-
-*/
 strategies
+  parse-tree =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "parse-tree", "108,2,110,50")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "108,15,110,50")
+    ; rec x (
+        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "108,21,110,49")
+        ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "108,21,108,26") ; is-int
+           + s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "109,21,110,49")
+             ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "109,21,109,32")
+                ; amb(
+                    s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "109,25,109,31")
+                    ; list(
+                        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "109,30,109,30") ; x
+                      )
+                  )
+                + s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,21,110,49")
+                  ; appl(
+                      s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,26,110,39")
+                      ; prod(
+                          s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,31,110,32") ; id
+                        , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,34,110,35") ; id
+                        , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,37,110,38") ; id
+                        )
+                    , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,42,110,48")
+                      ; list(
+                          s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "110,47,110,47") ; x
+                        )
+                    )))
+      )
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "parse-tree", "108,2,110,50")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "parse-tree", "108,2,110,50")
+      ; fail
 
-  parse-tree = rec x(is-int + 
-                     amb(list(x)) + 
-                     appl(prod(id,id,id), list(x)))
+  format =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "format", "112,2,112,56")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "112,11,112,56")
+    ; parsetree(
+        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "112,21,112,47")
+        ; list(
+            s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "112,26,112,46")
+            ; amb(
+                s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "112,30,112,45")
+                ; list(
+                    s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "112,35,112,44") ; parse-tree
+                  )
+              )
+          )
+      , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "112,50,112,55") ; is-int
+      )
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "format", "112,2,112,56")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "format", "112,2,112,56")
+      ; fail
 
-  format = parsetree(list(amb(list(parse-tree))), is-int)
 
-/*
-
-	\paragraph{Abbreviation}
-
-	An ambiguity consists of a list of parse trees. It is abbreviated
-	as \verb|amb-abbr(s, tas)|, where \verb|s| is the yield of the
-	tree, i.e., the string underlying the parse tree, and \verb|tas|
-	is the list of abbreviated trees.
-
-*/
 strategies
+  abbrev-ambs =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-ambs", "126,2,126,73")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "126,16,126,73")
+    ; parsetree(
+        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "126,26,126,57")
+        ; map(
+            s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "126,30,126,55")
+            ; \ x -> root(
+                       <s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "126,42,126,51") ; abbrev-amb> x
+                     ) \
+          )
+      , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "126,60,126,72") ; int-to-string
+      )
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-ambs", "126,2,126,73")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-ambs", "126,2,126,73")
+      ; fail
 
-  abbrev-ambs = parsetree(map(\x -> root(<abbrev-amb>x)\ ), int-to-string)
-  
+
 rules
 
-  abbrev-amb : amb(ts) -> amb-abbr(<Hd; yield> ts, <map(abbrev-term)> ts)
+  abbrev-amb :
+    amb(ts) -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-amb", "130,2,130,72")> amb-abbr(
+                                                                                                       <s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "130,36,130,44")
+                                                                                                        ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "130,36,130,37") ; Hd)
+                                                                                                        ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "130,40,130,44")
+                                                                                                        ; yield> ts
+                                                                                                     , <s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "130,52,130,67")
+                                                                                                        ; map(
+                                                                                                            s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "130,56,130,66") ; abbrev-term
+                                                                                                          )> ts
+                                                                                                     )
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-amb", "130,2,130,72")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-amb", "130,2,130,72")
+             ; fail
+
 
 strategies
+  abbrev-term =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-term", "134,2,135,67")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "134,16,135,67")
+    ; rec x (
+        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "134,22,135,66")
+        ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "134,23,134,41")
+           ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "134,23,134,28") ; is-int
+              + s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "134,32,134,41") ; ProjectAmb)
+           <+ s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,22,135,66")
+              ; Nsplit(
+                  s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,29,135,36") ; get-sort
+                , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,39,135,65")
+                  ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,39,135,45") ; Lexical
+                     <+ s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,50,135,65")
+                        ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,50,135,57") ; get-args)
+                        ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,60,135,65")
+                        ; map(
+                            s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "135,64,135,64") ; x
+                          ))
+                ))
+      )
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-term", "134,2,135,67")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "abbrev-term", "134,2,135,67")
+      ; fail
 
-  abbrev-term = rec x((is-int + ProjectAmb) <+
-                      Nsplit(get-sort, Lexical <+ get-args; map(x)))
 
 rules
 
-  get-sort : appl(prod(args, res, attrs), targs) -> res
+  get-sort :
+    appl(prod(args, res, attrs), targs) -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "get-sort", "139,2,139,54")> res
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "get-sort", "139,2,139,54")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "get-sort", "139,2,139,54")
+             ; fail
 
-  get-args : appl(p, as) -> as
+  get-args :
+    appl(p, as) -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "get-args", "141,2,141,29")> as
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "get-args", "141,2,141,29")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "get-args", "141,2,141,29")
+             ; fail
 
-  Nsplit(f, g) : x -> N(<f> x, <g> x)
+  Nsplit(f, g) :
+    x -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Nsplit", "143,2,143,36")> N(
+                                                                                             <s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "143,25,143,25") ; f> x
+                                                                                           , <s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "143,32,143,32") ; g> x
+                                                                                           )
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Nsplit", "143,2,143,36")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Nsplit", "143,2,143,36")
+             ; fail
 
-  ProjectAmb : amb([x|xs]) -> x
-/*
+  ProjectAmb :
+    amb([x|xs]) -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "ProjectAmb", "145,2,145,30")> x
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "ProjectAmb", "145,2,145,30")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "ProjectAmb", "145,2,145,30")
+             ; fail
 
-	\paragraph{Implode lexicals}
 
-*/
 rules
-  F  : appl(p, ts) -> <concat> ts
-  F' : x -> [x]
- 
-  MkLex : x -> lexical(x)
-strategies
 
-  yield = rec x((appl(id, map(x)); F) <+ F'); implode-string
+  F :
+    appl(p, ts) -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "F", "152,2,152,32")> <s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "152,23,152,28") ; concat> ts
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "F", "152,2,152,32")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "F", "152,2,152,32")
+             ; fail
+
+  F' :
+    x -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "F'", "153,2,153,14")> [x]
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "F'", "153,2,153,14")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "F'", "153,2,153,14")
+             ; fail
+
+  MkLex :
+    x -> <r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "MkLex", "155,2,155,24")> lexical(x)
+    where r-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "MkLex", "155,2,155,24")
+          <+ r-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "MkLex", "155,2,155,24")
+             ; fail
+
+
+strategies
+  yield =
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "yield", "158,2,158,59")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,10,158,59")
+    ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,10,158,43")
+       ; rec x (
+           s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,16,158,42")
+           ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,17,158,35")
+              ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,17,158,32")
+                 ; appl(
+                     s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,22,158,23") ; id
+                   , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,26,158,31")
+                     ; map(
+                         s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,30,158,30") ; x
+                       )
+                   ))
+              ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,35,158,35")
+              ; F
+              <+ s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,41,158,42") ; F')
+         ))
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "158,46,158,59")
+    ; implode-string
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "yield", "158,2,158,59")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "yield", "158,2,158,59")
+      ; fail
 
   Lexical =
-	appl(prod([lex(id)],cf(id),id), id); yield; MkLex; F' 
-        + appl(prod(id,lit(id),id), id); ![]
+    s-enter(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Lexical", "160,2,162,43")
+    ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,1,162,43")
+    ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,1,161,53")
+       ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,1,161,35")
+          ; appl(
+              s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,6,161,30")
+              ; prod(
+                  s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,11,161,19")
+                  ; [ s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,12,161,18")
+                      ; lex(
+                          s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,16,161,17") ; id
+                        )
+                    ]
+                , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,21,161,26")
+                  ; cf(
+                      s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,24,161,25") ; id
+                    )
+                , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,28,161,29") ; id
+                )
+            , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,33,161,34") ; id
+            ))
+       ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,38,161,53")
+       ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,38,161,42") ; yield)
+       ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,45,161,53")
+       ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,45,161,49") ; MkLex)
+       ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "161,52,161,53")
+       ; F'
+       + s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,10,162,43")
+         ; (s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,10,162,38")
+            ; appl(
+                s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,15,162,33")
+                ; prod(
+                    s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,20,162,21") ; id
+                  , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,23,162,29")
+                    ; lit(
+                        s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,27,162,28") ; id
+                      )
+                  , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,31,162,32") ; id
+                  )
+              , s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,36,162,37") ; id
+              ))
+         ; s-step(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "162,41,162,43")
+         ; ![])
+    < s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Lexical", "160,2,162,43")
+    + s-exit(|"_cellar/asfix-tools/src/visamb/Vis-amb.str", "Lexical", "160,2,162,43")
+      ; fail
 
 
-// Constructors 
 signature
-   constructors
-      lexical : a -> a
-      root :    a -> a
-      N :       a * a -> a   
-
-
-
+  constructors
+    lexical : a -> a
+    root    : a -> a
+    N       : a * a -> a

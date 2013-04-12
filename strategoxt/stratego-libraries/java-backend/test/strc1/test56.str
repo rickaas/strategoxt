@@ -1,7 +1,21 @@
 module test56
-imports libstratego-lib
-strategies
 
-   main-test56 =
-     rules(Foo: t@(1, x@2) -> [1, 2, t, x])
- 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
+  main-test56 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test56.str", "main-test56", "5,3,6,42")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test56.str", "6,5,6,42")
+    ; rules (
+        Foo :
+          t@(1, x@2) -> [1, 2, t, x]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test56.str", "main-test56", "5,3,6,42")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test56.str", "main-test56", "5,3,6,42")
+      ; fail

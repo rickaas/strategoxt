@@ -1,9 +1,9 @@
-/**
- * Converts an RTG in concrete syntax to Stratego in concrete syntax.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module rtg2sig
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
@@ -12,42 +12,57 @@ imports
   tool-doc
   core-rtg2sig
 
+
 strategies
-  
   main-rtg2sig =
-    xtc-io-wrap(
-      module-option
-    , rtg2sig-usage
-    , rtg2sig-about
-    , ![]
-    , xtc-rtg-front-end
-      ; core-rtg2sig(|<guess-module-name>)
-      ; write-to
-      ; xtc-pp-abstract-stratego
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "main-rtg2sig", "17,2,27,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "18,4,27,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "19,6,19,18") ; module-option
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "20,6,20,18") ; rtg2sig-usage
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "21,6,21,18") ; rtg2sig-about
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "22,6,22,8")
+        ; ![]
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "23,6,26,31")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "23,6,23,22") ; xtc-rtg-front-end)
+        ; s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "24,8,26,31")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "24,8,24,41")
+           ; core-rtg2sig(
+             | <s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "24,23,24,39") ; guess-module-name>
+             ))
+        ; s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "25,8,26,31")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "25,8,25,15") ; write-to)
+        ; s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "26,8,26,31")
+        ; xtc-pp-abstract-stratego
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "main-rtg2sig", "17,2,27,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "main-rtg2sig", "17,2,27,4")
+      ; fail
 
   rtg2sig-usage =
-    <tool-doc>
-      [ Usage("rtg2sig [OPTIONS]")
-      , Summary(
-         "Generates a Stratego Signature from a Regular Tree Grammar (RTG).")
-      , OptionUsage()
-      , Description([
-          "The name of the resulting Stratego module is determined by
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "rtg2sig-usage", "29,2,42,6")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "30,4,42,6")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "30,5,30,12") ; tool-doc)> [ Usage("rtg2sig [OPTIONS]")
+                                                                                                 , Summary("Generates a Stratego Signature from a Regular Tree Grammar (RTG).")
+                                                                                                 , OptionUsage()
+                                                                                                 , Description(["The name of the resulting Stratego module is determined by
            (1) the specified module name with the --module option.
            (2) The name of the output file.
-           (3) The name of the input file."
-        ])
-      , AutoReportBugs()
-      ]
+           (3) The name of the input file."])
+                                                                                                 , AutoReportBugs()
+                                                                                                 ]
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "rtg2sig-usage", "29,2,42,6")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "rtg2sig-usage", "29,2,42,6")
+      ; fail
 
   rtg2sig-about =
-    <tool-doc>
-      [ AutoProgram()
-      , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
-      , GNU_LGPL("2002-2008", "Martin Bravenboer <martin.bravenboer@gmail.com>")
-      , Config([
-          DefaultXTCRepository()
-        , CurrentXTCRepository()
-        ])
-      ]
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "rtg2sig-about", "44,2,53,6")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "45,4,53,6")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "45,5,45,12") ; tool-doc)> [ AutoProgram()
+                                                                                                 , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
+                                                                                                 , GNU_LGPL("2002-2008", "Martin Bravenboer <martin.bravenboer@gmail.com>")
+                                                                                                 , Config([DefaultXTCRepository(), CurrentXTCRepository()])
+                                                                                                 ]
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "rtg2sig-about", "44,2,53,6")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/rtg2sig.str", "rtg2sig-about", "44,2,53,6")
+      ; fail

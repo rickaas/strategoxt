@@ -1,20 +1,29 @@
-/**
- * Invasively extends libstratego-sdf to support an extended
- * version of the SDF syntax definition formalism.
- */
 module pack-sdf-ext-compat
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
 
 imports
   libstratego-lib
   libstratego-sdf
   libstratego-sglr
 
+
 rules
 
   override get-sdf-parse-table =
-    MemoExtSDFParseTable
-  <+
-    import-term(SDF-Ext.tbl);
-    open-parse-table;
-    rules(MemoExtSDFParseTable := <id>)
-
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "get-sdf-parse-table", "14,11,19,38")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "15,4,19,38")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "15,4,15,23") ; MemoExtSDFParseTable
+                <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "17,4,19,38")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "17,4,17,27") ; import-term(SDF-Ext.tbl))
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "18,4,19,38")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "18,4,18,19") ; open-parse-table)
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "19,4,19,38")
+                   ; rules (
+                       MemoExtSDFParseTable := <s-step(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "19,35,19,36") ; id>
+                     ))
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "get-sdf-parse-table", "14,11,19,38")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/pack-sdf-ext/lib/org/strategoxt/pack_sdf_ext_compat/pack-sdf-ext-compat.str", "get-sdf-parse-table", "14,11,19,38")
+               ; fail

@@ -1,23 +1,63 @@
 module module-option
 
-strategies
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
+
+strategies
   module-option =
-    ArgOption("--module"
-    , where(<set-config> ("--module", <id>))
-    , !"--module n       Generated module has name n"
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "module-option", "5,2,9,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "6,4,9,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "6,14,6,23") ; "--module"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "7,6,7,43")
+        ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "7,12,7,42")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "7,13,7,22") ; set-config)> ( "--module"
+                                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "7,39,7,40") ; id>
+                                                                                                                                                            ))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "8,6,8,52")
+        ; !"--module n       Generated module has name n"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "module-option", "5,2,9,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "module-option", "5,2,9,4")
+      ; fail
 
   get-module-name =
-    <get-config> "--module"
-    <+ log(|Critical(), "No module name specified. Use the --module option to specify a module name. See also --help.")
-       ; <exit> 1
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "get-module-name", "11,2,14,16")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "12,4,14,16")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "12,4,12,26")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "12,5,12,14") ; get-config)> "--module"
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "13,7,14,16")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "13,7,13,118")
+             ; log(|Critical(), "No module name specified. Use the --module option to specify a module name. See also --help."))
+          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "14,9,14,16")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "14,10,14,13") ; exit)> 1)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "get-module-name", "11,2,14,16")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "get-module-name", "11,2,14,16")
+      ; fail
 
   guess-module-name =
-    <get-config> "--module"
-    <+ <get-config; remove-extension> "-o"
-    <+ <get-config; remove-extension> "-i"
-    <+ log(|Critical(), "No module name specified. Use the --module option to specify a module name. See also --help.")
-       ; <exit> 1
-
-    
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "guess-module-name", "16,2,21,16")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "17,4,21,16")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "17,4,17,26")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "17,5,17,14") ; get-config)> "--module"
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "18,7,21,16")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "18,7,18,41")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "18,8,18,35")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "18,8,18,17") ; get-config)
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "18,20,18,35")
+                 ; remove-extension)> "-o"
+             <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "19,7,21,16")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "19,7,19,41")
+                   ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "19,8,19,35")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "19,8,19,17") ; get-config)
+                       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "19,20,19,35")
+                       ; remove-extension)> "-i"
+                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "20,7,21,16")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "20,7,20,118")
+                         ; log(|Critical(), "No module name specified. Use the --module option to specify a module name. See also --help."))
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "21,9,21,16")
+                      ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "21,10,21,13") ; exit)> 1)))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "guess-module-name", "16,2,21,16")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/module-option.str", "guess-module-name", "16,2,21,16")
+      ; fail

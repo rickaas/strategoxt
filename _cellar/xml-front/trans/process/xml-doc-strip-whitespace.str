@@ -1,16 +1,34 @@
-/**
- * @author  Martin Bravenboer <mbravenb@cs.uu.nl>
- */
 module xml-doc-strip-whitespace
-imports libstratego-lib xml-doc xml-whitespace
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  xml-doc
+  xml-whitespace
+
 
 strategies
-
   main-xml-doc-strip-whitespace =
-    io-wrap(
-      topdown(
-        is-list; one(Text(id))
-      < xml-filter-whitespace
-      + id
+    s-enter(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "main-xml-doc-strip-whitespace", "9,2,16,4")
+    ; s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "10,4,16,4")
+    ; io-wrap(
+        s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "11,6,15,6")
+        ; topdown(
+            s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "12,8,14,9")
+            ; (s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "12,8,12,29")
+               ; (s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "12,8,12,14") ; is-list)
+               ; s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "12,17,12,29")
+               ; one(s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "12,21,12,28")
+                     ; Text(
+                         s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "12,26,12,27") ; id
+                       ))
+               < s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "13,8,13,28") ; xml-filter-whitespace
+               + s-step(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "14,8,14,9") ; id)
+          )
       )
-    )
+    < s-exit(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "main-xml-doc-strip-whitespace", "9,2,16,4")
+    + s-exit(|"_cellar/xml-front/trans/process/xml-doc-strip-whitespace.str", "main-xml-doc-strip-whitespace", "9,2,16,4")
+      ; fail

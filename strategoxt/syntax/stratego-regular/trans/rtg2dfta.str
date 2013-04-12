@@ -1,16 +1,33 @@
-/**
- * Converts a RTG to a normalized, deterministic RTG (DFTA)
- *
- * @author Martin Bravenboer
- */
 module rtg2dfta
-imports libstratego-rtg libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-rtg
+  libstratego-lib
+
+
+strategies
   main-rtg2dfta =
-    io-stream-wrap(
-      ?(<id>, fout)
-      ; parse-rtg-stream
-      ; rtg2dfta
-      ; <write-to-stream> (fout, <id>)
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "main-rtg2dfta", "10,2,16,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "11,4,16,4")
+    ; io-stream-wrap(
+        s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "12,6,15,37")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "12,6,12,18")
+           ; ?( <s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "12,9,12,10") ; id>
+              , fout
+              ))
+        ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "13,8,15,37")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "13,8,13,23") ; parse-rtg-stream)
+        ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "14,8,15,37")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "14,8,14,15") ; rtg2dfta)
+        ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "15,8,15,37")
+        ; <(s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "15,9,15,23") ; write-to-stream)> ( fout
+                                                                                                               , <s-step(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "15,34,15,35") ; id>
+                                                                                                               )
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "main-rtg2dfta", "10,2,16,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/trans/rtg2dfta.str", "main-rtg2dfta", "10,2,16,4")
+      ; fail

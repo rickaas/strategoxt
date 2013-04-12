@@ -1,10 +1,27 @@
 module congruence-arguments
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     If : a * b -> b
 
+
 strategies
-
-  main-congruence_arguments = <If(id, id)> If("a","b")
-
+  main-congruence_arguments =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "main-congruence_arguments", "9,2,9,53")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "9,30,9,53")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "9,31,9,40")
+        ; If(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "9,34,9,35") ; id
+          , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "9,38,9,39") ; id
+          ))> If("a", "b")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "main-congruence_arguments", "9,2,9,53")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_arguments.str", "main-congruence_arguments", "9,2,9,53")
+      ; fail

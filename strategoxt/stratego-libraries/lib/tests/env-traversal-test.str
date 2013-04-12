@@ -1,5 +1,13 @@
 module env-traversal-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     F : A * A -> A
@@ -7,21 +15,64 @@ signature
     A : A
     B : A
 
-strategies
 
-  main-env-traversal-test = 
-    test-suite(!"env-traversal-test",
-      test1
-    )
+strategies
+  main-env-traversal-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "main-env-traversal-test", "12,2,15,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "13,4,15,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "13,15,13,35")
+        ; !"env-traversal-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "14,6,14,10") ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "main-env-traversal-test", "12,2,15,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "main-env-traversal-test", "12,2,15,4")
+      ; fail
 
   test1 =
-    apply-test(!"test1a"
-	, count-bottomup(?F(_,_)); ?(_,<id>)
-	, !F(A,G(F(B,A)))
-	, !2
-	);
-    apply-test(!"test1b"
-	, count-bottomup(\ F(B,x) -> x \ )
-	, !F(A,G(F(B,A)))
-	, !(F(A,G(A)),1)
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "test1", "17,2,27,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "18,4,27,1")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "18,4,22,1")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "18,15,18,23")
+           ; !"test1a"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "19,3,19,36")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "19,3,19,25")
+              ; count-bottomup(
+                  s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "19,18,19,24")
+                  ; ?F(_, _)
+                ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "19,28,19,36")
+           ; ?( _
+              , <s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "19,33,19,34") ; id>
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "20,3,20,17")
+           ; !F(
+                A
+              , G(F(B, A))
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "21,3,21,4")
+           ; !2
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "23,4,27,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "23,15,23,23")
+        ; !"test1b"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "24,3,24,34")
+        ; count-bottomup(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "24,18,24,32")
+            ; \ F(B, x) -> x \
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "25,3,25,17")
+        ; !F(
+             A
+           , G(F(B, A))
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "26,3,26,16")
+        ; !( F(A, G(A))
+           , 1
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "test1", "17,2,27,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/env-traversal-test.str", "test1", "17,2,27,1")
+      ; fail

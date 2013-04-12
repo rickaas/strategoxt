@@ -1,360 +1,1570 @@
 module system-io-file-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main-system-io-file-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "main-system-io-file-test", "6,2,18,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "7,4,18,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "7,15,7,31")
+        ; !"system-io-file"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "8,6,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "8,6,8,19") ; aterm-io-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "9,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "9,8,9,20") ; char-io-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "10,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "10,8,10,19") ; fprint-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "11,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "11,8,11,24") ; file-stream-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "12,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "12,8,12,24") ; char-output-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "13,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "13,8,13,22") ; copy-file-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "14,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "14,8,14,20") ; dirname-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "15,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "15,8,15,26") ; base-filename-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "16,8,17,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "16,8,16,27") ; file-extension-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "17,8,17,19")
+        ; getenv-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "main-system-io-file-test", "6,2,18,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "main-system-io-file-test", "6,2,18,4")
+      ; fail
 
-  main-system-io-file-test = 
-    test-suite(!"system-io-file",
-      aterm-io-tests
-      ; char-io-tests
-      ; fprint-tests
-      ; file-stream-tests
-      ; char-output-tests
-      ; copy-file-tests
-      ; dirname-tests
-      ; base-filename-tests
-      ; file-extension-tests
-      ; getenv-tests
-    )
 
 strategies
-
   getenv-tests =
-    apply-and-check(!"test3"
-    , getenv
-    , !"HOME"
-    , debug; is-string
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "getenv-tests", "22,2,27,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "23,4,27,4")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "23,20,23,27")
+        ; !"test3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "24,6,24,11") ; getenv
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "25,6,25,12")
+        ; !"HOME"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "26,6,26,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "26,6,26,10") ; debug)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "26,13,26,21")
+        ; is-string
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "getenv-tests", "22,2,27,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "getenv-tests", "22,2,27,4")
+      ; fail
+
 
 strategies
-
-  base-filename-tests = 
-    apply-test(!"base-filename-test 1", base-filename, !"./number.r", !"number.r")
-  ; apply-test(!"base-filename-test 2", base-filename, !"./number",   !"number")
-  ; apply-test(!"base-filename-test 3", base-filename, !"/usr/bin/number.str", !"number.str")
+  base-filename-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "base-filename-tests", "31,2,34,92")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "32,4,34,92")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "32,4,32,81")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "32,15,32,37")
+           ; !"base-filename-test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "32,40,32,52") ; base-filename
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "32,55,32,67")
+           ; !"./number.r"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "32,70,32,80")
+           ; !"number.r"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "33,4,34,92")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "33,4,33,79")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "33,15,33,37")
+           ; !"base-filename-test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "33,40,33,52") ; base-filename
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "33,55,33,65")
+           ; !"./number"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "33,70,33,78")
+           ; !"number"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "34,4,34,92")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "34,15,34,37")
+        ; !"base-filename-test 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "34,40,34,52") ; base-filename
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "34,55,34,76")
+        ; !"/usr/bin/number.str"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "34,79,34,91")
+        ; !"number.str"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "base-filename-tests", "31,2,34,92")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "base-filename-tests", "31,2,34,92")
+      ; fail
 
   file-extension-tests =
-    apply-test(!"remove-extension 1", remove-extension, !"foo.str", !"foo")
-  ; apply-test(!"remove-extension 2", remove-extension, !"foo", !"foo")
-  ; apply-test(!"remove-extension 3", remove-extension, !"foo.rtree", !"foo")
-  ; apply-test(!"remove-extension 4", remove-extension, !"/bar/foo.str", !"/bar/foo")
-  ; apply-test(!"remove-extension 5", remove-extension, !"/bar/foo", !"/bar/foo")  
-  ; apply-test(!"remove-extension 6", remove-extension, !"/bar.foo/fred.str", !"/bar.foo/fred")  
-  ; apply-test(!"remove-extension 7", remove-extension, !"/bar.foo/fred", !"/bar.foo/fred")
-  ; apply-test(!"remove-extension 8", remove-extension, !"/bar.foo.str", !"/bar.foo")
-  ; apply-test(!"remove-extension 9", remove-extension, !"/bar.foo", !"/bar")
-  ; apply-test(!"remove-extension 10", remove-extension, !"/bar.foo.rtree", !"/bar.foo")
-  
-  ; apply-test(!"remove-extension 11", remove-extension, !"./bar/foo.str", !"./bar/foo")
-  ; apply-test(!"remove-extension 12", remove-extension, !"../bar/foo.str", !"../bar/foo")
-  ; apply-test(!"remove-extension 13", remove-extension, !"./bar/foo", !"./bar/foo")
-  ; apply-test(!"remove-extension 14", remove-extension, !"../bar/foo", !"../bar/foo")  
-  ; apply-test(!"remove-extension 15", remove-extension, !"./bar.foo/fred.str", !"./bar.foo/fred")
-  ; apply-test(!"remove-extension 16", remove-extension, !"../bar.foo/fred.str", !"../bar.foo/fred")
-  ; apply-test(!"remove-extension 17", remove-extension, !"./bar/../foo", !"./bar/../foo")
-  ; apply-test(!"remove-extension 18", remove-extension, !"../bar/../foo", !"../bar/../foo")
-  
-  ; apply-test(!"remove-extension 19", remove-extension, !"./bar/.foo.str", !"./bar/.foo")
-  ; apply-test(!"remove-extension 20", remove-extension, !"../bar/.foo.str", !"../bar/.foo")
-  ; apply-test(!"remove-extension 21", remove-extension, !"./bar/.foo", !"./bar/.foo")
-  ; apply-test(!"remove-extension 22", remove-extension, !"../bar/.foo", !"../bar/.foo")
-  ; apply-test(!"remove-extension 23", remove-extension, !"../bar/..", !"../bar/..")
-  
-  ; apply-test(!"guarantee-extension 1", guarantee-extension(|"str"), !"foo.str", !"foo.str")
-  ; apply-test(!"guarantee-extension 2", guarantee-extension(|"str"), !"foo", !"foo.str")
-  ; apply-test(!"guarantee-extension 3", guarantee-extension(|"str"), !"foo.rtree", !"foo.str")
-  ; apply-test(!"guarantee-extension 4", guarantee-extension(|"str"), !"/bar/foo.str", !"/bar/foo.str")
-  ; apply-test(!"guarantee-extension 5", guarantee-extension(|"str"), !"/bar/foo", !"/bar/foo.str")  
-  ; apply-test(!"guarantee-extension 6", guarantee-extension(|"str"), !"/bar/foo.rtree", !"/bar/foo.str")
-  ; apply-test(!"guarantee-extension 7", guarantee-extension(|"str"), !"/bar.foo.str", !"/bar.foo.str")
-  ; apply-test(!"guarantee-extension 9", guarantee-extension(|"str"), !"/bar.foo.rtree", !"/bar.foo.str")
-  
-  ; apply-test(!"guarantee-extension 10", guarantee-extension(|"str"), !"./foo.str", !"./foo.str")
-  ; apply-test(!"guarantee-extension 11", guarantee-extension(|"str"), !"../foo", !"../foo.str") 
-  ; apply-test(!"guarantee-extension 12", guarantee-extension(|"str"), !"./foo.rtree", !"./foo.str")
-  ; apply-test(!"guarantee-extension 13", guarantee-extension(|"str"), !"./bar/foo.str", !"./bar/foo.str")
-  ; apply-test(!"guarantee-extension 14", guarantee-extension(|"str"), !"./bar/foo", !"./bar/foo.str")
-  ; apply-test(!"guarantee-extension 15", guarantee-extension(|"str"), !".str", !".str.str")
-  ; apply-test(!"guarantee-extension 16", guarantee-extension(|"str"), !"..str", !"..str.str")
-  ; apply-test(!"guarantee-extension 17", guarantee-extension(|"str"), !"./.str", !"./.str.str")
-  
-  ; apply-test(!"has-extension 1", has-extension(|"str"), !"foo.str")
-  ; apply-test(!"has-extension 2", has-extension(|"str"), !"foo.fred.str")  
-  ; apply-and-fail(!"has-extension 3", has-extension(|"str"), !"foo.rtee")  
-  ; apply-and-fail(!"has-extension 4", has-extension(|"str"), !"foo")
-  ; apply-and-fail(!"has-extension 5", has-extension(|""), !"foo")
-  ; apply-and-fail(!"has-extension 6", has-extension(|"str"), !"foo.str.rtree")
-  
-  ; apply-test(!"get-extension 1", get-extension, !"foo.str", !"str")
-  ; apply-test(!"get-extension 2", get-extension, !"foo.fred.str", !"str")
-  ; apply-test(!"get-extension 3", get-extension, !"/foo/fred.str", !"str")
-  ; apply-and-fail(!"get-extension 4", get-extension, !"foo")
-  ; apply-and-fail(!"get-extension 5", get-extension, !"/foo.str/fred")
-    
-  ; apply-test(!"test-extension 1", test-extension(?"str"), !"foo.str")
-  ; apply-test(!"test-extension 2", test-extension(id), !"foo.str")
-  ; apply-and-fail(!"test-extension 3", test-extension(id), !"foo")
-  ; apply-test(!"test-extension 4", test-extension(?"str" + ?"rtree"), !"foo.str")
-  ; apply-test(!"test-extension 5", test-extension(?"str" + ?"rtree"), !"foo.rtree")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "file-extension-tests", "36,2,98,83")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "37,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "37,4,37,74")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "37,15,37,35")
+           ; !"remove-extension 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "37,38,37,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "37,56,37,65")
+           ; !"foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "37,68,37,73")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "38,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "38,4,38,70")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "38,15,38,35")
+           ; !"remove-extension 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "38,38,38,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "38,56,38,61")
+           ; !"foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "38,64,38,69")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "39,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "39,4,39,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "39,15,39,35")
+           ; !"remove-extension 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "39,38,39,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "39,56,39,67")
+           ; !"foo.rtree"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "39,70,39,75")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "40,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "40,4,40,84")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "40,15,40,35")
+           ; !"remove-extension 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "40,38,40,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "40,56,40,70")
+           ; !"/bar/foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "40,73,40,83")
+           ; !"/bar/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "41,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "41,4,41,80")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "41,15,41,35")
+           ; !"remove-extension 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "41,38,41,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "41,56,41,66")
+           ; !"/bar/foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "41,69,41,79")
+           ; !"/bar/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "42,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "42,4,42,94")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "42,15,42,35")
+           ; !"remove-extension 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "42,38,42,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "42,56,42,75")
+           ; !"/bar.foo/fred.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "42,78,42,93")
+           ; !"/bar.foo/fred"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "43,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "43,4,43,90")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "43,15,43,35")
+           ; !"remove-extension 7"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "43,38,43,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "43,56,43,71")
+           ; !"/bar.foo/fred"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "43,74,43,89")
+           ; !"/bar.foo/fred"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "44,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "44,4,44,84")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "44,15,44,35")
+           ; !"remove-extension 8"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "44,38,44,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "44,56,44,70")
+           ; !"/bar.foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "44,73,44,83")
+           ; !"/bar.foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "45,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "45,4,45,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "45,15,45,35")
+           ; !"remove-extension 9"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "45,38,45,53") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "45,56,45,66")
+           ; !"/bar.foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "45,69,45,75")
+           ; !"/bar"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "46,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "46,4,46,87")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "46,15,46,36")
+           ; !"remove-extension 10"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "46,39,46,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "46,57,46,73")
+           ; !"/bar.foo.rtree"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "46,76,46,86")
+           ; !"/bar.foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "48,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "48,4,48,87")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "48,15,48,36")
+           ; !"remove-extension 11"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "48,39,48,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "48,57,48,72")
+           ; !"./bar/foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "48,75,48,86")
+           ; !"./bar/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "49,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "49,4,49,89")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "49,15,49,36")
+           ; !"remove-extension 12"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "49,39,49,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "49,57,49,73")
+           ; !"../bar/foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "49,76,49,88")
+           ; !"../bar/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "50,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "50,4,50,83")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "50,15,50,36")
+           ; !"remove-extension 13"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "50,39,50,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "50,57,50,68")
+           ; !"./bar/foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "50,71,50,82")
+           ; !"./bar/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "51,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "51,4,51,85")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "51,15,51,36")
+           ; !"remove-extension 14"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "51,39,51,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "51,57,51,69")
+           ; !"../bar/foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "51,72,51,84")
+           ; !"../bar/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "52,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "52,4,52,97")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "52,15,52,36")
+           ; !"remove-extension 15"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "52,39,52,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "52,57,52,77")
+           ; !"./bar.foo/fred.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "52,80,52,96")
+           ; !"./bar.foo/fred"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "53,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "53,4,53,99")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "53,15,53,36")
+           ; !"remove-extension 16"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "53,39,53,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "53,57,53,78")
+           ; !"../bar.foo/fred.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "53,81,53,98")
+           ; !"../bar.foo/fred"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "54,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "54,4,54,89")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "54,15,54,36")
+           ; !"remove-extension 17"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "54,39,54,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "54,57,54,71")
+           ; !"./bar/../foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "54,74,54,88")
+           ; !"./bar/../foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "55,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "55,4,55,91")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "55,15,55,36")
+           ; !"remove-extension 18"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "55,39,55,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "55,57,55,72")
+           ; !"../bar/../foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "55,75,55,90")
+           ; !"../bar/../foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "57,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "57,4,57,89")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "57,15,57,36")
+           ; !"remove-extension 19"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "57,39,57,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "57,57,57,73")
+           ; !"./bar/.foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "57,76,57,88")
+           ; !"./bar/.foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "58,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "58,4,58,91")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "58,15,58,36")
+           ; !"remove-extension 20"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "58,39,58,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "58,57,58,74")
+           ; !"../bar/.foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "58,77,58,90")
+           ; !"../bar/.foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "59,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "59,4,59,85")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "59,15,59,36")
+           ; !"remove-extension 21"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "59,39,59,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "59,57,59,69")
+           ; !"./bar/.foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "59,72,59,84")
+           ; !"./bar/.foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "60,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "60,4,60,87")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "60,15,60,36")
+           ; !"remove-extension 22"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "60,39,60,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "60,57,60,70")
+           ; !"../bar/.foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "60,73,60,86")
+           ; !"../bar/.foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "61,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "61,4,61,83")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "61,15,61,36")
+           ; !"remove-extension 23"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "61,39,61,54") ; remove-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "61,57,61,68")
+           ; !"../bar/.."
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "61,71,61,82")
+           ; !"../bar/.."
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "63,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "63,4,63,92")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "63,15,63,38")
+           ; !"guarantee-extension 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "63,41,63,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "63,70,63,79")
+           ; !"foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "63,82,63,91")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "64,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "64,4,64,88")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "64,15,64,38")
+           ; !"guarantee-extension 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "64,41,64,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "64,70,64,75")
+           ; !"foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "64,78,64,87")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "65,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "65,4,65,94")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "65,15,65,38")
+           ; !"guarantee-extension 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "65,41,65,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "65,70,65,81")
+           ; !"foo.rtree"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "65,84,65,93")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "66,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "66,4,66,102")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "66,15,66,38")
+           ; !"guarantee-extension 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "66,41,66,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "66,70,66,84")
+           ; !"/bar/foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "66,87,66,101")
+           ; !"/bar/foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "67,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "67,4,67,98")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "67,15,67,38")
+           ; !"guarantee-extension 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "67,41,67,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "67,70,67,80")
+           ; !"/bar/foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "67,83,67,97")
+           ; !"/bar/foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "68,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "68,4,68,104")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "68,15,68,38")
+           ; !"guarantee-extension 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "68,41,68,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "68,70,68,86")
+           ; !"/bar/foo.rtree"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "68,89,68,103")
+           ; !"/bar/foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "69,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "69,4,69,102")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "69,15,69,38")
+           ; !"guarantee-extension 7"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "69,41,69,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "69,70,69,84")
+           ; !"/bar.foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "69,87,69,101")
+           ; !"/bar.foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "70,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "70,4,70,104")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "70,15,70,38")
+           ; !"guarantee-extension 9"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "70,41,70,67")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "70,70,70,86")
+           ; !"/bar.foo.rtree"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "70,89,70,103")
+           ; !"/bar.foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "72,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "72,4,72,97")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "72,15,72,39")
+           ; !"guarantee-extension 10"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "72,42,72,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "72,71,72,82")
+           ; !"./foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "72,85,72,96")
+           ; !"./foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "73,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "73,4,73,95")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "73,15,73,39")
+           ; !"guarantee-extension 11"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "73,42,73,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "73,71,73,79")
+           ; !"../foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "73,82,73,94")
+           ; !"../foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "74,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "74,4,74,99")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "74,15,74,39")
+           ; !"guarantee-extension 12"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "74,42,74,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "74,71,74,84")
+           ; !"./foo.rtree"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "74,87,74,98")
+           ; !"./foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "75,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "75,4,75,105")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "75,15,75,39")
+           ; !"guarantee-extension 13"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "75,42,75,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "75,71,75,86")
+           ; !"./bar/foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "75,89,75,104")
+           ; !"./bar/foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "76,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "76,4,76,101")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "76,15,76,39")
+           ; !"guarantee-extension 14"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "76,42,76,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "76,71,76,82")
+           ; !"./bar/foo"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "76,85,76,100")
+           ; !"./bar/foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "77,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "77,4,77,91")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "77,15,77,39")
+           ; !"guarantee-extension 15"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "77,42,77,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "77,71,77,77")
+           ; !".str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "77,80,77,90")
+           ; !".str.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "78,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "78,4,78,93")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "78,15,78,39")
+           ; !"guarantee-extension 16"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "78,42,78,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "78,71,78,78")
+           ; !"..str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "78,81,78,92")
+           ; !"..str.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "79,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "79,4,79,95")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "79,15,79,39")
+           ; !"guarantee-extension 17"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "79,42,79,68")
+           ; guarantee-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "79,71,79,79")
+           ; !"./.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "79,82,79,94")
+           ; !"./.str.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "81,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "81,4,81,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "81,15,81,32")
+           ; !"has-extension 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "81,35,81,55")
+           ; has-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "81,58,81,67")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "82,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "82,4,82,73")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "82,15,82,32")
+           ; !"has-extension 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "82,35,82,55")
+           ; has-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "82,58,82,72")
+           ; !"foo.fred.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "83,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "83,4,83,73")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "83,19,83,36")
+           ; !"has-extension 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "83,39,83,59")
+           ; has-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "83,62,83,72")
+           ; !"foo.rtee"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "84,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "84,4,84,68")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "84,19,84,36")
+           ; !"has-extension 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "84,39,84,59")
+           ; has-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "84,62,84,67")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "85,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "85,4,85,65")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "85,19,85,36")
+           ; !"has-extension 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "85,39,85,56")
+           ; has-extension(|"")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "85,59,85,64")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "86,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "86,4,86,78")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "86,19,86,36")
+           ; !"has-extension 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "86,39,86,59")
+           ; has-extension(|"str")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "86,62,86,77")
+           ; !"foo.str.rtree"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "88,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "88,4,88,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "88,15,88,32")
+           ; !"get-extension 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "88,35,88,47") ; get-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "88,50,88,59")
+           ; !"foo.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "88,62,88,67")
+           ; !"str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "89,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "89,4,89,73")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "89,15,89,32")
+           ; !"get-extension 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "89,35,89,47") ; get-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "89,50,89,64")
+           ; !"foo.fred.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "89,67,89,72")
+           ; !"str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "90,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "90,4,90,74")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "90,15,90,32")
+           ; !"get-extension 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "90,35,90,47") ; get-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "90,50,90,65")
+           ; !"/foo/fred.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "90,68,90,73")
+           ; !"str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "91,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "91,4,91,60")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "91,19,91,36")
+           ; !"get-extension 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "91,39,91,51") ; get-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "91,54,91,59")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "92,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "92,4,92,70")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "92,19,92,36")
+           ; !"get-extension 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "92,39,92,51") ; get-extension
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "92,54,92,69")
+           ; !"/foo.str/fred"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "94,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "94,4,94,70")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "94,15,94,33")
+           ; !"test-extension 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "94,36,94,57")
+           ; test-extension(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "94,51,94,56")
+               ; ?"str"
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "94,60,94,69")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "95,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "95,4,95,66")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "95,15,95,33")
+           ; !"test-extension 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "95,36,95,53")
+           ; test-extension(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "95,51,95,52") ; id
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "95,56,95,65")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "96,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "96,4,96,66")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "96,19,96,37")
+           ; !"test-extension 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "96,40,96,57")
+           ; test-extension(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "96,55,96,56") ; id
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "96,60,96,65")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,4,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,4,97,81")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,15,97,33")
+           ; !"test-extension 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,36,97,68")
+           ; test-extension(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,51,97,67")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,51,97,56")
+                  ; ?"str"
+                  + s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,60,97,67")
+                    ; ?"rtree")
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "97,71,97,80")
+           ; !"foo.str"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,4,98,83")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,15,98,33")
+        ; !"test-extension 5"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,36,98,68")
+        ; test-extension(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,51,98,67")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,51,98,56")
+               ; ?"str"
+               + s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,60,98,67")
+                 ; ?"rtree")
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "98,71,98,82")
+        ; !"foo.rtree"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "file-extension-tests", "36,2,98,83")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "file-extension-tests", "36,2,98,83")
+      ; fail
+
 
 strategies
-
   dirname-tests =
-      apply-test(!"dirname -- 1", dirname, !"/", !"/")
-    ; apply-test(!"dirname -- 2", dirname, !"bla", !".")
-    ; apply-test(!"dirname -- 3", dirname, !"bla/", !".")
-    ; apply-test(!"dirname -- 4", dirname, !"/bla", !"/")
-    ; apply-test(!"dirname -- 5", dirname, !"/bla/", !"/")
-    ; apply-test(!"dirname -- 6", dirname, !"foo/bla", !"foo")
-    ; apply-test(!"dirname -- 7", dirname, !"foo/bla/", !"foo")
-    ; apply-test(!"dirname -- 8", dirname, !"/foo/bla", !"/foo")
-    ; apply-test(!"dirname -- 9", dirname, !"/foo/bla/", !"/foo")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "dirname-tests", "102,2,111,64")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "103,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "103,6,103,53")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "103,17,103,31")
+           ; !"dirname -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "103,34,103,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "103,43,103,46")
+           ; !"/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "103,49,103,52")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "104,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "104,6,104,55")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "104,17,104,31")
+           ; !"dirname -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "104,34,104,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "104,43,104,48")
+           ; !"bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "104,51,104,54")
+           ; !"."
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "105,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "105,6,105,56")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "105,17,105,31")
+           ; !"dirname -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "105,34,105,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "105,43,105,49")
+           ; !"bla/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "105,52,105,55")
+           ; !"."
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "106,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "106,6,106,56")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "106,17,106,31")
+           ; !"dirname -- 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "106,34,106,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "106,43,106,49")
+           ; !"/bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "106,52,106,55")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "107,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "107,6,107,57")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "107,17,107,31")
+           ; !"dirname -- 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "107,34,107,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "107,43,107,50")
+           ; !"/bla/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "107,53,107,56")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "108,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "108,6,108,61")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "108,17,108,31")
+           ; !"dirname -- 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "108,34,108,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "108,43,108,52")
+           ; !"foo/bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "108,55,108,60")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "109,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "109,6,109,62")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "109,17,109,31")
+           ; !"dirname -- 7"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "109,34,109,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "109,43,109,53")
+           ; !"foo/bla/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "109,56,109,61")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "110,6,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "110,6,110,63")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "110,17,110,31")
+           ; !"dirname -- 8"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "110,34,110,40") ; dirname
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "110,43,110,53")
+           ; !"/foo/bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "110,56,110,62")
+           ; !"/foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "111,6,111,64")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "111,17,111,31")
+        ; !"dirname -- 9"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "111,34,111,40") ; dirname
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "111,43,111,54")
+        ; !"/foo/bla/"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "111,57,111,63")
+        ; !"/foo"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "dirname-tests", "102,2,111,64")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "dirname-tests", "102,2,111,64")
+      ; fail
+
 
 strategies
-
   copy-file-tests =
-    apply-and-check(!"copy-file-test 1"
-    , where(<copy-file> (<id>, "copy-file-test.tmp"))
-      ; !(<my-read-text-file>, <my-read-text-file> "copy-file-test.tmp")
-      ; where(<remove-file> "copy-file-test.tmp")
-    , !"system-io-file-test.str"
-    , ?(s, s)
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "copy-file-tests", "115,2,122,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "116,4,122,4")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "116,20,116,38")
+        ; !"copy-file-test 1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "117,6,119,48")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "117,6,117,52")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "117,12,117,51")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "117,13,117,21") ; copy-file)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "117,26,117,27") ; id>
+                                                                                                                                 , "copy-file-test.tmp"
+                                                                                                                                 )))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "118,8,119,48")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "118,8,118,71")
+           ; !( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "118,11,118,27") ; my-read-text-file>
+              , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "118,32,118,48") ; my-read-text-file> "copy-file-test.tmp"
+              ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "119,8,119,48")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "119,14,119,47")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "119,15,119,25") ; remove-file)> "copy-file-test.tmp")
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "120,6,120,31")
+        ; !"system-io-file-test.str"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "121,6,121,12")
+        ; ?(s, s)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "copy-file-tests", "115,2,122,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "copy-file-tests", "115,2,122,4")
+      ; fail
+
 
 strategies
-
   char-io-tests =
-    where(<fopen> ("system-io-file-test.str", "r") => stream)
-    ; apply-test(!"read-text-line 1"
-      , !(<read-text-line>, <read-text-line>)
-      , !stream
-      , !("module system-io-file-test", "imports libstratego-lib")
-      )
-    ; where(<fclose> stream)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "char-io-tests", "126,2,133,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "127,4,133,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "127,4,127,60")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "127,10,127,59")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "127,10,127,49")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "127,11,127,15") ; fopen)> ("system-io-file-test.str", "r")) => stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "128,6,133,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "128,6,132,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "128,17,128,35")
+           ; !"read-text-line 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "129,8,129,44")
+           ; !( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "129,11,129,24") ; read-text-line>
+              , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "129,29,129,42") ; read-text-line>
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "130,8,130,14") ; !stream
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "131,8,131,65")
+           ; !("module system-io-file-test", "imports libstratego-lib")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "133,6,133,27")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "133,12,133,26")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "133,13,133,18") ; fclose)> stream)
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "char-io-tests", "126,2,133,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "char-io-tests", "126,2,133,27")
+      ; fail
+
 
 strategies
+  fprint-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "fprint-tests", "137,2,162,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "137,17,162,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "137,17,137,18") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "138,6,162,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "138,6,142,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "138,17,138,59")
+           ; !"Print something to stderr using fprintnl"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "139,8,139,39")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "139,8,139,34")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "139,9,139,16") ; fprintnl)> ( stderr()
+                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "139,31,139,32") ; id>
+                                                                                                                          ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "139,37,139,39")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "140,8,140,15")
+           ; !["Hey"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "141,8,141,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "143,6,162,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "143,6,147,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "143,17,143,59")
+           ; !"Print something to stderr using fprintnl"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "144,8,144,49")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "144,8,144,44")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "144,9,144,16") ; fprintnl)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "144,21,144,33") ; stderr-stream> ()
+                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "144,41,144,42") ; id>
+                                                                                                                          ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "144,47,144,49")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "145,8,145,30")
+           ; !["Hey", "He", "Hallo"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "146,8,146,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "148,6,162,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "148,6,152,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "148,17,148,59")
+           ; !"Print something to stderr using fprintnl"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "149,8,149,39")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "149,8,149,34")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "149,9,149,16") ; fprintnl)> ( stderr()
+                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "149,31,149,32") ; id>
+                                                                                                                          ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "149,37,149,39")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "150,8,150,39")
+           ; ![ "Hey"
+              , "He"
+              , "Hallo"
+              , 1
+              , 2
+              , 3
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "151,8,151,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "153,6,162,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "153,6,157,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "153,17,153,24")
+           ; !"Debug"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "154,8,154,12") ; debug
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "155,8,155,39")
+           ; ![ "Hey"
+              , "He"
+              , "Hallo"
+              , 1
+              , 2
+              , 3
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "156,8,156,39")
+           ; ![ "Hey"
+              , "He"
+              , "Hallo"
+              , 1
+              , 2
+              , 3
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "158,6,162,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "158,17,158,38")
+        ; !"Debug with argument"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "159,8,159,20")
+        ; debug(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "159,14,159,19")
+            ; !"Hey"
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "160,8,160,32")
+        ; ![ "He"
+           , "Hallo"
+           , 1
+           , 2
+           , 3
+           ]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "161,8,161,32")
+        ; ![ "He"
+           , "Hallo"
+           , 1
+           , 2
+           , 3
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "fprint-tests", "137,2,162,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "fprint-tests", "137,2,162,6")
+      ; fail
 
-  fprint-tests = id
-    ; apply-test(!"Print something to stderr using fprintnl"
-      , <fprintnl> (stderr(), <id>); !()
-      , !["Hey"]
-      , !()
-      )
-    ; apply-test(!"Print something to stderr using fprintnl"
-      , <fprintnl> (<stderr-stream> (), <id>); !()
-      , !["Hey", "He", "Hallo"]
-      , !()
-      )
-    ; apply-test(!"Print something to stderr using fprintnl"
-      , <fprintnl> (stderr(), <id>); !()
-      , !["Hey", "He", "Hallo", 1, 2, 3]
-      , !()
-      )
-    ; apply-test(!"Debug"
-      , debug
-      , !["Hey", "He", "Hallo", 1, 2, 3]
-      , !["Hey", "He", "Hallo", 1, 2, 3]
-      )
-    ; apply-test(!"Debug with argument"
-      , debug(!"Hey")
-      , !["He", "Hallo", 1, 2, 3]
-      , !["He", "Hallo", 1, 2, 3]
-      )
-      
   test-write-read-term =
-      ?t
-    ; <WriteToTextFile> ("test.aterm", t)
-    ; <ReadFromFile> "test.aterm" => t
-    ; <remove-file> "test.aterm"
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "test-write-read-term", "164,2,169,7")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "165,6,169,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "165,6,165,7") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "166,6,169,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "166,6,166,40")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "166,7,166,21") ; WriteToTextFile)> ("test.aterm", t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "167,6,169,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "167,6,167,37")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "167,6,167,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "167,7,167,18") ; ReadFromFile)> "test.aterm") => t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "168,6,169,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "168,6,168,31")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "168,7,168,17") ; remove-file)> "test.aterm")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "169,6,169,7")
     ; !t
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "test-write-read-term", "164,2,169,7")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "test-write-read-term", "164,2,169,7")
+      ; fail
 
   test-write-read-term-string =
-      ?t
-    ; <WriteToTextFile> ("test.aterm", t)
-    ; <ReadFromFile> "test.aterm" => t
-    ; <remove-file> "test.aterm"
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "test-write-read-term-string", "171,2,176,7")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "172,6,176,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "172,6,172,7") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "173,6,176,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "173,6,173,40")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "173,7,173,21") ; WriteToTextFile)> ("test.aterm", t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "174,6,176,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "174,6,174,37")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "174,6,174,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "174,7,174,18") ; ReadFromFile)> "test.aterm") => t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "175,6,176,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "175,6,175,31")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "175,7,175,17") ; remove-file)> "test.aterm")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "176,6,176,7")
     ; !t
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "test-write-read-term-string", "171,2,176,7")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "test-write-read-term-string", "171,2,176,7")
+      ; fail
+
 
 strategies
-
   aterm-io-tests =
-      aterm-io-tests(write-in-baf-to-stream)
-    ; aterm-io-tests(write-in-taf-to-stream)
-    ; aterm-io-tests(write-in-text-to-stream)
-    ; apply-test(!"ATerm IO -- 1"
-      , test-write-read-term
-      , !"Bla Bla Bla"
-      , !"Bla Bla Bla"
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "aterm-io-tests", "180,2,233,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "181,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "181,6,181,43")
+       ; aterm-io-tests(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "181,21,181,42") ; write-in-baf-to-stream
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "182,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "182,6,182,43")
+       ; aterm-io-tests(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "182,21,182,42") ; write-in-taf-to-stream
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "183,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "183,6,183,44")
+       ; aterm-io-tests(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "183,21,183,43") ; write-in-text-to-stream
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "184,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "184,6,188,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "184,17,184,32")
+           ; !"ATerm IO -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "185,8,185,27") ; test-write-read-term
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "186,8,186,21")
+           ; !"Bla Bla Bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "187,8,187,21")
+           ; !"Bla Bla Bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "189,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "189,6,193,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "189,17,189,32")
+           ; !"ATerm IO -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "190,8,190,27") ; test-write-read-term
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "191,8,191,10")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "192,8,192,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "194,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "194,6,198,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "194,17,194,32")
+           ; !"ATerm IO -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "195,8,195,27") ; test-write-read-term
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "196,8,196,9")
+           ; !1
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "197,8,197,9")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "199,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "199,6,203,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "199,17,199,32")
+           ; !"ATerm IO -- 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "200,8,200,27") ; test-write-read-term
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "201,8,201,14")
+           ; !None()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "202,8,202,14")
+           ; !None()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "204,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "204,6,208,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "204,17,204,41")
+           ; !"ATerm from String -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "205,8,205,23") ; read-from-string
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "206,8,206,17")
+           ; !"[1,2,3]"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "207,8,207,15")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "209,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "209,6,213,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "209,17,209,39")
+           ; !"ATerm to String -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "210,8,210,22") ; write-to-string
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "211,8,211,15")
+           ; ![1, 2, 3]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "212,8,212,17")
+           ; !"[1,2,3]"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "214,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "214,6,218,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "214,17,214,39")
+           ; !"ATerm string IO -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "215,8,215,34") ; test-write-read-term-string
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "216,8,216,21")
+           ; !"Bla Bla Bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "217,8,217,21")
+           ; !"Bla Bla Bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "219,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "219,6,223,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "219,17,219,39")
+           ; !"ATerm string IO -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "220,8,220,34") ; test-write-read-term-string
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "221,8,221,10")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "222,8,222,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "224,6,233,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "224,6,228,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "224,17,224,39")
+           ; !"ATerm string IO -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "225,8,225,34") ; test-write-read-term-string
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "226,8,226,9")
+           ; !1
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "227,8,227,9")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "229,6,233,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "229,17,229,39")
+        ; !"ATerm string IO -- 4"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "230,8,230,34") ; test-write-read-term-string
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "231,8,231,14")
+        ; !None()
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "232,8,232,14")
+        ; !None()
       )
-    ; apply-test(!"ATerm IO -- 2"
-      , test-write-read-term
-      , !()
-      , !()
-      )
-    ; apply-test(!"ATerm IO -- 3"
-      , test-write-read-term
-      , !1
-      , !1
-      )
-    ; apply-test(!"ATerm IO -- 4"
-      , test-write-read-term
-      , !None()
-      , !None()
-      )
-    ; apply-test(!"ATerm from String -- 1"
-      , read-from-string
-      , !"[1,2,3]"
-      , ![1,2,3]
-      )
-    ; apply-test(!"ATerm to String -- 1"
-      , write-to-string
-      , ![1,2,3]
-      , !"[1,2,3]"
-      )
-   ;  apply-test(!"ATerm string IO -- 1"
-      , test-write-read-term-string
-      , !"Bla Bla Bla"
-      , !"Bla Bla Bla"
-      )
-    ; apply-test(!"ATerm string IO -- 2"
-      , test-write-read-term-string
-      , !()
-      , !()
-      )
-    ; apply-test(!"ATerm string IO -- 3"
-      , test-write-read-term-string
-      , !1
-      , !1
-      )
-    ; apply-test(!"ATerm string IO -- 4"
-      , test-write-read-term-string
-      , !None()
-      , !None()
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "aterm-io-tests", "180,2,233,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "aterm-io-tests", "180,2,233,6")
+      ; fail
 
   aterm-io-tests(writer) =
-      apply-test(!"ATerm IO -- 1", write-read-term(writer), !"Bla Bla Bla", !"Bla Bla Bla")
-    ; apply-test(!"ATerm IO -- 2", write-read-term(writer), !(), !())
-    ; apply-test(!"ATerm IO -- 3", write-read-term(writer), !1, !1)
-    ; apply-test(!"ATerm IO -- 4", write-read-term(writer), !None(), !None())
-    ; apply-test(!"ATerm IO -- 5", write-read-term(writer), !-1, !-1) // Spoofax/312
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "aterm-io-tests", "235,2,240,68")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,6,240,68")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,6,236,90")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,17,236,32")
+           ; !"ATerm IO -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,35,236,57")
+           ; write-read-term(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,51,236,56") ; writer
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,60,236,73")
+           ; !"Bla Bla Bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "236,76,236,89")
+           ; !"Bla Bla Bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,6,240,68")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,6,237,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,17,237,32")
+           ; !"ATerm IO -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,35,237,57")
+           ; write-read-term(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,51,237,56") ; writer
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,60,237,62")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "237,65,237,67")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,6,240,68")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,6,238,66")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,17,238,32")
+           ; !"ATerm IO -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,35,238,57")
+           ; write-read-term(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,51,238,56") ; writer
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,60,238,61")
+           ; !1
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "238,64,238,65")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,6,240,68")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,6,239,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,17,239,32")
+           ; !"ATerm IO -- 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,35,239,57")
+           ; write-read-term(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,51,239,56") ; writer
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,60,239,66")
+           ; !None()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "239,69,239,75")
+           ; !None()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "240,6,240,68")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "240,17,240,32")
+        ; !"ATerm IO -- 5"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "240,35,240,57")
+        ; write-read-term(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "240,51,240,56") ; writer
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "240,60,240,62")
+        ; !-1
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "240,65,240,67")
+        ; !-1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "aterm-io-tests", "235,2,240,68")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "aterm-io-tests", "235,2,240,68")
+      ; fail
 
   write-read-term(writer) =
-    ?t
-    ; <fopen> ("test.aterm", "w")
-    ; <writer> (<id>, t)
-    ; fclose
-    ; <fopen> ("test.aterm", "r")
-    ; where(read-from-stream => t)
-    ; fclose
-    ; <remove-file> "test.aterm"
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-read-term", "242,2,251,7")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "243,4,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "243,4,243,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "244,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "244,6,244,32")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "244,7,244,11") ; fopen)> ("test.aterm", "w"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "245,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "245,6,245,23")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "245,7,245,12") ; writer)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "245,17,245,18") ; id>
+                                                                                                                 , t
+                                                                                                                 ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "246,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "246,6,246,11") ; fclose)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "247,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "247,6,247,32")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "247,7,247,11") ; fopen)> ("test.aterm", "r"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "248,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "248,6,248,33")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "248,12,248,32")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "248,12,248,27") ; read-from-stream) => t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "249,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "249,6,249,11") ; fclose)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "250,6,251,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "250,6,250,31")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "250,7,250,17") ; remove-file)> "test.aterm")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "251,6,251,7")
     ; !t
-
-strategies
-
-  file-stream-tests = id
-
-    ; apply-and-fail(!"fputc applied to a term that is not a stream"
-      , <fputc> ('a', <id>)
-      , !()
-      )
-
-    ; apply-and-fail(!"fputc applied to a term that is not a stream"
-      , <fputc> ('a', <id>)
-      , !Stream("foo")
-      )
-
-    ; apply-and-fail(!"fputs applied to a term that is not a stream"
-      , <fputs> ("a", <id>)
-      , !()
-      )
-
-    ; apply-and-fail(!"fputs applied to a term that is not a stream"
-      , <fputc> ("a", <id>)
-      , !Stream("foo")
-      )
-
-    ; apply-test(!"Multiple open file streams"
-      ,   <fopen> ("test1.aterm", "w") => stream1
-        ; <fopen> ("test2.aterm", "w") => stream2
-        ; <write-in-text-to-stream> (stream1, "test1")
-        ; <write-in-text-to-stream> (stream2, "test2")
-        ; <fclose> stream1
-        ; <fclose> stream2
-        ; <ReadFromFile> "test1.aterm" => "test1"
-        ; <ReadFromFile> "test2.aterm" => "test2"
-        ; <remove-file> "test1.aterm"
-        ; <remove-file> "test2.aterm"
-      , !()
-      )
-
-strategies
-
-  char-output-tests = id
-
-    ; { stream :
-        where(stdout-stream => stream)
-      ; apply-test(!"stdout char output test -- 1",
-          <write-to-stream> (<id>, "This is stdout (1)")
-        ; <fputs> ("This is stdout (2)\n", <id>)
-//        ; <puts> "This is stdout (3)"
-        , !stream
-        , !stream
-        )
-      }
-
-    ; apply-test(!"write a text file with fputc",
-        <write-text-file-c> ("text-file.tmp", <id>)
-      , !"This is a test file\nIt can be removed."
-      , !()
-      )
-
-    ; apply-test(!"read a text file with fgetc",
-        my-read-text-file
-      , !"text-file.tmp"
-      , !"This is a test file\nIt can be removed."
-      )
-
-    ; apply-test(!"write a text file with fputs",
-        <write-text-file> ("text-file.tmp", <id>)
-      , !"This is a test file\nIt can be removed."
-      , !()
-      )
-
-    ; apply-test(!"read a text file with fgetc",
-        read-text-file-2
-      , !"text-file.tmp"
-      , !"This is a test file\nIt can be removed."
-      )
-
-    ; where(<remove-file> "text-file.tmp")
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-read-term", "242,2,251,7")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-read-term", "242,2,251,7")
+      ; fail
 
 
 strategies
+  file-stream-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "file-stream-tests", "255,2,289,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "255,22,289,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "255,22,255,23") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "257,6,289,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "257,6,260,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "257,21,257,67")
+           ; !"fputc applied to a term that is not a stream"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "258,8,258,26")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "258,9,258,13") ; fputc)> ( 'a'
+                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "258,23,258,24") ; id>
+                                                                                                                    )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "259,8,259,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "262,6,289,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "262,6,265,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "262,21,262,67")
+           ; !"fputc applied to a term that is not a stream"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "263,8,263,26")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "263,9,263,13") ; fputc)> ( 'a'
+                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "263,23,263,24") ; id>
+                                                                                                                    )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "264,8,264,21")
+           ; !Stream("foo")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "267,6,289,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "267,6,270,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "267,21,267,67")
+           ; !"fputs applied to a term that is not a stream"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "268,8,268,26")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "268,9,268,13") ; fputs)> ( "a"
+                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "268,23,268,24") ; id>
+                                                                                                                    )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "269,8,269,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "272,6,289,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "272,6,275,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "272,21,272,67")
+           ; !"fputs applied to a term that is not a stream"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "273,8,273,26")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "273,9,273,13") ; fputc)> ( "a"
+                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "273,23,273,24") ; id>
+                                                                                                                    )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "274,8,274,21")
+           ; !Stream("foo")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "277,6,289,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "277,17,277,45")
+        ; !"Multiple open file streams"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "278,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "278,10,278,48")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "278,10,278,37")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "278,11,278,15") ; fopen)> ("test1.aterm", "w")) => stream1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "279,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "279,10,279,48")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "279,10,279,37")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "279,11,279,15") ; fopen)> ("test2.aterm", "w")) => stream2)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "280,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "280,10,280,53")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "280,11,280,33") ; write-in-text-to-stream)> (stream1, "test1"))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "281,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "281,10,281,53")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "281,11,281,33") ; write-in-text-to-stream)> (stream2, "test2"))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "282,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "282,10,282,25")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "282,11,282,16") ; fclose)> stream1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "283,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "283,10,283,25")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "283,11,283,16") ; fclose)> stream2)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "284,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "284,10,284,48")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "284,10,284,37")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "284,11,284,22") ; ReadFromFile)> "test1.aterm") => "test1")
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "285,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "285,10,285,48")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "285,10,285,37")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "285,11,285,22") ; ReadFromFile)> "test2.aterm") => "test2")
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "286,10,287,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "286,10,286,36")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "286,11,286,21") ; remove-file)> "test1.aterm")
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "287,10,287,36")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "287,11,287,21") ; remove-file)> "test2.aterm"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "288,8,288,10")
+        ; !()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "file-stream-tests", "255,2,289,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "file-stream-tests", "255,2,289,6")
+      ; fail
 
+
+strategies
+  char-output-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "char-output-tests", "293,2,330,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "293,22,330,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "293,22,293,23") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "295,6,330,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "295,6,304,6")
+       ; {stream:
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "296,8,303,8")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "296,8,296,37")
+              ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "296,14,296,36")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "296,14,296,26") ; stdout-stream) => stream))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "297,8,303,8")
+           ; apply-test(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "297,19,297,49")
+               ; !"stdout char output test -- 1"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "298,10,299,47")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "298,10,298,55")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "298,11,298,25") ; write-to-stream)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "298,30,298,31") ; id>
+                                                                                                                                      , "This is stdout (1)"
+                                                                                                                                      ))
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "299,10,299,47")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "299,11,299,15") ; fputs)> ( "This is stdout (2)\n"
+                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "299,44,299,45") ; id>
+                                                                                                                         )
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "301,10,301,16") ; !stream
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "302,10,302,16") ; !stream
+             )
+         })
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "306,6,330,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "306,6,310,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "306,17,306,47")
+           ; !"write a text file with fputc"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "307,8,307,50")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "307,9,307,25") ; write-text-file-c)> ( "text-file.tmp"
+                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "307,47,307,48") ; id>
+                                                                                                                                )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "308,8,308,49")
+           ; !"This is a test file\nIt can be removed."
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "309,8,309,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "312,6,330,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "312,6,316,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "312,17,312,46")
+           ; !"read a text file with fgetc"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "313,8,313,24") ; my-read-text-file
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "314,8,314,23")
+           ; !"text-file.tmp"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "315,8,315,49")
+           ; !"This is a test file\nIt can be removed."
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "318,6,330,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "318,6,322,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "318,17,318,47")
+           ; !"write a text file with fputs"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "319,8,319,48")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "319,9,319,23") ; write-text-file)> ( "text-file.tmp"
+                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "319,45,319,46") ; id>
+                                                                                                                              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "320,8,320,49")
+           ; !"This is a test file\nIt can be removed."
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "321,8,321,10")
+           ; !()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "324,6,330,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "324,6,328,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "324,17,324,46")
+           ; !"read a text file with fgetc"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "325,8,325,23") ; read-text-file-2
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "326,8,326,23")
+           ; !"text-file.tmp"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "327,8,327,49")
+           ; !"This is a test file\nIt can be removed."
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "330,6,330,41")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "330,12,330,40")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "330,13,330,23") ; remove-file)> "text-file.tmp")
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "char-output-tests", "293,2,330,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "char-output-tests", "293,2,330,41")
+      ; fail
+
+
+strategies
   my-read-text-file =
-    ?file
-    ; <fopen> (file,"r") => stream
-    ; read-text-from-stream
-    ; where(<fclose> stream)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "my-read-text-file", "335,2,339,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "336,4,339,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "336,4,336,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "337,6,339,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "337,6,337,33")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "337,6,337,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "337,7,337,11") ; fopen)> (file, "r")) => stream)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "338,6,339,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "338,6,338,26") ; read-text-from-stream)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "339,6,339,27")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "339,12,339,26")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "339,13,339,18") ; fclose)> stream)
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "my-read-text-file", "335,2,339,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "my-read-text-file", "335,2,339,27")
+      ; fail
 
   read-text-file-2 =
-    ?file
-    ; <fopen> (file,"r") => stream
-    ; rec x(![<fgetc> stream | <x> ()] <+ ![])
-    ; where(<fclose> stream)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "read-text-file-2", "341,2,346,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "342,4,346,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "342,4,342,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "343,6,346,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "343,6,343,33")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "343,6,343,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "343,7,343,11") ; fopen)> (file, "r")) => stream)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,6,346,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,6,344,45")
+       ; rec x (
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,12,344,44")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,12,344,37")
+              ; ![<s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,15,344,19") ; fgetc> stream|<s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,32,344,32") ; x> ()]
+              <+ s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "344,42,344,44")
+                 ; ![])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "345,6,346,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "345,6,345,27")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "345,12,345,26")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "345,13,345,18") ; fclose)> stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "346,6,346,19")
     ; implode-string
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "read-text-file-2", "341,2,346,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "read-text-file-2", "341,2,346,19")
+      ; fail
 
   write-text-file =
-    ?(file, string)
-    ; <fopen> (file, "w")
-    ; <fputs> (string, <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-text-file", "348,2,352,11")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "349,4,352,11")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "349,4,349,18")
+       ; ?(file, string))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "350,6,352,11")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "350,6,350,24")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "350,7,350,11") ; fopen)> (file, "w"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "351,6,352,11")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "351,6,351,27")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "351,7,351,11") ; fputs)> ( string
+                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "351,24,351,25") ; id>
+                                                                                                                ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "352,6,352,11")
     ; fclose
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-text-file", "348,2,352,11")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-text-file", "348,2,352,11")
+      ; fail
 
   write-text-file-c =
-    ?(file, string)
-    ; <fopen> (file, "w") => stream
-    ; <explode-string> string
-    ; map(<fputc> (<id>, stream))
-    ; where(<fclose> stream)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-text-file-c", "354,2,360,8")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "355,4,360,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "355,4,355,18")
+       ; ?(file, string))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "356,6,360,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "356,6,356,34")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "356,6,356,24")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "356,7,356,11") ; fopen)> (file, "w")) => stream)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "357,6,360,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "357,6,357,28")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "357,7,357,20") ; explode-string)> string)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "358,6,360,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "358,6,358,32")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "358,10,358,31")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "358,11,358,15") ; fputc)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "358,20,358,21") ; id>
+                                                                                                                     , stream
+                                                                                                                     )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "359,6,360,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "359,6,359,27")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "359,12,359,26")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "359,13,359,18") ; fclose)> stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "360,6,360,8")
     ; !()
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-text-file-c", "354,2,360,8")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-io-file-test.str", "write-text-file-c", "354,2,360,8")
+      ; fail

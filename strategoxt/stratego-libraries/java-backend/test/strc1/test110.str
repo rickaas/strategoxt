@@ -1,10 +1,22 @@
-/**
- * Test for STR-626
- */
 module test110
-imports libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
   main-test110 =
-    x := None()
-  ; not(!Some(x#([])))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "main-test110", "8,2,10,21")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "9,4,10,21")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "9,4,9,14")
+       ; x := None())
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "10,4,10,21")
+    ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "10,8,10,20")
+          ; !Some(x#([])))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "main-test110", "8,2,10,21")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test110.str", "main-test110", "8,2,10,21")
+      ; fail

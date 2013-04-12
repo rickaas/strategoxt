@@ -1,7 +1,18 @@
 module test07
-imports libstrategolib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstrategolib
+
 
 strategies
-
   main =
-    <add> (1, 2)
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test07.str", "main", "6,2,7,15")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test07.str", "7,4,7,15")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test07.str", "7,5,7,7") ; add)> (1, 2)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test07.str", "main", "6,2,7,15")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test07.str", "main", "6,2,7,15")
+      ; fail

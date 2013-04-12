@@ -1,158 +1,750 @@
 module format-check-tests
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-rtg
 
-strategies 
 
-  main-format-check-tests = 
-    option-wrap(general-options,
-      test-suite(!"format-check",
-        format-check-tests
-        ; rules(UseDeprecatedNormalizer: _ -> ())
-        ; format-check-tests
+strategies
+  main-format-check-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "main-format-check-tests", "8,2,15,4")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "9,4,15,4")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "9,16,9,30") ; general-options
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "10,6,14,6")
+        ; test-suite(
+            s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "10,17,10,31")
+            ; !"format-check"
+          , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "11,8,13,27")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "11,8,11,25") ; format-check-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "12,10,13,27")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "12,10,12,48")
+               ; rules ( UseDeprecatedNormalizer :
+                           _ -> () ))
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "13,10,13,27")
+            ; format-check-tests
+          )
       )
-    )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "main-format-check-tests", "8,2,15,4")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "main-format-check-tests", "8,2,15,4")
+      ; fail
 
   format-check-tests =
-      int-list-tests
-    ; expression-tests(simple-inj)
-    ; expression-tests(quoted-exp)
-    ; string-star-tests
-    ; string-plus-tests
-    ; string-even-tests
-    ; string-opt-tests
-    ; tuple-stuff-tests
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "format-check-tests", "17,2,26,19")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "18,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "18,6,18,19") ; int-list-tests)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "19,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "19,6,19,33")
+       ; expression-tests(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "19,23,19,32") ; simple-inj
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "20,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "20,6,20,33")
+       ; expression-tests(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "20,23,20,32") ; quoted-exp
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "21,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "21,6,21,22") ; string-star-tests)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "22,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "22,6,22,22") ; string-plus-tests)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "23,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "23,6,23,22") ; string-even-tests)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "24,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "24,6,24,21") ; string-opt-tests)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "25,6,26,19")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "25,6,25,22") ; tuple-stuff-tests)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "26,6,26,19")
     ; argument-tests
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "format-check-tests", "17,2,26,19")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "format-check-tests", "17,2,26,19")
+      ; fail
 
-  int-list-tests = 
-      apply-test(!"test: Simple int list", fc-int-list, ![1, 2, 3])
-    ; apply-test(!"test: Empty list",      fc-int-list, ![])
-    ; apply-test(!"test: Conc list 1",       fc-int-list, !"Conc"#([[], []]))
-    ; apply-test(!"test: Conc list 2",       fc-int-list, !"Conc"#([[1], [2]]))
-    ; apply-and-fail(!"test: Not an int-list a", fc-int-list, !["foo"])
-    ; apply-and-fail(!"test: Not an int-list b", fc-int-list, ![1, 2, "foo"])
-    ; apply-and-fail(!"test: Not an int-list c", fc-int-list, !["foo", 3, 4])
-    ; apply-and-fail(!"test: Not an int-list d", fc-int-list, !1)
-    ; apply-and-fail(!"test: Not an int-list e", fc-int-list, !"foo")
-    ; apply-and-fail(!"test: Not an int-list f", fc-int-list, !"Conc"#(["foo", []]))
-    ; apply-and-fail(!"test: Not an int-list g", fc-int-list, !"Conc"#([[], "foo"]))
+  int-list-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "int-list-tests", "28,2,39,83")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "29,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "29,6,29,66")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "29,17,29,40")
+           ; !"test: Simple int list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "29,43,29,53") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "29,56,29,65")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "30,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "30,6,30,59")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "30,17,30,35")
+           ; !"test: Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "30,43,30,53") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "30,56,30,58")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "31,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "31,6,31,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "31,17,31,36")
+           ; !"test: Conc list 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "31,45,31,55") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "31,58,31,75")
+           ; !"Conc"#([[], []])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "32,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "32,6,32,78")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "32,17,32,36")
+           ; !"test: Conc list 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "32,45,32,55") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "32,58,32,77")
+           ; !"Conc"#([[1], [2]])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "33,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "33,6,33,70")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "33,21,33,46")
+           ; !"test: Not an int-list a"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "33,49,33,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "33,62,33,69")
+           ; !["foo"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "34,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "34,6,34,76")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "34,21,34,46")
+           ; !"test: Not an int-list b"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "34,49,34,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "34,62,34,75")
+           ; ![1, 2, "foo"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "35,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "35,6,35,76")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "35,21,35,46")
+           ; !"test: Not an int-list c"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "35,49,35,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "35,62,35,75")
+           ; !["foo", 3, 4]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "36,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "36,6,36,64")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "36,21,36,46")
+           ; !"test: Not an int-list d"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "36,49,36,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "36,62,36,63")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "37,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "37,6,37,68")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "37,21,37,46")
+           ; !"test: Not an int-list e"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "37,49,37,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "37,62,37,67")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "38,6,39,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "38,6,38,83")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "38,21,38,46")
+           ; !"test: Not an int-list f"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "38,49,38,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "38,62,38,82")
+           ; !"Conc"#(["foo", []])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "39,6,39,83")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "39,21,39,46")
+        ; !"test: Not an int-list g"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "39,49,39,59") ; fc-int-list
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "39,62,39,82")
+        ; !"Conc"#([[], "foo"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "int-list-tests", "28,2,39,83")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "int-list-tests", "28,2,39,83")
+      ; fail
 
   argument-tests =
-          apply-test(!"test: Specify a start symbol a", simple-inj(|"Id"), !"Bla")
-    ; apply-and-fail(!"test: Specify a start symbol b", simple-inj(|"Id"), !1)
-    ;     apply-test(!"test: Specify a start symbol c", simple-inj(|"IntConst"), !1)
-    ;     apply-test(!"test: Specify a start symbol d", simple-inj(|"Exp"), !Plus(IntConst(2), IntConst(4)))
-    ; apply-and-fail(!"test: Specify a start symbol e", tuple-stuff(|"Int2"), !1)
-    ;     apply-test(!"test: Specify a start symbol f", tuple-stuff(|"Int2"), !(1, 2))
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "argument-tests", "41,2,47,85")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "42,10,47,85")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "42,10,42,81")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "42,21,42,53")
+           ; !"test: Specify a start symbol a"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "42,56,42,72")
+           ; simple-inj(|"Id")
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "42,75,42,80")
+           ; !"Bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "43,6,47,85")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "43,6,43,77")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "43,21,43,53")
+           ; !"test: Specify a start symbol b"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "43,56,43,72")
+           ; simple-inj(|"Id")
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "43,75,43,76")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "44,10,47,85")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "44,10,44,83")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "44,21,44,53")
+           ; !"test: Specify a start symbol c"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "44,56,44,78")
+           ; simple-inj(|"IntConst")
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "44,81,44,82")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "45,10,47,85")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "45,10,45,107")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "45,21,45,53")
+           ; !"test: Specify a start symbol d"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "45,56,45,73")
+           ; simple-inj(|"Exp")
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "45,76,45,106")
+           ; !Plus(
+                IntConst(2)
+              , IntConst(4)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "46,6,47,85")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "46,6,46,80")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "46,21,46,53")
+           ; !"test: Specify a start symbol e"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "46,56,46,75")
+           ; tuple-stuff(|"Int2")
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "46,78,46,79")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "47,10,47,85")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "47,21,47,53")
+        ; !"test: Specify a start symbol f"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "47,56,47,75")
+        ; tuple-stuff(|"Int2")
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "47,78,47,84")
+        ; !(1, 2)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "argument-tests", "41,2,47,85")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "argument-tests", "41,2,47,85")
+      ; fail
 
-  expression-tests(s) = 
-      apply-test(!"test: Simple injection 1", s, !"Bla")
-    ; apply-test(!"test: Simple injection 2", s, !3)
-    ; apply-test(!"test: Simple production ", s, !IntConst(3))
-    ; apply-test(!"test: Simple plus expression 1", s, !Plus(IntConst(2), IntConst(4)))
-    ; apply-test(!"test: Simple plus expression 2", s, !Plus(IntConst(2), Var("a")))
-
-    ; apply-and-fail(!"test: Incorrect IntConst", s, !IntConst("2"))
-    ; apply-and-fail(!"test: Incorrect Var", s, !Var(2))
-    ; apply-and-fail(!"test: Incorrect plus expression 1", s, !Plus(2, Var("a")))
-    ; apply-and-fail(!"test: Incorrect plus expression 2", s, !Plus(IntConst("2"), Var("a")))
+  expression-tests(s) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "expression-tests", "49,2,59,92")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "50,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "50,6,50,55")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "50,17,50,43")
+           ; !"test: Simple injection 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "50,46,50,46") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "50,49,50,54")
+           ; !"Bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "51,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "51,6,51,51")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "51,17,51,43")
+           ; !"test: Simple injection 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "51,46,51,46") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "51,49,51,50")
+           ; !3
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "52,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "52,6,52,61")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "52,17,52,43")
+           ; !"test: Simple production "
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "52,46,52,46") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "52,49,52,60")
+           ; !IntConst(3)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "53,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "53,6,53,86")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "53,17,53,49")
+           ; !"test: Simple plus expression 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "53,52,53,52") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "53,55,53,85")
+           ; !Plus(
+                IntConst(2)
+              , IntConst(4)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "54,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "54,6,54,83")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "54,17,54,49")
+           ; !"test: Simple plus expression 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "54,52,54,52") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "54,55,54,82")
+           ; !Plus(
+                IntConst(2)
+              , Var("a")
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "56,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "56,6,56,67")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "56,21,56,47")
+           ; !"test: Incorrect IntConst"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "56,50,56,50") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "56,53,56,66")
+           ; !IntConst("2")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "57,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "57,6,57,55")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "57,21,57,42")
+           ; !"test: Incorrect Var"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "57,45,57,45") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "57,48,57,54")
+           ; !Var(2)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "58,6,59,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "58,6,58,80")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "58,21,58,56")
+           ; !"test: Incorrect plus expression 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "58,59,58,59") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "58,62,58,79")
+           ; !Plus(2, Var("a"))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "59,6,59,92")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "59,21,59,56")
+        ; !"test: Incorrect plus expression 2"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "59,59,59,59") ; s
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "59,62,59,91")
+        ; !Plus(
+             IntConst("2")
+           , Var("a")
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "expression-tests", "49,2,59,92")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "expression-tests", "49,2,59,92")
+      ; fail
 
   tuple-stuff-tests =
-      apply-test(!"test: Tuple1, not head or last", tuple-stuff, !Tuple1(1, (2, 3), 4))
-    ; apply-test(!"test: Tuple2, head", tuple-stuff, !Tuple2((1, 2), 3))
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff-tests", "61,2,73,74")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "62,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "62,6,62,86")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "62,17,62,49")
+           ; !"test: Tuple1, not head or last"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "62,52,62,62") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "62,65,62,85")
+           ; !Tuple1(
+                1
+              , (2, 3)
+              , 4
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "63,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "63,6,63,71")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "63,17,63,37")
+           ; !"test: Tuple2, head"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "63,40,63,50") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "63,53,63,70")
+           ; !Tuple2((1, 2), 3)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "65,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "65,6,65,72")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "65,21,65,40")
+           ; !"Incorrect Tuple1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "65,43,65,53") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "65,56,65,71")
+           ; !Tuple1(1, 2, 4)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "66,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "66,6,66,74")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "66,21,66,39")
+           ; !"Incorrect Tuple1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "66,42,66,52") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "66,55,66,73")
+           ; !Tuple1(1, 2, 3, 4)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "67,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "67,6,67,73")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "67,21,67,39")
+           ; !"Incorrect Tuple2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "67,42,67,52") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "67,55,67,72")
+           ; !Tuple2(1, (2, 3))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "69,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "69,6,69,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "69,17,69,31")
+           ; !"Tuple3, last"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "69,34,69,44") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "69,47,69,67")
+           ; !Tuple3(
+                1
+              , 2
+              , (3, 4)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "70,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "70,6,70,71")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "70,17,70,31")
+           ; !"Tuple3, last"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "70,34,70,44") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "70,47,70,70")
+           ; !Tuple3(
+                1
+              , 2
+              , (3, 4, 5)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "72,6,73,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "72,6,72,82")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "72,21,72,39")
+           ; !"Incorrect Tuple3"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "72,42,72,52") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "72,55,72,81")
+           ; !Tuple3(
+                1
+              , 2
+              , (3, 4, 5, 6)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "73,6,73,74")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "73,21,73,39")
+        ; !"Incorrect Tuple3"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "73,42,73,52") ; tuple-stuff
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "73,55,73,73")
+        ; !Tuple3(1, 2, 3, 5)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff-tests", "61,2,73,74")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff-tests", "61,2,73,74")
+      ; fail
 
-    ; apply-and-fail(! "Incorrect Tuple1", tuple-stuff, !Tuple1(1, 2, 4))
-    ; apply-and-fail(!"Incorrect Tuple1", tuple-stuff, !Tuple1(1, 2, 3, 4))
-    ; apply-and-fail(!"Incorrect Tuple2", tuple-stuff, !Tuple2(1, (2, 3)))
+  string-star-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-star-tests", "75,3,79,93")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "76,6,79,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "76,6,76,47")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "76,17,76,29")
+           ; !"Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "76,32,76,41") ; StringStar
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "76,44,76,46")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "77,6,79,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "77,6,77,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "77,17,77,42")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "77,45,77,54") ; StringStar
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "77,57,77,75")
+           ; !["Hello", "World"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "78,6,79,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "78,6,78,75")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "78,21,78,56")
+           ; !"List with element of illegal type"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "78,59,78,68") ; StringStar
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "78,71,78,74")
+           ; ![1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "79,6,79,93")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "79,21,79,56")
+        ; !"List with element of illegal type"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "79,59,79,68") ; StringStar
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "79,71,79,92")
+        ; !["Hello", 1, "World"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-star-tests", "75,3,79,93")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-star-tests", "75,3,79,93")
+      ; fail
 
-    ; apply-test(!"Tuple3, last", tuple-stuff, !Tuple3(1, 2, (3, 4)))
-    ; apply-test(!"Tuple3, last", tuple-stuff, !Tuple3(1, 2, (3, 4, 5)))
+  string-plus-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-plus-tests", "81,3,86,93")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "82,6,86,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "82,6,82,51")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "82,21,82,33")
+           ; !"Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "82,36,82,45") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "82,48,82,50")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "83,6,86,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "83,6,83,67")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "83,17,83,42")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "83,45,83,54") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "83,57,83,66")
+           ; !["Hello"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "84,6,86,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "84,6,84,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "84,17,84,42")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "84,45,84,54") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "84,57,84,75")
+           ; !["Hello", "World"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "85,6,86,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "85,6,85,75")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "85,21,85,56")
+           ; !"List with element of illegal type"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "85,59,85,68") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "85,71,85,74")
+           ; ![1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "86,6,86,93")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "86,21,86,56")
+        ; !"List with element of illegal type"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "86,59,86,68") ; StringPlus
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "86,71,86,92")
+        ; !["Hello", 1, "World"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-plus-tests", "81,3,86,93")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-plus-tests", "81,3,86,93")
+      ; fail
 
-    ; apply-and-fail(!"Incorrect Tuple3", tuple-stuff, !Tuple3(1, 2, (3, 4, 5, 6)))
-    ; apply-and-fail(!"Incorrect Tuple3", tuple-stuff, !Tuple3(1, 2, 3, 5))
+  string-even-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-even-tests", "88,3,93,93")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "89,10,93,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "89,10,89,51")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "89,21,89,33")
+           ; !"Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "89,36,89,45") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "89,48,89,50")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "90,6,93,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "90,6,90,71")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "90,21,90,46")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "90,49,90,58") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "90,61,90,70")
+           ; !["Hello"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "91,10,93,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "91,10,91,80")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "91,21,91,46")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "91,49,91,58") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "91,61,91,79")
+           ; !["Hello", "World"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "92,6,93,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "92,6,92,78")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "92,21,92,56")
+           ; !"List with element of illegal type"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "92,59,92,68") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "92,71,92,77")
+           ; ![1, 1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "93,6,93,93")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "93,21,93,56")
+        ; !"List with element of illegal type"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "93,59,93,68") ; StringEven
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "93,71,93,92")
+        ; !["Hello", 1, "World"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-even-tests", "88,3,93,93")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-even-tests", "88,3,93,93")
+      ; fail
 
-   string-star-tests =
-      apply-test(!"Empty list", StringStar, ![])
-    ; apply-test(!"List with some elements", StringStar, !["Hello", "World"])
-    ; apply-and-fail(!"List with element of illegal type", StringStar, ![1])
-    ; apply-and-fail(!"List with element of illegal type", StringStar, !["Hello", 1, "World"])
+  string-opt-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-opt-tests", "95,3,99,59")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "96,6,99,59")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "96,6,96,59")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "96,17,96,30")
+           ; !"Some String"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "96,33,96,41") ; StringOpt
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "96,44,96,58")
+           ; !Some("String")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "97,6,99,59")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "97,6,97,49")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "97,17,97,28")
+           ; !"No String"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "97,31,97,39") ; StringOpt
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "97,42,97,48")
+           ; !None()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "98,6,99,59")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "98,6,98,55")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "98,21,98,35")
+           ; !"Plain string"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "98,38,98,46") ; StringOpt
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "98,49,98,54")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "99,6,99,59")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "99,21,99,37")
+        ; !"Some no-string"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "99,40,99,48") ; StringOpt
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "99,51,99,58")
+        ; !Some(1)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-opt-tests", "95,3,99,59")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "string-opt-tests", "95,3,99,59")
+      ; fail
 
-   string-plus-tests =
-      apply-and-fail(!"Empty list", StringPlus, ![])
-    ; apply-test(!"List with some elements", StringPlus, !["Hello"])
-    ; apply-test(!"List with some elements", StringPlus, !["Hello", "World"])
-    ; apply-and-fail(!"List with element of illegal type", StringPlus, ![1])
-    ; apply-and-fail(!"List with element of illegal type", StringPlus, !["Hello", 1, "World"])
-
-   string-even-tests =
-          apply-test(!"Empty list", StringEven, ![])
-    ; apply-and-fail(!"List with some elements", StringEven, !["Hello"])
-    ;     apply-test(!"List with some elements", StringEven, !["Hello", "World"])
-    ; apply-and-fail(!"List with element of illegal type", StringEven, ![1, 1])
-    ; apply-and-fail(!"List with element of illegal type", StringEven, !["Hello", 1, "World"])
-
-   string-opt-tests =
-      apply-test(!"Some String", StringOpt, !Some("String"))
-    ; apply-test(!"No String", StringOpt, !None())
-    ; apply-and-fail(!"Plain string", StringOpt, !"foo")
-    ; apply-and-fail(!"Some no-string", StringOpt, !Some(1))
 
 strategies
-
   simple-inj =
-     test-format-check(|"SimpleInj.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "simple-inj", "103,2,104,39")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "104,5,104,39")
+    ; test-format-check(|"SimpleInj.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "simple-inj", "103,2,104,39")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "simple-inj", "103,2,104,39")
+      ; fail
 
   simple-inj(|startnt) =
-     test-format-check(|"SimpleInj.rtg", startnt)
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "simple-inj", "106,2,107,48")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "107,5,107,48")
+    ; test-format-check(|"SimpleInj.rtg", startnt)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "simple-inj", "106,2,107,48")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "simple-inj", "106,2,107,48")
+      ; fail
 
   tuple-stuff =
-     test-format-check(|"TupleStuff.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff", "109,2,110,40")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "110,5,110,40")
+    ; test-format-check(|"TupleStuff.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff", "109,2,110,40")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff", "109,2,110,40")
+      ; fail
 
   tuple-stuff(|startnt) =
-     test-format-check(|"TupleStuff.rtg", startnt)
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff", "112,2,113,49")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "113,5,113,49")
+    ; test-format-check(|"TupleStuff.rtg", startnt)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff", "112,2,113,49")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "tuple-stuff", "112,2,113,49")
+      ; fail
 
   quoted-exp =
-     test-format-check(|"QuotedExp.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "quoted-exp", "115,2,116,39")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "116,5,116,39")
+    ; test-format-check(|"QuotedExp.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "quoted-exp", "115,2,116,39")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "quoted-exp", "115,2,116,39")
+      ; fail
 
   StringStar =
-     test-format-check(|"StringStar.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringStar", "118,2,119,40")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "119,5,119,40")
+    ; test-format-check(|"StringStar.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringStar", "118,2,119,40")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringStar", "118,2,119,40")
+      ; fail
 
   StringPlus =
-     test-format-check(|"StringPlus.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringPlus", "121,2,122,40")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "122,5,122,40")
+    ; test-format-check(|"StringPlus.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringPlus", "121,2,122,40")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringPlus", "121,2,122,40")
+      ; fail
 
   StringEven =
-     test-format-check(|"StringEven.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringEven", "124,2,125,40")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "125,5,125,40")
+    ; test-format-check(|"StringEven.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringEven", "124,2,125,40")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringEven", "124,2,125,40")
+      ; fail
 
   StringOpt =
-     test-format-check(|"StringOpt.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringOpt", "127,2,128,39")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "128,5,128,39")
+    ; test-format-check(|"StringOpt.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringOpt", "127,2,128,39")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "StringOpt", "127,2,128,39")
+      ; fail
 
   fc-int-list =
-     test-format-check(|"int-list.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "fc-int-list", "130,2,131,38")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "131,5,131,38")
+    ; test-format-check(|"int-list.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "fc-int-list", "130,2,131,38")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "fc-int-list", "130,2,131,38")
+      ; fail
+
 
 strategies
-
   test-format-check(|rtg) =
-    where(
-      rtg' := <parse-rtg-file> rtg
-      ; if UseDeprecatedNormalizer then
-          rtgnf := <rtg-normalize-deprecated> rtg'
-        else
-          rtgnf := <rtg-normalize> rtg'
-        end
-    )
-    ; where(rtg-format-check(|rtgnf))
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "test-format-check", "135,2,144,36")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "136,4,144,36")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "136,4,143,4")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "137,6,142,10")
+               ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "137,6,137,33")
+                  ; rtg' := <s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "137,15,137,28") ; parse-rtg-file> rtg)
+               ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "138,8,142,10")
+               ; if s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "138,11,138,33") ; UseDeprecatedNormalizer then
+                   s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "139,10,139,49")
+                   ; rtgnf := <s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "139,20,139,43") ; rtg-normalize-deprecated> rtg'
+                 else
+                   s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "141,10,141,38")
+                   ; rtgnf := <s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "141,20,141,32") ; rtg-normalize> rtg'
+                 end))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "144,6,144,36")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "144,12,144,35")
+            ; rtg-format-check(|rtgnf))
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "test-format-check", "135,2,144,36")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "test-format-check", "135,2,144,36")
+      ; fail
 
   test-format-check(|rtg, startnt) =
-    where(
-      rtg' := <parse-rtg-file> rtg
-      ; if UseDeprecatedNormalizer then
-          rtgnf := <rtg-normalize-deprecated> rtg'
-        else
-          rtgnf := <rtg-normalize> rtg'
-        end
-    )
-    ; where(rtg-format-check(|rtgnf,  [Nonterm(startnt)]))
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "test-format-check", "146,2,155,57")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "147,4,155,57")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "147,4,154,4")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "148,6,153,10")
+               ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "148,6,148,33")
+                  ; rtg' := <s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "148,15,148,28") ; parse-rtg-file> rtg)
+               ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "149,8,153,10")
+               ; if s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "149,11,149,33") ; UseDeprecatedNormalizer then
+                   s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "150,10,150,49")
+                   ; rtgnf := <s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "150,20,150,43") ; rtg-normalize-deprecated> rtg'
+                 else
+                   s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "152,10,152,38")
+                   ; rtgnf := <s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "152,20,152,32") ; rtg-normalize> rtg'
+                 end))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "155,6,155,57")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "155,12,155,56")
+            ; rtg-format-check(
+              | rtgnf
+              , [Nonterm(startnt)]
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "test-format-check", "146,2,155,57")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/format-check-tests.str", "test-format-check", "146,2,155,57")
+      ; fail
+
 
 signature
   constructors
@@ -160,10 +752,8 @@ signature
     IntConst : IntConst -> Exp
     Plus     : Exp * Exp -> Exp
     Call     : Var * List(Exp) -> Exp
-
     Tuple1   : Int * Tuple * Int -> Tuple
     Tuple1   : Int * Int * Int * Int -> Tuple
     Tuple2   : Tuple * Int -> Tuple
     Tuple3   : Int * Int * Tuple -> Tuple
     Tuple3   : Int * Int * Int * Int -> Tuple
-

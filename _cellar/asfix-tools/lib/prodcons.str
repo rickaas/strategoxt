@@ -1,157 +1,431 @@
-/**
- * Add cons(...) attributes to Sdf productions.
- *
- * Use option --modular to prefix cons attributes with the
- * name of the module they belong to.
- *
- * Bracket and reject productions remain unchanged.
- * Lexical syntax productions remain unchanged.
- * When a production already has a cons(..) attribute,
- * it is _not_ overriden by a synthesized one.
- * All constructor names in the output are quoted literals,
- * even user-supplied non-quoted ones are given quotes.
- *
- * Constructor names are synthesized from productions
- * roughly using the following heuristics:
- *
- * o Concatenate any literals occuring in the LHS,
- *   verbalizing some non-alphanumerical literals, and
- *   filter-out remaining non-alphanumerical literals.
- *   Hyphens are not filtered or verbalized.
- *   If the resulting constructorname does not start
- *   with a letter, it is qualified with
- *   the result sort name.
- *
- * o In the absence of (verbalizable) literals, verbalize
- *   the sorts of the LHS, and concatenate the resulting
- *   words.
- *
- * o In the absence of verbalizable literals and sorts,
- *   use the constructor name "dunno", qualified with the
- *   result sort name and suffixed with a generated
- *   unique string.
- *
- * Author: Joost Visser (Joost.Visser@cwi.nl)
- * Changes by : Merijn de Jonge, Eelco Visser, and Hedzer Westra.
- */
 module prodcons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   Sdf2
   verbalize-sdf
   asfix-extra
 
+
 signature
   constructors
     term : ATerm -> Attribute
 
+
 rules
 
   prodcons :
-    p -> <at-cons(<uq2q> c)> p
-    where
-      c := <get-constr> p
+    p -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "49,2,52,24")> <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "50,10,50,26")
+                                                                                      ; at-cons(
+                                                                                          s-step(|"_cellar/asfix-tools/lib/prodcons.str", "50,18,50,25")
+                                                                                          ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "50,19,50,22") ; uq2q)> c
+                                                                                        )> p
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "49,2,52,24")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "49,2,52,24")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "52,6,52,24")
+          ; c := <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "52,12,52,21") ; get-constr> p
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "49,2,52,24")
+             ; fail
 
   prodcons :
-    p -> <add-attributes> (p, [term(cons(<mk-constr> p))])
-    where
-      <not(get-constr + is-bracket + is-reject + is-injection)> p 
+    p -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "54,2,57,64")> <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "55,10,55,23") ; add-attributes> ( p
+                                                                                                                                                                       , [ term(
+                                                                                                                                                                             cons(
+                                                                                                                                                                               <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "55,42,55,50") ; mk-constr> p
+                                                                                                                                                                             )
+                                                                                                                                                                           )
+                                                                                                                                                                         ]
+                                                                                                                                                                       )
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "54,2,57,64")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "54,2,57,64")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,6,57,64")
+          ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,7,57,61")
+              ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,11,57,60")
+                    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,11,57,20") ; get-constr
+                       + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,24,57,60")
+                         ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,24,57,33") ; is-bracket
+                            + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,37,57,60")
+                              ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,37,57,45") ; is-reject
+                                 + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "57,49,57,60") ; is-injection)))))> p
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "prodcons", "54,2,57,64")
+             ; fail
 
   mk-constr :
-    prod([], sym, _) -> c
-    where
-      c := <conc; strs2constr> (<syms2strs>[sym], ["empty"])
+    prod([], sym, _) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "59,2,62,59")> c
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "59,2,62,59")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "59,2,62,59")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "62,6,62,59")
+          ; c := <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "62,12,62,28")
+                  ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "62,12,62,15") ; conc)
+                  ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "62,18,62,28")
+                  ; strs2constr> ( <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "62,33,62,41") ; syms2strs> [sym]
+                                 , ["empty"]
+                                 )
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "59,2,62,59")
+             ; fail
 
   mk-constr :
-    prod(syms, sym, _) -> c
-    where
-      <lits2strs; strs2constr> syms => c
-      <+ <conc;strs2constr>(<syms2strs>[sym],<lits2strs;empty-test>syms) => c
-      <+ <syms2strs; strs2constr> syms => c
-      <+ <conc;strs2constr>(<syms2strs>[sym],["dunno",<new>()]) => c
+    prod(syms, sym, _) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "64,2,70,67")> c
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "64,2,70,67")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "64,2,70,67")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "67,6,70,67")
+          ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "67,6,67,39")
+             ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "67,6,67,34")
+                ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "67,7,67,28")
+                    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "67,7,67,15") ; lits2strs)
+                    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "67,18,67,28")
+                    ; strs2constr)> syms) => c
+             <+ s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,9,70,67")
+                ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,9,68,76")
+                   ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,9,68,71")
+                      ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,10,68,25")
+                          ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,10,68,13") ; conc)
+                          ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,15,68,25")
+                          ; strs2constr)> ( <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,29,68,37") ; syms2strs> [sym]
+                                          , <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,46,68,65")
+                                             ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,46,68,54") ; lits2strs)
+                                             ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "68,56,68,65")
+                                             ; empty-test> syms
+                                          )) => c
+                   <+ s-step(|"_cellar/asfix-tools/lib/prodcons.str", "69,9,70,67")
+                      ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "69,9,69,42")
+                         ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "69,9,69,37")
+                            ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "69,10,69,31")
+                                ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "69,10,69,18") ; syms2strs)
+                                ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "69,21,69,31")
+                                ; strs2constr)> syms) => c
+                         <+ s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,9,70,67")
+                            ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,9,70,62")
+                               ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,10,70,25")
+                                   ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,10,70,13") ; conc)
+                                   ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,15,70,25")
+                                   ; strs2constr)> ( <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,29,70,37") ; syms2strs> [sym]
+                                                   , [ "dunno"
+                                                     , <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "70,55,70,57") ; new> ()
+                                                     ]
+                                                   )) => c)))
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr", "64,2,70,67")
+             ; fail
 
   mk-constr' :
-    prod(syms, sym,_)	-> c
-    where <conc;strs2constr>(<syms2strs>[sym],["dunno",<new>()]) => c
+    prod(syms, sym, _) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr'", "72,2,74,68")> c
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr'", "72,2,74,68")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr'", "72,2,74,68")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,10,74,68")
+          ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,10,74,63")
+             ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,11,74,26")
+                 ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,11,74,14") ; conc)
+                 ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,16,74,26")
+                 ; strs2constr)> ( <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,30,74,38") ; syms2strs> [sym]
+                                 , [ "dunno"
+                                   , <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "74,56,74,58") ; new> ()
+                                   ]
+                                 )) => c
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "mk-constr'", "72,2,74,68")
+             ; fail
+
 
 strategies
-
-  empty-test
-    = test( filter(not(empty-string))
-          ; Hd
-          )
+  empty-test =
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "empty-test", "78,2,81,10")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "79,6,81,10")
+    ; test(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "79,12,80,13")
+           ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "79,12,79,36")
+              ; filter(
+                  s-step(|"_cellar/asfix-tools/lib/prodcons.str", "79,19,79,35")
+                  ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "79,23,79,34") ; empty-string)
+                ))
+           ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "80,12,80,13")
+           ; Hd)
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "empty-test", "78,2,81,10")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "empty-test", "78,2,81,10")
+      ; fail
 
   strs2constr =
-    filter(not(empty-string))
-    ; Cons(test(string-Hd;is-alpha),id) /*First char of first string is Alpha*/
-    ; separate-by(!"-")
-    ; concat-strings
-    ; ?s
-    ; <not(is-subterm)> (s, ["START","LCons","SCons","some","all","id","Cons","Nil","TCons","TNil","NL","L","Bracket"])
-    ; !s
-    ; escape
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "strs2constr", "83,2,92,17")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "84,4,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "84,4,84,28")
+       ; filter(
+           s-step(|"_cellar/asfix-tools/lib/prodcons.str", "84,11,84,27")
+           ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "84,15,84,26") ; empty-string)
+         ))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,6,85,38")
+       ; Cons(
+           s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,11,85,34")
+           ; test(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,16,85,33")
+                  ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,16,85,24") ; string-Hd)
+                  ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,26,85,33")
+                  ; is-alpha)
+         , s-step(|"_cellar/asfix-tools/lib/prodcons.str", "85,36,85,37") ; id
+         ))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "86,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "86,6,86,22")
+       ; separate-by(
+           s-step(|"_cellar/asfix-tools/lib/prodcons.str", "86,18,86,21")
+           ; !"-"
+         ))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "87,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "87,6,87,19") ; concat-strings)
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "88,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "88,6,88,7") ; ?s)
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "89,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "89,6,89,118")
+       ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "89,7,89,21")
+           ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "89,11,89,20") ; is-subterm))> ( s
+                                                                                                , [ "START"
+                                                                                                  , "LCons"
+                                                                                                  , "SCons"
+                                                                                                  , "some"
+                                                                                                  , "all"
+                                                                                                  , "id"
+                                                                                                  , "Cons"
+                                                                                                  , "Nil"
+                                                                                                  , "TCons"
+                                                                                                  , "TNil"
+                                                                                                  , "NL"
+                                                                                                  , "L"
+                                                                                                  , "Bracket"
+                                                                                                  ]
+                                                                                                ))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "90,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "90,6,90,7") ; !s)
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "91,6,92,17")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "91,6,91,11") ; escape)
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "92,6,92,17")
     ; double-quote
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "strs2constr", "83,2,92,17")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "strs2constr", "83,2,92,17")
+      ; fail
 
-  string-Hd
-    = explode-string;Hd
+  string-Hd =
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "string-Hd", "94,2,95,22")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "95,6,95,22")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "95,6,95,19") ; explode-string)
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "95,21,95,22")
+    ; Hd
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "string-Hd", "94,2,95,22")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "string-Hd", "94,2,95,22")
+      ; fail
 
-  normalize-constr
-    = try(test(not(un-double-quote)) ; double-quote)
+  normalize-constr =
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "normalize-constr", "97,2,98,51")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "98,6,98,51")
+    ; try(
+        s-step(|"_cellar/asfix-tools/lib/prodcons.str", "98,10,98,50")
+        ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "98,10,98,35")
+           ; test(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "98,15,98,34")
+                  ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "98,19,98,33") ; un-double-quote)))
+        ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "98,39,98,50")
+        ; double-quote
+      )
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "normalize-constr", "97,2,98,51")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "normalize-constr", "97,2,98,51")
+      ; fail
 
-  empty-string
-    = ?""
+  empty-string =
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "empty-string", "100,2,101,8")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "101,6,101,8")
+    ; ?""
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "empty-string", "100,2,101,8")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "empty-string", "100,2,101,8")
+      ; fail
 
-  at-cons(s)
-    = oncetd(cons(s))
+  at-cons(s) =
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "at-cons", "103,2,104,20")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "104,6,104,20")
+    ; oncetd(
+        s-step(|"_cellar/asfix-tools/lib/prodcons.str", "104,13,104,19")
+        ; cons(
+            s-step(|"_cellar/asfix-tools/lib/prodcons.str", "104,18,104,18") ; s
+          )
+      )
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "at-cons", "103,2,104,20")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "at-cons", "103,2,104,20")
+      ; fail
+
 
 strategies
-
-  /**
-   * @todo The get-config --injections is a very dirty hook for the configuration
-   *       of sdf-cons. This should be replaced with a better mechanism.
-   */
   is-injection =
-    prod([syntaxless-sort], id, id)
-    ; where(<get-config> "--injections")
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "is-injection", "112,2,114,39")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "113,4,114,39")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "113,4,113,34")
+       ; prod(
+           s-step(|"_cellar/asfix-tools/lib/prodcons.str", "113,9,113,25")
+           ; [ s-step(|"_cellar/asfix-tools/lib/prodcons.str", "113,10,113,24") ; syntaxless-sort
+             ]
+         , s-step(|"_cellar/asfix-tools/lib/prodcons.str", "113,28,113,29") ; id
+         , s-step(|"_cellar/asfix-tools/lib/prodcons.str", "113,32,113,33") ; id
+         ))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "114,6,114,39")
+    ; where(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "114,12,114,38")
+            ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "114,13,114,22") ; get-config)> "--injections")
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-injection", "112,2,114,39")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-injection", "112,2,114,39")
+      ; fail
 
   syntaxless-sort =
-    rec x(
-	sort(id) + alt(x,x) + opt(x) 
-	+ iter(x) + iter-star(x) + iter-sep(x,id) + iter-star-sep(x,id)
-    )    
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "syntaxless-sort", "116,2,120,4")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "117,4,120,4")
+    ; rec x (
+        s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,1,119,63")
+        ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,1,118,8")
+           ; sort(
+               s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,6,118,7") ; id
+             )
+           + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,12,119,63")
+             ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,12,118,19")
+                ; alt(
+                    s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,16,118,16") ; x
+                  , s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,18,118,18") ; x
+                  )
+                + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,23,119,63")
+                  ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,23,118,28")
+                     ; opt(
+                         s-step(|"_cellar/asfix-tools/lib/prodcons.str", "118,27,118,27") ; x
+                       )
+                     + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,3,119,63")
+                       ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,3,119,9")
+                          ; iter(
+                              s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,8,119,8") ; x
+                            )
+                          + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,13,119,63")
+                            ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,13,119,24")
+                               ; iter-star(
+                                   s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,23,119,23") ; x
+                                 )
+                               + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,28,119,63")
+                                 ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,28,119,41")
+                                    ; iter-sep(
+                                        s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,37,119,37") ; x
+                                      , s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,39,119,40") ; id
+                                      )
+                                    + s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,45,119,63")
+                                      ; iter-star-sep(
+                                          s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,59,119,59") ; x
+                                        , s-step(|"_cellar/asfix-tools/lib/prodcons.str", "119,61,119,62") ; id
+                                        )))))))
+      )
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "syntaxless-sort", "116,2,120,4")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "syntaxless-sort", "116,2,120,4")
+      ; fail
+
 
 rules
 
   get-constr :
-    prod(syms,sym,as) -> c
-    where
-      <oncetd(?cons(c))> as
+    prod(syms, sym, as) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "get-constr", "124,2,127,26")> c
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "get-constr", "124,2,127,26")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "get-constr", "124,2,127,26")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "127,6,127,26")
+          ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "127,7,127,22")
+              ; oncetd(
+                  s-step(|"_cellar/asfix-tools/lib/prodcons.str", "127,14,127,21")
+                  ; ?cons(c)
+                ))> as
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "get-constr", "124,2,127,26")
+             ; fail
 
-  get-mod:
-    prod(syms,sym,as) -> c
-    where
-      <oncetd(?'id(c))> as
+  get-mod :
+    prod(syms, sym, as) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "get-mod", "129,2,132,25")> c
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "get-mod", "129,2,132,25")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "get-mod", "129,2,132,25")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "132,6,132,25")
+          ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "132,7,132,21")
+              ; oncetd(
+                  s-step(|"_cellar/asfix-tools/lib/prodcons.str", "132,14,132,20")
+                  ; ?'id(c)
+                ))> as
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "get-mod", "129,2,132,25")
+             ; fail
 
   is-bracket :
-    prod(syms,sym,as) -> ()
-    where
-      <oncetd(?bracket())> as
+    prod(syms, sym, as) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-bracket", "134,2,137,28")> ()
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "is-bracket", "134,2,137,28")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-bracket", "134,2,137,28")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "137,6,137,28")
+          ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "137,7,137,24")
+              ; oncetd(
+                  s-step(|"_cellar/asfix-tools/lib/prodcons.str", "137,14,137,23")
+                  ; ?bracket()
+                ))> as
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-bracket", "134,2,137,28")
+             ; fail
 
   is-reject :
-    prod(syms,sym,as) -> ()
-    where
-      <oncetd(?reject())> as
+    prod(syms, sym, as) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-reject", "139,2,142,27")> ()
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "is-reject", "139,2,142,27")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-reject", "139,2,142,27")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/prodcons.str", "142,6,142,27")
+          ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "142,7,142,23")
+              ; oncetd(
+                  s-step(|"_cellar/asfix-tools/lib/prodcons.str", "142,14,142,22")
+                  ; ?reject()
+                ))> as
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "is-reject", "139,2,142,27")
+             ; fail
 
   add-attributes :
-    (prod(syms,sym,no-attrs()),as) -> prod(syms,sym,attrs(as))
+    (prod(syms, sym, no-attrs()), as) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "add-attributes", "144,2,145,61")> prod(syms, sym, attrs(as))
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "add-attributes", "144,2,145,61")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "add-attributes", "144,2,145,61")
+             ; fail
 
   add-attributes :
-    (prod(syms,sym,attrs(as')),as) -> prod(syms,sym,attrs(<conc>(as',as)))
+    ( prod(syms, sym, attrs(as'))
+    , as
+    ) -> <r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "add-attributes", "147,2,148,73")> prod(
+                                                                                               syms
+                                                                                             , sym
+                                                                                             , attrs(
+                                                                                                 <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "148,59,148,62") ; conc> (as', as)
+                                                                                               )
+                                                                                             )
+    where r-enter(|"_cellar/asfix-tools/lib/prodcons.str", "add-attributes", "147,2,148,73")
+          <+ r-exit(|"_cellar/asfix-tools/lib/prodcons.str", "add-attributes", "147,2,148,73")
+             ; fail
+
 
 strategies
-
   uq2q =
-    explode-string
-    ; test(not(Hd;?34))         /* first char is NOT double-quote */
-    ; test(not(at-last(?[34]))) /* last char is NOT double-quote */
-    ; <concat> [[34], <id>, [34]]
+    s-enter(|"_cellar/asfix-tools/lib/prodcons.str", "uq2q", "152,2,157,19")
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "153,4,157,19")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "153,4,153,17") ; explode-string)
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "154,6,157,19")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "154,6,154,22")
+       ; test(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "154,11,154,21")
+              ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "154,15,154,20")
+                    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "154,15,154,16") ; Hd)
+                    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "154,18,154,20")
+                    ; ?34)))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "155,6,157,19")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "155,6,155,30")
+       ; test(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "155,11,155,29")
+              ; not(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "155,15,155,28")
+                    ; at-last(
+                        s-step(|"_cellar/asfix-tools/lib/prodcons.str", "155,23,155,27")
+                        ; ?[34]
+                      ))))
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "156,6,157,19")
+    ; (s-step(|"_cellar/asfix-tools/lib/prodcons.str", "156,6,156,32")
+       ; <(s-step(|"_cellar/asfix-tools/lib/prodcons.str", "156,7,156,12") ; concat)> [ [34]
+                                                                                      , <s-step(|"_cellar/asfix-tools/lib/prodcons.str", "156,23,156,24") ; id>
+                                                                                      , [34]
+                                                                                      ])
+    ; s-step(|"_cellar/asfix-tools/lib/prodcons.str", "157,6,157,19")
     ; implode-string
+    < s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "uq2q", "152,2,157,19")
+    + s-exit(|"_cellar/asfix-tools/lib/prodcons.str", "uq2q", "152,2,157,19")
+      ; fail

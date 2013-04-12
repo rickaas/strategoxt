@@ -1,12 +1,27 @@
 module test91
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main-test91 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "main-test91", "6,2,6,35")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "6,16,6,35")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "6,17,6,20") ; rewr)> f(100, empty)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "main-test91", "6,2,6,35")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "main-test91", "6,2,6,35")
+      ; fail
 
-  main-test91 = <rewr> f(100, empty)
 
 signature
-  sorts Domain Range Map
+  sorts
+    Domain Range Map
+
   constructors
     undefined : Range
     empty     : Map
@@ -19,36 +34,124 @@ signature
     mydiv     : Int * Int -> Int
     foo       : Map * Int * Int * Int -> Map
 
+
 rules
 
-  I : insert(D, R, empty) -> join(rel(D, R), empty)
+  I :
+    insert(D, R, empty) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "24,2,24,50")> join(rel(D, R), empty)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "24,2,24,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "24,2,24,50")
+             ; fail
 
-  I : insert(D, R, join(rel(D', R'), rest)) ->
-                   join(rel(D', R'), insert(D, R, rest)) 
-      where <not(eq)> (D, D')
+  I :
+    insert(
+      D
+    , R
+    , join(rel(D', R'), rest)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "26,2,28,28")> join(
+                                                                                                            rel(D', R')
+                                                                                                          , insert(D, R, rest)
+                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "26,2,28,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "26,2,28,28")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "28,12,28,28")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "28,13,28,19")
+              ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "28,17,28,18") ; eq))> (D, D')
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "26,2,28,28")
+             ; fail
 
-  I : lookup(join(rel(D, R), rest), D') -> R 
-      where <eq> (D, D')
+  I :
+    lookup(
+      join(rel(D, R), rest)
+    , D'
+    ) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "30,2,31,23")> R
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "30,2,31,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "30,2,31,23")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "31,12,31,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "31,13,31,14") ; eq)> (D, D')
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "30,2,31,23")
+             ; fail
 
-  I : lookup(join(rel(D, R), rest), D') -> lookup(rest, D') 
-      where <not(eq)> (D, D')
+  I :
+    lookup(
+      join(rel(D, R), rest)
+    , D'
+    ) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "33,2,34,28")> lookup(rest, D')
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "33,2,34,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "33,2,34,28")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "34,12,34,28")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "34,13,34,19")
+              ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "34,17,34,18") ; eq))> (D, D')
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "33,2,34,28")
+             ; fail
 
-  I : lookup(empty, D) -> undefined
+  I :
+    lookup(empty, D) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "36,2,36,34")> undefined
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "36,2,36,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "36,2,36,34")
+             ; fail
 
-  I : myadd(X, Y) -> <add>(X,Y)
+  I :
+    myadd(X, Y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "38,2,38,30")> <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "38,22,38,24") ; add> (X, Y)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "38,2,38,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "38,2,38,30")
+             ; fail
 
-  I : mydiv(X, Y) -> <div>(X,Y)
+  I :
+    mydiv(X, Y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "40,2,40,30")> <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "40,22,40,24") ; div> (X, Y)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "40,2,40,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "40,2,40,30")
+             ; fail
 
-  I : f(0, M) -> insert(0, 1, M)
+  I :
+    f(0, M) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "42,2,42,31")> insert(0, 1, M)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "42,2,42,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "42,2,42,31")
+             ; fail
 
-  I : f(N', M) -> foo(f(N, M), N', N, M)
-      where <gt>(N',0); <subti>(N',1) => N
+  I :
+    f(N', M) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "44,2,45,41")> foo(
+                                                                                                                   f(N, M)
+                                                                                                                 , N'
+                                                                                                                 , N
+                                                                                                                 , M
+                                                                                                                 )
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "44,2,45,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "44,2,45,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "45,12,45,41")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "45,12,45,21")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "45,13,45,14") ; gt)> (N', 0))
+          ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "45,24,45,41")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "45,24,45,36")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "45,25,45,29") ; subti)> (N', 1)) => N
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "44,2,45,41")
+             ; fail
 
-  I : foo(I, N', N, M) ->
-      insert(N', myadd(lookup(I, mydiv(N,2)),
-                       lookup(I, mydiv(N,4))), I)
+  I :
+    foo(I, N', N, M) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "47,2,49,48")> insert(
+                                                                                                                           N'
+                                                                                                                         , myadd(
+                                                                                                                             lookup(I, mydiv(N, 2))
+                                                                                                                           , lookup(I, mydiv(N, 4))
+                                                                                                                           )
+                                                                                                                         , I
+                                                                                                                         )
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "47,2,49,48")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "I", "47,2,49,48")
+             ; fail
+
 
 strategies
-
-  rewr = innermost(I)
-
+  rewr =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "rewr", "53,2,53,20")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "53,9,53,20")
+    ; innermost(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "53,19,53,19") ; I
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "rewr", "53,2,53,20")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test91.str", "rewr", "53,2,53,20")
+      ; fail

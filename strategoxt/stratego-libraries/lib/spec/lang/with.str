@@ -1,40 +1,62 @@
-/**
- * This module provides a basic strategy for specifying
- * run-time verified strategies.
- *
- * @author Lennart Kats <lennart add lclnet.nl>
- */
 module lang/with
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
 
 imports
   util/log
   strategy/conditional
 
+
 strategies
-
-  /**
-   * Evaluate a strategy s, or, if s fails, end with a fatal error.
-   *
-   * @note In future revisions, a facility may be provided to "catch"
-   *       failures raised by with clauses and uses of this strategy.
-   */
   with(s|message) =
-    where(s <+ ?term; prim("SSL_stacktrace_get_all_frame_names"); report-failure(|message, term))
-  
-  /**
-   * @obsolete
-   * @internal
-   */
-  report-with-failure(|message) =
-      ?term
-    ; prim("SSL_stacktrace_get_all_frame_names")
-    ; report-failure(log(|Critical(), message, term); exit)
-  
-  /**
-   * @internal
-   */
-  report-with-failure(|message, trace) =
-      ?term
-    ; !trace
-    ; report-failure(log(|Critical(), message, term); exit)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "with", "21,2,22,96")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,4,22,96")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,10,22,95")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,10,22,10") ; s
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,15,22,95")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,15,22,19") ; ?term)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,22,22,95")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,22,22,63") ; prim("SSL_stacktrace_get_all_frame_names"))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "22,66,22,95")
+                  ; report-failure(|message, term)))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "with", "21,2,22,96")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "with", "21,2,22,96")
+      ; fail
 
+  report-with-failure(|message) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "report-with-failure", "28,2,31,58")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "29,6,31,58")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "29,6,29,10") ; ?term)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "30,6,31,58")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "30,6,30,47") ; prim("SSL_stacktrace_get_all_frame_names"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "31,6,31,58")
+    ; report-failure(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "31,21,31,57")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "31,21,31,51")
+           ; log(|Critical(), message, term))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "31,54,31,57")
+        ; exit
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "report-with-failure", "28,2,31,58")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "report-with-failure", "28,2,31,58")
+      ; fail
+
+  report-with-failure(|message, trace) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "report-with-failure", "36,2,39,58")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "37,6,39,58")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "37,6,37,10") ; ?term)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "38,6,39,58")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "38,6,38,11") ; !trace)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "39,6,39,58")
+    ; report-failure(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "39,21,39,57")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "39,21,39,51")
+           ; log(|Critical(), message, term))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "39,54,39,57")
+        ; exit
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "report-with-failure", "36,2,39,58")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/with.str", "report-with-failure", "36,2,39,58")
+      ; fail

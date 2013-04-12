@@ -1,20 +1,22 @@
-/**
- * @author Merijn de Jonge (mdjonge@cwi.nl)
- */
 module Abox-2-latex-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
   constructors
-    ALLTT    : Boxes                            -> ALLTT
-    BOXENV   : Width    * Boxes                 -> BOXENV
-    HBOX     : HS       * Boxes                 -> Hbox
-    VBOX     : VS       * IS    * Boxes         -> Vbox
-    HVBOX    : HS       * VS    * IS    * Boxes -> HVbox
-    ABOX     : TableDef * Boxes                 -> Abox
-    ALTBOX   : Box1     * Box2                  -> ALTBOX
-    CBOX     : Boxes                            -> Cbox
-    LBOX     : Fmt      * Box                   -> LBOX
-    LBLBOX   : String   * Box                   -> LBLBOX
-    REFBOX   : String   * Box                   -> REFBOX
+    ALLTT    : Boxes -> ALLTT
+    BOXENV   : Width * Boxes -> BOXENV
+    HBOX     : HS * Boxes -> Hbox
+    VBOX     : VS * IS * Boxes -> Vbox
+    HVBOX    : HS * VS * IS * Boxes -> HVbox
+    ABOX     : TableDef * Boxes -> Abox
+    ALTBOX   : Box1 * Box2 -> ALTBOX
+    CBOX     : Boxes -> Cbox
+    LBOX     : Fmt * Box -> LBOX
+    LBLBOX   : String * Box -> LBLBOX
+    REFBOX   : String * Box -> REFBOX
     C        : Alignment
     R        : Alignment
     L        : Alignment
@@ -23,86 +25,417 @@ signature
     BOXFONT  : Font * Box -> BoxFont
     BOXCOLOR : Color -> Bpxfont
 
-strategies
 
+strategies
   latex2text =
-      bottomup(try(Latex2text ) )
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex2text", "28,2,29,32")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "29,6,29,32")
+    ; bottomup(
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "29,15,29,30")
+        ; try(
+            s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "29,19,29,28") ; Latex2text
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex2text", "28,2,29,32")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex2text", "28,2,29,32")
+      ; fail
 
   Latex2text =
-        ?ALLTT(boxes);                !["\\begin{alltt}\n", boxes, "\n\\end{alltt}\n"]
-     <+ ?BOXENV( [], boxes );         !["\\begin{boxenv}%\n", boxes , "%\n\\end{boxenv}\n"]
-     <+ ?BOXENV( [width], boxes );    !["\\begin{boxenv}{", width, "}%\n", boxes , "%\n\\end{boxenv}\n"]
-     <+ ?HBOX( hs, boxes );           !["\\begin{HBOX}{", hs, "}%\n", boxes, "%\n\\end{HBOX}%\n"]
-     <+ ?VBOX( vs, is, boxes );       !["\\begin{VBOX}{", vs, "}{", is, "}%\n", boxes, "%\n\\end{VBOX}%\n"]
-     <+ ?HVBOX( hs, vs, is, boxes );  !["\\begin{HVBOX}{", hs, "}{", vs, "}{", is, "}%\n", boxes, "%\n\\end{HVBOX}%\n"]
-     <+ ?ABOX( tdef, boxes );         !["\\begin{ABOX}{", tdef, "}%\n", boxes, "\\crcr%\n\\end{ABOX}%\n"]
-     <+ ?ALTBOX( b1, b2 );            !["\\begin{ALTBOX}{%\n", b1, "%\n}", b2, "%\n}%\n\\end{ALTBOX}%\n"]
-     <+ ?CBOX( b );                   !["%\n\\begin{latextext}%\n", b, "%\n\\end{latextext}%\n"]
-     <+ ?LBOX( s, b ); <is-int>s;     !["\\\ncopies{", <int-to-string>s, "}{", b, "}%"]
-     <+ ?LBOX("=", b );               !["\\begin{LBOX}{=}%\n", b, "%\n\\end{LBOX}%\n"]
-     <+ ?LBOX( s, b );                !["\\begin{LBOX}{", s, "}%\n", b, "%\n\\end{LBOX}%\n"]
-     <+ ?LBLBOX( l, b );              !["\\boxlabel{", l, "}", b]
-     <+ ?REFBOX( l, b );              !["\\boxref{", l, "}{", b, "}" ]
-     <+ ?BOXFONT(KW(), b );           !["\\KWf{", b, "}"]
-     <+ ?BOXFONT(VAR(), b );          !["\\VARf{", b, "}"]
-     <+ ?BOXFONT(NUM(), b );          !["\\NUMf{", b, "}"]
-     <+ ?BOXFONT(MATH(), b );         !["\\MATHf{", b, "}"]
-     <+ ?BOXFONT("sf", b );           !["\\textsf{", b, "}"]
-     <+ ?BOXFONT("rm", b );           !["\\textrm{", b, "}"]
-     <+ ?BOXFONT("tt", b );           !["\\texttt{", b, "}"]
-     <+ ?BOXFONT("md", b );           !["\\textmd{", b, "}"]
-     <+ ?BOXFONT("bf", b );           !["\\textbf{", b, "}"]
-     <+ ?BOXFONT("up", b );           !["\\textup{", b, "}"]
-     <+ ?BOXFONT("it", b );           !["\\textit{", b, "}"]
-     <+ ?BOXFONT("sc", b );           !["\\textsc{", b, "}"]
-     <+ ?BOXFONT("sl", b );           !["\\textsl{", b, "}"]
-     <+ ?BOXFONT("em", b );           !["\\emph{", b, "}"]
-     <+ ?BOXFONT("tiny", b );         !["\\tiny{", b, "}"]
-     <+ ?BOXFONT("scriptsize", b );   !["\\scriptsize{", b, "}"]
-     <+ ?BOXFONT("footnotesize", b ); !["\\footnotesize{", b, "}"]
-     <+ ?BOXFONT("small", b );        !["\\small{", b, "}"]
-     <+ ?BOXFONT("normalsize", b );   !["\\normalsize{", b, "}"]
-     <+ ?BOXFONT("large", b );        !["\\large{", b, "}"]
-     <+ ?BOXFONT("Large", b );        !["\\Large{", b, "}"]
-     <+ ?BOXFONT("LARGE", b );        !["\\LARGE{", b, "}"]
-     <+ ?BOXFONT("huge", b );         !["\\huge{", b, "}"]
-     <+ ?BOXFONT("Huge", b );         !["\\Huge{", b, "}"]
-     <+ ?BOXFONT(BOXCOLOR(c),b);      !["\\textcolor{", c, "}{", b, "}"]
-     <+ ?C();                         !"\\hfill#\\hfill"
-     <+ ?R();                         !"\\hfill#"
-     <+ ?L();                         !"#\\hfill"
-     <+ ?EOR();                       !"\\cr"
-     <+ ?CSEP();                      !"&"
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "Latex2text", "31,2,75,41")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "32,8,75,41")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "32,8,32,85")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "32,8,32,20")
+          ; ?ALLTT(boxes))
+       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "32,38,32,85")
+       ; !["\\begin{alltt}\n", boxes, "\n\\end{alltt}\n"]
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "33,8,75,41")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "33,8,33,90")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "33,8,33,27")
+                ; ?BOXENV([], boxes))
+             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "33,38,33,90")
+             ; !["\\begin{boxenv}%\n", boxes, "%\n\\end{boxenv}\n"]
+             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "34,8,75,41")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "34,8,34,103")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "34,8,34,32")
+                      ; ?BOXENV([width], boxes))
+                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "34,38,34,103")
+                   ; !["\\begin{boxenv}{", width, "}%\n", boxes, "%\n\\end{boxenv}\n"]
+                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "35,8,75,41")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "35,8,35,96")
+                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "35,8,35,25")
+                            ; ?HBOX(hs, boxes))
+                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "35,38,35,96")
+                         ; !["\\begin{HBOX}{", hs, "}%\n", boxes, "%\n\\end{HBOX}%\n"]
+                         <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "36,8,75,41")
+                            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "36,8,36,106")
+                               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "36,8,36,29")
+                                  ; ?VBOX(vs, is, boxes))
+                               ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "36,38,36,106")
+                               ; ![ "\\begin{VBOX}{"
+                                  , vs
+                                  , "}{"
+                                  , is
+                                  , "}%\n"
+                                  , boxes
+                                  , "%\n\\end{VBOX}%\n"
+                                  ]
+                               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "37,8,75,41")
+                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "37,8,37,118")
+                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "37,8,37,34")
+                                        ; ?HVBOX(hs, vs, is, boxes))
+                                     ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "37,38,37,118")
+                                     ; ![ "\\begin{HVBOX}{"
+                                        , hs
+                                        , "}{"
+                                        , vs
+                                        , "}{"
+                                        , is
+                                        , "}%\n"
+                                        , boxes
+                                        , "%\n\\end{HVBOX}%\n"
+                                        ]
+                                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "38,8,75,41")
+                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "38,8,38,104")
+                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "38,8,38,27")
+                                              ; ?ABOX(tdef, boxes))
+                                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "38,38,38,104")
+                                           ; !["\\begin{ABOX}{", tdef, "}%\n", boxes, "\\crcr%\n\\end{ABOX}%\n"]
+                                           <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "39,8,75,41")
+                                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "39,8,39,104")
+                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "39,8,39,24")
+                                                    ; ?ALTBOX(b1, b2))
+                                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "39,38,39,104")
+                                                 ; !["\\begin{ALTBOX}{%\n", b1, "%\n}", b2, "%\n}%\n\\end{ALTBOX}%\n"]
+                                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "40,8,75,41")
+                                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "40,8,40,95")
+                                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "40,8,40,17")
+                                                          ; ?CBOX(b))
+                                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "40,38,40,95")
+                                                       ; !["%\n\\begin{latextext}%\n", b, "%\n\\end{latextext}%\n"]
+                                                       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,8,75,41")
+                                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,8,41,86")
+                                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,8,41,20")
+                                                                ; ?LBOX(s, b))
+                                                             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,23,41,86")
+                                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,23,41,31")
+                                                                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,24,41,29") ; is-int)> s)
+                                                             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,38,41,86")
+                                                             ; ![ "\\\ncopies{"
+                                                                , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "41,56,41,68") ; int-to-string> s
+                                                                , "}{"
+                                                                , b
+                                                                , "}%"
+                                                                ]
+                                                             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "42,8,75,41")
+                                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "42,8,42,85")
+                                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "42,8,42,21")
+                                                                      ; ?LBOX("=", b))
+                                                                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "42,38,42,85")
+                                                                   ; !["\\begin{LBOX}{=}%\n", b, "%\n\\end{LBOX}%\n"]
+                                                                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "43,8,75,41")
+                                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "43,8,43,91")
+                                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "43,8,43,20")
+                                                                            ; ?LBOX(s, b))
+                                                                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "43,38,43,91")
+                                                                         ; !["\\begin{LBOX}{", s, "}%\n", b, "%\n\\end{LBOX}%\n"]
+                                                                         <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "44,8,75,41")
+                                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "44,8,44,64")
+                                                                               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "44,8,44,22")
+                                                                                  ; ?LBLBOX(l, b))
+                                                                               ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "44,38,44,64")
+                                                                               ; !["\\boxlabel{", l, "}", b]
+                                                                               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "45,8,75,41")
+                                                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "45,8,45,69")
+                                                                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "45,8,45,22")
+                                                                                        ; ?REFBOX(l, b))
+                                                                                     ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "45,38,45,69")
+                                                                                     ; !["\\boxref{", l, "}{", b, "}"]
+                                                                                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "46,8,75,41")
+                                                                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "46,8,46,56")
+                                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "46,8,46,25")
+                                                                                              ; ?BOXFONT(KW(), b))
+                                                                                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "46,38,46,56")
+                                                                                           ; !["\\KWf{", b, "}"]
+                                                                                           <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "47,8,75,41")
+                                                                                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "47,8,47,57")
+                                                                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "47,8,47,26")
+                                                                                                    ; ?BOXFONT(VAR(), b))
+                                                                                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "47,38,47,57")
+                                                                                                 ; !["\\VARf{", b, "}"]
+                                                                                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "48,8,75,41")
+                                                                                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "48,8,48,57")
+                                                                                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "48,8,48,26")
+                                                                                                          ; ?BOXFONT(NUM(), b))
+                                                                                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "48,38,48,57")
+                                                                                                       ; !["\\NUMf{", b, "}"]
+                                                                                                       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "49,8,75,41")
+                                                                                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "49,8,49,58")
+                                                                                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "49,8,49,27")
+                                                                                                                ; ?BOXFONT(MATH(), b))
+                                                                                                             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "49,38,49,58")
+                                                                                                             ; !["\\MATHf{", b, "}"]
+                                                                                                             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "50,8,75,41")
+                                                                                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "50,8,50,59")
+                                                                                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "50,8,50,25")
+                                                                                                                      ; ?BOXFONT("sf", b))
+                                                                                                                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "50,38,50,59")
+                                                                                                                   ; !["\\textsf{", b, "}"]
+                                                                                                                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "51,8,75,41")
+                                                                                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "51,8,51,59")
+                                                                                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "51,8,51,25")
+                                                                                                                            ; ?BOXFONT("rm", b))
+                                                                                                                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "51,38,51,59")
+                                                                                                                         ; !["\\textrm{", b, "}"]
+                                                                                                                         <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "52,8,75,41")
+                                                                                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "52,8,52,59")
+                                                                                                                               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "52,8,52,25")
+                                                                                                                                  ; ?BOXFONT("tt", b))
+                                                                                                                               ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "52,38,52,59")
+                                                                                                                               ; !["\\texttt{", b, "}"]
+                                                                                                                               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "53,8,75,41")
+                                                                                                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "53,8,53,59")
+                                                                                                                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "53,8,53,25")
+                                                                                                                                        ; ?BOXFONT("md", b))
+                                                                                                                                     ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "53,38,53,59")
+                                                                                                                                     ; !["\\textmd{", b, "}"]
+                                                                                                                                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "54,8,75,41")
+                                                                                                                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "54,8,54,59")
+                                                                                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "54,8,54,25")
+                                                                                                                                              ; ?BOXFONT("bf", b))
+                                                                                                                                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "54,38,54,59")
+                                                                                                                                           ; !["\\textbf{", b, "}"]
+                                                                                                                                           <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "55,8,75,41")
+                                                                                                                                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "55,8,55,59")
+                                                                                                                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "55,8,55,25")
+                                                                                                                                                    ; ?BOXFONT("up", b))
+                                                                                                                                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "55,38,55,59")
+                                                                                                                                                 ; !["\\textup{", b, "}"]
+                                                                                                                                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "56,8,75,41")
+                                                                                                                                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "56,8,56,59")
+                                                                                                                                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "56,8,56,25")
+                                                                                                                                                          ; ?BOXFONT("it", b))
+                                                                                                                                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "56,38,56,59")
+                                                                                                                                                       ; !["\\textit{", b, "}"]
+                                                                                                                                                       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "57,8,75,41")
+                                                                                                                                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "57,8,57,59")
+                                                                                                                                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "57,8,57,25")
+                                                                                                                                                                ; ?BOXFONT("sc", b))
+                                                                                                                                                             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "57,38,57,59")
+                                                                                                                                                             ; !["\\textsc{", b, "}"]
+                                                                                                                                                             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "58,8,75,41")
+                                                                                                                                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "58,8,58,59")
+                                                                                                                                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "58,8,58,25")
+                                                                                                                                                                      ; ?BOXFONT("sl", b))
+                                                                                                                                                                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "58,38,58,59")
+                                                                                                                                                                   ; !["\\textsl{", b, "}"]
+                                                                                                                                                                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "59,8,75,41")
+                                                                                                                                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "59,8,59,57")
+                                                                                                                                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "59,8,59,25")
+                                                                                                                                                                            ; ?BOXFONT("em", b))
+                                                                                                                                                                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "59,38,59,57")
+                                                                                                                                                                         ; !["\\emph{", b, "}"]
+                                                                                                                                                                         <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "60,8,75,41")
+                                                                                                                                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "60,8,60,57")
+                                                                                                                                                                               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "60,8,60,27")
+                                                                                                                                                                                  ; ?BOXFONT("tiny", b))
+                                                                                                                                                                               ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "60,38,60,57")
+                                                                                                                                                                               ; !["\\tiny{", b, "}"]
+                                                                                                                                                                               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "61,8,75,41")
+                                                                                                                                                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "61,8,61,63")
+                                                                                                                                                                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "61,8,61,33")
+                                                                                                                                                                                        ; ?BOXFONT("scriptsize", b))
+                                                                                                                                                                                     ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "61,38,61,63")
+                                                                                                                                                                                     ; !["\\scriptsize{", b, "}"]
+                                                                                                                                                                                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "62,8,75,41")
+                                                                                                                                                                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "62,8,62,65")
+                                                                                                                                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "62,8,62,35")
+                                                                                                                                                                                              ; ?BOXFONT("footnotesize", b))
+                                                                                                                                                                                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "62,38,62,65")
+                                                                                                                                                                                           ; !["\\footnotesize{", b, "}"]
+                                                                                                                                                                                           <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "63,8,75,41")
+                                                                                                                                                                                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "63,8,63,58")
+                                                                                                                                                                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "63,8,63,28")
+                                                                                                                                                                                                    ; ?BOXFONT("small", b))
+                                                                                                                                                                                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "63,38,63,58")
+                                                                                                                                                                                                 ; !["\\small{", b, "}"]
+                                                                                                                                                                                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "64,8,75,41")
+                                                                                                                                                                                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "64,8,64,63")
+                                                                                                                                                                                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "64,8,64,33")
+                                                                                                                                                                                                          ; ?BOXFONT("normalsize", b))
+                                                                                                                                                                                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "64,38,64,63")
+                                                                                                                                                                                                       ; !["\\normalsize{", b, "}"]
+                                                                                                                                                                                                       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "65,8,75,41")
+                                                                                                                                                                                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "65,8,65,58")
+                                                                                                                                                                                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "65,8,65,28")
+                                                                                                                                                                                                                ; ?BOXFONT("large", b))
+                                                                                                                                                                                                             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "65,38,65,58")
+                                                                                                                                                                                                             ; !["\\large{", b, "}"]
+                                                                                                                                                                                                             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "66,8,75,41")
+                                                                                                                                                                                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "66,8,66,58")
+                                                                                                                                                                                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "66,8,66,28")
+                                                                                                                                                                                                                      ; ?BOXFONT("Large", b))
+                                                                                                                                                                                                                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "66,38,66,58")
+                                                                                                                                                                                                                   ; !["\\Large{", b, "}"]
+                                                                                                                                                                                                                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "67,8,75,41")
+                                                                                                                                                                                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "67,8,67,58")
+                                                                                                                                                                                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "67,8,67,28")
+                                                                                                                                                                                                                            ; ?BOXFONT("LARGE", b))
+                                                                                                                                                                                                                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "67,38,67,58")
+                                                                                                                                                                                                                         ; !["\\LARGE{", b, "}"]
+                                                                                                                                                                                                                         <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "68,8,75,41")
+                                                                                                                                                                                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "68,8,68,57")
+                                                                                                                                                                                                                               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "68,8,68,27")
+                                                                                                                                                                                                                                  ; ?BOXFONT("huge", b))
+                                                                                                                                                                                                                               ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "68,38,68,57")
+                                                                                                                                                                                                                               ; !["\\huge{", b, "}"]
+                                                                                                                                                                                                                               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "69,8,75,41")
+                                                                                                                                                                                                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "69,8,69,57")
+                                                                                                                                                                                                                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "69,8,69,27")
+                                                                                                                                                                                                                                        ; ?BOXFONT("Huge", b))
+                                                                                                                                                                                                                                     ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "69,38,69,57")
+                                                                                                                                                                                                                                     ; !["\\Huge{", b, "}"]
+                                                                                                                                                                                                                                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "70,8,75,41")
+                                                                                                                                                                                                                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "70,8,70,71")
+                                                                                                                                                                                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "70,8,70,30")
+                                                                                                                                                                                                                                              ; ?BOXFONT(BOXCOLOR(c), b))
+                                                                                                                                                                                                                                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "70,38,70,71")
+                                                                                                                                                                                                                                           ; !["\\textcolor{", c, "}{", b, "}"]
+                                                                                                                                                                                                                                           <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "71,8,75,41")
+                                                                                                                                                                                                                                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "71,8,71,55")
+                                                                                                                                                                                                                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "71,8,71,11")
+                                                                                                                                                                                                                                                    ; ?C())
+                                                                                                                                                                                                                                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "71,38,71,55")
+                                                                                                                                                                                                                                                 ; !"\\hfill#\\hfill"
+                                                                                                                                                                                                                                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "72,8,75,41")
+                                                                                                                                                                                                                                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "72,8,72,48")
+                                                                                                                                                                                                                                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "72,8,72,11")
+                                                                                                                                                                                                                                                          ; ?R())
+                                                                                                                                                                                                                                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "72,38,72,48")
+                                                                                                                                                                                                                                                       ; !"\\hfill#"
+                                                                                                                                                                                                                                                       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "73,8,75,41")
+                                                                                                                                                                                                                                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "73,8,73,48")
+                                                                                                                                                                                                                                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "73,8,73,11")
+                                                                                                                                                                                                                                                                ; ?L())
+                                                                                                                                                                                                                                                             ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "73,38,73,48")
+                                                                                                                                                                                                                                                             ; !"#\\hfill"
+                                                                                                                                                                                                                                                             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "74,8,75,41")
+                                                                                                                                                                                                                                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "74,8,74,44")
+                                                                                                                                                                                                                                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "74,8,74,13")
+                                                                                                                                                                                                                                                                      ; ?EOR())
+                                                                                                                                                                                                                                                                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "74,38,74,44")
+                                                                                                                                                                                                                                                                   ; !"\\cr"
+                                                                                                                                                                                                                                                                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "75,8,75,41")
+                                                                                                                                                                                                                                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "75,8,75,14")
+                                                                                                                                                                                                                                                                         ; ?CSEP())
+                                                                                                                                                                                                                                                                      ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "75,38,75,41")
+                                                                                                                                                                                                                                                                      ; !"&")))))))))))))))))))))))))))))))))))))))))))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "Latex2text", "31,2,75,41")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "Latex2text", "31,2,75,41")
+      ; fail
 
-  latex-string = 
-        latex-abbrev 
-     <+ string-as-chars(escape-special-characters;latex-quotes)
+  latex-string =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-string", "77,2,79,62")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "78,8,79,62")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "78,8,78,19") ; latex-abbrev
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "79,8,79,62")
+          ; string-as-chars(
+              s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "79,24,79,61")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "79,24,79,48") ; escape-special-characters)
+              ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "79,50,79,61")
+              ; latex-quotes
+            ))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-string", "77,2,79,62")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-string", "77,2,79,62")
+      ; fail
 
-  latex-abbrev = <table-get> ("latex-abbrevs", <id>)
+  latex-abbrev =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-abbrev", "81,2,81,51")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "81,17,81,51")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "81,18,81,26") ; table-get)> ( "latex-abbrevs"
+                                                                                                  , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "81,48,81,49") ; id>
+                                                                                                  )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-abbrev", "81,2,81,51")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-abbrev", "81,2,81,51")
+      ; fail
 
   escape-special-characters =
-   map(try(
-            \32 -> <explode-string>"\\boxspace{}" \ /* space */
-         +  \35 -> <explode-string>"\\#" \
-         +  \36 -> <explode-string>"\\$" \
-         +  \37 -> <explode-string>"\\%" \
-         +  \38 -> <explode-string>"\\&" \
-         +  \45 -> <explode-string>"\\mbox{-}" \ /* - */
-         +  \60 -> <explode-string>"\\ensuremath{<}" \
-         +  \62 -> <explode-string>"\\ensuremath{>}" \
-         +  \92 -> <explode-string>"\\ensuremath{\\backslash}" \
-         +  \94 -> <explode-string>"\\^{}" \
-         +  \95 -> <explode-string>"\\_" \
-         + \123 -> <explode-string>"\\{" \
-         + \124 -> <explode-string>"\\ensuremath{\\vert}" \
-         + \125 -> <explode-string>"\\}" \
-         + \126 -> <explode-string>"\\~{}" \
-        ))
-   ; flat-list
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "escape-special-characters", "83,2,101,13")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "84,3,101,13")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "84,3,100,9")
+       ; map(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "84,7,100,8")
+           ; try(
+               s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "85,12,99,43")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "85,12,85,50")
+                  ; \ 32 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "85,20,85,33") ; explode-string> "\\boxspace{}" \
+                  + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "86,12,99,43")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "86,12,86,41")
+                       ; \ 35 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "86,20,86,33") ; explode-string> "\\#" \
+                       + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "87,12,99,43")
+                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "87,12,87,41")
+                            ; \ 36 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "87,20,87,33") ; explode-string> "\\$" \
+                            + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "88,12,99,43")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "88,12,88,41")
+                                 ; \ 37 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "88,20,88,33") ; explode-string> "\\%" \
+                                 + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "89,12,99,43")
+                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "89,12,89,41")
+                                      ; \ 38 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "89,20,89,33") ; explode-string> "\\&" \
+                                      + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "90,12,99,43")
+                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "90,12,90,47")
+                                           ; \ 45 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "90,20,90,33") ; explode-string> "\\mbox{-}" \
+                                           + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "91,12,99,43")
+                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "91,12,91,53")
+                                                ; \ 60 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "91,20,91,33") ; explode-string> "\\ensuremath{<}" \
+                                                + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "92,12,99,43")
+                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "92,12,92,53")
+                                                     ; \ 62 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "92,20,92,33") ; explode-string> "\\ensuremath{>}" \
+                                                     + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "93,12,99,43")
+                                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "93,12,93,63")
+                                                          ; \ 92 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "93,20,93,33") ; explode-string> "\\ensuremath{\\backslash}" \
+                                                          + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "94,12,99,43")
+                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "94,12,94,43")
+                                                               ; \ 94 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "94,20,94,33") ; explode-string> "\\^{}" \
+                                                               + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "95,12,99,43")
+                                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "95,12,95,41")
+                                                                    ; \ 95 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "95,20,95,33") ; explode-string> "\\_" \
+                                                                    + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "96,11,99,43")
+                                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "96,11,96,41")
+                                                                         ; \ 123 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "96,20,96,33") ; explode-string> "\\{" \
+                                                                         + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "97,11,99,43")
+                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "97,11,97,58")
+                                                                              ; \ 124 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "97,20,97,33") ; explode-string> "\\ensuremath{\\vert}" \
+                                                                              + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "98,11,99,43")
+                                                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "98,11,98,41")
+                                                                                   ; \ 125 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "98,20,98,33") ; explode-string> "\\}" \
+                                                                                   + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "99,11,99,43")
+                                                                                     ; \ 126 -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "99,20,99,33") ; explode-string> "\\~{}" \))))))))))))))
+             )
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "101,5,101,13")
+    ; flat-list
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "escape-special-characters", "83,2,101,13")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "escape-special-characters", "83,2,101,13")
+      ; fail
 
   latex-quotes =
-     listtd( try( replace-quotes ) )
-            
-  // replaces "abcd\"efg\"hij" to "abcd``efg''hij"
-  replace-quotes:
-    ['"' | xs ] -> ['`', '`' | <at-suffix( \ ['"'| xs'] -> ['\'', '\'' | xs'] \ ) > xs]
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-quotes", "103,2,104,35")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "104,5,104,35")
+    ; listtd(
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "104,13,104,33")
+        ; try(
+            s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "104,18,104,31") ; replace-quotes
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-quotes", "103,2,104,35")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "latex-quotes", "103,2,104,35")
+      ; fail
+
+  replace-quotes :
+    ['"'|xs] -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "replace-quotes", "107,2,108,86")> ['`', '`'|<s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "108,32,108,80")
+                                                                                                                            ; at-suffix(
+                                                                                                                                s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "108,43,108,78")
+                                                                                                                                ; \ ['"'|xs'] -> ['\'', '\''|xs'] \
+                                                                                                                              )> xs]
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "replace-quotes", "107,2,108,86")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex-lib.str", "replace-quotes", "107,2,108,86")
+             ; fail

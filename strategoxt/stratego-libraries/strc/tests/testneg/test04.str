@@ -1,21 +1,62 @@
 module test77
-imports libstrateg-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstrateg-lib
+
 
 strategies
-
-  main = 
-    testbagof
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "main", "6,2,8,28")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "7,4,8,28")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "7,4,7,12") ; testbagof)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "8,6,8,28")
     ; dr-print-rule-set(|"R")
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "main", "6,2,8,28")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "main", "6,2,8,28")
+      ; fail
 
   testbagof =
-    rules(R:+ "foo" -> "bar")
-    ; where(
-        <bagof-R> "foo"
-        ; debug(!"<bagof-R> foo: ")
-        ; <R> "foo"
-        ; debug(!"<R> foo: ")
-      )
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "testbagof", "10,2,17,6")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "11,4,17,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "11,4,11,28")
+       ; rules ( R :+
+                   "foo" -> "bar" ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "12,6,17,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "13,8,16,28")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "13,8,13,22")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "13,9,13,15") ; bagof-R)> "foo")
+            ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "14,10,16,28")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "14,10,14,34")
+               ; debug(
+                   s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "14,16,14,33")
+                   ; !"<bagof-R> foo: "
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "15,10,16,28")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "15,10,15,18")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "15,11,15,11") ; R)> "foo")
+            ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "16,10,16,28")
+            ; debug(
+                s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "16,16,16,27")
+                ; !"<R> foo: "
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "testbagof", "10,2,17,6")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "testbagof", "10,2,17,6")
+      ; fail
 
   unused-strat =
-    where(!"something" => m)
-    ; rules(R:+ m -> "boom")
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "unused-strat", "19,2,21,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "20,4,21,27")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "20,4,20,27")
+       ; where(s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "20,10,20,26")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "20,10,20,21")
+                  ; !"something") => m))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "21,6,21,27")
+    ; rules ( R :+
+                m -> "boom" )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "unused-strat", "19,2,21,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test04.str", "unused-strat", "19,2,21,27")
+      ; fail

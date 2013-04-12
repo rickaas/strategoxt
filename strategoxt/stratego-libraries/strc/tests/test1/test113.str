@@ -1,87 +1,148 @@
-/**
- * Test for $[ string quotation syntax ] in combination with tabs (STR-783.)
- * Sander likes tabs.
- */
 module test113
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
 
 imports
   libstratego-lib
 
-strategies
-  
-	show(|s) = where(write-to-string; debug(!s)); say(id)
 
-	main =
-		s := $[ Sorry! ];
-		!$[		I like tabs.
+strategies
+  show(|s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "show", "12,1,12,53")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,12,12,53")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,12,12,44")
+       ; where(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,18,12,43")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,18,12,32") ; write-to-string)
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,35,12,43")
+               ; debug(
+                   s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,41,12,42") ; !s
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,47,12,53")
+    ; say(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "12,51,12,52") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "show", "12,1,12,53")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "show", "12,1,12,53")
+      ; fail
+
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "main", "14,1,87,0")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "15,2,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "15,2,15,17")
+       ; s := $[ Sorry! ])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "16,2,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "16,2,18,7")
+       ; !$[		I like tabs.
 					[s]
-				[s]];
-		show(|1) => x =>
-"I like tabs.
+				[s]])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "19,2,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "19,2,22,6")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "19,2,19,14")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "19,2,19,9")
+             ; show(|1)) => x) => "I like tabs.
 	Sorry!
-Sorry!";
-        !$[ Sometimes, I like tabs with my spaces.
+Sorry!")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "23,8,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "23,8,25,15")
+       ; !$[ Sometimes, I like tabs with my spaces.
             	[x]
-            [s]];
-		show(|2) =>
-"Sometimes, I like tabs with my spaces.
+            [s]])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "26,2,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "26,2,31,6")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "26,2,26,9")
+          ; show(|2)) => "Sometimes, I like tabs with my spaces.
 	I like tabs.
 		Sorry!
 	Sorry!
-Sorry!";
-		!$[ Sometimes, I even like spaces with my tabs.
+Sorry!")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "32,2,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "32,2,35,14")
+       ; !$[ Sometimes, I even like spaces with my tabs.
 			  Makes people angry and confused sometimes.
 		      Again, [s] Shame on me. [s]
-		    [s] [s] ];
-		show(|3) =>
-"Sometimes, I even like spaces with my tabs.
+		    [s] [s] ])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "36,2,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "36,2,40,13")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "36,2,36,9")
+          ; show(|3)) => "Sometimes, I even like spaces with my tabs.
   Makes people angry and confused sometimes.
   Again, Sorry! Shame on me. Sorry!
-Sorry! Sorry!";
-	n := $[	1
-		2 ];
-	!$[
+Sorry! Sorry!")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "41,1,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "41,1,42,4")
+       ; n := $[	1
+		2 ])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "43,1,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "43,1,47,1")
+       ; !$[
 		tabs go here
 			0
 			[n]
-	]; show(|4) =>
-"
+	])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "47,4,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "47,4,53,0")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "47,4,47,11")
+          ; show(|4)) => "
 	tabs go here
 		0
 		1
 		2
-";
-	!$[	tabs go here
+")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "54,1,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "54,1,57,1")
+       ; !$[	tabs go here
 			0
 			[n]
-	]; show(|5) =>
-"tabs go here
+	])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "57,4,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "57,4,62,0")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "57,4,57,11")
+          ; show(|5)) => "tabs go here
 	0
 	1
 	2
-";
-	!$[ tabs go here
+")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "63,1,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "63,1,66,1")
+       ; !$[ tabs go here
 			0
 			[n]
-	]; show(|6) =>
-"tabs go here
+	])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "66,4,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "66,4,71,0")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "66,4,66,11")
+          ; show(|6)) => "tabs go here
 	0
 	1
 	2
-";
-	!$[ and now with a
+")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "72,1,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "72,1,75,1")
+       ; !$[ and now with a
         
           blank line
-	]; show(|7) =>
-"and now with a
+	])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "75,4,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "75,4,79,0")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "75,4,75,11")
+          ; show(|7)) => "and now with a
 
   blank line
-";
-	!$[ and now with another
+")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "80,1,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "80,1,83,1")
+       ; !$[ and now with another
 
           blank line
-	]; show(|8) =>
-"and now with another
+	])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "83,4,87,0")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "83,4,83,11")
+       ; show(|8)) => "and now with another
 
   blank line
 "
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "main", "14,1,87,0")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test113.str", "main", "14,1,87,0")
+      ; fail

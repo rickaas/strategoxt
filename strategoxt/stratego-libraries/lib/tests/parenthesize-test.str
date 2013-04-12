@@ -1,54 +1,175 @@
 module parenthesize-test
-imports libstratego-lib
-strategies
 
-  main-parenthesize-test = 
-    test-suite(!"parenthesize-test",
-      parenthesize-tests
-    )
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
+  main-parenthesize-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "main-parenthesize-test", "5,2,8,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "6,4,8,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "6,15,6,34")
+        ; !"parenthesize-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "7,6,7,23") ; parenthesize-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "main-parenthesize-test", "5,2,8,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "main-parenthesize-test", "5,2,8,4")
+      ; fail
 
   parenthesize-tests =
-    apply-test(!"Unary construct"
-    , test-parenthesize
-    , !Uminus(Plus(Int(1), Int(2)))
-    , !Uminus(Paren(Plus(Int(1), Int(2))))
-    )
-  ; apply-test(!"Unary construct"
-    , test-parenthesize
-    , !Uminus(Uminus(Int(2)))
-    , !Uminus(Uminus(Int(2)))
-    )
-  ; apply-test(!"Binary construct"
-    , test-parenthesize
-    , !Times(Plus(Int(1), Int(2)), Or(Int(1), Int(2)))
-    , !Times(Paren(Plus(Int(1), Int(2))), Paren(Or(Int(1), Int(2))))
-    )
-  ; apply-test(!"Binary construct. left"
-    , test-parenthesize
-    , !Plus(Int(1), Plus(Int(2), Int(3)))
-    , !Plus(Int(1), Paren(Plus(Int(2), Int(3))))
-    )
-
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "parenthesize-tests", "10,2,30,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "11,4,30,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "11,4,15,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "11,15,11,32")
+           ; !"Unary construct"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "12,6,12,22") ; test-parenthesize
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "13,6,13,34")
+           ; !Uminus(
+                Plus(
+                  Int(1)
+                , Int(2)
+                )
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "14,6,14,41")
+           ; !Uminus(
+                Paren(
+                  Plus(
+                    Int(1)
+                  , Int(2)
+                  )
+                )
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "16,4,30,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "16,4,20,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "16,15,16,32")
+           ; !"Unary construct"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "17,6,17,22") ; test-parenthesize
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "18,6,18,28")
+           ; !Uminus(Uminus(Int(2)))
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "19,6,19,28")
+           ; !Uminus(Uminus(Int(2)))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "21,4,30,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "21,4,25,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "21,15,21,33")
+           ; !"Binary construct"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "22,6,22,22") ; test-parenthesize
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "23,6,23,53")
+           ; !Times(
+                Plus(
+                  Int(1)
+                , Int(2)
+                )
+              , Or(
+                  Int(1)
+                , Int(2)
+                )
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "24,6,24,67")
+           ; !Times(
+                Paren(
+                  Plus(
+                    Int(1)
+                  , Int(2)
+                  )
+                )
+              , Paren(
+                  Or(
+                    Int(1)
+                  , Int(2)
+                  )
+                )
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "26,4,30,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "26,15,26,39")
+        ; !"Binary construct. left"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "27,6,27,22") ; test-parenthesize
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "28,6,28,40")
+        ; !Plus(
+             Int(1)
+           , Plus(
+               Int(2)
+             , Int(3)
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "29,6,29,47")
+        ; !Plus(
+             Int(1)
+           , Paren(
+               Plus(
+                 Int(2)
+               , Int(3)
+               )
+             )
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "parenthesize-tests", "10,2,30,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "parenthesize-tests", "10,2,30,4")
+      ; fail
 
   test-parenthesize =
-    parenthesize(!Paren(<id>), test-priorities)
-   
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "test-parenthesize", "33,2,34,46")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "34,4,34,46")
+    ; parenthesize(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "34,17,34,28")
+        ; !Paren(
+             <s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "34,25,34,26") ; id>
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "34,31,34,45") ; test-priorities
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "test-parenthesize", "33,2,34,46")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "test-parenthesize", "33,2,34,46")
+      ; fail
+
   test-priorities =
-     ![(None,			["Uminus","FieldVar","Subscript"]),
-       (Some("left"),		["Power"]),
-       (Some("left"),		["Times","Divide"]),
-       (Some("left"),		["Plus","Minus"]),
-       (Some("non-assoc"),	["CPlus","CMinus","Eq","Neq","Gt","Lt","Geq","Leq"]),
-       (Some("left"),		["And"]),
-       (Some("left"),		["Or"]),
-       (None,			["Array"]),
-       (None,			["Assign"]),
-       (Some("right"),		["If","While","For"])]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "test-priorities", "36,2,46,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "37,5,46,45")
+    ; ![ (None, ["Uminus", "FieldVar", "Subscript"])
+       , (Some("left"), ["Power"])
+       , ( Some("left")
+         , ["Times", "Divide"]
+         )
+       , ( Some("left")
+         , ["Plus", "Minus"]
+         )
+       , ( Some("non-assoc")
+         , [ "CPlus"
+           , "CMinus"
+           , "Eq"
+           , "Neq"
+           , "Gt"
+           , "Lt"
+           , "Geq"
+           , "Leq"
+           ]
+         )
+       , (Some("left"), ["And"])
+       , (Some("left"), ["Or"])
+       , (None, ["Array"])
+       , (None, ["Assign"])
+       , ( Some("right")
+         , ["If", "While", "For"]
+         )
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "test-priorities", "36,2,46,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/parenthesize-test.str", "test-priorities", "36,2,46,45")
+      ; fail
+
 
 signature
   constructors
     Paren  : Exp -> Exp
-
     Uminus : Exp -> Exp
     Power  : Exp * Exp -> Exp
     Times  : Exp * Exp -> Exp
@@ -68,4 +189,3 @@ signature
     And    : Exp * Exp -> Exp
     Or     : Exp * Exp -> Exp
     Int    : Int -> Exp
-

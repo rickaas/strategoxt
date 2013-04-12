@@ -1,12 +1,15 @@
-/**
- * Strategies for logging 
- */
-
 module util/log
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   collection/tuple/cons
   collection/tuple/common
   collection/list/common
+
+
 signature
   constructors
     Emergency : Severity
@@ -18,188 +21,501 @@ signature
     Info      : Severity
     Debug     : Severity
     Vomit     : Severity
-    
-strategies
 
+
+strategies
   debug-area(s|msg) =
-      log(|Debug(), <conc-strings> ("entering area ", msg))
-    ; s
-    ; log(|Debug(), <conc-strings> ("leaving area ",  msg))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "debug-area", "24,2,27,58")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "25,6,27,58")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "25,6,25,58")
+       ; log(
+         | Debug()
+         , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "25,21,25,32") ; conc-strings> ("entering area ", msg)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "26,6,27,58")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "26,6,26,6") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "27,6,27,58")
+    ; log(
+      | Debug()
+      , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "27,21,27,32") ; conc-strings> ("leaving area ", msg)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "debug-area", "24,2,27,58")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "debug-area", "24,2,27,58")
+      ; fail
 
   risky(s|msg) =
-    risky(s|Error(), msg)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "risky", "29,2,30,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "30,4,30,24")
+    ; risky(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "30,10,30,10") ; s
+      | Error()
+      , msg
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "risky", "29,2,30,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "risky", "29,2,30,24")
+      ; fail
 
   risky(s|severity, msg) =
-    restore(s, log(|severity, msg, <id>))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "risky", "32,2,33,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "33,4,33,40")
+    ; restore(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "33,12,33,12") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "33,15,33,39")
+        ; log(
+          | severity
+          , msg
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "33,36,33,37") ; id>
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "risky", "32,2,33,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "risky", "32,2,33,40")
+      ; fail
+
 
 strategies
-
   log(|severity : Severity, msg, term) =
-    if-log-severity(
-      log(|severity, msg)
-      ; where(
-          <copy-char; log-puts> (<add> (<severity-string; string-length> severity, 3), ' ')
-        ; <write-in-text-to-stream> (<log-stream>, term)
-        ; <log-puts> "\n"
-        )
-    | severity
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log", "37,2,46,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "38,4,46,4")
+    ; if-log-severity(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "39,6,44,8")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "39,6,39,24")
+           ; log(|severity, msg))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "40,8,44,8")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,10,43,24")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,10,41,90")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,11,41,29")
+                       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,11,41,19") ; copy-char)
+                       ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,22,41,29")
+                       ; log-puts)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,34,41,36") ; add> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,41,41,70")
+                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,41,41,55") ; severity-string)
+                                                                                                                               ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "41,58,41,70")
+                                                                                                                               ; string-length> severity
+                                                                                                                            , 3
+                                                                                                                            )
+                                    , ' '
+                                    ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "42,10,43,24")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "42,10,42,55")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "42,11,42,33") ; write-in-text-to-stream)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "42,38,42,47") ; log-stream>
+                                                                                                                                 , term
+                                                                                                                                 ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "43,10,43,24")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "43,11,43,18") ; log-puts)> "\n")
+      | severity
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log", "37,2,46,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log", "37,2,46,4")
+      ; fail
 
   log(|severity : Severity, msg) =
-    if-log-severity(
-      where(
-        <try(not(is-list) ; ![<id>])>msg 
-      ; map(is-string <+ write-to-string) 
-      ; <concat-strings ; log-puts> ["[ ", <log-src>, " | ",  <severity-string> severity, " ] " | <id> ]
-      ; <log-puts> "\n"
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log", "48,2,57,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "49,4,57,4")
+    ; if-log-severity(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "50,6,55,6")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,8,54,22")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,8,51,39")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,9,51,35")
+                       ; try(
+                           s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,13,51,34")
+                           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,13,51,24")
+                              ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,17,51,23") ; is-list))
+                           ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,28,51,34")
+                           ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "51,31,51,32") ; id>]
+                         ))> msg)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "52,8,54,22")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "52,8,52,40")
+                   ; map(
+                       s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "52,12,52,39")
+                       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "52,12,52,20") ; is-string
+                          <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "52,25,52,39") ; write-to-string)
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,8,54,22")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,8,53,103")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,9,53,33")
+                       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,9,53,22") ; concat-strings)
+                       ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,26,53,33")
+                       ; log-puts)> ["[ ", <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,44,53,50") ; log-src>, " | ", <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,63,53,77") ; severity-string> severity, " ] "|<s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "53,99,53,100") ; id>])
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "54,8,54,22")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "54,9,54,16") ; log-puts)> "\n")
+      | severity
       )
-    | severity
-    )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log", "48,2,57,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log", "48,2,57,4")
+      ; fail
 
-  if-log-severity(s | severity) =
-    if-verbose(s | <verbose-level> severity)
+  if-log-severity(s|severity) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "if-log-severity", "59,2,60,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "60,4,60,43")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "60,15,60,15") ; s
+      | <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "60,20,60,32") ; verbose-level> severity
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "if-log-severity", "59,2,60,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "if-log-severity", "59,2,60,43")
+      ; fail
+
 
 strategies
-
   log-stream =
-    <get-config> "log-stream"
-    <+ <getenv> "STRATEGO_LOG"
-       ; <fopen> (<id>, "a")
-    <+ <stderr-stream> ()
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-stream", "64,2,68,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "65,4,68,24")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "65,4,65,28")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "65,5,65,14") ; get-config)> "log-stream"
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "66,7,68,24")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "66,7,67,27")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "66,7,66,29")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "66,8,66,13") ; getenv)> "STRATEGO_LOG")
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "67,9,67,27")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "67,10,67,14") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "67,19,67,20") ; id>
+                                                                                                         , "a"
+                                                                                                         )
+             <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "68,7,68,24")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "68,8,68,20") ; stderr-stream)> ()))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-stream", "64,2,68,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-stream", "64,2,68,24")
+      ; fail
 
   set-log-stream =
-    <set-config> ("log-stream", <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "set-log-stream", "70,2,71,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "71,4,71,36")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "71,5,71,14") ; set-config)> ( "log-stream"
+                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "71,33,71,34") ; id>
+                                                                                                    )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "set-log-stream", "70,2,71,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "set-log-stream", "70,2,71,36")
+      ; fail
 
   log-puts =
-    <fputs> (<id>, <log-stream> ())
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-puts", "73,2,74,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "74,4,74,34")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "74,5,74,9") ; fputs)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "74,14,74,15") ; id>
+                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "74,20,74,29") ; log-stream> ()
+                                                                                              )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-puts", "73,2,74,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-puts", "73,2,74,34")
+      ; fail
 
   log-src =
-    whoami; base-filename
-    <+ !"identity crisis"
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-src", "76,2,78,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "77,4,78,24")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "77,4,77,24")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "77,4,77,9") ; whoami)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "77,12,77,24")
+       ; base-filename
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "78,7,78,24")
+          ; !"identity crisis")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-src", "76,2,78,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "log-src", "76,2,78,24")
+      ; fail
+
 
 rules
 
-  verbose-level : Emergency() -> -10
-  verbose-level : Alert()     -> -5
-  verbose-level : Critical()  -> -2
-  verbose-level : Error()     -> 0
-  verbose-level : Warning()   -> 1
-  verbose-level : Info()      -> 1
-  verbose-level : Notice()    -> 2
-  verbose-level : Debug()     -> 4
-  verbose-level : Vomit()     -> 10
+  verbose-level :
+    Emergency() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "82,2,82,35")> -10
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "82,2,82,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "82,2,82,35")
+             ; fail
 
-  severity-string : Emergency() -> "emergency"
-  severity-string : Alert()     -> "alert"
-  severity-string : Critical()  -> "critical"
-  severity-string : Error()     -> "error"
-  severity-string : Info()      -> "info"
-  severity-string : Warning()   -> "warning"
-  severity-string : Notice()    -> "notice"
-  severity-string : Debug()     -> "debug"
-  severity-string : Vomit()     -> "vomit"
-  
-  string-to-level : "emergency" -> level
-    where <verbose-level> Emergency() => level
-    
-  string-to-level : "alert"     -> level
-    where <verbose-level> Alert() => level
+  verbose-level :
+    Alert() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "83,2,83,34")> -5
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "83,2,83,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "83,2,83,34")
+             ; fail
 
-  string-to-level : "critical"  -> level
-    where <verbose-level> Critical() => level
-    
-  string-to-level : "error"     -> level
-    where <verbose-level> Error() => level
-    
-  string-to-level : "warning"   -> level
-    where <verbose-level> Warning() => level
-    
-  string-to-level : "notice"    -> level
-    where <verbose-level> Notice() => level
-    
-  string-to-level : "info"      -> level
-    where <verbose-level> Info() => level
-    
-  string-to-level : "debug"     -> level
-    where <verbose-level> Debug() => level
-    
-  string-to-level : "vomit"     -> level
-    where <verbose-level> Vomit() => level
+  verbose-level :
+    Critical() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "84,2,84,34")> -2
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "84,2,84,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "84,2,84,34")
+             ; fail
+
+  verbose-level :
+    Error() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "85,2,85,33")> 0
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "85,2,85,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "85,2,85,33")
+             ; fail
+
+  verbose-level :
+    Warning() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "86,2,86,33")> 1
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "86,2,86,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "86,2,86,33")
+             ; fail
+
+  verbose-level :
+    Info() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "87,2,87,33")> 1
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "87,2,87,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "87,2,87,33")
+             ; fail
+
+  verbose-level :
+    Notice() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "88,2,88,33")> 2
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "88,2,88,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "88,2,88,33")
+             ; fail
+
+  verbose-level :
+    Debug() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "89,2,89,33")> 4
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "89,2,89,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "89,2,89,33")
+             ; fail
+
+  verbose-level :
+    Vomit() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "90,2,90,34")> 10
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "90,2,90,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "verbose-level", "90,2,90,34")
+             ; fail
+
+  severity-string :
+    Emergency() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "92,2,92,45")> "emergency"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "92,2,92,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "92,2,92,45")
+             ; fail
+
+  severity-string :
+    Alert() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "93,2,93,41")> "alert"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "93,2,93,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "93,2,93,41")
+             ; fail
+
+  severity-string :
+    Critical() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "94,2,94,44")> "critical"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "94,2,94,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "94,2,94,44")
+             ; fail
+
+  severity-string :
+    Error() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "95,2,95,41")> "error"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "95,2,95,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "95,2,95,41")
+             ; fail
+
+  severity-string :
+    Info() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "96,2,96,40")> "info"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "96,2,96,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "96,2,96,40")
+             ; fail
+
+  severity-string :
+    Warning() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "97,2,97,43")> "warning"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "97,2,97,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "97,2,97,43")
+             ; fail
+
+  severity-string :
+    Notice() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "98,2,98,42")> "notice"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "98,2,98,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "98,2,98,42")
+             ; fail
+
+  severity-string :
+    Debug() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "99,2,99,41")> "debug"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "99,2,99,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "99,2,99,41")
+             ; fail
+
+  severity-string :
+    Vomit() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "100,2,100,41")> "vomit"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "100,2,100,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "severity-string", "100,2,100,41")
+             ; fail
+
+  string-to-level :
+    "emergency" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "102,2,103,45")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "102,2,103,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "102,2,103,45")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "103,10,103,45")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "103,10,103,36")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "103,11,103,23") ; verbose-level)> Emergency()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "102,2,103,45")
+             ; fail
+
+  string-to-level :
+    "alert" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "105,2,106,41")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "105,2,106,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "105,2,106,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "106,10,106,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "106,10,106,32")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "106,11,106,23") ; verbose-level)> Alert()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "105,2,106,41")
+             ; fail
+
+  string-to-level :
+    "critical" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "108,2,109,44")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "108,2,109,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "108,2,109,44")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "109,10,109,44")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "109,10,109,35")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "109,11,109,23") ; verbose-level)> Critical()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "108,2,109,44")
+             ; fail
+
+  string-to-level :
+    "error" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "111,2,112,41")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "111,2,112,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "111,2,112,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "112,10,112,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "112,10,112,32")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "112,11,112,23") ; verbose-level)> Error()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "111,2,112,41")
+             ; fail
+
+  string-to-level :
+    "warning" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "114,2,115,43")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "114,2,115,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "114,2,115,43")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "115,10,115,43")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "115,10,115,34")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "115,11,115,23") ; verbose-level)> Warning()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "114,2,115,43")
+             ; fail
+
+  string-to-level :
+    "notice" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "117,2,118,42")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "117,2,118,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "117,2,118,42")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "118,10,118,42")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "118,10,118,33")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "118,11,118,23") ; verbose-level)> Notice()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "117,2,118,42")
+             ; fail
+
+  string-to-level :
+    "info" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "120,2,121,40")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "120,2,121,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "120,2,121,40")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "121,10,121,40")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "121,10,121,31")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "121,11,121,23") ; verbose-level)> Info()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "120,2,121,40")
+             ; fail
+
+  string-to-level :
+    "debug" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "123,2,124,41")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "123,2,124,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "123,2,124,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "124,10,124,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "124,10,124,32")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "124,11,124,23") ; verbose-level)> Debug()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "123,2,124,41")
+             ; fail
+
+  string-to-level :
+    "vomit" -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "126,2,127,41")> level
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "126,2,127,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "126,2,127,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "127,10,127,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "127,10,127,32")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "127,11,127,23") ; verbose-level)> Vomit()) => level
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "string-to-level", "126,2,127,41")
+             ; fail
+
 
 strategies
-
-  /**
-   * Logs the specified message as critical and terminates the program
-   * with exit code 1.
-   *
-   * @type a -> _
-   */
   fatal-err(|msg : String) =
-    log(|Critical(), msg, <id>); <exit> 1
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "fatal-err", "137,2,138,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "138,4,138,40")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "138,4,138,30")
+       ; log(
+         | Critical()
+         , msg
+         , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "138,27,138,28") ; id>
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "138,33,138,40")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "138,34,138,37") ; exit)> 1
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "fatal-err", "137,2,138,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "fatal-err", "137,2,138,40")
+      ; fail
 
-  /**
-   * Logs the specified message as an error.
-   *
-   * @type a -> a
-   */
   err(|msg : String) =
-    log(|Error(), msg, <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "err", "145,2,146,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "146,4,146,27")
+    ; log(
+      | Error()
+      , msg
+      , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "146,24,146,25") ; id>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "err", "145,2,146,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "err", "145,2,146,27")
+      ; fail
 
-  /**
-   * Logs the specified message as a warning.
-   *
-   * @type a -> a
-   */
   warn(|msg : String) =
-    log(|Warning(), msg, <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "warn", "153,2,154,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "154,4,154,29")
+    ; log(
+      | Warning()
+      , msg
+      , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "154,26,154,27") ; id>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "warn", "153,2,154,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "warn", "153,2,154,29")
+      ; fail
 
-  /**
-   * Logs the specified message as a notice.
-   *
-   * @type a -> a
-   */
   notice(|msg : String) =
-    log(|Notice(), msg, <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "notice", "161,2,162,28")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "162,4,162,28")
+    ; log(
+      | Notice()
+      , msg
+      , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "162,25,162,26") ; id>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "notice", "161,2,162,28")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "notice", "161,2,162,28")
+      ; fail
 
-  /**
-   * Logs the specified message as a debug.
-   *
-   * @type a -> a
-   */
   dbg(|msg : String) =
-    log(|Debug(), msg, <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "dbg", "169,2,170,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "170,4,170,27")
+    ; log(
+      | Debug()
+      , msg
+      , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "170,24,170,25") ; id>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "dbg", "169,2,170,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "dbg", "169,2,170,27")
+      ; fail
+
 
 strategies
-
-  /**
-   * Logs the specified message as critical and terminates the program
-   * with exit code 1.
-   *
-   * @type a -> _
-   */
   fatal-err-msg(|msg : String) =
-    log(|Critical(), msg); <exit> 1
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "fatal-err-msg", "180,2,181,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "181,4,181,34")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "181,4,181,24")
+       ; log(|Critical(), msg))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "181,27,181,34")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "181,28,181,31") ; exit)> 1
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "fatal-err-msg", "180,2,181,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "fatal-err-msg", "180,2,181,34")
+      ; fail
 
-  /**
-   * Logs the specified message as an error.
-   *
-   * @type a -> a
-   */
   err-msg(|msg : String) =
-    log(|Error(), msg)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "err-msg", "188,2,189,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "189,4,189,21")
+    ; log(|Error(), msg)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "err-msg", "188,2,189,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "err-msg", "188,2,189,21")
+      ; fail
 
-  /**
-   * Logs the specified message as a warning.
-   *
-   * @type a -> a
-   */
   warn-msg(|msg : String) =
-    log(|Warning(), msg)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "warn-msg", "196,2,197,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "197,4,197,23")
+    ; log(|Warning(), msg)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "warn-msg", "196,2,197,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "warn-msg", "196,2,197,23")
+      ; fail
 
-  /**
-   * Logs the specified message as a notice.
-   *
-   * @type a -> a
-   */
   notice-msg(|msg : String) =
-    log(|Notice(), msg)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "notice-msg", "204,2,205,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "205,4,205,22")
+    ; log(|Notice(), msg)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "notice-msg", "204,2,205,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/log.str", "notice-msg", "204,2,205,22")
+      ; fail

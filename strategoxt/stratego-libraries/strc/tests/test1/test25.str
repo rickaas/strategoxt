@@ -1,5 +1,23 @@
 module test25
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 rules
 
-  main = ![]; !"" #(<id>)
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "main", "5,2,5,24")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "5,9,5,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "5,9,5,11")
+       ; ![])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "5,14,5,24")
+    ; !""#(<s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "5,21,5,22") ; id>)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "main", "5,2,5,24")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test25.str", "main", "5,2,5,24")
+      ; fail

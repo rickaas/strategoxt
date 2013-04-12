@@ -1,116 +1,366 @@
 module til-dce
-imports TIL til-eval libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  TIL
+  til-eval
+  libstratego-lib
+
 
 rules
 
   ElimDecl :
-    [Declaration(x) | st*] -> st*
-    where <not(VarUsed)> Var(x)
+    [Declaration(x)|st*] -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "6,2,8,30")> st*
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "6,2,8,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "6,2,8,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "8,10,8,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "8,11,8,22")
+              ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "8,15,8,21") ; VarUsed))> Var(x)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "6,2,8,30")
+             ; fail
 
   ElimDecl :
-    [DeclarationTyped(x, t) | st*] -> st*
-    where <not(VarUsed)> Var(x)
+    [DeclarationTyped(x, t)|st*] -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "10,2,12,30")> st*
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "10,2,12,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "10,2,12,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "12,10,12,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "12,11,12,22")
+              ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "12,15,12,21") ; VarUsed))> Var(x)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimDecl", "10,2,12,30")
+             ; fail
 
   ElimAssign :
-    Assign(x, e) -> Block([])
-    where <not(VarNeeded)> Var(x)
+    Assign(x, e) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimAssign", "14,2,16,32")> Block([])
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimAssign", "14,2,16,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimAssign", "14,2,16,32")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "16,10,16,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "16,11,16,24")
+              ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "16,15,16,23") ; VarNeeded))> Var(x)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimAssign", "14,2,16,32")
+             ; fail
 
   ElimIf :
-    IfElse(e, [], []) -> Block([])
+    IfElse(e, [], []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "18,2,19,33")> Block([])
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "18,2,19,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "18,2,19,33")
+             ; fail
 
   ElimIf :
-    IfElse(e, th, []) -> IfThen(e, th)
-    where <not(?[])>th
+    IfElse(e, th, []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "21,2,23,21")> IfThen(e, th)
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "21,2,23,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "21,2,23,21")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "23,10,23,21")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "23,11,23,18")
+              ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "23,15,23,17")
+                    ; ?[]))> th
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "21,2,23,21")
+             ; fail
 
   ElimIf :
-    IfElse(e, [], el) -> IfElse(e, Block([]), el)
-    where <not(?[])>el
+    IfElse(e, [], el) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "25,2,27,21")> IfElse(e, Block([]), el)
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "25,2,27,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "25,2,27,21")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "27,10,27,21")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "27,11,27,18")
+              ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "27,15,27,17")
+                    ; ?[]))> el
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "25,2,27,21")
+             ; fail
 
   ElimIf :
-    IfThen(e, []) -> Block([])
+    IfThen(e, []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "29,2,30,29")> Block([])
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "29,2,30,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "ElimIf", "29,2,30,29")
+             ; fail
+
 
 strategies
-
   io-til-dce =
-    io-wrap(dce-program)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "io-til-dce", "34,2,35,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "35,4,35,23")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "35,12,35,22") ; dce-program
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "io-til-dce", "34,2,35,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "io-til-dce", "34,2,35,23")
+      ; fail
 
   dce-stat =
-    ElimAssign
-    <+ dce-assign
-    <+ dce-proccall
-    <+ dce-if-then; try(ElimIf)
-    <+ dce-if-then-else; try(ElimIf)
-    <+ dce-block
-    <+ dce-break
-    <+ dce-while
-    <+ dce-for
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stat", "37,2,46,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "38,4,46,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "38,4,38,13") ; ElimAssign
+       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "39,7,46,13")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "39,7,39,16") ; dce-assign
+             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "40,7,46,13")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "40,7,40,18") ; dce-proccall
+                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "41,7,46,13")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "41,7,41,30")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "41,7,41,17") ; dce-if-then)
+                         ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "41,20,41,30")
+                         ; try(
+                             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "41,24,41,29") ; ElimIf
+                           )
+                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "42,7,46,13")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "42,7,42,35")
+                               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "42,7,42,22") ; dce-if-then-else)
+                               ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "42,25,42,35")
+                               ; try(
+                                   s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "42,29,42,34") ; ElimIf
+                                 )
+                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "43,7,46,13")
+                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "43,7,43,15") ; dce-block
+                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "44,7,46,13")
+                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "44,7,44,15") ; dce-break
+                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "45,7,46,13")
+                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "45,7,45,15") ; dce-while
+                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "46,7,46,13") ; dce-for))))))))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stat", "37,2,46,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stat", "37,2,46,13")
+      ; fail
 
   dce-program =
-    Program(dce-stats)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-program", "48,2,49,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "49,4,49,21")
+    ; Program(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "49,12,49,20") ; dce-stats
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-program", "48,2,49,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-program", "48,2,49,21")
+      ; fail
 
   dce-block =
-    Block(dce-stats)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-block", "51,2,52,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "52,4,52,19")
+    ; Block(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "52,10,52,18") ; dce-stats
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-block", "51,2,52,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-block", "51,2,52,19")
+      ; fail
 
   dce-stats =
-    dce-stats-decl
-    <+ dce-stats-other
-    <+ []
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats", "54,2,57,8")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "55,4,57,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "55,4,55,17") ; dce-stats-decl
+       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "56,7,57,8")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "56,7,56,21") ; dce-stats-other
+             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "57,7,57,8") ; []))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats", "54,2,57,8")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats", "54,2,57,8")
+      ; fail
 
   dce-stats-decl =
-    (?[Declaration(x) | _] <+ ?[DeclarationTyped(x, _) | _])
-    ; {| VarNeeded, VarUsed :
-         rules(
-           VarNeeded+x :- Var(x)
-           VarUsed+x   :- Var(x)
-         )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats-decl", "59,2,70,7")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "60,4,70,7")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "60,5,60,58")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "60,5,60,25")
+          ; ?[Declaration(x)|_]
+          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "60,30,60,58")
+             ; ?[DeclarationTyped(x, _)|_]))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "61,6,70,7")
+    ; {|VarNeeded, VarUsed:
+         s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "62,9,69,37")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "62,9,65,9")
+            ; rules (
+                VarNeeded+x :-
+                  Var(x)
+                VarUsed+x :-
+                  Var(x)
+              ))
+         ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "66,11,69,37")
          ; dr-transaction(
-             [id | dce-stats]
-             ; try(ElimDecl)
-           | ["VarNeeded", "VarUsed"])
+             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "67,13,68,27")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "67,13,67,28")
+                ; [s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "67,14,67,15") ; id|s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "67,19,67,27") ; dce-stats])
+             ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "68,15,68,27")
+             ; try(
+                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "68,19,68,26") ; ElimDecl
+               )
+           | ["VarNeeded", "VarUsed"]
+           )
       |}
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats-decl", "59,2,70,7")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats-decl", "59,2,70,7")
+      ; fail
 
   dce-stats-other =
-    [not(?Declaration(_) <+ ?DeclarationTyped(_, _)) | dce-stats]
-    ; [dce-stat | id]
-    ; try(?[Block([]) | <id>])
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats-other", "72,2,75,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,4,75,29")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,4,73,64")
+       ; [s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,5,73,51")
+          ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,9,73,50")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,9,73,23")
+                   ; ?Declaration(_)
+                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,28,73,50")
+                      ; ?DeclarationTyped(_, _)))|s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "73,55,73,63") ; dce-stats])
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "74,6,75,29")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "74,6,74,20")
+       ; [s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "74,7,74,14") ; dce-stat|s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "74,18,74,19") ; id])
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "75,6,75,29")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "75,10,75,28")
+        ; ?[Block([])|<s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "75,25,75,26") ; id>]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats-other", "72,2,75,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-stats-other", "72,2,75,29")
+      ; fail
 
   dce-assign =
-    ?Assign(x, _)
-    ; rules( VarNeeded.x :- Var(x) )
-    ; Assign(id, declare-var-needed)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-assign", "77,2,80,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "78,4,80,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "78,4,78,16")
+       ; ?Assign(x, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "79,6,80,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "79,6,79,35")
+       ; rules ( VarNeeded.x :-
+                   Var(x) ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "80,6,80,35")
+    ; Assign(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "80,13,80,14") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "80,17,80,34") ; declare-var-needed
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-assign", "77,2,80,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-assign", "77,2,80,35")
+      ; fail
 
   dce-proccall =
-    ProcCall(id, map(declare-var-needed))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-proccall", "82,2,83,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "83,4,83,40")
+    ; ProcCall(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "83,13,83,14") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "83,17,83,39")
+        ; map(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "83,21,83,38") ; declare-var-needed
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-proccall", "82,2,83,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-proccall", "82,2,83,40")
+      ; fail
 
   declare-var-needed =
-    alltd({x :
-      ?Var(x)
-      ; rules(
-          VarNeeded.x : Var(x)
-          VarUsed.x   : Var(x)
-        )
-    })
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "declare-var-needed", "85,2,92,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "86,4,92,5")
+    ; alltd(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "86,10,92,4")
+        ; {x:
+            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "87,6,91,8")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "87,6,87,12")
+               ; ?Var(x))
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "88,8,91,8")
+            ; rules (
+                VarNeeded.x :
+                  Var(x)
+                VarUsed.x :
+                  Var(x)
+              )
+          }
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "declare-var-needed", "85,2,92,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "declare-var-needed", "85,2,92,5")
+      ; fail
 
   dce-if-then =
-    ?IfThen(_, _)
-    ; (IfThen(id, dce-stats) \VarNeeded,VarUsed/ id)
-    ; IfThen(declare-var-needed, id)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-if-then", "94,2,97,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "95,4,97,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "95,4,95,16")
+       ; ?IfThen(_, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "96,6,97,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "96,7,96,50")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "96,7,96,27")
+          ; IfThen(
+              s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "96,14,96,15") ; id
+            , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "96,18,96,26") ; dce-stats
+            )) \VarNeeded, VarUsed/ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "96,49,96,50") ; id))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "97,6,97,35")
+    ; IfThen(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "97,13,97,30") ; declare-var-needed
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "97,33,97,34") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-if-then", "94,2,97,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-if-then", "94,2,97,35")
+      ; fail
 
   dce-if-then-else =
-    ?IfElse(_, _, _)
-    ; (IfElse(id, dce-stats, id) \VarNeeded,VarUsed/ IfElse(id, id, dce-stats))
-    ; IfElse(declare-var-needed, id, id)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-if-then-else", "99,2,102,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "100,4,102,39")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "100,4,100,19")
+       ; ?IfElse(_, _, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,6,102,39")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,7,101,77")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,7,101,31")
+          ; IfElse(
+              s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,14,101,15") ; id
+            , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,18,101,26") ; dce-stats
+            , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,29,101,30") ; id
+            )) \VarNeeded, VarUsed/ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,53,101,77")
+                                     ; IfElse(
+                                         s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,60,101,61") ; id
+                                       , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,64,101,65") ; id
+                                       , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "101,68,101,76") ; dce-stats
+                                       )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "102,6,102,39")
+    ; IfElse(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "102,13,102,30") ; declare-var-needed
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "102,33,102,34") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "102,37,102,38") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-if-then-else", "99,2,102,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-if-then-else", "99,2,102,39")
+      ; fail
 
   dce-break =
-    ?Break(None)
-    ; break-bp-VarNeeded
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-break", "104,2,107,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "105,4,107,21")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "105,4,105,15")
+       ; ?Break(None))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "106,6,107,21")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "106,6,106,23") ; break-bp-VarNeeded)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "107,6,107,21")
     ; break-bp-VarUsed
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-break", "104,2,107,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-break", "104,2,107,21")
+      ; fail
 
   dce-while =
-    ?While(_, _)
-    ; (\VarNeeded,VarUsed/* While(declare-var-needed, dce-stats))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-while", "109,2,111,64")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "110,4,111,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "110,4,110,15")
+       ; ?While(_, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "111,7,111,63")
+    ; \VarNeeded, VarUsed/* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "111,28,111,63")
+                             ; While(
+                                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "111,34,111,51") ; declare-var-needed
+                               , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "111,54,111,62") ; dce-stats
+                               ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-while", "109,2,111,64")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-while", "109,2,111,64")
+      ; fail
 
   dce-for =
-    ?For(i, _, _, _)
-    ; (\VarNeeded,VarUsed/* For(declare-var-needed, declare-var-needed, declare-var-needed, dce-stats))
-    ; rules( VarNeeded.i :- Var(i) )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-for", "113,2,116,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "114,4,116,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "114,4,114,19")
+       ; ?For(i, _, _, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,6,116,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,7,115,101")
+       ; \VarNeeded, VarUsed/* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,28,115,101")
+                                ; For(
+                                    s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,32,115,49") ; declare-var-needed
+                                  , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,52,115,69") ; declare-var-needed
+                                  , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,72,115,89") ; declare-var-needed
+                                  , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "115,92,115,100") ; dce-stats
+                                  )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "116,6,116,35")
+    ; rules ( VarNeeded.i :-
+                Var(i) )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-for", "113,2,116,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-dce.str", "dce-for", "113,2,116,35")
+      ; fail

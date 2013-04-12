@@ -1,27 +1,55 @@
 module test106
 
-imports collection/list/cons
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+
 
 signature
   constructors
     Bar : String * Int -> Bar
 
-overlays
 
-  Foo(x) = Bar(x, _ 1)
+overlays
+  Foo ( x ) =
+    Bar(x, _1)
+
 
 strategies
-
-  main-test106 = id
-    ; <test1> Bar("a", 3)
-    ; <test2> Bar("a", 3)
+  main-test106 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "main-test106", "15,2,17,24")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "15,17,17,24")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "15,17,15,18") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "16,6,17,24")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "16,6,16,24")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "16,7,16,11") ; test1)> Bar("a", 3))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "17,6,17,24")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "17,7,17,11") ; test2)> Bar("a", 3)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "main-test106", "15,2,17,24")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "main-test106", "15,2,17,24")
+      ; fail
 
   test1 =
-    ?Foo("a")
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "test1", "19,2,21,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "20,4,21,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "20,4,20,12")
+       ; ?Foo("a"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "21,6,21,14")
     ; !Foo("c")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "test1", "19,2,21,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "test1", "19,2,21,14")
+      ; fail
 
   test2 =
-    ?x@Foo(y)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "test2", "23,2,25,12")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "24,4,25,12")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "24,4,24,12")
+       ; ?x@Foo(y))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "25,6,25,12")
     ; ![x, y]
-
-
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "test2", "23,2,25,12")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test106.str", "test2", "23,2,25,12")
+      ; fail

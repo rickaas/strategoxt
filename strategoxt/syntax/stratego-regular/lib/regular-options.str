@@ -1,75 +1,152 @@
-/**
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module regular-options
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   input-to-rtg-nf =
-    get-rtg-nf-config
-    <+ get-rtg-config
-    <+ fatal-err(|"No tree grammar specified")
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "input-to-rtg-nf", "7,2,10,45")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "8,4,10,45")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "8,4,8,20") ; get-rtg-nf-config
+       <+ s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "9,7,10,45")
+          ; (s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "9,7,9,20") ; get-rtg-config
+             <+ s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "10,7,10,45")
+                ; fatal-err(|"No tree grammar specified")))
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "input-to-rtg-nf", "7,2,10,45")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "input-to-rtg-nf", "7,2,10,45")
+      ; fail
 
-/**
- * rtg-nf options
- */
+
 strategies
-
   rtg-nf-option(|descr) =
-    ArgOption("--rtg-nf"
-    , where(<set-config> ("--rtg-nf", <id>))
-    , !HelpString("--rtg-nf file", descr)
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "rtg-nf-option", "17,2,21,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "18,4,21,4")
+    ; ArgOption(
+        s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "18,14,18,23") ; "--rtg-nf"
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "19,6,19,43")
+        ; where(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "19,12,19,42")
+                ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "19,13,19,22") ; set-config)> ( "--rtg-nf"
+                                                                                                                        , <s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "19,39,19,40") ; id>
+                                                                                                                        ))
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "20,6,20,40")
+        ; !HelpString("--rtg-nf file", descr)
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "rtg-nf-option", "17,2,21,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "rtg-nf-option", "17,2,21,4")
+      ; fail
 
-  /**
-   * Returns the specified rtg-nf. Fails if there was not rhg specified.
-   *
-   * @type  _ -> RTG
-   */
   get-rtg-nf-config =
-    <get-config> "--rtg-nf"
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-rtg-nf-config", "28,2,30,17")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "29,4,30,17")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "29,4,29,26")
+       ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "29,5,29,14") ; get-config)> "--rtg-nf")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "30,6,30,17")
     ; ReadFromFile
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-rtg-nf-config", "28,2,30,17")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-rtg-nf-config", "28,2,30,17")
+      ; fail
+
 
 strategies
-
   rtg-option(|descr) =
-    ArgOption("--rtg"
-    , where(<set-config> ("--rtg", <id>))
-    , !HelpString("--rtg file", descr)
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "rtg-option", "34,2,38,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "35,4,38,4")
+    ; ArgOption(
+        s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "35,14,35,20") ; "--rtg"
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "36,6,36,40")
+        ; where(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "36,12,36,39")
+                ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "36,13,36,22") ; set-config)> ( "--rtg"
+                                                                                                                        , <s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "36,36,36,37") ; id>
+                                                                                                                        ))
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "37,6,37,37")
+        ; !HelpString("--rtg file", descr)
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "rtg-option", "34,2,38,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "rtg-option", "34,2,38,4")
+      ; fail
 
-  /**
-   * Returns the specified rtg. Fails if there was not rtg specified.
-   *
-   * @type  _ -> RTG
-   */
   get-rtg-config =
-    <get-config> "--rtg"
-    ; <xtc-rtg-front-end> FILE(<id>)
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-rtg-config", "45,2,47,35")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "46,4,47,35")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "46,4,46,23")
+       ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "46,5,46,14") ; get-config)> "--rtg")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "47,6,47,35")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "47,7,47,23") ; xtc-rtg-front-end)> FILE(
+                                                                                                                    <s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "47,32,47,33") ; id>
+                                                                                                                  )
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-rtg-config", "45,2,47,35")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-rtg-config", "45,2,47,35")
+      ; fail
+
 
 strategies
-
   start-nonterm-option(|msg) =
-    ArgOption("-s" + "--start"
-    , set-start-nonterm
-    , !HelpString("-s|--start s", msg)
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "start-nonterm-option", "51,2,55,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "52,4,55,4")
+    ; ArgOption(
+        s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "52,14,52,29")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "52,14,52,17") ; "-s"
+           + s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "52,21,52,29") ; "--start")
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "53,6,53,22") ; set-start-nonterm
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "54,6,54,37")
+        ; !HelpString("-s|--start s", msg)
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "start-nonterm-option", "51,2,55,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "start-nonterm-option", "51,2,55,4")
+      ; fail
 
   set-start-nonterm =
-    <set-config> ("start-nonterm", <id>)
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "set-start-nonterm", "57,2,58,39")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "58,4,58,39")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "58,5,58,14") ; set-config)> ( "start-nonterm"
+                                                                                                           , <s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "58,36,58,37") ; id>
+                                                                                                           )
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "set-start-nonterm", "57,2,58,39")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "set-start-nonterm", "57,2,58,39")
+      ; fail
 
-  get-start-nonterm = 
-    <get-config> "start-nonterm"
+  get-start-nonterm =
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-start-nonterm", "60,2,61,31")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "61,4,61,31")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "61,5,61,14") ; get-config)> "start-nonterm"
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-start-nonterm", "60,2,61,31")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "get-start-nonterm", "60,2,61,31")
+      ; fail
+
 
 strategies
-
   fast-option(|msg) =
-    Option("--fast"
-    , enable-fast-mode
-    , !HelpString("--fast", msg)
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "fast-option", "65,2,69,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "66,4,69,4")
+    ; Option(
+        s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "66,11,66,18") ; "--fast"
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "67,6,67,21") ; enable-fast-mode
+      , s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "68,6,68,31")
+        ; !HelpString("--fast", msg)
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "fast-option", "65,2,69,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "fast-option", "65,2,69,4")
+      ; fail
 
   enable-fast-mode =
-    <set-config> ("--fast", "true")
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "enable-fast-mode", "71,2,72,34")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "72,4,72,34")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "72,5,72,14") ; set-config)> ("--fast", "true")
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "enable-fast-mode", "71,2,72,34")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "enable-fast-mode", "71,2,72,34")
+      ; fail
 
   if-fast-mode(s) =
-    if <get-config> "--fast" => "true" then s else id end
+    s-enter(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "if-fast-mode", "74,2,75,56")
+    ; s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "75,4,75,56")
+    ; if s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "75,7,75,37")
+         ; (s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "75,7,75,27")
+            ; <(s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "75,8,75,17") ; get-config)> "--fast") => "true" then
+        s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "75,44,75,44") ; s
+      else
+        s-step(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "75,51,75,52") ; id
+      end
+    < s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "if-fast-mode", "74,2,75,56")
+    + s-exit(|"strategoxt/syntax/stratego-regular/lib/regular-options.str", "if-fast-mode", "74,2,75,56")
+      ; fail

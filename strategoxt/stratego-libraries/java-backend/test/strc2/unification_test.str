@@ -1,12 +1,29 @@
 module unification-test
-imports libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
   main-unification_test =
-    test-suite(!"unification-test",
-	test0;
-	test1
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "main-unification_test", "5,2,9,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "6,4,9,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "6,15,6,33")
+        ; !"unification-test"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "7,1,8,5")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "7,1,7,5") ; test0)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "8,1,8,5")
+        ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "main-unification_test", "5,2,9,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "main-unification_test", "5,2,9,4")
+      ; fail
+
 
 signature
   constructors
@@ -15,21 +32,58 @@ signature
     Forall : String * Type -> Type
     TVar   : String -> Type
 
+
 strategies
+  test0 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "test0", "20,2,26,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "21,4,26,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "21,15,21,22")
+        ; !"test0"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "22,2,22,6") ; equal
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "23,2,24,50")
+        ; ![ ( Typed(
+                 Var("a")
+               , Forall("b", TVar("b"))
+               )
+             , Typed(
+                 Var("a")
+               , Forall("b", TVar("b"))
+               )
+             )
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "25,2,25,4")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "test0", "20,2,26,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "test0", "20,2,26,1")
+      ; fail
 
-  test0 = 
-    apply-test(!"test0"
-	,equal
-	,![(Typed(Var("a"),Forall("b",TVar("b")))
-           ,Typed(Var("a"),Forall("b",TVar("b"))))]
-	,![]
-	)
-
-  test1 = 
-    apply-test(!"test1"
-	,equal( \ Typed(x,y) -> x \ )
-	,![(Typed(Var("a"),Forall("b",TVar("b")))
-	   ,Typed(Var("a"),Forall("c",TVar("c"))))]
-	,![]
-	)
-
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "test1", "28,2,34,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "29,4,34,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "29,15,29,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "30,2,30,29")
+        ; equal(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "30,9,30,27")
+            ; \ Typed(x, y) -> x \
+          )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "31,2,32,43")
+        ; ![ ( Typed(
+                 Var("a")
+               , Forall("b", TVar("b"))
+               )
+             , Typed(
+                 Var("a")
+               , Forall("c", TVar("c"))
+               )
+             )
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "33,2,33,4")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "test1", "28,2,34,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/unification_test.str", "test1", "28,2,34,1")
+      ; fail

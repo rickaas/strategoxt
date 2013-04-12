@@ -1,10 +1,9 @@
-/**
- * Generates a description of conflicts in an AST from an SDF syntax definition.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- * @since   0.11
- */
 module sdf2ast-conflicts
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   Stratego
@@ -16,111 +15,353 @@ imports
   sdf/symbol/implode
   sdf/tool/xtc
 
-strategies
 
+strategies
   main-sdf2ast-conflicts =
-    xtc-io-wrap(sdf-main-module-option + tbl-option,
-      if not(<get-config> "--tbl" + FILE(has-extension(|"tbl"))) then
-        xtc-transform(!"sdf2table", !["-m", <get-sdf-main-module> | <pass-v-verbose>])
-      end
-      ; read-from
-      ; ?parse-table(_, _, labels, _, priorities(<id>))
-      ; core-sdf2conflicts(|labels)
-      ; write-to
-    )
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "main-sdf2ast-conflicts", "21,2,30,4")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "22,4,30,4")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "22,16,22,50")
+        ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "22,16,22,37") ; sdf-main-module-option
+           + s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "22,41,22,50") ; tbl-option)
+      , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,6,29,15")
+        ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,6,25,8")
+           ; if s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,9,23,63")
+                ; not(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,13,23,62")
+                      ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,13,23,32")
+                         ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,14,23,23") ; get-config)> "--tbl"
+                         + s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,36,23,62")
+                           ; FILE(
+                               s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "23,41,23,61")
+                               ; has-extension(|"tbl")
+                             ))) then
+               s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "24,8,24,85")
+               ; xtc-transform(
+                   s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "24,22,24,33")
+                   ; !"sdf2table"
+                 , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "24,36,24,84")
+                   ; !["-m", <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "24,45,24,63") ; get-sdf-main-module>|<s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "24,69,24,82") ; pass-v-verbose>]
+                 )
+             end)
+        ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "26,8,29,15")
+        ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "26,8,26,16") ; read-from)
+        ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "27,8,29,15")
+        ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "27,8,27,54")
+           ; ?parse-table(
+                _
+              , _
+              , labels
+              , _
+              , priorities(
+                  <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "27,50,27,51") ; id>
+                )
+              ))
+        ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "28,8,29,15")
+        ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "28,8,28,34")
+           ; core-sdf2conflicts(|labels))
+        ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "29,8,29,15")
+        ; write-to
+      )
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "main-sdf2ast-conflicts", "21,2,30,4")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "main-sdf2ast-conflicts", "21,2,30,4")
+      ; fail
 
   tbl-option =
-    Option("--tbl"
-    , <set-config> ("--tbl", ())
-    , !"--tbl            Input is a parse table"
-    )  
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "tbl-option", "32,2,36,4")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "33,4,36,4")
+    ; Option(
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "33,11,33,17") ; "--tbl"
+      , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "34,6,34,31")
+        ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "34,7,34,16") ; set-config)> ("--tbl", ())
+      , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "35,6,35,47")
+        ; !"--tbl            Input is a parse table"
+      )
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "tbl-option", "32,2,36,4")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "tbl-option", "32,2,36,4")
+      ; fail
 
-  core-sdf2conflicts(|labels) = id
-    ; lookup-labels(|labels)
-    ; check-empty-table
-    ; retain-all(all-prods-have-cons)
-    ; map(Priority2Conflicts <+ log(|Error(), "Could not handle priority", <id>); fail)
+  core-sdf2conflicts(|labels) =
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "core-sdf2conflicts", "38,2,43,11")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "38,32,43,11")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "38,32,38,33") ; id)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "39,6,43,11")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "39,6,39,27")
+       ; lookup-labels(|labels))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "40,6,43,11")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "40,6,40,22") ; check-empty-table)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "41,6,43,11")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "41,6,41,36")
+       ; retain-all(
+           s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "41,17,41,35") ; all-prods-have-cons
+         ))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,6,43,11")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,6,42,86")
+       ; map(
+           s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,10,42,85")
+           ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,10,42,27") ; Priority2Conflicts
+              <+ s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,32,42,85")
+                 ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,32,42,79")
+                    ; log(
+                      | Error()
+                      , "Could not handle priority"
+                      , <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,76,42,77") ; id>
+                      ))
+                 ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "42,82,42,85")
+                 ; fail)
+         ))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "43,6,43,11")
     ; concat
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "core-sdf2conflicts", "38,2,43,11")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "core-sdf2conflicts", "38,2,43,11")
+      ; fail
 
   check-empty-table =
-    if ?[arg-gtr-prio(
-           prod([cf(layout()), cf(layout())], cf(layout()), _)
-         , 1
-         , prod([cf(layout()), cf(layout())], cf(layout()), _))
-        ]
-    then
-      log(|Error(), "No priorities in parse table. Did you specify the right main module?")
-      ; <xtc-exit> 1
-    end
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "check-empty-table", "45,2,54,6")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "46,4,54,6")
+    ; if s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "46,7,50,8")
+         ; ?[ arg-gtr-prio(
+                prod(
+                  [ cf(layout())
+                  , cf(layout())
+                  ]
+                , cf(layout())
+                , _
+                )
+              , 1
+              , prod(
+                  [ cf(layout())
+                  , cf(layout())
+                  ]
+                , cf(layout())
+                , _
+                )
+              )
+            ] then
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "52,6,53,19")
+        ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "52,6,52,90")
+           ; log(|Error(), "No priorities in parse table. Did you specify the right main module?"))
+        ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "53,8,53,19")
+        ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "53,9,53,16") ; xtc-exit)> 1
+      end
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "check-empty-table", "45,2,54,6")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "check-empty-table", "45,2,54,6")
+      ; fail
+
 
 strategies
-
   lookup-labels(|labels) =
-    {| LookupLabel :
-      where(<map(define-label)> labels)
-      ; map(LookupLabels <+ log(|Error(), "Could not find labels for priority", <id>); fail)
-    |}
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "lookup-labels", "58,2,62,5")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "59,4,62,5")
+    ; {|LookupLabel:
+         s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "60,6,61,91")
+         ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "60,6,60,38")
+            ; where(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "60,12,60,37")
+                    ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "60,13,60,29")
+                        ; map(
+                            s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "60,17,60,28") ; define-label
+                          ))> labels))
+         ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,8,61,91")
+         ; map(
+             s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,12,61,90")
+             ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,12,61,23") ; LookupLabels
+                <+ s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,28,61,90")
+                   ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,28,61,84")
+                      ; log(
+                        | Error()
+                        , "Could not find labels for priority"
+                        , <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,81,61,82") ; id>
+                        ))
+                   ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "61,87,61,90")
+                   ; fail)
+           )
+      |}
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "lookup-labels", "58,2,62,5")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "lookup-labels", "58,2,62,5")
+      ; fail
 
   define-label =
-    ?label(prod, nr)
-    ; rules(LookupLabel: nr -> prod)
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "define-label", "64,2,66,35")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "65,4,66,35")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "65,4,65,19")
+       ; ?label(prod, nr))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "66,6,66,35")
+    ; rules ( LookupLabel :
+                nr -> prod )
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "define-label", "64,2,66,35")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "define-label", "64,2,66,35")
+      ; fail
 
   LookupLabels =
-    gtr-prio(LookupLabel, LookupLabel)
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "LookupLabels", "68,2,69,37")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "69,4,69,37")
+    ; gtr-prio(
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "69,13,69,23") ; LookupLabel
+      , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "69,26,69,36") ; LookupLabel
+      )
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "LookupLabels", "68,2,69,37")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "LookupLabels", "68,2,69,37")
+      ; fail
 
   LookupLabels =
-    arg-gtr-prio(LookupLabel, id, LookupLabel)
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "LookupLabels", "71,2,72,45")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "72,4,72,45")
+    ; arg-gtr-prio(
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "72,17,72,27") ; LookupLabel
+      , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "72,30,72,31") ; id
+      , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "72,34,72,44") ; LookupLabel
+      )
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "LookupLabels", "71,2,72,45")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "LookupLabels", "71,2,72,45")
+      ; fail
 
-  /**
-   * @type Priority -> Priority
-   */
   all-prods-have-cons =
-    ?arg-gtr-prio(p1, _, p2)
-    ; where(<cons-of-prod> p1; <cons-of-prod> p2)
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "all-prods-have-cons", "77,2,79,48")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "78,4,79,48")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "78,4,78,27")
+       ; ?arg-gtr-prio(p1, _, p2))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "79,6,79,48")
+    ; where(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "79,12,79,47")
+            ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "79,12,79,28")
+               ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "79,13,79,24") ; cons-of-prod)> p1)
+            ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "79,31,79,47")
+            ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "79,32,79,43") ; cons-of-prod)> p2)
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "all-prods-have-cons", "77,2,79,48")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "all-prods-have-cons", "77,2,79,48")
+      ; fail
 
   all-prods-have-cons =
-    ?gtr-prio(p1, p2)
-    ; where(<cons-of-prod> p1; <cons-of-prod> p2)
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "all-prods-have-cons", "81,2,83,48")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "82,4,83,48")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "82,4,82,20")
+       ; ?gtr-prio(p1, p2))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "83,6,83,48")
+    ; where(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "83,12,83,47")
+            ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "83,12,83,28")
+               ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "83,13,83,24") ; cons-of-prod)> p1)
+            ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "83,31,83,47")
+            ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "83,32,83,43") ; cons-of-prod)> p2)
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "all-prods-have-cons", "81,2,83,48")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "all-prods-have-cons", "81,2,83,48")
+      ; fail
+
 
 rules
 
   Priority2Conflicts :
-    gtr-prio(p1, p2) -> <map(!SubtermConflict(sym1, <id>, sym2))> args
-    where
-      sym1@Symbol(_, n) := <Prod2Symbol> p1
-      ; sym2 := <Prod2Symbol> p2
-      ; args := <range> (0, n)
+    gtr-prio(p1, p2) -> <r-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "87,2,92,29")> <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "88,25,88,63")
+                                                                                                                        ; map(
+                                                                                                                            s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "88,29,88,62")
+                                                                                                                            ; !SubtermConflict(
+                                                                                                                                 sym1
+                                                                                                                               , <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "88,53,88,54") ; id>
+                                                                                                                               , sym2
+                                                                                                                               )
+                                                                                                                          )> args
+    where r-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "87,2,92,29")
+          <+ r-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "87,2,92,29")
+             ; fail
+    where s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "90,6,92,29")
+          ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "90,6,90,42")
+             ; sym1@Symbol(_, n) := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "90,28,90,38") ; Prod2Symbol> p1)
+          ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "91,8,92,29")
+          ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "91,8,91,31")
+             ; sym2 := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "91,17,91,27") ; Prod2Symbol> p2)
+          ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "92,8,92,29")
+          ; args := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "92,17,92,21") ; range> (0, n)
+          <+ r-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "87,2,92,29")
+             ; fail
 
   Priority2Conflicts =
-    ?arg-gtr-prio(p1, arg, p2)
-    ; sym1 := <Prod2Symbol> p1
-    ; sym2 := <Prod2Symbol> p2
-    ; arg' := <arg-for-symbol(|p1)> arg
-    ; if arg' := () then
-        ![]
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "94,2,103,8")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "95,4,103,8")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "95,4,95,29")
+       ; ?arg-gtr-prio(p1, arg, p2))
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "96,6,103,8")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "96,6,96,29")
+       ; sym1 := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "96,15,96,25") ; Prod2Symbol> p1)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "97,6,103,8")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "97,6,97,29")
+       ; sym2 := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "97,15,97,25") ; Prod2Symbol> p2)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "98,6,103,8")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "98,6,98,38")
+       ; arg' := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "98,15,98,33")
+                  ; arg-for-symbol(|p1)> arg)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "99,6,103,8")
+    ; if s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "99,9,99,18")
+         ; arg' := () then
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "100,8,100,10")
+        ; ![]
       else
-        ![SubtermConflict(sym1, arg', sym2)]
+        s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "102,8,102,43")
+        ; ![SubtermConflict(sym1, arg', sym2)]
       end
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "94,2,103,8")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Priority2Conflicts", "94,2,103,8")
+      ; fail
 
   Prod2Symbol :
-    p@prod(syms, _, _) -> Symbol(x, n)
-    where
-      n := <filter(not(is-empty-sym)); length> syms
-      ; x := <cons-of-prod> p
+    p@prod(syms, _, _) -> <r-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Prod2Symbol", "105,2,109,28")> Symbol(x, n)
+    where r-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Prod2Symbol", "105,2,109,28")
+          <+ r-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Prod2Symbol", "105,2,109,28")
+             ; fail
+    where s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,6,109,28")
+          ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,6,108,50")
+             ; n := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,12,108,44")
+                     ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,12,108,36")
+                        ; filter(
+                            s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,19,108,35")
+                            ; not(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,23,108,34") ; is-empty-sym)
+                          ))
+                     ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "108,39,108,44")
+                     ; length> syms)
+          ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "109,8,109,28")
+          ; x := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "109,14,109,25") ; cons-of-prod> p
+          <+ r-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "Prod2Symbol", "105,2,109,28")
+             ; fail
+
 
 strategies
-
-  /**
-   * @type Int -> Int
-   */
   arg-for-symbol(|p) =
-    ?arg
-    ; prod(syms, _, _) := p
-    ; syms' := <add-indices; retain-all((id, not(is-empty-sym)); ?(<id>, _))> syms
-    ; (<get-index; dec> (<inc> arg, syms') <+ !())
+    s-enter(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "arg-for-symbol", "116,2,120,49")
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "117,4,120,49")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "117,4,117,7") ; ?arg)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "118,6,120,49")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "118,6,118,26")
+       ; prod(syms, _, _) := p)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,6,120,49")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,6,119,81")
+       ; syms' := <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,16,119,75")
+                   ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,16,119,26") ; add-indices)
+                   ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,29,119,75")
+                   ; retain-all(
+                       s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,40,119,74")
+                       ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,40,119,62")
+                          ; ( s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,41,119,42") ; id
+                            , s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,45,119,61")
+                              ; not(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,49,119,60") ; is-empty-sym)
+                            ))
+                       ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,65,119,74")
+                       ; ?( <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "119,68,119,69") ; id>
+                          , _
+                          )
+                     )> syms)
+    ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,7,120,48")
+    ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,7,120,41")
+       ; <(s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,8,120,21")
+           ; (s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,8,120,16") ; get-index)
+           ; s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,19,120,21")
+           ; dec)> ( <s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,26,120,28") ; inc> arg
+                   , syms'
+                   )
+       <+ s-step(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "120,46,120,48")
+          ; !())
+    < s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "arg-for-symbol", "116,2,120,49")
+    + s-exit(|"_cellar/sdf-tools/trans/sdf2ast-conflicts.str", "arg-for-symbol", "116,2,120,49")
+      ; fail
+
 
 signature
   constructors
-    gtr-prio : Int * Int -> Priority
+    gtr-prio     : Int * Int -> Priority
     arg-gtr-prio : Int * Int * Int -> Priority
-    parse-table : Int * Int * Labels * States * Priorities -> ParseTable
+    parse-table  : Int * Int * Labels * States * Priorities -> ParseTable

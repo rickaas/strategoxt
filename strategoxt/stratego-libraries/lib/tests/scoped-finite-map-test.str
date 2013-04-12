@@ -1,5 +1,13 @@
 module scoped-finite-map-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     Var  : String -> Exp
@@ -10,90 +18,371 @@ signature
     Fdec : String * List(String) * Exp -> Decl
     Vdec : String * Exp -> Decl
 
+
 strategies
+  exp-rename =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "exp-rename", "15,2,15,16")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "15,15,15,16")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "exp-rename", "15,2,15,16")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "exp-rename", "15,2,15,16")
+      ; fail
 
-  exp-rename = id
+  my-inline =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "my-inline", "17,2,24,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "18,4,24,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "18,4,18,26")
+       ; init-name-space(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "18,20,18,25")
+           ; !"var"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "19,4,24,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "19,4,23,34")
+       ; rec i (
+           s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,10,23,33")
+           ; scope(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,16,20,21")
+               ; !"var"
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,24,23,32")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,24,20,38")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,24,20,30") ; Declare)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,33,20,38")
+                  ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "20,37,20,37") ; i)
+                  <+ s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,27,23,32")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,27,21,54")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,27,21,43")
+                           ; Call(
+                               s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,32,21,33") ; id
+                             , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,36,21,42")
+                               ; list(
+                                   s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,41,21,41") ; i
+                                 )
+                             ))
+                        ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,46,21,54")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,46,21,51") ; Inline)
+                        ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "21,54,21,54")
+                        ; i
+                        <+ s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "22,27,23,32")
+                           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "22,27,22,36") ; Substitute
+                              <+ s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "23,27,23,32")
+                                 ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "23,31,23,31") ; i))))
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "24,4,24,26")
+    ; exit-name-space(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "24,20,24,25")
+        ; !"var"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "my-inline", "17,2,24,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "my-inline", "17,2,24,26")
+      ; fail
 
-  my-inline = 
-    init-name-space(!"var");
-    rec i(//debug(!"a: ");
-          scope(!"var", Declare; all(i)
-                        <+ Call(id, list(i)); Inline; i
-                        <+ Substitute
-                        <+ all(i)));
-    exit-name-space(!"var")
- 
-  Declare = 
-    Let(list(DeclareFun + DeclareVar), id)
+  Declare =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Declare", "26,2,27,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "27,4,27,41")
+    ; Let(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "27,8,27,36")
+        ; list(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "27,13,27,35")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "27,13,27,22") ; DeclareFun
+               + s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "27,26,27,35") ; DeclareVar)
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "27,39,27,40") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Declare", "26,2,27,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Declare", "26,2,27,41")
+      ; fail
 
   DeclareFun =
-    ?fdec@Fdec(f, _, _); where(<assert(!"var")> (f, fdec))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "DeclareFun", "29,2,30,57")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "30,4,30,57")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "30,4,30,22")
+       ; ?fdec@Fdec(f, _, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "30,25,30,57")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "30,31,30,56")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "30,32,30,45")
+                ; assert(
+                    s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "30,39,30,44")
+                    ; !"var"
+                  ))> (f, fdec))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "DeclareFun", "29,2,30,57")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "DeclareFun", "29,2,30,57")
+      ; fail
 
   DeclareVar =
-    ?Vdec(x,e); where(<assert(!"var")> (x, e))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "DeclareVar", "32,2,33,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "33,4,33,45")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "33,4,33,13")
+       ; ?Vdec(x, e))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "33,16,33,45")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "33,22,33,44")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "33,23,33,36")
+                ; assert(
+                    s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "33,30,33,35")
+                    ; !"var"
+                  ))> (x, e))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "DeclareVar", "32,2,33,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "DeclareVar", "32,2,33,45")
+      ; fail
+
 
 rules
 
   Substitute :
-    Var(x) -> e 
-    where <rewrite(!"var")> x => e
+    Var(x) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Substitute", "37,2,39,33")> e
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Substitute", "37,2,39,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Substitute", "37,2,39,33")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "39,10,39,33")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "39,10,39,28")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "39,11,39,25")
+                 ; rewrite(
+                     s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "39,19,39,24")
+                     ; !"var"
+                   ))> x) => e
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Substitute", "37,2,39,33")
+             ; fail
 
   Inline :
-    Call(f, es) -> e
-    where <rewrite(!"var"); exp-rename> f => Fdec(f, xs, e);
-          <zip(assert(!"var"))> (xs, es)
+    Call(f, es) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Inline", "41,2,44,39")> e
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Inline", "41,2,44,39")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Inline", "41,2,44,39")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,10,44,39")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,10,43,58")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,10,43,40")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,11,43,37")
+                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,11,43,25")
+                       ; rewrite(
+                           s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,19,43,24")
+                           ; !"var"
+                         ))
+                    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "43,28,43,37")
+                    ; exp-rename)> f) => Fdec(f, xs, e))
+          ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "44,10,44,39")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "44,11,44,29")
+              ; zip(
+                  s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "44,15,44,28")
+                  ; assert(
+                      s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "44,22,44,27")
+                      ; !"var"
+                    )
+                ))> (xs, es)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "Inline", "41,2,44,39")
+             ; fail
 
-  // Note: this approach assumes that either the local variables
-  // in Fdec are renamed to new unique variables, or that any
-  // substitutions to variables in es are done before inlining.
 
 strategies
-
-  main-scoped-finite-map-test = 
-    test-suite(!"scoped-finite-map-test",
-	test0;
-	test1;
-	test2;
-	test3
-    )
+  main-scoped-finite-map-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "main-scoped-finite-map-test", "52,2,58,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "53,4,58,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "53,15,53,39")
+        ; !"scoped-finite-map-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "54,1,57,5")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "54,1,54,5") ; test0)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "55,1,57,5")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "55,1,55,5") ; test1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "56,1,57,5")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "56,1,56,5") ; test2)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "57,1,57,5")
+        ; test3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "main-scoped-finite-map-test", "52,2,58,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "main-scoped-finite-map-test", "52,2,58,4")
+      ; fail
 
   test0 =
-    apply-test(!"test0a"
-	, assert(!"Bla")
-	, !((),())
-	, !((),())
-	);
-    apply-test(!"test0b"
-	, rewrite(!"Bla")
-	, !()
-	, !()
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test0", "60,2,70,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "61,4,70,1")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "61,4,65,1")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "61,15,61,23")
+           ; !"test0a"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "62,3,62,16")
+           ; assert(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "62,10,62,15")
+               ; !"Bla"
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "63,3,63,10")
+           ; !((), ())
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "64,3,64,10")
+           ; !((), ())
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "66,4,70,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "66,15,66,23")
+        ; !"test0b"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "67,3,67,17")
+        ; rewrite(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "67,11,67,16")
+            ; !"Bla"
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "68,3,68,5")
+        ; !()
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "69,3,69,5")
+        ; !()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test0", "60,2,70,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test0", "60,2,70,1")
+      ; fail
 
   test1 =
-    apply-test(!"test1"
-	, my-inline
-	, !Let([Vdec("x", 1)], Call("g", [Var("x")]))
-	, !Let([Vdec("x", 1)], Call("g", [1]))
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test1", "72,2,77,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "73,4,77,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "73,15,73,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "74,3,74,11") ; my-inline
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "75,3,75,45")
+        ; !Let(
+             [Vdec("x", 1)]
+           , Call(
+               "g"
+             , [Var("x")]
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "76,3,76,38")
+        ; !Let(
+             [Vdec("x", 1)]
+           , Call("g", [1])
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test1", "72,2,77,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test1", "72,2,77,1")
+      ; fail
 
   test2 =
-    apply-test(!"test2"
-	, my-inline
-	, !Let([Fdec("f", ["x"], Var("x"))],    
-	    Let([Fdec("g", ["x"], Plus(Int(1), Call("f", [Var("x")])))],
-             Let([Vdec("x", Int(1))], Call("g", [Var("x")]))))
-	, !Let([Fdec("f",["x"],Var("x"))],
-            Let([Fdec("g",["x"],Plus(Int(1),Var("x")))],
-              Let([Vdec("x",Int(1))],Plus(Int(1),Int(1)))))
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test2", "79,2,88,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "80,4,88,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "80,15,80,22")
+        ; !"test2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "81,3,81,11") ; my-inline
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "82,3,84,61")
+        ; !Let(
+             [ Fdec(
+                 "f"
+               , ["x"]
+               , Var("x")
+               )
+             ]
+           , Let(
+               [ Fdec(
+                   "g"
+                 , ["x"]
+                 , Plus(
+                     Int(1)
+                   , Call(
+                       "f"
+                     , [Var("x")]
+                     )
+                   )
+                 )
+               ]
+             , Let(
+                 [Vdec("x", Int(1))]
+               , Call(
+                   "g"
+                 , [Var("x")]
+                 )
+               )
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "85,3,87,58")
+        ; !Let(
+             [ Fdec(
+                 "f"
+               , ["x"]
+               , Var("x")
+               )
+             ]
+           , Let(
+               [ Fdec(
+                   "g"
+                 , ["x"]
+                 , Plus(
+                     Int(1)
+                   , Var("x")
+                   )
+                 )
+               ]
+             , Let(
+                 [Vdec("x", Int(1))]
+               , Plus(
+                   Int(1)
+                 , Int(1)
+                 )
+               )
+             )
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test2", "79,2,88,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test2", "79,2,88,1")
+      ; fail
 
   test3 =
-    apply-test(!"test3"
-	, my-inline
-	, !Let([Fdec("f", ["x"], Plus(Int(1), Var("x")))],    
-	   Let([Fdec("g", ["x"], Call("f", [Var("x")]))],
-               Call("g", [Int(2)])))
-	, !Let([Fdec("f",["x"],Plus(Int(1),Var("x")))],
-           Let([Fdec("g",["x"],Plus(Int(1),Var("x")))],
-               Plus(Int(1),Int(2))))
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test3", "90,2,99,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "91,4,99,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "91,15,91,22")
+        ; !"test3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "92,3,92,11") ; my-inline
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "93,3,95,35")
+        ; !Let(
+             [ Fdec(
+                 "f"
+               , ["x"]
+               , Plus(
+                   Int(1)
+                 , Var("x")
+                 )
+               )
+             ]
+           , Let(
+               [ Fdec(
+                   "g"
+                 , ["x"]
+                 , Call(
+                     "f"
+                   , [Var("x")]
+                   )
+                 )
+               ]
+             , Call(
+                 "g"
+               , [Int(2)]
+               )
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "96,3,98,35")
+        ; !Let(
+             [ Fdec(
+                 "f"
+               , ["x"]
+               , Plus(
+                   Int(1)
+                 , Var("x")
+                 )
+               )
+             ]
+           , Let(
+               [ Fdec(
+                   "g"
+                 , ["x"]
+                 , Plus(
+                     Int(1)
+                   , Var("x")
+                   )
+                 )
+               ]
+             , Plus(
+                 Int(1)
+               , Int(2)
+               )
+             )
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test3", "90,2,99,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/scoped-finite-map-test.str", "test3", "90,2,99,1")
+      ; fail

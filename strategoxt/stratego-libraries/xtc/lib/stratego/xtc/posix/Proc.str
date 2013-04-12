@@ -1,237 +1,315 @@
-/**
- * Used for POSIX and POSIX+XSI
- */
 module stratego/xtc/posix/Proc
-strategies
 
-  /**
-   * Reads a term from a file. If the given file exists, it will be
-   * treated as an ATerm and its content will be returned, as a term.
-   *
-   * @type FILE -> t
-   */
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   read-from :
-    FILE(name) -> t
-    where <file-exists; ReadFromFile> name => t
+    FILE(name) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "read-from", "13,2,15,46")> t
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "read-from", "13,2,15,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "read-from", "13,2,15,46")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "15,10,15,46")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "15,10,15,41")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "15,11,15,35")
+                 ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "15,11,15,21") ; file-exists)
+                 ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "15,24,15,35")
+                 ; ReadFromFile)> name) => t
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "read-from", "13,2,15,46")
+             ; fail
+
 
 strategies
+  xtc-command(tool) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-command", "31,2,34,30")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "32,6,34,30")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "32,6,32,41")
+       ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "32,12,32,40")
+               ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "32,12,32,15") ; tool)
+               ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "32,18,32,40")
+               ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "32,18,32,33") ; xtc-find-warning) => loc))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "33,6,34,30")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "33,6,33,105")
+       ; log(
+         | Debug()
+         , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "33,20,33,33") ; concat-strings> [ "Invoking tool "
+                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "33,54,33,57") ; tool>
+                                                                                                                          , " at location "
+                                                                                                                          , loc
+                                                                                                                          , " with arguments: "
+                                                                                                                          ]
+         , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "33,102,33,103") ; id>
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "34,6,34,30")
+    ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "34,12,34,29")
+            ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "34,13,34,16") ; call)> ( loc
+                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "34,26,34,27") ; id>
+                                                                                                                     ))
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-command", "31,2,34,30")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-command", "31,2,34,30")
+      ; fail
 
-  // XTC-COMMAND
-  // Executing an external process
-  // a -> String :: List(String) -> List(String)
-
-  /**
-   * Invokes the XT component given by tool. The input term is
-   * a list of command line arguments that will be passed to the
-   * invoked component.
-   * 
-   * @param tool _ -> String
-   * @type List(a) -> Int
-   */
-  xtc-command(tool) = 
-      where(tool; xtc-find-warning => loc)
-    ; log(|Debug(),<concat-strings>["Invoking tool ",<tool>," at location ",loc," with arguments: "],<id>)
-    ; where(<call> (loc, <id>))
-
-  // Transparent transformation of terms and files by external processes
-
-  /**
-   * Invokes the XT component given by tool to transform the current term. 
-   * The tool strategy must give the name of the component to invoke. The
-   * The current term will be serialized to the invoked component, and the
-   * result of its execution will become the new current term. No command
-   * line arguments are given.
-   *
-   * @param tool _ -> String
-   * @type       t -> u 
-   */
   xtc-transform(tool) =
-    xtc-transform(tool, ![])
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform", "48,2,49,27")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "49,4,49,27")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "49,18,49,21") ; tool
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "49,24,49,26")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform", "48,2,49,27")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform", "48,2,49,27")
+      ; fail
 
-  /**
-   * Invokes the XT component given by tool to transform the current term. 
-   * The tool strategy must give the name of the component to invoke. The
-   * The current term will be serialized to the invoked component, and the
-   * result of its execution will become the new current term. The args
-   * parameter must return a list of arguments that will be given to the
-   * invoked component.
-   *
-   * @param tool _ -> String
-   * @type       t -> u 
-   */
   xtc-transform(tool, args) =
-    (FILE(id) + stdin)
-    < xtc-transform-file(tool, args)
-    + xtc-transform-term(tool, args)
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform", "62,2,65,35")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "63,4,65,35")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "63,5,63,20")
+       ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "63,5,63,12")
+          ; FILE(
+              s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "63,10,63,11") ; id
+            )
+          + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "63,16,63,20") ; stdin)
+       < s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "64,6,64,35")
+         ; xtc-transform-file(
+             s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "64,25,64,28") ; tool
+           , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "64,31,64,34") ; args
+           )
+       + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "65,6,65,35")
+         ; xtc-transform-term(
+             s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "65,25,65,28") ; tool
+           , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "65,31,65,34") ; args
+           ))
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform", "62,2,65,35")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform", "62,2,65,35")
+      ; fail
 
 
 strategies
-
   xtc-transform-file =
-    ?(tool, args, file)
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "70,2,71,22")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "71,4,71,22")
+    ; ?(tool, args, file)
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "70,2,71,22")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "70,2,71,22")
+      ; fail
 
-  /**
-   * Transforms an existing file with an external process into a new file.
-   * The resulting file will be created automatically, and a handle will
-   * be returned by this strategy. The tool strategy must give the name
-   * of the component to invoke. No arguments will be passed to the
-   * transforming component.
-   *
-   * @param tool       _ -> n 
-   * @type       FILE(a) -> FILE(b)
-   */
   xtc-transform-file(tool) =
-    xtc-transform-file(tool, ![])
-
-  /**
-   * Transforms an existing file with an external process into a new file.
-   * The resulting file will be created automatically, and a handle will
-   * be returned by this strategy.
-   *
-   * The tool strategy must give the name of the component to invoke. The
-   * args strategy must give a list of arguments to pass to the component.
-   *
-   * @param tool       _ -> n 
-   * @param args       _ -> List(arg)
-   * @type       FILE(a) -> FILE(b)
-   */
-  xtc-transform-file(tool, args) :
-    FILE(f) -> FILE(g)
-    where <xtc-new-file> f => g
-        ; <conc; xtc-command(tool)> (<args>, ["-i", f, "-o", g])
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "83,2,84,32")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "84,4,84,32")
+    ; xtc-transform-file(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "84,23,84,26") ; tool
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "84,29,84,31")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "83,2,84,32")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "83,2,84,32")
+      ; fail
 
   xtc-transform-file(tool, args) :
-    stdin() -> FILE(g)
-    where xtc-new-file => g
-        ; <conc; xtc-command(tool)> (<args>, ["-o", g])
+    FILE(f) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "98,2,101,63")> FILE(g)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "98,2,101,63")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "98,2,101,63")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "100,10,101,63")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "100,10,100,30")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "100,10,100,25")
+                ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "100,11,100,22") ; xtc-new-file)> f) => g)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "101,10,101,63")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "101,11,101,33")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "101,11,101,14") ; conc)
+              ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "101,17,101,33")
+              ; xtc-command(
+                  s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "101,29,101,32") ; tool
+                ))> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "101,38,101,41") ; args>
+                    , ["-i", f, "-o", g]
+                    )
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "98,2,101,63")
+             ; fail
 
-  /**
-   * Transforms the current term with an external process. The current
-   * term will be serialized and handed off to the component identified
-   * by the tool strategy argument. The result of the component will
-   * be returned by this strategy.
-   *
-   * The tool strategy must give the name of the component to invoke. The 
-   * args strategy must give a list of arguments to pass to the component.
-   * @param tool       _ -> n 
-   * @param args       _ -> List(arg)
-   * @type             t -> u
-   */
-  xtc-transform-term(tool, args) = 
-    write-to
-    ; xtc-transform-file(tool, args)
+  xtc-transform-file(tool, args) :
+    stdin() -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "103,2,106,54")> FILE(g)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "103,2,106,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "103,2,106,54")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "105,10,106,54")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "105,10,105,26")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "105,10,105,21") ; xtc-new-file) => g)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "106,10,106,54")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "106,11,106,33")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "106,11,106,14") ; conc)
+              ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "106,17,106,33")
+              ; xtc-command(
+                  s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "106,29,106,32") ; tool
+                ))> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "106,38,106,41") ; args>
+                    , ["-o", g]
+                    )
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-file", "103,2,106,54")
+             ; fail
+
+  xtc-transform-term(tool, args) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-term", "120,2,123,14")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "121,4,123,14")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "121,4,121,11") ; write-to)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "122,6,123,14")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "122,6,122,35")
+       ; xtc-transform-file(
+           s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "122,25,122,28") ; tool
+         , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "122,31,122,34") ; args
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "123,6,123,14")
     ; read-from
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-term", "120,2,123,14")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-transform-term", "120,2,123,14")
+      ; fail
 
-  /**
-   * Transforms a file with an internal strategy s. This strategy
-   * will open an external file, apply s to it, and write the
-   * result back to the file.
-   *
-   * @param s    a -> b
-   * @type    File -> File
-   */
   xtc-io-transform(s) =
-    read-from; s; write-to
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-io-transform", "133,2,134,25")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "134,4,134,25")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "134,4,134,12") ; read-from)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "134,15,134,25")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "134,15,134,15") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "134,18,134,25")
+    ; write-to
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-io-transform", "133,2,134,25")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-io-transform", "133,2,134,25")
+      ; fail
 
-  /**
-   * Transforms a file with an internal strategy s into a text file.
-   * This strategy will open an external file (which must be an ATerm),
-   * apply s to it, and print the result as a string back into the
-   * file.
-   *
-   * @param s    a -> b
-   * @type    File -> File
-   */
   xtc-io-transform-text(s) =
-      read-from; s; print-to
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-io-transform-text", "145,2,146,27")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "146,6,146,27")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "146,6,146,14") ; read-from)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "146,17,146,27")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "146,17,146,17") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "146,20,146,27")
+    ; print-to
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-io-transform-text", "145,2,146,27")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-io-transform-text", "145,2,146,27")
+      ; fail
 
-  /**
-   * Generates a new file using the component identified by tool. This
-   * strategy will invoke the component given by tool with no arguments,
-   * and write the resulting term to a new file. A handle to the new
-   * file will be returned. No arguments will be passed on to the
-   * invoked component (except the implicit -o).
-   *
-   * @param tool    _ -> name
-   * @type          _ -> FILE(b)
-   */
   xtc-generate(tool) =
-    xtc-generate(tool, ![])
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "158,2,159,26")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "159,4,159,26")
+    ; xtc-generate(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "159,17,159,20") ; tool
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "159,23,159,25")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "158,2,159,26")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "158,2,159,26")
+      ; fail
 
-  /**
-   * Generates a new file using the component identified by tool. This
-   * strategy will invoke the component given by tool with no arguments,
-   * and write the resulting term to a new file. A handle to the new
-   * file will be returned. The strategy args must produce a list of
-   * arguments which are passed to the invoked component.
-   *
-   * @param tool    _ -> name
-   * @type          _ -> FILE(b)
-   */
   xtc-generate(tool, args) :
-    _ -> FILE(g)
-    where <xtc-new-file> () => g
-        ; <conc; xtc-command(tool)> (<args>, ["-o", g])
+    _ -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "171,2,174,54")> FILE(g)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "171,2,174,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "171,2,174,54")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "173,10,174,54")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "173,10,173,31")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "173,10,173,26")
+                ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "173,11,173,22") ; xtc-new-file)> ()) => g)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "174,10,174,54")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "174,11,174,33")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "174,11,174,14") ; conc)
+              ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "174,17,174,33")
+              ; xtc-command(
+                  s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "174,29,174,32") ; tool
+                ))> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "174,38,174,41") ; args>
+                    , ["-o", g]
+                    )
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-generate", "171,2,174,54")
+             ; fail
+
 
 strategies
-
-  /**
-   * Opens a file, applies the strategy s the file descriptor,
-   * and ensures that the file descriptor is closed on return
-   * of s, regardless of outcome.  The strategy s will be 
-   * handed a file descriptor for the the FILE given to
-   * File-as-fd. The result of s will become the result
-   * of File-as-fd, and the file descriptor will always be
-   * closed, also when s fails.
-   *
-   * @param s  Int -> b 
-   * @type    FILE -> b
-   */
   File-as-fd(s) =
-      xtc-open-fd => fd
-    ; finally(s, where(try(<xtc-close-fd> fd)))
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "File-as-fd", "190,2,192,46")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "191,6,192,46")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "191,6,191,22")
+       ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "191,6,191,16") ; xtc-open-fd) => fd)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "192,6,192,46")
+    ; finally(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "192,14,192,14") ; s
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "192,17,192,45")
+        ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "192,23,192,44")
+                ; try(
+                    s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "192,27,192,43")
+                    ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "192,28,192,39") ; xtc-close-fd)> fd
+                  ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "File-as-fd", "190,2,192,46")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "File-as-fd", "190,2,192,46")
+      ; fail
 
-  /**
-   * Opens a file and returns a file descriptor. This strategy
-   * can be used to open any <tt>FILE</tt>s as well as
-   * <tt>stdin</tt>, <tt>stdout</tt> and <tt>stderr</tt>. The
-   * file descriptor should be closed with <tt>xtc-close-fd</tt>.
-   *
-   * @type FILE -> Int
-   */
   xtc-open-fd =
-      \ FILE(s)  -> <open> s \
-    + \ stdin()  -> < STDIN_FILENO> () \
-    + \ stdout() -> <STDOUT_FILENO> () \
-    + \ stderr() -> <STDERR_FILENO> () \
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-open-fd", "202,2,206,39")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "203,6,206,39")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "203,6,203,29")
+       ; \ FILE(s) -> <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "203,21,203,24") ; open> s \
+       + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "204,6,206,39")
+         ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "204,6,204,39")
+            ; \ stdin() -> <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "204,22,204,33") ; STDIN_FILENO> () \
+            + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "205,6,206,39")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "205,6,205,39")
+                 ; \ stdout() -> <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "205,21,205,33") ; STDOUT_FILENO> () \
+                 + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "206,6,206,39")
+                   ; \ stderr() -> <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "206,21,206,33") ; STDERR_FILENO> () \)))
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-open-fd", "202,2,206,39")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-open-fd", "202,2,206,39")
+      ; fail
 
-  /**
-   * Closes a file descriptor. This strategy can be used to close
-   * any file opened by <tt>xtc-open-fd</tt>, and also the
-   * standard files <tt>stdin</tt>, <tt>stdout</tt> and
-   * <tt>stderr</tt>.
-   *
-   * @type FILE -> Int
-   */
-  xtc-close-fd = 
-    finally(
-      ( where(<eq> (<id>, < STDIN_FILENO> ()))
-      + where(<eq> (<id>, <STDOUT_FILENO> ()))
-      + where(<eq> (<id>, <STDERR_FILENO> ()))
-      ) <+ close
-    , !())
+  xtc-close-fd =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-close-fd", "216,2,222,9")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "217,4,222,9")
+    ; finally(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,6,221,15")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,8,220,45")
+           ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,8,218,45")
+              ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,14,218,44")
+                      ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,15,218,16") ; eq)> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,21,218,22") ; id>
+                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "218,28,218,39") ; STDIN_FILENO> ()
+                                                                                                                               ))
+              + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "219,8,220,45")
+                ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "219,8,219,45")
+                   ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "219,14,219,44")
+                           ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "219,15,219,16") ; eq)> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "219,21,219,22") ; id>
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "219,27,219,39") ; STDOUT_FILENO> ()
+                                                                                                                                    ))
+                   + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "220,8,220,45")
+                     ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "220,14,220,44")
+                             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "220,15,220,16") ; eq)> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "220,21,220,22") ; id>
+                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "220,27,220,39") ; STDERR_FILENO> ()
+                                                                                                                                      ))))
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "221,11,221,15") ; close)
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "222,6,222,8")
+        ; !()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-close-fd", "216,2,222,9")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-close-fd", "216,2,222,9")
+      ; fail
 
-  /**
-   * Generates a new file name, but does not create the file on
-   * disk. As the file is not created on disk, another process
-   * may theoretically create it (and thus own it), thus causing
-   * a race condition. For this reason, you may prefer to us
-   * <tt>xtc-new-file</tt> instead.
-   * 
-   * @type _ -> FILE
-   */
   xtc-new-file-name =
-    obsolete(!"xtc-new-file-name; use xtc-new-file")
-    ; new-file => f
-    ; where(<assert(!TempFiles())> (f, ()))
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-new-file-name", "233,2,237,13")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "234,4,237,13")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "234,4,234,51")
+       ; obsolete(
+           s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "234,13,234,50")
+           ; !"xtc-new-file-name; use xtc-new-file"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "235,6,237,13")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "235,6,235,18")
+       ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "235,6,235,13") ; new-file) => f)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "236,6,237,13")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "236,6,236,42")
+       ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "236,12,236,41")
+               ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "236,13,236,32")
+                   ; assert(
+                       s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "236,20,236,31")
+                       ; !TempFiles()
+                     ))> (f, ())))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "237,6,237,13")
     ; !FILE(f)
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-new-file-name", "233,2,237,13")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix/Proc.str", "xtc-new-file-name", "233,2,237,13")
+      ; fail

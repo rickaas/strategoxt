@@ -1,4 +1,20 @@
 module rename-vars
-imports stratlib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratlib
+
+
 strategies
-  rename-vars = io-wrap(strename)
+  rename-vars =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/rename-vars.str", "rename-vars", "4,2,4,32")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/rename-vars.str", "4,16,4,32")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/rename-vars.str", "4,24,4,31") ; strename
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/rename-vars.str", "rename-vars", "4,2,4,32")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/rename-vars.str", "rename-vars", "4,2,4,32")
+      ; fail

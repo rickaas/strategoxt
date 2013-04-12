@@ -1,68 +1,117 @@
-/**
- * Options for pptable-diff
- */
 module pp-table-diff-options
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   lib-pp-table-args
 
+
 signature
-   constructors
-      OldTable : Option
-      Patch    : Option
-      Prune    : Option
+  constructors
+    OldTable : Option
+    Patch    : Option
+    Prune    : Option
+
 
 strategies
-
   pp-table-diff-options =
-         Option( "--patch", enable-patch, !"--patch          Bring old table up-to-date" )
-    +    Option( "--prune", enable-prune, !"--prune          Remove obsolete pp entries" )
-    + ArgOption( "--old",   <set-config> (OldTable(), <id>), !"--old <table>    Old table" )
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "pp-table-diff-options", "16,2,19,91")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "17,9,19,91")
+    ; (s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "17,9,17,89")
+       ; Option(
+           s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "17,17,17,25") ; "--patch"
+         , s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "17,28,17,39") ; enable-patch
+         , s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "17,42,17,87")
+           ; !"--patch          Bring old table up-to-date"
+         )
+       + s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "18,9,19,91")
+         ; (s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "18,9,18,89")
+            ; Option(
+                s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "18,17,18,25") ; "--prune"
+              , s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "18,28,18,39") ; enable-prune
+              , s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "18,42,18,87")
+                ; !"--prune          Remove obsolete pp entries"
+              )
+            + s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "19,6,19,91")
+              ; ArgOption(
+                  s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "19,17,19,23") ; "--old"
+                , s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "19,28,19,58")
+                  ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "19,29,19,38") ; set-config)> ( OldTable()
+                                                                                                                     , <s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "19,55,19,56") ; id>
+                                                                                                                     )
+                , s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "19,61,19,89")
+                  ; !"--old <table>    Old table"
+                )))
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "pp-table-diff-options", "16,2,19,91")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "pp-table-diff-options", "16,2,19,91")
+      ; fail
 
-/**
- * Passing options
- */
+
 strategies
 
-//  pass-pp-table-diff-options =
-//    <concat> [<pass-patch> (), <pass-prune>(), <pass-old-pp-table>()]
 
-//  pass-patch =
-//    is-patch-enabled < !["--patch"] + ![]
-
-//  pass-prune =
-//    is-prune-enabled < !["--prune"] + ![]
-
-//  pass-old-pp-table =
-//    <get-config> OldTable() < ensure-pp-table-parsed; !["--old", <id>] + ![]
-
-/**
- * Setting options
- */
 strategies
-
-  enable-patch  =
-    <set-config> (Patch(), "on")
+  enable-patch =
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "enable-patch", "43,2,44,31")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "44,4,44,31")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "44,5,44,14") ; set-config)> (Patch(), "on")
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "enable-patch", "43,2,44,31")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "enable-patch", "43,2,44,31")
+      ; fail
 
   disable-patch =
-    <set-config> (Patch(), "off")
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "disable-patch", "46,2,47,32")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "47,4,47,32")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "47,5,47,14") ; set-config)> (Patch(), "off")
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "disable-patch", "46,2,47,32")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "disable-patch", "46,2,47,32")
+      ; fail
 
-  enable-prune  =
-    <set-config> (Prune(), "on")
+  enable-prune =
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "enable-prune", "49,2,50,31")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "50,4,50,31")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "50,5,50,14") ; set-config)> (Prune(), "on")
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "enable-prune", "49,2,50,31")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "enable-prune", "49,2,50,31")
+      ; fail
 
   disable-prune =
-    <set-config> (Prune(), "off")
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "disable-prune", "52,2,53,32")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "53,4,53,32")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "53,5,53,14") ; set-config)> (Prune(), "off")
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "disable-prune", "52,2,53,32")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "disable-prune", "52,2,53,32")
+      ; fail
 
-/**
- * Getting options
- */
+
 strategies
-
   is-patch-enabled =
-    <get-config> Patch() => "on"
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "is-patch-enabled", "60,2,61,31")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "61,4,61,31")
+    ; (s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "61,4,61,23")
+       ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "61,5,61,14") ; get-config)> Patch()) => "on"
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "is-patch-enabled", "60,2,61,31")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "is-patch-enabled", "60,2,61,31")
+      ; fail
 
   is-prune-enabled =
-    <get-config> Prune() => "on"
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "is-prune-enabled", "63,2,64,31")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "64,4,64,31")
+    ; (s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "64,4,64,23")
+       ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "64,5,64,14") ; get-config)> Prune()) => "on"
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "is-prune-enabled", "63,2,64,31")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "is-prune-enabled", "63,2,64,31")
+      ; fail
 
   get-old-pp-table =
-    <get-config> OldTable()
-    <+ <fatal-error> ["please specify old table with --old switch"] 
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "get-old-pp-table", "66,2,68,66")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "67,4,68,66")
+    ; (s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "67,4,67,26")
+       ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "67,5,67,14") ; get-config)> OldTable()
+       <+ s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "68,7,68,66")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "68,8,68,18") ; fatal-error)> ["please specify old table with --old switch"])
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "get-old-pp-table", "66,2,68,66")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-table-diff-options.str", "get-old-pp-table", "66,2,68,66")
+      ; fail

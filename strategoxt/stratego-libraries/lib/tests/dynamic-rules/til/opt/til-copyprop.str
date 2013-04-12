@@ -1,42 +1,155 @@
 module til-copyprop
-imports til-opt-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  til-opt-lib
+
+
 strategies
+  io-til-copyprop =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "io-til-copyprop", "5,2,6,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "6,4,6,20")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "6,12,6,19") ; copyprop
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "io-til-copyprop", "5,2,6,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "io-til-copyprop", "5,2,6,20")
+      ; fail
 
-  io-til-copyprop = 
-    io-wrap(copyprop)
-
-  copyprop = 
-    CopyProp
-    <+ copyprop-declaration
-    <+ copyprop-assign 
-    <+ copyprop-block
-    <+ copyprop-if
-    <+ copyprop-while
-    <+ all(copyprop)
+  copyprop =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop", "8,2,15,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "9,4,15,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "9,4,9,11") ; CopyProp
+       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "10,7,15,19")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "10,7,10,26") ; copyprop-declaration
+             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "11,7,15,19")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "11,7,11,21") ; copyprop-assign
+                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "12,7,15,19")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "12,7,12,20") ; copyprop-block
+                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "13,7,15,19")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "13,7,13,17") ; copyprop-if
+                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "14,7,15,19")
+                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "14,7,14,20") ; copyprop-while
+                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "15,7,15,19")
+                                        ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "15,11,15,18") ; copyprop)))))))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop", "8,2,15,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop", "8,2,15,19")
+      ; fail
 
   copyprop-block =
-    Block({| CopyProp : map(copyprop) |})
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-block", "17,2,18,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "18,4,18,40")
+    ; Block(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "18,10,18,39")
+        ; {|CopyProp:
+             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "18,24,18,36")
+             ; map(
+                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "18,28,18,35") ; copyprop
+               )
+          |}
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-block", "17,2,18,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-block", "17,2,18,40")
+      ; fail
 
-  copyprop-declaration = 
-    (?Declaration(x) <+ ?DeclarationTyped(x, t))
+  copyprop-declaration =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-declaration", "20,2,22,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "21,4,22,24")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "21,5,21,46")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "21,5,21,19")
+          ; ?Declaration(x)
+          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "21,24,21,46")
+             ; ?DeclarationTyped(x, t)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "22,6,22,24")
     ; new-CopyProp(|x, x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-declaration", "20,2,22,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-declaration", "20,2,22,24")
+      ; fail
 
-  copyprop-assign = 
-    Assign(?x, copyprop => e)
-    ; undefine-CopyProp(|x)
-    ; where( innermost-scope-CopyProp => z )
-    ; if <?Var(y)> e then
-        rules( CopyProp.z : Var(x) -> Var(y) depends on [(x,x),(y,y)] )
+  copyprop-assign =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-assign", "24,2,30,8")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "25,4,30,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "25,4,25,28")
+       ; Assign(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "25,11,25,12") ; ?x
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "25,15,25,27")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "25,15,25,22") ; copyprop) => e
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "26,6,30,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "26,6,26,26")
+       ; undefine-CopyProp(|x))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "27,6,30,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "27,6,27,43")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "27,13,27,41")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "27,13,27,36") ; innermost-scope-CopyProp) => z))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "28,6,30,8")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "28,9,28,19")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "28,10,28,16")
+             ; ?Var(y))> e then
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "29,8,29,70")
+        ; rules (
+            CopyProp.z :
+              Var(x) -> Var(y)
+              depends on [(x, x), (y, y)]
+          )
       end
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-assign", "24,2,30,8")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-assign", "24,2,30,8")
+      ; fail
 
   copyprop-if =
-    IfElse(copyprop, id, id)
-    ; (IfElse(id, copyprop, id) /CopyProp\ IfElse(id,id,copyprop))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-if", "32,2,34,65")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "33,4,34,65")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "33,4,33,27")
+       ; IfElse(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "33,11,33,18") ; copyprop
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "33,21,33,22") ; id
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "33,25,33,26") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,7,34,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,7,34,30")
+       ; IfElse(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,14,34,15") ; id
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,18,34,25") ; copyprop
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,28,34,29") ; id
+         )) /CopyProp\ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,43,34,64")
+                        ; IfElse(
+                            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,50,34,51") ; id
+                          , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,53,34,54") ; id
+                          , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "34,56,34,63") ; copyprop
+                          ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-if", "32,2,34,65")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-if", "32,2,34,65")
+      ; fail
 
   copyprop-while =
-    ?While(_, _)
-    ; (/CopyProp\* While(copyprop, copyprop))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-while", "36,2,38,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "37,4,38,44")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "37,4,37,15")
+       ; ?While(_, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "38,7,38,43")
+    ; /CopyProp\* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "38,19,38,43")
+                   ; While(
+                       s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "38,25,38,32") ; copyprop
+                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "38,35,38,42") ; copyprop
+                     ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-while", "36,2,38,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "copyprop-while", "36,2,38,44")
+      ; fail
 
-  innermost-scope-CopyProp = 
-    get-var-names => vars
-    ; innermost-scope-CopyProp(elem-of(|vars))
+  innermost-scope-CopyProp =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "innermost-scope-CopyProp", "40,2,42,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "41,4,42,45")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "41,4,41,24")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "41,4,41,16") ; get-var-names) => vars)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "42,6,42,45")
+    ; innermost-scope-CopyProp(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "42,31,42,44")
+        ; elem-of(|vars)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "innermost-scope-CopyProp", "40,2,42,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-copyprop.str", "innermost-scope-CopyProp", "40,2,42,45")
+      ; fail

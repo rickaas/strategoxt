@@ -1,45 +1,141 @@
-/**
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */ 
 module rtg-ppfix
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-rtg
 
-strategies
 
+strategies
   rtg-ppfix =
-    topdown(
-      if Term(is-string) + Nonterm(is-string) then
-        Term(ExplodeId)
-        + Nonterm(ExplodeId)
-      else
-        try(PpFix)
-      end
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "rtg-ppfix", "11,2,19,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "12,4,19,4")
+    ; topdown(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "13,6,18,8")
+        ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "13,9,13,44")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "13,9,13,23")
+                ; Term(
+                    s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "13,14,13,22") ; is-string
+                  )
+                + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "13,27,13,44")
+                  ; Nonterm(
+                      s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "13,35,13,43") ; is-string
+                    )) then
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "14,8,15,27")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "14,8,14,22")
+               ; Term(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "14,13,14,21") ; ExplodeId
+                 )
+               + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "15,10,15,27")
+                 ; Nonterm(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "15,18,15,26") ; ExplodeId
+                   ))
+          else
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "17,8,17,17")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "17,12,17,16") ; PpFix
+              )
+          end
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "rtg-ppfix", "11,2,19,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "rtg-ppfix", "11,2,19,4")
+      ; fail
 
   PpFix =
-    TupleTerm(int-to-string)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "PpFix", "21,2,22,27")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "22,4,22,27")
+    ; TupleTerm(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "22,14,22,26") ; int-to-string
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "PpFix", "21,2,22,27")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "PpFix", "21,2,22,27")
+      ; fail
 
   ExplodeId =
-    explode-string
-    ; foldr(![Chars([])],
-         \ ('\', parts) -> [EscapeSeq('\') | parts] \
-      + \ (']', parts) -> [EscapeSeq(']') | parts] \
-      + \ (c,   [Chars(cs) | parts]) ->  [Chars([c | cs]) | parts] \
-      + \ (c,   parts) -> [Chars([c]) | parts] \
-      )
-    ; filter(not(Chars([])))
-    ; if [Chars(?s; map(is-rtg-plain-char))] then
-        <implode-string> s
-      ; !Plain(<id>)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "ExplodeId", "24,2,39,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "25,4,39,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "25,4,25,17") ; explode-string)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "26,6,39,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "26,6,31,6")
+       ; foldr(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "26,12,26,23")
+           ; ![Chars([])]
+         , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "27,9,30,47")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "27,9,27,52")
+              ; \ ('\', parts) -> [EscapeSeq('\')|parts] \
+              + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "28,8,30,47")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "28,8,28,51")
+                   ; \ (']', parts) -> [EscapeSeq(']')|parts] \
+                   + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "29,8,30,47")
+                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "29,8,29,67")
+                        ; \ (c, [Chars(cs)|parts]) -> [Chars([c|cs])|parts] \
+                        + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "30,8,30,47")
+                          ; \ (c, parts) -> [Chars([c])|parts] \)))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "32,6,39,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "32,6,32,27")
+       ; filter(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "32,13,32,26")
+           ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "32,17,32,25")
+                 ; Chars(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "32,23,32,24") ; []
+                   ))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,6,39,8")
+    ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,9,33,43")
+         ; [ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,10,33,42")
+             ; Chars(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,16,33,41")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,16,33,17") ; ?s)
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,20,33,41")
+                 ; map(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "33,24,33,40") ; is-rtg-plain-char
+                   )
+               )
+           ] then
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "34,8,35,19")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "34,8,34,25")
+           ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "34,9,34,22") ; implode-string)> s)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "35,8,35,19")
+        ; !Plain(
+             <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "35,16,35,17") ; id>
+           )
       else
-        map(Chars(implode-string) + EscapeSeq(<implode-string> [<id>]))
-      ; !Quoted(<id>)
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,8,38,20")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,8,37,70")
+           ; map(
+               s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,12,37,69")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,12,37,32")
+                  ; Chars(
+                      s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,18,37,31") ; implode-string
+                    )
+                  + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,36,37,69")
+                    ; EscapeSeq(
+                        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,46,37,68")
+                        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,47,37,60") ; implode-string)> [<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "37,65,37,66") ; id>]
+                      ))
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "38,8,38,20")
+        ; !Quoted(
+             <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "38,17,38,18") ; id>
+           )
       end
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "ExplodeId", "24,2,39,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "ExplodeId", "24,2,39,8")
+      ; fail
 
   is-rtg-plain-char =
-    is-alphanum
-    + '\''
-    + '-'
-    + '_'
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "is-rtg-plain-char", "41,2,45,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "42,4,45,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "42,4,42,14") ; is-alphanum
+       + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "43,6,45,8")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "43,6,43,9") ; '\''
+            + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "44,6,45,8")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "44,6,44,8") ; '-'
+                 + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "45,6,45,8") ; '_')))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "is-rtg-plain-char", "41,2,45,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/rtg-ppfix.str", "is-rtg-plain-char", "41,2,45,8")
+      ; fail

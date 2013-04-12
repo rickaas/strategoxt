@@ -1,67 +1,214 @@
 module defs-to-external-defs
-imports libstratego-lib Stratego
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  Stratego
+
+
 strategies
-
   dted-options =
-    Option("--no-inlining",
-	where(<set-config>("--no-inlining", ())),
-	!"--no-inlining: do not include definition bodies")
-  
-strategies // extract external definitions
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "dted-options", "5,2,8,51")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "6,4,8,51")
+    ; Option(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "6,11,6,25") ; "--no-inlining"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "7,1,7,40")
+        ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "7,7,7,39")
+                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "7,8,7,17") ; set-config)> ("--no-inlining", ()))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "8,1,8,50")
+        ; !"--no-inlining: do not include definition bodies"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "dted-options", "5,2,8,51")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "dted-options", "5,2,8,51")
+      ; fail
 
+
+strategies
   defs-to-external-defs =
-    Specification(
-      [Signature([Constructors(filter-exported-constructors)]), 
-       Strategies(filter-exported-strategies)])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "defs-to-external-defs", "12,2,15,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "13,4,15,46")
+    ; Specification(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "14,6,15,45")
+        ; [ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "14,7,14,61")
+            ; Signature(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "14,17,14,60")
+                ; [ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "14,18,14,59")
+                    ; Constructors(
+                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "14,31,14,58") ; filter-exported-constructors
+                      )
+                  ]
+              )
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "15,7,15,44")
+            ; Strategies(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "15,18,15,43") ; filter-exported-strategies
+              )
+          ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "defs-to-external-defs", "12,2,15,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "defs-to-external-defs", "12,2,15,46")
+      ; fail
 
 
-strategies // exported strategies
-
+strategies
   filter-exported-strategies =
-    filter(
-      ignore-anno-def(DefToExtDefInl <+ DefToExtDef /* + ExtSDef(unmangle,id,id) */ )
-      ; is-exported-definition
-    )    
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "filter-exported-strategies", "20,2,24,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "21,4,24,4")
+    ; filter(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "22,6,23,29")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "22,6,22,84")
+           ; ignore-anno-def(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "22,22,22,50")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "22,22,22,35") ; DefToExtDefInl
+                  <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "22,40,22,50") ; DefToExtDef)
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "23,8,23,29")
+        ; is-exported-definition
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "filter-exported-strategies", "20,2,24,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "filter-exported-strategies", "20,2,24,4")
+      ; fail
 
   DefToExtDef :
-    SDefT(f, a1*, a2*, s) -> ExtSDef(<unmangle>f, a1*, a2*)
+    SDefT(f, a1*, a2*, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDef", "26,2,27,58")> ExtSDef(
+                                                                                                                                                            <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "27,38,27,45") ; unmangle> f
+                                                                                                                                                          , a1*
+                                                                                                                                                          , a2*
+                                                                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDef", "26,2,27,58")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDef", "26,2,27,58")
+             ; fail
 
   DefToExtDefInl :
-    SDefT(f, a1*, a2*, s) -> 
-    ExtSDefInl(<unmangle>f, a1*, a2*, <topdown(try(UnmangleSVar))> s)
-    where <inlinable> s
+    SDefT(f, a1*, a2*, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDefInl", "29,2,32,22")> ExtSDefInl(
+                                                                                                                                                               <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "31,16,31,23") ; unmangle> f
+                                                                                                                                                             , a1*
+                                                                                                                                                             , a2*
+                                                                                                                                                             , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "31,39,31,64")
+                                                                                                                                                                ; topdown(
+                                                                                                                                                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "31,47,31,63")
+                                                                                                                                                                    ; try(
+                                                                                                                                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "31,51,31,62") ; UnmangleSVar
+                                                                                                                                                                      )
+                                                                                                                                                                  )> s
+                                                                                                                                                             )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDefInl", "29,2,32,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDefInl", "29,2,32,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "32,10,32,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "32,11,32,19") ; inlinable)> s
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "DefToExtDefInl", "29,2,32,22")
+             ; fail
 
-  inlinable = 
-    false
-    // where(not(<get-config>"--no-inlining"))
+  inlinable =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "inlinable", "34,2,35,8")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "35,4,35,8")
+    ; false
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "inlinable", "34,2,35,8")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "inlinable", "34,2,35,8")
+      ; fail
 
   UnmangleSVar :
-    SVar(x) -> SVar(<unmangle>x)
+    SVar(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "UnmangleSVar", "38,2,39,31")> SVar(
+                                                                                                                                               <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "39,21,39,28") ; unmangle> x
+                                                                                                                                             )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "UnmangleSVar", "38,2,39,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "UnmangleSVar", "38,2,39,31")
+             ; fail
 
   unmangle =
-    explode-string
-    ; at-suffix(['_' | match-digits(['_' | match-digits([]) ])]; ![])
-    ; implode-string
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "unmangle", "41,2,45,11")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "42,4,45,11")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "42,4,42,17") ; explode-string)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,6,45,11")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,6,43,68")
+       ; at-suffix(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,16,43,67")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,16,43,62")
+              ; [s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,17,43,19") ; '_'|s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,23,43,61")
+                                                                                                                                    ; match-digits(
+                                                                                                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,36,43,60")
+                                                                                                                                        ; [s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,37,43,39") ; '_'|s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,43,43,58")
+                                                                                                                                                                                                                                                              ; match-digits(
+                                                                                                                                                                                                                                                                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,56,43,57") ; []
+                                                                                                                                                                                                                                                                )]
+                                                                                                                                      )])
+           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "43,65,43,67")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "44,6,45,11")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "44,6,44,19") ; implode-string)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "45,6,45,11")
     ; uncify
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "unmangle", "41,2,45,11")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "unmangle", "41,2,45,11")
+      ; fail
 
   match-digits(s) =
-    [is-num | match-digits(s) <+ s]
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "match-digits", "47,2,48,34")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "48,4,48,34")
+    ; [s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "48,5,48,10") ; is-num|s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "48,14,48,33")
+                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "48,14,48,28")
+                                                                                                                               ; match-digits(
+                                                                                                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "48,27,48,27") ; s
+                                                                                                                                 )
+                                                                                                                               <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "48,33,48,33") ; s)]
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "match-digits", "47,2,48,34")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "match-digits", "47,2,48,34")
+      ; fail
 
   is-exported-definition =
-    ExtSDef(not(?"DYNAMIC_CALLS"), id, id)
-    <+ ExtSDefInl(not(?"DYNAMIC_CALLS"), id, id, id)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "is-exported-definition", "50,2,52,51")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "51,4,52,51")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "51,4,51,41")
+       ; ExtSDef(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "51,12,51,32")
+           ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "51,16,51,31")
+                 ; ?"DYNAMIC_CALLS")
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "51,35,51,36") ; id
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "51,39,51,40") ; id
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "52,7,52,51")
+          ; ExtSDefInl(
+              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "52,18,52,38")
+              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "52,22,52,37")
+                    ; ?"DYNAMIC_CALLS")
+            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "52,41,52,42") ; id
+            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "52,45,52,46") ; id
+            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "52,49,52,50") ; id
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "is-exported-definition", "50,2,52,51")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "is-exported-definition", "50,2,52,51")
+      ; fail
 
 
-strategies // exported constructors
-
+strategies
   filter-exported-constructors =
-    filter(OpDeclToExtOpDecl)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "filter-exported-constructors", "57,2,58,28")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "58,4,58,28")
+    ; filter(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "58,11,58,27") ; OpDeclToExtOpDecl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "filter-exported-constructors", "57,2,58,28")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "filter-exported-constructors", "57,2,58,28")
+      ; fail
 
   OpDeclToExtOpDecl :
-    OpDeclInj(t) ->  ExtOpDeclInj(t)
+    OpDeclInj(t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "60,2,61,35")> ExtOpDeclInj(t)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "60,2,61,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "60,2,61,35")
+             ; fail
 
   OpDeclToExtOpDecl :
-    OpDeclQ(c, t) -> ExtOpDeclQ(c, t)
+    OpDeclQ(c, t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "63,2,64,36")> ExtOpDeclQ(c, t)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "63,2,64,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "63,2,64,36")
+             ; fail
 
   OpDeclToExtOpDecl :
-    OpDecl(c, t) -> ExtOpDecl(c, t)
+    OpDecl(c, t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "66,2,67,34")> ExtOpDecl(c, t)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "66,2,67,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/defs-to-external-defs.str", "OpDeclToExtOpDecl", "66,2,67,34")
+             ; fail

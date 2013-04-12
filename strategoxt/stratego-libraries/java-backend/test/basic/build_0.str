@@ -1,11 +1,23 @@
 module build_0
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
 
+
 signature
   constructors
-   Foo : Term * Term -> Term
+    Foo : Term * Term -> Term
+
 
 strategies
-
-  main-build_0 = !Foo(1,2)
+  main-build_0 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/build_0.str", "main-build_0", "11,2,11,25")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_0.str", "11,17,11,25")
+    ; !Foo(1, 2)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_0.str", "main-build_0", "11,2,11,25")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_0.str", "main-build_0", "11,2,11,25")
+      ; fail

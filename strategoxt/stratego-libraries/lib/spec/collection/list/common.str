@@ -1,1135 +1,1615 @@
-/**
- * This module contains basic functionality for manipulating lists.
- *
- */
 module collection/list/common
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   collection/list/cons
   collection/list/index
   term/integer
 
-strategies
 
-  /**
-   * Iterative loop over a list applying s to each element.
-   *
-   * @param Strategy to apply to every element (a -> _)
-   * @type List(a) -> List(a)
-   */
+strategies
   list-loop(s) =
-    ?xs; prim("SSL_list_loop", s | xs)
-
-  /**
-   * Iterative fold over a list applying s to each element and 
-   * accumulator acc from left to right.
-   *
-   * @param Strategy applied for folding. The current
-   *        intermediate result is a term argument. The next element
-   *        of the list is the current term.
-   * @param Initial value for folding (type: c)
-   * @type List(a) -> c
-   */
-  list-fold(s : c * a -> c | acc) =
-    ?xs; prim("SSL_list_fold", s | acc, xs)
-
-strategies
-
-  /** @internal */
-  Hd   : [x | _] -> x
-  
-  /** @internal */
-  Tl   : [_ | l] -> l
-  
-  /** @internal */
-  Last : [x]     -> x
-
-  /**
-   * @internal
-   * @type a -> List(a)
-   */
-  MkSingleton =
-    ![<id>]
-
-  /**
-   * Splits a Cons into a tuple with head and tail.
-   *
-   * @type List(a) -> (a, List(a))
-   */
-  split-Cons :
-    [x | xs] -> (x, xs)
-
-  /**
-   * Makes a Cons out of a tuple with head and tail. The
-   * tail must be a list, but may be the empty list.
-   *
-   * @type (a, List(a)) -> List(a)
-   */
-  MkCons :
-    (x, xs) -> [x | xs]
-
-strategies
-
-  /**
-   * Succeeds if the input term is a list.
-   *
-   * @type List(a) -> _
-   */
-  is-list = ?[] + ?[_ | _]
-
-  /**
-   * Apply a strategy to each element of a list.
-   *
-   * @param s is applied to all elements: a -> b
-   * @type  List(a) -> List(b)
-   * @inc   map-test
-   */
-  map(s) = 
-    rec x([] + [s | x]) 
-
-  /** @internal */
-  map1(s) = 
-    [s | id]; [id | try(map1(s))] <+ [id | map1(s)]
-
-  /**
-   * In reverse order, apply a strategy to each element of a list.
-   *
-   * @param s is applied to all elements: a -> b
-   * @type  List(a) -> List(b)
-   */
-  reverse-map(s) = 
-    [id | reverse-map(s)]; [s | id] <+ []
-
-  /**
-   * @inc map
-   *
-   * @note list(s) is an alias for map
-   */
-  list(s) = 
-    map(s)
-
-  /** 
-   * Apply a strategy to some elements in a list. The elements
-   * of the original list will be kept unchanged when the 
-   * strategy s fails.
-   *
-   * @param s       a -> b
-   * @type    List(a) -> List(b)
-   */
-  list-some(s) =
-    rec x([s| id] < [id| list(try(s))] + [id| x])
-
- /**
-  * Returns the length of a list.
-  *
-  * @type List(a) -> Int
-  * @inc length-test
-  */
-  length = 
-    ?t; prim("SSL_get_list_length", t)
-
-  /**
-   * Succeeds if the term is in the list.
-   *
-   * @type  (a, List(a)) ->? List(a)
-   */
-  elem =
-    ?(x, <id>); fetch(?x)
-  
-  /**
-   * Succeeds if the term is in the list, using the given
-   * strategy for determining equality.
-   *
-   * @param (a, a) ->? b
-   * @type  (a, List(a)) ->? List(a or b)
-   */
-  elem(eq) =
-    ?(x, <id>); fetch(<eq> (x, <id>))
-
-  /**
-   * Find first list element for which s succeeds.
-   *
-   * @param a -> b
-   * @type  List(a) -> List(a or b)
-   * @inc   fetch-test
-   */
-  fetch(s) = 
-    rec x([s | id] <+ [id | x])
-
-  /**
-   * Return first list element for which s succeeds.
-   *
-   * @type  List(a) -> a
-   * @inc   fetch-elem-test
-   */
-  fetch-elem(s) = 
-    fetch(s; ?x); !x
-
-  /**
-   * Splits a list in two parts at the first point where s succeeds.
-   *
-   * The element to which s was applied is not part of the result. split-fetch
-   * fails if s cannot be applied to any of the elements.
-   *
-   * Examples:
-   *   <split-fetch(\ 3 -> 6 \)> [1, 2, 3] => ([1,2], [])
-   *   <split-fetch(\ 3 -> 6 \)> [2, 3, 4] => ([2], [4])
-   *   <split-fetch(\ 3 -> 6 \)> [3, 4, 5] => ([], [4,5])
-   *   not(<split-fetch(\ 3 -> 6 \)> [8, 7, 6])
-   *
-   * @param a ->? _
-   * @type  List(a) -> (List(a), List(a))
-   * @inc   split-fetch-test
-   */
-  split-fetch(s) =
-    at-suffix([s|id];[id|?tl];![]); !(<id>, tl)
-
-  /**
-   * Splits a list in two parts at the point where s succeeds, keeping the
-   * element at which s succeeded.
-   *
-   * Unlike split-fetch, this strategy keeps the dividing element as part of
-   * the result as the second element in the triple: (before, split, after)
-   *
-   * split-fetch-keep fails if s cannot be applied to any of the elements.
-   *
-   * @param a -> b
-   * @type  List(a) -> (List(a), b, List(a))
-   */
-  split-fetch-keep(s) =
-    at-suffix([s|id];[?el|?tl];![]); !(<id>, el, tl)
-    
-  /**
-   * Breaks a list into multiple parts (tokens). 
-   *
-   * The term argument sep is a list of delimiters (elements that separate
-   * tokens from one another), which is used to split the list
-   * into multiple tokens. The result is a list of lists, i.e. a list
-   * of tokens.
-   *  
-   * @param List of separator elements.
-   * @type  List(a) -> List(List(a))
-   */
-  list-tokenize(|sep) =
-    list-tokenize({c: ?c; <fetch(?c)> sep})
-
-  /**
-   * Breaks a list into multiple parts (tokens). 
-   *
-   * The strategy argument sep is used to split the list. Wherever it
-   * succeeds, the original list is split, and the parts are returned
-   * as a list of lists, i.e. a list of tokens.
-   * 
-   * @param s  a -> fail?
-   * @type     List(a) -> List(List(a))
-   */
-  list-tokenize(sep) =
-      (split-fetch(sep) <+ !(<id>, []))
-    ; ( \ (  []     , [])        -> []   \
-      + \ (l@[_ | _], [])        -> [l]  \
-      + \ (  []     , l@[_ | _]) -> <list-tokenize(sep)> l \
-      + \ (t@[_ | _], l@[_ | _]) -> [t | <list-tokenize(sep)> l] \
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-loop", "19,2,20,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "20,4,20,37")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "20,4,20,6") ; ?xs)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "20,9,20,37")
+    ; prim(
+        "SSL_list_loop"
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "20,31,20,31") ; s
+      | xs
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-loop", "19,2,20,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-loop", "19,2,20,37")
+      ; fail
 
-strategies    
+  list-fold(s : c * a -> c|acc) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-fold", "32,2,33,42")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "33,4,33,42")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "33,4,33,6") ; ?xs)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "33,9,33,42")
+    ; prim(
+        "SSL_list_fold"
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "33,31,33,31") ; s
+      | acc
+      , xs
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-fold", "32,2,33,42")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-fold", "32,2,33,42")
+      ; fail
 
-  /**
-   * Apply a strategy to the tail of a list.
-   *
-   * @param is applied to the tail: List(a) -> List(b)
-   * @type  List(a) -> List(a or b)
-   */
-  at-tail(s) = 
-    [id | s]
 
-  /**
-   * Apply s to the Nil of a list. 
-   *
-   * @param is applied to Nil ([]) and must return a list: List(a) -> List(a)
-   * @type  List(a) -> List(a)
-   */
-  at-end(s) = 
-    rec x([id | x] + []; s)
+strategies
+  Hd :
+    [x|_] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Hd", "38,2,38,20")> x
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Hd", "38,2,38,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Hd", "38,2,38,20")
+             ; fail
 
-  /**
-   * Apply a strategy to some suffix of a list.
-   *
-   * The longest suffix (that is, the first application in a list)
-   * is preferred.
-   *
-   * @param is applied to the suffix : List(a) -> b
-   * @type  List(a) -> List(a or b)
-   */
-  at-suffix(s) = 
-    rec x(s <+ [id | x])
+  Tl :
+    [_|l] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Tl", "41,2,41,20")> l
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Tl", "41,2,41,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Tl", "41,2,41,20")
+             ; fail
 
-  /**
-   * Apply a strategy to some suffix of a list.
-   *
-   * The shortest suffix (that is, the last application in a list)
-   * is preferred.
-   *
-   * @param is applied to the suffix : List(a) -> b
-   * @type  List(a) -> List(a or b)
-   */
-  at-suffix-rev(s) = 
-    rec x([id | x] <+ s)
+  Last :
+    [x] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Last", "44,2,44,20")> x
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Last", "44,2,44,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Last", "44,2,44,20")
+             ; fail
 
-  /**
-   * Apply s to the last Cons ([_]) of a list.
-   *
-   * @param Is applied to the [x] and must return a list: List(a) -> List(a)
-   * @type  List(a) -> List(a)
-   */
-  at-last(s) = 
-    rec x([id]; s <+ [id | x])
+  MkSingleton =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "MkSingleton", "50,2,51,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "51,4,51,10")
+    ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "51,7,51,8") ; id>]
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "MkSingleton", "50,2,51,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "MkSingleton", "50,2,51,10")
+      ; fail
 
-  /**
-   * Splits a list into a tuple of its init list and last element.
-   *
-   * Example:
-   *   <split-init-last> [1, 2, 3, 4] => ([1, 2, 3], 4)
-   *   <split-init-last> [1]          => ([], 1)
-   *
-   * @type   List(a) -> (List(a), a)
-   * @inc    split-init-last
-   * @since  0.9.4
-   */
-  split-init-last = 
-    at-last(?[x]; ![]); !(<id>, x)
+  split-Cons :
+    [x|xs] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-Cons", "58,2,59,22")> (x, xs)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-Cons", "58,2,59,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-Cons", "58,2,59,22")
+             ; fail
 
-  /**
-   * Applies s1 to all elements in a list, except the last, where
-   * s2 is applied.
-   *
-   * @param s1 a -> b 
-   * @param s2 a -> b
-   * @type List(a) -> List(b)
-   */
+  MkCons :
+    (x, xs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "MkCons", "67,2,68,22")> [x|xs]
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "MkCons", "67,2,68,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "MkCons", "67,2,68,22")
+             ; fail
+
+
+strategies
+  is-list =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "is-list", "77,2,77,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "77,12,77,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "77,12,77,14")
+       ; ?[]
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "77,18,77,25")
+         ; ?[_|_])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "is-list", "77,2,77,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "is-list", "77,2,77,25")
+      ; fail
+
+  map(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map", "86,2,87,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "87,4,87,22")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "87,10,87,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "87,10,87,11") ; []
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "87,15,87,21")
+             ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "87,16,87,16") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "87,20,87,20") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map", "86,2,87,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map", "86,2,87,22")
+      ; fail
+
+  map1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map1", "90,2,91,50")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,4,91,50")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,4,91,32")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,4,91,11")
+          ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,5,91,5") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,9,91,10") ; id])
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,14,91,32")
+       ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,15,91,16") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,20,91,31")
+                                                                                                           ; try(
+                                                                                                               s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,24,91,30")
+                                                                                                               ; map1(
+                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,29,91,29") ; s
+                                                                                                                 )
+                                                                                                             )]
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,37,91,50")
+          ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,38,91,39") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,43,91,49")
+                                                                                                              ; map1(
+                                                                                                                  s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "91,48,91,48") ; s
+                                                                                                                )])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map1", "90,2,91,50")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map1", "90,2,91,50")
+      ; fail
+
+  reverse-map(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-map", "99,2,100,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,4,100,40")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,4,100,34")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,4,100,24")
+          ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,5,100,6") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,10,100,23")
+                                                                                                              ; reverse-map(
+                                                                                                                  s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,22,100,22") ; s
+                                                                                                                )])
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,27,100,34")
+       ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,28,100,28") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,32,100,33") ; id]
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "100,39,100,40") ; [])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-map", "99,2,100,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-map", "99,2,100,40")
+      ; fail
+
+  list(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list", "107,2,108,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "108,4,108,9")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "108,8,108,8") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list", "107,2,108,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list", "107,2,108,9")
+      ; fail
+
+  list-some(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-some", "118,2,119,48")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,4,119,48")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,10,119,47")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,10,119,16")
+           ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,11,119,11") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,14,119,15") ; id]
+           < s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,20,119,37")
+             ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,21,119,22") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,25,119,36")
+                                                                                                                   ; list(
+                                                                                                                       s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,30,119,35")
+                                                                                                                       ; try(
+                                                                                                                           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,34,119,34") ; s
+                                                                                                                         )
+                                                                                                                     )]
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,41,119,47")
+             ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,42,119,43") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "119,46,119,46") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-some", "118,2,119,48")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-some", "118,2,119,48")
+      ; fail
+
+  length =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "length", "127,2,128,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "128,4,128,37")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "128,4,128,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "128,8,128,37")
+    ; prim("SSL_get_list_length", t)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "length", "127,2,128,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "length", "127,2,128,37")
+      ; fail
+
+  elem =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "elem", "135,2,136,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "136,4,136,24")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "136,4,136,13")
+       ; ?( x
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "136,10,136,11") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "136,16,136,24")
+    ; fetch(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "136,22,136,23") ; ?x
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "elem", "135,2,136,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "elem", "135,2,136,24")
+      ; fail
+
+  elem(eq) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "elem", "145,2,146,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,4,146,36")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,4,146,13")
+       ; ?( x
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,10,146,11") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,16,146,36")
+    ; fetch(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,22,146,35")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,23,146,24") ; eq)> ( x
+                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "146,32,146,33") ; id>
+                                                                                                                 )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "elem", "145,2,146,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "elem", "145,2,146,36")
+      ; fail
+
+  fetch(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "fetch", "155,2,156,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,4,156,30")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,10,156,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,10,156,17")
+           ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,11,156,11") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,15,156,16") ; id]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,22,156,29")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,23,156,24") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "156,28,156,28") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "fetch", "155,2,156,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "fetch", "155,2,156,30")
+      ; fail
+
+  fetch-elem(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "fetch-elem", "164,2,165,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "165,4,165,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "165,4,165,15")
+       ; fetch(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "165,10,165,14")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "165,10,165,10") ; s)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "165,13,165,14")
+           ; ?x
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "165,18,165,19")
+    ; !x
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "fetch-elem", "164,2,165,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "fetch-elem", "164,2,165,19")
+      ; fail
+
+  split-fetch(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-fetch", "183,2,184,46")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,4,184,46")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,4,184,33")
+       ; at-suffix(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,14,184,32")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,14,184,19")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,15,184,15") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,17,184,18") ; id])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,21,184,32")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,21,184,28")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,22,184,23") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,25,184,27") ; ?tl])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,30,184,32")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,36,184,46")
+    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "184,39,184,40") ; id>
+       , tl
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-fetch", "183,2,184,46")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-fetch", "183,2,184,46")
+      ; fail
+
+  split-fetch-keep(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-fetch-keep", "198,2,199,51")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,4,199,51")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,4,199,34")
+       ; at-suffix(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,14,199,33")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,14,199,19")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,15,199,15") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,17,199,18") ; id])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,21,199,33")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,21,199,29")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,22,199,24") ; ?el|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,26,199,28") ; ?tl])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,31,199,33")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,37,199,51")
+    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "199,40,199,41") ; id>
+       , el
+       , tl
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-fetch-keep", "198,2,199,51")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-fetch-keep", "198,2,199,51")
+      ; fail
+
+  list-tokenize(|sep) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-tokenize", "212,2,213,42")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,4,213,42")
+    ; list-tokenize(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,18,213,41")
+        ; {c:
+            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,22,213,40")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,22,213,23") ; ?c)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,26,213,40")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,27,213,35")
+                ; fetch(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "213,33,213,34") ; ?c
+                  ))> sep
+          }
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-tokenize", "212,2,213,42")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-tokenize", "212,2,213,42")
+      ; fail
+
+  list-tokenize(sep) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-tokenize", "225,2,231,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "226,6,231,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "226,7,226,37")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "226,7,226,22")
+          ; split-fetch(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "226,19,226,21") ; sep
+            )
+          <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "226,27,226,37")
+             ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "226,30,226,31") ; id>
+                , []
+                )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "227,8,230,65")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "227,8,227,41")
+       ; \ ([], []) -> [] \
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "228,8,230,65")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "228,8,228,41")
+            ; \ (l@[_|_], []) -> [l] \
+            + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "229,8,230,65")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "229,8,229,59")
+                 ; \ ([], l@[_|_]) -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "229,37,229,54")
+                                       ; list-tokenize(
+                                           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "229,51,229,53") ; sep
+                                         )> l \
+                 + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "230,8,230,65")
+                   ; \ ( t@[_|_]
+                       , l@[_|_]
+                       ) -> [t|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "230,42,230,59")
+                                ; list-tokenize(
+                                    s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "230,56,230,58") ; sep
+                                  )> l] \)))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-tokenize", "225,2,231,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-tokenize", "225,2,231,6")
+      ; fail
+
+
+strategies
+  at-tail(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-tail", "241,2,242,11")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "242,4,242,11")
+    ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "242,5,242,6") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "242,10,242,10") ; s]
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-tail", "241,2,242,11")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-tail", "241,2,242,11")
+      ; fail
+
+  at-end(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-end", "250,2,251,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,4,251,26")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,10,251,25")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,10,251,17")
+           ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,11,251,12") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,16,251,16") ; x]
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,21,251,25")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,21,251,22") ; [])
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "251,25,251,25")
+             ; s)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-end", "250,2,251,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-end", "250,2,251,26")
+      ; fail
+
+  at-suffix(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-suffix", "262,2,263,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "263,4,263,23")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "263,10,263,22")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "263,10,263,10") ; s
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "263,15,263,22")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "263,16,263,17") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "263,21,263,21") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-suffix", "262,2,263,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-suffix", "262,2,263,23")
+      ; fail
+
+  at-suffix-rev(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-suffix-rev", "274,2,275,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "275,4,275,23")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "275,10,275,22")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "275,10,275,17")
+           ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "275,11,275,12") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "275,16,275,16") ; x]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "275,22,275,22") ; s)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-suffix-rev", "274,2,275,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-suffix-rev", "274,2,275,23")
+      ; fail
+
+  at-last(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-last", "283,2,284,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,4,284,29")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,10,284,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,10,284,16")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,10,284,13")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,11,284,12") ; id])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,16,284,16")
+           ; s
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,21,284,28")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,22,284,23") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "284,27,284,27") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-last", "283,2,284,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-last", "283,2,284,29")
+      ; fail
+
+  split-init-last =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-init-last", "297,2,298,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,4,298,33")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,4,298,21")
+       ; at-last(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,12,298,20")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,12,298,15")
+              ; ?[x])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,18,298,20")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,24,298,33")
+    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "298,27,298,28") ; id>
+       , x
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-init-last", "297,2,298,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-init-last", "297,2,298,33")
+      ; fail
+
   at-init(s1, s2) =
-    rec x([s2] <+ [s1 | x])
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-init", "308,2,309,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,4,309,26")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,10,309,25")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,10,309,13")
+           ; [ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,11,309,12") ; s2
+             ]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,18,309,25")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,19,309,20") ; s1|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "309,24,309,24") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-init", "308,2,309,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "at-init", "308,2,309,26")
+      ; fail
 
-  /**
-   * Applies a strategy to a list in bottom up order. That is to say,
-   * the strategy s will be applied to successively longer excerpts
-   * of the list, starting from the end. 
-   *
-   * At the first invocation, s will be applied to the tail of the list,
-   * and is expected to return a new list. The last element of the list
-   * will then be added in front of this result, and s is applied to
-   * this. The recursion continues through all elements from last to
-   * first, each time on a longer list, hence "bottom up".
-   *
-   * Example: <listbu(![9 | <id>])> [1,2,3,4] => [9,1,9,2,9,3,9,4,9]
-   *
-   * @param s  List(a) -> List(b)
-   * @type     List(a) -> List(b)
-   */
-  listbu(s) = 
-    rec x(([] + [id| x]); s)
+  listbu(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listbu", "327,2,328,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,4,328,27")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,10,328,26")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,11,328,22")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,11,328,12") ; []
+              + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,16,328,22")
+                ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,17,328,18") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,21,328,21") ; x]))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "328,26,328,26")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listbu", "327,2,328,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listbu", "327,2,328,27")
+      ; fail
 
-  /**
-   * @inc listbu
-   */
-  listbu1(s) = 
-    [id| listbu1(s)]; try(s) <+ s
+  listbu1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listbu1", "333,2,334,32")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,4,334,32")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,4,334,27")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,4,334,19")
+          ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,5,334,6") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,9,334,18")
+                                                                                                              ; listbu1(
+                                                                                                                  s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,17,334,17") ; s
+                                                                                                                )])
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,22,334,27")
+       ; try(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,26,334,26") ; s
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "334,32,334,32") ; s)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listbu1", "333,2,334,32")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listbu1", "333,2,334,32")
+      ; fail
 
-  /**
-   * Applies a strategy to a list in top down order. That is to say,
-   * the strategy s will first be applied to the whole list, then 
-   * successively shorter excerpts, all the way chopping of elements from
-   * the start of the list.
-   *
-   * At the first invocation, s will be applied to the whole list, and
-   * is expected to return a new list. The first element is chopped off
-   * this result, and s is applied again, until s has been applied to
-   * the empty list. The recursion continues through successively 
-   * shorter list, hence "top down".
-   *
-   * @note The strategy s cannot result in a list which is longer than
-   * it is given, because that will result in non-termination.
-   *
-   * Example: <listtd(not(?[]) ; ![<sum>] <+ ![])> [1,2,3,4] => [10]
-   *
-   * @param s  List(a) -> List(b)
-   * @type     List(a) -> List(b)
-   */
-  listtd(s) = 
-    rec x(s; ([] + [id| x]))
+  listtd(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listtd", "356,2,357,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,4,357,27")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,10,357,26")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,10,357,10") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,14,357,25")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,14,357,15") ; []
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,19,357,25")
+             ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,20,357,21") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "357,24,357,24") ; x])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listtd", "356,2,357,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listtd", "356,2,357,27")
+      ; fail
 
-  /**
-   * Applies s in a top down then bottom up, i.e. down up, order. See
-   * listtd and listbu for a detailed description of each phase.
-   *
-   * @note As with listtd, the strategy s can never result in a list
-   * which is longer than given to it.
-   *   
-   * @param s List(a) -> List(b)
-   * @type    List(a) -> List(b)
-   */
   listdu(s) =
-    rec x(s; ([] + [id| x]); s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listdu", "369,2,370,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,4,370,30")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,10,370,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,10,370,10") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,13,370,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,14,370,25")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,14,370,15") ; []
+              + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,19,370,25")
+                ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,20,370,21") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,24,370,24") ; x]))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "370,29,370,29")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listdu", "369,2,370,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listdu", "369,2,370,30")
+      ; fail
 
-  /**
-   * Applies s1 in a top down order then s2 in a bottom up order. See
-   * listd and listbu for a detailed description of each phase.
-   *
-   * @note As with listtd, the strategy s2 can never result in a list
-   * which is longer than given to it.
-   *
-   * @param s1 List(a) -> List(b)
-   * @param s2 List(a) -> List(b)
-   * @type     List(a) -> List(b)
-   */
-  listdu2(s1, s2) = 
-    rec x(s1; ([] + [id| x]); s2)
+  listdu2(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listdu2", "383,2,384,32")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,4,384,32")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,10,384,31")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,10,384,11") ; s1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,14,384,31")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,15,384,26")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,15,384,16") ; []
+              + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,20,384,26")
+                ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,21,384,22") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,25,384,25") ; x]))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "384,30,384,31")
+        ; s2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listdu2", "383,2,384,32")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "listdu2", "383,2,384,32")
+      ; fail
 
-  /** @internal */
-  RevInit : xs -> (xs, [])
-  
-  /** @internal */
-  Rev     : ([x| xs], ys) -> (xs, [x| ys])
-  
-  /** @internal */
-  RevExit : ([], ys) -> ys
+  RevInit :
+    xs -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "RevInit", "387,2,387,25")> (xs, [])
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "RevInit", "387,2,387,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "RevInit", "387,2,387,25")
+             ; fail
 
-  /**
-   * Reverses a list.
-   *
-   * @inc reverse-test
-   * @type List(a) -> List(a)
-   */
-  reverse = 
-    reverse-acc(id, ![])
+  Rev :
+    ([x|xs], ys) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Rev", "390,2,390,41")> (xs, [x|ys])
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Rev", "390,2,390,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "Rev", "390,2,390,41")
+             ; fail
 
-  /**
-   * Reverses a list and applies s to all the elements.
-   *
-   * @param a -> b
-   * @type  List(a) -> List(b)
-   */
-  reverse(s) = 
-    reverse-acc(s, ![])
+  RevExit :
+    ([], ys) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "RevExit", "393,2,393,25")> ys
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "RevExit", "393,2,393,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "RevExit", "393,2,393,25")
+             ; fail
 
-  /** @internal */
-  reverse-acc(s, acc) : 
-    [] -> <acc>()
+  reverse =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse", "401,2,402,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "402,4,402,23")
+    ; reverse-acc(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "402,16,402,17") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "402,20,402,22")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse", "401,2,402,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse", "401,2,402,23")
+      ; fail
 
-  /** @internal */
-  reverse-acc(s, acc) : 
-    [x | xs] -> <{ys:where(![<s>x | <acc>] => ys); reverse-acc(s, !ys)}> xs
+  reverse(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse", "410,2,411,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "411,4,411,22")
+    ; reverse-acc(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "411,16,411,16") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "411,19,411,21")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse", "410,2,411,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse", "410,2,411,22")
+      ; fail
+
+  reverse-acc(s, acc) :
+    [] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-acc", "414,2,415,16")> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "415,11,415,13") ; acc> ()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-acc", "414,2,415,16")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-acc", "414,2,415,16")
+             ; fail
+
+  reverse-acc(s, acc) :
+    [x|xs] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-acc", "418,2,419,74")> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,17,419,70")
+                                                                                                                             ; {ys:
+                                                                                                                                 s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,21,419,69")
+                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,21,419,48")
+                                                                                                                                    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,27,419,47")
+                                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,27,419,41")
+                                                                                                                                               ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,30,419,30") ; s> x|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,37,419,39") ; acc>]) => ys))
+                                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,51,419,69")
+                                                                                                                                 ; reverse-acc(
+                                                                                                                                     s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,63,419,63") ; s
+                                                                                                                                   , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "419,66,419,68") ; !ys
+                                                                                                                                   )
+                                                                                                                               }> xs
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-acc", "418,2,419,74")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "reverse-acc", "418,2,419,74")
+             ; fail
+
 
 rules
 
-  /** @internal */
-  UptoInit : i -> (i, [])
-  
-  /** @internal */
-  UptoExit : (i, xs) -> xs where <lt> (i, 0)
-  
-  /** @internal */
-  UptoStep : (i, xs) -> (<subt> (i, 1), [i| xs])
+  UptoInit :
+    i -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoInit", "424,2,424,24")> (i, [])
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoInit", "424,2,424,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoInit", "424,2,424,24")
+             ; fail
+
+  UptoExit :
+    (i, xs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoExit", "427,2,427,43")> xs
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoExit", "427,2,427,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoExit", "427,2,427,43")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "427,33,427,43")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "427,34,427,35") ; lt)> (i, 0)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoExit", "427,2,427,43")
+             ; fail
+
+  UptoStep :
+    (i, xs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoStep", "430,2,430,47")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "430,26,430,29") ; subt> (i, 1)
+                                                                                                                          , [i|xs]
+                                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoStep", "430,2,430,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "UptoStep", "430,2,430,47")
+             ; fail
+
 
 strategies
-
-  /**
-   * Generates a sequence of numbers from 0 up to the given input
-   * integer, inclusive. 
-   *
-   * See also range.
-   *
-   * @type Int -> List(Int)
-   *
-   * @inc upto-test
-   */
   upto =
-    UptoInit; rec x(UptoExit <+ UptoStep; x)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "upto", "444,2,445,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,4,445,43")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,4,445,11") ; UptoInit)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,14,445,43")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,20,445,42")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,20,445,27") ; UptoExit
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,32,445,42")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,32,445,39") ; UptoStep)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "445,42,445,42")
+              ; x)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "upto", "444,2,445,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "upto", "444,2,445,43")
+      ; fail
+
 
 strategies
-
-  /**
-   * Concatenates all lists of a tuple.
-   *
-   * @type (List(a), List(a), ...) -> List(a)
-   * @inc  conc-test
-   */
   conc =
-    \ (l1, l2) -> <at-end(!l2)> l1 \
-    <+ \ "" # (xs) -> <concat> xs \
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "conc", "455,2,457,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "456,4,457,34")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "456,4,456,35")
+       ; \ (l1, l2) -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "456,19,456,29")
+                        ; at-end(
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "456,26,456,28") ; !l2
+                          )> l1 \
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "457,7,457,34")
+          ; \ ""#(xs) -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "457,23,457,28") ; concat> xs \)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "conc", "455,2,457,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "conc", "455,2,457,34")
+      ; fail
 
-  /**
-   * Concatenates a list of lists into one list.
-   *
-   * Example: <concat> [[1,2],[3,4],[5,6]] => [1,2,3,4,5,6]
-   *
-   * @type List(List(a)) -> List(a)
-   * @inc  concat-test
-   */
   concat =
-    rec x([] + \ [l | ls] -> <at-end(<x> ls)> l\ )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "concat", "467,2,468,49")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,4,468,49")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,10,468,47")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,10,468,11") ; []
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,15,468,47")
+             ; \ [l|ls] -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,30,468,43")
+                            ; at-end(
+                                s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,37,468,42")
+                                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "468,38,468,38") ; x)> ls
+                              )> l \)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "concat", "467,2,468,49")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "concat", "467,2,468,49")
+      ; fail
 
-  /**
-   * Concats two elements if both elements are lists. Otherwise, constructs
-   * a Conc term.
-   *
-   * Generic term construction is used to avoid infinite recursion: makeConc
-   * is used in the compilation of Conc itself.
-   *
-   * @type List(a) * List(b) -> List(a|b)
-   * @type a * b -> Conc(a,b)
-   */
-  makeConc = 
-    ?(xs, ys)
-    ; if <is-list> xs; <is-list> ys then conc else !"Conc"#([xs, ys]) end
+  makeConc =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "makeConc", "480,2,482,72")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "481,4,482,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "481,4,481,12")
+       ; ?(xs, ys))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,6,482,72")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,9,482,34")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,9,482,20")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,10,482,16") ; is-list)> xs)
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,23,482,34")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,24,482,30") ; is-list)> ys then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,41,482,44") ; conc
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "482,51,482,68")
+        ; !"Conc"#([xs, ys])
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "makeConc", "480,2,482,72")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "makeConc", "480,2,482,72")
+      ; fail
+
 
 strategies
-
-  /**
-   * Separates the elements of the list by the specified separator.
-   * The separate-by variant that uses a term argument is prefered.
-   *
-   * @type (sep, List(a)) -> List(a or sep)
-   */
   separate-by =
-    ?(sep, <id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "492,2,494,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "493,4,494,22")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "493,4,493,15")
+       ; ?( sep
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "493,12,493,13") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "494,6,494,22")
     ; separate-by(|sep)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "492,2,494,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "492,2,494,22")
+      ; fail
 
-  /**
-   * Separates the elements of the list by the specified separator.
-   * The separate-by variant that uses a term argument is prefered.
-   *
-   * @param Strategy that results in a separator.
-   * @type  List(a) -> List(a or sep)
-   */
   separate-by(sep) =
-    separate-by(|<sep> ())
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "503,2,504,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "504,4,504,25")
+    ; separate-by(
+      | <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "504,18,504,20") ; sep> ()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "503,2,504,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "503,2,504,25")
+      ; fail
 
-  /**
-   * Separates the elements of the list by the specified separator.
-   *
-   * @param Separator term
-   * @type  List(a) -> List(a or sep)
-   */
   separate-by(|sep) =
-    []
-    + [id |
-        rec x(
-          []
-        + [id | x]
-          ; ![sep | <id>]
-        )]
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "512,2,519,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "513,4,519,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "513,4,513,5") ; []
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "514,6,519,9")
+         ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "514,7,514,8") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "515,8,519,8")
+                                                                                                             ; rec x (
+                                                                                                                 s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "516,10,518,24")
+                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "516,10,516,11") ; []
+                                                                                                                    + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "517,10,518,24")
+                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "517,10,517,17")
+                                                                                                                         ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "517,11,517,12") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "517,16,517,16") ; x])
+                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "518,12,518,24")
+                                                                                                                      ; ![sep|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "518,21,518,22") ; id>])
+                                                                                                               )])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "512,2,519,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "separate-by", "512,2,519,9")
+      ; fail
+
 
 strategies
-
-  /**
-   * Transposes an n by m matrix. The matrix must be represented as
-   * a list of n elements, where each element is a list of length m.
-   * The element of the inner lists may be of any type.
-   *
-   * Example: <matrix-transpose> [[1,2],[3,4]] => [[1,3],[2,4]]
-   *
-   * @type List(List(a)) -> List(List(a))
-   */
   matrix-transpose =
-      map(?[]); ![]
-    +   map(split-Cons)
-      ; unzip
-      ; (id, matrix-transpose)
-      ; MkCons
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "matrix-transpose", "532,2,537,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "533,6,537,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "533,6,533,18")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "533,6,533,13")
+          ; map(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "533,10,533,12")
+              ; ?[]
+            ))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "533,16,533,18")
+       ; ![]
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "534,8,537,13")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "534,8,534,22")
+            ; map(
+                s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "534,12,534,21") ; split-Cons
+              ))
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "535,8,537,13")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "535,8,535,12") ; unzip)
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "536,8,537,13")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "536,8,536,29")
+            ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "536,9,536,10") ; id
+              , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "536,13,536,28") ; matrix-transpose
+              ))
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "537,8,537,13")
+         ; MkCons)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "matrix-transpose", "532,2,537,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "matrix-transpose", "532,2,537,13")
+      ; fail
 
-  /**
-   * <for-each-pair(s)> (xs, ys) produces the list of pairs <s> (x,y).
-   * for each pair of x from xs and y from ys.
-   *
-   * @inc for-each-pair-test
-   *
-   * @type List(a) * List(b) -> List((a,b), ...)
-   */
   for-each-pair(s) =
-    ?(xs, ys); <map(\ x -> <map(<s>(x,<id>))> ys \ )> xs
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "for-each-pair", "547,2,548,55")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,4,548,55")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,4,548,12")
+       ; ?(xs, ys))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,15,548,55")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,16,548,51")
+        ; map(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,20,548,49")
+            ; \ x -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,28,548,43")
+                      ; map(
+                          s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,32,548,42")
+                          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,33,548,33") ; s)> ( x
+                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "548,39,548,40") ; id>
+                                                                                                                                  )
+                        )> ys \
+          ))> xs
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "for-each-pair", "547,2,548,55")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "for-each-pair", "547,2,548,55")
+      ; fail
+
 
 strategies
+  member =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "member", "557,2,557,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "557,11,557,25")
+    ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "557,12,557,13") ; ?x
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "557,16,557,24")
+        ; fetch(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "557,22,557,23") ; ?x
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "member", "557,2,557,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "member", "557,2,557,25")
+      ; fail
 
-  /**
-   * Succeeds if the first input term is a member of the second.
-   *
-   * @type a * List(a) -> a
-   */
-  member = (?x, fetch(?x))
 
 rules
 
-  /** @internal */
-  FoldR1   : [x, y] -> (x, y)
+  FoldR1 :
+    [x, y] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldR1", "562,2,562,28")> (x, y)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldR1", "562,2,562,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldR1", "562,2,562,28")
+             ; fail
 
-  /** @internal */
-  FoldR    : [x | xs] -> (x, xs)
+  FoldR :
+    [x|xs] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldR", "565,2,565,31")> (x, xs)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldR", "565,2,565,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldR", "565,2,565,31")
+             ; fail
 
-  /** @internal */
-  FoldL(s) : ([x | xs], y) -> (xs, <s> (x, y))
+  FoldL(s) :
+    ([x|xs], y) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldL", "568,2,568,45")> ( xs
+                                                                                                                           , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "568,36,568,36") ; s> (x, y)
+                                                                                                                           )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldL", "568,2,568,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "FoldL", "568,2,568,45")
+             ; fail
 
-  /** @internal */
-  lsplit(f, g) : x -> [<f> x, <g> x]
+  lsplit(f, g) :
+    x -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "lsplit", "571,2,571,35")> [ <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "571,24,571,24") ; f> x
+                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "571,31,571,31") ; g> x
+                                                                                                                  ]
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "lsplit", "571,2,571,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "lsplit", "571,2,571,35")
+             ; fail
+
 
 strategies
+  foldr1(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "583,2,584,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,4,584,40")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,10,584,39")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,10,584,17")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,10,584,13")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,11,584,12") ; id])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,16,584,17")
+           ; s1
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,22,584,39")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,22,584,26") ; FoldR)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,29,584,39")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,29,584,35")
+                 ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,30,584,31") ; id
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,34,584,34") ; x
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "584,38,584,39")
+              ; s2)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "583,2,584,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "583,2,584,40")
+      ; fail
 
-  /**
-   * foldr, requires a list of length > 1.
-   *
-   * @param  List(a) -> b
-   * @param  (a, b) -> b
-   * @type   List(a) -> b
-   * @internal
-   */
-  foldr1(s1, s2) = 
-    rec x([id]; s1 <+ FoldR; (id, x); s2)
+  foldr1(s1, s2, f) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "597,2,598,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,4,598,38")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,10,598,37")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,10,598,16")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,10,598,12")
+              ; [ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,11,598,11") ; f
+                ])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,15,598,16")
+           ; s1
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,21,598,37")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,21,598,25") ; FoldR)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,28,598,37")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,28,598,33")
+                 ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,29,598,29") ; f
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,32,598,32") ; x
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "598,36,598,37")
+              ; s2)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "597,2,598,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "597,2,598,38")
+      ; fail
 
-  /**
-   * foldr, requires a list of length > 1.
-   * The additional parameter strategy f is applied to each element just
-   * before each folding step.
-   *
-   * @param List(c) -> b
-   * @param (c, b) -> b
-   * @param a -> c
-   * @type  List(a) -> b
-   * @internal
-   */
-  foldr1(s1, s2, f) = 
-    rec x([f]; s1 <+ FoldR; (f, x); s2)
+  foldr1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "608,2,609,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,4,609,39")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,10,609,38")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,11,609,34")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,11,609,16") ; FoldR1
+              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,21,609,34")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,21,609,25") ; FoldR)
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,28,609,34")
+                 ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,29,609,30") ; id
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,33,609,33") ; x
+                   )))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "609,38,609,38")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "608,2,609,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr1", "608,2,609,39")
+      ; fail
 
-  /**
-   * foldr, requires a list of length > 1.
-   * Note that s maps (a, a) to a, only one type is involved.
-   *
-   * @param (a, a) -> a
-   * @type  List(a) -> a
-   * @internal
-   */
-  foldr1(s) = 
-    rec x((FoldR1 <+ FoldR; (id, x)); s)
+  foldr(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr", "624,2,626,46")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "625,4,626,46")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "625,4,625,9")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "625,4,625,5") ; [])
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "625,8,625,9")
+       ; s1
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "626,6,626,46")
+         ; \ [y|ys] -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "626,19,626,20") ; s2> ( y
+                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "626,27,626,39")
+                                                                                                                               ; foldr(
+                                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "626,33,626,34") ; s1
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "626,37,626,38") ; s2
+                                                                                                                                 )> ys
+                                                                                                                            ) \)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr", "624,2,626,46")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr", "624,2,626,46")
+      ; fail
 
-  /**
-   * Right folds a list. That is, the strategy s2 is applied as a 
-   * binary operator between all adjacent elements in the list.
-   * foldr starts by applying s2 to the last element in the list
-   * and the result of s1. s1 is therefore the starting point of
-   * the folding.
-   *
-   * Example: <foldr(!0, add)> [1,2,3,4] => 10
-   *
-   * @param [] -> b
-   * @param (a, b) -> b
-   * @type  List(a) -> b
-   */
-  foldr(s1, s2) = 
-    []; s1 
-    + \ [y|ys] -> <s2>(y, <foldr(s1, s2)> ys) \
+  foldr(s1, s2, f) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr", "645,2,647,52")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "646,4,647,52")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "646,4,646,9")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "646,4,646,5") ; [])
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "646,8,646,9")
+       ; s1
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,4,647,52")
+         ; \ [y|ys] -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,17,647,18") ; s2> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,23,647,23") ; f> y
+                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,30,647,45")
+                                                                                                                               ; foldr(
+                                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,36,647,37") ; s1
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,40,647,41") ; s2
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "647,44,647,44") ; f
+                                                                                                                                 )> ys
+                                                                                                                            ) \)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr", "645,2,647,52")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldr", "645,2,647,52")
+      ; fail
 
-  /**
-   * Right folds a list. That is, the strategy s2 is applied as a 
-   * binary operator between all adjacent elements in the list.
-   * foldr starts by applying s2 to the last element in the list
-   * and the result of s1. s1 is therefore the starting point of
-   * the folding.
-   *
-   * The additional parameter strategy f is applied to each element just
-   * before each folding step.
-   *
-   * Example: <foldr(!0, add, inc)> [1,2,3,4] => 14
-   *
-   * @param [] -> b
-   * @param (c, b) -> b
-   * @param a -> c
-   * @type  List(a) -> b
-   */
-  foldr(s1, s2, f)  = 
-    []; s1 + 
-    \ [y|ys] -> <s2> (<f> y, <foldr(s1, s2, f)> ys) \
+  foldl(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldl", "660,2,661,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,4,661,41")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,11,661,40")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,11,661,26")
+           ; \ ([], y) -> y \
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,30,661,40")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,30,661,37")
+                ; FoldL(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,36,661,36") ; s
+                  ))
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "661,40,661,40")
+             ; x)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldl", "660,2,661,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "foldl", "660,2,661,41")
+      ; fail
 
-  /**
-   * Left folds a list. That is, the strategy sis applied as a 
-   * binary operator between all adjacent elements in the list.
-   * foldr starts by applying s to b and the first element in
-   * the list. b is therefore the starting point of the folding.
-   *
-   * Example: <foldl(add)> ([1,2,3,4], 0)
-   *
-   * @param (a, b) -> b
-   * @type  (List(a), b) -> b
-   */ 
-  foldl(s) = 
-    rec x( \ ([], y) -> y \ + FoldL(s); x)
+  mapfoldr1(s1, s2, s3) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "mapfoldr1", "664,2,665,49")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,4,665,49")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,10,665,48")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,10,665,17")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,10,665,13")
+              ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,11,665,12") ; id])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,16,665,17")
+           ; s1
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,22,665,48")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,22,665,27")
+                 ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,23,665,24") ; s2|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,26,665,26") ; x])
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,30,665,48")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,30,665,44")
+                 ; \ [a|b] -> (a, b) \)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "665,47,665,48")
+              ; s3)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "mapfoldr1", "664,2,665,49")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "mapfoldr1", "664,2,665,49")
+      ; fail
 
-  /** @internal */
-  mapfoldr1(s1, s2, s3) = 
-    rec x([id]; s1 <+ [s2|x]; \ [a|b]->(a,b)\; s3)
-
-  /** 
-   * Transform the elements of a list into lists (map)
-   * and concatenate into a single list (concat).
-   * 
-   * Note: equivalent to map(s); concat
-   *
-   * @param a -> List(b) 
-   * @type  List(a) -> List(b)
-   */
   mapconcat(s) =
-    foldr([], conc, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "mapconcat", "676,2,677,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "677,4,677,21")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "677,10,677,11") ; []
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "677,14,677,17") ; conc
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "677,20,677,20") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "mapconcat", "676,2,677,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "mapconcat", "676,2,677,21")
+      ; fail
 
-  /**
-   * Returns the last element of a list.
-   *
-   * Fails if applied to the empty list.
-   *
-   * @type List(a) -> a
-   */
-  last = 
-    rec x(Last <+ Tl; x)
+  last =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "last", "686,2,687,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "687,4,687,23")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "687,10,687,22")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "687,10,687,13") ; Last
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "687,18,687,22")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "687,18,687,19") ; Tl)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "687,22,687,22")
+              ; x)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "last", "686,2,687,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "last", "686,2,687,23")
+      ; fail
 
-
-  /**
-   * Returns a list with the first and the last element of
-   * the input list. For the empty list and the singleton
-   * list, this is equivalent to id.
-   *
-   * @type List(a) -> List(a)
-   */
   first-last =
-    [id | try(last; MkSingleton)] <+ []
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "first-last", "697,2,698,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,4,698,38")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,4,698,32")
+       ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,5,698,6") ; id|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,10,698,31")
+                                                                                                           ; try(
+                                                                                                               s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,14,698,30")
+                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,14,698,17") ; last)
+                                                                                                               ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,20,698,30")
+                                                                                                               ; MkSingleton
+                                                                                                             )]
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "698,37,698,38") ; [])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "first-last", "697,2,698,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "first-last", "697,2,698,38")
+      ; fail
 
- /**
-  * Returns a list of all elements of a list, except the last.
-  * 
-  * Fails if applied to the empty list.
-  *
-  * @inc init
-  * @inc empty init
-  *
-  * @type List(a) -> List(a)
-  */
-  init = 
-    at-last(Tl)
+  init =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "init", "710,2,711,14")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "711,4,711,14")
+    ; at-last(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "711,12,711,13") ; Tl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "init", "710,2,711,14")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "init", "710,2,711,14")
+      ; fail
 
-  /**
-   * @inc split-init-last
-   * @note Alias for split-init-last.
-   */ 
   split-last =
-    split-init-last
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-last", "717,2,718,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "718,4,718,18")
+    ; split-init-last
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-last", "717,2,718,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-last", "717,2,718,18")
+      ; fail
 
-  /**
-   * Makes n copies of a term into a list of duplicates. The
-   * first input term is the integer n, the second is the term
-   * to duplicate.
-   *
-   * @inc copy-test
-   *
-   * Example: <copy> (3, "foo") => ["foo", "foo", "foo"]
-   *
-   * @type Int * a -> List(a)
-   */
-  copy = 
-    for(\ (n,t) -> (n,t,[]) \
-       ,\ (0,t,ts) -> ts \
-       ,\ (n,t,ts) -> (<subt>(n,1), t, [t|ts]) where <geq>(n,1) \ )
+  copy =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "copy", "731,2,734,66")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "732,4,734,66")
+    ; for(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "732,8,732,28")
+        ; \ (n, t) -> (n, t, []) \
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "733,8,733,25")
+        ; \ (0, t, ts) -> ts \
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "734,8,734,64")
+        ; \ (n, t, ts) -> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "734,24,734,27") ; subt> (n, 1)
+                          , t
+                          , [t|ts]
+                          )
+            where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "734,53,734,62")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "734,54,734,56") ; geq)> (n, 1) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "copy", "731,2,734,66")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "copy", "731,2,734,66")
+      ; fail
 
-  /**
-   * Makes n copies of a term into a list of duplicates, applying
-   * the strategy s to every copy. The first input term is the 
-   * integer n, the second is the term to duplicate.
-   * 
-   * Example: <copy(\ "foo" -> "bar" \)> (3, "foo") => ["bar","bar,"bar"]
-   *
-   * @param s       a -> b
-   * @type    Int * a -> List(n)
-   */
-  copy(s) = 
-    for(\ (n,t) -> (n,t,[]) \
-       ,\ (0,t,ts) -> ts \
-       ,\ (n,t,ts) -> (<subt>(n,1), t, [<s> t|ts]) where <geq>(n,1) \ )
+  copy(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "copy", "746,2,749,70")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "747,4,749,70")
+    ; for(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "747,8,747,28")
+        ; \ (n, t) -> (n, t, []) \
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "748,8,748,25")
+        ; \ (0, t, ts) -> ts \
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "749,8,749,68")
+        ; \ (n, t, ts) -> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "749,24,749,27") ; subt> (n, 1)
+                          , t
+                          , [<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "749,41,749,41") ; s> t|ts]
+                          )
+            where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "749,57,749,66")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "749,58,749,60") ; geq)> (n, 1) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "copy", "746,2,749,70")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "copy", "746,2,749,70")
+      ; fail
 
-  /** @internal */
   thread-map(s) :
-    ([], t) -> ([], t)
+    ([], t) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "752,2,753,21")> ([], t)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "752,2,753,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "752,2,753,21")
+             ; fail
 
-  /**
-   * Applies s to each element in the list, keeping along a separate
-   * context term. 
-   *
-   * For each element in the list, a tuple (a, b) is constructed and
-   * given to s. From the result, (a', b'), a' goes to the final list
-   * returned by this strategy, and b' becomes the new b as s is
-   * applied to the next element.
-   *
-   * Example: <thread-map(add ; !(<id>, <id>))> ([1,2,3,4], 1) => ([2,4,7,11],11)
-   *
-   * @param s a * b -> a' * b'
-   * @type List(a) * b -> List(a') * b'
-   */ 
   thread-map(s) :
-    ([x | xs], t) -> ([y | ys], t'')
-    where <s> (x, t) => (y, t')
-	; <thread-map(s)> (xs, t') => (ys, t'')
+    ([x|xs], t) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "769,2,772,39")> ([y|ys], t'')
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "769,2,772,39")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "769,2,772,39")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "771,10,772,39")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "771,10,771,30")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "771,10,771,19")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "771,11,771,11") ; s)> (x, t)) => (y, t'))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "772,3,772,39")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "772,3,772,26")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "772,4,772,16")
+                 ; thread-map(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "772,15,772,15") ; s
+                   ))> (xs, t')) => (ys, t'')
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "thread-map", "769,2,772,39")
+             ; fail
 
-  /**
-   * Numbers each element in a list successively with an
-   * integer, starting at 0. The result is a list of pairs,
-   * (elem, num) where elem is the original element and num
-   * is its associated number. s is applied to each pair
-   * before inserting it into the list
-   *
-   * Example: <number(id)> ["a","b","c"] => [("a",0),("b",1),("c",2)]
-   *
-   * @inc number-test
-   *
-   * @param s a * Int -> a' * Int
-   * @type List(a) -> List((a,n),...)
-   */
   number(s) =
-    !(<id>, 0); thread-map(!(<s>,<Snd;inc>)); ?(<id>,_)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "number", "788,2,789,54")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,4,789,54")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,4,789,13")
+       ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,7,789,8") ; id>
+          , 0
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,16,789,54")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,16,789,43")
+       ; thread-map(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,27,789,42")
+           ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,30,789,30") ; s>
+              , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,34,789,40")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,34,789,36") ; Snd)
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,38,789,40")
+                 ; inc>
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,46,789,54")
+    ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "789,49,789,50") ; id>
+       , _
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "number", "788,2,789,54")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "number", "788,2,789,54")
+      ; fail
 
-  /**
-   * Take elements from the start of a list while s succeeds.
-   * Each element of the list is tested against s, starting at
-   * the head of the list. For as long as s succeeds, the elements
-   * are accumulated in a list, which is returned as s fails, or
-   * the end of the list is reached. The actual term returned by
-   * s is ignored.
-   *
-   * Example: <take-while(?2 ; !3)> [2,2,3] => [2,2]
-   *
-   * @param s       a -> _
-   * @type    List(a) -> List(a)
-   */
-  take-while(s) = 
-    at-suffix([] + ([not(s)|id];![]))
+  take-while(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take-while", "804,2,805,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,4,805,36")
+    ; at-suffix(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,14,805,35")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,14,805,15") ; []
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,20,805,34")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,20,805,30")
+                ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,21,805,26")
+                   ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,25,805,25") ; s)|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,28,805,29") ; id])
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "805,32,805,34")
+             ; ![])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take-while", "804,2,805,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take-while", "804,2,805,36")
+      ; fail
 
-  /**
-   * Take elements from the start of a list until s succeeds. 
-   * Each element of the list is tested against s, starting at
-   * the head of the list. For as long as s does not succeed, the 
-   * elements are accumulated in a list, which is returned at
-   * the instant s fails. The actual term returned by s is
-   * ignored. If s never succeeds, the entire list is returned.
-   *
-   * Example: <take-until(?2; !3)> [3,3,2,4] => [3,3]
-   *
-   * @param s       a -> _
-   * @type    List(a) -> List(a)
-   */
-  take-until(s) = 
-    at-suffix([] + ([s|id];![]))
+  take-until(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take-until", "820,2,821,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,4,821,31")
+    ; at-suffix(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,14,821,30")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,14,821,15") ; []
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,20,821,29")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,20,821,25")
+                ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,21,821,21") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,23,821,24") ; id])
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "821,27,821,29")
+             ; ![])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take-until", "820,2,821,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take-until", "820,2,821,31")
+      ; fail
 
-  /**
-   * Take the first n elements of a list, given by isn. The
-   * strategy argument isn must produce an integer, which
-   * gives the length of the sublist to return. If there are
-   * not enough elements, this strategy fails.
-   *
-   * @param isn _ -> Int
-   * @type List(a) -> List(a)
-   */
-  take(isn) = 
-    take(|<isn>)
+  take(isn) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take", "832,2,833,15")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "833,4,833,15")
+    ; take(
+      | <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "833,11,833,13") ; isn>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take", "832,2,833,15")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take", "832,2,833,15")
+      ; fail
 
-  /**
-   * Returns the first n elements of a list, fails
-   * if list has fewer than n elements.
-   *
-   * @param n The number of elements to take.
-   * @type List(a) -> List(a)
-   */
   take(|n) =
-    if <eq>(n,0) then 
-      ![]
-    else 
-      ![<Hd> | <Tl; take(|<subt>(n,1))>]
-    end
-
-  /** 
-   * Returns the n first elements after s has been applied to them.
-   * With the exception of side effects, takemap(s|n) is equal to
-   * take(|n); map(s). The difference when considering side-effects
-   * is that s is applied while taking elements, so if s has a
-   * side-effect these will be performed, even if take fails.
-   *
-   * @param n - The number of elements to retrieve
-   * @param s a -> b 
-   * @type List(a) -> List(b)
-   */
-  takemap(s|n) =
-    if <eq>(n,0) then 
-      ![]
-    else 
-      ![<Hd; s> | <Tl; takemap(s|<subt>(n,1))>]
-    end
-  
-  /**
-   * Drops elements from the start of a list while s succeeds. The
-   * first element at which s fails and all following it will be
-   * returned.
-   *
-   * Example: <drop-while(?2)> [2,2,3,4] => [3,4]
-   *
-   * @param s       a -> _
-   * @type    List(a) -> List(a)
-   */
-  drop-while(s) = 
-    at-suffix(([] + [not(s)|id]);?xs); !xs
-
-  /**
-   * Drops elements from the start of a list until s succeeds. The
-   * first element at which s succeeds and all following it will be
-   * returned.
-   *
-   * Example: <drop-until(?3)> [2,2,3,4] => [3,4]
-   *
-   * @param s       a -> _
-   * @type    List(a) -> List(a)
-   */
-  drop-until(s) = 
-    at-suffix(([] + [s|id]);?xs); !xs
-
-  /**
-   * Drops the first n elements from a list. If the list has
-   * fewer than n elements, the strategy fails.
-   *
-   * @param n - the number of elements to drop
-   * @type  List(a) -> List(a)
-   */
-  drop(|n) =
-    if <eq>(n,0) then 
-      id
-    else 
-      Tl; drop(|<subt>(n,1))
-    end
-
-  /** 
-   * Splits a list after n elements and applies strategy s to the
-   * first sublist. The second sublist is left untouched. 
-   * Disregarding side-effects, splitmap is equal to 
-   * !(<take(|n); map(s)>, <drop(|n)>). If side-effects are
-   * considered, note that application of s happens while
-   * traversing and splitting.
-   *
-   * @param s a -> b
-   * @param n - the number of elements to apply s to, from the start
-   * @type List(a) -> (List(b), List(a))
-   */
-  splitmap(s|n) =
-    if <eq>(n,0) then 
-      !([], <id>)
-    else 
-      where(Hd; s => x)
-      ; where(Tl; splitmap(s|<subt>(n,1)) => (xs, ys))
-      ; !([x | xs], ys)
-    end
-
-  /**
-   * @inc split-fetch
-   * @note Alias for split-fetch/1
-   */
-  split-at(s) = 
-    split-fetch(s)
-
-  /**
-   * Splits a list in two, with the second part containing the last
-   * n elements and and first part containing all elements except the
-   * last n.
-   *
-   * @type List(a) -> (List(a), List(a))
-   * @param n - the number of elements to split at (counting from the back)
-   */
-  back-split-at(|n) =
-    foldr(!(([], []), 0)
-          , {x, l, r, m :
-             ?(x, ((l, r), m))
-             ; if <lt>(m, n)
-               then
-                 !((l, [x | r]), <inc>m)
-               else
-                 !(([x | l], r), m)
-               end})
-    ; ?(<id>, _)
-
-  /**
-   * Drops a number of terms from the front of a list.
-   *
-   * The number is specified by the strategy argument, which should
-   * produce an integer.
-   *
-   * @type  List(a) -> List(a)
-   * @param _ -> Int
-   */
-  drop(isn) = 
-    where(isn => n)
-    ; nzip0(id)
-    ; drop-until(?(n,_))
-    ; map(Snd)
-
-  /**
-   * Splits the list in two sublists, containing elements from 0 to
-   * n and from n onwards.
-   *
-   * Example: <split-at(|4)>[1,2,3,4,5,6,7,8,9] => ([1,2,3,4], [5,6,7,8,9])
-   *
-   * @type List(a) -> (List(a), List(a))
-   */
-  split-at(|n) =
-    at-index-tail(?tail; ![] | n)
-    ; !(<id>, tail)
-
-strategies
-
-  /**
-   * Trim elements from the end of a list
-   *
-   * Removes the longest sublist from the end of a list, for which
-   * all elements satisfy the strategy s.
-   *
-   * @type  List(a) -> List(a)
-   * @param should succeed for all elements that have to be trimmed.
-   * @since 0.9.5
-   * @inc   trim-test
-   */
-  rtrim(s) =
-    ![()|<id>] // Add dummy element, or at-suffix-rev will fail at empty lists
-  ; at-suffix-rev(
-      where( not(?[])     // This only succeeds if we're not at list-end
-           ; not([s|id])) // and s fails at the head of the current suffix
-    ; ![<Hd>]) // s failed, no further trimming.
-  ; Tl // Strip off dummy head element.
-
-  /**
-   * Trim elements from the start of a list.
-   *
-   * Removes the longest sublist from the start of a list, for which
-   * all elements satisfy the strategy s.
-   *
-   * @type  List(a) -> List(a)
-   * @param should succeed for all elements that have to be trimmed.
-   * @since 0.9.5
-   * @inc   trim-test
-   * @note Alias for drop-while
-   */
-  ltrim(s) = drop-while(s)
-
-  /**
-   * Trim elements from both start and end of a list.
-   * 
-   * Removest the longest sublist from both start and end of a
-   * list for which all elements satisfy s.
-   *
-   * @type List(a) -> List(a)
-   * @param s a -> - 
-   * @since 0.9.5
-   * @inc trim-test
-   */
-  trim(s) = ltrim(s); rtrim(s)
-
-strategies
-
-  /** 
-   * Completely flattens a list and its sublists to a single list.
-   *
-   * See list-misc-test for examples.
-   * 
-   * @type List(rec x(a or List(x))) -> List(a)
-   * @inc flatten-test
-   */
-  flatten-list =
-    foldr(![], (is-list, id) < conc + MkCons, is-list < flatten-list + id)
-
-
-  /**
-   * Eliminates all elements at the end of the two lists that are equal.
-   * Only works correctly on lists of equal length!
-   *
-   * Example: <eliminate-common-suffix>([1,3,4], [1,2,4]) => ([1,3], [1,2])
-   *
-   * @type (List(a), List(a)) -> (List(a), List(a))
-   */
-  eliminate-common-suffix =
-    ?([x | xs], [y | ys])
-    ; <eliminate-common-suffix>(xs, ys)
-    ; if ?([], []); <eq>(x, y)
-      then !([], [])
-      else (![x | <id>], ![y | <id>])
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take", "842,2,847,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "843,4,847,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "843,7,843,15")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "843,8,843,9") ; eq)> (n, 0) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "844,6,844,8")
+        ; ![]
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "846,6,846,39")
+        ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "846,9,846,10") ; Hd>|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "846,16,846,37")
+                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "846,16,846,17") ; Tl)
+                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "846,20,846,37")
+                                                                                                                 ; take(
+                                                                                                                   | <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "846,27,846,30") ; subt> (n, 1)
+                                                                                                                   )>]
       end
-    <+ !([], [])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take", "842,2,847,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "take", "842,2,847,6")
+      ; fail
 
-  /**
-   * Returns the common prefix of two lists.
-   *
-   * Examples:
-   *  <common-prefix>([1,2,3], [1,2,4,5]) => [1,2]
-   *  <common-prefix>([1,2,3], [2,3,4]) => []
-   *
-   * @type (List(a), List(a)) -> List(a)
-   */
+  takemap(s|n) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "takemap", "860,2,865,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "861,4,865,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "861,7,861,15")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "861,8,861,9") ; eq)> (n, 0) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "862,6,862,8")
+        ; ![]
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,6,864,46")
+        ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,9,864,13")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,9,864,10") ; Hd)
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,13,864,13")
+             ; s>|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,19,864,44")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,19,864,20") ; Tl)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,23,864,44")
+                   ; takemap(
+                       s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,31,864,31") ; s
+                     | <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "864,34,864,37") ; subt> (n, 1)
+                     )>]
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "takemap", "860,2,865,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "takemap", "860,2,865,6")
+      ; fail
+
+  drop-while(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop-while", "877,2,878,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,4,878,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,4,878,36")
+       ; at-suffix(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,14,878,35")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,15,878,30")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,15,878,16") ; []
+                 + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,20,878,30")
+                   ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,21,878,26")
+                      ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,25,878,25") ; s)|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,28,878,29") ; id]))
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,33,878,35")
+           ; ?xs
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "878,39,878,41")
+    ; !xs
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop-while", "877,2,878,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop-while", "877,2,878,41")
+      ; fail
+
+  drop-until(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop-until", "890,2,891,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,4,891,36")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,4,891,31")
+       ; at-suffix(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,14,891,30")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,15,891,25")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,15,891,16") ; []
+                 + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,20,891,25")
+                   ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,21,891,21") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,23,891,24") ; id]))
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,28,891,30")
+           ; ?xs
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "891,34,891,36")
+    ; !xs
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop-until", "890,2,891,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop-until", "890,2,891,36")
+      ; fail
+
+  drop(|n) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop", "900,2,905,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "901,4,905,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "901,7,901,15")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "901,8,901,9") ; eq)> (n, 0) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "902,6,902,7") ; id
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "904,6,904,27")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "904,6,904,7") ; Tl)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "904,10,904,27")
+        ; drop(
+          | <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "904,17,904,20") ; subt> (n, 1)
+          )
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop", "900,2,905,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop", "900,2,905,6")
+      ; fail
+
+  splitmap(s|n) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "splitmap", "919,2,926,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "920,4,926,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "920,7,920,15")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "920,8,920,9") ; eq)> (n, 0) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "921,6,921,16")
+        ; !( []
+           , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "921,13,921,14") ; id>
+           )
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "923,6,925,22")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "923,6,923,22")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "923,12,923,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "923,12,923,13") ; Hd)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "923,16,923,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "923,16,923,16") ; s) => x))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,8,925,22")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,8,924,53")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,14,924,52")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,14,924,15") ; Tl)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,18,924,52")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,18,924,40")
+                      ; splitmap(
+                          s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,27,924,27") ; s
+                        | <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "924,30,924,33") ; subt> (n, 1)
+                        )) => (xs, ys)))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "925,8,925,22")
+        ; !([x|xs], ys)
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "splitmap", "919,2,926,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "splitmap", "919,2,926,6")
+      ; fail
+
+  split-at(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-at", "932,2,933,17")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "933,4,933,17")
+    ; split-fetch(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "933,16,933,16") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-at", "932,2,933,17")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-at", "932,2,933,17")
+      ; fail
+
+  back-split-at(|n) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "back-split-at", "943,2,953,15")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "944,4,953,15")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "944,4,952,19")
+       ; foldr(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "944,10,944,23")
+           ; !(([], []), 0)
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "945,12,952,18")
+           ; {x, l, r, m:
+               s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "946,13,952,17")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "946,13,946,29")
+                  ; ?(x, ((l, r), m)))
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "947,15,952,17")
+               ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "947,18,947,27")
+                    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "947,19,947,20") ; lt)> (m, n) then
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "949,17,949,39")
+                   ; !( (l, [x|r])
+                      , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "949,34,949,36") ; inc> m
+                      )
+                 else
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "951,17,951,34")
+                   ; !(([x|l], r), m)
+                 end
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "953,6,953,15")
+    ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "953,9,953,10") ; id>
+       , _
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "back-split-at", "943,2,953,15")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "back-split-at", "943,2,953,15")
+      ; fail
+
+  drop(isn) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop", "964,2,968,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "965,4,968,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "965,4,965,18")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "965,10,965,17")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "965,10,965,12") ; isn) => n))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "966,6,968,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "966,6,966,14")
+       ; nzip0(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "966,12,966,13") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "967,6,968,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "967,6,967,23")
+       ; drop-until(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "967,17,967,22")
+           ; ?(n, _)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "968,6,968,13")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "968,10,968,12") ; Snd
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop", "964,2,968,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "drop", "964,2,968,13")
+      ; fail
+
+  split-at(|n) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-at", "978,2,980,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "979,4,980,18")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "979,4,979,32")
+       ; at-index-tail(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "979,18,979,27")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "979,18,979,22") ; ?tail)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "979,25,979,27")
+           ; ![]
+         | n
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "980,6,980,18")
+    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "980,9,980,10") ; id>
+       , tail
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-at", "978,2,980,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "split-at", "978,2,980,18")
+      ; fail
+
+
+strategies
+  rtrim(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "rtrim", "995,2,1001,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "996,4,1001,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "996,4,996,13")
+       ; ![()|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "996,10,996,11") ; id>])
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "997,4,1001,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "997,4,1000,13")
+       ; at-suffix-rev(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "998,6,1000,12")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "998,6,999,24")
+              ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "998,13,999,23")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "998,13,998,20")
+                         ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "998,17,998,19")
+                               ; ?[]))
+                      ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "999,13,999,23")
+                      ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "999,17,999,22")
+                            ; [s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "999,18,999,18") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "999,20,999,21") ; id])))
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1000,6,1000,12")
+           ; ![ <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1000,9,1000,10") ; Hd>
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1001,4,1001,5")
+    ; Tl
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "rtrim", "995,2,1001,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "rtrim", "995,2,1001,5")
+      ; fail
+
+  ltrim(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "ltrim", "1015,2,1015,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1015,13,1015,25")
+    ; drop-while(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1015,24,1015,24") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "ltrim", "1015,2,1015,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "ltrim", "1015,2,1015,25")
+      ; fail
+
+  trim(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "trim", "1028,2,1028,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1028,12,1028,29")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1028,12,1028,19")
+       ; ltrim(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1028,18,1028,18") ; s
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1028,22,1028,29")
+    ; rtrim(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1028,28,1028,28") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "trim", "1028,2,1028,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "trim", "1028,2,1028,29")
+      ; fail
+
+
+strategies
+  flatten-list =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "flatten-list", "1040,2,1041,73")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,4,1041,73")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,10,1041,12")
+        ; ![]
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,15,1041,43")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,15,1041,27")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,16,1041,22") ; is-list
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,25,1041,26") ; id
+             )
+           < s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,31,1041,34") ; conc
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,38,1041,43") ; MkCons)
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,46,1041,72")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,46,1041,52") ; is-list
+           < s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,56,1041,67") ; flatten-list
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1041,71,1041,72") ; id)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "flatten-list", "1040,2,1041,73")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "flatten-list", "1040,2,1041,73")
+      ; fail
+
+  eliminate-common-suffix =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "eliminate-common-suffix", "1052,2,1059,15")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1053,4,1059,15")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1053,4,1058,8")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1053,4,1053,24")
+          ; ?([x|xs], [y|ys]))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1054,6,1058,8")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1054,6,1054,38")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1054,7,1054,29") ; eliminate-common-suffix)> (xs, ys))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1055,6,1058,8")
+       ; if s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1055,9,1055,29")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1055,9,1055,17")
+               ; ?([], []))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1055,20,1055,29")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1055,21,1055,22") ; eq)> (x, y) then
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1056,11,1056,19")
+           ; !([], [])
+         else
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1057,11,1057,36")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1057,12,1057,22")
+               ; ![x|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1057,19,1057,20") ; id>]
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1057,25,1057,35")
+               ; ![y|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1057,32,1057,33") ; id>]
+             )
+         end
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1059,7,1059,15")
+          ; !([], []))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "eliminate-common-suffix", "1052,2,1059,15")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "eliminate-common-suffix", "1052,2,1059,15")
+      ; fail
+
   common-prefix =
-    ?([x | xs], [x | ys])
-    ; ![x | <common-prefix>(xs, ys)]
-    <+ ![]
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "common-prefix", "1070,2,1073,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1071,4,1073,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1071,4,1072,35")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1071,4,1071,24")
+          ; ?([x|xs], [x|ys]))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1072,6,1072,35")
+       ; ![x|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1072,13,1072,25") ; common-prefix> (xs, ys)]
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1073,7,1073,9")
+          ; ![])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "common-prefix", "1070,2,1073,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "common-prefix", "1070,2,1073,9")
+      ; fail
 
 
 strategies
 
-strategies
 
-  /**
-   * Returns a list of combinations by choosing one element from every 
-   * list, in every possible combination.
-   * 
-   * Examples:
-   *
-   *   $ <list-combinations> [[1, 2]]
-   *   [[1],[2]]
-   *
-   *   $ <list-combinations> [[1, 2], []]
-   *   []
-   *
-   *   $ <list-combinations> [[1, 2], ["a", "b"]]
-   *   [[1,"a"],[2,"a"],[1,"b"],[2,"b"]]
-   *
-   *   $ <list-combinations> []
-   *   [[]]
-   *  
-   * @type List(List(a)) -> List(List(a))
-   */
+strategies
   list-combinations =
-    let step = fail
-          <+ \ [] -> [[]] \
-
-          <+ \ [[] | _] -> [] \
-
-          <+ {xs :
-               ?[xs | <step>]
-               ; map-intermediate(|xs)
-             }
-
-        map-intermediate(|xs) = fail
-          <+ \ [] -> [] \
-
-          <+ {intermediate, tail, tail' :
-               ?[intermediate | tail]
-               ; tail' :=  <map-intermediate(|xs)> tail
-               ; <map-xs(|intermediate, tail')> xs
-             }
-
-        /**
-         * This is just a foldr, but Stratego does not support 
-         * specialization of map-xs to an intermediate without 
-         * introducing tuples, which means that we cannot
-         * use a generic fold.
-         */
-        map-xs(|intermediate, tail) = fail
-          <+ \ [] -> tail \
-
-          <+ {x:
-               ?[x | <id>]
-               ; map-xs(|intermediate, tail)
-               ; ![[x | intermediate] | <id>]
-             }
-    in step 
-   end
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-combinations", "1100,2,1135,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1101,4,1135,5")
+    ; let step =
+            s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "step", "1101,8,1109,13")
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1101,15,1109,13")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1101,15,1101,18") ; fail
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1102,13,1109,13")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1102,13,1102,26")
+                     ; \ [] -> [[]] \
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1104,13,1109,13")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1104,13,1104,30")
+                           ; \ [[]|_] -> [] \
+                           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1106,13,1109,13")
+                              ; {xs:
+                                  s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1107,15,1108,37")
+                                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1107,15,1107,28")
+                                     ; ?[xs|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1107,23,1107,26") ; step>])
+                                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1108,17,1108,37")
+                                  ; map-intermediate(|xs)
+                                })))
+            < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "step", "1101,8,1109,13")
+            + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "step", "1101,8,1109,13")
+              ; fail
+          map-intermediate(|xs) =
+            s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map-intermediate", "1111,8,1118,13")
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1111,32,1118,13")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1111,32,1111,35") ; fail
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1112,13,1118,13")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1112,13,1112,24")
+                     ; \ [] -> [] \
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1114,13,1118,13")
+                        ; {intermediate, tail, tail':
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1115,15,1117,49")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1115,15,1115,36")
+                               ; ?[intermediate|tail])
+                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1116,17,1117,49")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1116,17,1116,54")
+                               ; tail' := <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1116,28,1116,48")
+                                           ; map-intermediate(|xs)> tail)
+                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1117,17,1117,49")
+                            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1117,18,1117,45")
+                                ; map-xs(|intermediate, tail'))> xs
+                          }))
+            < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map-intermediate", "1111,8,1118,13")
+            + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map-intermediate", "1111,8,1118,13")
+              ; fail
+          map-xs(|intermediate, tail) =
+            s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map-xs", "1126,8,1133,13")
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1126,38,1133,13")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1126,38,1126,41") ; fail
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1127,13,1133,13")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1127,13,1127,26")
+                     ; \ [] -> tail \
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1129,13,1133,13")
+                        ; {x:
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1130,15,1132,44")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1130,15,1130,25")
+                               ; ?[x|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1130,22,1130,23") ; id>])
+                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1131,17,1132,44")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1131,17,1131,43")
+                               ; map-xs(|intermediate, tail))
+                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1132,17,1132,44")
+                            ; ![[x|intermediate]|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1132,41,1132,42") ; id>]
+                          }))
+            < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map-xs", "1126,8,1133,13")
+            + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "map-xs", "1126,8,1133,13")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "1134,7,1134,10") ; step
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-combinations", "1100,2,1135,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/common.str", "list-combinations", "1100,2,1135,5")
+      ; fail

@@ -1,15 +1,17 @@
-/**
- * Used for C99
- */
 module stratego/xtc/c99/Proc
-strategies
 
-  /**
-   * Reads a term from a file. If the given file exists, it will be
-   * treated as an ATerm and its content will be returned, as a term.
-   *
-   * @type FILE -> t
-   */
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   read-from :
-    FILE(name) -> t
-    where <ReadFromFile> name => t
+    FILE(name) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "read-from", "13,2,15,33")> t
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "read-from", "13,2,15,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "read-from", "13,2,15,33")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "15,10,15,33")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "15,10,15,28")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "15,11,15,22") ; ReadFromFile)> name) => t
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Proc.str", "read-from", "13,2,15,33")
+             ; fail

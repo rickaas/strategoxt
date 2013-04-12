@@ -1,18 +1,92 @@
 module twice
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     A : Term
     B : Term
 
+
 rules
 
-    RuleA      : A -> B
+  RuleA :
+    A -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "RuleA", "10,4,10,22")> B
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "RuleA", "10,4,10,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "RuleA", "10,4,10,22")
+             ; fail
+
 
 strategies
+  main-twice =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "main-twice", "14,4,14,67")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,17,14,67")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,17,14,32")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,23,14,31")
+           ; !"main: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,35,14,67")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,35,14,47")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,36,14,39") ; Main)> [A, A])
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,50,14,67")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "14,56,14,66")
+        ; !"main x: "
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "main-twice", "14,4,14,67")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "main-twice", "14,4,14,67")
+      ; fail
 
-    main-twice = debug(!"main: "); <Main> [A, A]; debug(!"main x: ")
+  Main =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "Main", "16,4,16,74")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,17,16,74")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,17,16,32")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,23,16,31")
+           ; !"Main: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,35,16,74")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,35,16,54")
+       ; memo-scope(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,46,16,53")
+           ; [ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,47,16,48") ; ma
+             , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,51,16,52") ; ma
+             ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,57,16,74")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "16,63,16,73")
+        ; !"Main x: "
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "Main", "16,4,16,74")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "Main", "16,4,16,74")
+      ; fail
 
-    Main       = debug(!"Main: "); memo-scope([ma, ma]); debug(!"Main x: ")
-
-    ma 	       = debug(!"ma: "); memo(RuleA); debug(!"ma x: ")
+  ma =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "ma", "18,4,18,61")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,17,18,61")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,17,18,30")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,23,18,29")
+           ; !"ma: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,33,18,61")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,33,18,43")
+       ; memo(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,38,18,42") ; RuleA
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,46,18,61")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "18,52,18,60")
+        ; !"ma x: "
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "ma", "18,4,18,61")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/twice.str", "ma", "18,4,18,61")
+      ; fail

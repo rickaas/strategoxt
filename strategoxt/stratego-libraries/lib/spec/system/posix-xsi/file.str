@@ -1,99 +1,158 @@
 module system/posix-xsi/file
 
-/**
- * Generate a new, not existing file name.
- */
-strategies
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  /**
-   * Safe, mkstemp based, creation of temporary file
-   * 
-   * @type _ -> (String, FileDescr)
-   */
+
+strategies
   new-temp-file =
-      <conc-strings> (<temp-dir>, "/StrategoXT")
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "new-temp-file", "13,2,15,12")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "14,6,15,12")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "14,6,14,47")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "14,7,14,18") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "14,23,14,30") ; temp-dir>
+                                                                                                                      , "/StrategoXT"
+                                                                                                                      ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "15,6,15,12")
     ; mkstemp
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "new-temp-file", "13,2,15,12")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "new-temp-file", "13,2,15,12")
+      ; fail
 
-  /**
-   * Safe, mkdtemp based, creation of temporary directory
-   * 
-   * @type  _ -> String
-   */
   new-temp-dir =
-      <conc-strings> (<temp-dir>, "/StrategoXT")
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "new-temp-dir", "22,2,24,12")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "23,6,24,12")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "23,6,23,47")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "23,7,23,18") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "23,23,23,30") ; temp-dir>
+                                                                                                                      , "/StrategoXT"
+                                                                                                                      ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "24,6,24,12")
     ; mkdtemp
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "new-temp-dir", "22,2,24,12")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "new-temp-dir", "22,2,24,12")
+      ; fail
+
 
 strategies
-
   temp-dir =
-    <getenv> "TMPDIR"
-    <+ P_tmpdir
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "temp-dir", "28,2,30,14")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "29,4,30,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "29,4,29,20")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "29,5,29,10") ; getenv)> "TMPDIR"
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "30,7,30,14") ; P_tmpdir)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "temp-dir", "28,2,30,14")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "temp-dir", "28,2,30,14")
+      ; fail
 
   P_tmpdir =
-    prim("SSL_P_tmpdir")
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "P_tmpdir", "32,2,33,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "33,4,33,23")
+    ; prim("SSL_P_tmpdir")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "P_tmpdir", "32,2,33,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "P_tmpdir", "32,2,33,23")
+      ; fail
 
-  /**
-   * Creates a unique temporary file
-   *
-   * returns a fd if succesful, fails on error
-   * @type String -> String * Int
-   */
   mkstemp =
-    <conc-strings> (<id>, "XXXXXX") => template
-    ; prim("SSL_mkstemp", template)
-    <+ <perror; fail> "SSL/mkstemp"
- 
-  /**
-   * Creates a unique temporary directory
-   *
-   * returns a fd if succesful, fails on error
-   * @type String -> String
-   */
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "mkstemp", "41,2,44,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "42,4,44,34")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "42,4,43,34")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "42,4,42,46")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "42,4,42,34")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "42,5,42,16") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "42,21,42,22") ; id>
+                                                                                                                            , "XXXXXX"
+                                                                                                                            )) => template)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "43,6,43,34")
+       ; prim("SSL_mkstemp", template)
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "44,7,44,34")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "44,8,44,19")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "44,8,44,13") ; perror)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "44,16,44,19")
+              ; fail)> "SSL/mkstemp")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "mkstemp", "41,2,44,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "mkstemp", "41,2,44,34")
+      ; fail
+
   mkdtemp =
-    <conc-strings> (<id>, "XXXXXX") => template
-    ; prim("SSL_mkdtemp", template)
-    <+ <perror; fail> "SSL/mkdtemp"
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "mkdtemp", "52,2,55,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "53,4,55,34")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "53,4,54,34")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "53,4,53,46")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "53,4,53,34")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "53,5,53,16") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "53,21,53,22") ; id>
+                                                                                                                            , "XXXXXX"
+                                                                                                                            )) => template)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "54,6,54,34")
+       ; prim("SSL_mkdtemp", template)
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "55,7,55,34")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "55,8,55,19")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "55,8,55,13") ; perror)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "55,16,55,19")
+              ; fail)> "SSL/mkdtemp")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "mkdtemp", "52,2,55,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "mkdtemp", "52,2,55,34")
+      ; fail
+
 
 strategies
-
- /** 
-  * rename renames a file, moving it between directories if required.
-  * Any  other  hard links to the file (as created using link(2)) are unaffected.
-  *
-  * If newpath already exists it will be atomically replaced (subject to  a
-  * few  conditions ~ see ERRORS below), so that there is no point at which
-  * another process attempting to access newpath will find it missing.
-  *
-  * If newpath exists but the operation fails for some reason rename  guarantees 
-  * to leave an instance of newpath in place.
-  *
-  * From 0.9.4 this implementation copies the file if the primitive rename 
-  * fails because of an XDEV error.
-  */
   rename-file =
-      ?(oldname, newname)
-    ; (  prim("SSL_rename", oldname, newname)
-      <+ ( get-last-error => ErrorNumber(<EXDEV> ())
-         < <copy-file> (oldname, newname)
-           ; <remove-file> oldname
-         + fail
-         )
-      )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "rename-file", "73,2,81,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "74,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "74,6,74,24")
+       ; ?(oldname, newname))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "75,9,80,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "75,9,75,44")
+       ; prim("SSL_rename", oldname, newname)
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "76,11,79,14")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "76,11,76,51")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "76,11,76,24") ; get-last-error) => ErrorNumber(
+                                                                                                                                  <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "76,42,76,46") ; EXDEV> ()
+                                                                                                                                )
+             < s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "77,11,78,33")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "77,11,77,40")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "77,12,77,20") ; copy-file)> (oldname, newname))
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "78,13,78,33")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "78,14,78,24") ; remove-file)> oldname
+             + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "79,11,79,14") ; fail))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "rename-file", "73,2,81,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "rename-file", "73,2,81,6")
+      ; fail
 
- /**
-  * Copy a file using memory mapped I/O. 
-  *
-  * If newname is a directory the file is copied to a file in the directory
-  * with the same base name as the old file.
-  */
   copy-file =
-    ?(oldname, newname)
-    ; where(
-        if <file-exists; filemode; isdir> newname then
-          <concat-strings>[newname, "/", <base-filename> oldname]
-        else !newname end => newname'
-      )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "copy-file", "89,2,96,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "90,4,96,40")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "90,4,90,22")
+       ; ?(oldname, newname))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "91,6,96,40")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "91,6,95,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,8,94,36")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,8,94,24")
+                  ; if s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,11,92,48")
+                       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,12,92,39")
+                           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,12,92,22") ; file-exists)
+                           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,25,92,39")
+                           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,25,92,32") ; filemode)
+                           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "92,35,92,39")
+                           ; isdir)> newname then
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "93,10,93,64")
+                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "93,11,93,24") ; concat-strings)> [ newname
+                                                                                                                                        , "/"
+                                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "93,42,93,54") ; base-filename> oldname
+                                                                                                                                        ]
+                    else
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "94,13,94,20") ; !newname
+                    end) => newname'))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "96,6,96,40")
     ; prim("SSL_copy", oldname, newname')
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "copy-file", "89,2,96,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "copy-file", "89,2,96,40")
+      ; fail
 
   fdcopy =
-    ?(fdin, fdout); prim("SSL_fdcopy", fdin, fdout)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "fdcopy", "98,2,99,50")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "99,4,99,50")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "99,4,99,17")
+       ; ?(fdin, fdout))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "99,20,99,50")
+    ; prim("SSL_fdcopy", fdin, fdout)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "fdcopy", "98,2,99,50")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/file.str", "fdcopy", "98,2,99,50")
+      ; fail

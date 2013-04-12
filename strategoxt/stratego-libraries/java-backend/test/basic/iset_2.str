@@ -1,15 +1,57 @@
 module iset_2
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
   main-iset_2 =
-    set := <new-iset>
-  ; iset-add(|1)
-  ; iset-clear
-  ; iset-addlist(|[2,3,4])
-  ; with(iset-get-index(|3); debug => 1)
-  ; with(iset-add(inc | 3); debug => 2)
-  ; with(iset-add(inc | 5))
-  ; iset-elements; debug => [2,3,4,5]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "main-iset_2", "7,2,15,36")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "8,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "8,4,8,20")
+       ; set := <s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "8,12,8,19") ; new-iset>)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "9,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "9,4,9,15")
+       ; iset-add(|1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "10,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "10,4,10,13") ; iset-clear)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "11,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "11,4,11,25")
+       ; iset-addlist(
+         | [2, 3, 4]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "12,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "12,4,12,39")
+       ; with(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "12,9,12,38")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "12,9,12,26")
+                 ; iset-get-index(|3))
+              ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "12,29,12,38")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "12,29,12,33") ; debug) => 1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,4,13,38")
+       ; with(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,9,13,37")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,9,13,25")
+                 ; iset-add(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,18,13,20") ; inc
+                   | 3
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,28,13,37")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "13,28,13,32") ; debug) => 2))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "14,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "14,4,14,26")
+       ; with(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "14,9,14,25")
+              ; iset-add(
+                  s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "14,18,14,20") ; inc
+                | 5
+                )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "15,4,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "15,4,15,16") ; iset-elements)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "15,19,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "15,19,15,23") ; debug) => [2, 3, 4, 5]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "main-iset_2", "7,2,15,36")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_2.str", "main-iset_2", "7,2,15,36")
+      ; fail

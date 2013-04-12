@@ -1,12 +1,23 @@
-/**
- * Test for issue STR-577: support import of an ATerm from a file
- */
 module test107
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
   main-test107 =
-    import-term(./Java-15.tbl)
-    ; ?"parse-table"#(_)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "main-test107", "9,2,12,10")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "10,4,12,10")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "10,4,10,29") ; import-term(./Java-15.tbl))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "11,6,12,10")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "11,6,11,23")
+       ; ?"parse-table"#(_))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "12,6,12,10")
     ; !"ok"
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "main-test107", "9,2,12,10")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test107.str", "main-test107", "9,2,12,10")
+      ; fail

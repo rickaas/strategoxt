@@ -1,17 +1,41 @@
 module pp-box
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
-  libstratego-xtc strategoxt-xtc-tools parse-box
+  libstratego-xtc
+  strategoxt-xtc-tools
+  parse-box
 
-/**
- * @todo Use libstratego-gpp
- */
+
 strategies
-
   io-pp-box =
-    xtc-io-wrap(
-      xtc-io-transform(box-ensugar)
-    ; xtc-transform(!"ast2abox", !["-p", <xtc-find> "Box.pp.af"])
-    ; xtc-abox-format
-    ; xtc-abox2text
-    )
+    s-enter(|"strategoxt/syntax/gpp/tools/pp-box.str", "io-pp-box", "11,2,17,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "12,4,17,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "13,6,16,18")
+        ; (s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "13,6,13,34")
+           ; xtc-io-transform(
+               s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "13,23,13,33") ; box-ensugar
+             ))
+        ; s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "14,6,16,18")
+        ; (s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "14,6,14,64")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "14,20,14,30")
+               ; !"ast2abox"
+             , s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "14,33,14,63")
+               ; ![ "-p"
+                  , <s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "14,42,14,49") ; xtc-find> "Box.pp.af"
+                  ]
+             ))
+        ; s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "15,6,16,18")
+        ; (s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "15,6,15,20") ; xtc-abox-format)
+        ; s-step(|"strategoxt/syntax/gpp/tools/pp-box.str", "16,6,16,18")
+        ; xtc-abox2text
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools/pp-box.str", "io-pp-box", "11,2,17,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools/pp-box.str", "io-pp-box", "11,2,17,4")
+      ; fail

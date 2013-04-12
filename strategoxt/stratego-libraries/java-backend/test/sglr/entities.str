@@ -1,14 +1,31 @@
 module entities
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-xtc
   libstratego-sglr
 
+
 rules
 
   main-entities =
-    <parse-file> "Entities.ent"
-  
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "main-entities", "10,2,11,30")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "11,4,11,30")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "11,5,11,14") ; parse-file)> "Entities.ent"
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "main-entities", "10,2,11,30")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "main-entities", "10,2,11,30")
+      ; fail
+
   parse-file =
-    parse-file(|<import-term(Entities.tbl)>)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "parse-file", "13,2,14,43")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "14,4,14,43")
+    ; parse-file(
+      | <s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "14,17,14,41") ; import-term(Entities.tbl)>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "parse-file", "13,2,14,43")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/entities.str", "parse-file", "13,2,14,43")
+      ; fail

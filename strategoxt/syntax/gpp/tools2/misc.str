@@ -1,45 +1,116 @@
-/**
- * @author Merijn de Jonge (mdjonge@cwi.nl) 
- */
 module misc
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
-
   collect'(s) =
-    rec rec(
-      s < ![<id>] +  crush(![], conc, rec)
-    )
+    s-enter(|"strategoxt/syntax/gpp/tools2/misc.str", "collect'", "8,2,11,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "9,4,11,4")
+    ; rec rec (
+        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,6,10,41")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,6,10,6") ; s
+           < s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,10,10,16")
+             ; ![<s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,13,10,14") ; id>]
+           + s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,21,10,41")
+             ; crush(
+                 s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,27,10,29")
+                 ; ![]
+               , s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,32,10,35") ; conc
+               , s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "10,38,10,40") ; rec
+               ))
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "collect'", "8,2,11,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "collect'", "8,2,11,4")
+      ; fail
 
-  /**
-   * Try to flatten lists but do not change to total number of
-   * elements. This means that empty lists (containg for a single
-   * element) are not removed.
-   */
   flat-list =
-    flat-list(![])
-    
-  flat-list(cont) =  
-    ?[]; cont
-    
+    s-enter(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "18,2,19,17")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "19,4,19,17")
+    ; flat-list(
+        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "19,14,19,16")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "18,2,19,17")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "18,2,19,17")
+      ; fail
+
   flat-list(cont) =
-    ?[hd | tl]
-    ; if !hd => [] then
-        ![[] | <flat-list(cont)> tl]
+    s-enter(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "21,2,22,12")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "22,4,22,12")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "22,4,22,6")
+       ; ?[])
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "22,9,22,12")
+    ; cont
+    < s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "21,2,22,12")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "21,2,22,12")
+      ; fail
+
+  flat-list(cont) =
+    s-enter(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "24,2,34,8")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "25,4,34,8")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "25,4,25,13")
+       ; ?[hd|tl])
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "26,6,34,8")
+    ; if s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "26,9,26,17")
+         ; (s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "26,9,26,11") ; !hd) => [] then
+        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "27,8,27,35")
+        ; ![[]|<s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "27,16,27,30")
+                ; flat-list(
+                    s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "27,26,27,29") ; cont
+                  )> tl]
       else
-        if !hd => [_ | _] then
-          <flat-list(<flat-list(cont)> tl)> hd
-        else
-          ![hd | <flat-list(cont)> tl]
-        end
+        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "29,8,33,10")
+        ; if s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "29,11,29,24")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "29,11,29,13") ; !hd) => [_|_] then
+            s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "30,10,30,45")
+            ; <(s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "30,11,30,41")
+                ; flat-list(
+                    s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "30,21,30,40")
+                    ; <(s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "30,22,30,36")
+                        ; flat-list(
+                            s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "30,32,30,35") ; cont
+                          ))> tl
+                  ))> hd
+          else
+            s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "32,10,32,37")
+            ; ![hd|<s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "32,18,32,32")
+                    ; flat-list(
+                        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "32,28,32,31") ; cont
+                      )> tl]
+          end
       end
+    < s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "24,2,34,8")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "flat-list", "24,2,34,8")
+      ; fail
 
   remove-trailing(s) =
-    rec x (
-      try(
-        [s | id]
-      ; ?[_| <x>]
+    s-enter(|"strategoxt/syntax/gpp/tools2/misc.str", "remove-trailing", "36,2,42,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "37,4,42,4")
+    ; rec x (
+        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "38,6,41,6")
+        ; try(
+            s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "39,8,40,16")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "39,8,39,15")
+               ; [s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "39,9,39,9") ; s|s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "39,13,39,14") ; id])
+            ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "40,8,40,16")
+            ; ?[_|<s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "40,14,40,14") ; x>]
+          )
       )
-    )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "remove-trailing", "36,2,42,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "remove-trailing", "36,2,42,4")
+      ; fail
 
   notify(s) =
-    if-verbose5(debug(s))
+    s-enter(|"strategoxt/syntax/gpp/tools2/misc.str", "notify", "44,2,45,24")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "45,4,45,24")
+    ; if-verbose5(
+        s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "45,16,45,23")
+        ; debug(
+            s-step(|"strategoxt/syntax/gpp/tools2/misc.str", "45,22,45,22") ; s
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "notify", "44,2,45,24")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/misc.str", "notify", "44,2,45,24")
+      ; fail

@@ -1,20 +1,57 @@
 module readterm_1
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
 
-strategies
-  
-  main-readterm_1 =
-    t := Some([1,2{3}]{4}){5};
-    debug(!"Writing ");
-    <WriteToTextFile> ("readterm_1.trm", t);
-    <ReadFromFile> "readterm_1.trm" => t;
-    <ReadFromFile> "readterm_1.trm" => t;
-    
-    t2 := Some([1,2]);
-    debug(!"Writing ");
-    <WriteToTextFile> ("readterm_1.trm", t2);
-    <ReadFromFile> "readterm_1.trm" => t2;
-    <ReadFromFile> "readterm_1.trm" => t2
 
+strategies
+  main-readterm_1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "main-readterm_1", "8,2,19,40")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "9,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "9,4,9,28")
+       ; t := Some(
+                [1, 2{3}]{4}
+              ){5})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "10,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "10,4,10,21")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "10,10,10,20")
+           ; !"Writing "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "11,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "11,4,11,42")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "11,5,11,19") ; WriteToTextFile)> ("readterm_1.trm", t))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "12,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "12,4,12,39")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "12,4,12,34")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "12,5,12,16") ; ReadFromFile)> "readterm_1.trm") => t)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "13,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "13,4,13,39")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "13,4,13,34")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "13,5,13,16") ; ReadFromFile)> "readterm_1.trm") => t)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "15,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "15,4,15,20")
+       ; t2 := Some([1, 2]))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "16,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "16,4,16,21")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "16,10,16,20")
+           ; !"Writing "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "17,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "17,4,17,43")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "17,5,17,19") ; WriteToTextFile)> ("readterm_1.trm", t2))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "18,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "18,4,18,40")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "18,4,18,34")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "18,5,18,16") ; ReadFromFile)> "readterm_1.trm") => t2)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "19,4,19,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "19,4,19,34")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "19,5,19,16") ; ReadFromFile)> "readterm_1.trm") => t2
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "main-readterm_1", "8,2,19,40")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/readterm_1.str", "main-readterm_1", "8,2,19,40")
+      ; fail

@@ -1,12 +1,28 @@
 module match_3
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 rules
 
   main-match_3 =
-    x := 1
-  ; y := x
-  ; z := y
-  ; !x
-    
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "main-match_3", "7,2,11,5")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "8,4,11,5")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "8,4,8,9")
+       ; x := 1)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "9,4,11,5")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "9,4,9,9")
+       ; y := x)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "10,4,11,5")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "10,4,10,9")
+       ; z := y)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "11,4,11,5")
+    ; !x
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "main-match_3", "7,2,11,5")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/match_3.str", "main-match_3", "7,2,11,5")
+      ; fail

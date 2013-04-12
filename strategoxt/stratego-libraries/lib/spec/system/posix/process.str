@@ -1,119 +1,123 @@
-/**
- * Run-time process information
- */
 module system/posix/process
-imports 
-  system/posix/signal 
-  util/config/verbose 
-  system/io/file 
-  system/io/dir 
-  system/io/char 
-  system/io/term 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  system/posix/signal
+  util/config/verbose
+  system/io/file
+  system/io/dir
+  system/io/char
+  system/io/term
+
 
 strategies
+  setenv =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "setenv", "22,2,24,54")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "23,4,24,54")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "23,4,23,28")
+       ; ?(name, value, overwrite))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "24,6,24,54")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "24,12,24,53")
+            ; prim("SSL_setenv", name, value, overwrite))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "setenv", "22,2,24,54")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "setenv", "22,2,24,54")
+      ; fail
 
- /**
-  * The  setenv() function adds the variable name to the 
-  * environment with the value value, if  name  does  not  already
-  * exist.   If  name  does exist in the environment, then its
-  * value is changed to value if  overwrite  is  non-zero;  if
-  * overwrite  is zero, then the value of name is not changed. 
-  */
-  setenv = 
-    ?(name, value, overwrite)
-    ; where(prim("SSL_setenv", name, value, overwrite))
 
 strategies
+  get-pid =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "get-pid", "33,2,34,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "34,4,34,22")
+    ; prim("SSL_get_pid")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "get-pid", "33,2,34,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "get-pid", "33,2,34,22")
+      ; fail
 
-  /**
-   * Return process identifier of current process
-   *
-   * @type _ -> Int
-   */
-  get-pid = 
-    prim("SSL_get_pid")
 
-/**
- * Process creation
- */
-strategies   
-
-  /**
-   * Creates a child process almost equivalent to the parent process.
-   *
-   * The new process differs from the parent process
-   * only in its PID and PPID, and in the fact that resource  
-   * utilizations  are  set  to  0. File locks and pending signals are not
-   * inherited. 
-   *
-   * Fails if forking fails, in which case no child process is created.
-   * On success, the PID of the child process is returned  in  the  parent’s
-   * thread  of execution, and a 0 is returned in the child’s thread of exe‐
-   * cution.
-   *
-   * @type fork :: a -> Int
-   */
+strategies
   fork =
-    prim("SSL_fork")
-    
-  /**
-   * Replaces the current process image with a new  process image.
-   *
-   * @see      man execvp
-   * @warning  The first arugment is added in the runtime.
-   */
-  execvp = 
-    ?(file, argv)
-    ; prim("SSL_execvp", file, argv)
-    ; where(<conc-strings; perror; fail> ("SSL/execvp: Cannot execute file ", file))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "fork", "56,2,57,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "57,4,57,19")
+    ; prim("SSL_fork")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "fork", "56,2,57,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "fork", "56,2,57,19")
+      ; fail
 
-  /**
-   * Replaces the current process image with a new  process image.
-   *
-   * @see      man execv
-   * @warning  The first arugment is not added in the runtime.
-   * @warning  If the
-   */
-  execv = 
-    ?(file, argv)
-    ; prim("SSL_execv", file, argv)
-    ; where(<conc-strings; perror; fail> ("SSL/execv: Cannot execute file ", file))
+  execvp =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execvp", "65,2,68,83")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "66,4,68,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "66,4,66,16")
+       ; ?(file, argv))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "67,6,68,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "67,6,67,35")
+       ; prim("SSL_execvp", file, argv))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,6,68,83")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,12,68,82")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,13,68,38")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,13,68,24") ; conc-strings)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,27,68,38")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,27,68,32") ; perror)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,35,68,38")
+                ; fail)> ("SSL/execvp: Cannot execute file ", file))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execvp", "65,2,68,83")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execvp", "65,2,68,83")
+      ; fail
 
-/**
- * Process termination 
- */
-strategies 
+  execv =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execv", "77,2,80,82")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "78,4,80,82")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "78,4,78,16")
+       ; ?(file, argv))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "79,6,80,82")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "79,6,79,34")
+       ; prim("SSL_execv", file, argv))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,6,80,82")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,12,80,81")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,13,80,38")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,13,80,24") ; conc-strings)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,27,80,38")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,27,80,32") ; perror)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,35,80,38")
+                ; fail)> ("SSL/execv: Cannot execute file ", file))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execv", "77,2,80,82")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execv", "77,2,80,82")
+      ; fail
 
-  /**
-   * @type Int -> WaitStatus
-   */
+
+strategies
   waitpid =
-    ?pid; prim("SSL_waitpid", pid)
-    
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "waitpid", "90,2,91,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "91,4,91,33")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "91,4,91,7") ; ?pid)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "91,10,91,33")
+    ; prim("SSL_waitpid", pid)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "waitpid", "90,2,91,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "waitpid", "90,2,91,33")
+      ; fail
+
+
 signature
   constructors
-    /**
-     * Collects the information returned from a wait call.
-     *
-     * (1) Exit status or -1 if process did not terminate properly
-     * (2) Signal number or -1 if the process wasn't terminated because of a signal
-     * (3) Signal number or -1 if the process wasn't stopped
-     */
     WaitStatus : Int * Int * Int -> WaitStatus
-      
-/**
- * Terminating Another Process 
- */
+
+
 strategies
- 
-  /**
-   * Sends the specified signal to the specified process.
-   *
-   * @fail fails on failure of the kill invocation
-   * @type Int * Signal -> Int * Signal
-   */
   kill =
-    where(
-      ?(pid, <number-from-signal; ?sig>)
-    ; prim("SSL_kill", pid, sig)
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "kill", "115,2,119,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "116,4,119,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,6,118,31")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,6,117,39")
+               ; ?( pid
+                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,14,117,37")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,14,117,31") ; number-from-signal)
+                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,34,117,37")
+                     ; ?sig>
+                  ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "118,6,118,31")
+            ; prim("SSL_kill", pid, sig))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "kill", "115,2,119,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "kill", "115,2,119,4")
+      ; fail

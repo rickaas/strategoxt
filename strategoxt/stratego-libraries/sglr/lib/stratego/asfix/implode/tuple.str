@@ -1,18 +1,30 @@
-/**
- * Implosion of AsFix tuples
- */
 module stratego/asfix/implode/tuple
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 rules
 
-  ImplodeTuple : 
-    appl(prod(_, cf(seq(_)), _), args) -> ""#(args)
+  ImplodeTuple :
+    appl(
+      prod(_, cf(seq(_)), _)
+    , args
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/tuple.str", "ImplodeTuple", "7,2,8,50")> ""#(args)
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/tuple.str", "ImplodeTuple", "7,2,8,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/tuple.str", "ImplodeTuple", "7,2,8,50")
+             ; fail
 
-  ImplodeTuple : 
-    appl(prod(_, seq(_), _), args) -> ""#(args)         
+  ImplodeTuple :
+    appl(
+      prod(_, seq(_), _)
+    , args
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/tuple.str", "ImplodeTuple", "10,2,11,46")> ""#(args)
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/tuple.str", "ImplodeTuple", "10,2,11,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/tuple.str", "ImplodeTuple", "10,2,11,46")
+             ; fail
 
-/**
- * @todo  The seq/1 constructor doesn't seem to be an AsFix construct.
- */
+
 signature
   constructors
     seq : List(Symbol) -> Symbol

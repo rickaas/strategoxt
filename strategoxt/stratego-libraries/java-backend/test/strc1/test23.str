@@ -1,33 +1,105 @@
-// testing tuples
-
 module test23
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 strategies
+  main-test23 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "main-test23", "7,2,9,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "8,4,9,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "8,4,8,8") ; test1)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "9,4,9,8")
+    ; test2
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "main-test23", "7,2,9,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "main-test23", "7,2,9,8")
+      ; fail
 
-  main-test23 = 
-    test1; 
-    test2
+  Swap :
+    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Swap", "11,2,11,24")> (y, x)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Swap", "11,2,11,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Swap", "11,2,11,24")
+             ; fail
 
-  Swap : (x, y) -> (y, x)
+  Fst :
+    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Fst", "13,2,13,18")> x
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Fst", "13,2,13,18")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Fst", "13,2,13,18")
+             ; fail
 
-  Fst : (x, y) -> x
+  Snd :
+    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Snd", "15,2,15,18")> y
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Snd", "15,2,15,18")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Snd", "15,2,15,18")
+             ; fail
 
-  Snd : (x, y) -> y
+  Split(f, g) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Split", "17,2,17,26")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "17,16,17,26")
+    ; !( <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "17,19,17,19") ; f>
+       , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "17,24,17,24") ; g>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Split", "17,2,17,26")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Split", "17,2,17,26")
+      ; fail
 
-  Split(f, g) = !(<f>, <g>)
+  Swap2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Swap2", "19,2,19,23")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "19,10,19,23")
+    ; Split(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "19,16,19,18") ; Snd
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "19,20,19,22") ; Fst
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Swap2", "19,2,19,23")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "Swap2", "19,2,19,23")
+      ; fail
 
-  Swap2 = Split(Snd,Fst)
+  is-pair =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "is-pair", "21,2,21,18")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "21,12,21,18")
+    ; ( s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "21,13,21,14") ; id
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "21,16,21,17") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "is-pair", "21,2,21,18")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "is-pair", "21,2,21,18")
+      ; fail
 
-  is-pair = (id,id)
-
-  test1 = 
-    !("a", "b");
-    Swap;
-    is-pair;
-    Swap2;
-    ?("a", "b")
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "test1", "23,2,28,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "24,4,28,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "24,4,24,14")
+       ; !("a", "b"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "25,4,28,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "25,4,25,7") ; Swap)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "26,4,28,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "26,4,26,10") ; is-pair)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "27,4,28,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "27,4,27,8") ; Swap2)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "28,4,28,14")
+    ; ?("a", "b")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "test1", "23,2,28,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "test1", "23,2,28,14")
+      ; fail
 
   test2 =
-    !(("b", "c"), "a");
-    ?(<Snd>("$", <Swap>), _);
-    ?("c", "b")
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "test2", "30,2,33,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "31,4,33,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "31,4,31,21")
+       ; !(("b", "c"), "a"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "32,4,33,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "32,4,32,27")
+       ; ?( <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "32,7,32,9") ; Snd> ( "$"
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "32,18,32,21") ; Swap>
+                                                                                                             )
+          , _
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "33,4,33,14")
+    ; ?("c", "b")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "test2", "30,2,33,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test23.str", "test2", "30,2,33,14")
+      ; fail

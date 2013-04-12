@@ -1,9 +1,21 @@
-/**
- * @author  Martin Bravenboer
- */
 module implode-aterm
-imports libstratego-lib libstratego-aterm
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  libstratego-aterm
+
+
+strategies
   io-implode-aterm =
-    io-wrap(implode-aterm)
+    s-enter(|"strategoxt/syntax/aterm-front/tools/implode-aterm.str", "io-implode-aterm", "8,2,9,25")
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/implode-aterm.str", "9,4,9,25")
+    ; io-wrap(
+        s-step(|"strategoxt/syntax/aterm-front/tools/implode-aterm.str", "9,12,9,24") ; implode-aterm
+      )
+    < s-exit(|"strategoxt/syntax/aterm-front/tools/implode-aterm.str", "io-implode-aterm", "8,2,9,25")
+    + s-exit(|"strategoxt/syntax/aterm-front/tools/implode-aterm.str", "io-implode-aterm", "8,2,9,25")
+      ; fail

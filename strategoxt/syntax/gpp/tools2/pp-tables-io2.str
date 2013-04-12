@@ -1,131 +1,310 @@
-/**
- * @author Merijn de Jonge (mdjonge@cwi.nl)
- */
 module pp-tables-io2
-imports pp-table
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  pp-table
+
 
 strategies
-  
-  /**
-   * @type List(String) -> ...
-   */
   read-pp-tables =
-    where(<table-create> "pp-table")
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "read-pp-tables", "12,2,20,6")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "13,4,20,6")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "13,4,13,35")
+       ; where(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "13,10,13,34")
+               ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "13,11,13,22") ; table-create)> "pp-table"))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "14,6,20,6")
     ; map(
-        notify(!"Reading table: ")
-        ; ReadFromFile
-        // todo: remove this line (baseline issue)
-        ; (?PP-Table(_) <+ ?version#([<?PP-Table(_)>]))
+        s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "15,8,19,23")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "15,8,15,33")
+           ; notify(
+               s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "15,15,15,32")
+               ; !"Reading table: "
+             ))
+        ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "16,10,19,23")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "16,10,16,21") ; ReadFromFile)
+        ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "18,10,19,23")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "18,11,18,53")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "18,11,18,22")
+              ; ?PP-Table(_)
+              <+ s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "18,27,18,53")
+                 ; ?version#([ <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "18,39,18,50")
+                                ; ?PP-Table(_)>
+                             ])))
+        ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "19,10,19,23")
         ; build-pp-table
       )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "read-pp-tables", "12,2,20,6")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "read-pp-tables", "12,2,20,6")
+      ; fail
 
-  /**
-   * Add entries to table. Reverse the list of entries to get correct
-   * ordering of entries.
-   */
   build-pp-table =
-     ?PP-Table(<id>)
-     ; reverse
-     ; map(makePPEntry; StoreEntry)
-  
-  StoreEntry =
-     ?PP-Entry(path, value)
-     ; <table-put> ("pp-table", <mk-key-arity>, (path, value))
-     ; <notify(!"storing: ")> (<path-to-string> path, value)
-  
-  StoreEntryIfNotExists = 
-    ?PP-Entry( path, value )
-    ; ( where(<table-get> ("pp-table", <mk-key-arity>))
-     <+ StoreEntry
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "build-pp-table", "26,2,29,34")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "27,5,29,34")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "27,5,27,19")
+       ; ?PP-Table(
+            <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "27,16,27,17") ; id>
+          ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "28,7,29,34")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "28,7,28,13") ; reverse)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "29,7,29,34")
+    ; map(
+        s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "29,11,29,33")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "29,11,29,21") ; makePPEntry)
+        ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "29,24,29,33")
+        ; StoreEntry
       )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "build-pp-table", "26,2,29,34")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "build-pp-table", "26,2,29,34")
+      ; fail
 
-/**
- * Pretty-printing of paths
- */
+  StoreEntry =
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "StoreEntry", "31,2,34,59")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "32,5,34,59")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "32,5,32,26")
+       ; ?PP-Entry(path, value))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "33,7,34,59")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "33,7,33,61")
+       ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "33,8,33,16") ; table-put)> ( "pp-table"
+                                                                                                 , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "33,33,33,44") ; mk-key-arity>
+                                                                                                 , (path, value)
+                                                                                                 ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "34,7,34,59")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "34,8,34,27")
+        ; notify(
+            s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "34,15,34,26")
+            ; !"storing: "
+          ))> ( <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "34,32,34,45") ; path-to-string> path
+              , value
+              )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "StoreEntry", "31,2,34,59")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "StoreEntry", "31,2,34,59")
+      ; fail
+
+  StoreEntryIfNotExists =
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "StoreEntryIfNotExists", "36,2,40,6")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "37,4,40,6")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "37,4,37,27")
+       ; ?PP-Entry(path, value))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "38,8,39,17")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "38,8,38,54")
+       ; where(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "38,14,38,53")
+               ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "38,15,38,23") ; table-get)> ( "pp-table"
+                                                                                                          , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "38,40,38,51") ; mk-key-arity>
+                                                                                                          ))
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "39,8,39,17") ; StoreEntry)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "StoreEntryIfNotExists", "36,2,40,6")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "StoreEntryIfNotExists", "36,2,40,6")
+      ; fail
+
+
 strategies
-
-  /**
-   * @type Path -> String
-   */
-  path-to-string = 
-    ?Path1(<id>)
-
-  /**
-   * @type Path -> String
-   */
   path-to-string =
-    ?Path( s1, s2 )
-    ; < map( \ selector(a,b) -> [".", <int-to-string>a,":", b] \ )
-      ; concat
-      > s2 => s3
-    ; <concat-strings> [s1 | s3]
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "path-to-string", "50,2,51,15")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "51,4,51,15")
+    ; ?Path1(
+         <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "51,12,51,13") ; id>
+       )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "path-to-string", "50,2,51,15")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "path-to-string", "50,2,51,15")
+      ; fail
 
-/**
- * Key of a pp entry.
- */
+  path-to-string =
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "path-to-string", "56,2,61,31")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "57,4,61,31")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "57,4,57,18")
+       ; ?Path(s1, s2))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,6,61,31")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,6,60,15")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,6,60,9")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,8,59,13")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,8,58,65")
+                 ; map(
+                     s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,13,58,63")
+                     ; \ selector(a, b) -> [ "."
+                                           , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "58,39,58,51") ; int-to-string> a
+                                           , ":"
+                                           , b
+                                           ] \
+                   ))
+              ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "59,8,59,13")
+              ; concat)> s2) => s3)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "61,6,61,31")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "61,7,61,20") ; concat-strings)> [s1|s3]
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "path-to-string", "56,2,61,31")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "path-to-string", "56,2,61,31")
+      ; fail
+
+
 strategies
-
-  /**
-   * @type PP-Entry -> Key
-   */
   mk-key-arity :
-    PP-Entry(Path1(s), value) -> (arity, [s])
-    where
-      <arity-of-template> value => arity
+    PP-Entry(Path1(s), value) -> <r-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "71,2,74,39")> (arity, [s])
+    where r-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "71,2,74,39")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "71,2,74,39")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "74,6,74,39")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "74,6,74,30")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "74,7,74,23") ; arity-of-template)> value) => arity
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "71,2,74,39")
+             ; fail
 
   mk-key-arity :
-    PP-Entry(Path(s1, s2), value) -> <reverse> [s1 | xs]
-    where
-      <map(?selector(<id>, _))> s2 =>  xs
+    PP-Entry(Path(s1, s2), value) -> <r-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "76,2,79,40")> <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "77,38,77,44") ; reverse> [s1|xs]
+    where r-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "76,2,79,40")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "76,2,79,40")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "79,6,79,40")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "79,6,79,33")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "79,7,79,29")
+                 ; map(
+                     s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "79,11,79,28")
+                     ; ?selector(
+                          <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "79,22,79,23") ; id>
+                        , _
+                        )
+                   ))> s2) => xs
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "mk-key-arity", "76,2,79,40")
+             ; fail
 
-  /**
-   * Determines the arity of a template by collecting the Arg nodes.
-   *
-   * @type BOX -> Int
-   */
   arity-of-template =
-    collect(Arg(id)); length
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "arity-of-template", "86,2,87,27")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "87,4,87,27")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "87,4,87,19")
+       ; collect(
+           s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "87,12,87,18")
+           ; Arg(
+               s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "87,16,87,17") ; id
+             )
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "87,22,87,27")
+    ; length
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "arity-of-template", "86,2,87,27")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "arity-of-template", "86,2,87,27")
+      ; fail
 
-/**
- * Desguaring of pp entries
- */
+
 strategies
-  
   makePPEntry =
-    topdown( try(MakePPTerm ) )
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "makePPEntry", "94,2,95,30")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "95,4,95,30")
+    ; topdown(
+        s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "95,13,95,28")
+        ; try(
+            s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "95,17,95,26") ; MakePPTerm
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "makePPEntry", "94,2,95,30")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "makePPEntry", "94,2,95,30")
+      ; fail
 
   MakePPTerm =
-      Arg(string-to-int)
-    + Arg2(string-to-int, string-to-int)
-    + SOpt(id, id)
-    + S(un-double-quote; unescape)
-    + selector(string-to-int, id)
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "MakePPTerm", "97,2,102,32")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "98,6,102,32")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "98,6,98,23")
+       ; Arg(
+           s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "98,10,98,22") ; string-to-int
+         )
+       + s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "99,6,102,32")
+         ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "99,6,99,39")
+            ; Arg2(
+                s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "99,11,99,23") ; string-to-int
+              , s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "99,26,99,38") ; string-to-int
+              )
+            + s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "100,6,102,32")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "100,6,100,17")
+                 ; SOpt(
+                     s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "100,11,100,12") ; id
+                   , s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "100,15,100,16") ; id
+                   )
+                 + s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "101,6,102,32")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "101,6,101,33")
+                      ; S(
+                          s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "101,8,101,32")
+                          ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "101,8,101,22") ; un-double-quote)
+                          ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "101,25,101,32")
+                          ; unescape
+                        )
+                      + s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "102,6,102,32")
+                        ; selector(
+                            s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "102,15,102,27") ; string-to-int
+                          , s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "102,30,102,31") ; id
+                          )))))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "MakePPTerm", "97,2,102,32")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "MakePPTerm", "97,2,102,32")
+      ; fail
 
-/**
- * Access to the pp table
- */
+
 strategies
-
   pp-table-get =
-     ?key
-     ; <table-get> ("pp-table", key )
-     /* ; where(
-         <path-to-string> path
-         ; notify(!"obtaining: " )
-       ) */
-  
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "pp-table-get", "109,2,111,36")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "110,5,111,36")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "110,5,110,8") ; ?key)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "111,7,111,36")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "111,8,111,16") ; table-get)> ("pp-table", key)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "pp-table-get", "109,2,111,36")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "pp-table-get", "109,2,111,36")
+      ; fail
+
   try-pp-table-get =
-    pp-table-get 
-    <+ log(|Error(),<concat-strings>["No pp entry found for: ",<write-to-string>]); fail
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "try-pp-table-get", "117,2,119,87")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "118,4,119,87")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "118,4,118,15") ; pp-table-get
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "119,7,119,87")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "119,7,119,81")
+             ; log(
+               | Error()
+               , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "119,21,119,34") ; concat-strings> [ "No pp entry found for: "
+                                                                                                               , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "119,64,119,78") ; write-to-string>
+                                                                                                               ]
+               ))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "119,84,119,87")
+          ; fail)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "try-pp-table-get", "117,2,119,87")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "try-pp-table-get", "117,2,119,87")
+      ; fail
 
   try-pp-table-get(|tbl) =
-    ?key
-    ; ( <hashtable-get(|key)> tbl
-        <+ log(|Error(),<concat-strings>["No pp entry found for: ",<write-to-string> key])
-           ; fail)
-  
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "try-pp-table-get", "121,2,125,17")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "122,4,125,17")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "122,4,122,7") ; ?key)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "123,8,125,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "123,8,123,32")
+       ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "123,9,123,27")
+           ; hashtable-get(|key))> tbl
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "124,11,125,16")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "124,11,124,89")
+             ; log(
+               | Error()
+               , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "124,25,124,38") ; concat-strings> [ "No pp entry found for: "
+                                                                                                               , <s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "124,68,124,82") ; write-to-string> key
+                                                                                                               ]
+               ))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "125,13,125,16")
+          ; fail)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "try-pp-table-get", "121,2,125,17")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "try-pp-table-get", "121,2,125,17")
+      ; fail
+
   pp-table-put =
-     ?(key, value)
-     ; !key
-     ; where(path-to-string; notify( !"storing: "))
-     ; <table-put> ("pp-table", key, value)
+    s-enter(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "pp-table-put", "127,2,131,42")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "128,5,131,42")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "128,5,128,17")
+       ; ?(key, value))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "129,7,131,42")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "129,7,129,10") ; !key)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "130,7,131,42")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "130,7,130,50")
+       ; where(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "130,13,130,49")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "130,13,130,26") ; path-to-string)
+               ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "130,29,130,49")
+               ; notify(
+                   s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "130,37,130,48")
+                   ; !"storing: "
+                 )))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "131,7,131,42")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "131,8,131,16") ; table-put)> ("pp-table", key, value)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "pp-table-put", "127,2,131,42")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/pp-tables-io2.str", "pp-table-put", "127,2,131,42")
+      ; fail

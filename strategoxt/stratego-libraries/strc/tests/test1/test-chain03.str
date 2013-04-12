@@ -1,13 +1,37 @@
 module test-chain03
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
 
+
 strategies
-
   main =
-      !"Foo" => op1
-    ; !"Bar" => op2
-    ; rules(Foo : (op1#(_), op2#(_)) -> ())
-    ; <chain-Foo> ("Foo"#([]), "Bar"#([]))
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "main", "7,2,12,8")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "8,6,12,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "8,6,8,18")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "8,6,8,11")
+          ; !"Foo") => op1)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "9,6,12,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "9,6,9,18")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "9,6,9,11")
+          ; !"Bar") => op2)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "10,6,12,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "10,6,10,42")
+       ; rules (
+           Foo :
+             (op1#(_), op2#(_)) -> ()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "11,6,12,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "11,6,11,41")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "11,7,11,15") ; chain-Foo)> ( "Foo"#([])
+                                                                                                                  , "Bar"#([])
+                                                                                                                  ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "12,6,12,8")
     ; ?()
-
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "main", "7,2,12,8")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test-chain03.str", "main", "7,2,12,8")
+      ; fail

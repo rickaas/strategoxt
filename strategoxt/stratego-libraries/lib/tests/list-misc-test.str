@@ -1,194 +1,605 @@
 module list-misc-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
   main-list-misc-test =
-    test-suite(!"list-misc-test",
-	copy-test;
-	number-test;
-	flatten-test;
-	init-last-test;
-	take-test;
-	drop-test;
-  trim-test
-    )
-
-  copy-test = 
-    apply-test(!"copy-test"
-	, copy
-	, !(4, "a")
-	, !["a", "a", "a", "a"]
-	)
-
-
-  number-test = 
-    apply-test(!"number-test"
-	, number(id)
-	, !["a", "b", "c", "d"]
-	, ![("a",0),("b",1),("c",2),("d",3)]
-	)
-
-  init-last-test = 
-      apply-test(!"init"
-      , init
-      , ![1, 2, 3, 4]
-      , ![1, 2, 3]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "main-list-misc-test", "6,2,15,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "7,4,15,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "7,15,7,31")
+        ; !"list-misc-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "8,1,14,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "8,1,8,9") ; copy-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "9,1,14,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "9,1,9,11") ; number-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "10,1,14,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "10,1,10,12") ; flatten-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "11,1,14,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "11,1,11,14") ; init-last-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "12,1,14,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "12,1,12,9") ; take-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "13,1,14,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "13,1,13,9") ; drop-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "14,2,14,10")
+        ; trim-test
       )
-    ; apply-test(!"empty init"
-      , init
-      , ![1]
-      , ![]
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "main-list-misc-test", "6,2,15,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "main-list-misc-test", "6,2,15,4")
+      ; fail
+
+  copy-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "copy-test", "17,2,22,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "18,4,22,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "18,15,18,26")
+        ; !"copy-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "19,3,19,6") ; copy
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "20,3,20,11")
+        ; !(4, "a")
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "21,3,21,23")
+        ; !["a", "a", "a", "a"]
       )
-    ; apply-test(!"split-last"
-      , split-last
-      , ![1, 2, 3, 4]
-      , !([1, 2, 3], 4)
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "copy-test", "17,2,22,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "copy-test", "17,2,22,1")
+      ; fail
+
+  number-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "number-test", "25,2,30,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "26,4,30,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "26,15,26,28")
+        ; !"number-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "27,3,27,12")
+        ; number(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "27,10,27,11") ; id
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "28,3,28,23")
+        ; !["a", "b", "c", "d"]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "29,3,29,36")
+        ; ![ ("a", 0)
+           , ("b", 1)
+           , ("c", 2)
+           , ("d", 3)
+           ]
       )
-    ; apply-test(!"split-last"
-      , split-last
-      , ![1]
-      , !([], 1)
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "number-test", "25,2,30,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "number-test", "25,2,30,1")
+      ; fail
+
+  init-last-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "init-last-test", "32,2,52,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "33,6,52,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "33,6,37,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "33,17,33,23")
+           ; !"init"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "34,8,34,11") ; init
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "35,8,35,20")
+           ; ![1, 2, 3, 4]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "36,8,36,17")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "38,6,52,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "38,6,42,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "38,17,38,29")
+           ; !"empty init"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "39,8,39,11") ; init
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "40,8,40,11")
+           ; ![1]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "41,8,41,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "43,6,52,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "43,6,47,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "43,17,43,29")
+           ; !"split-last"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "44,8,44,17") ; split-last
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "45,8,45,20")
+           ; ![1, 2, 3, 4]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "46,8,46,22")
+           ; !( [1, 2, 3]
+              , 4
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "48,6,52,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "48,17,48,29")
+        ; !"split-last"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "49,8,49,17") ; split-last
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "50,8,50,11")
+        ; ![1]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "51,8,51,15")
+        ; !([], 1)
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "init-last-test", "32,2,52,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "init-last-test", "32,2,52,6")
+      ; fail
 
   flatten-test =
-      apply-test(!"flatten-test 1", flatten-list
-      , !["a",["b",["c","d"]],"e"]
-      , !["a","b","c","d","e"]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "flatten-test", "54,2,81,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "55,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "55,6,58,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "55,17,55,33")
+           ; !"flatten-test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "55,36,55,47") ; flatten-list
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "56,8,56,33")
+           ; ![ "a"
+              , ["b", ["c", "d"]]
+              , "e"
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "57,8,57,29")
+           ; ![ "a"
+              , "b"
+              , "c"
+              , "d"
+              , "e"
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "59,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "59,6,62,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "59,17,59,33")
+           ; !"flatten-test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "59,36,59,47") ; flatten-list
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "60,8,60,26")
+           ; ![ "a"
+              , ["b", []]
+              , "e"
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "61,8,61,22")
+           ; !["a", "b", "e"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "63,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "63,6,66,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "63,17,63,33")
+           ; !"flatten-test 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "63,36,63,47") ; flatten-list
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "64,8,64,10")
+           ; ![]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "65,8,65,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "67,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "67,6,70,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "67,17,67,33")
+           ; !"flatten-test 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "67,36,67,47") ; flatten-list
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "68,8,68,12")
+           ; ![[]]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "69,8,69,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "71,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "71,6,74,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "71,17,71,33")
+           ; !"flatten-test 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "71,36,71,47") ; flatten-list
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "72,8,72,23")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "73,8,73,23")
+           ; !["a", "b", "c"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "75,6,81,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "75,6,78,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "75,17,75,33")
+           ; !"flatten-test 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "75,36,75,47") ; flatten-list
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "76,8,76,40")
+           ; ![ "a"
+              , [ ("b", [1, 2])
+                , "d"
+                ]
+              , "c"
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "77,8,77,38")
+           ; ![ "a"
+              , ("b", [1, 2])
+              , "d"
+              , "c"
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "79,6,81,6")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "79,21,79,37")
+        ; !"flatten-test 7"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "79,40,79,51") ; flatten-list
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "80,8,80,11")
+        ; !"a"
       )
-    ; apply-test(!"flatten-test 2", flatten-list
-      , !["a",["b",[]],"e"]
-      , !["a","b", "e"]
-      )
-    ; apply-test(!"flatten-test 3", flatten-list
-      , ![]
-      , ![]
-      )
-    ; apply-test(!"flatten-test 4", flatten-list
-      , ![[]]
-      , ![]
-      )
-    ; apply-test(!"flatten-test 5", flatten-list
-      , !["a", "b", "c"]
-      , !["a", "b", "c"]
-      )
-    ; apply-test(!"flatten-test 6", flatten-list
-      , !["a", [("b", [1, 2]), "d"], "c"]
-      , !["a", ("b", [1, 2]), "d", "c"]
-      )
-    ; apply-and-fail(!"flatten-test 7", flatten-list
-      , !"a"
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "flatten-test", "54,2,81,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "flatten-test", "54,2,81,6")
+      ; fail
 
-  take-test = id
-    ; apply-test(!"take 3 of a list of more than 3 elements"
-      , take(!3)
-      , !["a","b","c","d","e"]
-      , !["a","b","c"]
+  take-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "take-test", "83,2,149,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "83,14,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "83,14,83,15") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "84,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "84,6,88,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "84,17,84,59")
+           ; !"take 3 of a list of more than 3 elements"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "85,8,85,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "85,13,85,14")
+               ; !3
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "86,8,86,29")
+           ; ![ "a"
+              , "b"
+              , "c"
+              , "d"
+              , "e"
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "87,8,87,21")
+           ; !["a", "b", "c"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "89,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "89,6,93,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "89,17,89,48")
+           ; !"take 0 returns the empty list"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "90,8,90,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "90,13,90,14")
+               ; !0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "91,8,91,21")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "92,8,92,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "94,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "94,6,98,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "94,17,94,51")
+           ; !"take 1 returns the first element"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "95,8,95,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "95,13,95,14")
+               ; !1
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "96,8,96,21")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "97,8,97,13")
+           ; !["a"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "99,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "99,6,103,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "99,17,99,51")
+           ; !"take 1 returns the first element"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "100,8,100,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "100,13,100,14")
+               ; !1
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "101,8,101,13")
+           ; !["a"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "102,8,102,13")
+           ; !["a"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "104,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "104,6,108,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "104,17,104,66")
+           ; !"take 3 of a list of 3 elements returns the list"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "105,8,105,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "105,13,105,14")
+               ; !3
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "106,8,106,21")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "107,8,107,21")
+           ; !["a", "b", "c"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "109,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "109,6,112,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "109,21,109,61")
+           ; !"take 3 fails on a list of two elements"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "110,8,110,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "110,13,110,14")
+               ; !3
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "111,8,111,17")
+           ; !["a", "b"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "113,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "113,6,116,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "113,21,113,53")
+           ; !"take 3 fails on the empty list"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "114,8,114,15")
+           ; take(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "114,13,114,14")
+               ; !3
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "115,8,115,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "117,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "117,6,121,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "117,17,117,59")
+           ; !"take 3 of a list of more than 3 elements"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "118,8,118,15")
+           ; take(|3)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "119,8,119,29")
+           ; ![ "a"
+              , "b"
+              , "c"
+              , "d"
+              , "e"
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "120,8,120,21")
+           ; !["a", "b", "c"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "122,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "122,6,126,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "122,17,122,48")
+           ; !"take 0 returns the empty list"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "123,8,123,15")
+           ; take(|0)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "124,8,124,21")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "125,8,125,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "127,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "127,6,131,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "127,17,127,51")
+           ; !"take 1 returns the first element"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "128,8,128,15")
+           ; take(|1)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "129,8,129,21")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "130,8,130,13")
+           ; !["a"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "132,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "132,6,136,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "132,17,132,51")
+           ; !"take 1 returns the first element"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "133,8,133,15")
+           ; take(|1)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "134,8,134,13")
+           ; !["a"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "135,8,135,13")
+           ; !["a"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "137,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "137,6,141,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "137,17,137,66")
+           ; !"take 3 of a list of 3 elements returns the list"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "138,8,138,15")
+           ; take(|3)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "139,8,139,21")
+           ; !["a", "b", "c"]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "140,8,140,21")
+           ; !["a", "b", "c"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "142,6,149,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "142,6,145,6")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "142,21,142,61")
+           ; !"take 3 fails on a list of two elements"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "143,8,143,15")
+           ; take(|3)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "144,8,144,17")
+           ; !["a", "b"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "146,6,149,6")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "146,21,146,53")
+        ; !"take 3 fails on the empty list"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "147,8,147,15")
+        ; take(|3)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "148,8,148,10")
+        ; ![]
       )
-    ; apply-test(!"take 0 returns the empty list"
-      , take(!0)
-      , !["a","b","c"]
-      , ![]
-      )
-    ; apply-test(!"take 1 returns the first element"
-      , take(!1)
-      , !["a","b","c"]
-      , !["a"]
-      )
-    ; apply-test(!"take 1 returns the first element"
-      , take(!1)
-      , !["a"]
-      , !["a"]
-      )
-    ; apply-test(!"take 3 of a list of 3 elements returns the list"
-      , take(!3)
-      , !["a","b","c"]
-      , !["a","b","c"]
-      )
-    ; apply-and-fail(!"take 3 fails on a list of two elements"
-      , take(!3)
-      , !["a","b"]
-      )
-    ; apply-and-fail(!"take 3 fails on the empty list"
-      , take(!3)
-      , ![]
-      )
-    ; apply-test(!"take 3 of a list of more than 3 elements"
-      , take(|3)
-      , !["a","b","c","d","e"]
-      , !["a","b","c"]
-      )
-    ; apply-test(!"take 0 returns the empty list"
-      , take(|0)
-      , !["a","b","c"]
-      , ![]
-      )
-    ; apply-test(!"take 1 returns the first element"
-      , take(|1)
-      , !["a","b","c"]
-      , !["a"]
-      )
-    ; apply-test(!"take 1 returns the first element"
-      , take(|1)
-      , !["a"]
-      , !["a"]
-      )
-    ; apply-test(!"take 3 of a list of 3 elements returns the list"
-      , take(|3)
-      , !["a","b","c"]
-      , !["a","b","c"]
-      )
-    ; apply-and-fail(!"take 3 fails on a list of two elements"
-      , take(|3)
-      , !["a","b"]
-      )
-    ; apply-and-fail(!"take 3 fails on the empty list"
-      , take(|3)
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "take-test", "83,2,149,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "take-test", "83,2,149,6")
+      ; fail
 
   drop-test =
-    apply-test(!"drop-test"
-        , drop(!3)
-	, !["a","b","c","d","e"]
-	, !["d","e"]
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "drop-test", "151,2,156,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "152,4,156,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "152,15,152,26")
+        ; !"drop-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "153,10,153,17")
+        ; drop(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "153,15,153,16")
+            ; !3
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "154,3,154,24")
+        ; ![ "a"
+           , "b"
+           , "c"
+           , "d"
+           , "e"
+           ]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "155,3,155,12")
+        ; !["d", "e"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "drop-test", "151,2,156,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "drop-test", "151,2,156,4")
+      ; fail
 
   trim-test =
-      apply-test(!"ltrim-test 1", ltrim(?0)
-      , ![0, 0, 0, 1, 2, 3, 0]
-      , ![1, 2, 3, 0]
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "trim-test", "158,2,194,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "159,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "159,6,162,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "159,17,159,31")
+           ; !"ltrim-test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "159,34,159,42")
+           ; ltrim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "159,40,159,41")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "160,8,160,29")
+           ; ![ 0
+              , 0
+              , 0
+              , 1
+              , 2
+              , 3
+              , 0
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "161,8,161,20")
+           ; ![1, 2, 3, 0]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "163,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "163,6,166,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "163,17,163,31")
+           ; !"ltrim-test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "163,34,163,42")
+           ; ltrim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "163,40,163,41")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "164,8,164,20")
+           ; ![1, 2, 3, 0]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "165,8,165,20")
+           ; ![1, 2, 3, 0]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "167,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "167,6,170,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "167,17,167,31")
+           ; !"ltrim-test 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "167,34,167,42")
+           ; ltrim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "167,40,167,41")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "168,8,168,10")
+           ; ![]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "169,8,169,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "171,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "171,6,174,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "171,17,171,31")
+           ; !"rtrim-test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "171,34,171,42")
+           ; rtrim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "171,40,171,41")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "172,8,172,23")
+           ; ![ 0
+              , 1
+              , 2
+              , 3
+              , 0
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "173,8,173,20")
+           ; ![0, 1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "175,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "175,6,178,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "175,17,175,31")
+           ; !"rtrim-test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "175,34,175,42")
+           ; rtrim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "175,40,175,41")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "176,8,176,17")
+           ; ![1, 2, 3]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "177,8,177,17")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "179,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "179,6,182,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "179,17,179,31")
+           ; !"rtrim-test 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "179,34,179,42")
+           ; rtrim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "179,40,179,41")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "180,8,180,10")
+           ; ![]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "181,8,181,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "183,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "183,6,186,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "183,17,183,30")
+           ; !"trim-test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "183,33,183,40")
+           ; trim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "183,38,183,39")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "184,8,184,23")
+           ; ![ 0
+              , 1
+              , 2
+              , 3
+              , 0
+              ]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "185,8,185,17")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "187,6,194,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "187,6,190,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "187,17,187,30")
+           ; !"trim-test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "187,33,187,40")
+           ; trim(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "187,38,187,39")
+               ; ?0
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "188,8,188,17")
+           ; ![1, 2, 3]
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "189,8,189,17")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "191,6,194,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "191,17,191,30")
+        ; !"trim-test 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "191,33,191,40")
+        ; trim(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "191,38,191,39")
+            ; ?0
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "192,8,192,10")
+        ; ![]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "193,8,193,10")
+        ; ![]
       )
-    ; apply-test(!"ltrim-test 2", ltrim(?0)
-      , ![1, 2, 3, 0]
-      , ![1, 2, 3, 0]
-      )
-    ; apply-test(!"ltrim-test 3", ltrim(?0)
-      , ![]
-      , ![]
-      )
-    ; apply-test(!"rtrim-test 1", rtrim(?0)
-      , ![0, 1, 2, 3, 0]
-      , ![0, 1, 2, 3]
-      )
-    ; apply-test(!"rtrim-test 2", rtrim(?0)
-      , ![1, 2, 3]
-      , ![1, 2, 3]
-      )
-    ; apply-test(!"rtrim-test 3", rtrim(?0)
-      , ![]
-      , ![]
-      )
-    ; apply-test(!"trim-test 1", trim(?0)
-      , ![0, 1, 2, 3, 0]
-      , ![1, 2, 3]
-      )
-    ; apply-test(!"trim-test 2", trim(?0)
-      , ![1, 2, 3]
-      , ![1, 2, 3]
-      )
-    ; apply-test(!"trim-test 3", trim(?0)
-      , ![]
-      , ![]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "trim-test", "158,2,194,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-misc-test.str", "trim-test", "158,2,194,6")
+      ; fail

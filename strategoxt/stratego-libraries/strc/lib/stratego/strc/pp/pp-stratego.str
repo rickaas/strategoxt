@@ -1,79 +1,228 @@
 module pp-stratego
 
-imports 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc 
+  libstratego-xtc
   stratego/strc/pp/stratego-parenthesize
+
 
 signature
   constructors
     Comment : a * List(String) -> a
 
-strategies
 
+strategies
   io-pp-stratego =
-    xtc-io-wrap(
-      pp-stratego-options <+ io-options
-    ,
-      xtc-pp-and-parse-stratego
-    )
-  
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "io-pp-stratego", "14,2,19,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "15,4,19,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "16,6,16,38")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "16,6,16,24") ; pp-stratego-options
+           <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "16,29,16,38") ; io-options)
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "18,6,18,30") ; xtc-pp-and-parse-stratego
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "io-pp-stratego", "14,2,19,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "io-pp-stratego", "14,2,19,4")
+      ; fail
+
   xtc-pp-and-parse-stratego =
-    if not(<get-config> "--abstract") then
-      xtc-transform(!"parse-stratego",!["-b" | <pass-includes> ])
-    end
-  ; read-from
-  ; with(
-      file   := <xtc-new-file>
-    ; stream := <open-stream> (file, "w")
-    )
-  ; finally(
-      pp-stratego-stream(|stream), <fclose> stream
-    )
-  ; !FILE(file)
-  
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "xtc-pp-and-parse-stratego", "21,2,33,14")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "22,4,33,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "22,4,24,6")
+       ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "22,7,22,36")
+            ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "22,11,22,35")
+                  ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "22,12,22,21") ; get-config)> "--abstract") then
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "23,6,23,64")
+           ; xtc-transform(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "23,20,23,36")
+               ; !"parse-stratego"
+             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "23,38,23,63")
+               ; !["-b"|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "23,48,23,60") ; pass-includes>]
+             )
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "25,4,33,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "25,4,25,12") ; read-from)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "26,4,33,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "26,4,29,4")
+       ; with(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "27,6,28,40")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "27,6,27,29")
+                 ; file := <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "27,17,27,28") ; xtc-new-file>)
+              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "28,6,28,40")
+              ; stream := <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "28,17,28,27") ; open-stream> (file, "w")))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "30,4,33,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "30,4,32,4")
+       ; finally(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "31,6,31,32")
+           ; pp-stratego-stream(|stream)
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "31,35,31,49")
+           ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "31,36,31,41") ; fclose)> stream
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "33,4,33,14")
+    ; !FILE(file)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "xtc-pp-and-parse-stratego", "21,2,33,14")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "xtc-pp-and-parse-stratego", "21,2,33,14")
+      ; fail
+
   pp-stratego-string =
-      pp-stratego-box
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-string", "35,2,37,25")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "36,6,37,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "36,6,36,20") ; pp-stratego-box)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "37,6,37,25")
     ; box2text-string(|80)
-  
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-string", "35,2,37,25")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-string", "35,2,37,25")
+      ; fail
+
   pp-stratego-stream(|stream) =
-      pp-stratego-box
-    ; box2text-stream(|80, stream)
-    ; <fputs> ("\n", stream)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-stream", "39,2,43,12")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "40,6,43,12")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "40,6,40,20") ; pp-stratego-box)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "41,6,43,12")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "41,6,41,33")
+       ; box2text-stream(|80, stream))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "42,6,43,12")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "42,6,42,27")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "42,7,42,11") ; fputs)> ("\n", stream))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "43,6,43,12")
     ; !stream
-  
-  pp-stratego-box = 
-    Stratego-Ensugar
-    //; try(where(<get-config> "--annotations")
-    //      ; xtc-transform(!"annos-to-term"))
-    ; parenthesize-Stratego
-    ; topdown(try(\ Parenthetical(s) -> ParenStrat(s) \ ))
-    ; try(where(<get-config> "--annotations"); annos-as-comment)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-stream", "39,2,43,12")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-stream", "39,2,43,12")
+      ; fail
+
+  pp-stratego-box =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-box", "45,2,52,18")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "46,4,52,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "46,4,46,19") ; Stratego-Ensugar)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "49,6,52,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "49,6,49,26") ; parenthesize-Stratego)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "50,6,52,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "50,6,50,57")
+       ; topdown(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "50,14,50,56")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "50,18,50,54")
+               ; \ Parenthetical(s) -> ParenStrat(s) \
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,6,52,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,6,51,63")
+       ; try(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,10,51,62")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,10,51,44")
+              ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,16,51,43")
+                      ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,17,51,26") ; get-config)> "--annotations"))
+           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "51,47,51,62")
+           ; annos-as-comment
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "52,6,52,18")
     ; stratego2abox
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-box", "45,2,52,18")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-box", "45,2,52,18")
+      ; fail
 
   pp-stratego-options =
-    Option("-a" + "--abstract", where(<set-config>("--abstract", ())),
-              !"-a | --abstract  source is abstract syntax")
-
-  + Option("--annotations", where(<set-config>("--annotations", ())),
-              !"--annotations    print annotations on abstract syntax")
-
-  + ArgOption("-I" + "--Include", where(<extend-config>("-I", [<id>])),
-          !"-I p|--Include p   include modules from directory p") 
-
-  + ArgOption("-p" , where(<set-config>("-p", <id>)),
-          !"-p file   use pptable in file instead of Stratego-pretty.pp")
-
-  + ArgOption("-la", id,
-              !"-la <name>         Ignored (for command-line compatibility with strc).")
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-options", "54,2,68,87")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,4,68,87")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,4,56,59")
+       ; Option(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,11,55,29")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,11,55,14") ; "-a"
+              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,18,55,29") ; "--abstract")
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,32,55,68")
+           ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,38,55,67")
+                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "55,39,55,48") ; set-config)> ("--abstract", ()))
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "56,14,56,58")
+           ; !"-a | --abstract  source is abstract syntax"
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "58,4,68,87")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "58,4,59,70")
+            ; Option(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "58,11,58,25") ; "--annotations"
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "58,28,58,67")
+                ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "58,34,58,66")
+                        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "58,35,58,44") ; set-config)> ("--annotations", ()))
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "59,14,59,69")
+                ; !"--annotations    print annotations on abstract syntax"
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,4,68,87")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,4,62,64")
+                 ; ArgOption(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,14,61,31")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,14,61,17") ; "-I"
+                        + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,21,61,31") ; "--Include")
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,34,61,69")
+                     ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,40,61,68")
+                             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,41,61,53") ; extend-config)> ( "-I"
+                                                                                                                                                     , [<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "61,64,61,65") ; id>]
+                                                                                                                                                     ))
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "62,10,62,63")
+                     ; !"-I p|--Include p   include modules from directory p"
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,4,68,87")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,4,65,72")
+                      ; ArgOption(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,14,64,17") ; "-p"
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,21,64,51")
+                          ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,27,64,50")
+                                  ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,28,64,37") ; set-config)> ( "-p"
+                                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "64,47,64,48") ; id>
+                                                                                                                                                       ))
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "65,10,65,71")
+                          ; !"-p file   use pptable in file instead of Stratego-pretty.pp"
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "67,4,68,87")
+                        ; ArgOption(
+                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "67,14,67,18") ; "-la"
+                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "67,21,67,22") ; id
+                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "68,14,68,86")
+                            ; !"-la <name>         Ignored (for command-line compatibility with strc)."
+                          )))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-options", "54,2,68,87")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pp-stratego-options", "54,2,68,87")
+      ; fail
 
   pass-includes =
-    <get-config<+![]> "-I" ; foldr(id, conc, !["-I", <id>])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pass-includes", "70,2,71,58")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,4,71,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,4,71,25")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,5,71,19")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,5,71,14") ; get-config
+              <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,17,71,19")
+                 ; ![]))> "-I")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,29,71,58")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,35,71,36") ; id
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,39,71,42") ; conc
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,45,71,57")
+        ; ![ "-I"
+           , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "71,54,71,55") ; id>
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pass-includes", "70,2,71,58")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "pass-includes", "70,2,71,58")
+      ; fail
+
 
 strategies
-
   annos-as-comment =
-    bottomup(try(anno-as-comment))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "annos-as-comment", "75,2,76,33")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "76,4,76,33")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "76,13,76,32")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "76,17,76,31") ; anno-as-comment
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "annos-as-comment", "75,2,76,33")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "annos-as-comment", "75,2,76,33")
+      ; fail
 
   anno-as-comment :
-    x{t,t*} -> Comment(x, [t,t*])
+    x{t, t*} -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "anno-as-comment", "78,2,79,32")> Comment(x, [t, t*])
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "anno-as-comment", "78,2,79,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/pp/pp-stratego.str", "anno-as-comment", "78,2,79,32")
+             ; fail

@@ -1,6 +1,23 @@
 module test16
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-  main = <map(\a -> a with ?b\)> [1,2,3]
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "main", "6,2,6,39")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "6,9,6,39")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "6,10,6,30")
+        ; map(
+            s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "6,14,6,29")
+            ; \ a -> a
+                with s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "6,27,6,28") ; ?b \
+          ))> [1, 2, 3]
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "main", "6,2,6,39")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test16.str", "main", "6,2,6,39")
+      ; fail

@@ -1,10 +1,39 @@
 module pp-java5-to-string
 
-imports libjava-front libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libjava-front
+  libstratego-lib
+
 
 rules
 
   main-pp_java5_to_string =
-    !CompilationUnit(None,[],[ClassDec(ClassDecHead([],Id("Foo"),None,None,None),ClassBody([]))])
-  ; pp-java5-to-string
-  ; is-string
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "main-pp_java5_to_string", "7,2,10,12")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "8,4,10,12")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "8,4,8,96")
+       ; !CompilationUnit(
+            None
+          , []
+          , [ ClassDec(
+                ClassDecHead(
+                  []
+                , Id("Foo")
+                , None
+                , None
+                , None
+                )
+              , ClassBody([])
+              )
+            ]
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "9,4,10,12")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "9,4,9,21") ; pp-java5-to-string)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "10,4,10,12")
+    ; is-string
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "main-pp_java5_to_string", "7,2,10,12")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/pp_java5_to_string.str", "main-pp_java5_to_string", "7,2,10,12")
+      ; fail

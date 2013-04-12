@@ -1,6 +1,22 @@
 module test40
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 strategies
-
-  main = foldr(id, conc, explode-string)
-
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "main", "5,2,5,39")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "5,9,5,39")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "5,15,5,16") ; id
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "5,19,5,22") ; conc
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "5,25,5,38") ; explode-string
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "main", "5,2,5,39")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test40.str", "main", "5,2,5,39")
+      ; fail

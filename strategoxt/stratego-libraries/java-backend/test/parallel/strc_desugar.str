@@ -1,26 +1,68 @@
 module strc_desugar
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-parallel
   libstrc
 
+
 strategies
-  
   main-strc_desugar =
-    <set-config> ("--statistics", 1);
-    <set-config> ("-O", 3);
-    // import-term(libstrc.ptree);
-    import-term(webdsl-generator.ptree);
-    log-timed(
-      many-runs(parallel-unordered(stratego-desugar))
-    | "desugared", 0
-    );
-    log-timed(
-      many-runs(parallel-unordered(strc-optimize))
-    | "optimized", 0
-    );
-    !()
- 
- many-runs(s) =
-   ?t; repeat(<s> t|2)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "main-strc_desugar", "10,2,23,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "11,4,23,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "11,4,11,35")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "11,5,11,14") ; set-config)> ("--statistics", 1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "12,4,23,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "12,4,12,25")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "12,5,12,14") ; set-config)> ("-O", 3))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "14,4,23,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "14,4,14,38") ; import-term(webdsl-generator.ptree))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "15,4,23,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "15,4,18,4")
+       ; log-timed(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "16,6,16,52")
+           ; many-runs(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "16,16,16,51")
+               ; parallel-unordered(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "16,35,16,50") ; stratego-desugar
+                 )
+             )
+         | "desugared"
+         , 0
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "19,4,23,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "19,4,22,4")
+       ; log-timed(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "20,6,20,49")
+           ; many-runs(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "20,16,20,48")
+               ; parallel-unordered(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "20,35,20,47") ; strc-optimize
+                 )
+             )
+         | "optimized"
+         , 0
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "23,4,23,6")
+    ; !()
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "main-strc_desugar", "10,2,23,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "main-strc_desugar", "10,2,23,6")
+      ; fail
+
+  many-runs(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "many-runs", "25,1,26,21")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "26,3,26,21")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "26,3,26,4") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "26,7,26,21")
+    ; repeat(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "26,14,26,18")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "26,15,26,15") ; s)> t
+      | 2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "many-runs", "25,1,26,21")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/parallel/strc_desugar.str", "many-runs", "25,1,26,21")
+      ; fail

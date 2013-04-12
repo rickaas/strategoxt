@@ -1,17 +1,52 @@
 module foo
-imports libstrategolib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstrategolib
+
+
 strategies
+  main =
+    s-enter(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "main", "5,2,6,19")
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "6,4,6,19")
+    ; (s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "6,4,6,6") ; foo) /Fred\ (s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "6,17,6,19") ; bar)
+    < s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "main", "5,2,6,19")
+    + s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "main", "5,2,6,19")
+      ; fail
 
-  main = 
-    foo / Fred \ bar
-
-  main = 
-    foo / ~"Fred" \ bar
+  main =
+    s-enter(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "main", "8,2,9,22")
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "9,4,9,22")
+    ; (s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "9,4,9,6") ; foo) /~"Fred"\ (s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "9,20,9,22") ; bar)
+    < s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "main", "8,2,9,22")
+    + s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "main", "8,2,9,22")
+      ; fail
 
   foo =
-      rules(Fred : 1 -> 2)
-    ; rules(Fred : 2 -> 3)
+    s-enter(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "foo", "11,2,13,25")
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "12,6,13,25")
+    ; (s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "12,6,12,25")
+       ; rules ( Fred :
+                   1 -> 2 ))
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "13,6,13,25")
+    ; rules ( Fred :
+                2 -> 3 )
+    < s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "foo", "11,2,13,25")
+    + s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "foo", "11,2,13,25")
+      ; fail
 
   bar =
-      rules(Fred : 1 -> 2)
-    ; rules(Fred : 3 -> 3)
+    s-enter(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "bar", "15,2,17,25")
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "16,6,17,25")
+    ; (s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "16,6,16,25")
+       ; rules ( Fred :
+                   1 -> 2 ))
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "17,6,17,25")
+    ; rules ( Fred :
+                3 -> 3 )
+    < s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "bar", "15,2,17,25")
+    + s-exit(|"strategoxt/syntax/stratego-front/test/pp/dynrule-intersection.str", "bar", "15,2,17,25")
+      ; fail

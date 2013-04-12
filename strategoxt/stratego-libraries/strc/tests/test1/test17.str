@@ -1,36 +1,78 @@
 module test17
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     A : Term
     B : Term
     F : Term * Term * Term -> Term
 
-overlays
 
-  F(x,y) = F(x, A, y)
+overlays
+  F ( x, y ) =
+    F(x, A, y)
+
 
 strategies
-
-  main = 
-    test-suite(!"test17",
-	test1
-    )
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "main", "15,2,18,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "16,4,18,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "16,15,16,23")
+        ; !"test17"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "17,1,17,5") ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "main", "15,2,18,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "main", "15,2,18,4")
+      ; fail
 
   test1 =
-    apply-test(!"test1a"
-	, F(!B,!A)
-	, !F(A,A,A)
-	, !F(B,A,A)
-	);
-    apply-test(!"test1b"
-	, ?F(x,y)
-	, !F(A,A,A)
-	, !F(A,A,A)
-	);
-    apply-test(!"test1c"
-	, !F(B,A)
-	, !()
-	, !F(B,A,A)
-	)
-
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "test1", "20,2,35,1")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "21,4,35,1")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "21,4,25,1")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "21,15,21,23")
+           ; !"test1a"
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "22,3,22,10")
+           ; F(
+               s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "22,5,22,6") ; !B
+             , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "22,8,22,9") ; !A
+             )
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "23,3,23,11")
+           ; !F(A, A, A)
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "24,3,24,11")
+           ; !F(B, A, A)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "26,4,35,1")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "26,4,30,1")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "26,15,26,23")
+           ; !"test1b"
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "27,3,27,9")
+           ; ?F(x, y)
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "28,3,28,11")
+           ; !F(A, A, A)
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "29,3,29,11")
+           ; !F(A, A, A)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "31,4,35,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "31,15,31,23")
+        ; !"test1c"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "32,3,32,9")
+        ; !F(B, A)
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "33,3,33,5")
+        ; !()
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "34,3,34,11")
+        ; !F(B, A, A)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "test1", "20,2,35,1")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test17.str", "test1", "20,2,35,1")
+      ; fail

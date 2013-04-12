@@ -1,22 +1,64 @@
 module parallel
-imports process pipe
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  process
+  pipe
+
+
 strategies
-
-  // par(s1, s2) : apply strategies s1 and s2 in parallel to the subject term
-  // and construct the pair (<s1>, <s2>)
-
   par(s1, s2) =
-    where(pipe => p)
-    ; fork({t1: (s1 <+ <exit> 1) => t1
-              ; <stdout-to-pipe> p
-              ; <WriteToTextFile> (stdout, t1)
-              ; <exit> 0})
-    ; ?(pid, t)
-    ; <s2> t => t2
-    ; <read-term-from-pipe> p => t1
-    ; <waitpid> pid 
-    ; (exited + signaled + stopped)
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "par", "8,2,19,14")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "9,4,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "9,4,9,19")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "9,10,9,18")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "9,10,9,13") ; pipe) => p))
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,6,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,6,13,25")
+       ; fork(
+           s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,11,13,24")
+           ; {t1:
+               s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,16,13,23")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,16,10,37")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,17,10,30")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,17,10,18") ; s1
+                        <+ s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,23,10,30")
+                           ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "10,24,10,27") ; exit)> 1)) => t1)
+               ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "11,16,13,23")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "11,16,11,33")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "11,17,11,30") ; stdout-to-pipe)> p)
+               ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "12,16,13,23")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "12,16,12,45")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "12,17,12,31") ; WriteToTextFile)> (stdout, t1))
+               ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "13,16,13,23")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "13,17,13,20") ; exit)> 0
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "14,6,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "14,6,14,14")
+       ; ?(pid, t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "15,6,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "15,6,15,17")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "15,6,15,11")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "15,7,15,8") ; s2)> t) => t2)
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "16,6,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "16,6,16,34")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "16,6,16,28")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "16,7,16,25") ; read-term-from-pipe)> p) => t1)
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "17,6,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "17,6,17,18")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "17,7,17,13") ; waitpid)> pid)
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "18,6,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "18,7,18,33")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "18,7,18,12") ; exited
+          + s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "18,16,18,33")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "18,16,18,23") ; signaled
+               + s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "18,27,18,33") ; stopped)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "19,6,19,14")
     ; !(t1, t2)
-
-  // note failure in s2 will cause trouble: no data written to stdout
-  // what will the behaviour of read-term-from-pipe be?
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "par", "8,2,19,14")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/parallel.str", "par", "8,2,19,14")
+      ; fail

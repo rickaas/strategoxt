@@ -1,5 +1,16 @@
 module test05
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   main =
-    prim("Macro"); ?2
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test05.str", "main", "4,2,5,20")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test05.str", "5,4,5,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test05.str", "5,4,5,16") ; prim("Macro"))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test05.str", "5,19,5,20")
+    ; ?2
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test05.str", "main", "4,2,5,20")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test05.str", "main", "4,2,5,20")
+      ; fail

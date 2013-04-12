@@ -1,12 +1,31 @@
 module parse-stratego-xml-doc
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc strategoxt-xtc-tools
+  libstratego-xtc
+  strategoxt-xtc-tools
+
 
 strategies
-
-  main-parse-stratego-xml-doc=
-    xtc-io-wrap(
-      xtc-sglr(!"Stratego-xml.tbl", !"StrategoModule")
-    ; xtc-implode-asfix
-    )
+  main-parse-stratego-xml-doc =
+    s-enter(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "main-parse-stratego-xml-doc", "8,2,12,4")
+    ; s-step(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "9,4,12,4")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "10,6,11,22")
+        ; (s-step(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "10,6,10,53")
+           ; xtc-sglr(
+               s-step(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "10,15,10,33")
+               ; !"Stratego-xml.tbl"
+             , s-step(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "10,36,10,52")
+               ; !"StrategoModule"
+             ))
+        ; s-step(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "11,6,11,22")
+        ; xtc-implode-asfix
+      )
+    < s-exit(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "main-parse-stratego-xml-doc", "8,2,12,4")
+    + s-exit(|"_cellar/xml-front/trans/str-xml-doc/parse-stratego-xml-doc.str", "main-parse-stratego-xml-doc", "8,2,12,4")
+      ; fail

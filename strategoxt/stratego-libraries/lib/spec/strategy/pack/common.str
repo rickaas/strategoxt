@@ -1,65 +1,110 @@
-/**
- * This module defines generic strategies for packing a
- * set of modules reachable from a root module and for
- * flattening a set of modules into a single program.
- * 
- * Module systems allow the definition of a program to be
- * split into separate units stored in separate files. For
- * languages that do not support separate compilation (such
- * as grammar formalisms) these separate units need to be
- * combined to create the whole program.
- * 
- * Aspects of module packing and flattening
- * 
- * - finding the module associated with the module name
- * - doing something with the module, i.e., adding it to the result
- * - finding the imports in a module
- * - keeping track of which modules have already been inlined
- */
 module strategy/pack/common
-imports 
-  term/string 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  term/string
   strategy/pack/graph
 
+
 rules
 
-  PackInit : root -> (root, (), [])
+  PackInit :
+    root -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "PackInit", "26,2,26,34")> (root, (), [])
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "PackInit", "26,2,26,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "PackInit", "26,2,26,34")
+             ; fail
+
 
 strategies
-
- /**
-  * Packing a module consists of collecting all modules into
-  * a single file.
-  */
-  pack(parser, imp) = 
-    PackInit; 
-    graph-nodes(Fst; parser, get-imports(imp), \ (n,x,xs) -> [x|xs] \ )
+  pack(parser, imp) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "pack", "34,2,36,70")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "35,4,36,70")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "35,4,35,11") ; PackInit)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,4,36,70")
+    ; graph-nodes(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,16,36,26")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,16,36,18") ; Fst)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,21,36,26")
+        ; parser
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,29,36,44")
+        ; get-imports(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,41,36,43") ; imp
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "36,47,36,68")
+        ; \ (n, x, xs) -> [x|xs] \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "pack", "34,2,36,70")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "pack", "34,2,36,70")
+      ; fail
 
   get-imports(imp) =
-    collect(imp); concat
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "get-imports", "38,2,39,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "39,4,39,23")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "39,4,39,15")
+       ; collect(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "39,12,39,14") ; imp
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "39,18,39,23")
+    ; concat
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "get-imports", "38,2,39,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "get-imports", "38,2,39,23")
+      ; fail
+
 
 rules
 
-  WriteMod(getname, write, ext) : 
-    mod -> <write>(<add-extension>(<getname>mod, <ext>()), mod)
+  WriteMod(getname, write, ext) :
+    mod -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "WriteMod", "43,2,44,62")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "44,12,44,16") ; write> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "44,20,44,32") ; add-extension> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "44,36,44,42") ; getname> mod
+                                                                                                                                                                                                                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "44,50,44,52") ; ext> ()
+                                                                                                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                      , mod
+                                                                                                                                                                                                                      )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "WriteMod", "43,2,44,62")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "WriteMod", "43,2,44,62")
+             ; fail
+
 
 strategies
+  unpack(wrapper : ( term -> term ) * term -> term, getname, ext) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "unpack", "52,2,53,51")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "53,4,53,51")
+    ; wrapper(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "53,12,53,50")
+        ; WriteMod(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "53,21,53,27") ; getname
+          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "53,30,53,44") ; WriteToTextFile
+          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "53,47,53,49") ; ext
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "unpack", "52,2,53,51")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "unpack", "52,2,53,51")
+      ; fail
 
- /**
-  * Unpacking is the reverse of packing, i.e., writing each module
-  * in a list of modules to a separate file.
-  */
-  unpack(wrapper: (term -> term) * term -> term, getname, ext) = 
-    wrapper(WriteMod(getname, WriteToTextFile, ext))
 
 strategies
-
- /**
-  * <flatten> (root, mods)| produces a flattened version of the root module.
-  */
-  flatten(imp, nameeq, getcontent) = 
-    \ (root, mods) -> (root, mods, []) \;
-    graph-nodes(lookup(nameeq),
-		get-imports(imp), 
-		\ (_,x,y) -> <conc>(<getcontent>x, y)\ )
-
+  flatten(imp, nameeq, getcontent) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "flatten", "60,2,64,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "61,4,64,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "61,4,61,39")
+       ; \ (root, mods) -> (root, mods, []) \)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "62,4,64,41")
+    ; graph-nodes(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "62,16,62,29")
+        ; lookup(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "62,23,62,28") ; nameeq
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "63,2,63,17")
+        ; get-imports(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "63,14,63,16") ; imp
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "64,2,64,39")
+        ; \ (_, x, y) -> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "64,16,64,19") ; conc> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "64,23,64,32") ; getcontent> x
+                                                                                                                            , y
+                                                                                                                            ) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "flatten", "60,2,64,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/common.str", "flatten", "60,2,64,41")
+      ; fail

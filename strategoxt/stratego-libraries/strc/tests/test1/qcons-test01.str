@@ -1,14 +1,24 @@
-/**
- * Build of a quoted constructor
- */
 module qcons-test01
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
 
 strategies
-
   main =
-    !"aap"(1)
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test01.str", "main", "9,2,10,12")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test01.str", "10,4,10,12")
+    ; !"aap"(1)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test01.str", "main", "9,2,10,12")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test01.str", "main", "9,2,10,12")
+      ; fail
+
 
 signature
   constructors
-   "aap" : Term -> Term
+    "aap" : Term -> Term

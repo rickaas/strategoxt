@@ -1,18 +1,46 @@
 module plain-text
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
-
-  // :: _ -> FILE
   topdown-print-to :
-    strings -> FILE(name)
-      where xtc-new-file => name
-          ; <fopen> (name, "w") => Stream(stream)
-          ; <topdown(try(is-string; where(my-fputs(|stream))))> strings
-          ; <fclose> stream
+    strings -> <r-exit(|"strategoxt/syntax/gpp/tools2/plain-text.str", "topdown-print-to", "6,2,11,26")> FILE(name)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/plain-text.str", "topdown-print-to", "6,2,11,26")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/plain-text.str", "topdown-print-to", "6,2,11,26")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "8,12,11,26")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "8,12,8,31")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "8,12,8,23") ; xtc-new-file) => name)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "9,12,11,26")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "9,12,9,48")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "9,12,9,30")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "9,13,9,17") ; fopen)> (name, "w")) => Stream(stream))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,12,11,26")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,12,10,70")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,13,10,61")
+                 ; topdown(
+                     s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,21,10,60")
+                     ; try(
+                         s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,25,10,59")
+                         ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,25,10,33") ; is-string)
+                         ; s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,36,10,59")
+                         ; where(s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "10,42,10,58")
+                                 ; my-fputs(|stream))
+                       )
+                   ))> strings)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "11,12,11,26")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "11,13,11,18") ; fclose)> stream
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/plain-text.str", "topdown-print-to", "6,2,11,26")
+             ; fail
 
-  /**
-   * Writes a String to a Stream
-   * @type (String, Stream) -> Stream
-   */
   my-fputs(|stream) =
-    ?str; prim("SSL_fputs", str, stream)
+    s-enter(|"strategoxt/syntax/gpp/tools2/plain-text.str", "my-fputs", "17,2,18,39")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "18,4,18,39")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "18,4,18,7") ; ?str)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/plain-text.str", "18,10,18,39")
+    ; prim("SSL_fputs", str, stream)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/plain-text.str", "my-fputs", "17,2,18,39")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/plain-text.str", "my-fputs", "17,2,18,39")
+      ; fail

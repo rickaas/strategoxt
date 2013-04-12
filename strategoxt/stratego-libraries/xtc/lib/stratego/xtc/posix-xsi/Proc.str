@@ -1,34 +1,62 @@
-/**
- * Used for POSIX+XSI
- */
 module stratego/xtc/posix-xsi/Proc
-strategies
 
-  /**
-   * Creates a new and unique scoped temporary file.
-   *
-   * @type _ -> String
-   */
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   xtc-new-file =
-    new-temp-file => (f, fd)
-  ; where(
-      <assert(!TempFiles())> (f, ())
-    )
-  ; <close> fd
-  ; !f
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-new-file", "12,2,18,5")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "13,4,18,5")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "13,4,13,27")
+       ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "13,4,13,16") ; new-temp-file) => (f, fd))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "14,4,18,5")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "14,4,16,4")
+       ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "15,6,15,35")
+               ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "15,7,15,26")
+                   ; assert(
+                       s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "15,14,15,25")
+                       ; !TempFiles()
+                     ))> (f, ())))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "17,4,18,5")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "17,4,17,13")
+       ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "17,5,17,9") ; close)> fd)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "18,4,18,5")
+    ; !f
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-new-file", "12,2,18,5")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-new-file", "12,2,18,5")
+      ; fail
+
 
 strategies
-
-  /**
-   * Concatenates the content of a list of files and stores
-   * the result in a fresh File. Each file in the list can
-   * be a FILE, stdin, stdout, or stderr.
-   *
-   * @type List(FILE) -> FILE
-   */
-  xtc-cat:
-    in-files -> file
-      where !FILE(<xtc-new-file>) => file
-          ; <xtc-open-fd> file => fdout
-          ; <map(File-as-fd(<fdcopy> (<id>, fdout)))> in-files
-          ; <xtc-close-fd> fdout
+  xtc-cat :
+    in-files -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-cat", "29,2,34,31")> file
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-cat", "29,2,34,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-cat", "29,2,34,31")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "31,12,34,31")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "31,12,31,40")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "31,12,31,32")
+                ; !FILE(
+                     <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "31,19,31,30") ; xtc-new-file>
+                   )) => file)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "32,12,34,31")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "32,12,32,38")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "32,12,32,29")
+                ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "32,13,32,23") ; xtc-open-fd)> file) => fdout)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,12,34,31")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,12,33,61")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,13,33,51")
+                 ; map(
+                     s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,17,33,50")
+                     ; File-as-fd(
+                         s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,28,33,49")
+                         ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,29,33,34") ; fdcopy)> ( <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "33,39,33,40") ; id>
+                                                                                                                                        , fdout
+                                                                                                                                        )
+                       )
+                   ))> in-files)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "34,12,34,31")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "34,13,34,24") ; xtc-close-fd)> fdout
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/posix-xsi/Proc.str", "xtc-cat", "29,2,34,31")
+             ; fail

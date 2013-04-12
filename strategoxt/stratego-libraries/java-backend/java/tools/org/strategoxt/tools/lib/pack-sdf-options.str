@@ -1,15 +1,14 @@
-/**
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module pack-sdf-options
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
-  // strategoxt-xtc-tools
 
-/**
- * Options
- */
+
 signature
   constructors
     IncludeDef : String -> IncludeVal
@@ -21,122 +20,335 @@ signature
     IncludePathName : String -> Include
     IncludeFromPath : String -> Include
 
+
 strategies
-
   pack-sdf-options =
-       include-from-dir-option
-    <+ include-from-def-option
-    <+ dep-options
-    <+ of-option
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "pack-sdf-options", "26,2,30,15")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "27,7,30,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "27,7,27,29") ; include-from-dir-option
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "28,7,30,15")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "28,7,28,29") ; include-from-def-option
+             <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "29,7,30,15")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "29,7,29,17") ; dep-options
+                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "30,7,30,15") ; of-option)))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "pack-sdf-options", "26,2,30,15")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "pack-sdf-options", "26,2,30,15")
+      ; fail
 
-  of-config = 
-    <get-config> "--output-format" <+ !"txt"
+  of-config =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "of-config", "32,2,33,43")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "33,4,33,43")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "33,4,33,33")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "33,5,33,14") ; get-config)> "--output-format"
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "33,38,33,43")
+          ; !"txt")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "of-config", "32,2,33,43")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "of-config", "32,2,33,43")
+      ; fail
 
   of-option =
-    OutputFormatOption(|["txt", "asfix", "ast"])
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "of-option", "35,2,36,47")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "36,4,36,47")
+    ; OutputFormatOption(
+      | ["txt", "asfix", "ast"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "of-option", "35,2,36,47")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "of-option", "35,2,36,47")
+      ; fail
 
   OutputFormatOption(|formats) =
-    ArgOption("-of" + "--output-format"
-    , where(
-        where(<elem> (<id>, formats))
-      ; <set-config> ("--output-format", <id>)
-      <+ <fatal-error> ["pack-sdf: ", <id>, " is not a valid output format. Supported formats: " | <separate-by> (", ", formats)]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "OutputFormatOption", "38,2,46,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "39,4,46,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "39,14,39,38")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "39,14,39,18") ; "-of"
+           + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "39,22,39,38") ; "--output-format")
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "40,6,44,6")
+        ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "41,8,43,128")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "41,8,42,45")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "41,8,41,36")
+                      ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "41,14,41,35")
+                              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "41,15,41,18") ; elem)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "41,23,41,24") ; id>
+                                                                                                                                                                         , formats
+                                                                                                                                                                         )))
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "42,8,42,45")
+                   ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "42,9,42,18") ; set-config)> ( "--output-format"
+                                                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "42,42,42,43") ; id>
+                                                                                                                                                                   )
+                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "43,9,43,128")
+                      ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "43,10,43,20") ; fatal-error)> ["pack-sdf: ", <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "43,39,43,40") ; id>, " is not a valid output format. Supported formats: "|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "43,100,43,110") ; separate-by> (", ", formats)]))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "45,6,45,116")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "45,7,45,20") ; concat-strings)> [ "-of f            Use output format f ("
+                                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "45,67,45,93")
+                                                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "45,67,45,77") ; separate-by)
+                                                                                                                                                               ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "45,80,45,93")
+                                                                                                                                                               ; concat-strings> (", ", formats)
+                                                                                                                                                            , ")"
+                                                                                                                                                            ]
       )
-    , <concat-strings> ["-of f            Use output format f (", <separate-by; concat-strings> (", ", formats), ")"]
-    )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "OutputFormatOption", "38,2,46,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "OutputFormatOption", "38,2,46,4")
+      ; fail
 
   include-from-def-option =
-    ArgOption("-Idef"
-    , where(<extend-config> ("-I", [IncludeDef(<id>)]))
-    , !"-Idef <lang.def>     Include modules from SDF definition <lang.def>"
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-from-def-option", "48,2,52,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "49,4,52,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "49,14,49,20") ; "-Idef"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "50,6,50,54")
+        ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "50,12,50,53")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "50,13,50,25") ; extend-config)> ( "-I"
+                                                                                                                                                                    , [ IncludeDef(
+                                                                                                                                                                          <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "50,48,50,49") ; id>
+                                                                                                                                                                        )
+                                                                                                                                                                      ]
+                                                                                                                                                                    ))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "51,6,51,75")
+        ; !"-Idef <lang.def>     Include modules from SDF definition <lang.def>"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-from-def-option", "48,2,52,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-from-def-option", "48,2,52,4")
+      ; fail
 
-  /**
-   * Read SDF definitions and add current directory and XTC to include values.
-   */
   process-options =
-    where(
-      (<get-config> "-I" <+ ![])
-    ; map(?IncludeDef(_) < process-Idef + id)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "process-options", "57,2,78,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "58,4,78,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "59,6,77,30")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "59,7,59,30")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "59,7,59,23")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "59,8,59,17") ; get-config)> "-I"
+                  <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "59,28,59,30")
+                     ; ![]))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "60,6,77,30")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "60,6,60,44")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "60,10,60,43")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "60,10,60,23")
+                      ; ?IncludeDef(_)
+                      < s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "60,27,60,38") ; process-Idef
+                      + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "60,42,60,43") ; id)
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "65,6,77,30")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "65,6,65,34")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "65,7,65,10") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "65,15,65,16") ; id>
+                                                                                                                                                         , [IncludeXTC()]
+                                                                                                                                                         ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "71,6,77,30")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "71,6,75,8")
+               ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "71,9,71,34")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "71,9,71,25")
+                       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "71,10,71,19") ; get-config)> "-i") => input then
+                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "72,8,72,44")
+                   ; ![IncludeDir(
+                         <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "72,22,72,28") ; dirname> input
+                       )|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "72,41,72,42") ; id>]
+                 else
+                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "74,8,74,32")
+                   ; ![IncludeDir(".")|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "74,29,74,30") ; id>]
+                 end)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "77,6,77,30")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "77,7,77,16") ; set-config)> ( "-I"
+                                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "77,27,77,28") ; id>
+                                                                                                                                                            ))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "process-options", "57,2,78,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "process-options", "57,2,78,4")
+      ; fail
 
-      /**
-       * XTC is the final search option
-       */
-    ; <conc> (<id>, [IncludeXTC()])
-      
-      /**
-       * The first search option is the directory of the input
-       * file, or the current directory if the input is stdin.
-       */
-    ; if <get-config> "-i" => input then
-        ![IncludeDir(<dirname> input) | <id>]
-      else 
-        ![IncludeDir(".") | <id>]
-      end
-
-    ; <set-config> ("-I", <id>)
-    )
-
-  /**
-   * @type  String -> List((String, AsFix(Module)))
-   */
   process-Idef =
-      ?IncludeDef(def)
-    ; !FILE(def)
-    ; parse-xtc-file-pt-report-errors(|<get-sdf-parse-table>, "SDF")
-    ; collect-om(?
-        appl(prod(_, cf(sort("Module")), attrs([term(cons("module"))])), _)
-      )
-    ; map(!(<module-to-module-name>, <id>))
-    ; where(
-        if-verbose2(
-          say(<concat-strings> ["pack-sdf: SDF Syntax Definition ", def, " provides the modules "])
-        ; map(Fst; debug(!"pack-sdf:   - "))
-        )
-      )
-    ; !IncludeDef(def, <id>)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "process-Idef", "83,2,97,27")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "84,6,97,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "84,6,84,21")
+       ; ?IncludeDef(def))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "85,6,97,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "85,6,85,15")
+       ; !FILE(def))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "86,6,97,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "86,6,86,67")
+       ; parse-xtc-file-pt-report-errors(
+         | <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "86,40,86,58") ; get-sdf-parse-table>
+         , "SDF"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "87,6,97,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "87,6,89,6")
+       ; collect-om(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "87,17,88,74")
+           ; ?appl(
+                prod(
+                  _
+                , cf(sort("Module"))
+                , attrs(
+                    [term(cons("module"))]
+                  )
+                )
+              , _
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "90,6,97,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "90,6,90,42")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "90,10,90,41")
+           ; !( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "90,13,90,33") ; module-to-module-name>
+              , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "90,38,90,39") ; id>
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "91,6,97,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "91,6,96,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "92,8,95,8")
+               ; if-verbose2(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "93,10,94,43")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "93,10,93,98")
+                      ; say(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "93,14,93,97")
+                          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "93,15,93,28") ; concat-strings)> ["pack-sdf: SDF Syntax Definition ", def, " provides the modules "]
+                        ))
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "94,10,94,43")
+                   ; map(
+                       s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "94,14,94,42")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "94,14,94,16") ; Fst)
+                       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "94,19,94,42")
+                       ; debug(
+                           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "94,25,94,41")
+                           ; !"pack-sdf:   - "
+                         )
+                     )
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "97,6,97,27")
+    ; !IncludeDef(
+         def
+       , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "97,24,97,25") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "process-Idef", "83,2,97,27")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "process-Idef", "83,2,97,27")
+      ; fail
 
   include-from-dir-option =
-    ArgOption("-I" + "--Include"
-    , where(<extend-config>("-I", [IncludeDir(<ensure-directory>)]))
-    , !"-I|--Include <dir>   Include modules from directory <dir>"
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-from-dir-option", "99,2,103,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "100,4,103,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "100,14,100,31")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "100,14,100,17") ; "-I"
+           + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "100,21,100,31") ; "--Include")
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "101,6,101,67")
+        ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "101,12,101,66")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "101,13,101,25") ; extend-config)> ( "-I"
+                                                                                                                                                                      , [ IncludeDir(
+                                                                                                                                                                            <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "101,47,101,62") ; ensure-directory>
+                                                                                                                                                                          )
+                                                                                                                                                                        ]
+                                                                                                                                                                      ))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "102,6,102,65")
+        ; !"-I|--Include <dir>   Include modules from directory <dir>"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-from-dir-option", "99,2,103,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-from-dir-option", "99,2,103,4")
+      ; fail
 
   ensure-directory =
-    if not(file-exists) then
-      debug(!"pack-sdf: warning: directory specified with -I does not exist: ")
-    else
-      if not(filemode; isdir) then
-        debug(!"pack-sdf: warning: path specified with -I is a file, not a directory: ")
-      else id end
-    end
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "ensure-directory", "105,2,112,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "106,4,112,6")
+    ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "106,7,106,22")
+         ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "106,11,106,21") ; file-exists) then
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "107,6,107,78")
+        ; debug(
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "107,12,107,77")
+            ; !"pack-sdf: warning: directory specified with -I does not exist: "
+          )
+      else
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "109,6,111,16")
+        ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "109,9,109,28")
+             ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "109,13,109,27")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "109,13,109,20") ; filemode)
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "109,23,109,27")
+                   ; isdir) then
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "110,8,110,87")
+            ; debug(
+                s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "110,14,110,86")
+                ; !"pack-sdf: warning: path specified with -I is a file, not a directory: "
+              )
+          else
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "111,11,111,12") ; id
+          end
+      end
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "ensure-directory", "105,2,112,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "ensure-directory", "105,2,112,6")
+      ; fail
 
-  dep-options = 
-    ArgOption("--dep"
-    , where(<set-config> ("-dep", <id>))
-    , !"--dep <file>         Write make dependencies to <file>"
-    )
+  dep-options =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "dep-options", "114,2,118,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "115,4,118,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "115,14,115,20") ; "--dep"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "116,6,116,39")
+        ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "116,12,116,38")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "116,13,116,22") ; set-config)> ( "-dep"
+                                                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "116,35,116,36") ; id>
+                                                                                                                                                                   ))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "117,6,117,62")
+        ; !"--dep <file>         Write make dependencies to <file>"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "dep-options", "114,2,118,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "dep-options", "114,2,118,4")
+      ; fail
 
-  /**
-   * Gets the include path from the config.
-   *
-   * The current working directory . is added to this path.
-   */
   include-path =
-    <get-config> "-I" <+ ![]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-path", "125,2,126,27")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "126,4,126,27")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "126,4,126,20")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "126,5,126,14") ; get-config)> "-I"
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "126,25,126,27")
+          ; ![])
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-path", "125,2,126,27")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "include-path", "125,2,126,27")
+      ; fail
 
   depfile-from-config =
-    <get-config> "-dep"
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "depfile-from-config", "128,2,129,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "129,4,129,22")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "129,5,129,14") ; get-config)> "-dep"
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "depfile-from-config", "128,2,129,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "depfile-from-config", "128,2,129,22")
+      ; fail
 
   maybe-create-depfile =
-    where(try(create-dep-file))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "maybe-create-depfile", "131,2,132,30")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "132,4,132,30")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "132,10,132,29")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "132,14,132,28") ; create-dep-file
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "maybe-create-depfile", "131,2,132,30")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "maybe-create-depfile", "131,2,132,30")
+      ; fail
 
   create-dep-file =
-    ?files
-    ; where(
-        <get-config> "-o" => outfile
-      ; <fopen> (<depfile-from-config> (), "w") => stream
-      )
-    ; ![outfile | <separate-by(|" \\\n\t")> [":" | files]]
-    ; map(<fputs> (<id>, stream))
-    ; <fclose> stream
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "create-dep-file", "134,2,142,20")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "135,4,142,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "135,4,135,9") ; ?files)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "136,6,142,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "136,6,139,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "137,8,138,56")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "137,8,137,35")
+                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "137,8,137,24")
+                     ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "137,9,137,18") ; get-config)> "-o") => outfile)
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "138,8,138,56")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "138,8,138,46")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "138,9,138,13") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "138,18,138,36") ; depfile-from-config> ()
+                                                                                                                                                               , "w"
+                                                                                                                                                               )) => stream))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "140,6,142,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "140,6,140,57")
+       ; ![outfile|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "140,19,140,41")
+                    ; separate-by(|" \\\n\t")> [":"|files]])
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "141,6,142,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "141,6,141,32")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "141,10,141,31")
+           ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "141,11,141,15") ; fputs)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "141,20,141,21") ; id>
+                                                                                                                                                         , stream
+                                                                                                                                                         )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "142,6,142,20")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "142,7,142,12") ; fclose)> stream
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "create-dep-file", "134,2,142,20")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/pack-sdf-options.str", "create-dep-file", "134,2,142,20")
+      ; fail

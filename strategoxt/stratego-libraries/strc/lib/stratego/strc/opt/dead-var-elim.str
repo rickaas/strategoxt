@@ -1,121 +1,395 @@
 module dead-var-elim
-imports stratego/strc/lib/stratlib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratego/strc/lib/stratlib
+
+
 strategies
- 
   dead-var-elim =
-    Specification(
-      [Signature(id),
-       Strategies(
-	 map(dead-var-elim)
-        )
-      ])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "dead-var-elim", "5,2,11,7")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "6,4,11,7")
+    ; Specification(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "7,6,11,6")
+        ; [ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "7,7,7,19")
+            ; Signature(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "7,17,7,18") ; id
+              )
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "8,7,10,8")
+            ; Strategies(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "9,2,9,19")
+                ; map(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "9,6,9,18") ; dead-var-elim
+                  )
+              )
+          ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "dead-var-elim", "5,2,11,7")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "dead-var-elim", "5,2,11,7")
+      ; fail
 
-  remove-annotations-from-vars = 
-    alltd(\ Var(x){_} -> Var(x) \ )
+  remove-annotations-from-vars =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "remove-annotations-from-vars", "13,2,14,34")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "14,4,14,34")
+    ; alltd(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "14,10,14,32")
+        ; \ Var(x){_} -> Var(x) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "remove-annotations-from-vars", "13,2,14,34")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "remove-annotations-from-vars", "13,2,14,34")
+      ; fail
 
-  dead-var-elim = rec dve(
-    elim-scope(dve)
-    <+ elim-sdef(dve)
-    <+ MarkBuild
-    <+ PrimT(id, reverse-map(dve), reverse-map(mark-build-term))
-    <+ CallT(id, reverse-map(dve), reverse-map(mark-build-term))
-    <+ Seq(id, dve); Seq(dve, id) 
-    <+ elim-choice(dve)
-    <+ elim-lchoice(dve)
-    <+ elim-guardedlchoice(dve)
-    <+ EliminateFromMatch
-    <+ all-rl(dve)
-  )
+  dead-var-elim =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "dead-var-elim", "16,2,28,2")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "16,18,28,2")
+    ; rec dve (
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "17,4,27,17")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "17,4,17,18")
+           ; elim-scope(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "17,15,17,17") ; dve
+             )
+           <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "18,7,27,17")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "18,7,18,20")
+                 ; elim-sdef(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "18,17,18,19") ; dve
+                   )
+                 <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "19,7,27,17")
+                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "19,7,19,15") ; MarkBuild
+                       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,7,27,17")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,7,20,63")
+                             ; PrimT(
+                                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,13,20,14") ; id
+                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,17,20,32")
+                                 ; reverse-map(
+                                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,29,20,31") ; dve
+                                   )
+                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,35,20,62")
+                                 ; reverse-map(
+                                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "20,47,20,61") ; mark-build-term
+                                   )
+                               )
+                             <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,7,27,17")
+                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,7,21,63")
+                                   ; CallT(
+                                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,13,21,14") ; id
+                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,17,21,32")
+                                       ; reverse-map(
+                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,29,21,31") ; dve
+                                         )
+                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,35,21,62")
+                                       ; reverse-map(
+                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "21,47,21,61") ; mark-build-term
+                                         )
+                                     )
+                                   <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,7,27,17")
+                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,7,22,32")
+                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,7,22,18")
+                                            ; Seq(
+                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,11,22,12") ; id
+                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,15,22,17") ; dve
+                                              ))
+                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,21,22,32")
+                                         ; Seq(
+                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,25,22,27") ; dve
+                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "22,30,22,31") ; id
+                                           )
+                                         <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "23,7,27,17")
+                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "23,7,23,22")
+                                               ; elim-choice(
+                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "23,19,23,21") ; dve
+                                                 )
+                                               <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "24,7,27,17")
+                                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "24,7,24,23")
+                                                     ; elim-lchoice(
+                                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "24,20,24,22") ; dve
+                                                       )
+                                                     <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "25,7,27,17")
+                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "25,7,25,30")
+                                                           ; elim-guardedlchoice(
+                                                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "25,27,25,29") ; dve
+                                                             )
+                                                           <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "26,7,27,17")
+                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "26,7,26,24") ; EliminateFromMatch
+                                                                 <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "27,7,27,17")
+                                                                    ; all-rl(
+                                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "27,14,27,16") ; dve
+                                                                      )))))))))))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "dead-var-elim", "16,2,28,2")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "dead-var-elim", "16,2,28,2")
+      ; fail
 
-  all-rl(x) = 
-    id # ( reverse-map(x) )
+  all-rl(x) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "all-rl", "30,2,31,26")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "31,4,31,26")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "31,4,31,5") ; id)#((s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "31,11,31,24")
+                                                                                                                  ; reverse-map(
+                                                                                                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "31,23,31,23") ; x
+                                                                                                                    )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "all-rl", "30,2,31,26")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "all-rl", "30,2,31,26")
+      ; fail
 
   elim-sdef(x) =
-    ?SDefT(_,_,_,_)
-    ; {| ElimVar :
-           SDefT(id, id, map(where(?VarDec(<id>,_); DeclareAlive)), x)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-sdef", "33,2,37,7")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "34,4,37,7")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "34,4,34,18")
+       ; ?SDefT(_, _, _, _))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "35,6,37,7")
+    ; {|ElimVar:
+         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,11,36,69")
+         ; SDefT(
+             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,17,36,18") ; id
+           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,21,36,22") ; id
+           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,25,36,65")
+             ; map(
+                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,29,36,64")
+                 ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,35,36,63")
+                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,35,36,49")
+                            ; ?VarDec(
+                                 <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,44,36,45") ; id>
+                               , _
+                               ))
+                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,52,36,63")
+                         ; DeclareAlive)
+               )
+           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "36,68,36,68") ; x
+           )
       |}
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-sdef", "33,2,37,7")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-sdef", "33,2,37,7")
+      ; fail
 
   elim-scope(x) =
-    ?Scope(_,_)
-    ; {| ElimVar :
-           Scope(map(DeclareDead), x)
-           ; EliminateFromScope
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-scope", "39,2,44,7")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "40,4,44,7")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "40,4,40,14")
+       ; ?Scope(_, _))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "41,6,44,7")
+    ; {|ElimVar:
+         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "42,11,43,30")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "42,11,42,36")
+            ; Scope(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "42,17,42,32")
+                ; map(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "42,21,42,31") ; DeclareDead
+                  )
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "42,35,42,35") ; x
+              ))
+         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "43,13,43,30")
+         ; EliminateFromScope
       |}
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-scope", "39,2,44,7")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-scope", "39,2,44,7")
+      ; fail
 
   DeclareDead =
-    ?x; rules(ElimVar : Var(x) -> Wld())
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "DeclareDead", "46,2,47,39")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "47,4,47,39")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "47,4,47,5") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "47,8,47,39")
+    ; rules (
+        ElimVar :
+          Var(x) -> Wld()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "DeclareDead", "46,2,47,39")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "DeclareDead", "46,2,47,39")
+      ; fail
 
   EliminateFromScope =
-    Scope(filter(not(!Var(<id>); ElimVar)), id)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "EliminateFromScope", "49,2,50,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,4,50,46")
+    ; Scope(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,10,50,41")
+        ; filter(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,17,50,40")
+            ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,21,50,39")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,21,50,30")
+                     ; !Var(
+                          <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,27,50,28") ; id>
+                        ))
+                  ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,33,50,39")
+                  ; ElimVar)
+          )
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "50,44,50,45") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "EliminateFromScope", "49,2,50,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "EliminateFromScope", "49,2,50,46")
+      ; fail
 
   DeclareAlive =
-    ?x; rules(ElimVar+x : Var(x))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "DeclareAlive", "52,2,53,32")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "53,4,53,32")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "53,4,53,5") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "53,8,53,32")
+    ; rules ( ElimVar+x :
+                Var(x) )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "DeclareAlive", "52,2,53,32")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "DeclareAlive", "52,2,53,32")
+      ; fail
 
   mark-build-term =
-    alltd(where({?Var(x); rules(ElimVar :- Var(x))}))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "mark-build-term", "55,2,56,52")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "56,4,56,52")
+    ; alltd(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "56,10,56,51")
+        ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "56,16,56,50")
+                ; {s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "56,17,56,49")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "56,17,56,23")
+                      ; ?Var(x))
+                   ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "56,26,56,49")
+                   ; rules ( ElimVar :-
+                               Var(x) )})
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "mark-build-term", "55,2,56,52")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "mark-build-term", "55,2,56,52")
+      ; fail
 
   MarkBuild =
-    Build(mark-build-term)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "MarkBuild", "58,2,59,25")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "59,4,59,25")
+    ; Build(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "59,10,59,24") ; mark-build-term
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "MarkBuild", "58,2,59,25")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "MarkBuild", "58,2,59,25")
+      ; fail
 
   EliminateFromMatch =
-    Match(
-      alltd(
-        {x : (?Var(x){"bound"} + ?Var(x){"(un)bound"} + ?Var(x){})
-         ; rules(ElimVar.x :- Var(x))}
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "EliminateFromMatch", "61,2,68,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "62,4,68,4")
+    ; Match(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "63,6,67,44")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "63,6,66,6")
+           ; alltd(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,8,65,37")
+               ; {x:
+                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,13,65,36")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,14,64,64")
+                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,14,64,29")
+                         ; ?Var(x){"bound"}
+                         + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,33,64,64")
+                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,33,64,52")
+                              ; ?Var(x){"(un)bound"}
+                              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "64,56,64,64")
+                                ; ?Var(x){})))
+                   ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "65,11,65,36")
+                   ; rules ( ElimVar.x :-
+                               Var(x) )
+                 }
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "67,8,67,44")
+        ; alltd(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "67,14,67,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "67,14,67,34")
+               ; ?Var(
+                    <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "67,20,67,29")
+                     ; !Var(
+                          <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "67,26,67,27") ; id>
+                        )>
+                  ){_})
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "67,37,67,43")
+            ; ElimVar
+          )
       )
-      ; alltd(?Var(<!Var(<id>)>){_}; ElimVar)
-    )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "EliminateFromMatch", "61,2,68,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "EliminateFromMatch", "61,2,68,4")
+      ; fail
 
-strategies // Choice 
 
+strategies
   elim-choice(uv) =
-    Choice(id, id)
-    ; elim-abstract-choice(Choice(uv,id),Choice(id, uv))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-choice", "72,2,74,55")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "73,4,74,55")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "73,4,73,17")
+       ; Choice(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "73,11,73,12") ; id
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "73,15,73,16") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,6,74,55")
+    ; elim-abstract-choice(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,27,74,39")
+        ; Choice(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,34,74,35") ; uv
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,37,74,38") ; id
+          )
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,41,74,54")
+        ; Choice(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,48,74,49") ; id
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "74,52,74,53") ; uv
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-choice", "72,2,74,55")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-choice", "72,2,74,55")
+      ; fail
 
   elim-lchoice(uv) =
-    LChoice(id, id)
-    ; elim-abstract-choice(LChoice(uv,id),LChoice(id, uv))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-lchoice", "76,2,78,57")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "77,4,78,57")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "77,4,77,18")
+       ; LChoice(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "77,12,77,13") ; id
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "77,16,77,17") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,6,78,57")
+    ; elim-abstract-choice(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,27,78,40")
+        ; LChoice(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,35,78,36") ; uv
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,38,78,39") ; id
+          )
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,42,78,56")
+        ; LChoice(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,50,78,51") ; id
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "78,54,78,55") ; uv
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-lchoice", "76,2,78,57")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-lchoice", "76,2,78,57")
+      ; fail
 
   elim-guardedlchoice(uv) =
-    GuardedLChoice(id, id, id)
-    ; elim-abstract-choice(GuardedLChoice(id,uv,id); GuardedLChoice(uv,id,id)
-	           ,GuardedLChoice(id,id,uv))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-guardedlchoice", "80,2,83,37")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "81,4,83,37")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "81,4,81,29")
+       ; GuardedLChoice(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "81,19,81,20") ; id
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "81,23,81,24") ; id
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "81,27,81,28") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,6,83,37")
+    ; elim-abstract-choice(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,27,82,76")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,27,82,50")
+           ; GuardedLChoice(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,42,82,43") ; id
+             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,45,82,46") ; uv
+             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,48,82,49") ; id
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,53,82,76")
+        ; GuardedLChoice(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,68,82,69") ; uv
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,71,82,72") ; id
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "82,74,82,75") ; id
+          )
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "83,13,83,36")
+        ; GuardedLChoice(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "83,28,83,29") ; id
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "83,31,83,32") ; id
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "83,34,83,35") ; uv
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-guardedlchoice", "80,2,83,37")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-guardedlchoice", "80,2,83,37")
+      ; fail
 
   elim-abstract-choice(left, right) =
-    left /ElimVar\ right
-
-
-/*
-    where(save-ElimVar => bnd0)
-    ; left
-    ; where(
-	save-ElimVar => bndL; <restore-ElimVar> bnd0
-      )
-    ; right
-    ; where(
-        <isect-ElimVar> bndL
-      )
-
-strategies // Dynamic rule manipulation
-
-  save-ElimVar =
-    <table-getlist> "ElimVar"
-
-  clean-ElimVar =
-    where(<table-destroy> "ElimVar";
-          <table-putlist>("ElimVar", []))
-
-  restore-ElimVar = ?tbl;
-    where(<table-destroy> "ElimVar";
-          <table-putlist>("ElimVar", tbl))
-
-  isect-ElimVar =
-     map(try(?(Scopes,_)
-        <+ {?(key, [Defined(_)|_]);
-            (where(<table-get> ("ElimVar", key) => [Defined(_)|_])
-             <+ !(key, [Undefined]))
-           }))
-    ; restore-ElimVar
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-abstract-choice", "85,2,86,23")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "86,4,86,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "86,4,86,7") ; left) /ElimVar\ (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "86,19,86,23") ; right)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-abstract-choice", "85,2,86,23")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/dead-var-elim.str", "elim-abstract-choice", "85,2,86,23")
+      ; fail

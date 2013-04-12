@@ -1,213 +1,264 @@
-/**
- * This module contains strategies for operating on tuples.
- *
- * In Stratego, tuples are a terms, separate from lists. 
- *
- * @author Eelco Visser <visser@acm.org>
- * @author Karl Trygve Kalleberg <karltk@strategoxt.org> - documentation
- *
- * @see collection/list/common
- */
-module collection/tuple/common 
-imports 
-  collection/list/cons 
-  collection/tuple/cons 
-  collection/list/index 
+module collection/tuple/common
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+  collection/list/index
   collection/list/zip
+
+
 strategies
+  TupleToList :
+    ""#(xs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "TupleToList", "23,2,23,30")> xs
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "TupleToList", "23,2,23,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "TupleToList", "23,2,23,30")
+             ; fail
 
-  /** Convert a tuple to a list.
-   *
-   * @type List(a) -> Tuple(a)
-   */
-  TupleToList : "" # (xs) -> xs
-  
-  /** Convert a list to a tuple.
-   *
-   * @type Tuple(a) -> List(a)
-   */
-  ListToTuple : xs -> "" # (xs)
+  ListToTuple :
+    xs -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "ListToTuple", "29,2,29,30")> ""#(xs)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "ListToTuple", "29,2,29,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "ListToTuple", "29,2,29,30")
+             ; fail
 
-  /** Retrieve the first element of a tuple.
-   *
-   * @type Tuple(a, xs...) -> a
-   */
-  Fst   : "" # ([x | xs]) -> x
-  
-  /** Retrieve the second element of a tuple.
-   *
-   * @type Tuple(a, b, xs...) -> b
-   */
-  Snd   : "" # ([x, y | xs]) -> y
+  Fst :
+    ""#([x|xs]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Fst", "35,2,35,29")> x
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Fst", "35,2,35,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Fst", "35,2,35,29")
+             ; fail
 
-  /** Retrieve the third element of a tuple.
-   *
-   * @type Tuple(a, b, c, xs...) -> c
-   */
-  Third : "" # ([x, y, z | xs]) -> z
+  Snd :
+    ""#([x, y|xs]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Snd", "41,2,41,32")> y
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Snd", "41,2,41,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Snd", "41,2,41,32")
+             ; fail
 
-  /** Duplicate a term into a two-element tuple
-   *
-   * @type a -> Tuple(a, a)
-   */
-  Dupl  : x -> (x, x)
+  Third :
+    ""#([x, y, z|xs]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Third", "47,2,47,35")> z
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Third", "47,2,47,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Third", "47,2,47,35")
+             ; fail
 
-  /** Apply a pair of strategies, f and g, to a two-element tuple. The 
-   * strategy f will be applied to the first element, g to the second.
-   *
-   * @param f        a -> a'
-   * @param g        b -> b'
-   * @type           Tuple(a, b) -> Tuple(a', b')
-   */
-  split(f, g) = !(<f>, <g>)
-  
-  /** Apply a triple of strategies, f, g and h to a three-element tuple.
-   * The strategy f will be applied to the first element, g to the second
-   * and h to the third.
-   *
-   * @param f        a -> a'
-   * @param g        b -> b'
-   * @param h        c -> c'
-   * @type           Tuple(a, b, c) -> Tuple(a', b', c')
-   */
-  split3(f, g, h) = !(<f>, <g>, <h>)
+  Dupl :
+    x -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Dupl", "53,2,53,20")> (x, x)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Dupl", "53,2,53,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Dupl", "53,2,53,20")
+             ; fail
 
-  /** Swap two elements in a tuple.
-   *
-   * @type Tuple(a, b) -> Tuple(b, a)
-   */
-  Swap : (x, y) -> (y, x)
+  split(f, g) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "split", "62,2,62,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "62,16,62,26")
+    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "62,19,62,19") ; f>
+       , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "62,24,62,24") ; g>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "split", "62,2,62,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "split", "62,2,62,26")
+      ; fail
 
-  /** Retrieve the head of a tuple. 
-   * 
-   * @type Tuple(a) -> a
-   * @see Fst
-   */
-  Thd = Fst
-  
-  /** Retrieve the tail of a tuple. A new tuple with all elements except
-   * the first will be returned.
-   * 
-   * @type Tuple(a) -> Tuple(a)
-   */
-  Ttl : "" # ([x | xs]) -> "" # (xs)
+  split3(f, g, h) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "split3", "73,2,73,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "73,20,73,35")
+    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "73,23,73,23") ; f>
+       , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "73,28,73,28") ; g>
+       , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "73,33,73,33") ; h>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "split3", "73,2,73,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "split3", "73,2,73,35")
+      ; fail
 
-  /** Get the nth element of a tuple. The index must be smaller than the
-   * number of elements in the tuple.
-   *
-   * @type (Int, Tuple(a)) -> a
-   * @see index
-   */
-  tindex = 
-    (id, ?""#(<id>)); index
+  Swap :
+    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Swap", "79,2,79,24")> (y, x)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Swap", "79,2,79,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Swap", "79,2,79,24")
+             ; fail
 
-  /** Predicate that checks if the supplied term is a tuple.
-   *
-   * @type Tuple(a) -?> Tuple(a)
-   */
-  is-tuple = 
-    ?""#(_)
+  Thd =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Thd", "86,2,86,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "86,8,86,10")
+    ; Fst
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Thd", "86,2,86,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Thd", "86,2,86,10")
+      ; fail
 
-  /** Apply a strategy s to a swapped version of the supplied tuple.
-   * The supplied tuple will be swapped, then is s applied.
-   *
-   * @param s          Tuple(b,a) -> Tuple(b', a')
-   * @type             Tuple(a,b) -> Tuple(b', a')
-   */
-  flip(s) = Swap; s
+  Ttl :
+    ""#([x|xs]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Ttl", "93,2,93,35")> ""#(xs)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Ttl", "93,2,93,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "Ttl", "93,2,93,35")
+             ; fail
 
-  /** Apply a strategy to each element of a tuple. This strategy maps
-   * a strategy s over all elements in a tuple.
-   *
-   * @param s           a -> b
-   * @type              Tuple(a) -> Tuple(b)
-   */
-  tmap(s) = 
-    is-tuple; all(s)
+  tindex =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tindex", "101,2,102,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "102,4,102,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "102,4,102,19")
+       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "102,5,102,6") ; id
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "102,9,102,18")
+           ; ?""#(<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "102,15,102,16") ; id>)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "102,22,102,26")
+    ; index
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tindex", "101,2,102,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tindex", "101,2,102,26")
+      ; fail
 
-  /** Concatenate the lists in a tuple of lists, using s as the
-   * concatenation strategy.
-   *
-   * The concatenation strategy is asked to concatenate a two-element
-   * tuple of lists and produce a list. Concatenation goes from right to
-   * left.
-   *
-   * @param s          Tuple(List(a), List(a)) -> List(a)
-   * @type             Tuple(List(a))
-   */
-  tconcat(s) = 
-    is-tuple; crush(![], s)
+  is-tuple =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "is-tuple", "108,2,109,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "109,4,109,10")
+    ; ?""#(_)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "is-tuple", "108,2,109,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "is-tuple", "108,2,109,10")
+      ; fail
 
-  /** Concatenate the lists in a tuple of lists, using s2 as the
-   * concatenation strategy and s1 as the startup strategy.
-   *
-   * The strategy s1 is applied once initially to an empty list, and
-   * can be used to create a custom tail on the resulting list. It can
-   * also be used to concatenate into non-list types.
-   * 
-   * The concatenation strategy s2 is asked to concatenate a
-   * two-element tuple of lists and produce list. Concatenation goes
-   * from right to left.
-   *
-   * Example: <tconcat'(!0, \([a],b)-><add> (a,b)\)> ([1],[2],[3]) => 6
-   *
-   * @param s1         Nil -> b
-   * @param s2         Tuple(List(a), b) -> b
-   * @type             Tuple(List(a))
-   * @see tconcat
-   */
-  tconcat'(s1, s2) = 
-    is-tuple; crush(<s1> [], s2)
+  flip(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "flip", "117,2,117,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "117,12,117,18")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "117,12,117,15") ; Swap)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "117,18,117,18")
+    ; s
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "flip", "117,2,117,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "flip", "117,2,117,18")
+      ; fail
 
-  /** Apply a s1 and s2 in a catamorphic way to reduce a tuple.
-   * 
-   * s2 must be a catamorphism, i.e. it must be able to reduce the 
-   * elements of the tuple from right to left.
-   *
-   * This strategy is also named tfoldr, as it is equivalent to a 
-   * right-fold on tuples.
-   * 
-   * @param s1         Nil -> b
-   * @param s2         Tuple(a, b) -> b
-   * @type             Tuple(a) -> b
-   * @see foldr
-   */
-  tcata(s1, s2) = 
-    is-tuple; crush(s1, s2)
+  tmap(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tmap", "125,2,126,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "126,4,126,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "126,4,126,11") ; is-tuple)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "126,14,126,19")
+    ; all(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "126,18,126,18") ; s)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tmap", "125,2,126,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tmap", "125,2,126,19")
+      ; fail
 
-  /**
-   * Fold a tuple from right to left using s2 as the folding strategy. 
-   * s1 is used to obtain the right-element (of type b) for s2. 
-   * 
-   * @param s1         Nil -> b
-   * @param s2         Tuple(a, b) -> b
-   * @type             Tuple(a) -> b
-   * @see tcata
-   */
-  tfoldr(s1, s2) = 
-    tcata(s1, s2)
+  tconcat(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tconcat", "138,2,139,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "139,4,139,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "139,4,139,11") ; is-tuple)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "139,14,139,26")
+    ; crush(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "139,20,139,22")
+        ; ![]
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "139,25,139,25") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tconcat", "138,2,139,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tconcat", "138,2,139,26")
+      ; fail
 
-  /** Zip two tuples with s as the zipping strategy. 
-   *
-   * Example: <tzip(add)> ((1,2,3),(5,4,3)) -> [6,6,6]
-   *
-   * @param s          Tuple(a,b) -> c
-   * @type             Tuple(Tuple(a), Tuple(b)) -> c
-   * @see zip
-   */
-  tzip(s)  = 
-    (TupleToList, TupleToList); zip(s)
+  tconcat'(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tconcat'", "159,2,160,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "160,4,160,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "160,4,160,11") ; is-tuple)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "160,14,160,31")
+    ; crush(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "160,20,160,26")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "160,21,160,22") ; s1)> []
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "160,29,160,30") ; s2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tconcat'", "159,2,160,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tconcat'", "159,2,160,31")
+      ; fail
 
-  /**
-   * @inc tuple-zip-test
-   */
-  tuple-zip(s) = 
-    rec x(![<tmap(Hd); s> | <tmap(Tl); x>]
-          <+ tmap([]); ![])
+  tcata(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tcata", "175,2,176,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "176,4,176,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "176,4,176,11") ; is-tuple)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "176,14,176,26")
+    ; crush(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "176,20,176,21") ; s1
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "176,24,176,25") ; s2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tcata", "175,2,176,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tcata", "175,2,176,26")
+      ; fail
 
-  /**
-   * @inc tuple-unzip-test
-   */
+  tfoldr(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tfoldr", "187,2,188,16")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "188,4,188,16")
+    ; tcata(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "188,10,188,11") ; s1
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "188,14,188,15") ; s2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tfoldr", "187,2,188,16")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tfoldr", "187,2,188,16")
+      ; fail
+
+  tzip(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tzip", "198,2,199,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "199,4,199,37")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "199,4,199,29")
+       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "199,5,199,15") ; TupleToList
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "199,18,199,28") ; TupleToList
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "199,32,199,37")
+    ; zip(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "199,36,199,36") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tzip", "198,2,199,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tzip", "198,2,199,37")
+      ; fail
+
+  tuple-zip(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tuple-zip", "204,2,206,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,4,206,26")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,10,206,25")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,10,205,41")
+           ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,13,205,23")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,13,205,20")
+                   ; tmap(
+                       s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,18,205,19") ; Hd
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,23,205,23")
+                ; s>|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,29,205,39")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,29,205,36")
+                         ; tmap(
+                             s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,34,205,35") ; Tl
+                           ))
+                      ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "205,39,205,39")
+                      ; x>]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "206,13,206,25")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "206,13,206,20")
+                 ; tmap(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "206,18,206,19") ; []
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "206,23,206,25")
+              ; ![])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tuple-zip", "204,2,206,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tuple-zip", "204,2,206,26")
+      ; fail
+
   tuple-unzip(s) =
-    rec x(![<map(Thd); s> | <map(Ttl); x>] <+ map(()); ![])
-  ; !"" #(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tuple-unzip", "211,2,213,14")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,4,213,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,4,212,58")
+       ; rec x (
+           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,10,212,57")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,10,212,41")
+              ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,13,212,23")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,13,212,20")
+                      ; map(
+                          s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,17,212,19") ; Thd
+                        ))
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,23,212,23")
+                   ; s>|<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,29,212,39")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,29,212,36")
+                            ; map(
+                                s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,33,212,35") ; Ttl
+                              ))
+                         ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,39,212,39")
+                         ; x>]
+              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,46,212,57")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,46,212,52")
+                    ; map(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,50,212,51") ; ()
+                      ))
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "212,55,212,57")
+                 ; ![])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "213,4,213,14")
+    ; !""#(<s-step(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "213,11,213,12") ; id>)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tuple-unzip", "211,2,213,14")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/tuple/common.str", "tuple-unzip", "211,2,213,14")
+      ; fail

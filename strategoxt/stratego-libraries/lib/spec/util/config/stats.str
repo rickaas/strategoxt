@@ -1,72 +1,233 @@
 module util/config/stats
-imports util/config/common
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  util/config/common
+
+
 strategies
+  set-statistics =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "set-statistics", "10,2,11,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "11,4,11,38")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "11,5,11,14") ; set-config)> ( "--statistics"
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "11,35,11,36") ; id>
+                                                                                                             )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "set-statistics", "10,2,11,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "set-statistics", "10,2,11,38")
+      ; fail
 
-/**
-  * Sets the 'statistics' level.
-  *
-  * E.g. <set-statistics>4 sets the statistics level to 4.
-  */
-  set-statistics = 
-    <set-config> ("--statistics", <id>)
+  get-statistics =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "get-statistics", "16,2,17,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "17,4,17,36")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "17,4,17,30")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "17,5,17,14") ; get-config)> "--statistics"
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "17,35,17,36")
+          ; !0)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "get-statistics", "16,2,17,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "get-statistics", "16,2,17,36")
+      ; fail
 
- /**
-  * Give the current 'statistics' level. Default is 0.
-  */
-  get-statistics = 
-    <get-config> "--statistics" <+ !0
+  pass-statistics =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "pass-statistics", "25,2,26,81")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,4,26,81")
+    ; ![ "--statistics"
+       , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,23,26,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,23,26,26") ; subt)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,29,26,41")
+          ; int-to-string> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,45,26,60")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,45,26,54") ; get-config
+                                 <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "26,59,26,60")
+                                    ; !1)> "--statistics"
+                           , 1
+                           )
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "pass-statistics", "25,2,26,81")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "pass-statistics", "25,2,26,81")
+      ; fail
 
- /**
-  * Builds command-line parameter for 'statistics' levels for calling XT tools.
-  *
-  * E.g. xtc-transform(!"abox2text", pass-statistics ) passes the 'statistics' level
-  * to abox2text.
-  */
-  pass-statistics = 
-    !["--statistics", <subt; int-to-string>(<get-config <+ !1> "--statistics", 1)]
 
-/**
- * Apply the supplied strategy if the 'statistics' level is set to a value greater
- * than or equal to the number given in the strategy name.
- *
- * E.g. if-statistics5(debug) calls the debug strategy if 'statistics' level is > 5.
- *
- * @param strategy to be applied
- */
 strategies
-
   if-statistics(s|t) =
-    if <geq> (<get-statistics> (), t) then
-      s
-    end
- 
-  if-statistics1(s) = if-statistics(s|1)
-  if-statistics2(s) = if-statistics(s|2)
-  if-statistics3(s) = if-statistics(s|3)
-  if-statistics4(s) = if-statistics(s|4) 
-  if-statistics5(s) = if-statistics(s|5) 
-  if-statistics6(s) = if-statistics(s|6) 
-  if-statistics7(s) = if-statistics(s|7)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics", "38,2,41,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "39,4,41,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "39,7,39,36")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "39,8,39,10") ; geq)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "39,15,39,28") ; get-statistics> ()
+                                                                                                           , t
+                                                                                                           ) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "40,6,40,6") ; s
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics", "38,2,41,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics", "38,2,41,6")
+      ; fail
 
-/**
- * Apply the supplied strategy if the 'statistics' level is set to a value lesser
- * than or equal to the number given in the strategy name.
- *
- * E.g. if-less-statistics3(s) calls the s strategy if 'statistics' level is < 3.
- *
- * @param strategy to be applied
- */
+  if-statistics1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics1", "43,2,43,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "43,22,43,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "43,36,43,36") ; s
+      | 1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics1", "43,2,43,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics1", "43,2,43,39")
+      ; fail
+
+  if-statistics2(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics2", "44,2,44,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "44,22,44,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "44,36,44,36") ; s
+      | 2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics2", "44,2,44,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics2", "44,2,44,39")
+      ; fail
+
+  if-statistics3(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics3", "45,2,45,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "45,22,45,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "45,36,45,36") ; s
+      | 3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics3", "45,2,45,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics3", "45,2,45,39")
+      ; fail
+
+  if-statistics4(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics4", "46,2,46,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "46,22,46,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "46,36,46,36") ; s
+      | 4
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics4", "46,2,46,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics4", "46,2,46,39")
+      ; fail
+
+  if-statistics5(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics5", "47,2,47,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "47,22,47,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "47,36,47,36") ; s
+      | 5
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics5", "47,2,47,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics5", "47,2,47,39")
+      ; fail
+
+  if-statistics6(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics6", "48,2,48,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "48,22,48,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "48,36,48,36") ; s
+      | 6
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics6", "48,2,48,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics6", "48,2,48,39")
+      ; fail
+
+  if-statistics7(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics7", "49,2,49,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "49,22,49,39")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "49,36,49,36") ; s
+      | 7
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics7", "49,2,49,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-statistics7", "49,2,49,39")
+      ; fail
+
+
 strategies
+  if-less-statistics(s|t) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics", "61,2,64,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "62,4,64,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "62,7,62,36")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "62,8,62,10") ; leq)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "62,15,62,28") ; get-statistics> ()
+                                                                                                           , t
+                                                                                                           ) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "63,6,63,6") ; s
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics", "61,2,64,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics", "61,2,64,6")
+      ; fail
 
-  if-less-statistics(s|t) = 
-    if <leq> (<get-statistics> (), t) then
-      s
-    end
+  if-less-statistics1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics1", "66,2,66,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "66,27,66,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "66,41,66,41") ; s
+      | 1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics1", "66,2,66,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics1", "66,2,66,44")
+      ; fail
 
-  if-less-statistics1(s) = if-statistics(s|1)
-  if-less-statistics2(s) = if-statistics(s|2)
-  if-less-statistics3(s) = if-statistics(s|3) 
-  if-less-statistics4(s) = if-statistics(s|4) 
-  if-less-statistics5(s) = if-statistics(s|5) 
-  if-less-statistics6(s) = if-statistics(s|6) 
-  if-less-statistics7(s) = if-statistics(s|7) 
+  if-less-statistics2(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics2", "67,2,67,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "67,27,67,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "67,41,67,41") ; s
+      | 2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics2", "67,2,67,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics2", "67,2,67,44")
+      ; fail
+
+  if-less-statistics3(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics3", "68,2,68,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "68,27,68,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "68,41,68,41") ; s
+      | 3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics3", "68,2,68,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics3", "68,2,68,44")
+      ; fail
+
+  if-less-statistics4(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics4", "69,2,69,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "69,27,69,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "69,41,69,41") ; s
+      | 4
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics4", "69,2,69,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics4", "69,2,69,44")
+      ; fail
+
+  if-less-statistics5(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics5", "70,2,70,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "70,27,70,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "70,41,70,41") ; s
+      | 5
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics5", "70,2,70,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics5", "70,2,70,44")
+      ; fail
+
+  if-less-statistics6(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics6", "71,2,71,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "71,27,71,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "71,41,71,41") ; s
+      | 6
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics6", "71,2,71,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics6", "71,2,71,44")
+      ; fail
+
+  if-less-statistics7(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics7", "72,2,72,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "72,27,72,44")
+    ; if-statistics(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "72,41,72,41") ; s
+      | 7
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics7", "72,2,72,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/stats.str", "if-less-statistics7", "72,2,72,44")
+      ; fail

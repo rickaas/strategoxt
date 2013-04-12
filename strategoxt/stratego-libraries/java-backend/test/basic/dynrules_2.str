@@ -1,9 +1,25 @@
 module dynrules_2
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
+
 
 rules
 
   main-dynrules_2 =
-     rules(Foo :+= 1 Foo :+=2); bagof-Foo
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_2.str", "main-dynrules_2", "8,2,9,40")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_2.str", "9,5,9,40")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_2.str", "9,5,9,29")
+       ; rules (
+           Foo :+= 1
+           Foo :+= 2
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_2.str", "9,32,9,40")
+    ; bagof-Foo
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_2.str", "main-dynrules_2", "8,2,9,40")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_2.str", "main-dynrules_2", "8,2,9,40")
+      ; fail

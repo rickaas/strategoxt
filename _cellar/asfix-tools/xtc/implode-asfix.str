@@ -1,95 +1,265 @@
-/**
- * Transformation from AsFix terms produced y the SDF2 parser to 
- * abstract syntax terms. The transformation removes layout and 
- * literals, collapses lexical terms to strings and replaces 
- * production applications by applications of a derived 
- * constructor name.
- */
 module implode-asfix
-imports 
-  libstratego-sglr 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-sglr
   libstratego-lib
 
+
 strategies
+  main-implode-asfix =
+    s-enter(|"_cellar/asfix-tools/xtc/implode-asfix.str", "main-implode-asfix", "15,2,16,61")
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "16,4,16,61")
+    ; io-wrap(
+        s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "16,12,16,32") ; implode-asfix-options
+      , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "16,35,16,60") ; implode-asfix-using-config
+      )
+    < s-exit(|"_cellar/asfix-tools/xtc/implode-asfix.str", "main-implode-asfix", "15,2,16,61")
+    + s-exit(|"_cellar/asfix-tools/xtc/implode-asfix.str", "main-implode-asfix", "15,2,16,61")
+      ; fail
 
-  main-implode-asfix = 
-    io-wrap(implode-asfix-options, implode-asfix-using-config)
-
-  /**
-   * @warning This strategy is also used by sglri.
-   */
   implode-asfix-using-config =
-    ?term
-    ; if <get-config> "--lex"    then asfix-flat-lex end
-    ; if <get-config> "--layout" then asfix-remove-layout end
-    ; if <get-config> "--nt"     then asfix-appl-to-sort end
-    ; if <get-config> "--list"   then asfix-flat-list end
-    ; if <get-config> "--lit"    then asfix-remove-lit end
-    ; if <get-config> "--appl"   then asfix-replace-appl end
-    ; if <get-config> "--inj"    then asfix-flat-injections end
-    ; if <get-config> "--alt"    then asfix-flat-alt end
-    ; if <get-config> "--seq"    then asfix-remove-seq end
-    ; if <get-config> "--pt"     then ?parsetree(<id>, _) end
-    ; try(
-        ?term
-        ; implode-asfix(not(<get-config> ("--concrete")))
-      )
-    ; if <get-config> "--yield-quotes" then
-        yield-asfix-quotes
+    s-enter(|"_cellar/asfix-tools/xtc/implode-asfix.str", "implode-asfix-using-config", "21,2,39,8")
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "22,4,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "22,4,22,8") ; ?term)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "23,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "23,6,23,55")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "23,9,23,28")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "23,10,23,19") ; get-config)> "--lex" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "23,38,23,51") ; asfix-flat-lex
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "24,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "24,6,24,60")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "24,9,24,31")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "24,10,24,19") ; get-config)> "--layout" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "24,38,24,56") ; asfix-remove-layout
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "25,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "25,6,25,59")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "25,9,25,27")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "25,10,25,19") ; get-config)> "--nt" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "25,38,25,55") ; asfix-appl-to-sort
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "26,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "26,6,26,56")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "26,9,26,29")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "26,10,26,19") ; get-config)> "--list" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "26,38,26,52") ; asfix-flat-list
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "27,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "27,6,27,57")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "27,9,27,28")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "27,10,27,19") ; get-config)> "--lit" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "27,38,27,53") ; asfix-remove-lit
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "28,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "28,6,28,59")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "28,9,28,29")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "28,10,28,19") ; get-config)> "--appl" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "28,38,28,55") ; asfix-replace-appl
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "29,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "29,6,29,62")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "29,9,29,28")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "29,10,29,19") ; get-config)> "--inj" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "29,38,29,58") ; asfix-flat-injections
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "30,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "30,6,30,55")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "30,9,30,28")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "30,10,30,19") ; get-config)> "--alt" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "30,38,30,51") ; asfix-flat-alt
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "31,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "31,6,31,57")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "31,9,31,28")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "31,10,31,19") ; get-config)> "--seq" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "31,38,31,53") ; asfix-remove-seq
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "32,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "32,6,32,60")
+       ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "32,9,32,27")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "32,10,32,19") ; get-config)> "--pt" then
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "32,38,32,56")
+           ; ?parsetree(
+                <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "32,50,32,51") ; id>
+              , _
+              )
+         end)
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "33,6,39,8")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "33,6,36,6")
+       ; try(
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "34,8,35,56")
+           ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "34,8,34,12") ; ?term)
+           ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "35,10,35,56")
+           ; implode-asfix(
+               s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "35,24,35,55")
+               ; not(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "35,28,35,54")
+                     ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "35,29,35,38") ; get-config)> ("--concrete"))
+             )
+         ))
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "37,6,39,8")
+    ; if s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "37,9,37,37")
+         ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "37,10,37,19") ; get-config)> "--yield-quotes" then
+        s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "38,8,38,25") ; yield-asfix-quotes
       end
+    < s-exit(|"_cellar/asfix-tools/xtc/implode-asfix.str", "implode-asfix-using-config", "21,2,39,8")
+    + s-exit(|"_cellar/asfix-tools/xtc/implode-asfix.str", "implode-asfix-using-config", "21,2,39,8")
+      ; fail
 
-  /**
-   * @warning These options are also used by sglri.
-   */
   implode-asfix-options =
-    Option( "--lex",    
-	where(<set-config>("--lex", <id>)),
-	!"--lex            Flatten lexical substrings to strings" )
-
-  + Option( "--layout", 
-	where(<set-config>("--layout", <id>)),
-	!"--layout         Remove layout nodes from the AsFix? parse tree" )
-
-  + Option( "--lit",    
-	where(<set-config>("--lit", <id>)),
-	!"--lit            Remove literal nodes from the AsFix? parse tree")
-
-  + Option( "--alt",    
-	where(<set-config>("--alt", <id>)),
-	!"--alt            Flat alternatives")
-
-  + Option( "--appl",   
-	where(<set-config>("--appl", <id>)),
-	!"--appl           Replace 'appl' applications by constructor applications" )
-
-  + Option( "--nt",     
-	where(<set-config>("--nt", <id>)),
-	!"--nt             Replace 'appl' applications by non-terminal application" )
-
-  + Option( "--inj",    
-	where(<set-config>("--inj", <id>)),
-	!"--inj            Remove injections from the parse tree." )
-
-  + Option( "--list",   
-	where(<set-config>("--list", <id>)),
-	!"--list           Flatten lists." )
-
-  + Option( "--seq",    
-	where(<set-config>("--seq", <id>)),
-	!"--seq            Replace sequences by tuples" )
-
-  + Option( "--pt",     
-	where(<set-config>("--pt", <id>)),
-	!"--pt             Remove the outer 'pt' function symbol from the parse tree" )
-
-  + Option( "--concrete",
-	where(<set-config>("--concrete", <id>)),
-        !"--concrete   Do not implode quotes (concrete object syntax)")
-
-  + Option( "--yield-quotes",
-      where(
-	    <set-config>("--yield-quotes", <id>)
-	  ; <set-config>("--concrete", <id>)	    
-      )
-    , !"--yield-quotes  Yield quotes (concrete object syntax) to single applications"
-    )
+    s-enter(|"_cellar/asfix-tools/xtc/implode-asfix.str", "implode-asfix-options", "44,2,95,4")
+    ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "45,4,95,4")
+    ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "45,4,47,59")
+       ; Option(
+           s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "45,12,45,18") ; "--lex"
+         , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "46,1,46,34")
+           ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "46,7,46,33")
+                   ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "46,8,46,17") ; set-config)> ( "--lex"
+                                                                                                         , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "46,30,46,31") ; id>
+                                                                                                         ))
+         , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "47,1,47,57")
+           ; !"--lex            Flatten lexical substrings to strings"
+         )
+       + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "49,4,95,4")
+         ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "49,4,51,68")
+            ; Option(
+                s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "49,12,49,21") ; "--layout"
+              , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "50,1,50,37")
+                ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "50,7,50,36")
+                        ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "50,8,50,17") ; set-config)> ( "--layout"
+                                                                                                              , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "50,33,50,34") ; id>
+                                                                                                              ))
+              , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "51,1,51,66")
+                ; !"--layout         Remove layout nodes from the AsFix? parse tree"
+              )
+            + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "53,4,95,4")
+              ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "53,4,55,68")
+                 ; Option(
+                     s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "53,12,53,18") ; "--lit"
+                   , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "54,1,54,34")
+                     ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "54,7,54,33")
+                             ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "54,8,54,17") ; set-config)> ( "--lit"
+                                                                                                                   , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "54,30,54,31") ; id>
+                                                                                                                   ))
+                   , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "55,1,55,67")
+                     ; !"--lit            Remove literal nodes from the AsFix? parse tree"
+                   )
+                 + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "57,4,95,4")
+                   ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "57,4,59,38")
+                      ; Option(
+                          s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "57,12,57,18") ; "--alt"
+                        , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "58,1,58,34")
+                          ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "58,7,58,33")
+                                  ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "58,8,58,17") ; set-config)> ( "--alt"
+                                                                                                                        , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "58,30,58,31") ; id>
+                                                                                                                        ))
+                        , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "59,1,59,37")
+                          ; !"--alt            Flat alternatives"
+                        )
+                      + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "61,4,95,4")
+                        ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "61,4,63,77")
+                           ; Option(
+                               s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "61,12,61,19") ; "--appl"
+                             , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "62,1,62,35")
+                               ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "62,7,62,34")
+                                       ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "62,8,62,17") ; set-config)> ( "--appl"
+                                                                                                                             , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "62,31,62,32") ; id>
+                                                                                                                             ))
+                             , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "63,1,63,75")
+                               ; !"--appl           Replace 'appl' applications by constructor applications"
+                             )
+                           + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "65,4,95,4")
+                             ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "65,4,67,77")
+                                ; Option(
+                                    s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "65,12,65,17") ; "--nt"
+                                  , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "66,1,66,33")
+                                    ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "66,7,66,32")
+                                            ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "66,8,66,17") ; set-config)> ( "--nt"
+                                                                                                                                  , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "66,29,66,30") ; id>
+                                                                                                                                  ))
+                                  , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "67,1,67,75")
+                                    ; !"--nt             Replace 'appl' applications by non-terminal application"
+                                  )
+                                + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "69,4,95,4")
+                                  ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "69,4,71,60")
+                                     ; Option(
+                                         s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "69,12,69,18") ; "--inj"
+                                       , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "70,1,70,34")
+                                         ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "70,7,70,33")
+                                                 ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "70,8,70,17") ; set-config)> ( "--inj"
+                                                                                                                                       , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "70,30,70,31") ; id>
+                                                                                                                                       ))
+                                       , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "71,1,71,58")
+                                         ; !"--inj            Remove injections from the parse tree."
+                                       )
+                                     + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "73,4,95,4")
+                                       ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "73,4,75,36")
+                                          ; Option(
+                                              s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "73,12,73,19") ; "--list"
+                                            , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "74,1,74,35")
+                                              ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "74,7,74,34")
+                                                      ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "74,8,74,17") ; set-config)> ( "--list"
+                                                                                                                                            , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "74,31,74,32") ; id>
+                                                                                                                                            ))
+                                            , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "75,1,75,34")
+                                              ; !"--list           Flatten lists."
+                                            )
+                                          + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "77,4,95,4")
+                                            ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "77,4,79,49")
+                                               ; Option(
+                                                   s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "77,12,77,18") ; "--seq"
+                                                 , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "78,1,78,34")
+                                                   ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "78,7,78,33")
+                                                           ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "78,8,78,17") ; set-config)> ( "--seq"
+                                                                                                                                                 , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "78,30,78,31") ; id>
+                                                                                                                                                 ))
+                                                 , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "79,1,79,47")
+                                                   ; !"--seq            Replace sequences by tuples"
+                                                 )
+                                               + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "81,4,95,4")
+                                                 ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "81,4,83,79")
+                                                    ; Option(
+                                                        s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "81,12,81,17") ; "--pt"
+                                                      , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "82,1,82,33")
+                                                        ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "82,7,82,32")
+                                                                ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "82,8,82,17") ; set-config)> ( "--pt"
+                                                                                                                                                      , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "82,29,82,30") ; id>
+                                                                                                                                                      ))
+                                                      , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "83,1,83,77")
+                                                        ; !"--pt             Remove the outer 'pt' function symbol from the parse tree"
+                                                      )
+                                                    + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "85,4,95,4")
+                                                      ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "85,4,87,70")
+                                                         ; Option(
+                                                             s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "85,12,85,23") ; "--concrete"
+                                                           , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "86,1,86,39")
+                                                             ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "86,7,86,38")
+                                                                     ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "86,8,86,17") ; set-config)> ( "--concrete"
+                                                                                                                                                           , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "86,35,86,36") ; id>
+                                                                                                                                                           ))
+                                                           , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "87,8,87,69")
+                                                             ; !"--concrete   Do not implode quotes (concrete object syntax)"
+                                                           )
+                                                         + s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "89,4,95,4")
+                                                           ; Option(
+                                                               s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "89,12,89,27") ; "--yield-quotes"
+                                                             , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "90,6,93,6")
+                                                               ; where(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "91,5,92,36")
+                                                                       ; (s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "91,5,91,40")
+                                                                          ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "91,6,91,15") ; set-config)> ( "--yield-quotes"
+                                                                                                                                                                , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "91,37,91,38") ; id>
+                                                                                                                                                                ))
+                                                                       ; s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "92,5,92,36")
+                                                                       ; <(s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "92,6,92,15") ; set-config)> ( "--concrete"
+                                                                                                                                                             , <s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "92,33,92,34") ; id>
+                                                                                                                                                             ))
+                                                             , s-step(|"_cellar/asfix-tools/xtc/implode-asfix.str", "94,6,94,84")
+                                                               ; !"--yield-quotes  Yield quotes (concrete object syntax) to single applications"
+                                                             ))))))))))))
+    < s-exit(|"_cellar/asfix-tools/xtc/implode-asfix.str", "implode-asfix-options", "44,2,95,4")
+    + s-exit(|"_cellar/asfix-tools/xtc/implode-asfix.str", "implode-asfix-options", "44,2,95,4")
+      ; fail

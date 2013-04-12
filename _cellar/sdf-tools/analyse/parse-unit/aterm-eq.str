@@ -1,90 +1,209 @@
-/**
- * Tests explodes ATerms for equivalence with wildcards.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module aterm-eq
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   ATerms
 
+
 strategies
-
   aterm-eq =
-    rec x(
-        list-term-eq(x)
-    +    int-term-eq(x)
-    +    fun-term-eq(x)
-    +   appl-term-eq(x)
-    +        afun-eq(x)
-    +    wildcard-eq(x)
-    + wildcardvar-eq(x)
-    )
-
-rules
-
-  /**
-   * Wildcard
-   */
-  wildcard-eq(x) =
-    (id, wildcard())
-
-  wildcard-eq(x) =
-    (wildcard(), id)
-
-rules
-
-  wildcardvar-eq(x) =
-    ?(list(wildcardvar()), list(_))
-
-  wildcardvar-eq(x) =
-    ?(list(_), list(wildcardvar()))
-
-  wildcardvar-eq(x) =
-    ?(appl(s1, wildcardvar()), appl(s2, _))
-    ; where(<x> (s1, s2))
-
-  wildcardvar-eq(x) =
-    ?(appl(s1, _), appl(s2, wildcardvar()))
-    ; where(<x> (s1, s2))
-
-rules
-
-  /**
-   * list
-   */
-  list-term-eq(x) =
-    ?(list(xs1), list(xs2))
-    ; where(
-        <is-list> xs1
-      ; <is-list> xs2
-      ; <zip(x)> (xs1, xs2)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "aterm-eq", "12,2,21,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "13,4,21,4")
+    ; rec x (
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "14,8,20,22")
+        ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "14,8,14,22")
+           ; list-term-eq(
+               s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "14,21,14,21") ; x
+             )
+           + s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "15,9,20,22")
+             ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "15,9,15,22")
+                ; int-term-eq(
+                    s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "15,21,15,21") ; x
+                  )
+                + s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "16,9,20,22")
+                  ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "16,9,16,22")
+                     ; fun-term-eq(
+                         s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "16,21,16,21") ; x
+                       )
+                     + s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "17,8,20,22")
+                       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "17,8,17,22")
+                          ; appl-term-eq(
+                              s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "17,21,17,21") ; x
+                            )
+                          + s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "18,13,20,22")
+                            ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "18,13,18,22")
+                               ; afun-eq(
+                                   s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "18,21,18,21") ; x
+                                 )
+                               + s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "19,9,20,22")
+                                 ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "19,9,19,22")
+                                    ; wildcard-eq(
+                                        s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "19,21,19,21") ; x
+                                      )
+                                    + s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "20,6,20,22")
+                                      ; wildcardvar-eq(
+                                          s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "20,21,20,21") ; x
+                                        )))))))
       )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "aterm-eq", "12,2,21,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "aterm-eq", "12,2,21,4")
+      ; fail
 
-  /**
-   * integer
-   */
-  int-term-eq(x) =
-    ?(int(natural(s)), int(natural(s)))
-
-  /**
-   * just fun
-   */
-  fun-term-eq(x) =
-    ?(fun(a1), fun(a2))
-    ; where(<x> (a1, a2))
-
-  /**
-   * appl
-   */
-  appl-term-eq(x) =
-    ?(appl(s1, x1*), appl(s2, x2*))
-    ; where(<x> (s1, s2))
-    ; where(<zip(x)> (x1*, x2*))
 
 rules
 
-  afun-eq(x) = 
-    ?(unquoted(s), unquoted(s))
+  wildcard-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcard-eq", "28,2,29,19")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "29,4,29,19")
+    ; ( s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "29,5,29,6") ; id
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "29,9,29,18") ; wildcard
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcard-eq", "28,2,29,19")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcard-eq", "28,2,29,19")
+      ; fail
 
-  afun-eq(x) = 
-    ?(quoted(s), quoted(s))
+  wildcard-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcard-eq", "31,2,32,19")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "32,4,32,19")
+    ; ( s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "32,5,32,14") ; wildcard
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "32,17,32,18") ; id
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcard-eq", "31,2,32,19")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcard-eq", "31,2,32,19")
+      ; fail
+
+
+rules
+
+  wildcardvar-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "36,2,37,34")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "37,4,37,34")
+    ; ?(list(wildcardvar()), list(_))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "36,2,37,34")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "36,2,37,34")
+      ; fail
+
+  wildcardvar-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "39,2,40,34")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "40,4,40,34")
+    ; ?(list(_), list(wildcardvar()))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "39,2,40,34")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "39,2,40,34")
+      ; fail
+
+  wildcardvar-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "42,2,44,24")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "43,4,44,24")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "43,4,43,42")
+       ; ?( appl(s1, wildcardvar())
+          , appl(s2, _)
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "44,6,44,24")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "44,12,44,23")
+            ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "44,13,44,13") ; x)> (s1, s2))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "42,2,44,24")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "42,2,44,24")
+      ; fail
+
+  wildcardvar-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "46,2,48,24")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "47,4,48,24")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "47,4,47,42")
+       ; ?( appl(s1, _)
+          , appl(s2, wildcardvar())
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "48,6,48,24")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "48,12,48,23")
+            ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "48,13,48,13") ; x)> (s1, s2))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "46,2,48,24")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "wildcardvar-eq", "46,2,48,24")
+      ; fail
+
+
+rules
+
+  list-term-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "list-term-eq", "55,2,61,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "56,4,61,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "56,4,56,26")
+       ; ?(list(xs1), list(xs2)))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "57,6,61,6")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "58,8,60,26")
+            ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "58,8,58,20")
+               ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "58,9,58,15") ; is-list)> xs1)
+            ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "59,8,60,26")
+            ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "59,8,59,20")
+               ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "59,9,59,15") ; is-list)> xs2)
+            ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "60,8,60,26")
+            ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "60,9,60,14")
+                ; zip(
+                    s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "60,13,60,13") ; x
+                  ))> (xs1, xs2))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "list-term-eq", "55,2,61,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "list-term-eq", "55,2,61,6")
+      ; fail
+
+  int-term-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "int-term-eq", "66,2,67,38")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "67,4,67,38")
+    ; ?( int(natural(s))
+       , int(natural(s))
+       )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "int-term-eq", "66,2,67,38")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "int-term-eq", "66,2,67,38")
+      ; fail
+
+  fun-term-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "fun-term-eq", "72,2,74,24")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "73,4,74,24")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "73,4,73,22")
+       ; ?(fun(a1), fun(a2)))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "74,6,74,24")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "74,12,74,23")
+            ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "74,13,74,13") ; x)> (a1, a2))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "fun-term-eq", "72,2,74,24")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "fun-term-eq", "72,2,74,24")
+      ; fail
+
+  appl-term-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "appl-term-eq", "79,2,82,31")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "80,4,82,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "80,4,80,34")
+       ; ?( appl(s1, x1*)
+          , appl(s2, x2*)
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "81,6,82,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "81,6,81,24")
+       ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "81,12,81,23")
+               ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "81,13,81,13") ; x)> (s1, s2)))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "82,6,82,31")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "82,12,82,30")
+            ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "82,13,82,18")
+                ; zip(
+                    s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "82,17,82,17") ; x
+                  ))> (x1*, x2*))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "appl-term-eq", "79,2,82,31")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "appl-term-eq", "79,2,82,31")
+      ; fail
+
+
+rules
+
+  afun-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "afun-eq", "86,2,87,30")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "87,4,87,30")
+    ; ?(unquoted(s), unquoted(s))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "afun-eq", "86,2,87,30")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "afun-eq", "86,2,87,30")
+      ; fail
+
+  afun-eq(x) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "afun-eq", "89,2,90,26")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "90,4,90,26")
+    ; ?(quoted(s), quoted(s))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "afun-eq", "89,2,90,26")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/aterm-eq.str", "afun-eq", "89,2,90,26")
+      ; fail

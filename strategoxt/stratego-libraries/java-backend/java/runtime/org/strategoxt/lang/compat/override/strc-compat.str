@@ -1,9 +1,8 @@
-/** 
- * Overrides xtc-based library imports in strc.
- *
- * @author Lennart Kats <lennart add lclnet.nl>
- */
 module strc-compat
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
 
 imports
   libstratego-lib
@@ -11,34 +10,69 @@ imports
   libstrc
   strj-version
 
-strategies
 
+strategies
   override strc-get-include-dirs =
-    <get-config> "-I"
-  
-  extend pack-stratego-parse-stratego:
-    (IncludeFromPath(name), includes) -> ("", ast) // (empty result name goes into .dep)
-    where
-      switch !name
-        case "libstratego-lib" + "libstrategolib":
-          import-term(libstratego-lib.rtree)
-        case "libstratego-xtc":      import-term(libstratego-xtc.rtree)
-        case "libstratego-sglr":     import-term(libstratego-sglr.rtree)
-        case "libstratego-rtg":      import-term(libstratego-rtg.rtree)
-        case "libstratego-sdf":      import-term(libstratego-sdf.rtree)
-        case "libstratego-aterm":    import-term(libstratego-aterm.rtree)
-        case "libstratego-gpp":      import-term(libstratego-gpp.rtree)
-        case "libstratego-tool-doc": import-term(libstratego-tool-doc.rtree)
-        case "libstratego-parallel": import-term(libstratego-parallel.rtree)
-        case "libstrc":              import-term(libstrc.rtree)
-      end => ast
-  
-   extend pack-stratego-parse-stratego:
-     (IncludeFromPath("libjava-front"), includes) -> result
-     where
-       proceed => result // prefer local (-I) definition
-     <+
-       result := ("", <import-term(libjava-front.rtree)>)
-   
-   extend xtc-find =
-     ?"StrategoRenamed.sdf" // no warning
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "strc-get-include-dirs", "16,11,17,20")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "17,4,17,20")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "17,5,17,14") ; get-config)> "-I"
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "strc-get-include-dirs", "16,11,17,20")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "strc-get-include-dirs", "16,11,17,20")
+               ; fail
+
+  extend pack-stratego-parse-stratego :
+           (IncludeFromPath(name), includes) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "19,9,34,15")> ("", ast)
+           where r-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "19,9,34,15")
+                 <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "19,9,34,15")
+                    ; fail
+           where s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "22,6,34,15")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "22,6,34,8")
+                    ; switch s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "22,13,22,17") ; !name
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "23,13,23,48")
+                             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "23,13,23,29") ; "libstratego-lib"
+                                + s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "23,33,23,48") ; "libstrategolib") :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "24,10,24,43") ; import-term(libstratego-lib.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "25,13,25,29") ; "libstratego-xtc" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "25,37,25,70") ; import-term(libstratego-xtc.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "26,13,26,30") ; "libstratego-sglr" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "26,37,26,71") ; import-term(libstratego-sglr.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "27,13,27,29") ; "libstratego-rtg" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "27,37,27,70") ; import-term(libstratego-rtg.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "28,13,28,29") ; "libstratego-sdf" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "28,37,28,70") ; import-term(libstratego-sdf.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "29,13,29,31") ; "libstratego-aterm" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "29,37,29,72") ; import-term(libstratego-aterm.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "30,13,30,29") ; "libstratego-gpp" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "30,37,30,70") ; import-term(libstratego-gpp.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "31,13,31,34") ; "libstratego-tool-doc" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "31,37,31,75") ; import-term(libstratego-tool-doc.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "32,13,32,34") ; "libstratego-parallel" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "32,37,32,75") ; import-term(libstratego-parallel.rtree)
+                        case s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "33,13,33,21") ; "libstrc" :
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "33,37,33,62") ; import-term(libstrc.rtree)
+                      end) => ast
+                 <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "19,9,34,15")
+                    ; fail
+
+  extend pack-stratego-parse-stratego :
+           (IncludeFromPath("libjava-front"), includes) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "36,10,41,56")> result
+           where r-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "36,10,41,56")
+                 <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "36,10,41,56")
+                    ; fail
+           where s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "39,7,41,56")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "39,7,39,23")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "39,7,39,13") ; proceed) => result
+                    <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "41,7,41,56")
+                       ; result := ( ""
+                                   , <s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "41,23,41,54") ; import-term(libjava-front.rtree)>
+                                   ))
+                 <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "pack-stratego-parse-stratego", "36,10,41,56")
+                    ; fail
+
+  extend xtc-find =
+           s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "xtc-find", "43,10,44,26")
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "44,5,44,26")
+           ; ?"StrategoRenamed.sdf"
+           < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "xtc-find", "43,10,44,26")
+           + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/strc-compat.str", "xtc-find", "43,10,44,26")
+             ; fail

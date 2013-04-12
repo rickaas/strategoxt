@@ -1,9 +1,30 @@
 module stratego/xtc/c99/Repository
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   read-repository-file =
-    ReadFromFile
-    <+ if not(<get-config> "register") then
-         log(|Error(), <concat-strings> ["repository ", <id> , " cannot be read."])
-       end
-       ; ![]
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "read-repository-file", "4,2,9,11")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "5,4,9,11")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "5,4,5,15") ; ReadFromFile
+       <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "6,7,9,11")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "6,7,8,9")
+             ; if s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "6,10,6,37")
+                  ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "6,14,6,36")
+                        ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "6,15,6,24") ; get-config)> "register") then
+                 s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "7,9,7,82")
+                 ; log(
+                   | Error()
+                   , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "7,24,7,37") ; concat-strings> [ "repository "
+                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "7,57,7,58") ; id>
+                                                                                                                                      , " cannot be read."
+                                                                                                                                      ]
+                   )
+               end)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "9,9,9,11")
+          ; ![])
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "read-repository-file", "4,2,9,11")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/Repository.str", "read-repository-file", "4,2,9,11")
+      ; fail

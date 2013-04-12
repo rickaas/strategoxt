@@ -1,20 +1,78 @@
 module test31
-imports libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
   main =
-    test-suite(!"test31",
-      test1
-    )
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "main", "5,2,8,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "6,4,8,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "6,15,6,23")
+        ; !"test31"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "7,6,7,10") ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "main", "5,2,8,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "main", "5,2,8,4")
+      ; fail
 
   test1 =
-    apply-test(!"test1a"
-        , id
-        , !['a', '\n', 'b', '\ ', '\'', '&', 'l', 't', '\t', ';']
-        , ![97,10,98,32,39,38,108,116,9,59]
-        );
-    apply-test(!"test1b"
-        , implode-string
-        , !['a', '\n', 'b', '\ ', '\'', '&', 'l', 't', ';']
-        , !"a\nb '&lt;"
-        )
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "test1", "10,2,20,8")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "11,4,20,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "11,4,15,8")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "11,15,11,23")
+           ; !"test1a"
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "12,10,12,11") ; id
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "13,10,13,64")
+           ; ![ 'a'
+              , '\n'
+              , 'b'
+              , '\ '
+              , '\''
+              , '&'
+              , 'l'
+              , 't'
+              , '\t'
+              , ';'
+              ]
+         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "14,10,14,42")
+           ; ![ 97
+              , 10
+              , 98
+              , 32
+              , 39
+              , 38
+              , 108
+              , 116
+              , 9
+              , 59
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "16,4,20,8")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "16,15,16,23")
+        ; !"test1b"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "17,10,17,23") ; implode-string
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "18,10,18,58")
+        ; ![ 'a'
+           , '\n'
+           , 'b'
+           , '\ '
+           , '\''
+           , '&'
+           , 'l'
+           , 't'
+           , ';'
+           ]
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "19,10,19,22")
+        ; !"a\nb '&lt;"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "test1", "10,2,20,8")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test31.str", "test1", "10,2,20,8")
+      ; fail

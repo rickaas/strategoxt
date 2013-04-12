@@ -1,289 +1,515 @@
-/**
- * Term input and output.
- */
 module system/io/term
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   system/io/char
   system/io/dir
   system/io/file
   system/io/process
-
-  term/string 
+  term/string
   term/integer
   collection/list/common
   strategy/conditional
   util/config/options
 
-/**
- * Term input and output
- */
-strategies
 
-  /**
-   * <ReadFromFile> file reads the term in file. 
-   * The file needs to be in textual or binary ATerm format.
-   * 
-   * @type File -> a
-   */
+strategies
   ReadFromFile =
-      ( <open-stream> (<id>, "r")
-      <+ <conc-strings; perror; fail> ("SSL/ReadFromFile ", <id>))
-    ; where(read-from-stream => trm)
-    ; fclose
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "ReadFromFile", "28,2,33,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "29,6,33,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "29,8,30,64")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "29,8,29,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "29,9,29,19") ; open-stream)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "29,24,29,25") ; id>
+                                                                                                                 , "r"
+                                                                                                                 )
+          <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,9,30,64")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,10,30,35")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,10,30,21") ; conc-strings)
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,24,30,35")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,24,30,29") ; perror)
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,32,30,35")
+                 ; fail)> ( "SSL/ReadFromFile "
+                          , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "30,61,30,62") ; id>
+                          )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "31,6,33,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "31,6,31,35")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "31,12,31,34")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "31,12,31,27") ; read-from-stream) => trm))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "32,6,33,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "32,6,32,11") ; fclose)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "33,6,33,9")
     ; !trm
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "ReadFromFile", "28,2,33,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "ReadFromFile", "28,2,33,9")
+      ; fail
 
-  /**
-   * <WriteToBinaryFile> (file, term) writes term to file in BAF format.i
-   *
-   * @type File * a -> a
-   */
-  WriteToBinaryFile = 
-    WriteToFile(write-in-baf-to-stream)
+  WriteToBinaryFile =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToBinaryFile", "40,2,41,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "41,4,41,38")
+    ; WriteToFile(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "41,16,41,37") ; write-in-baf-to-stream
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToBinaryFile", "40,2,41,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToBinaryFile", "40,2,41,38")
+      ; fail
 
-  /**
-   * <WriteToTextFile> (file, term) writes term to file in textual ATerm format.
-   *
-   * @type File * a -> a
-   */
-  WriteToTextFile = 
-    WriteToFile(write-in-text-to-stream; <fputc> ('\n', <id>))
+  WriteToTextFile =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToTextFile", "48,2,49,61")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "49,4,49,61")
+    ; WriteToFile(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "49,16,49,60")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "49,16,49,38") ; write-in-text-to-stream)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "49,41,49,60")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "49,42,49,46") ; fputc)> ( '\n'
+                                                                                                          , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "49,57,49,58") ; id>
+                                                                                                          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToTextFile", "48,2,49,61")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToTextFile", "48,2,49,61")
+      ; fail
 
-  /**
-   * <WriteToFile(s)> (file, term) writes term to file with the writer s.
-   *
-   * @type (Stream * a -> Stream) * File * a -> a
-   */
   WriteToFile(writer) =
-      ?(<id>, trm)
-    ; <open-stream> (<id>, "w")
-    ; <writer> (<id>, trm)
-    ; fclose
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToFile", "56,2,61,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "57,6,61,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "57,6,57,17")
+       ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "57,9,57,10") ; id>
+          , trm
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "58,6,61,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "58,6,58,30")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "58,7,58,17") ; open-stream)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "58,22,58,23") ; id>
+                                                                                                              , "w"
+                                                                                                              ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "59,6,61,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "59,6,59,25")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "59,7,59,12") ; writer)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "59,17,59,18") ; id>
+                                                                                                         , trm
+                                                                                                         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "60,6,61,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "60,6,60,11") ; fclose)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "61,6,61,9")
     ; !trm
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToFile", "56,2,61,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "WriteToFile", "56,2,61,9")
+      ; fail
 
-  open(file) = 
-    file; ReadFromFile
+  open(file) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "open", "63,2,64,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "64,4,64,21")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "64,4,64,7") ; file)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "64,10,64,21")
+    ; ReadFromFile
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "open", "63,2,64,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "open", "63,2,64,21")
+      ; fail
 
-  save(file) = 
-    <WriteToTextFile> (<file>, <id>)
+  save(file) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "save", "66,2,67,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "67,4,67,35")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "67,5,67,19") ; WriteToTextFile)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "67,24,67,27") ; file>
+                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "67,32,67,33") ; id>
+                                                                                                               )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "save", "66,2,67,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "save", "66,2,67,35")
+      ; fail
 
-/**
- * ATerm input and output with streams
- *
- * @TODO move to io module.
- */
+
 strategies
-
-  /**
-   * Writes an ATerm to a Stream.
-   *
-   * @type Stream * _ -> Stream
-   */
   write-to-stream =
-    write-in-baf-to-stream
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-stream", "81,2,82,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "82,4,82,25")
+    ; write-in-baf-to-stream
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-stream", "81,2,82,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-stream", "81,2,82,25")
+      ; fail
 
   write-in-baf-to-stream =
-    ?(Stream(stream), term); prim("SSL_write_term_to_stream_baf", stream, term); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-baf-to-stream", "84,2,85,93")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "85,4,85,93")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "85,4,85,26")
+       ; ?(Stream(stream), term))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "85,29,85,93")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "85,29,85,78")
+       ; prim("SSL_write_term_to_stream_baf", stream, term))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "85,81,85,93")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "85,90,85,91") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-baf-to-stream", "84,2,85,93")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-baf-to-stream", "84,2,85,93")
+      ; fail
 
   write-in-taf-to-stream =
-    ?(Stream(stream), term); prim("SSL_write_term_to_stream_taf", stream, term); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-taf-to-stream", "87,2,88,93")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "88,4,88,93")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "88,4,88,26")
+       ; ?(Stream(stream), term))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "88,29,88,93")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "88,29,88,78")
+       ; prim("SSL_write_term_to_stream_taf", stream, term))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "88,81,88,93")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "88,90,88,91") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-taf-to-stream", "87,2,88,93")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-taf-to-stream", "87,2,88,93")
+      ; fail
 
   write-in-text-to-stream =
-    ?(Stream(stream), term); prim("SSL_write_term_to_stream_text", stream, term); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-text-to-stream", "90,2,91,94")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "91,4,91,94")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "91,4,91,26")
+       ; ?(Stream(stream), term))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "91,29,91,94")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "91,29,91,79")
+       ; prim("SSL_write_term_to_stream_text", stream, term))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "91,82,91,94")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "91,91,91,92") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-text-to-stream", "90,2,91,94")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-in-text-to-stream", "90,2,91,94")
+      ; fail
 
-  /**
-   * Reads an ATerm from a Stream
-   *
-   * @type Stream -> _
-   */
   read-from-stream =
-    ?Stream(stream); prim("SSL_read_term_from_stream", stream)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "read-from-stream", "98,2,99,61")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "99,4,99,61")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "99,4,99,18")
+       ; ?Stream(stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "99,21,99,61")
+    ; prim("SSL_read_term_from_stream", stream)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "read-from-stream", "98,2,99,61")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "read-from-stream", "98,2,99,61")
+      ; fail
 
-  /**
-   * Reads an ATerm from a String
-   *
-   * @type String -> _
-   */
   read-from-string =
-    ?s; prim("SSL_read_term_from_string", s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "read-from-string", "106,2,107,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "107,4,107,43")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "107,4,107,5") ; ?s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "107,8,107,43")
+    ; prim("SSL_read_term_from_string", s)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "read-from-string", "106,2,107,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "read-from-string", "106,2,107,43")
+      ; fail
 
-  /**
-   * Writes an ATerm to a String
-   *
-   * @type a -> String
-   */
   write-to-string =
-    ?t; prim("SSL_write_term_to_string", t)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-string", "114,2,115,42")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "115,4,115,42")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "115,4,115,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "115,8,115,42")
+    ; prim("SSL_write_term_to_string", t)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-string", "114,2,115,42")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-string", "114,2,115,42")
+      ; fail
 
-  /**
-   * Writes an ATerm to a binary string represented as a list of chars.
-   *
-   * @type a -> List(Char)
-   */
   write-to-binary-string =
-    ?t; prim("SSL_write_term_to_binary_string", t)  
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-binary-string", "122,2,123,49")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "123,4,123,49")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "123,4,123,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "123,8,123,49")
+    ; prim("SSL_write_term_to_binary_string", t)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-binary-string", "122,2,123,49")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-binary-string", "122,2,123,49")
+      ; fail
 
-  /**
-   * Writes an ATerm to a shared string represented as a list of chars.
-   *
-   * @type a -> List(Char)
-   */
   write-to-shared-string =
-    ?t; prim("SSL_write_term_to_shared_string", t)  
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-shared-string", "130,2,131,49")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "131,4,131,49")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "131,4,131,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "131,8,131,49")
+    ; prim("SSL_write_term_to_shared_string", t)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-shared-string", "130,2,131,49")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "write-to-shared-string", "130,2,131,49")
+      ; fail
+
 
 strategies
-
-  /**
-   * Prints the terms to a stream. If a term is a string it is printed 
-   * without quotes, otherwise it is printed as a term.
-   *
-   * @type Stream * [a] -> Stream
-   */
   fprint =
-    (?Stream(_) <+ stdio-stream, id)
-    ; ?(stream, <id>)
-    ; map(
-        where(
-          is-string
-        < <fputs> (<id>, stream)
-        + <write-in-text-to-stream> (stream, <id>)
-        )
-      )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fprint", "141,2,151,12")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "142,4,151,12")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "142,4,142,35")
+       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "142,5,142,30")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "142,5,142,14")
+              ; ?Stream(_)
+              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "142,19,142,30") ; stdio-stream)
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "142,33,142,34") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "143,6,151,12")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "143,6,143,20")
+       ; ?( stream
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "143,17,143,18") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "144,6,151,12")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "144,6,150,6")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "145,8,149,8")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "146,10,148,49")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "146,10,146,18") ; is-string
+                      < s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "147,10,147,31")
+                        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "147,11,147,15") ; fputs)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "147,20,147,21") ; id>
+                                                                                                                            , stream
+                                                                                                                            )
+                      + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "148,10,148,49")
+                        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "148,11,148,33") ; write-in-text-to-stream)> ( stream
+                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "148,46,148,47") ; id>
+                                                                                                                                              )))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "151,6,151,12")
     ; !stream
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fprint", "141,2,151,12")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fprint", "141,2,151,12")
+      ; fail
 
-  /**
-   * fprint, followed by a newline.
-   *
-   * @type Stream * [a] -> Stream
-   */
   fprintnl =
-    fprint; <fputc> ('\n', <?Stream(_) <+ stdio-stream>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fprintnl", "158,2,159,55")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,4,159,55")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,4,159,9") ; fprint)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,12,159,55")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,13,159,17") ; fputc)> ( '\n'
+                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,28,159,53")
+                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,28,159,37")
+                                                                                                              ; ?Stream(_)
+                                                                                                              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "159,42,159,53") ; stdio-stream)>
+                                                                                                        )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fprintnl", "158,2,159,55")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fprintnl", "158,2,159,55")
+      ; fail
 
- /**
-  * Prints terms to a file. If \verb|ti| is a string it is printed without 
-  * quotes, otherwise it is printed as a term. \verb|printnl| has the same
-  * behaviour, but also prints a newline after \verb|tn|.
-  *
-  * E.g. <print> (file, [t1,...,tn]) prints terms ti to file. Terms ti 
-  * that are strings are printed without quotes  
-  *
-  * @obsolete use fprint
-  */
   print =
-    ?(stream, strs)
-    ; obsolete(!"print: use fprint")
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "print", "171,2,174,11")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "172,4,174,11")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "172,4,172,18")
+       ; ?(stream, strs))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "173,6,174,11")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "173,6,173,35")
+       ; obsolete(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "173,15,173,34")
+           ; !"print: use fprint"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "174,6,174,11")
     ; fprint
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "print", "171,2,174,11")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "print", "171,2,174,11")
+      ; fail
 
- /**
-  * Same as print, but prints a newline at the end. 
-  *
-  * @obsolete use fprintnl
-  */
   printnl =
-    ?(stream, strs)
-    ; obsolete(!"printnl: use fprintnl")
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "printnl", "181,2,183,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "182,4,183,39")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "182,4,182,18")
+       ; ?(stream, strs))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "183,6,183,39")
+    ; obsolete(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "183,15,183,38")
+        ; !"printnl: use fprintnl"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "printnl", "181,2,183,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "printnl", "181,2,183,39")
+      ; fail
+
 
 strategies
+  debug =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug", "193,2,194,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "194,4,194,39")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "194,10,194,38")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "194,11,194,18") ; fprintnl)> ( stderr()
+                                                                                                                   , [<s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "194,34,194,35") ; id>]
+                                                                                                                   ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug", "193,2,194,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug", "193,2,194,39")
+      ; fail
 
-  /**
-   * Prints the current term to stderr without changing it.
-   * This is a useful strategy for debugging specifications (hence its name).
-   *
-   * @type  a -> a
-   */
-  debug = 
-    where(<fprintnl> (stderr(), [<id>]))
+  debug(msg) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug", "201,2,202,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "202,4,202,45")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "202,10,202,44")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "202,11,202,18") ; fprintnl)> ( stderr()
+                                                                                                                   , [ <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "202,34,202,36") ; msg>
+                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "202,40,202,41") ; id>
+                                                                                                                     ]
+                                                                                                                   ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug", "201,2,202,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug", "201,2,202,45")
+      ; fail
 
-  /**
-   * Prints the term produced by applying msg followed by the current term to stderr.
-   *
-   * @type  a -> a
-   */
-  debug(msg) = 
-    where(<fprintnl> (stderr(), [<msg>,<id>]))
 
 strategies
-    
-  debug-depth = 
-    debug-depth(!4, !"")
+  debug-depth =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "206,2,207,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "207,4,207,23")
+    ; debug-depth(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "207,16,207,17")
+        ; !4
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "207,20,207,22")
+        ; !""
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "206,2,207,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "206,2,207,23")
+      ; fail
 
-  debug-depth(depth) = 
-    debug-depth(depth, !"")
-    
-  debug-depth(depth, s) = 
-    where(  
-      at-depth(depth, !"...")
-    ; debug(s)
-    )
-    
+  debug-depth(depth) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "209,2,210,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "210,4,210,26")
+    ; debug-depth(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "210,16,210,20") ; depth
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "210,23,210,25")
+        ; !""
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "209,2,210,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "209,2,210,26")
+      ; fail
+
+  debug-depth(depth, s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "212,2,216,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "213,4,216,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "214,6,215,13")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "214,6,214,28")
+               ; at-depth(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "214,15,214,19") ; depth
+                 , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "214,22,214,27")
+                   ; !"..."
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "215,6,215,13")
+            ; debug(
+                s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "215,12,215,12") ; s
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "212,2,216,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "debug-depth", "212,2,216,4")
+      ; fail
+
+
 strategies
+  say(msg) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "say", "226,2,227,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "227,4,227,20")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "227,10,227,19")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "227,10,227,12") ; msg)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "227,15,227,19")
+            ; debug)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "say", "226,2,227,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "say", "226,2,227,20")
+      ; fail
 
-  /**
-   * Prints the term produced by applying msg to stderr.
-   *
-   * @param  term to print to stderr
-   * @type   a -> a
-   */
-  say(msg) = 
-    where(msg; debug)
+  trace(msg, s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "trace", "229,2,230,63")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,4,230,63")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,4,230,13")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,10,230,12") ; msg
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,17,230,62")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,17,230,40")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,17,230,17") ; s)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,20,230,40")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,26,230,39")
+           ; !"succeeded: "
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,45,230,62")
+          ; debug(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "230,51,230,61")
+              ; !"failed: "
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "trace", "229,2,230,63")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "trace", "229,2,230,63")
+      ; fail
 
-  trace(msg,s) =
-    debug(msg); (s; debug(!"succeeded: ") <+ debug(!"failed: "))
+  error =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "error", "237,2,238,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "238,4,238,37")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "238,10,238,36")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "238,11,238,18") ; fprintnl)> ( stderr()
+                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "238,33,238,34") ; id>
+                                                                                                                   ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "error", "237,2,238,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "error", "237,2,238,37")
+      ; fail
 
-  /**
-   * Prints a list of terms to stderr using fprintnl.
-   *
-   * @type List(a) -> List(a)
-   */
-  error = 
-    where(<fprintnl> (stderr(), <id>))
+  fatal-error =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fatal-error", "245,2,246,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "246,4,246,25")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "246,10,246,24")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "246,10,246,14") ; error)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "246,17,246,24")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "246,18,246,21") ; exit)> 1)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fatal-error", "245,2,246,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "fatal-error", "245,2,246,25")
+      ; fail
 
-  /**
-   * Prints a list of terms to stderr using fprintnl and exits with code 1.
-   *
-   * @type List(a) -> List(a)
-   */
-  fatal-error = 
-    where(error; <exit> 1)
+  giving-up =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "giving-up", "253,2,254,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "254,4,254,29")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "254,5,254,15") ; fatal-error)> ["giving-up"]
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "giving-up", "253,2,254,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "giving-up", "253,2,254,29")
+      ; fail
 
-  /**
-   * Prints giving-up to stderr and exits with code 1.
-   *
-   * @type _ -> _
-   */
-  giving-up = 
-    <fatal-error>["giving-up"]
+  obsolete(msg) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "obsolete", "262,2,263,80")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "263,4,263,80")
+    ; log(
+      | Warning()
+      , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "263,21,263,32") ; conc-strings> ( "program uses obsolete strategy "
+                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "263,72,263,74") ; msg> ()
+                                                                                                               )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "obsolete", "262,2,263,80")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "obsolete", "262,2,263,80")
+      ; fail
 
-  /**
-   * Logs an obsolete strategy message with the given message.
-   *
-   * @param Strategy that produces a string message.
-   * @type  a -> a
-   */
-  obsolete(msg) = 
-    log(|Warning(), <conc-strings> ("program uses obsolete strategy ", <msg> ()))
+  risky(msg, s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "risky", "274,2,275,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "275,4,275,25")
+    ; restore(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "275,12,275,12") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "275,15,275,24")
+        ; debug(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "275,21,275,23") ; msg
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "risky", "274,2,275,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "risky", "274,2,275,25")
+      ; fail
 
-  /**
-   * Tries to apply s and prints msg to stderr if this fails.
-   * Risky preserves the failure of s: if s fails, then risky will
-   * fail as well.
-   *
-   * @param Strategy that produces a string message
-   * @param Strategy to apply
-   * @type  a -> a
-   */
-  risky(msg, s) = 
-    restore(s, debug(msg))
 
-/**
- * Print to the stdout. You usually don't want this.
- */
 strategies
+  echo =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "echo", "282,2,283,53")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,4,283,53")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,10,283,52")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,11,283,18") ; fprintnl)> ( stdout()
+                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,33,283,50")
+                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,33,283,39") ; is-list
+                                                                                                                         <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,44,283,50")
+                                                                                                                            ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "283,47,283,48") ; id>])>
+                                                                                                                   ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "echo", "282,2,283,53")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "echo", "282,2,283,53")
+      ; fail
 
-  echo = 
-    where(<fprintnl> (stdout(), <is-list <+ ![<id>]>))
+  echo(msg) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "echo", "285,2,286,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "286,4,286,45")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "286,10,286,44")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "286,11,286,18") ; fprintnl)> ( stdout()
+                                                                                                                   , [ <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "286,34,286,36") ; msg>
+                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "286,40,286,41") ; id>
+                                                                                                                     ]
+                                                                                                                   ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "echo", "285,2,286,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "echo", "285,2,286,45")
+      ; fail
 
-  echo(msg) = 
-    where(<fprintnl> (stdout(), [<msg>,<id>]))
-
-  printstring = 
-    where(<fprint> (stdout(), [<id>]))
+  printstring =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "printstring", "288,2,289,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "289,4,289,37")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "289,10,289,36")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "289,11,289,16") ; fprint)> ( stdout()
+                                                                                                                 , [<s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "289,32,289,33") ; id>]
+                                                                                                                 ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "printstring", "288,2,289,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/term.str", "printstring", "288,2,289,37")
+      ; fail

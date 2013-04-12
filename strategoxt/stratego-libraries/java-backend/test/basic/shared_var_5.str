@@ -1,16 +1,51 @@
 module shared_var_5
 
-signature constructors
-  Cons : Term * List(Term) -> List(Term)
-  Nil  : List(Term)
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+signature
+  constructors
+    Cons : Term * List(Term) -> List(Term)
+    Nil  : List(Term)
+
 
 strategies
-
   main-shared_var_5 =
-      let
-        a = ?x; b; a
-        b = not(?x); a; b
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "main-shared_var_5", "9,2,15,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "10,6,15,8")
+    ; let a =
+            s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "a", "11,8,11,19")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "11,12,11,19")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "11,12,11,13") ; ?x)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "11,16,11,19")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "11,16,11,16") ; b)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "11,19,11,19")
+            ; a
+            < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "a", "11,8,11,19")
+            + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "a", "11,8,11,19")
+              ; fail
+          b =
+            s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "b", "12,8,12,24")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "12,12,12,24")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "12,12,12,18")
+               ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "12,16,12,17") ; ?x))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "12,21,12,24")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "12,21,12,21") ; a)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "12,24,12,24")
+            ; b
+            < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "b", "12,8,12,24")
+            + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "b", "12,8,12,24")
+              ; fail
       in
-        not(<a> 1); not(<b> 1)
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,8,14,29")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,8,14,17")
+           ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,12,14,16")
+                 ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,13,14,13") ; a)> 1))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,20,14,29")
+        ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,24,14,28")
+              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "14,25,14,25") ; b)> 1)
       end
-
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "main-shared_var_5", "9,2,15,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_5.str", "main-shared_var_5", "9,2,15,8")
+      ; fail

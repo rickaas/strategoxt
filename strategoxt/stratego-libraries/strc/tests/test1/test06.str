@@ -1,28 +1,72 @@
 module test06
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
   constructors
-    Nil   : List(a)
-    Cons  : a * List(a) -> List(a)
+    Nil  : List(a)
+    Cons : a * List(a) -> List(a)
+    Zero : Nat
+    Succ : Nat -> Nat
+    Plus : Nat * Nat -> Nat
 
-    Zero  : Nat
-    Succ  : Nat -> Nat
-    Plus  : Nat * Nat -> Nat
 
 rules
 
-  A : Plus(Zero, x) -> x
-  B : Plus(Succ(x), y) -> Plus(x, Succ(y))
+  A :
+    Plus(Zero, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "A", "13,2,13,23")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "A", "13,2,13,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "A", "13,2,13,23")
+             ; fail
+
+  B :
+    Plus(Succ(x), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "B", "14,2,14,41")> Plus(x, Succ(y))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "B", "14,2,14,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "B", "14,2,14,41")
+             ; fail
+
 
 strategies
- 
-  repeat(s) = 
-    s; repeat(s) <+ id
+  repeat(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "repeat", "18,2,19,21")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "19,4,19,21")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "19,4,19,15")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "19,4,19,4") ; s)
+       ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "19,7,19,15")
+       ; repeat(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "19,14,19,14") ; s
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "19,20,19,21") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "repeat", "18,2,19,21")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "repeat", "18,2,19,21")
+      ; fail
 
-  eval = 
-    repeat(A + B)
+  eval =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "eval", "21,2,22,16")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "22,4,22,16")
+    ; repeat(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "22,11,22,15")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "22,11,22,11") ; A
+           + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "22,15,22,15") ; B)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "eval", "21,2,22,16")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "eval", "21,2,22,16")
+      ; fail
+
 
 strategies
-
-  main = 
-    !Plus(Succ(Succ(Zero)), Succ(Zero));
-    eval
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "main", "26,2,28,7")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "27,4,28,7")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "27,4,27,38")
+       ; !Plus(
+            Succ(Succ(Zero))
+          , Succ(Zero)
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "28,4,28,7")
+    ; eval
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "main", "26,2,28,7")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test06.str", "main", "26,2,28,7")
+      ; fail

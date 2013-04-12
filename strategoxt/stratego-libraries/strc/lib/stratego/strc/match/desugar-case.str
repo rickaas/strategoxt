@@ -1,52 +1,143 @@
 module desugar-case
-imports stratego/strc/match/automaton 
-	libstratego-lib 
-	stratego/strc/opt/stratego-laws 
-	stratego/strc/front/desugar
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratego/strc/match/automaton
+  libstratego-lib
+  stratego/strc/opt/stratego-laws
+  stratego/strc/front/desugar
+
+
 strategies
-
   desugar-case =
-    where(assume-shared-terms := <AssumeSharedTerms>)
-  ; topdown(repeat(DesugarAssign + DesugarCase + Optimize(|assume-shared-terms)))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "desugar-case", "8,2,10,80")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "9,4,10,80")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "9,4,9,52")
+       ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "9,10,9,51")
+               ; assume-shared-terms := <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "9,34,9,50") ; AssumeSharedTerms>))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,4,10,80")
+    ; topdown(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,12,10,79")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,19,10,78")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,19,10,31") ; DesugarAssign
+               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,35,10,78")
+                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,35,10,45") ; DesugarCase
+                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "10,49,10,78")
+                      ; Optimize(|assume-shared-terms)))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "desugar-case", "8,2,10,80")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "desugar-case", "8,2,10,80")
+      ; fail
 
   DesugarAssign :
-    Assign(Var(x), t) -> Seq(Build(t), Match(Var(x)))
+    Assign(Var(x), t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarAssign", "12,2,13,52")> Seq(
+                                                                                                                                                   Build(t)
+                                                                                                                                                 , Match(Var(x))
+                                                                                                                                                 )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarAssign", "12,2,13,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarAssign", "12,2,13,52")
+             ; fail
 
   DesugarAssign :
-    Assign(Var(x)) -> Match(Var(x))
+    Assign(Var(x)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarAssign", "15,2,16,34")> Match(Var(x))
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarAssign", "15,2,16,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarAssign", "15,2,16,34")
+             ; fail
 
   DesugarCase :
-    Case(lab, x, alts, s) ->
-    Case(x, alts, s)
+    Case(lab, x, alts, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "18,2,20,19")> Case(x, alts, s)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "18,2,20,19")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "18,2,20,19")
+             ; fail
 
   DesugarCase :
-    Case(Var(x), alts, s) ->
-    Seq(Build(Var(x)), Case(alts, s))
+    Case(Var(x), alts, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "22,2,24,36")> Seq(
+                                                                                                                                                     Build(Var(x))
+                                                                                                                                                   , Case(alts, s)
+                                                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "22,2,24,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "22,2,24,36")
+             ; fail
 
   DesugarCase :
-    Case([], s) -> s
+    Case([], s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "26,2,27,19")> s
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "26,2,27,19")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "26,2,27,19")
+             ; fail
 
   DesugarCase :
-    Case([Alt(Fun(c, n), xs, x, s1) | alts], s2) ->
-    GuardedLChoice(Match(Anno(Op(c, xs), x)), s1
-                  , Case(alts, s2))
+    Case(
+      [Alt(
+         Fun(c, n)
+       , xs
+       , x
+       , s1
+       )|alts]
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "29,2,32,34")> GuardedLChoice(
+                                                                                                                                 Match(
+                                                                                                                                   Anno(Op(c, xs), x)
+                                                                                                                                 )
+                                                                                                                               , s1
+                                                                                                                               , Case(alts, s2)
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "29,2,32,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "29,2,32,34")
+             ; fail
 
   DesugarCase :
-    Case([Alt(Str(str), xs, x, s1) | alts], s2) -> 
-    GuardedLChoice(Match(Anno(Str(str), x)), s1
-                  , Case(alts, s2))
+    Case(
+      [Alt(Str(str), xs, x, s1)|alts]
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "34,2,37,34")> GuardedLChoice(
+                                                                                                                                 Match(Anno(Str(str), x))
+                                                                                                                               , s1
+                                                                                                                               , Case(alts, s2)
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "34,2,37,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "34,2,37,34")
+             ; fail
 
   DesugarCase :
-    Case([Alt(Int(i), xs, x, s1) | alts], s2) -> 
-    GuardedLChoice(Match(Anno(Int(i),x)), s1
-                  , Case(alts, s2))
+    Case(
+      [Alt(Int(i), xs, x, s1)|alts]
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "39,2,42,34")> GuardedLChoice(
+                                                                                                                                 Match(Anno(Int(i), x))
+                                                                                                                               , s1
+                                                                                                                               , Case(alts, s2)
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "39,2,42,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "39,2,42,34")
+             ; fail
 
   DesugarCase :
-    Case([Alt(Real(i), xs, x, s1) | alts], s2) -> 
-    GuardedLChoice(Match(Anno(Real(i), x)), s1
-                  , Case(alts, s2))
+    Case(
+      [Alt(Real(i), xs, x, s1)|alts]
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "44,2,47,34")> GuardedLChoice(
+                                                                                                                                 Match(Anno(Real(i), x))
+                                                                                                                               , s1
+                                                                                                                               , Case(alts, s2)
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "44,2,47,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "44,2,47,34")
+             ; fail
 
   DesugarCase :
-    Case([Alt(Wld(), xs, x, s1) | alts], s2) -> 
-    GuardedLChoice(Match(Anno(Wld(), x)), s1
-                  , Case(alts, s2))
+    Case(
+      [Alt(Wld(), xs, x, s1)|alts]
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "49,2,52,34")> GuardedLChoice(
+                                                                                                                                 Match(Anno(Wld(), x))
+                                                                                                                               , s1
+                                                                                                                               , Case(alts, s2)
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "49,2,52,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/desugar-case.str", "DesugarCase", "49,2,52,34")
+             ; fail

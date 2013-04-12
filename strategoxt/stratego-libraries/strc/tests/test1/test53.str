@@ -1,66 +1,268 @@
 module test53
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "main", "6,3,15,14")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "7,5,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "7,5,7,30")
+       ; !["test53", "a", "b", "c"])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "8,7,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "8,7,8,11") ; test0)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "9,7,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "9,7,9,11") ; test1)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "10,7,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "10,7,10,11") ; test2)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "11,7,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "11,7,11,11") ; test3)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "13,7,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "13,7,13,11") ; test5)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "14,7,15,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "14,7,14,21")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "14,11,14,20")
+           ; !"success"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "15,7,15,14")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "15,8,15,11") ; exit)> 0
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "main", "6,3,15,14")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "main", "6,3,15,14")
+      ; fail
 
-   main =
-     !["test53", "a", "b", "c"]
-     ; test0
-     ; test1
-     ; test2
-     ; test3
-     //; test4
-     ; test5
-     ; say(!"success")
-     ; <exit> 0
+  test0 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test0", "17,3,24,25")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "18,5,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "18,5,18,19")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "18,11,18,18")
+           ; !"test0"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "19,7,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "19,7,19,18")
+       ; ?[prog|xs])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "20,7,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "20,7,20,9") ; !xs)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "21,7,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "21,7,21,50")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "21,11,21,49")
+           ; {x:
+               s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "21,15,21,48")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "21,15,21,16") ; ?x)
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "21,19,21,48")
+               ; rules ( Arguments0 :+
+                           prog -> x )
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "22,7,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "22,7,22,11") ; !prog)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "23,7,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "23,7,23,87")
+       ; !( <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "23,10,23,11") ; id>
+          , [ "arguments: "
+            , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "23,32,23,41") ; Arguments0>
+            ]
+          , [ "bagof-arguments: "
+            , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "23,69,23,84") ; bagof-Arguments0>
+            ]
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "24,7,24,25")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "24,13,24,24")
+        ; !"test0 yes"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test0", "17,3,24,25")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test0", "17,3,24,25")
+      ; fail
 
-   test0 =
-     debug(!"test0")
-     ; ?[prog | xs]
-     ; !xs
-     ; map({x: ?x; rules(Arguments0 :+ prog -> x)})
-     ; !prog
-     ; !(<id>, ["arguments: ", <Arguments0>], ["bagof-arguments: ", <bagof-Arguments0>])
-     ; debug(!"test0 yes")
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test1", "26,3,30,23")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "27,5,30,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "27,5,27,17")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "27,9,27,16")
+           ; !"test1"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "28,7,30,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "28,7,28,48")
+       ; rules (
+           DynRule1 :+
+             None() -> Some("Blaat")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "29,7,30,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "29,7,29,23")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "29,8,29,15") ; DynRule1)> None())
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "30,7,30,23")
+    ; say(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "30,11,30,22")
+        ; !"test1 yes"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test1", "26,3,30,23")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test1", "26,3,30,23")
+      ; fail
 
-   test1 =
-     say(!"test1")
-     ; rules(DynRule1 :+ None() -> Some("Blaat"))
-     ; <DynRule1> None()
-     ; say(!"test1 yes")
+  test2 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test2", "32,3,38,24")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "33,5,38,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "33,5,33,17")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "33,9,33,16")
+           ; !"test2"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "34,7,38,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "34,7,34,52")
+       ; rules (
+           DynRule2 :+
+             None(){t*} -> Some("Blaat")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "35,7,38,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "35,7,35,35")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "35,8,35,15") ; DynRule2)> None(){"whatever"})
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "36,7,38,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "36,7,36,24")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "36,11,36,23")
+           ; !"test2a yes"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "37,7,38,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "37,7,37,23")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "37,8,37,15") ; DynRule2)> None())
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "38,7,38,24")
+    ; say(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "38,11,38,23")
+        ; !"test2b yes"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test2", "32,3,38,24")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test2", "32,3,38,24")
+      ; fail
 
-   test2 =
-     say(!"test2")
-     ; rules(DynRule2 :+ None(){t*} -> Some("Blaat"))
-     ; <DynRule2> None(){"whatever"}
-     ; say(!"test2a yes")
-     ; <DynRule2> None()
-     ; say(!"test2b yes")
+  test3 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test3", "40,3,46,24")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "41,5,46,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "41,5,41,17")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "41,9,41,16")
+           ; !"test3"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "42,7,46,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "42,7,42,57")
+       ; rules (
+           DynRule3 :+
+             Some("aap"){t*} -> Some("Blaat")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "43,7,46,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "43,7,43,40")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "43,8,43,15") ; DynRule3)> Some("aap"){"whatever"})
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "44,7,46,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "44,7,44,24")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "44,11,44,23")
+           ; !"test3a yes"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "45,7,46,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "45,7,45,28")
+       ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "45,11,45,27")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "45,12,45,19") ; DynRule3)> None()))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "46,7,46,24")
+    ; say(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "46,11,46,23")
+        ; !"test3b yes"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test3", "40,3,46,24")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test3", "40,3,46,24")
+      ; fail
 
-   test3 =
-     say(!"test3")
-     ; rules(DynRule3 :+ Some("aap"){t*} -> Some("Blaat"))
-     ; <DynRule3> Some("aap"){"whatever"}
-     ; say(!"test3a yes")
-     ; not(<DynRule3> None())
-     ; say(!"test3b yes")
+  test4 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test4", "48,3,52,23")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "49,5,52,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "49,5,49,17")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "49,9,49,16")
+           ; !"test4"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "50,7,52,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "50,7,50,48")
+       ; rules (
+           DynRule4 :+
+             None() -> Some("Blaat")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "51,7,52,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "51,7,51,35")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "51,8,51,15") ; DynRule4)> None(){"whatever"})
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "52,7,52,23")
+    ; say(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "52,11,52,22")
+        ; !"test4 yes"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test4", "48,3,52,23")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test4", "48,3,52,23")
+      ; fail
 
-   test4 =
-     say(!"test4")
-     ; rules(DynRule4 :+ None() -> Some("Blaat"))
-     ; <DynRule4> None(){"whatever"}
-     ; say(!"test4 yes")
-
-   test5 = 
-     !["test53", "a", "b", "c"]
-     ; debug(!"test5")
-     ; ?[prog | xs]
-     ; rules(Arguments5 :- prog )
-     ; <bagof-Arguments5> prog
-     ; debug(!"bagof-Arguments5: ")
-     ; !xs
-     ; map({x: ?x; rules(Arguments5 :+ prog -> x)})
-     ; !prog
-     ; !(<id>, ["arguments: ", <Arguments5>], ["bagof-arguments: ", <bagof-Arguments5>])
-     ; debug(!"test5 yes")
-     
+  test5 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test5", "54,3,65,25")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "55,5,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "55,5,55,30")
+       ; !["test53", "a", "b", "c"])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "56,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "56,7,56,21")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "56,13,56,20")
+           ; !"test5"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "57,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "57,7,57,18")
+       ; ?[prog|xs])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "58,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "58,7,58,32")
+       ; rules ( Arguments5 :-
+                   prog ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "59,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "59,7,59,29")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "59,8,59,23") ; bagof-Arguments5)> prog)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "60,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "60,7,60,34")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "60,13,60,33")
+           ; !"bagof-Arguments5: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "61,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "61,7,61,9") ; !xs)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "62,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "62,7,62,50")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "62,11,62,49")
+           ; {x:
+               s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "62,15,62,48")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "62,15,62,16") ; ?x)
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "62,19,62,48")
+               ; rules ( Arguments5 :+
+                           prog -> x )
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "63,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "63,7,63,11") ; !prog)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "64,7,65,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "64,7,64,87")
+       ; !( <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "64,10,64,11") ; id>
+          , [ "arguments: "
+            , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "64,32,64,41") ; Arguments5>
+            ]
+          , [ "bagof-arguments: "
+            , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "64,69,64,84") ; bagof-Arguments5>
+            ]
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "65,7,65,25")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "65,13,65,24")
+        ; !"test5 yes"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test5", "54,3,65,25")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test53.str", "test5", "54,3,65,25")
+      ; fail

@@ -1,21 +1,59 @@
-module io-test10  
-imports libstratego-lib
+module io-test10
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
-    Zero  : Nat
-    Succ  : Nat -> Nat
-    Plus  : Nat * Nat -> Nat
+    Zero : Nat
+    Succ : Nat -> Nat
+    Plus : Nat * Nat -> Nat
+
 
 rules
 
-  A : Plus(Zero, x) -> x
-  B : Plus(Succ(x), y) -> Succ(Plus(x, y))
+  A :
+    Plus(Zero, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "A", "11,2,11,23")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "A", "11,2,11,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "A", "11,2,11,23")
+             ; fail
+
+  B :
+    Plus(Succ(x), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "B", "12,2,12,41")> Succ(Plus(x, y))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "B", "12,2,12,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "B", "12,2,12,41")
+             ; fail
+
 
 strategies
+  eval =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "eval", "16,2,17,19")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "17,4,17,19")
+    ; innermost(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "17,14,17,18")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "17,14,17,14") ; A
+           + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "17,18,17,18") ; B)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "eval", "16,2,17,19")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "eval", "16,2,17,19")
+      ; fail
 
-  eval = 
-    innermost(A + B)
-
-  main = 
-    <conc>(<id>, ["-i", "io-test10.in", "-o", "io-test10.out"])
-    ; io-wrap(eval)
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "main", "19,2,21,18")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "20,4,21,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "20,4,20,62")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "20,5,20,8") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "20,12,20,13") ; id>
+                                                                                                         , ["-i", "io-test10.in", "-o", "io-test10.out"]
+                                                                                                         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "21,6,21,18")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "21,14,21,17") ; eval
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "main", "19,2,21,18")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test10.str", "main", "19,2,21,18")
+      ; fail

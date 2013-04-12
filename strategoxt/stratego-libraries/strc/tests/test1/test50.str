@@ -1,12 +1,33 @@
 module test50
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "main", "5,2,5,11")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "5,9,5,11")
+    ; foo
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "main", "5,2,5,11")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "main", "5,2,5,11")
+      ; fail
 
-  main = foo
-
-  foo = [bar(!"a") | id]
+  foo =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "foo", "7,2,7,23")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "7,8,7,23")
+    ; [s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "7,9,7,17")
+       ; bar(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "7,13,7,16")
+           ; !"a"
+         )|s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "7,21,7,22") ; id]
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "foo", "7,2,7,23")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test50.str", "foo", "7,2,7,23")
+      ; fail
 
   external bar(s|)
-
-
-

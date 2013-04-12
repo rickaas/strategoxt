@@ -1,18 +1,40 @@
-/**
- * Congruence of a quoted constructor.
- */
 module qcons-test02
-imports collection/list/cons collection/tuple/cons
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
+strategies
   main-qcons_test02 =
-    !"aap"(1)
-    ; do-aap
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "main-qcons_test02", "8,2,11,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "9,4,11,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "9,4,9,12")
+       ; !"aap"(1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "10,6,11,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "10,6,10,11") ; do-aap)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "11,6,11,14")
     ; ?"aap"(2)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "main-qcons_test02", "8,2,11,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "main-qcons_test02", "8,2,11,14")
+      ; fail
 
   do-aap =
-    "aap"( \ 1 -> 2 \ )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "do-aap", "13,2,14,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "14,4,14,22")
+    ; "aap"(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "14,11,14,20")
+        ; \ 1 -> 2 \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "do-aap", "13,2,14,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/qcons_test02.str", "do-aap", "13,2,14,22")
+      ; fail
+
 
 signature
   constructors
-   "aap" : Term -> Term
+    "aap" : Term -> Term

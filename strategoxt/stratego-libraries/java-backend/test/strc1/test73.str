@@ -1,22 +1,129 @@
 module test73
-imports libstratego-lib
-strategies
-  
-    test1 = ( rules( a : _ -> 1 ) /~["a"]\ rules( a : _ -> 0 ) ) ; a 
-    test2 = ( rules( b : _ -> 1 ) /~["b"]\ rules( b : _ -> 1 ) ) ; b
-    test3 = ( rules( c : _ -> 1 ) /c\ rules( c : _ -> 0 ) ) ; c 
-    test4 = ( rules( d : _ -> 1 ) /d\ rules( d : _ -> 1 ) ) ; d
-	  
-strategies
 
-  main-test73 = 
-    test-suite(!"intersection with rulenames",
-      test-it-now
-    )
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  test-it-now = 
-    apply-and-fail(!"intersection with rulenames 1",test1,![])
-  ; apply-test(!"intersection with rulenames 2",test2,![],!1) 
-  ; apply-and-fail(!"normal intersection 1",test3,![])
-  ; apply-test(!"normal intersection 2",test4,![],!1)
-		  
+
+imports
+  libstratego-lib
+
+
+strategies
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test1", "5,4,5,67")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "5,12,5,67")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "5,14,5,61")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "5,14,5,32")
+          ; rules ( a :
+                      _ -> 1 )) /~["a"]\ (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "5,43,5,61")
+                                          ; rules ( a :
+                                                      _ -> 0 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "5,67,5,67")
+    ; a
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test1", "5,4,5,67")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test1", "5,4,5,67")
+      ; fail
+
+  test2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test2", "6,4,6,67")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "6,12,6,67")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "6,14,6,61")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "6,14,6,32")
+          ; rules ( b :
+                      _ -> 1 )) /~["b"]\ (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "6,43,6,61")
+                                          ; rules ( b :
+                                                      _ -> 1 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "6,67,6,67")
+    ; b
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test2", "6,4,6,67")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test2", "6,4,6,67")
+      ; fail
+
+  test3 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test3", "7,4,7,62")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "7,12,7,62")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "7,14,7,56")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "7,14,7,32")
+          ; rules ( c :
+                      _ -> 1 )) /c\ (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "7,38,7,56")
+                                     ; rules ( c :
+                                                 _ -> 0 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "7,62,7,62")
+    ; c
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test3", "7,4,7,62")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test3", "7,4,7,62")
+      ; fail
+
+  test4 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test4", "8,4,8,62")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "8,12,8,62")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "8,14,8,56")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "8,14,8,32")
+          ; rules ( d :
+                      _ -> 1 )) /d\ (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "8,38,8,56")
+                                     ; rules ( d :
+                                                 _ -> 1 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "8,62,8,62")
+    ; d
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test4", "8,4,8,62")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test4", "8,4,8,62")
+      ; fail
+
+
+strategies
+  main-test73 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "main-test73", "12,2,15,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "13,4,15,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "13,15,13,44")
+        ; !"intersection with rulenames"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "14,6,14,16") ; test-it-now
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "main-test73", "12,2,15,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "main-test73", "12,2,15,4")
+      ; fail
+
+  test-it-now =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test-it-now", "17,2,21,52")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "18,4,21,52")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "18,4,18,61")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "18,19,18,50")
+           ; !"intersection with rulenames 1"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "18,52,18,56") ; test1
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "18,58,18,60")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "19,4,21,52")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "19,4,19,60")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "19,15,19,46")
+           ; !"intersection with rulenames 2"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "19,48,19,52") ; test2
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "19,54,19,56")
+           ; ![]
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "19,58,19,59")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "20,4,21,52")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "20,4,20,53")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "20,19,20,42")
+           ; !"normal intersection 1"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "20,44,20,48") ; test3
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "20,50,20,52")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "21,4,21,52")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "21,15,21,38")
+        ; !"normal intersection 2"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "21,40,21,44") ; test4
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "21,46,21,48")
+        ; ![]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "21,50,21,51")
+        ; !1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test-it-now", "17,2,21,52")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test73.str", "test-it-now", "17,2,21,52")
+      ; fail

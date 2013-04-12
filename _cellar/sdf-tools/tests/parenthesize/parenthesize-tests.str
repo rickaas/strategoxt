@@ -1,72 +1,185 @@
 module parenthesize-tests
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  parenthesize-Exp libstratego-xtc strategoxt-xtc-tools
+  parenthesize-Exp
+  libstratego-xtc
+  strategoxt-xtc-tools
+
 
 strategies
-
   io-parenthesize-tests =
-    option-wrap(io-options,
-      test-suite(!"sdf2parenthesize generator tests",
-        where(register-test-data)
-      ; exp-tests
+    s-enter(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "io-parenthesize-tests", "8,2,14,4")
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "9,4,14,4")
+    ; option-wrap(
+        s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "9,16,9,25") ; io-options
+      , s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "10,6,13,6")
+        ; test-suite(
+            s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "10,17,10,51")
+            ; !"sdf2parenthesize generator tests"
+          , s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "11,8,12,16")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "11,8,11,32")
+               ; where(s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "11,14,11,31") ; register-test-data))
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "12,8,12,16")
+            ; exp-tests
+          )
       )
-    )
+    < s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "io-parenthesize-tests", "8,2,14,4")
+    + s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "io-parenthesize-tests", "8,2,14,4")
+      ; fail
 
   exp-tests =
-      exp-test(|"a + e")
-
-    ; exp-test(|"b + (c + d)")
-    ; exp-test(|"(b + c) + d", "b + c + d")
-
-    ; exp-test(|"b * (c + d)")
-    ; exp-test(|"(b + c) * d")
-    ; exp-test(|"b + c * d")
-
-    ; exp-test(|"(b * c) + d", "b * c + d")
-    ; exp-test(|"(b + c) + d", "b + c + d")
-
-    ; exp-test(|"a ? b : c ? d : e")
-    ; exp-test(|"a ? b : (c ? d : e)", "a ? b : c ? d : e")
-    ; exp-test(|"(a ? b : c) ? d : e", "(a ? b : c) ? d : e")
-
-    ; exp-test(|"(b - c) - d", "(b - c) - d")
-    ; exp-test(|"b - (c - d)", "b - (c - d)")
-
-    ; exp-test(|"(a ? b : c) == d")
-    ; exp-test(|"(a ? b : c) != d")
-
-    ; exp-test(|"a * (b ? c : d)")
-    ; exp-test(|"a * (b || c)")
-    ; exp-test(|"a * (b && c)")
-    ; exp-test(|"a * (b == c)")
-    ; exp-test(|"a * (b < c)")
+    s-enter(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-tests", "16,2,44,29")
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "17,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "17,6,17,23")
+       ; exp-test(|"a + e"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "19,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "19,6,19,29")
+       ; exp-test(|"b + (c + d)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "20,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "20,6,20,42")
+       ; exp-test(|"(b + c) + d", "b + c + d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "22,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "22,6,22,29")
+       ; exp-test(|"b * (c + d)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "23,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "23,6,23,29")
+       ; exp-test(|"(b + c) * d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "24,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "24,6,24,27")
+       ; exp-test(|"b + c * d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "26,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "26,6,26,42")
+       ; exp-test(|"(b * c) + d", "b * c + d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "27,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "27,6,27,42")
+       ; exp-test(|"(b + c) + d", "b + c + d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "29,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "29,6,29,35")
+       ; exp-test(|"a ? b : c ? d : e"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "30,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "30,6,30,58")
+       ; exp-test(|"a ? b : (c ? d : e)", "a ? b : c ? d : e"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "31,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "31,6,31,60")
+       ; exp-test(|"(a ? b : c) ? d : e", "(a ? b : c) ? d : e"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "33,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "33,6,33,44")
+       ; exp-test(|"(b - c) - d", "(b - c) - d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "34,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "34,6,34,44")
+       ; exp-test(|"b - (c - d)", "b - (c - d)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "36,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "36,6,36,34")
+       ; exp-test(|"(a ? b : c) == d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "37,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "37,6,37,34")
+       ; exp-test(|"(a ? b : c) != d"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "39,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "39,6,39,33")
+       ; exp-test(|"a * (b ? c : d)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "40,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "40,6,40,30")
+       ; exp-test(|"a * (b || c)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "41,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "41,6,41,30")
+       ; exp-test(|"a * (b && c)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "42,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "42,6,42,30")
+       ; exp-test(|"a * (b == c)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "43,6,44,29")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "43,6,43,29")
+       ; exp-test(|"a * (b < c)"))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "44,6,44,29")
     ; exp-test(|"a * (b - c)")
+    < s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-tests", "16,2,44,29")
+    + s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-tests", "16,2,44,29")
+      ; fail
 
-  /**
-   * @param  txt  Expression to test
-   */
   exp-test(|txt) =
-    exp-test(|txt, txt)
+    s-enter(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-test", "49,2,50,22")
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "50,4,50,22")
+    ; exp-test(|txt, txt)
+    < s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-test", "49,2,50,22")
+    + s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-test", "49,2,50,22")
+      ; fail
 
   exp-test(|txt1, txt2) =
-    apply-test(<concat-strings> ["test -- ", txt1, "  ->  " , txt2],
-      xtc-temp-files(
-        <print-to> [<id>]
-      ; xtc-sglr(!"Exp.tbl")
-      ; xtc-implode-asfix
-      ; xtc-io-transform(parenthesize-Exp)
-      ; xtc-ast2abox(!["Exp-pretty.pp.af"])
-      ; xtc-abox2text
-      ; ?FILE(<read-text-file>)
-      ; string-as-chars(trim(is-all-whitespace))
+    s-enter(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-test", "52,2,66,4")
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "53,4,66,4")
+    ; apply-test(
+        s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "53,15,53,66")
+        ; <(s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "53,16,53,29") ; concat-strings)> ["test -- ", txt1, "  ->  ", txt2]
+      , s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "54,6,63,6")
+        ; xtc-temp-files(
+            s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "55,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "55,8,55,24")
+               ; <(s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "55,9,55,16") ; print-to)> [<s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "55,21,55,22") ; id>])
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "56,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "56,8,56,27")
+               ; xtc-sglr(
+                   s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "56,17,56,26")
+                   ; !"Exp.tbl"
+                 ))
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "57,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "57,8,57,24") ; xtc-implode-asfix)
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "58,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "58,8,58,41")
+               ; xtc-io-transform(
+                   s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "58,25,58,40") ; parenthesize-Exp
+                 ))
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "59,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "59,8,59,42")
+               ; xtc-ast2abox(
+                   s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "59,21,59,41")
+                   ; !["Exp-pretty.pp.af"]
+                 ))
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "60,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "60,8,60,20") ; xtc-abox2text)
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "61,8,62,47")
+            ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "61,8,61,30")
+               ; ?FILE(
+                    <s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "61,15,61,28") ; read-text-file>
+                  ))
+            ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "62,8,62,47")
+            ; string-as-chars(
+                s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "62,24,62,46")
+                ; trim(
+                    s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "62,29,62,45") ; is-all-whitespace
+                  )
+              )
+          )
+      , s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "64,6,64,10") ; !txt1
+      , s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "65,6,65,10") ; !txt2
       )
-    , !txt1
-    , !txt2
-    )
+    < s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-test", "52,2,66,4")
+    + s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "exp-test", "52,2,66,4")
+      ; fail
 
   register-test-data =
-      xtc-register(|"Exp-pretty.pp.af", "Foo", ".")
+    s-enter(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "register-test-data", "68,2,70,41")
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "69,6,70,41")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "69,6,69,50")
+       ; xtc-register(|"Exp-pretty.pp.af", "Foo", "."))
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "70,6,70,41")
     ; xtc-register(|"Exp.tbl", "Foo", ".")
+    < s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "register-test-data", "68,2,70,41")
+    + s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "register-test-data", "68,2,70,41")
+      ; fail
 
-  is-all-whitespace = '\t' + '\r' + '\n' + ' '
+  is-all-whitespace =
+    s-enter(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "is-all-whitespace", "72,2,72,45")
+    ; s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,22,72,45")
+    ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,22,72,25") ; '\t'
+       + s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,29,72,45")
+         ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,29,72,32") ; '\r'
+            + s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,36,72,45")
+              ; (s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,36,72,39") ; '\n'
+                 + s-step(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "72,43,72,45") ; ' ')))
+    < s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "is-all-whitespace", "72,2,72,45")
+    + s-exit(|"_cellar/sdf-tools/tests/parenthesize/parenthesize-tests.str", "is-all-whitespace", "72,2,72,45")
+      ; fail

@@ -1,105 +1,153 @@
-/**
- * Get and set values in the configuration table.
- */
 module util/config/common
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   collection/hash-table/common
 
+
 strategies
+  get-config =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-config", "14,2,15,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "15,4,15,31")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "15,5,15,13") ; table-get)> ( "config"
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "15,28,15,29") ; id>
+                                                                                                             )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-config", "14,2,15,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-config", "14,2,15,31")
+      ; fail
 
-  /**
-   * Get the value for the specified key from the config table.
-   * The key is the current term.
-   */
-  get-config = 
-    <table-get> ("config", <id>)
-
-  /**
-   * Get all values of config keys for which 'pred' succeeds.
-   * The current term is ignored.
-   * 
-   * @returns The list of values for the keys that satisfy pred.   
-   * @param   Is applied to the keys of the config table.
-   * @type  _ -> List(b)
-   */
   get-configs(pred) =
-    <table-getlist> "config"
-    ; filter((pred,id); Snd)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-configs", "25,2,27,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "26,4,27,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "26,4,26,27")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "26,5,26,17") ; table-getlist)> "config")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "27,6,27,27")
+    ; filter(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "27,13,27,26")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "27,13,27,21")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "27,14,27,17") ; pred
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "27,19,27,20") ; id
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "27,24,27,26")
+        ; Snd
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-configs", "25,2,27,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-configs", "25,2,27,27")
+      ; fail
 
-  /**
-   * Get all config keys for which pred succeeds
-   *
-   * @returns  The list of keys that satisfy pred.
-   * @param    Is applied to the keys of the config table.
-   * @type     _ -> List(a)
-   */
   get-config-keys(pred) =
-    <table-getlist> "config"
-    ; filter((pred,id); Fst)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-config-keys", "36,2,38,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "37,4,38,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "37,4,37,27")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "37,5,37,17") ; table-getlist)> "config")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "38,6,38,27")
+    ; filter(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "38,13,38,26")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "38,13,38,21")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "38,14,38,17") ; pred
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "38,19,38,20") ; id
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "38,24,38,26")
+        ; Fst
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-config-keys", "36,2,38,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "get-config-keys", "36,2,38,27")
+      ; fail
+
 
 strategies
+  set-config =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "set-config", "47,2,49,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "48,4,49,37")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "48,4,48,14")
+       ; ?(key, val))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "49,6,49,37")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "49,7,49,15") ; table-put)> ("config", key, val)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "set-config", "47,2,49,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "set-config", "47,2,49,37")
+      ; fail
 
-  /**
-   * Set an entry (key and value) in the config table.
-   *
-   * @type (a, b) -> _
-   */
-  set-config = 
-    ?(key, val)
-    ; <table-put> ("config", key, val)
+  rm-config =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "rm-config", "56,2,58,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "57,4,58,35")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "57,4,57,7") ; ?key)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "58,6,58,35")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "58,7,58,18") ; table-remove)> ("config", key)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "rm-config", "56,2,58,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "rm-config", "56,2,58,35")
+      ; fail
 
-  /**
-   * Remove the entry of the specified key from the config table.
-   *
-   * @type (a, b) -> _
-   */
-  rm-config = 
-    ?key
-    ; <table-remove> ("config", key)
-
-  /**
-   * Adds an entry to the config table if it does not exist, or
-   * removes the entry if it does already exist in the config table.
-   *
-   * @type (a, b) -> _
-   */
-  toggle-config = 
-    ?(key, val)
-    ; if <get-config> key then
-        <table-remove> ("config", key)
+  toggle-config =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "toggle-config", "66,2,72,8")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "67,4,72,8")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "67,4,67,14")
+       ; ?(key, val))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "68,6,72,8")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "68,9,68,24")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "68,10,68,19") ; get-config)> key then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "69,8,69,37")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "69,9,69,20") ; table-remove)> ("config", key)
       else
-        <set-config> (key, val)
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "71,8,71,30")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "71,9,71,18") ; set-config)> (key, val)
       end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "toggle-config", "66,2,72,8")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "toggle-config", "66,2,72,8")
+      ; fail
 
-  /**
-   * Extends the list of values of the specified key with new values.
-   * The values are added in front of the current list.
-   *
-   * @type (a, List(b)) -> _
-   */
   extend-config =
-    ?(key, val)
-    ; <table-put> ("config", key, <conc> (val, <get-config <+ ![]> key))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "extend-config", "80,2,82,71")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "81,4,82,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "81,4,81,14")
+       ; ?(key, val))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "82,6,82,71")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "82,7,82,15") ; table-put)> ( "config"
+                                                                                                             , key
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "82,35,82,38") ; conc> ( val
+                                                                                                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "82,48,82,64")
+                                                                                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "82,48,82,57") ; get-config
+                                                                                                                                                                                                                      <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "82,62,82,64")
+                                                                                                                                                                                                                         ; ![])> key
+                                                                                                                                                                                                                )
+                                                                                                             )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "extend-config", "80,2,82,71")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "extend-config", "80,2,82,71")
+      ; fail
 
-  /**
-   * Extends the list of values of the specified key with new values.
-   * The values are added to the end of the current list.
-   *
-   * @type (a, List(b)) -> _
-   */
   post-extend-config =
-    ?(key, val)
-    ; <table-put> ("config", key, <conc> (<get-config <+ ![]> key, val))
-  
-  /**
-   * Evaluates a strategy f if and only if the program is compiled to Java.
-   */
-  if-java-platform(s) = // implemented by the compiler
-    s
-  
-  /**
-   * Evaluates a strategy f if and only if the program is compiled to C.
-   */
-  if-c-platform(s) = // implemented by the compiler
-    s
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "post-extend-config", "90,2,92,71")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "91,4,92,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "91,4,91,14")
+       ; ?(key, val))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "92,6,92,71")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "92,7,92,15") ; table-put)> ( "config"
+                                                                                                             , key
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "92,35,92,38") ; conc> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "92,43,92,59")
+                                                                                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "92,43,92,52") ; get-config
+                                                                                                                                                                                                                      <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "92,57,92,59")
+                                                                                                                                                                                                                         ; ![])> key
+                                                                                                                                                                                                                , val
+                                                                                                                                                                                                                )
+                                                                                                             )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "post-extend-config", "90,2,92,71")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "post-extend-config", "90,2,92,71")
+      ; fail
 
+  if-java-platform(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "if-java-platform", "97,2,98,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "98,4,98,4")
+    ; s
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "if-java-platform", "97,2,98,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "if-java-platform", "97,2,98,4")
+      ; fail
+
+  if-c-platform(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "if-c-platform", "103,2,104,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "104,4,104,4")
+    ; s
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "if-c-platform", "103,2,104,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/common.str", "if-c-platform", "103,2,104,4")
+      ; fail

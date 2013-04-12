@@ -1,23 +1,55 @@
 module shared_var_4
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
 
-strategies
 
-  main-shared_var_4 = rtg-remove-injection-rules
+strategies
+  main-shared_var_4 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "main-shared_var_4", "8,2,8,47")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "8,22,8,47")
+    ; rtg-remove-injection-rules
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "main-shared_var_4", "8,2,8,47")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "main-shared_var_4", "8,2,8,47")
+      ; fail
 
   rtg-remove-injection-rules =
-      let
-        is-injection =
-          id
- 
-        ensure-injection =
-          is-injection
- 
-        remove-injection(|ps) =
-          map(ensure-injection)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "rtg-remove-injection-rules", "10,2,22,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "11,6,22,8")
+    ; let is-injection =
+            s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "is-injection", "12,8,13,11")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "13,10,13,11")
+            ; id
+            < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "is-injection", "12,8,13,11")
+            + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "is-injection", "12,8,13,11")
+              ; fail
+          ensure-injection =
+            s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "ensure-injection", "15,8,16,21")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "16,10,16,21")
+            ; is-injection
+            < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "ensure-injection", "15,8,16,21")
+            + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "ensure-injection", "15,8,16,21")
+              ; fail
+          remove-injection(|ps) =
+            s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "remove-injection", "18,8,19,30")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "19,10,19,30")
+            ; map(
+                s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "19,14,19,29") ; ensure-injection
+              )
+            < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "remove-injection", "18,8,19,30")
+            + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "remove-injection", "18,8,19,30")
+              ; fail
       in
-        try(remove-injection(|1))
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "21,8,21,32")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "21,12,21,31")
+            ; remove-injection(|1)
+          )
       end
-
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "rtg-remove-injection-rules", "10,2,22,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/shared_var_4.str", "rtg-remove-injection-rules", "10,2,22,8")
+      ; fail

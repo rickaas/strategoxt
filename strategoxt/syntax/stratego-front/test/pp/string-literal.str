@@ -1,5 +1,14 @@
 module string-literal
 
-strategies
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  foo = !"2"
+
+strategies
+  foo =
+    s-enter(|"strategoxt/syntax/stratego-front/test/pp/string-literal.str", "foo", "5,2,5,11")
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/string-literal.str", "5,8,5,11")
+    ; !"2"
+    < s-exit(|"strategoxt/syntax/stratego-front/test/pp/string-literal.str", "foo", "5,2,5,11")
+    + s-exit(|"strategoxt/syntax/stratego-front/test/pp/string-literal.str", "foo", "5,2,5,11")
+      ; fail

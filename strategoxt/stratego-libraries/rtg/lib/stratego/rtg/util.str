@@ -1,71 +1,177 @@
 module stratego/rtg/util
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/rtg/signature
 
-strategies
 
-  /**
-   * Returns the right hand sides of productions of the specified non terminal.
-   *
-   * @type RTG -> List(ProdRuleRHS)
-   */
+strategies
   rtg-productions-of(|nt : NonTerm) =
-    ?RTG(_, ProdRules(<id>))
-    ; filter(?ProdRule(nt, <id>))
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-productions-of", "12,2,15,11")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "13,4,15,11")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "13,4,13,27")
+       ; ?RTG(
+            _
+          , ProdRules(
+              <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "13,23,13,24") ; id>
+            )
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "14,6,15,11")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "14,6,14,32")
+       ; filter(
+           s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "14,13,14,31")
+           ; ?ProdRule(
+                nt
+              , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "14,28,14,29") ; id>
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "15,6,15,11")
     ; concat
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-productions-of", "12,2,15,11")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-productions-of", "12,2,15,11")
+      ; fail
 
-  /**
-   * @type RTG -> List(Nonterm)
-   */
   rtg-start-nonterms =
-    ?RTG(Start(<id>), ProdRules(<id>))
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-start-nonterms", "20,2,21,37")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "21,4,21,37")
+    ; ?RTG(
+         Start(
+           <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "21,16,21,17") ; id>
+         )
+       , ProdRules(
+           <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "21,33,21,34") ; id>
+         )
+       )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-start-nonterms", "20,2,21,37")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-start-nonterms", "20,2,21,37")
+      ; fail
+
 
 strategies
-
-  /**
-   * Rewrites an rtg to one rhs in a prodrule.
-   *
-   * @type RTG -> RTG 
-   */
   rtg-ungroup-productions =
-    RTG(id, ProdRules(rtg-ungroup-productions))
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-ungroup-productions", "30,2,31,46")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "31,4,31,46")
+    ; RTG(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "31,8,31,9") ; id
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "31,12,31,45")
+        ; ProdRules(
+            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "31,22,31,44") ; rtg-ungroup-productions
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-ungroup-productions", "30,2,31,46")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-ungroup-productions", "30,2,31,46")
+      ; fail
 
-  /**
-   * Rewrites an list of prodrules to one rhs in a prodrule.
-   *
-   * @type List(ProdRule) -> List(ProdRule)
-   */
   rtg-ungroup-productions =
-      map(\ ProdRule(nt, rhss) -> <map(!ProdRule(nt, [<id>]))> rhss \)
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-ungroup-productions", "38,2,40,11")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "39,6,40,11")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "39,6,39,69")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "39,10,39,68")
+           ; \ ProdRule(nt, rhss) -> <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "39,35,39,60")
+                                      ; map(
+                                          s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "39,39,39,59")
+                                          ; !ProdRule(
+                                               nt
+                                             , [<s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "39,55,39,56") ; id>]
+                                             )
+                                        )> rhss \
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "40,6,40,11")
     ; concat
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-ungroup-productions", "38,2,40,11")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-ungroup-productions", "38,2,40,11")
+      ; fail
+
 
 strategies
-
-  /**
-   * @type  RTG -> RTG
-   */
   rtg-group-productions =
-    RTG(id, ProdRules(rtg-group-by-nonterm))
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-productions", "47,2,48,43")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "48,4,48,43")
+    ; RTG(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "48,8,48,9") ; id
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "48,12,48,42")
+        ; ProdRules(
+            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "48,22,48,41") ; rtg-group-by-nonterm
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-productions", "47,2,48,43")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-productions", "47,2,48,43")
+      ; fail
 
-  /**
-   * @type  List(ProdRule) -> List(ProdRule)
-   */
   rtg-group-by-nonterm =
-    rtg-group-by(
-      \ ProdRule(nt, _) -> nt \ // key producer
-    , \ ProdRule(_, rhss) -> rhss \ // reducer to vales
-    , \ (nt, rhsss) -> ProdRule(nt, <concat> rhsss) \ // builder
-    )
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-by-nonterm", "53,2,58,4")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "54,4,58,4")
+    ; rtg-group-by(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "55,6,55,30")
+        ; \ ProdRule(nt, _) -> nt \
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "56,6,56,34")
+        ; \ ProdRule(_, rhss) -> rhss \
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "57,6,57,52")
+        ; \ (nt, rhsss) -> ProdRule(
+                             nt
+                           , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "57,37,57,42") ; concat> rhsss
+                           ) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-by-nonterm", "53,2,58,4")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-by-nonterm", "53,2,58,4")
+      ; fail
+
 
 strategies
+  rtg-group-by(k, r, build) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-by", "62,2,66,55")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "63,6,66,55")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "63,6,63,11") ; ?items)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "64,6,66,55")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "64,6,64,11")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "64,10,64,10") ; k
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "65,6,66,55")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "65,6,65,13") ; make-set)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "66,6,66,55")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "66,10,66,54")
+        ; rtg-build-group-by-pairs(
+            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "66,35,66,35") ; k
+          , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "66,38,66,38") ; r
+          , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "66,41,66,45") ; build
+          , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "66,48,66,53") ; !items
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-by", "62,2,66,55")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-group-by", "62,2,66,55")
+      ; fail
 
-  rtg-group-by(k, r, build) = 
-      ?items
-    ; map(k)
-    ; make-set
-    ; map(rtg-build-group-by-pairs(k, r, build, !items))
-
-  rtg-build-group-by-pairs(k, r, build, items) = 
-      ?key
-    ; where(<items; filter(where(k; ?key)); map(r)> () => values)
-    ; <build> (key, values)
+  rtg-build-group-by-pairs(k, r, build, items) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-build-group-by-pairs", "68,2,71,26")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "69,6,71,26")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "69,6,69,9") ; ?key)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,6,71,26")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,6,70,64")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,12,70,63")
+               ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,12,70,53")
+                  ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,13,70,49")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,13,70,17") ; items)
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,20,70,49")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,20,70,41")
+                         ; filter(
+                             s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,27,70,40")
+                             ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,33,70,39")
+                                     ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,33,70,33") ; k)
+                                     ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,36,70,39")
+                                     ; ?key)
+                           ))
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,44,70,49")
+                      ; map(
+                          s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "70,48,70,48") ; r
+                        ))> ()) => values))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "71,6,71,26")
+    ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "71,7,71,11") ; build)> (key, values)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-build-group-by-pairs", "68,2,71,26")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/util.str", "rtg-build-group-by-pairs", "68,2,71,26")
+      ; fail

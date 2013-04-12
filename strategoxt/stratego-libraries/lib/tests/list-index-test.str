@@ -1,94 +1,357 @@
-/**
- * Unit tests for list-index
- */
 module list-index-test
-imports libstratego-lib
-strategies
 
-  main-list-index-test = 
-    test-suite(!"list-index-test",
-      test-set-index
-    ; test-index
-    ; test-insert
-    ; test4a
-    ; test4b
-    ; test5
-    )
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
+  main-list-index-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "main-list-index-test", "8,2,16,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "9,4,16,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "9,15,9,32")
+        ; !"list-index-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "10,6,15,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "10,6,10,19") ; test-set-index)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "11,6,15,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "11,6,11,15") ; test-index)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "12,6,15,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "12,6,12,16") ; test-insert)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "13,6,15,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "13,6,13,11") ; test4a)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "14,6,15,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "14,6,14,11") ; test4b)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "15,6,15,10")
+        ; test5
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "main-list-index-test", "8,2,16,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "main-list-index-test", "8,2,16,4")
+      ; fail
 
   test-set-index =
-    apply-test(!"test-set-index 1", set-index
-    , !(3, "a", ["a", "b", "c", "d", "e"])
-    , !         ["a", "b", "c", "a", "e"]
-    ) 
-  ; apply-test(!"test-set-index 2", set-index
-    , !(0, "f", ["a", "b", "c", "d", "e"])
-    , !         ["f", "b", "c", "d", "e"]
-    )
-  ; apply-test(!"test-set-index 3", set-index
-    , !(1, "f", ["a", "b", "c", "d", "e"])
-    , !         ["a", "f", "c", "d", "e"]
-    )
-  ; apply-test(!"test-set-index 4", set-index
-    , !(4, "f", ["a", "b", "c", "d", "e"])
-    , !         ["a", "b", "c", "d", "f"]
-    )
-  ; apply-and-fail(!"test-set-index 5", set-index
-    , !(15, "f", ["a", "b", "c", "d", "e"])
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-set-index", "18,2,37,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "19,4,37,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "19,4,22,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "19,15,19,33")
+           ; !"test-set-index 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "19,36,19,44") ; set-index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "20,6,20,41")
+           ; !( 3
+              , "a"
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "21,6,21,40")
+           ; ![ "a"
+              , "b"
+              , "c"
+              , "a"
+              , "e"
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "23,4,37,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "23,4,26,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "23,15,23,33")
+           ; !"test-set-index 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "23,36,23,44") ; set-index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "24,6,24,41")
+           ; !( 0
+              , "f"
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "25,6,25,40")
+           ; ![ "f"
+              , "b"
+              , "c"
+              , "d"
+              , "e"
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "27,4,37,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "27,4,30,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "27,15,27,33")
+           ; !"test-set-index 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "27,36,27,44") ; set-index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "28,6,28,41")
+           ; !( 1
+              , "f"
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "29,6,29,40")
+           ; ![ "a"
+              , "f"
+              , "c"
+              , "d"
+              , "e"
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "31,4,37,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "31,4,34,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "31,15,31,33")
+           ; !"test-set-index 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "31,36,31,44") ; set-index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "32,6,32,41")
+           ; !( 4
+              , "f"
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "33,6,33,40")
+           ; ![ "a"
+              , "b"
+              , "c"
+              , "d"
+              , "f"
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "35,4,37,4")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "35,19,35,37")
+        ; !"test-set-index 5"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "35,40,35,48") ; set-index
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "36,6,36,42")
+        ; !( 15
+           , "f"
+           , [ "a"
+             , "b"
+             , "c"
+             , "d"
+             , "e"
+             ]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-set-index", "18,2,37,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-set-index", "18,2,37,4")
+      ; fail
 
   test-insert =
-    apply-test(!"test-insert", insert
-    , !(3, "a", ["a", "b", "c", "d", "e"])
-    , !         ["a", "b", "c", "a", "d", "e"]
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-insert", "39,2,43,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "40,4,43,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "40,15,40,28")
+        ; !"test-insert"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "40,31,40,36") ; insert
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "41,6,41,41")
+        ; !( 3
+           , "a"
+           , [ "a"
+             , "b"
+             , "c"
+             , "d"
+             , "e"
+             ]
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "42,6,42,45")
+        ; ![ "a"
+           , "b"
+           , "c"
+           , "a"
+           , "d"
+           , "e"
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-insert", "39,2,43,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-insert", "39,2,43,4")
+      ; fail
 
   test-index =
-    apply-test(!"test-index 1", index
-    , !(3, ["a", "b", "c", "d", "e"])
-    , !"c"
-    )
-  ; apply-test(!"test-index 2", index
-    , !(1, ["a", "b", "c", "d", "e"])
-    , !"a"
-    )
-  ; apply-test(!"test-index 3", index
-    , !(5, ["a", "b", "c", "d", "e"])
-    , !"e"
-    )
-  ; apply-test(!"test-index 4", index
-    , !(1, ["a"])
-    , !"a"
-    )
-  ; apply-and-fail(!"test-index 5", index
-    , !(2, ["a"])
-    )
-  ; apply-and-fail(!"test-index 6", index
-    , !(1, [])
-    )
-  ; apply-and-fail(!"test-index 7", index
-    , !(0, [])
-    )
-  ; apply-and-fail(!"test-index 8", index
-    , !(0, ["a"])
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-index", "45,2,73,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "46,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "46,4,49,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "46,15,46,29")
+           ; !"test-index 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "46,32,46,36") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "47,6,47,36")
+           ; !( 3
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "48,6,48,9")
+           ; !"c"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "50,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "50,4,53,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "50,15,50,29")
+           ; !"test-index 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "50,32,50,36") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "51,6,51,36")
+           ; !( 1
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "52,6,52,9")
+           ; !"a"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "54,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "54,4,57,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "54,15,54,29")
+           ; !"test-index 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "54,32,54,36") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "55,6,55,36")
+           ; !( 5
+              , [ "a"
+                , "b"
+                , "c"
+                , "d"
+                , "e"
+                ]
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "56,6,56,9")
+           ; !"e"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "58,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "58,4,61,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "58,15,58,29")
+           ; !"test-index 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "58,32,58,36") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "59,6,59,16")
+           ; !(1, ["a"])
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "60,6,60,9")
+           ; !"a"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "62,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "62,4,64,4")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "62,19,62,33")
+           ; !"test-index 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "62,36,62,40") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "63,6,63,16")
+           ; !(2, ["a"])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "65,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "65,4,67,4")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "65,19,65,33")
+           ; !"test-index 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "65,36,65,40") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "66,6,66,13")
+           ; !(1, [])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "68,4,73,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "68,4,70,4")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "68,19,68,33")
+           ; !"test-index 7"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "68,36,68,40") ; index
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "69,6,69,13")
+           ; !(0, [])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "71,4,73,4")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "71,19,71,33")
+        ; !"test-index 8"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "71,36,71,40") ; index
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "72,6,72,16")
+        ; !(0, ["a"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-index", "45,2,73,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test-index", "45,2,73,4")
+      ; fail
 
   test4a =
-    apply-test(!"test4a"
-	, map-with-index(Fst; inc)
-	, !["a", "b", "c"]
-	, ![2, 3, 4]
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test4a", "75,2,80,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "76,4,80,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "76,15,76,23")
+        ; !"test4a"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "77,3,77,26")
+        ; map-with-index(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "77,18,77,25")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "77,18,77,20") ; Fst)
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "77,23,77,25")
+            ; inc
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "78,3,78,18")
+        ; !["a", "b", "c"]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "79,3,79,12")
+        ; ![2, 3, 4]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test4a", "75,2,80,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test4a", "75,2,80,1")
+      ; fail
 
   test4b =
-    apply-test(!"test4b"
-	, map-with-index(Fst; inc)
-	, ![]
-	, ![]
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test4b", "82,2,87,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "83,4,87,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "83,15,83,23")
+        ; !"test4b"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "84,3,84,26")
+        ; map-with-index(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "84,18,84,25")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "84,18,84,20") ; Fst)
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "84,23,84,25")
+            ; inc
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "85,3,85,5")
+        ; ![]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "86,3,86,5")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test4b", "82,2,87,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test4b", "82,2,87,1")
+      ; fail
 
   test5 =
-    apply-test(!"test5"
-	, add-indices
-	, !["a", "b", "c", "d", "e"]
-	, ![(1, "a"), (2, "b"), (3, "c"), (4, "d"), (5, "e")]
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test5", "89,2,94,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "90,4,94,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "90,15,90,22")
+        ; !"test5"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "91,3,91,13") ; add-indices
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "92,3,92,28")
+        ; ![ "a"
+           , "b"
+           , "c"
+           , "d"
+           , "e"
+           ]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "93,3,93,53")
+        ; ![ (1, "a")
+           , (2, "b")
+           , (3, "c")
+           , (4, "d")
+           , (5, "e")
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test5", "89,2,94,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-index-test.str", "test5", "89,2,94,1")
+      ; fail

@@ -1,50 +1,81 @@
 module dr-propconst-tests-2
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   dr-test-utils
 
-/**
- * This test suite uses constant propagation for TIL programs
- * as a real-life test of the dynamic rules library.
- */
 
 strategies
-
   main =
-    propconst-tests-2
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "main", "12,2,13,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "13,4,13,20")
+    ; propconst-tests-2
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "main", "12,2,13,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "main", "12,2,13,20")
+      ; fail
 
   propconst-tests-2 =
-    test-suite(!"Dynamic Rules Library -- Constant Propagation (part 2)",
-      where(separation-message(|"Dynamic Rules Library -- Constant Propagation -- Combined Break & Continue Tests"))
-    ; pc-break-and-continue-tests
-    ; where(separation-message(|"Dynamic Rules Library -- Constant Propagation -- Exception Tests"))
-    ; pc-exception-tests
-    ; pc-exception-tests-fin
-    ; pc-exception-tests-loop
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "propconst-tests-2", "15,2,23,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "16,4,23,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "16,15,16,71")
+        ; !"Dynamic Rules Library -- Constant Propagation (part 2)"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "17,6,22,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "17,6,17,115")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "17,12,17,114")
+                   ; separation-message(|"Dynamic Rules Library -- Constant Propagation -- Combined Break & Continue Tests")))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "18,6,22,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "18,6,18,32") ; pc-break-and-continue-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "19,6,22,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "19,6,19,99")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "19,12,19,98")
+                   ; separation-message(|"Dynamic Rules Library -- Constant Propagation -- Exception Tests")))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "20,6,22,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "20,6,20,23") ; pc-exception-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "21,6,22,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "21,6,21,27") ; pc-exception-tests-fin)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "22,6,22,28")
+        ; pc-exception-tests-loop
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "propconst-tests-2", "15,2,23,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "propconst-tests-2", "15,2,23,4")
+      ; fail
+
 
 strategies
-
-  pc-break-and-continue-tests = id
-
-  ; apply-propconst-test(!"Check break/continue scenario #1" |
-      "var x; x := 1;
+  pc-break-and-continue-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-break-and-continue-tests", "27,2,365,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "27,32,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "27,32,27,33") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "29,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "29,4,44,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "29,25,29,59")
+           ; !"Check break/continue scenario #1"
+         | "var x; x := 1;
        while c() do
          f(x);
          if c() then x := 1; break; else x := 1; continue; end
          x := 2;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        while c() do
          f(1);
          if c() then x := 1; break; else x := 1; continue; end
          x := 2;
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #2" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "46,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "46,4,67,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "46,25,46,59")
+           ; !"Check break/continue scenario #2"
+         | "var x; x := 1;
        l1: while c() do
          l2: while c() do
            f(x);
@@ -53,8 +84,8 @@ strategies
          end
          x := 2;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        l1: while c() do
          l2: while c() do
            f(1);
@@ -64,20 +95,13 @@ strategies
          x := 2;
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #3" |
-      "var x; x := 1;
-       l1: while c() do
-         l2: while c() do
-           f(x);
-           if c() then x := 1; continue l2; else x := 1; break l1; end
-           x := 2;
-         end
-         x := 2;
-       end
-       f(x);",
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "69,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "69,4,90,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "69,25,69,59")
+           ; !"Check break/continue scenario #3"
+         | "var x; x := 1;
        l1: while c() do
          l2: while c() do
            f(x);
@@ -87,20 +111,23 @@ strategies
          x := 2;
        end
        f(x);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #4" |
-      "var x; x := 1;
+         , "var x; x := 1;
        l1: while c() do
          l2: while c() do
            f(x);
-           if c() then x := 1; continue l1; else x := 1; break l2; end
+           if c() then x := 1; continue l2; else x := 1; break l1; end
            x := 2;
          end
          x := 2;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "92,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "92,4,113,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "92,25,92,59")
+           ; !"Check break/continue scenario #4"
+         | "var x; x := 1;
        l1: while c() do
          l2: while c() do
            f(x);
@@ -110,10 +137,23 @@ strategies
          x := 2;
        end
        f(x);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #5" |
-      "var x; x := 1;
+         , "var x; x := 1;
+       l1: while c() do
+         l2: while c() do
+           f(x);
+           if c() then x := 1; continue l1; else x := 1; break l2; end
+           x := 2;
+         end
+         x := 2;
+       end
+       f(x);"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "115,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "115,4,156,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "115,25,115,59")
+           ; !"Check break/continue scenario #5"
+         | "var x; x := 1;
        l1: while c() do
          f(x); if c() then x := 1; break; else x := 1; end
          l2: while c() do
@@ -132,8 +172,8 @@ strategies
          end
          f(x);
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        l1: while c() do
          f(1); if c() then x := 1; break; else x := 1; end
          l2: while c() do
@@ -153,10 +193,13 @@ strategies
          f(1);
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #6" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "158,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "158,4,199,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "158,25,158,59")
+           ; !"Check break/continue scenario #6"
+         | "var x; x := 1;
        l1: while c() do
          f(x); if c() then x := 1; break; else x := 1; end
          l2: while c() do
@@ -175,8 +218,8 @@ strategies
          end
          f(x);
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        l1: while c() do
          f(1); if c() then x := 1; break; else x := 1; end
          l2: while c() do
@@ -196,10 +239,13 @@ strategies
          f(1);
        end
        f(x);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #7" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "201,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "201,4,242,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "201,25,201,59")
+           ; !"Check break/continue scenario #7"
+         | "var x; x := 1;
        l1: while c() do
          f(x); if c() then x := 1; break; else x := 1; end
          l2: while c() do
@@ -218,8 +264,8 @@ strategies
          end
          f(x); x := 1;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        l1: while c() do
          f(x); if c() then x := 1; break; else x := 1; end
          l2: while c() do
@@ -239,10 +285,13 @@ strategies
          f(x); x := 1;
        end
        f(x);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #8" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "244,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "244,4,283,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "244,25,244,59")
+           ; !"Check break/continue scenario #8"
+         | "var x; x := 1;
        l1: while c() do
          f(x);
          l2: while c() do
@@ -260,8 +309,8 @@ strategies
          end
          f(x);
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        l1: while c() do
          f(1);
          l2: while c() do
@@ -280,10 +329,13 @@ strategies
          f(1);
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #9" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "285,4,365,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "285,4,324,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "285,25,285,59")
+           ; !"Check break/continue scenario #9"
+         | "var x; x := 1;
        l1: while c() do
          f(x);
          l2: while c() do
@@ -301,8 +353,8 @@ strategies
          end
          f(x); x := 1;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        l1: while c() do
          f(1);
          l2: while c() do
@@ -321,10 +373,12 @@ strategies
          f(x); x := 1;
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Check break/continue scenario #10" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "326,4,365,4")
+    ; apply-propconst-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "326,25,326,60")
+        ; !"Check break/continue scenario #10"
+      | "var x; x := 1;
        l1: while c() do
          f(x);
          l2: while c() do
@@ -342,8 +396,8 @@ strategies
          end
          f(x); x := 1;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+      , "var x; x := 1;
        l1: while c() do
          f(1);
          l2: while c() do
@@ -362,12 +416,21 @@ strategies
          f(x); x := 1;
        end
        f(1);"
-    )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-break-and-continue-tests", "27,2,365,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-break-and-continue-tests", "27,2,365,4")
+      ; fail
 
-  pc-exception-tests = id
-
-  ; apply-propconst-test(!"Exception test #1" |
-      "var x;
+  pc-exception-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests", "367,2,601,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "367,23,601,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "367,23,367,24") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "369,4,601,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "369,4,388,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "369,25,369,44")
+           ; !"Exception test #1"
+         | "var x;
        try
          if c() then x := 1; throw F; else x := 2; throw E; end
        catch (e: E)
@@ -375,8 +438,8 @@ strategies
        catch (f: F)
          f(x); x := 1;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then x := 1; throw F; else x := 2; throw E; end
        catch (e: E)
@@ -385,10 +448,13 @@ strategies
          f(1); x := 1;
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Exception test #2" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "390,4,601,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "390,4,417,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "390,25,390,44")
+           ; !"Exception test #2"
+         | "var x;
        try
          if c() then
            if c() then x := 1; throw F; else x := 2; throw E; end
@@ -400,8 +466,8 @@ strategies
        catch (f: F)
          f(x); x := 1;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then
            if c() then x := 1; throw F; else x := 2; throw E; end
@@ -414,10 +480,13 @@ strategies
          f(1); x := 1;
        end
        f(1);"
-    )
-
-  ; apply-propconst-test(!"Exception test #3" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "419,4,601,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "419,4,446,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "419,25,419,44")
+           ; !"Exception test #3"
+         | "var x;
        try
          if c() then
            if c() then x := 1; throw F; else x := 2; throw E; end
@@ -429,8 +498,8 @@ strategies
        catch (f: F)
          f(x); x := 1;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then
            if c() then x := 1; throw F; else x := 2; throw E; end
@@ -443,10 +512,13 @@ strategies
          f(1); x := 1;
        end
        f(x);"
-    )
-    
-  ; apply-propconst-test(!"Exception test #4" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "448,4,601,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "448,4,475,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "448,25,448,44")
+           ; !"Exception test #4"
+         | "var x;
        try
          if c() then
            if c() then x := 1; throw F; else x := 2; throw E; end
@@ -458,8 +530,8 @@ strategies
        catch (f: F)
          f(x); x := 1;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then
            if c() then x := 1; throw F; else x := 2; throw E; end
@@ -472,10 +544,13 @@ strategies
          f(1); x := 1;
        end
        f(x);"
-     )
-
-  ; apply-propconst-test(!"Exception test #5" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "477,4,601,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "477,4,538,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "477,25,477,44")
+           ; !"Exception test #5"
+         | "var x;
        try
          x := 1;
          try
@@ -504,8 +579,8 @@ strategies
        catch (f: F)
          f(x); x := 2;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          x := 1;
          try
@@ -535,10 +610,12 @@ strategies
          f(x); x := 2;
        end
        f(2);"
-     )
-
-  ; apply-propconst-test(!"Exception test #6" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "540,4,601,5")
+    ; apply-propconst-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "540,25,540,44")
+        ; !"Exception test #6"
+      | "var x;
        try
          x := 1;
          try
@@ -567,8 +644,8 @@ strategies
        catch (f: F)
          f(x); x := 1;
        end
-       f(x);",
-      "var x;
+       f(x);"
+      , "var x;
        try
          x := 1;
          try
@@ -598,12 +675,21 @@ strategies
          f(x); x := 1;
        end
        f(x);"
-     )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests", "367,2,601,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests", "367,2,601,5")
+      ; fail
 
-  pc-exception-tests-fin = id
-
-  ; apply-propconst-test(!"Exception test #7" |
-      "var x;
+  pc-exception-tests-fin =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests-fin", "603,2,1264,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "603,27,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "603,27,603,28") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "605,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "605,4,628,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "605,25,605,44")
+           ; !"Exception test #7"
+         | "var x;
        try
          if c() then x := 1; throw F; else x := 2; throw E; end
        catch (e: E)
@@ -613,8 +699,8 @@ strategies
        finally
          f(x); x := 2;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then x := 1; throw F; else x := 2; throw E; end
        catch (e: E)
@@ -625,10 +711,13 @@ strategies
          f(1); x := 2;
        end
        f(2);"
-    )
-
-  ; apply-propconst-test(!"Exception test #8" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "630,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "630,4,653,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "630,25,630,44")
+           ; !"Exception test #8"
+         | "var x;
        try
          if c() then x := 1; throw F; else x := 2; throw E; end
        catch (e: E)
@@ -638,8 +727,8 @@ strategies
        finally
          f(x); x := 2;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then x := 1; throw F; else x := 2; throw E; end
        catch (e: E)
@@ -650,10 +739,13 @@ strategies
          f(x); x := 2;
        end
        f(2);"
-    )
-
-  ; apply-propconst-test(!"Exception test #9" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "655,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "655,4,680,4")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "655,25,655,44")
+           ; !"Exception test #9"
+         | "var x;
        try
          if c() then x := 1; throw F; else x := 2; end
          if c() then x := 2; throw E; else x := 2; end
@@ -664,8 +756,8 @@ strategies
        finally
          f(x); x := 2;
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          if c() then x := 1; throw F; else x := 2; end
          if c() then x := 2; throw E; else x := 2; end
@@ -677,10 +769,13 @@ strategies
          f(x); x := 2;
        end
        f(2);"
-    )
-
-  ; apply-propconst-test(!"Exception test #10" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "682,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "682,4,751,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "682,25,682,45")
+           ; !"Exception test #10"
+         | "var x;
        try
          x := 1;
          try
@@ -713,8 +808,8 @@ strategies
        finally
          f(x);
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          x := 1;
          try
@@ -748,10 +843,13 @@ strategies
          f(2);
        end
        f(2);"
-     )
-
-  ; apply-propconst-test(!"Exception test #11" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "753,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "753,4,822,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "753,25,753,45")
+           ; !"Exception test #11"
+         | "var x;
        try
          x := 1;
          try
@@ -784,8 +882,8 @@ strategies
        finally
          f(x);
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          x := 1;
          try
@@ -819,10 +917,13 @@ strategies
          f(2);
        end
        f(2);"
-     )
-
-  ; apply-propconst-test(!"Exception test #12" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "824,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "824,4,887,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "824,25,824,45")
+           ; !"Exception test #12"
+         | "var x;
        try
          x := 1;
          try
@@ -852,8 +953,8 @@ strategies
        finally
          f(x);
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          x := 1;
          try
@@ -884,10 +985,13 @@ strategies
          f(2);
        end
        f(2);"
-     )
-
-  ; apply-propconst-test(!"Exception test #13" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "889,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "889,4,958,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "889,25,889,45")
+           ; !"Exception test #13"
+         | "var x;
        try
          x := 1;
          try
@@ -920,8 +1024,8 @@ strategies
        finally
          f(x);
        end
-       f(x);",
-      "var x;
+       f(x);"
+         , "var x;
        try
          x := 1;
          try
@@ -955,10 +1059,13 @@ strategies
          f(2);
        end
        f(2);"
-     )
-
-  ; apply-propconst-test(!"Exception test #14" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "960,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "960,4,1007,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "960,25,960,45")
+           ; !"Exception test #14"
+         | "var x;
        try
          try
            try
@@ -980,8 +1087,8 @@ strategies
        catch (b: B) f(x);
        catch (e: E) f(x);
        finally f(x);
-       end",
-      "var x;
+       end"
+         , "var x;
        try
          try
            try
@@ -1004,10 +1111,13 @@ strategies
        catch (e: E) f(2);
        finally f(x);
        end"
-     )
-
-  ; apply-propconst-test(!"Exception test #15" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1009,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1009,4,1056,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1009,25,1009,45")
+           ; !"Exception test #15"
+         | "var x;
        try
          try
            try
@@ -1029,8 +1139,8 @@ strategies
        catch (b: B) f(x);
        catch (e: E) f(x);
        finally f(x);
-       end",
-      "var x;
+       end"
+         , "var x;
        try
          try
            try
@@ -1053,10 +1163,13 @@ strategies
        catch (e: E) f(x);
        finally f(x);
        end"
-     )
-
-  ; apply-propconst-test(!"Exception test #16" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1058,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1058,4,1105,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1058,25,1058,45")
+           ; !"Exception test #16"
+         | "var x;
        try
          try
            try
@@ -1078,8 +1191,8 @@ strategies
        catch (b: B) f(x);
        catch (e: E) f(x);
        finally f(x);
-       end",
-      "var x;
+       end"
+         , "var x;
        try
          try
            try
@@ -1102,10 +1215,13 @@ strategies
        catch (e: E) f(x);
        finally f(x);
        end"
-     )
-
-  ; apply-propconst-test(!"Exception test #17" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1107,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1107,4,1154,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1107,25,1107,45")
+           ; !"Exception test #17"
+         | "var x;
        try
          try
            try
@@ -1127,8 +1243,8 @@ strategies
        catch (b: B) f(x);
        catch (e: E) f(x);
        finally f(x);
-       end",
-      "var x;
+       end"
+         , "var x;
        try
          try
            try
@@ -1151,10 +1267,13 @@ strategies
        catch (e: E) f(4);
        finally f(x);
        end"
-     )
-
-  ; apply-propconst-test(!"Exception test #18" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1156,4,1264,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1156,4,1209,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1156,25,1156,45")
+           ; !"Exception test #18"
+         | "var x;
        try
          try
            try
@@ -1179,8 +1298,8 @@ strategies
        catch (b: B) f(x);
        catch (e: E) f(x);
        finally f(x);
-       end",
-      "var x;
+       end"
+         , "var x;
        try
          try
            try
@@ -1206,10 +1325,12 @@ strategies
        catch (e: E) f(2);
        finally f(x);
        end"
-     )
-
-  ; apply-propconst-test(!"Exception test #19" |
-      "var x;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1211,4,1264,5")
+    ; apply-propconst-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1211,25,1211,45")
+        ; !"Exception test #19"
+      | "var x;
        try
          try
            try
@@ -1234,8 +1355,8 @@ strategies
        catch (b: B) f(x);
        catch (e: E) f(x);
        finally f(x);
-       end",
-      "var x;
+       end"
+      , "var x;
        try
          try
            try
@@ -1261,12 +1382,21 @@ strategies
        catch (e: E) f(x);
        finally f(x);
        end"
-     )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests-fin", "603,2,1264,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests-fin", "603,2,1264,5")
+      ; fail
 
-  pc-exception-tests-loop = id
-
-  ; apply-propconst-test(!"Exception test #20" |
-      "var x; x := 1;
+  pc-exception-tests-loop =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests-loop", "1266,2,1537,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1266,28,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1266,28,1266,29") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1268,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1268,4,1293,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1268,25,1268,45")
+           ; !"Exception test #20"
+         | "var x; x := 1;
        while c() do
          try
            if c() then x := 2; throw E; end
@@ -1277,8 +1407,8 @@ strategies
            f(x); x := 1;
          end
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        while c() do
          try
            if c() then x := 2; throw E; end
@@ -1290,20 +1420,13 @@ strategies
          end
        end
        f(1);"
-     )
-
-  ; apply-propconst-test(!"Exception test #21" |
-      "var x; x := 1;
-       while c() do
-         try
-           if c() then throw E; end
-           x := 2;
-         catch (e: E)
-           f(x); x := 1;
-         end
-       end
-       f(x);",
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1295,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1295,4,1316,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1295,25,1295,45")
+           ; !"Exception test #21"
+         | "var x; x := 1;
        while c() do
          try
            if c() then throw E; end
@@ -1313,10 +1436,23 @@ strategies
          end
        end
        f(x);"
-     )
-
-  ; apply-propconst-test(!"Exception test #22" |
-      "var x; x := 2;
+         , "var x; x := 1;
+       while c() do
+         try
+           if c() then throw E; end
+           x := 2;
+         catch (e: E)
+           f(x); x := 1;
+         end
+       end
+       f(x);"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1318,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1318,4,1341,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1318,25,1318,45")
+           ; !"Exception test #22"
+         | "var x; x := 2;
        try
          while c() do
            if c() then x := 1; throw E; end
@@ -1326,8 +1462,8 @@ strategies
        catch (e: E)
          f(x); x := 2;
        end
-       f(x);",
-      "var x; x := 2;
+       f(x);"
+         , "var x; x := 2;
        try
          while c() do
            if c() then x := 1; throw E; end
@@ -1338,21 +1474,13 @@ strategies
          f(1); x := 2;
        end
        f(2);"
-     )
-
-  ; apply-propconst-test(!"Exception test #23" |
-      "var x; x := 1;
-       try
-         while c() do
-           if c() then throw E; end
-           x := 2;
-         end
-         f(x);
-       catch (e: E)
-         f(x); x := 1;
-       end
-       f(x);",
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1343,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1343,4,1366,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1343,25,1343,45")
+           ; !"Exception test #23"
+         | "var x; x := 1;
        try
          while c() do
            if c() then throw E; end
@@ -1363,10 +1491,24 @@ strategies
          f(x); x := 1;
        end
        f(x);"
-     )
-
-  ; apply-propconst-test(!"Exception test #24" |
-      "var x; x := 1;
+         , "var x; x := 1;
+       try
+         while c() do
+           if c() then throw E; end
+           x := 2;
+         end
+         f(x);
+       catch (e: E)
+         f(x); x := 1;
+       end
+       f(x);"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1368,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1368,4,1393,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1368,25,1368,45")
+           ; !"Exception test #24"
+         | "var x; x := 1;
        try
          while c() do
            if c() then x := 1; throw E; end
@@ -1377,8 +1519,8 @@ strategies
        catch (e: E)
          f(x); x := 1;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        try
          while c() do
            if c() then x := 1; throw E; end
@@ -1390,22 +1532,13 @@ strategies
          f(1); x := 1;
        end
        f(x);"
-     )
-
-  ; apply-propconst-test(!"Exception test #25" |
-      "var x; x := 1;
-       try
-         while c() do
-           if c() then x := 1; throw E; end
-           if c() then throw E; end
-           x := 2;
-         end
-         f(x);
-       catch (e: E)
-         f(x); x := 1;
-       end
-       f(x);",
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1395,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1395,4,1420,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1395,25,1395,45")
+           ; !"Exception test #25"
+         | "var x; x := 1;
        try
          while c() do
            if c() then x := 1; throw E; end
@@ -1417,10 +1550,25 @@ strategies
          f(x); x := 1;
        end
        f(x);"
-     )
-
-  ; apply-propconst-test(!"Exception test #26" |
-      "var x; x := 1;
+         , "var x; x := 1;
+       try
+         while c() do
+           if c() then x := 1; throw E; end
+           if c() then throw E; end
+           x := 2;
+         end
+         f(x);
+       catch (e: E)
+         f(x); x := 1;
+       end
+       f(x);"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1422,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1422,4,1459,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1422,25,1422,45")
+           ; !"Exception test #26"
+         | "var x; x := 1;
        try
          if c() then x := 2; throw E; end
          while c() do
@@ -1437,8 +1585,8 @@ strategies
          f(x);
        catch (e: E) f(x);
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        try
          if c() then x := 2; throw E; end
          while c() do
@@ -1456,10 +1604,13 @@ strategies
        catch (e: E) f(2);
        end
        f(x);"
-     )
-
-  ; apply-propconst-test(!"Exception test #27" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1461,4,1537,5")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1461,4,1498,5")
+       ; apply-propconst-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1461,25,1461,45")
+           ; !"Exception test #27"
+         | "var x; x := 1;
        try
          if c() then x := 2; throw E; end
          while c() do
@@ -1476,8 +1627,8 @@ strategies
          f(x);
        catch (e: E) f(x); x := 1;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+         , "var x; x := 1;
        try
          if c() then x := 2; throw E; end
          while c() do
@@ -1495,10 +1646,12 @@ strategies
        catch (e: E) f(x); x := 1;
        end
        f(1);"
-     )
-
-  ; apply-propconst-test(!"Exception test #28" |
-      "var x; x := 1;
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1500,4,1537,5")
+    ; apply-propconst-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "1500,25,1500,45")
+        ; !"Exception test #28"
+      | "var x; x := 1;
        try
          if c() then x := 2; throw E; end
          while c() do
@@ -1515,8 +1668,8 @@ strategies
          f(x);
        catch (e: E) f(x); x := 1;
        end
-       f(x);",
-      "var x; x := 1;
+       f(x);"
+      , "var x; x := 1;
        try
          if c() then x := 2; throw E; end
          while c() do
@@ -1534,4 +1687,7 @@ strategies
        catch (e: E) f(x); x := 1;
        end
        f(1);"
-     )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests-loop", "1266,2,1537,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-propconst-tests-2.str", "pc-exception-tests-loop", "1266,2,1537,5")
+      ; fail

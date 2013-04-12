@@ -1,15 +1,44 @@
 module assignment
-imports list-cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  list-cons
+
+
 signature
   constructors
     A : Term
     G : Term -> Term
     F : Term * Term -> Term
 
+
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "main", "11,2,11,20")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "11,9,11,20")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "11,10,11,12") ; bla)> G(A())
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "main", "11,2,11,20")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "main", "11,2,11,20")
+      ; fail
 
-  main = <bla> G(A())
+  s =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "s", "13,2,13,19")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "13,6,13,19")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "13,6,13,10")
+       ; ?G(x))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "13,13,13,19")
+    ; !F(x, x)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "s", "13,2,13,19")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "s", "13,2,13,19")
+      ; fail
 
-  s = ?G(x); !F(x,x)
-
-  bla = s => F(x, y)
+  bla =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "bla", "15,2,15,19")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "15,8,15,19")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "15,8,15,8") ; s) => F(x, y)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "bla", "15,2,15,19")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/assignment.str", "bla", "15,2,15,19")
+      ; fail

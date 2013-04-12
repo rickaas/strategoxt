@@ -1,19 +1,51 @@
 module io-test4
-imports libstratego-lib
- 
-signature 
-  constructors 
-    "pp-tables-0" : Int -> Foo 
- 
-strategies 
 
-  main-io_test4 = 
-    <conc>(<id>, ["-i", "io-test4.in", "-o", "io-test4.out"])
-    ; io-wrap( 
-        ?x
-        ; debug(!"input: ")
-	; !"pp-tables-0"("b")
-        ; debug(!"a constructed term")
-        ; <?"pp-tables-0"(<id>)> x
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+signature
+  constructors
+    "pp-tables-0" : Int -> Foo
+
+
+strategies
+  main-io_test4 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "main-io_test4", "10,2,18,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "11,4,18,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "11,4,11,60")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "11,5,11,8") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "11,12,11,13") ; id>
+                                                                                                               , ["-i", "io-test4.in", "-o", "io-test4.out"]
+                                                                                                               ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "12,6,18,6")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "13,8,17,33")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "13,8,13,9") ; ?x)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "14,10,17,33")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "14,10,14,26")
+           ; debug(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "14,16,14,25")
+               ; !"input: "
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "15,3,17,33")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "15,3,15,21")
+           ; !"pp-tables-0"("b"))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "16,10,17,33")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "16,10,16,37")
+           ; debug(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "16,16,16,36")
+               ; !"a constructed term"
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "17,10,17,33")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "17,11,17,30")
+            ; ?"pp-tables-0"(
+                 <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "17,27,17,28") ; id>
+               ))> x
       )
- 
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "main-io_test4", "10,2,18,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test4.str", "main-io_test4", "10,2,18,6")
+      ; fail

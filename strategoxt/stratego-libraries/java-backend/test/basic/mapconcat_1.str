@@ -1,10 +1,25 @@
 module mapconcat_1
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
   main-mapconcat_1 =
-    ![1,2,3]
-  ; mapconcat(![<id>]) => [1,2,3]
-
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "main-mapconcat_1", "7,2,9,32")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "8,4,9,32")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "8,4,8,11")
+       ; ![1, 2, 3])
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "9,4,9,32")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "9,4,9,21")
+       ; mapconcat(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "9,14,9,20")
+           ; ![<s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "9,17,9,18") ; id>]
+         )) => [1, 2, 3]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "main-mapconcat_1", "7,2,9,32")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/mapconcat_1.str", "main-mapconcat_1", "7,2,9,32")
+      ; fail

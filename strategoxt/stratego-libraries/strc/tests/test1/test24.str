@@ -1,5 +1,13 @@
 module test24
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
 
 signature
   constructors
@@ -9,22 +17,44 @@ signature
     I : Exp -> Exp
     G : Exp * Exp -> Exp
 
-overlays
 
-  F(x) = G(H(x),A)
+overlays
+  F ( x ) =
+    G(H(x), A)
+
 
 rules
 
-  R1 : H(H(x)) -> x
+  R1 :
+    H(H(x)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "R1", "18,2,18,18")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "R1", "18,2,18,18")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "R1", "18,2,18,18")
+             ; fail
 
-  R2 : H(y) -> I(<R1; !F(<id>)> y)
+  R2 :
+    H(y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "R2", "20,2,20,33")> I(
+                                                                                                         <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "20,18,20,29")
+                                                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "20,18,20,19") ; R1)
+                                                                                                          ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "20,22,20,29")
+                                                                                                          ; !F(
+                                                                                                               <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "20,26,20,27") ; id>
+                                                                                                             )> y
+                                                                                                       )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "R2", "20,2,20,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "R2", "20,2,20,33")
+             ; fail
+
 
 strategies
-
   main =
-    !H(H(H(B)))
-    ; R2
-    ; ?I(G(H(B),A))
-
-  
-
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "main", "24,2,27,18")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "25,4,27,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "25,4,25,14")
+       ; !H(H(H(B))))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "26,6,27,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "26,6,26,7") ; R2)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "27,6,27,18")
+    ; ?I(G(H(B), A))
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "main", "24,2,27,18")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test24.str", "main", "24,2,27,18")
+      ; fail

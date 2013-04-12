@@ -1,13 +1,45 @@
 module tail
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 rules
 
-  RA : [x, y | z] -> [x, y, x | z]
+  RA :
+    [x, y|z] -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "RA", "5,2,5,33")> [x, y, x|z]
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "RA", "5,2,5,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "RA", "5,2,5,33")
+             ; fail
 
-  S2D0 : (n, [46|ys])  -> (n, 10, ys)
+  S2D0 :
+    (n, [46|ys]) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "S2D0", "7,2,7,36")> (n, 10, ys)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "S2D0", "7,2,7,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "S2D0", "7,2,7,36")
+             ; fail
+
 
 strategies
-
-  main = 
-   <[id, id | id]; RA; [id, id, id | id ]> 
-	["A", "B", "C", "D"] => ["A","B","A","C","D"]
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "main", "11,2,13,45")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,3,13,45")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,3,13,20")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,4,12,40")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,4,12,16")
+              ; [s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,5,12,6") ; id, s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,9,12,10") ; id|s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,14,12,15") ; id])
+           ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,19,12,40")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,19,12,20") ; RA)
+           ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,23,12,40")
+           ; [s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,24,12,25") ; id, s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,28,12,29") ; id, s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,32,12,33") ; id|s-step(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "12,37,12,38") ; id])> ["A", "B", "C", "D"]) => [ "A"
+                                                                                                                                                                                                                                                                                                                                                                                                        , "B"
+                                                                                                                                                                                                                                                                                                                                                                                                        , "A"
+                                                                                                                                                                                                                                                                                                                                                                                                        , "C"
+                                                                                                                                                                                                                                                                                                                                                                                                        , "D"
+                                                                                                                                                                                                                                                                                                                                                                                                        ]
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "main", "11,2,13,45")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/tail.str", "main", "11,2,13,45")
+      ; fail

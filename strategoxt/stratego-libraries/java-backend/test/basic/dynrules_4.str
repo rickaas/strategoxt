@@ -1,15 +1,41 @@
 module dynrules_4
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
+
 
 rules
 
   main-dynrules_4 =
-     rules(
-       Foo: Some("2") -> 1
-       Foo: None()    -> None()
-       Foo: ("a", 2)  -> 3
-     )
-   ; dr-all-keys(|"Foo"); debug => [Some("2"), None(), (a, 2)]
-   ; map(Foo) => [1{}, None(){}, 3{}]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "main-dynrules_4", "8,2,15,36")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "9,5,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "9,5,13,5")
+       ; rules (
+           Foo :
+             Some("2") -> 1
+           Foo :
+             None() -> None()
+           Foo :
+             ("a", 2) -> 3
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "14,5,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "14,5,14,23")
+       ; dr-all-keys(|"Foo"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "14,26,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "14,26,14,61")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "14,26,14,30") ; debug) => [ Some("2")
+                                                                                                                     , None()
+                                                                                                                     , (a, 2)
+                                                                                                                     ])
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "15,5,15,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "15,5,15,12")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "15,9,15,11") ; Foo
+         )) => [1{}, None(){}, 3{}]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "main-dynrules_4", "8,2,15,36")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/dynrules_4.str", "main-dynrules_4", "8,2,15,36")
+      ; fail

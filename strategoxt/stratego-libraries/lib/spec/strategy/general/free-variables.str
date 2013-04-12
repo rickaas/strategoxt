@@ -1,110 +1,288 @@
-/*
-
-	Extraction of free variables from an expression is governed
-	by the shape of variables and the shape of variable bindings.
-
-*/
 module strategy/general/free-variables
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   collection/list/-
 
-/*
 
-	\paragraph{Parameters of Free Variable Extraction}
-
-	the following aspects determine the extraction of
-	free variables from expressions
-
-	\begin{itemize}
-
-	\item shape of variables
-
-	\item variables bound by a binding construct
-
-	\item arguments of the binding constructs where variables are
-	bound
-
-	\end{itemize}
-
-	In addition can variable constructs contain other variables, 
-	or in other words, whether variables are leaves or non-leaves.
-
-	\paragraph{Variables are Leaves}
-
-	In the first style of free variable extraction, variables are
-	leaves of abstract syntax trees.
-
-	Free variables of a term; The first argument s1 is a strategy
-	that transforms variables into lists of variables, e.g.,
-	\verb|Var(x) -> [x]|; The second argument s2 is a strategy
-	that maps binding constructs to the list of bound variables,
-	e.g., \verb|Scope(xs, s) -> xs|;
-
-*/
 strategies
+  free-vars(getvars, boundvars) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "46,2,48,62")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "47,4,48,62")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "47,10,48,61")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "47,10,47,16") ; getvars
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,13,48,61")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,13,48,55")
+                 ; split(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,19,48,36")
+                     ; crush(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,25,48,27")
+                         ; ![]
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,29,48,33") ; union
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,35,48,35") ; x
+                       )
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,39,48,54")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,39,48,47") ; boundvars
+                        <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,52,48,54")
+                           ; ![])
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "48,58,48,61")
+              ; diff)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "46,2,48,62")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "46,2,48,62")
+      ; fail
 
-  free-vars(getvars, boundvars) = 
-    rec x(getvars 
-          <+ split(crush(![],union,x), boundvars <+ ![]); diff)
+  free-vars(getvars, boundvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "50,2,56,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "52,4,56,31")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "52,10,56,30")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "52,10,52,16") ; getvars
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,13,56,30")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,13,55,31")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,13,54,54")
+                    ; {vs:
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,18,54,53")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,18,53,39")
+                           ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,24,53,38")
+                                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "53,24,53,32") ; boundvars) => vs))
+                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,18,54,53")
+                        ; boundin(
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,26,54,44")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,26,54,38")
+                               ; split(
+                                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,32,54,32") ; x
+                                 , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,35,54,37") ; !vs
+                                 ))
+                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,41,54,44")
+                            ; diff
+                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,47,54,47") ; x
+                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "54,50,54,52")
+                            ; ![]
+                          )
+                      })
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "55,13,55,31")
+                 ; crush(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "55,19,55,21")
+                     ; ![]
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "55,23,55,27") ; union
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "55,29,55,30") ; id
+                   )
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "56,13,56,30")
+                    ; crush(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "56,19,56,21")
+                        ; ![]
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "56,23,56,27") ; union
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "56,29,56,29") ; x
+                      )))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "50,2,56,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "50,2,56,31")
+      ; fail
 
-  free-vars(getvars, boundvars
-           , boundin : (term -> term) * (term -> term) * (term -> term) * term -> term) = 
-    rec x(getvars 
-          <+ {vs: where(boundvars => vs); 
-                  boundin(split(x, !vs); diff, x, ![])};
-             crush(![],union,id)
-          <+ crush(![],union,x))
+  free-vars(getvars, boundvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term, eq) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "67,2,74,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "70,4,74,31")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "70,10,74,30")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "70,10,70,16") ; getvars
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,13,74,30")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,13,73,31")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,13,72,58")
+                    ; {vs:
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,18,72,57")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,18,71,39")
+                           ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,24,71,38")
+                                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "71,24,71,32") ; boundvars) => vs))
+                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,18,72,57")
+                        ; boundin(
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,26,72,48")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,26,72,38")
+                               ; split(
+                                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,32,72,32") ; x
+                                 , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,35,72,37") ; !vs
+                                 ))
+                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,41,72,48")
+                            ; diff(
+                                s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,46,72,47") ; eq
+                              )
+                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,51,72,51") ; x
+                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "72,54,72,56")
+                            ; ![]
+                          )
+                      })
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "73,13,73,31")
+                 ; crush(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "73,19,73,21")
+                     ; ![]
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "73,23,73,27") ; union
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "73,29,73,30") ; id
+                   )
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "74,13,74,30")
+                    ; crush(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "74,19,74,21")
+                        ; ![]
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "74,23,74,27") ; union
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "74,29,74,29") ; x
+                      )))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "67,2,74,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars", "67,2,74,31")
+      ; fail
 
-/* // if we had strategy abstraction /\(x1,...,xn) -> s
 
-  free-vars(getvars, boundvars, boundin) = 
-    collect(getvars
-           ,/\ (x,nil) -> 
-            {vs: where(boundvars => vs); 
-                 boundin(split(x, !vs); diff, x, nil)})
-*/
-
-  free-vars(getvars, boundvars
-           , boundin : (term -> term) * (term -> term) * (term -> term) * term -> term
-           , eq) 
-  = rec x(getvars 
-          <+ {vs: where(boundvars => vs); 
-                  boundin(split(x, !vs); diff(eq), x, ![])};
-             crush(![],union,id)
-          <+ crush(![],union,x))
-
-/*
-
-	\paragraph{Variables are not Leafs}
-
-	In a more complicated style of free variable extraction,
-	variables are not leaves of abstract syntax trees, but can
-	contain subterms that again contain variables.
-
-*/
 strategies
+  free-vars2(getvars, boundvars) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "87,2,90,15")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "88,4,90,15")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "88,10,90,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "88,10,89,58")
+           ; split(
+               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "88,16,88,29")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "88,16,88,22") ; getvars
+                  <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "88,27,88,29")
+                     ; ![])
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,9,89,57")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,9,89,51")
+                  ; split(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,15,89,32")
+                      ; crush(
+                          s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,21,89,23")
+                          ; ![]
+                        , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,25,89,29") ; union
+                        , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,31,89,31") ; x
+                        )
+                    , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,35,89,50")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,35,89,43") ; boundvars
+                         <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,48,89,50")
+                            ; ![])
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "89,54,89,57")
+               ; diff
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "90,10,90,14")
+        ; union
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "87,2,90,15")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "87,2,90,15")
+      ; fail
 
-  free-vars2(getvars, boundvars) = 
-    rec x(split(getvars <+ ![],
-	        split(crush(![],union,x), boundvars <+ ![]); diff); 
-          union)
+  free-vars2(getvars, boundvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "92,2,99,15")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "94,4,99,15")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "94,10,99,14")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "94,10,98,39")
+           ; split(
+               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "94,16,94,29")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "94,16,94,22") ; getvars
+                  <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "94,27,94,29")
+                     ; ![])
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,17,98,37")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,17,97,35")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,17,96,58")
+                     ; {vs:
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,22,96,57")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,22,95,43")
+                            ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,28,95,42")
+                                    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "95,28,95,36") ; boundvars) => vs))
+                         ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,22,96,57")
+                         ; boundin(
+                             s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,30,96,48")
+                             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,30,96,42")
+                                ; split(
+                                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,36,96,36") ; x
+                                  , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,39,96,41") ; !vs
+                                  ))
+                             ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,45,96,48")
+                             ; diff
+                           , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,51,96,51") ; x
+                           , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "96,54,96,56")
+                             ; ![]
+                           )
+                       })
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "97,17,97,35")
+                  ; crush(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "97,23,97,25")
+                      ; ![]
+                    , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "97,27,97,31") ; union
+                    , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "97,33,97,34") ; id
+                    )
+                  <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "98,20,98,37")
+                     ; crush(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "98,26,98,28")
+                         ; ![]
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "98,30,98,34") ; union
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "98,36,98,36") ; x
+                       ))
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "99,10,99,14")
+        ; union
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "92,2,99,15")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "92,2,99,15")
+      ; fail
 
-  free-vars2(getvars, boundvars
-            , boundin : (term -> term) * (term -> term) * (term -> term) * term -> term) = 
-    rec x(split(getvars <+ ![],
-                ({vs: where(boundvars => vs); 
-                      boundin(split(x, !vs); diff, x, ![])};
-                 crush(![],union,id)
-                 <+ crush(![],union,x)));
-          union)
-
-  free-vars2(getvars, boundvars
-            , boundin : (term -> term) * (term -> term) * (term -> term) * term -> term
-            , eq)
-  = rec x(split(getvars <+ ![]
-               ,{vs: where(boundvars => vs);
-                     boundin(split(x, !vs); diff(eq), x, ![]);
-                     crush(![],union,id)}
-                <+ crush(![],union,x)
-               ); union)
-
+  free-vars2(getvars, boundvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term, eq) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "101,2,109,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "104,4,109,23")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "104,10,109,22")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "104,10,109,15")
+           ; split(
+               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "104,16,104,29")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "104,16,104,22") ; getvars
+                  <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "104,27,104,29")
+                     ; ![])
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "105,16,108,36")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "105,16,107,40")
+                  ; {vs:
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "105,21,107,39")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "105,21,105,42")
+                         ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "105,27,105,41")
+                                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "105,27,105,35") ; boundvars) => vs))
+                      ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,21,107,39")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,21,106,60")
+                         ; boundin(
+                             s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,29,106,51")
+                             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,29,106,41")
+                                ; split(
+                                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,35,106,35") ; x
+                                  , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,38,106,40") ; !vs
+                                  ))
+                             ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,44,106,51")
+                             ; diff(
+                                 s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,49,106,50") ; eq
+                               )
+                           , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,54,106,54") ; x
+                           , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "106,57,106,59")
+                             ; ![]
+                           ))
+                      ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "107,21,107,39")
+                      ; crush(
+                          s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "107,27,107,29")
+                          ; ![]
+                        , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "107,31,107,35") ; union
+                        , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "107,37,107,38") ; id
+                        )
+                    }
+                  <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "108,19,108,36")
+                     ; crush(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "108,25,108,27")
+                         ; ![]
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "108,29,108,33") ; union
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "108,35,108,35") ; x
+                       ))
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "109,18,109,22")
+        ; union
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "101,2,109,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/free-variables.str", "free-vars2", "101,2,109,23")
+      ; fail

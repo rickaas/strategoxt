@@ -1,85 +1,269 @@
-/**
- * Implosion of AsFix lists.
- */
 module stratego/asfix/implode/list
 
-/**
- * Flatten list constructs
- *
- * Note: these rules are not used by implode-asfix: they are only
- * applied in flat-list.
- */
-rules
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  FlatList: 
-    appl(prod([cf(iter(_))],cf(iter-star(_)),_),[x]) -> <FlatList>x
-
-  FlatList: 
-    appl(prod([],cf(iter-star(_)),_),[]) -> []
-
-  FlatList: 
-    appl(prod(_,cf(iter(_)),_),[x]) -> [x]
-
-  FlatList: 
-    appl(prod(_,cf(iter(_)),_),[x|xs]) -> z
-    where
-      rec x (
-         \ appl(prod(_,cf(iter(_)),_),[a]) -> [a] \
-      <+ \ appl(prod(_,cf(iter(_)),_),[a,b]) -> <concat>[<x>a, <x>b] \
-      <+ \ appl(prod(_,cf(iter(_)),_),[a,w,b]) -> <concat>[<x>a,[w],<x>b] \
-      ) => z
-
-  FlatList: 
-    appl(prod([cf(iter-sep(_,_))],cf(iter-star-sep(_,_)),_),[x]) -> <FlatList>x
-
-  FlatList: 
-    appl(prod([], cf(iter-star-sep(_,_)),_),[]) -> []
-
-  FlatList: 
-    appl(prod(_,cf(iter-sep(_,_)),_),[x]) -> [x]
-
-  FlatList: 
-    appl(prod(_,cf(iter-sep(_,_)),_),[x|xs]) -> z
-    where
-      rec x (
-          \ appl(prod(_,cf(iter-sep(_,_)),_),[a]) -> [a] \
-       <+ \ appl(prod(_,cf(iter-sep(_,_)),_),[a,b,c]) -> <concat>[<x>a, [b],<x>c] \
-       <+ \ appl(prod(_,cf(iter-sep(_,_)),_),[a,w1,b,w2,c])
-	  -> <concat>[<x>a, [w1,b,w2],<x>c] \
-      ) => z
 
 rules
 
-  ImplodeOptionalList : 
-    appl(prod([], cf(opt(s)), _), []) -> []
-    where
-      <is-asfix-list> s
+  FlatList :
+    appl(
+      prod(
+        [cf(iter(_))]
+      , cf(iter-star(_))
+      , _
+      )
+    , [x]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "14,2,15,66")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "15,57,15,64") ; FlatList> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "14,2,15,66")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "14,2,15,66")
+             ; fail
 
-  ImplodeOptionalList : 
-    appl(prod([cf(s)], cf(opt(s)), _), [x]) -> x
-    where
-      <is-asfix-list> s
+  FlatList :
+    appl(
+      prod(
+        []
+      , cf(iter-star(_))
+      , _
+      )
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "17,2,18,45")> []
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "17,2,18,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "17,2,18,45")
+             ; fail
 
-  ImplodeOptionalList : 
-    appl(prod([], opt(s), _), []) -> []
-    where
-      <is-asfix-list> s
+  FlatList :
+    appl(
+      prod(_, cf(iter(_)), _)
+    , [x]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "20,2,21,41")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "20,2,21,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "20,2,21,41")
+             ; fail
 
-  ImplodeOptionalList : 
-    appl(prod([s], opt(s), _), [x]) -> x
-    where
-      <is-asfix-list> s
+  FlatList :
+    appl(
+      prod(_, cf(iter(_)), _)
+    , [x|xs]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "23,2,30,11")> z
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "23,2,30,11")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "23,2,30,11")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "26,6,30,11")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "26,6,30,6")
+             ; rec x (
+                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "27,9,29,74")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "27,9,27,50")
+                    ; \ appl(
+                          prod(_, cf(iter(_)), _)
+                        , [a]
+                        ) -> [a] \
+                    <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "28,9,29,74")
+                       ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "28,9,28,69")
+                          ; \ appl(
+                                prod(_, cf(iter(_)), _)
+                              , [a, b]
+                              ) -> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "28,49,28,54") ; concat> [ <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "28,58,28,58") ; x> a
+                                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "28,64,28,64") ; x> b
+                                                                                                                                               ] \
+                          <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "29,9,29,74")
+                             ; \ appl(
+                                   prod(_, cf(iter(_)), _)
+                                 , [a, w, b]
+                                 ) -> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "29,51,29,56") ; concat> [ <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "29,60,29,60") ; x> a
+                                                                                                                                                  , [w]
+                                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "29,69,29,69") ; x> b
+                                                                                                                                                  ] \))
+               )) => z
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "23,2,30,11")
+             ; fail
+
+  FlatList :
+    appl(
+      prod(
+        [cf(iter-sep(_, _))]
+      , cf(iter-star-sep(_, _))
+      , _
+      )
+    , [x]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "32,2,33,78")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "33,69,33,76") ; FlatList> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "32,2,33,78")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "32,2,33,78")
+             ; fail
+
+  FlatList :
+    appl(
+      prod(
+        []
+      , cf(iter-star-sep(_, _))
+      , _
+      )
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "35,2,36,52")> []
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "35,2,36,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "35,2,36,52")
+             ; fail
+
+  FlatList :
+    appl(
+      prod(_, cf(iter-sep(_, _)), _)
+    , [x]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "38,2,39,47")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "38,2,39,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "38,2,39,47")
+             ; fail
+
+  FlatList :
+    appl(
+      prod(_, cf(iter-sep(_, _)), _)
+    , [x|xs]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "41,2,49,11")> z
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "41,2,49,11")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "41,2,49,11")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "44,6,49,11")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "44,6,49,6")
+             ; rec x (
+                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "45,10,48,37")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "45,10,45,57")
+                    ; \ appl(
+                          prod(_, cf(iter-sep(_, _)), _)
+                        , [a]
+                        ) -> [a] \
+                    <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "46,10,48,37")
+                       ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "46,10,46,82")
+                          ; \ appl(
+                                prod(_, cf(iter-sep(_, _)), _)
+                              , [a, b, c]
+                              ) -> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "46,58,46,63") ; concat> [ <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "46,67,46,67") ; x> a
+                                                                                                                                               , [b]
+                                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "46,77,46,77") ; x> c
+                                                                                                                                               ] \
+                          <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "47,10,48,37")
+                             ; \ appl(
+                                   prod(_, cf(iter-sep(_, _)), _)
+                                 , [a, w1, b, w2, c]
+                                 ) -> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "48,7,48,12") ; concat> [ <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "48,16,48,16") ; x> a
+                                                                                                                                                 , [w1, b, w2]
+                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "48,32,48,32") ; x> c
+                                                                                                                                                 ] \))
+               )) => z
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "FlatList", "41,2,49,11")
+             ; fail
+
+
+rules
+
+  ImplodeOptionalList :
+    appl(
+      prod(
+        []
+      , cf(opt(s))
+      , _
+      )
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "53,2,56,22")> []
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "53,2,56,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "53,2,56,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "56,6,56,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "56,7,56,19") ; is-asfix-list)> s
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "53,2,56,22")
+             ; fail
+
+  ImplodeOptionalList :
+    appl(
+      prod(
+        [cf(s)]
+      , cf(opt(s))
+      , _
+      )
+    , [x]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "58,2,61,22")> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "58,2,61,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "58,2,61,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "61,6,61,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "61,7,61,19") ; is-asfix-list)> s
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "58,2,61,22")
+             ; fail
+
+  ImplodeOptionalList :
+    appl(
+      prod([], opt(s), _)
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "63,2,66,22")> []
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "63,2,66,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "63,2,66,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "66,6,66,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "66,7,66,19") ; is-asfix-list)> s
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "63,2,66,22")
+             ; fail
+
+  ImplodeOptionalList :
+    appl(
+      prod([s], opt(s), _)
+    , [x]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "68,2,71,22")> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "68,2,71,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "68,2,71,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "71,6,71,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "71,7,71,19") ; is-asfix-list)> s
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "ImplodeOptionalList", "68,2,71,22")
+             ; fail
+
 
 strategies
+  is-list-sort =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "is-list-sort", "75,2,79,24")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "76,4,79,24")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "76,4,76,11")
+       ; iter(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "76,9,76,10") ; id
+         )
+       + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "77,4,79,24")
+         ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "77,4,77,19")
+            ; iter-sep(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "77,13,77,14") ; id
+              , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "77,17,77,18") ; id
+              )
+            + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "78,4,79,24")
+              ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "78,4,78,16")
+                 ; iter-star(
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "78,14,78,15") ; id
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "79,4,79,24")
+                   ; iter-star-sep(
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "79,18,79,19") ; id
+                     , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "79,22,79,23") ; id
+                     ))))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "is-list-sort", "75,2,79,24")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "is-list-sort", "75,2,79,24")
+      ; fail
 
-  is-list-sort =  
-    iter(id) +
-    iter-sep(id, id) +
-    iter-star(id) + 
-    iter-star-sep(id, id)
-
-  is-asfix-list = 
-    rec x(
-      is-list-sort
-    + seq(map(lit(id) + layout() + x))
-    )
+  is-asfix-list =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "is-asfix-list", "81,2,85,4")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "82,4,85,4")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "83,6,84,37")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "83,6,83,17") ; is-list-sort
+           + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,6,84,37")
+             ; seq(
+                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,10,84,36")
+                 ; map(
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,14,84,35")
+                     ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,14,84,20")
+                        ; lit(
+                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,18,84,19") ; id
+                          )
+                        + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,24,84,35")
+                          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,24,84,31") ; layout
+                             + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "84,35,84,35") ; x))
+                   )
+               ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "is-asfix-list", "81,2,85,4")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/list.str", "is-asfix-list", "81,2,85,4")
+      ; fail

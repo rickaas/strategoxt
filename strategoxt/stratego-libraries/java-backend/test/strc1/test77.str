@@ -1,14 +1,38 @@
 module test77
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
-  constructors 
+  constructors
     Foo : Int * Int * Int -> Foo
 
+
 strategies
+  foo =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "foo", "9,2,11,50")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "10,4,11,50")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "10,4,10,11")
+       ; ?(x, y, z))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "11,6,11,50")
+    ; rules (
+        Foo :
+          Foo(x, y, _) -> ()
+          depends on []
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "foo", "9,2,11,50")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "foo", "9,2,11,50")
+      ; fail
 
-  foo = 
-    ?(x,y,z)
-    ; rules( Foo : Foo(x,y,_) -> () depends on [] )
-
-  main-test77 = 
-    undefine-Foo(|"a")
+  main-test77 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "main-test77", "13,2,14,21")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "14,4,14,21")
+    ; undefine-Foo(|"a")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "main-test77", "13,2,14,21")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test77.str", "main-test77", "13,2,14,21")
+      ; fail

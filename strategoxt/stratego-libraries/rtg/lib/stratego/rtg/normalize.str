@@ -1,103 +1,273 @@
-/**
- * Implements simplification to a normalized tree grammar (Section 2.1 TATA)
- *
- * After applying this transformation every production has the
- * from A -> f(A1 ... A2) or A -> f()
- * 
- * @author Martin Bravenboer
- */
 module stratego/rtg/normalize
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/rtg/signature
   libstratego-lib
 
+
 strategies
-
   rtg-remove-nested-trees =
-    RTG(
-      Start(id)
-    , ProdRules(
-        listtd(repeat(rtg-lift-nested-tree))
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-nested-trees", "16,2,22,4")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "17,4,22,4")
+    ; RTG(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "18,6,18,14")
+        ; Start(
+            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "18,12,18,13") ; id
+          )
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "19,6,21,6")
+        ; ProdRules(
+            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "20,8,20,43")
+            ; listtd(
+                s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "20,15,20,42")
+                ; repeat(
+                    s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "20,22,20,41") ; rtg-lift-nested-tree
+                  )
+              )
+          )
       )
-    )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-nested-trees", "16,2,22,4")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-nested-trees", "16,2,22,4")
+      ; fail
 
-  /**
-   * This might introduces duplicate rules, but the remove-inject-rules 
-   * simplifications turns the productions into a set anyway, so we
-   * ignore this.
-   */
   rtg-lift-nested-tree :
-    [ProdRule(a, [Appl(f, ts)]) | ps]
-      ->
-    [ProdRule(a, [Appl(f, ts')]), ProdRule(t', [t]) | ps]
-    where
-      ts' := <fetch((
-        Appl(g, ts2) -> Ref(t')
-        where
-          ?t; t' := <rtg-nested-tree-to-nonterm> t
-        ))> ts
+    [ProdRule(
+       a
+     , [Appl(f, ts)]
+     )|ps] -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-lift-nested-tree", "29,2,38,13")> [ProdRule(
+                                                                                                                                     a
+                                                                                                                                   , [Appl(f, ts')]
+                                                                                                                                   ), ProdRule(t', [t])|ps]
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-lift-nested-tree", "29,2,38,13")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-lift-nested-tree", "29,2,38,13")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "34,6,38,13")
+          ; ts' := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "34,14,38,9")
+                    ; fetch(
+                        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "34,20,38,8")
+                        ; ( Appl(g, ts2) -> Ref(t')
+                            where s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "37,10,37,49")
+                                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "37,10,37,11") ; ?t)
+                                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "37,14,37,49")
+                                  ; t' := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "37,21,37,46") ; rtg-nested-tree-to-nonterm> t )
+                      )> ts
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-lift-nested-tree", "29,2,38,13")
+             ; fail
 
   rtg-nested-tree-to-nonterm :
-    a@Appl(f, ts) -> Generated(a)
+    a@Appl(f, ts) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-nested-tree-to-nonterm", "40,2,41,32")> Generated(a)
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-nested-tree-to-nonterm", "40,2,41,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-nested-tree-to-nonterm", "40,2,41,32")
+             ; fail
+
 
 strategies
-
-  /**
-   * @todo Rather inefficient: need transitive closure implementation
-   *       with tracing of the transitivity.
-   */
   rtg-remove-injection-rules :
-    RTG(Start(starts), ProdRules(prodrules))
-      ->
-    RTG(Start(starts), ProdRules(prodrules'))
-    where
-      let create-hashtable = {tbl:
-              tbl := <new-hashtable>
-              ; <map(add-production-to-tbl(|tbl))> prodrules
-              ; !tbl
-            }
-
-          add-production-to-tbl(|tbl) = {a, p:
-              ?p@ProdRule(a, _)
-              ; <hashtable-push(|a, p)> tbl
-            }
-
-          is-normalized =
-            ProdRule(id, [Appl(id, map(Ref(id)))])
-
-          is-injection =
-            ProdRule(id, [Ref(id)])
-
-          ensure-injection =
-            is-injection
-            <+ log(|Error(), "expected injection production", <id>)
-               ; fail
-
-          remove-injection(|ps, tbl) = {a, b, tail, ps' :
-              ?[ProdRule(a, [Ref(b)]) | tail]
-              ; ps' := <hashtable-get(|b); map(make-inlined(|a))> tbl
-              ; <iset-addlist(|<retain-all(is-normalized)> ps')> ps
-              ; <remove-all(is-normalized)> ps'
-              ; map(ensure-injection)
-              ; <conc> (<id>, tail)
-            }
-
-          make-inlined(|a) =
-            \ ProdRule(b, [alt]) -> ProdRule(a, [alt]) \
-
-       in tbl := <create-hashtable>
-        ; ps := <new-iset>
-        ; finally(
-              <iset-addlist(|<retain-all(is-normalized)> prodrules)> ps
-
-            ; <remove-all(is-normalized)> prodrules
-            ; map(ensure-injection)
-            ; repeat(remove-injection(|ps, tbl))
-            ; (?[] <+ ?[<id> | _]; debug(!"cannot remove injection: "); fail)
-
-            ; prodrules' := <iset-elements> ps
-
-          ,   <iset-destroy> ps
-            ; <hashtable-destroy> tbl
-          )
-      end
+    RTG(Start(starts), ProdRules(prodrules)) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-injection-rules", "49,2,103,8")> RTG(Start(starts), ProdRules(prodrules'))
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-injection-rules", "49,2,103,8")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-injection-rules", "49,2,103,8")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "54,6,103,8")
+          ; let create-hashtable =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "create-hashtable", "54,10,58,12")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "54,29,58,12")
+                  ; {tbl:
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "55,14,57,19")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "55,14,55,35")
+                         ; tbl := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "55,22,55,34") ; new-hashtable>)
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "56,16,57,19")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "56,16,56,59")
+                         ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "56,17,56,48")
+                             ; map(
+                                 s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "56,21,56,47")
+                                 ; add-production-to-tbl(|tbl)
+                               ))> prodrules)
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "57,16,57,19")
+                      ; !tbl
+                    }
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "create-hashtable", "54,10,58,12")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "create-hashtable", "54,10,58,12")
+                    ; fail
+                add-production-to-tbl(|tbl) =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "add-production-to-tbl", "60,10,63,12")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "60,40,63,12")
+                  ; {a, p:
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "61,14,62,42")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "61,14,61,30")
+                         ; ?p@ProdRule(a, _))
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "62,16,62,42")
+                      ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "62,17,62,37")
+                          ; hashtable-push(|a, p))> tbl
+                    }
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "add-production-to-tbl", "60,10,63,12")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "add-production-to-tbl", "60,10,63,12")
+                    ; fail
+                is-normalized =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "is-normalized", "65,10,66,49")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,12,66,49")
+                  ; ProdRule(
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,21,66,22") ; id
+                    , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,25,66,48")
+                      ; [ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,26,66,47")
+                          ; Appl(
+                              s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,31,66,32") ; id
+                            , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,35,66,46")
+                              ; map(
+                                  s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,39,66,45")
+                                  ; Ref(
+                                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "66,43,66,44") ; id
+                                    )
+                                )
+                            )
+                        ]
+                    )
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "is-normalized", "65,10,66,49")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "is-normalized", "65,10,66,49")
+                    ; fail
+                is-injection =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "is-injection", "68,10,69,34")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "69,12,69,34")
+                  ; ProdRule(
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "69,21,69,22") ; id
+                    , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "69,25,69,33")
+                      ; [ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "69,26,69,32")
+                          ; Ref(
+                              s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "69,30,69,31") ; id
+                            )
+                        ]
+                    )
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "is-injection", "68,10,69,34")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "is-injection", "68,10,69,34")
+                    ; fail
+                ensure-injection =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "ensure-injection", "71,10,74,20")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "72,12,74,20")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "72,12,72,23") ; is-injection
+                     <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "73,15,74,20")
+                        ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "73,15,73,66")
+                           ; log(
+                             | Error()
+                             , "expected injection production"
+                             , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "73,63,73,64") ; id>
+                             ))
+                        ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "74,17,74,20")
+                        ; fail)
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "ensure-injection", "71,10,74,20")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "ensure-injection", "71,10,74,20")
+                    ; fail
+                remove-injection(|ps, tbl) =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "remove-injection", "76,10,83,12")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "76,39,83,12")
+                  ; {a, b, tail, ps':
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "77,14,82,34")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "77,14,77,44")
+                         ; ?[ProdRule(a, [Ref(b)])|tail])
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "78,16,82,34")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "78,16,78,68")
+                         ; ps' := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "78,24,78,63")
+                                   ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "78,24,78,40")
+                                      ; hashtable-get(|b))
+                                   ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "78,43,78,63")
+                                   ; map(
+                                       s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "78,47,78,62")
+                                       ; make-inlined(|a)
+                                     )> tbl)
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "79,16,82,34")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "79,16,79,66")
+                         ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "79,17,79,62")
+                             ; iset-addlist(
+                               | <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "79,32,79,56")
+                                  ; retain-all(
+                                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "79,43,79,55") ; is-normalized
+                                    )> ps'
+                               ))> ps)
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "80,16,82,34")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "80,16,80,46")
+                         ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "80,17,80,41")
+                             ; remove-all(
+                                 s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "80,28,80,40") ; is-normalized
+                               ))> ps')
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "81,16,82,34")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "81,16,81,36")
+                         ; map(
+                             s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "81,20,81,35") ; ensure-injection
+                           ))
+                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "82,16,82,34")
+                      ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "82,17,82,20") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "82,25,82,26") ; id>
+                                                                                                                              , tail
+                                                                                                                              )
+                    }
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "remove-injection", "76,10,83,12")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "remove-injection", "76,10,83,12")
+                    ; fail
+                make-inlined(|a) =
+                  s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "make-inlined", "85,10,86,55")
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "86,12,86,55")
+                  ; \ ProdRule(b, [alt]) -> ProdRule(a, [alt]) \
+                  < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "make-inlined", "85,10,86,55")
+                  + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "make-inlined", "85,10,86,55")
+                    ; fail
+            in
+              s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "88,10,102,10")
+              ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "88,10,88,34")
+                 ; tbl := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "88,18,88,33") ; create-hashtable>)
+              ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "89,10,102,10")
+              ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "89,10,89,25")
+                 ; ps := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "89,17,89,24") ; new-iset>)
+              ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "90,10,102,10")
+              ; finally(
+                  s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "91,14,98,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "91,14,91,70")
+                     ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "91,15,91,66")
+                         ; iset-addlist(
+                           | <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "91,30,91,54")
+                              ; retain-all(
+                                  s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "91,41,91,53") ; is-normalized
+                                )> prodrules
+                           ))> ps)
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "93,14,98,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "93,14,93,50")
+                     ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "93,15,93,39")
+                         ; remove-all(
+                             s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "93,26,93,38") ; is-normalized
+                           ))> prodrules)
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "94,14,98,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "94,14,94,34")
+                     ; map(
+                         s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "94,18,94,33") ; ensure-injection
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "95,14,98,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "95,14,95,47")
+                     ; repeat(
+                         s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "95,21,95,46")
+                         ; remove-injection(|ps, tbl)
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,14,98,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,15,96,75")
+                     ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,15,96,17")
+                        ; ?[]
+                        <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,22,96,75")
+                           ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,22,96,32")
+                              ; ?[<s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,25,96,26") ; id>|_])
+                           ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,35,96,75")
+                           ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,35,96,69")
+                              ; debug(
+                                  s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,41,96,68")
+                                  ; !"cannot remove injection: "
+                                ))
+                           ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "96,72,96,75")
+                           ; fail))
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "98,14,98,45")
+                  ; prodrules' := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "98,29,98,41") ; iset-elements> ps
+                , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "100,14,101,36")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "100,14,100,30")
+                     ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "100,15,100,26") ; iset-destroy)> ps)
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "101,14,101,36")
+                  ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "101,15,101,31") ; hashtable-destroy)> tbl
+                )
+            end
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/normalize.str", "rtg-remove-injection-rules", "49,2,103,8")
+             ; fail

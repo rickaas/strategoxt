@@ -1,8 +1,18 @@
 module io-test1
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
-   main = debug
-
-
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/io-test1.str", "main", "6,3,6,14")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/io-test1.str", "6,10,6,14")
+    ; debug
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test1.str", "main", "6,3,6,14")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/io-test1.str", "main", "6,3,6,14")
+      ; fail

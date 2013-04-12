@@ -1,19 +1,33 @@
-/**
- * Normalizes an RTG to TATA's normalized regular tree grammar.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module rtg-normalize
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-rtg
 
-strategies
 
+strategies
   main-rtg-normalize =
-    io-stream-wrap(
-      ?(<id>, fout)
-      ; parse-rtg-stream
-      ; rtg-normalize
-      ; <write-to-stream> (fout, <id>)
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "main-rtg-normalize", "13,2,19,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "14,4,19,4")
+    ; io-stream-wrap(
+        s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "15,6,18,37")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "15,6,15,18")
+           ; ?( <s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "15,9,15,10") ; id>
+              , fout
+              ))
+        ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "16,8,18,37")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "16,8,16,23") ; parse-rtg-stream)
+        ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "17,8,18,37")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "17,8,17,20") ; rtg-normalize)
+        ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "18,8,18,37")
+        ; <(s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "18,9,18,23") ; write-to-stream)> ( fout
+                                                                                                                    , <s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "18,34,18,35") ; id>
+                                                                                                                    )
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "main-rtg-normalize", "13,2,19,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/trans/rtg-normalize.str", "main-rtg-normalize", "13,2,19,4")
+      ; fail

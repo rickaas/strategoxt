@@ -1,8 +1,36 @@
 module test39
-imports collection/list/cons collection/tuple/cons
-strategies
 
-   main =
-     let lettest(s) = <s> (1, 2)
-      in lettest({?(x,y); prim("SSL_addi", x, y)})
-     end
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
+strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "main", "5,3,8,7")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "6,5,8,7")
+    ; let lettest(s) =
+            s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "lettest", "6,9,6,31")
+            ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "6,22,6,31")
+            ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "6,23,6,23") ; s)> (1, 2)
+            < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "lettest", "6,9,6,31")
+            + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "lettest", "6,9,6,31")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "7,9,7,49")
+        ; lettest(
+            s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "7,17,7,48")
+            ; {s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "7,18,7,47")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "7,18,7,23")
+                  ; ?(x, y))
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "7,26,7,47")
+               ; prim("SSL_addi", x, y)}
+          )
+      end
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "main", "5,3,8,7")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test39.str", "main", "5,3,8,7")
+      ; fail

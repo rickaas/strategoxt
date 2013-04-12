@@ -1,14 +1,16 @@
 module system/io/process
 
-/**
- * Terminating the Current Process
- */
-strategies 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  /**
-   * Abort execution with exit value n.
-   *
-   * @type Int -> _
-   */
-  exit = 
-    ?n; prim("SSL_exit", n)
+
+strategies
+  exit =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/process.str", "exit", "13,2,14,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/process.str", "14,4,14,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/process.str", "14,4,14,5") ; ?n)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/process.str", "14,8,14,26")
+    ; prim("SSL_exit", n)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/process.str", "exit", "13,2,14,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/process.str", "exit", "13,2,14,26")
+      ; fail

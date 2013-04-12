@@ -1,17 +1,21 @@
 module dr-all-tests
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   dr-propconst-tests-1
   dr-propconst-tests-2
   dr-dce-tests
   dr-scope-tests
 
-strategies
 
+strategies
   main =
-    id
-/*
-    ; scope-tests
-    ; propconst-tests-1
-    ; propconst-tests-2
-    ; dead-code-elimination-tests
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-all-tests.str", "main", "10,2,11,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-all-tests.str", "11,4,11,5")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-all-tests.str", "main", "10,2,11,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-all-tests.str", "main", "10,2,11,5")
+      ; fail

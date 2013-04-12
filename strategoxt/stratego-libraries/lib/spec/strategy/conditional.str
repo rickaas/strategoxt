@@ -1,138 +1,207 @@
-/**
- * Conditionals
- */
 module strategy/conditional
-imports strategy/general/option
 
-strategies // Equality
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  /**
-   * Tests whether two terms are equal.
-   */
 
-  eq = 
-    ?(x, x)
+imports
+  strategy/general/option
 
-  /**
-   * Tests whether two terms are equal.
-   */
-
-  equal =
-    ?(x, x)
-
-  /**
-   * Tests whether current term is equal to argument term.
-   */
-
-  equal(|x) =
-    ?x
-
-  /**
-   * Tests whether two argument terms are equal to each other.
-   */
-
-  equal(|x, y) =
-    where(!x => y)
-
-strategies // Control-flow combinators
-
-  /**
-   * try(s) tries to apply s to the current term, but
-   * returns it unchanged (and succeeds) when s fails.
-   */
-
-  try(s) = 
-    s <+ id
-
-  if(c, b) = 
-    c < b + id
-
-  if(c, b1, b2) = 
-    c < b1 + b2
-
-  /**
-   * Apply restoring action 'rest' if s fails, and then fail.
-   *
-   * Typically useful if s performs side effects that should be
-   * restored/undone in case s fails.
-   */
-
-  restore(s, rest) = 
-    s <+ (rest; fail)
-
-  /**
-   * Apply restoring action 'rest' after s terminates, and preserve
-   * success/failure behaviour of s.
-   *
-   * Typically useful if s performs side effects that should be
-   * restored always, e.g., when maintaining scope information.
-   */
-
-  restore-always(s, rest) = 
-    s < rest + (rest; fail)
-
-  /**
-   * Applies s followed by f whether s failed or not.
-   *
-   * @result <s> input
-   * @fail   s or f failed (consider try(f))
-   * @type   a -> b, (a or b) -> _ :: a -> b
-   */
-
-  finally(s, f) = 
-    s < where(f) + (where(f); fail)
-
-strategies // Boolean combinators
-
-  /**
-   * true is a synonym for id.
-   */
-
-  true = 
-    id
-
-  /**
-   * false is a synonym for fail.
-   */
-
-  false = 
-    fail
-
-  /**
-   * ior(s1, s2) implements 'inclusive or', that is, the
-   * inclusive choice of s1 and s2. It first tries s1, if
-   * that fails it applies s2 (just like s1 <+ s2). However,
-   * when s1 succeeds it also tries to apply s2.
-   *
-   * The results of the transformations are returned.
-   */
-
-  ior(s1, s2) = 
-    (s1; try(s2)) <+ s2
-
-  /**
-   * or(s1, s2) is similar to ior(s1,s2), but the application
-   * of the strategies is only tested.
-   */
-
-  or(s1, s2) = 
-    if s1 then try(test(s2)) else test(s2) end
-
-  /**
-   * and(s1, s2) applies s1 and s2 to the current
-   * term and succeeds if both succeed. s2 will always
-   * be applied, i.e., and is *not* a short-circuit 
-   * operator
-   */
-
-  and(s1, s2) = 
-    if s1 then test(s2) else test(s2); fail end
 
 strategies
+  eq =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "eq", "13,2,14,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "14,4,14,10")
+    ; ?(x, x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "eq", "13,2,14,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "eq", "13,2,14,10")
+      ; fail
 
-  // a -> b :: a -> Option(b)
-  maybe(s) = !Some(<s>) <+ !None()
+  equal =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "20,2,21,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "21,4,21,10")
+    ; ?(x, x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "20,2,21,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "20,2,21,10")
+      ; fail
 
-  // a -> b, () -> b :: Option(a) -> b
-  maybe(s1, s2) : Some(a) -> <s1> a
-  maybe(s1, s2) : None()  -> <s2> ()
+  equal(|x) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "27,2,28,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "28,4,28,5")
+    ; ?x
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "27,2,28,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "27,2,28,5")
+      ; fail
+
+  equal(|x, y) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "34,2,35,17")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "35,4,35,17")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "35,10,35,16")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "35,10,35,11") ; !x) => y)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "34,2,35,17")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "equal", "34,2,35,17")
+      ; fail
+
+
+strategies
+  try(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "try", "44,2,45,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "45,4,45,10")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "45,4,45,4") ; s
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "45,9,45,10") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "try", "44,2,45,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "try", "44,2,45,10")
+      ; fail
+
+  if(c, b) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "if", "47,2,48,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "48,4,48,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "48,4,48,4") ; c
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "48,8,48,8") ; b
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "48,12,48,13") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "if", "47,2,48,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "if", "47,2,48,13")
+      ; fail
+
+  if(c, b1, b2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "if", "50,2,51,14")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "51,4,51,14")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "51,4,51,4") ; c
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "51,8,51,9") ; b1
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "51,13,51,14") ; b2)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "if", "50,2,51,14")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "if", "50,2,51,14")
+      ; fail
+
+  restore(s, rest) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "restore", "60,2,61,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "61,4,61,20")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "61,4,61,4") ; s
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "61,10,61,19")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "61,10,61,13") ; rest)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "61,16,61,19")
+          ; fail)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "restore", "60,2,61,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "restore", "60,2,61,20")
+      ; fail
+
+  restore-always(s, rest) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "restore-always", "71,2,72,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "72,4,72,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "72,4,72,4") ; s
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "72,8,72,11") ; rest
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "72,16,72,25")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "72,16,72,19") ; rest)
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "72,22,72,25")
+         ; fail)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "restore-always", "71,2,72,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "restore-always", "71,2,72,26")
+      ; fail
+
+  finally(s, f) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "finally", "82,2,83,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,4,83,34")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,4,83,4") ; s
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,8,83,15")
+         ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,14,83,14") ; f)
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,20,83,33")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,20,83,27")
+            ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,26,83,26") ; f))
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "83,30,83,33")
+         ; fail)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "finally", "82,2,83,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "finally", "82,2,83,34")
+      ; fail
+
+
+strategies
+  true =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "true", "91,2,92,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "92,4,92,5")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "true", "91,2,92,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "true", "91,2,92,5")
+      ; fail
+
+  false =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "false", "98,2,99,7")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "99,4,99,7")
+    ; fail
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "false", "98,2,99,7")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "false", "98,2,99,7")
+      ; fail
+
+  ior(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "ior", "110,2,111,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "111,4,111,22")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "111,5,111,15")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "111,5,111,6") ; s1)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "111,9,111,15")
+       ; try(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "111,13,111,14") ; s2
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "111,21,111,22") ; s2)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "ior", "110,2,111,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "ior", "110,2,111,22")
+      ; fail
+
+  or(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "or", "118,2,119,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,4,119,45")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,7,119,8") ; s1 then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,15,119,27")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,19,119,26")
+            ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,24,119,25") ; s2)
+          )
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,34,119,41")
+        ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "119,39,119,40") ; s2)
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "or", "118,2,119,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "or", "118,2,119,45")
+      ; fail
+
+  and(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "and", "128,2,129,46")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,4,129,46")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,7,129,8") ; s1 then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,15,129,22")
+        ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,20,129,21") ; s2)
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,29,129,42")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,29,129,36")
+           ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,34,129,35") ; s2))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "129,39,129,42")
+        ; fail
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "and", "128,2,129,46")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "and", "128,2,129,46")
+      ; fail
+
+
+strategies
+  maybe(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "134,2,134,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "134,13,134,33")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "134,13,134,22")
+       ; !Some(
+            <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "134,20,134,20") ; s>
+          )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "134,27,134,33")
+          ; !None())
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "134,2,134,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "134,2,134,33")
+      ; fail
+
+  maybe(s1, s2) :
+    Some(a) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "137,2,137,34")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "137,30,137,31") ; s1> a
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "137,2,137,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "137,2,137,34")
+             ; fail
+
+  maybe(s1, s2) :
+    None() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "138,2,138,35")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "138,30,138,31") ; s2> ()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "138,2,138,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/conditional.str", "maybe", "138,2,138,35")
+             ; fail

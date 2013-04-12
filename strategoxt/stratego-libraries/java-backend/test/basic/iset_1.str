@@ -1,9 +1,20 @@
 module iset_1
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
   main-iset_1 =
-    new-iset
-  ; iset-add(|1)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_1.str", "main-iset_1", "7,2,9,15")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_1.str", "8,4,9,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_1.str", "8,4,8,11") ; new-iset)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_1.str", "9,4,9,15")
+    ; iset-add(|1)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_1.str", "main-iset_1", "7,2,9,15")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/iset_1.str", "main-iset_1", "7,2,9,15")
+      ; fail

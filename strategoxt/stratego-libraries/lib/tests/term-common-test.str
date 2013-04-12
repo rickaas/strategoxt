@@ -1,94 +1,240 @@
 module term-common-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
   main-term-common-test =
-    test-suite(!"term-common-test",
-        get-constructor-tests
-      ; get-arguments-tests
-      ; get-appl-arguments-tests
-      ; checksum-tests
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "main-term-common-test", "6,2,12,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "7,4,12,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "7,15,7,33")
+        ; !"term-common-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "8,8,11,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "8,8,8,28") ; get-constructor-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "9,8,11,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "9,8,9,26") ; get-arguments-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "10,8,11,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "10,8,10,31") ; get-appl-arguments-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "11,8,11,21")
+        ; checksum-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "main-term-common-test", "6,2,12,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "main-term-common-test", "6,2,12,4")
+      ; fail
 
-  get-constructor-tests = id
-    ; apply-test(!"get-constructor 1"
-      , get-constructor
-      , !C()
-      , !"C"
+  get-constructor-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-constructor-tests", "14,2,29,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "14,26,29,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "14,26,14,27") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "15,6,29,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "15,6,19,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "15,17,15,36")
+           ; !"get-constructor 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "16,8,16,22") ; get-constructor
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "17,8,17,11")
+           ; !C()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "18,8,18,11")
+           ; !"C"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "20,6,29,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "20,6,24,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "20,17,20,36")
+           ; !"get-constructor 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "21,8,21,22") ; get-constructor
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "22,8,22,12")
+           ; !B(1)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "23,8,23,11")
+           ; !"B"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "25,6,29,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "25,17,25,36")
+        ; !"get-constructor 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "26,8,26,22") ; get-constructor
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "27,8,27,15")
+        ; !A(1, 2)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "28,8,28,11")
+        ; !"A"
       )
-    ; apply-test(!"get-constructor 2"
-      , get-constructor
-      , !B(1)
-      , !"B"
-      )
-    ; apply-test(!"get-constructor 3"
-      , get-constructor
-      , !A(1, 2)
-      , !"A"
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-constructor-tests", "14,2,29,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-constructor-tests", "14,2,29,6")
+      ; fail
 
-  get-arguments-tests = id
-    ; apply-test(!"get-arguments 1"
-      , get-arguments
-      , !C()
-      , ![]
+  get-arguments-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-arguments-tests", "31,2,46,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "31,24,46,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "31,24,31,25") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "32,6,46,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "32,6,36,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "32,17,32,34")
+           ; !"get-arguments 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "33,8,33,20") ; get-arguments
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "34,8,34,11")
+           ; !C()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "35,8,35,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "37,6,46,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "37,6,41,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "37,17,37,34")
+           ; !"get-arguments 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "38,8,38,20") ; get-arguments
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "39,8,39,12")
+           ; !B(1)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "40,8,40,11")
+           ; ![1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "42,6,46,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "42,17,42,34")
+        ; !"get-arguments 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "43,8,43,20") ; get-arguments
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "44,8,44,15")
+        ; !A(1, 2)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "45,8,45,14")
+        ; ![1, 2]
       )
-    ; apply-test(!"get-arguments 2"
-      , get-arguments
-      , !B(1)
-      , ![1]
-      )
-    ; apply-test(!"get-arguments 3"
-      , get-arguments
-      , !A(1, 2)
-      , ![1, 2]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-arguments-tests", "31,2,46,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-arguments-tests", "31,2,46,6")
+      ; fail
 
-  get-appl-arguments-tests = id
-    ; apply-test(!"get-appl-arguments 1"
-      , get-appl-arguments
-      , !C()
-      , ![]
+  get-appl-arguments-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-appl-arguments-tests", "48,2,79,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "48,29,79,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "48,29,48,30") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "49,6,79,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "49,6,53,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "49,17,49,39")
+           ; !"get-appl-arguments 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "50,8,50,25") ; get-appl-arguments
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "51,8,51,11")
+           ; !C()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "52,8,52,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "54,6,79,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "54,6,58,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "54,17,54,39")
+           ; !"get-appl-arguments 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "55,8,55,25") ; get-appl-arguments
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "56,8,56,12")
+           ; !B(1)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "57,8,57,11")
+           ; ![1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "59,6,79,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "59,6,63,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "59,17,59,39")
+           ; !"get-appl-arguments 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "60,8,60,25") ; get-appl-arguments
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "61,8,61,15")
+           ; !A(1, 2)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "62,8,62,14")
+           ; ![1, 2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "65,6,79,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "65,6,69,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "65,17,65,39")
+           ; !"get-appl-arguments 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "66,8,66,30")
+           ; get-appl-arguments(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "66,27,66,29") ; inc
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "67,8,67,11")
+           ; !C()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "68,8,68,10")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "70,6,79,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "70,6,74,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "70,17,70,39")
+           ; !"get-appl-arguments 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "71,8,71,30")
+           ; get-appl-arguments(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "71,27,71,29") ; inc
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "72,8,72,12")
+           ; !B(1)
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "73,8,73,11")
+           ; ![2]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "75,6,79,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "75,17,75,39")
+        ; !"get-appl-arguments 6"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "76,8,76,30")
+        ; get-appl-arguments(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "76,27,76,29") ; inc
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "77,8,77,15")
+        ; !A(1, 2)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "78,8,78,14")
+        ; ![2, 3]
       )
-    ; apply-test(!"get-appl-arguments 2"
-      , get-appl-arguments
-      , !B(1)
-      , ![1]
-      )
-    ; apply-test(!"get-appl-arguments 3"
-      , get-appl-arguments
-      , !A(1, 2)
-      , ![1, 2]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-appl-arguments-tests", "48,2,79,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "get-appl-arguments-tests", "48,2,79,6")
+      ; fail
 
-    ; apply-test(!"get-appl-arguments 4"
-      , get-appl-arguments(inc)
-      , !C()
-      , ![]
+  checksum-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "checksum-tests", "81,2,91,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "81,19,91,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "81,19,81,20") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "82,6,91,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "82,6,86,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "82,17,82,29")
+           ; !"checksum 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "83,8,83,27")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "83,9,83,16") ; checksum
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "83,19,83,26") ; checksum
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "84,8,84,18")
+           ; !(C(), C())
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "85,8,85,20")
+           ; {x:
+               s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "85,12,85,18")
+               ; ?(x, x)
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "87,6,91,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "87,17,87,29")
+        ; !"checksum 2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "88,8,88,27")
+        ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "88,9,88,16") ; checksum
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "88,19,88,26") ; checksum
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "89,8,89,19")
+        ; !(B(1), B(2))
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "90,8,90,37")
+        ; {x, y:
+            s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "90,14,90,35")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "90,14,90,20")
+               ; ?(x, y))
+            ; s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "90,24,90,35")
+            ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "90,28,90,34")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "90,28,90,29") ; !x) => y)
+          }
       )
-    ; apply-test(!"get-appl-arguments 5"
-      , get-appl-arguments(inc)
-      , !B(1)
-      , ![2]
-      )
-    ; apply-test(!"get-appl-arguments 6"
-      , get-appl-arguments(inc)
-      , !A(1, 2)
-      , ![2, 3]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "checksum-tests", "81,2,91,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/term-common-test.str", "checksum-tests", "81,2,91,6")
+      ; fail
 
-  checksum-tests = id
-    ; apply-test(!"checksum 1"
-      , (checksum, checksum)
-      , !(C(), C())
-      , {x: ?(x, x) }
-      )
-    ; apply-test(!"checksum 2"
-      , (checksum, checksum)
-      , !(B(1),B(2))
-      , {x,y: ?(x, y) ; not(!x => y) }
-      )
 
 signature
   constructors

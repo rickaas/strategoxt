@@ -1,447 +1,1070 @@
-/**
- * This is a simple Box to text converter.
- * It formats H, HV, A/R and ALT boxes.
- *
- * Authors:
- * - Merijn de Jonge <mdjonge@cwi.nl>
- * - Eelco Visser <visser@acm.org>
- * - Joost Visser <jvisser@cwi.nl>
- * - Martin Bravenboer <martin.bravenboer@gmail.com>
- *
- * Eelco Visser (April 5, 2001)
- * - repaired bug in handling of H boxes
- * - refactored handling of H case using thread-map
- *
- * Martin Bravenboer (December 26/27/28, 2002)
- * - implemented HV and A/R boxes
- * - refactored many strategy defs
- */
 module stratego/gpp/BoxToText
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   Box
   libstratego-lib
   stratego/gpp/Util
 
-// NOTE: bootstrap (libraries are compiled against baseline signature?)
 
 signature
   constructors
-    I        : List(S-OPTION) * BOX -> BOX
-    HZ       : List(S-OPTION) * List(BOX) -> BOX
-    Z        : List(S-OPTION) * List(BOX) -> BOX
+    I  : List(S-OPTION) * BOX -> BOX
+    HZ : List(S-OPTION) * List(BOX) -> BOX
+    Z  : List(S-OPTION) * List(BOX) -> BOX
+
 
 strategies
-
-  /**
-   * @todo Dump the exit
-   */
   try-abox2text(|pos, width) =
-      rules( GppIndent := 0 )
-    ; let local-abox2text(|pos) =
-            abox2text(local-abox2text | pos, width)
-            <+ log(|Error(), "invalid box: ", <id>)
-               ; <exit> 1
-       in local-abox2text(|0)
-      end
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "try-abox2text", "38,2,46,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "39,6,46,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "39,6,39,28")
+       ; rules ( GppIndent := 0 ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "40,6,46,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "40,6,45,8")
+       ; let local-abox2text(|pos) =
+               s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "local-abox2text", "40,10,43,24")
+               ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "41,12,43,24")
+               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "41,12,41,50")
+                  ; abox2text(
+                      s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "41,22,41,36") ; local-abox2text
+                    | pos
+                    , width
+                    )
+                  <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "42,15,43,24")
+                     ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "42,15,42,50")
+                        ; log(
+                          | Error()
+                          , "invalid box: "
+                          , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "42,47,42,48") ; id>
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "43,17,43,24")
+                     ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "43,18,43,21") ; exit)> 1)
+               < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "local-abox2text", "40,10,43,24")
+               + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "local-abox2text", "40,10,43,24")
+                 ; fail
+         in
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "44,10,44,28")
+           ; local-abox2text(|0)
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "46,6,46,8")
     ; Fst
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "try-abox2text", "38,2,46,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "try-abox2text", "38,2,46,8")
+      ; fail
 
-  abox2text(| width) =
-      rules( GppIndent := 0 )
-    ; let local-abox2text(|pos) =
-            abox2text(local-abox2text | pos, width)
-
-       in local-abox2text(|0)
-      end
+  abox2text(|width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text", "48,2,55,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "49,6,55,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "49,6,49,28")
+       ; rules ( GppIndent := 0 ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "50,6,55,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "50,6,54,8")
+       ; let local-abox2text(|pos) =
+               s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "local-abox2text", "50,10,51,50")
+               ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "51,12,51,50")
+               ; abox2text(
+                   s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "51,22,51,36") ; local-abox2text
+                 | pos
+                 , width
+                 )
+               < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "local-abox2text", "50,10,51,50")
+               + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "local-abox2text", "50,10,51,50")
+                 ; fail
+         in
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "53,10,53,28")
+           ; local-abox2text(|0)
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "55,6,55,8")
     ; Fst
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text", "48,2,55,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text", "48,2,55,8")
+      ; fail
+
 
 strategies
+  abox2text(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text", "62,2,75,38")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "63,6,75,38")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "63,6,63,36")
+       ; abox2text-HV(
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "63,19,63,21") ; rec
+         | xpos
+         , width
+         )
+       + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "64,6,75,38")
+         ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "64,6,64,36")
+            ; abox2text-HZ(
+                s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "64,19,64,21") ; rec
+              | xpos
+              , width
+              )
+            + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "65,6,75,38")
+              ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "65,6,65,35")
+                 ; abox2text-H(
+                     s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "65,18,65,20") ; rec
+                   | xpos
+                   , width
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "66,6,75,38")
+                   ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "66,6,66,35")
+                      ; abox2text-V(
+                          s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "66,18,66,20") ; rec
+                        | xpos
+                        , width
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "67,6,75,38")
+                        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "67,6,67,35")
+                           ; abox2text-Z(
+                               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "67,18,67,20") ; rec
+                             | xpos
+                             , width
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "68,6,75,38")
+                             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "68,6,68,35")
+                                ; abox2text-I(
+                                    s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "68,18,68,20") ; rec
+                                  | xpos
+                                  , width
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "69,6,75,38")
+                                  ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "69,6,69,35")
+                                     ; abox2text-A(
+                                         s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "69,18,69,20") ; rec
+                                       | xpos
+                                       , width
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "70,6,75,38")
+                                       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "70,6,70,35")
+                                          ; abox2text-R(
+                                              s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "70,18,70,20") ; rec
+                                            | xpos
+                                            , width
+                                            )
+                                          + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "71,6,75,38")
+                                            ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "71,6,71,35")
+                                               ; abox2text-S(
+                                                   s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "71,18,71,20") ; rec
+                                                 | xpos
+                                                 , width
+                                                 )
+                                               + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "72,6,75,38")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "72,6,72,35")
+                                                    ; abox2text-C(
+                                                        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "72,18,72,20") ; rec
+                                                      | xpos
+                                                      , width
+                                                      )
+                                                    + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "73,6,75,38")
+                                                      ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "73,6,73,38")
+                                                         ; abox2text-FBOX(
+                                                             s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "73,21,73,23") ; rec
+                                                           | xpos
+                                                           , width
+                                                           )
+                                                         + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "74,6,75,38")
+                                                           ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "74,6,74,37")
+                                                              ; abox2text-ALT(
+                                                                  s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "74,20,74,22") ; rec
+                                                                | xpos
+                                                                , width
+                                                                )
+                                                              + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "75,6,75,38")
+                                                                ; abox2text-list(
+                                                                    s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "75,21,75,23") ; rec
+                                                                  | xpos
+                                                                  , width
+                                                                  )))))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text", "62,2,75,38")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text", "62,2,75,38")
+      ; fail
 
-  /**
-   * Use different names to make profiling easier.
-   */
-  abox2text(rec : t * t -> t | xpos, width) =
-      abox2text-HV(rec | xpos, width)
-    + abox2text-HZ(rec | xpos, width)
-    + abox2text-H(rec | xpos, width)
-    + abox2text-V(rec | xpos, width)
-    + abox2text-Z(rec | xpos, width)
-    + abox2text-I(rec | xpos, width)
-    + abox2text-A(rec | xpos, width)
-    + abox2text-R(rec | xpos, width)
-    + abox2text-S(rec | xpos, width)
-    + abox2text-C(rec | xpos, width)
-    + abox2text-FBOX(rec | xpos, width)
-    + abox2text-ALT(rec | xpos, width)
-    + abox2text-list(rec | xpos, width)
 
-/**
- * This encoding of HV boxes is exponential; not so bad for formatting
- * paragraphs, but not tractable for formatting nested expressions.
- */
 strategies
+  abox2text-HV(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-HV", "88,2,91,56")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "89,4,91,56")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "89,4,89,16")
+       ; ?HV(sopt, bs))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "91,6,91,56")
+    ; gpp-hv-hz-helper(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "91,23,91,25") ; rec
+      | xpos
+      , width
+      , sopt
+      , bs
+      , xpos
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-HV", "88,2,91,56")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-HV", "88,2,91,56")
+      ; fail
 
-  /**
-   * HV
-   *
-   * @type (Box, Int) -> (Strs, Int)
-   */
-  abox2text-HV(rec : t * t -> t | xpos, width) =
-    ?HV(sopt, bs)
+  abox2text-HZ(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-HZ", "93,2,96,63")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "94,4,96,63")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "94,4,94,16")
+       ; ?HZ(sopt, bs))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "96,6,96,63")
+    ; gpp-hv-hz-helper(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "96,23,96,25") ; rec
+      | xpos
+      , width
+      , sopt
+      , bs
+      , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "96,53,96,61") ; GppIndent>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-HZ", "93,2,96,63")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-HZ", "93,2,96,63")
+      ; fail
 
-    ; gpp-hv-hz-helper(rec | xpos, width, sopt, bs, xpos)
-
-  abox2text-HZ(rec : t * t -> t | xpos, width) =
-    ?HZ(sopt, bs)
-
-    ; gpp-hv-hz-helper(rec | xpos, width, sopt, bs, <GppIndent>)
-
-  gpp-hv-hz-helper(rec : t * t -> t | xpos, width, sopt, bs, left-margin-xpos) =
-      <gpp-hs-chars> sopt => hs-chars
-    ; <implode-string> hs-chars => hs
-    ; <gpp-vs-text> sopt => vs
-    ; <length> hs-chars => hsl
-    ; <add> (left-margin-xpos, <gpp-is-length> sopt) => left-xpos
-    ; <filter(gpp-is-real-vbox)> bs
-    ; if ?[] then
-        !([], xpos)
+  gpp-hv-hz-helper(rec : t * t -> t|xpos, width, sopt, bs, left-margin-xpos) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-hz-helper", "98,2,118,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "99,6,118,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "99,6,99,36")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "99,6,99,24")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "99,7,99,18") ; gpp-hs-chars)> sopt) => hs-chars)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "100,6,118,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "100,6,100,36")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "100,6,100,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "100,7,100,20") ; implode-string)> hs-chars) => hs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "101,6,118,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "101,6,101,29")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "101,6,101,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "101,7,101,17") ; gpp-vs-text)> sopt) => vs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "102,6,118,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "102,6,102,29")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "102,6,102,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "102,7,102,12") ; length)> hs-chars) => hsl)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "103,6,118,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "103,6,103,64")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "103,6,103,51")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "103,7,103,9") ; add)> ( left-margin-xpos
+                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "103,32,103,44") ; gpp-is-length> sopt
+                                                                                                                 )) => left-xpos)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "104,6,118,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "104,6,104,34")
+       ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "104,7,104,30")
+           ; filter(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "104,14,104,29") ; gpp-is-real-vbox
+             ))> bs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "105,6,118,8")
+    ; if s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "105,9,105,11")
+         ; ?[] then
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "106,8,106,18")
+        ; !([], xpos)
       else
-        !(<id>, [([], xpos)])
-        ; foldl(
-            gpp-hv-add-to-hbox(rec | hsl, width)
-            <+ gpp-hv-in-new-vbox(rec | hsl, left-xpos, width)
-          )
-          // Substract last hspace from xpos
-        ; [(id, <subt> (<id>, hsl)) | id]
-        ; reverse; map((reverse, id))
-        ; map((<separate-by> (hs, <id>), id))
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "108,8,117,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "108,8,108,28")
+           ; !( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "108,11,108,12") ; id>
+              , [([], xpos)]
+              ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "109,10,117,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "109,10,112,10")
+           ; foldl(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "110,12,111,61")
+               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "110,12,110,47")
+                  ; gpp-hv-add-to-hbox(
+                      s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "110,31,110,33") ; rec
+                    | hsl
+                    , width
+                    )
+                  <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "111,15,111,61")
+                     ; gpp-hv-in-new-vbox(
+                         s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "111,34,111,36") ; rec
+                       | hsl
+                       , left-xpos
+                       , width
+                       ))
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,10,117,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,10,114,40")
+           ; [s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,11,114,34")
+              ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,12,114,13") ; id
+                , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,16,114,33")
+                  ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,17,114,20") ; subt)> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,25,114,26") ; id>
+                                                                                                                            , hsl
+                                                                                                                            )
+                )|s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "114,38,114,39") ; id])
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,10,117,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,10,115,16") ; reverse)
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,19,117,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,19,115,36")
+           ; map(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,23,115,35")
+               ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,24,115,30") ; reverse
+                 , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "115,33,115,34") ; id
+                 )
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,10,117,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,10,116,44")
+           ; map(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,14,116,43")
+               ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,15,116,38")
+                   ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,16,116,26") ; separate-by)> ( hs
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,35,116,36") ; id>
+                                                                                                                                    )
+                 , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "116,41,116,42") ; id
+                 )
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "117,10,117,49")
         ; gpp-format-vbox(|sopt, left-margin-xpos)
       end
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-hz-helper", "98,2,118,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-hz-helper", "98,2,118,8")
+      ; fail
 
-  /**
-   * @type Box * [Int * [String]] -> [Int * [String]]
-   */
-  gpp-hv-add-to-hbox(rec : t * t -> t | hsl, width) :
-    (box, [(strs, xpos) | vbs ]) -> [([ str | strs ], <add> (new-xpos, hsl)) | vbs]
-    where
-      <rec(|xpos)> box => (str, new-xpos)
-      ; (<leq> (new-xpos, width) + (!width => 0))
+  gpp-hv-add-to-hbox(rec : t * t -> t|hsl, width):
+    (box, [(strs, xpos)|vbs]) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-add-to-hbox", "123,2,127,48")> [( [str|strs]
+                                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "124,55,124,57") ; add> (new-xpos, hsl)
+                                                                                                                                                      )|vbs]
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-add-to-hbox", "123,2,127,48")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-add-to-hbox", "123,2,127,48")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "126,6,127,48")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "126,6,126,40")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "126,6,126,21")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "126,7,126,16")
+                    ; rec(|xpos))> box) => (str, new-xpos))
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "127,9,127,47")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "127,9,127,31")
+             ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "127,10,127,12") ; leq)> (new-xpos, width)
+             + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "127,36,127,46")
+               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "127,36,127,41") ; !width) => 0)
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-add-to-hbox", "123,2,127,48")
+             ; fail
 
-  gpp-hv-in-new-vbox(rec : t * t -> t | hsl, left-xpos, width) :
-    (box, vbs) -> [([str], <add> (new-xpos, hsl)) | vbs]
-    where
-      <rec(|left-xpos)> box => (str, new-xpos)
+  gpp-hv-in-new-vbox(rec : t * t -> t|hsl, left-xpos, width):
+    (box, vbs) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-in-new-vbox", "129,2,132,45")> [( [str]
+                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "130,28,130,30") ; add> (new-xpos, hsl)
+                                                                                                                                       )|vbs]
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-in-new-vbox", "129,2,132,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-in-new-vbox", "129,2,132,45")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "132,6,132,45")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "132,6,132,26")
+             ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "132,7,132,21")
+                 ; rec(|left-xpos))> box) => (str, new-xpos)
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hv-in-new-vbox", "129,2,132,45")
+             ; fail
+
 
 strategies
-
-  /**
-   * H
-   *
-   * @type (Box, Int) -> (Strs, Int)
-   */
-  abox2text-H(rec : t * t -> t | xpos, width) =
-    ?H(sopt, bs)
-
-    ; <gpp-hs-chars> sopt => hschars
-    ; <implode-string> hschars => hs
-    ; <length> hschars => hsl
-    ; <filter(gpp-is-real-hbox)> bs
-
+  abox2text-H(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-H", "141,2,155,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "142,4,155,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "142,4,142,15")
+       ; ?H(sopt, bs))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "144,6,155,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "144,6,144,35")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "144,6,144,24")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "144,7,144,18") ; gpp-hs-chars)> sopt) => hschars)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "145,6,155,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "145,6,145,35")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "145,6,145,29")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "145,7,145,20") ; implode-string)> hschars) => hs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "146,6,155,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "146,6,146,28")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "146,6,146,21")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "146,7,146,12") ; length)> hschars) => hsl)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "147,6,155,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "147,6,147,34")
+       ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "147,7,147,30")
+           ; filter(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "147,14,147,29") ; gpp-is-real-hbox
+             ))> bs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "149,6,155,8")
     ; let rec-add(|pos) =
-            rec(|pos); (id, <add> (hsl, <id>))
-
-       in gpp-thread-map(rec-add | xpos)
-        ; (separate-by(|hs), id)
-        ; try((not([]), <subt> (<id>, hsl)))
+            s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "rec-add", "149,10,150,45")
+            ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,12,150,45")
+            ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,12,150,20")
+               ; rec(|pos))
+            ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,23,150,45")
+            ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,24,150,25") ; id
+              , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,28,150,44")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,29,150,31") ; add)> ( hsl
+                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "150,41,150,42") ; id>
+                                                                                                                         )
+              )
+            < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "rec-add", "149,10,150,45")
+            + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "rec-add", "149,10,150,45")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "152,10,154,43")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "152,10,152,39")
+           ; gpp-thread-map(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "152,25,152,31") ; rec-add
+             | xpos
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "153,10,154,43")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "153,10,153,31")
+           ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "153,11,153,26")
+               ; separate-by(|hs)
+             , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "153,29,153,30") ; id
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,10,154,43")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,14,154,42")
+            ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,15,154,21")
+                ; not(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,19,154,20") ; [])
+              , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,24,154,41")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,25,154,28") ; subt)> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "154,33,154,34") ; id>
+                                                                                                                          , hsl
+                                                                                                                          )
+              )
+          )
       end
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-H", "141,2,155,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-H", "141,2,155,8")
+      ; fail
 
-  gpp-thread-map(s: t * t -> t | t) :
-    [] -> ([], t)
+  gpp-thread-map(s : t * t -> t|t):
+    [] -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "157,2,158,16")> ([], t)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "157,2,158,16")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "157,2,158,16")
+             ; fail
 
-  gpp-thread-map(s : t * t -> t | t) :
-    [x | xs] -> ([y | ys], t'')
-    where
-      <s(|t)> x => (y, t')
-      ; <gpp-thread-map(s | t')> xs => (ys, t'')
+  gpp-thread-map(s : t * t -> t|t):
+    [x|xs] -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "160,2,164,47")> ([y|ys], t'')
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "160,2,164,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "160,2,164,47")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "163,6,164,47")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "163,6,163,25")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "163,6,163,14")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "163,7,163,11")
+                    ; s(|t))> x) => (y, t'))
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "164,8,164,47")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "164,8,164,34")
+             ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "164,9,164,30")
+                 ; gpp-thread-map(
+                     s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "164,24,164,24") ; s
+                   | t'
+                   ))> xs) => (ys, t'')
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-thread-map", "160,2,164,47")
+             ; fail
+
 
 strategies
+  abox2text-V(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-V", "173,2,176,54")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "174,4,176,54")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "174,4,174,15")
+       ; ?V(sopt, bs))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "176,6,176,54")
+    ; gpp-h-z-helper(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "176,21,176,23") ; rec
+      | xpos
+      , width
+      , sopt
+      , bs
+      , xpos
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-V", "173,2,176,54")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-V", "173,2,176,54")
+      ; fail
 
-  /**
-   * V
-   *
-   * @type (Box, Int) -> (Strs, Int)
-   */
-  abox2text-V(rec : t * t -> t | xpos, width) =
-    ?V(sopt, bs)
+  abox2text-Z(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-Z", "178,2,181,61")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "179,4,181,61")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "179,4,179,15")
+       ; ?Z(sopt, bs))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "181,6,181,61")
+    ; gpp-h-z-helper(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "181,21,181,23") ; rec
+      | xpos
+      , width
+      , sopt
+      , bs
+      , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "181,51,181,59") ; GppIndent>
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-Z", "178,2,181,61")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-Z", "178,2,181,61")
+      ; fail
 
-    ; gpp-h-z-helper(rec | xpos, width, sopt, bs, xpos)
-
-  abox2text-Z(rec : t * t -> t | xpos, width) =
-    ?Z(sopt, bs)
-
-    ; gpp-h-z-helper(rec | xpos, width, sopt, bs, <GppIndent>)
-
-  gpp-h-z-helper(rec : t * t -> t | xpos, width, sopt, bs, left-margin-xpos) =
-      <add> (left-margin-xpos, <gpp-is-length> sopt) => left-xpos
-    ; <filter(gpp-is-real-vbox)> bs
-    ; if ?[] then
-        !([], xpos)
+  gpp-h-z-helper(rec : t * t -> t|xpos, width, sopt, bs, left-margin-xpos) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-h-z-helper", "183,2,191,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "184,6,191,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "184,6,184,64")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "184,6,184,51")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "184,7,184,9") ; add)> ( left-margin-xpos
+                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "184,32,184,44") ; gpp-is-length> sopt
+                                                                                                                 )) => left-xpos)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "185,6,191,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "185,6,185,34")
+       ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "185,7,185,30")
+           ; filter(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "185,14,185,29") ; gpp-is-real-vbox
+             ))> bs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "186,6,191,8")
+    ; if s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "186,9,186,11")
+         ; ?[] then
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "187,8,187,18")
+        ; !([], xpos)
       else
-        gpp-do-vbox-children(rec | xpos, left-xpos)
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "189,8,190,49")
+        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "189,8,189,50")
+           ; gpp-do-vbox-children(
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "189,29,189,31") ; rec
+             | xpos
+             , left-xpos
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "190,10,190,49")
         ; gpp-format-vbox(|sopt, left-margin-xpos)
       end
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-h-z-helper", "183,2,191,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-h-z-helper", "183,2,191,8")
+      ; fail
 
-  /**
-   * @type Int * Int * [BOX] -> [Strings * Int]
-   */
-  gpp-do-vbox-children(rec : t * t -> t | xpos, left-xpos) :
-    [b | bs] -> [<rec(|xpos)> b | <map(rec(|left-xpos))> bs]
+  gpp-do-vbox-children(rec : t * t -> t|xpos, left-xpos):
+    [b|bs] -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-vbox-children", "196,2,197,59")> [<s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "197,18,197,27")
+                                                                                                                                      ; rec(|xpos)> b|<s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "197,35,197,54")
+                                                                                                                                                       ; map(
+                                                                                                                                                           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "197,39,197,53")
+                                                                                                                                                           ; rec(|left-xpos)
+                                                                                                                                                         )> bs]
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-vbox-children", "196,2,197,59")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-vbox-children", "196,2,197,59")
+             ; fail
+
 
 strategies
-
-  /**
-   * `I is=N b' is equivalent to `H hs=N [S(""), b]'
-   *
-   * NOTE: this I box is not context sensitive!
-   * NOTE: this I box takes a single box as argument, not a list of boxes!
-   * NOTE: is=0 is the default
-   */
-  abox2text-I(rec : t * t -> t | xpos, width) =
-    ?I(sopt, b)
-
+  abox2text-I(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-I", "208,2,216,7")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "209,4,216,7")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "209,4,209,14")
+       ; ?I(sopt, b))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "211,6,216,7")
     ; {|GppIndent:
-          <add> (xpos, <gpp-is-length> sopt) => left-xpos
-        ; rules( GppIndent := left-xpos )
-        ; <fetch-elem(?SOpt(IS(), <id>)) <+ !"0"> sopt => value
-        ; <rec(|xpos)> H([SOpt(HS(), value)], [S(""), b])
+         s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "212,10,215,56")
+         ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "212,10,212,56")
+            ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "212,10,212,43")
+               ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "212,11,212,13") ; add)> ( xpos
+                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "212,24,212,36") ; gpp-is-length> sopt
+                                                                                                                        )) => left-xpos)
+         ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "213,10,215,56")
+         ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "213,10,213,40")
+            ; rules ( GppIndent := left-xpos ))
+         ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,10,215,56")
+         ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,10,214,62")
+            ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,10,214,53")
+               ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,11,214,47")
+                   ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,11,214,39")
+                      ; fetch-elem(
+                          s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,22,214,38")
+                          ; ?SOpt(
+                               IS()
+                             , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,35,214,36") ; id>
+                             )
+                        )
+                      <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "214,44,214,47")
+                         ; !"0"))> sopt) => value)
+         ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "215,10,215,56")
+         ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "215,11,215,20")
+             ; rec(|xpos))> H(
+                              [SOpt(HS(), value)]
+                            , [S(""), b]
+                            )
       |}
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-I", "208,2,216,7")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-I", "208,2,216,7")
+      ; fail
+
 
 strategies
+  abox2text-A(rec : t * t -> t|xpos, width):
+    A(AOPTIONS(aopt), sopt, []) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "227,2,228,44")> ([], xpos)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "227,2,228,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "227,2,228,44")
+             ; fail
 
-  /**
-   * A
-   *
-   * The first two rules are to handle empty alignment operators, i.e., A
-   * boxses with [] or [[]] as third argument.
-   * Without subboxes ([] as third argument)
-   */
-  abox2text-A(rec : t * t -> t | xpos, width) :
-    A(AOPTIONS(aopt), sopt, []) -> ([], xpos)
+  abox2text-A(rec : t * t -> t|xpos, width):
+    A(
+      AOPTIONS(aopt)
+    , sopt
+    , [[]]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "233,2,234,46")> ([], xpos)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "233,2,234,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "233,2,234,46")
+             ; fail
 
-  /**
-   * Without subboxes ([[]] as third argument)
-   */
-  abox2text-A(rec : t * t -> t | xpos, width) :
-    A(AOPTIONS(aopt), sopt, [[]]) -> ([], xpos)
-
-  abox2text-A(rec : t * t -> t | xpos, width) =
-    ?A(AOPTIONS(aopt), sopt, bs)
-
-    ; !bs
-    ; gpp-construct-rows
-    ; map(?R(_, <id>))
-    ; gpp-to-matrix(|<length> aopt)
-    ; matrix-transpose
-
-    ; reverse
-    ; add-indices
-    ; reverse
-    ; ?columns
-
-    ; <zip> (aopt, columns) => column-tuples
-    ; <foldl(gpp-do-A-column(rec))> (column-tuples, (xpos, [])) => (last-xpos, str-columns)
-
-    ; <reverse; matrix-transpose> str-columns
-    ; map(!(<id>, last-xpos))
+  abox2text-A(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "236,2,255,33")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "237,4,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "237,4,237,31")
+       ; ?A(AOPTIONS(aopt), sopt, bs))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "239,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "239,6,239,8") ; !bs)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "240,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "240,6,240,23") ; gpp-construct-rows)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "241,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "241,6,241,21")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "241,10,241,20")
+           ; ?R(
+                _
+              , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "241,17,241,18") ; id>
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "242,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "242,6,242,34")
+       ; gpp-to-matrix(
+         | <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "242,22,242,27") ; length> aopt
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "243,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "243,6,243,21") ; matrix-transpose)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "245,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "245,6,245,12") ; reverse)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "246,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "246,6,246,16") ; add-indices)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "247,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "247,6,247,12") ; reverse)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "248,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "248,6,248,13") ; ?columns)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "250,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "250,6,250,43")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "250,6,250,26")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "250,7,250,9") ; zip)> (aopt, columns)) => column-tuples)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "251,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "251,6,251,90")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "251,6,251,62")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "251,7,251,33")
+              ; foldl(
+                  s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "251,13,251,32")
+                  ; gpp-do-A-column(
+                      s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "251,29,251,31") ; rec
+                    )
+                ))> (column-tuples, (xpos, []))) => (last-xpos, str-columns))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "253,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "253,6,253,44")
+       ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "253,7,253,31")
+           ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "253,7,253,13") ; reverse)
+           ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "253,16,253,31")
+           ; matrix-transpose)> str-columns)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "254,6,255,33")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "254,6,254,28")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "254,10,254,27")
+           ; !( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "254,13,254,14") ; id>
+              , last-xpos
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "255,6,255,33")
     ; gpp-format-vbox(|sopt, xpos)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "236,2,255,33")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-A", "236,2,255,33")
+      ; fail
 
-  /**
-   * (A-OPTION * (Int * [BOX])) * (Int * [[Strs]]) -> Int * [[Strs]]
-   */
   gpp-do-A-column(rec : t * t -> t) :
-    ((aopt, (index, bs)), (xpos, columns)) -> (<add> (<string-length> hs, max-xpos), [ new-column | columns ])
-     where
-         < map(rec(|xpos))
-         ; unzip
-         ; (map(try(flatten-list; concat-strings)), list-max)
-         > bs => (strings, max-xpos)
-       ; <subt> (max-xpos, xpos) => max-width
-       ; (<gt> (index, 1) < <gpp-SOpts-of-alignment; gpp-hs-text> aopt + !"") => hs
-       ; <map(
-            <gpp-align-column> (index, aopt, (' ', <id>, max-width))
-          ; <conc-strings> (<id>, hs)
-         )> strings => new-column
+    ( (aopt, (index, bs))
+    , (xpos, columns)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-A-column", "260,2,272,32")> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "261,48,261,50") ; add> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "261,55,261,67") ; string-length> hs
+                                                                                                                                                                                                                                 , max-xpos
+                                                                                                                                                                                                                                 )
+                                                                                                                          , [new-column|columns]
+                                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-A-column", "260,2,272,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-A-column", "260,2,272,32")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "263,9,272,32")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "263,9,266,35")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "263,9,266,12")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "263,11,265,60")
+                    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "263,11,263,25")
+                       ; map(
+                           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "263,15,263,24")
+                           ; rec(|xpos)
+                         ))
+                    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "264,11,265,60")
+                    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "264,11,264,15") ; unzip)
+                    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,11,265,60")
+                    ; ( s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,12,265,49")
+                        ; map(
+                            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,16,265,48")
+                            ; try(
+                                s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,20,265,47")
+                                ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,20,265,31") ; flatten-list)
+                                ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,34,265,47")
+                                ; concat-strings
+                              )
+                          )
+                      , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "265,52,265,59") ; list-max
+                      ))> bs) => (strings, max-xpos))
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "267,9,272,32")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "267,9,267,44")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "267,9,267,31")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "267,10,267,13") ; subt)> (max-xpos, xpos)) => max-width)
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,9,272,32")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,9,268,82")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,10,268,75")
+                ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,10,268,24")
+                   ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,11,268,12") ; gt)> (index, 1)
+                   < s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,28,268,69")
+                     ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,29,268,63")
+                         ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,29,268,50") ; gpp-SOpts-of-alignment)
+                         ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,53,268,63")
+                         ; gpp-hs-text)> aopt
+                   + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "268,73,268,75")
+                     ; !"")) => hs)
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "269,9,272,32")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "269,9,272,18")
+             ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "269,10,272,9")
+                 ; map(
+                     s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "270,12,271,36")
+                     ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "270,12,270,67")
+                        ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "270,13,270,28") ; gpp-align-column)> ( index
+                                                                                                                                              , aopt
+                                                                                                                                              , ( ' '
+                                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "270,52,270,53") ; id>
+                                                                                                                                                , max-width
+                                                                                                                                                )
+                                                                                                                                              ))
+                     ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "271,12,271,36")
+                     ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "271,13,271,24") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "271,29,271,30") ; id>
+                                                                                                                                       , hs
+                                                                                                                                       )
+                   ))> strings) => new-column
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-do-A-column", "260,2,272,32")
+             ; fail
 
-  gpp-align-column : (_, AR(_), t) -> <align-right>  t
-  gpp-align-column : (_, AC(_), t) -> <align-center> t
-  gpp-align-column : (1, AL(_), (_, s, _)) -> s
-  gpp-align-column : (i, AL(_), t) -> <align-left>   t
-    where <gt> (i, 1)
+  gpp-align-column :
+    (_, AR(_), t) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "274,2,274,53")> <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "274,39,274,49") ; align-right> t
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "274,2,274,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "274,2,274,53")
+             ; fail
 
-      // TODO: align cannot handle newlines in cells
-      // TODO: remove flatten-list and implement our own align strategies
+  gpp-align-column :
+    (_, AC(_), t) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "275,2,275,53")> <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "275,39,275,50") ; align-center> t
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "275,2,275,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "275,2,275,53")
+             ; fail
 
-  /**
-   * Make sure that all R boxes have the same number of arguments. If
-   * not, add empty boxes ([]) to make equal lengths.
-   */
+  gpp-align-column :
+    ( 1
+    , AL(_)
+    , (_, s, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "276,2,276,46")> s
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "276,2,276,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "276,2,276,46")
+             ; fail
+
+  gpp-align-column :
+    (i, AL(_), t) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "277,2,278,20")> <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "277,39,277,48") ; align-left> t
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "277,2,278,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "277,2,278,20")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "278,10,278,20")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "278,11,278,12") ; gt)> (i, 1)
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-align-column", "277,2,278,20")
+             ; fail
+
   gpp-to-matrix(|nr-cols) =
-    map(gpp-FitToMax(|nr-cols))
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-to-matrix", "287,2,288,30")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "288,4,288,30")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "288,8,288,29")
+        ; gpp-FitToMax(|nr-cols)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-to-matrix", "287,2,288,30")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-to-matrix", "287,2,288,30")
+      ; fail
 
   gpp-FitToMax(|nr-cols) =
-    ?lst
-    ; where(length => my-length)
-    ; <subt> (nr-cols, my-length) => diff
-    ; ( <gt> (<id>, 0)
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-FitToMax", "290,2,310,6")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "291,4,310,6")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "291,4,291,7") ; ?lst)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "292,6,310,6")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "292,6,292,31")
+       ; where(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "292,12,292,30")
+               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "292,12,292,17") ; length) => my-length))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "293,6,310,6")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "293,6,293,40")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "293,6,293,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "293,7,293,10") ; subt)> (nr-cols, my-length)) => diff)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "294,8,309,17")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "294,8,300,24")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "294,8,294,21")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "294,9,294,10") ; gt)> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "294,15,294,16") ; id>
+                                                                                                                 , 0
+                                                                                                                 ))
+       ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "297,10,300,24")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "297,10,297,31")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "297,10,297,26")
+             ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "297,11,297,14") ; copy)> (diff, [])) => l)
+       ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "300,10,300,24")
+       ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "300,11,300,14") ; conc)> (lst, l)
+       <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "302,8,309,17")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "302,8,303,13")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "302,8,302,9")
+                ; ?0)
+             ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "303,10,303,13")
+             ; !lst
+             <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "308,8,309,17")
+                ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "308,8,308,54")
+                   ; log(|Error(), "Too many columns in row: ", lst))
+                ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "309,10,309,17")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "309,11,309,14") ; exit)> 1))
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-FitToMax", "290,2,310,6")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-FitToMax", "290,2,310,6")
+      ; fail
 
-        // Create new (empty) columns
-        ; <copy> (diff, []) => l
+  abox2text-R(rec : t * t -> t|xpos, width):
+    R(sopt, bs) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-R", "313,2,314,43")> <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "314,20,314,29")
+                                                                                                                                 ; rec(|xpos)> HV(sopt, bs)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-R", "313,2,314,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-R", "313,2,314,43")
+             ; fail
 
-        // Create row with correct number of columns
-        ; <conc> (lst, l)
+  abox2text-S(rec : t * t -> t|xpos, width):
+    S(s) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-S", "319,2,320,62")> ( s
+                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "320,17,320,19") ; add> ( xpos
+                                                                                                                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "320,30,320,57")
+                                                                                                                                                                                                                                   ; gpp-rel-string-length(|xpos)> s
+                                                                                                                                                                                                                                )
+                                                                                                                         )
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-S", "319,2,320,62")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-S", "319,2,320,62")
+             ; fail
 
-     <+ ?0
-        ; !lst
+  abox2text-C(rec : t * t -> t|xpos, width):
+    C(_, [S(s)]) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-C", "322,2,323,27")> (s, xpos)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-C", "322,2,323,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-C", "322,2,323,27")
+             ; fail
 
-     <+ // A row with to many columns cause a fatal error, because
-        // since formatting information is missing, we do not know
-        // how to format these extra columns
-        log(|Error(), "Too many columns in row: ", lst)
-        ; <exit> 1
-      )
+  abox2text-FBOX(rec : t * t -> t|xpos, width):
+    FBOX(_, b) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-FBOX", "325,2,326,30")> <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "326,18,326,27")
+                                                                                                                                   ; rec(|xpos)> b
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-FBOX", "325,2,326,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-FBOX", "325,2,326,30")
+             ; fail
 
-  // R, not as child of an A
-  abox2text-R(rec : t * t -> t | xpos, width) :
-    R(sopt, bs) -> <rec(|xpos)> HV(sopt, bs)
-
-  /**
-   * S
-   */
-  abox2text-S(rec : t * t -> t | xpos, width) :
-    S(s) -> (s, <add> (xpos, <gpp-rel-string-length(|xpos)> s))
-
-  abox2text-C(rec : t * t -> t | xpos, width) :
-    C(_,[S(s)]) -> (s, xpos)
-
-  abox2text-FBOX(rec : t * t -> t | xpos, width) :
-    FBOX(_,b) -> <rec(|xpos)> b
-
-  abox2text-ALT(rec : t * t -> t | xpos, width) =
-    ?ALT(a1, a2)
-    ; <rec(|xpos)> a1 => r1@(s, xpos2)
-    ; if <leq> (xpos2, width) then
-        !r1
+  abox2text-ALT(rec : t * t -> t|xpos, width) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-ALT", "328,2,335,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "329,4,335,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "329,4,329,15")
+       ; ?ALT(a1, a2))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "330,6,335,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "330,6,330,37")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "330,6,330,20")
+          ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "330,7,330,16")
+              ; rec(|xpos))> a1) => r1@(s, xpos2))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "331,6,335,8")
+    ; if s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "331,9,331,28")
+         ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "331,10,331,12") ; leq)> (xpos2, width) then
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "332,8,332,10") ; !r1
       else
-        <rec(|xpos)> a2
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "334,8,334,22")
+        ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "334,9,334,18")
+            ; rec(|xpos))> a2
       end
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-ALT", "328,2,335,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-ALT", "328,2,335,8")
+      ; fail
 
-  abox2text-list(rec : t * t -> t | xpos, width) :
-    [b] -> <rec(|xpos)> b
+  abox2text-list(rec : t * t -> t|xpos, width):
+    [b] -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-list", "337,2,338,24")> <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "338,12,338,21")
+                                                                                                                            ; rec(|xpos)> b
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-list", "337,2,338,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-list", "337,2,338,24")
+             ; fail
 
-  abox2text-list(rec : t * t -> t | xpos, width) :
-    [] -> ("", xpos)
+  abox2text-list(rec : t * t -> t|xpos, width):
+    [] -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-list", "340,2,341,19")> ("", xpos)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-list", "340,2,341,19")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "abox2text-list", "340,2,341,19")
+             ; fail
+
 
 strategies
-
-  /**
-   * @type List(S-Option) -> String
-   */
   gpp-hs-text =
-    gpp-hs-chars
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hs-text", "348,2,350,19")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "349,4,350,19")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "349,4,349,15") ; gpp-hs-chars)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "350,6,350,19")
     ; implode-string
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hs-text", "348,2,350,19")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hs-text", "348,2,350,19")
+      ; fail
 
   gpp-hs-chars =
-    gpp-hs-length
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hs-chars", "352,2,354,19")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "353,4,354,19")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "353,4,353,16") ; gpp-hs-length)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "354,6,354,19")
     ; gpp-copy(|' ')
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hs-chars", "352,2,354,19")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-hs-chars", "352,2,354,19")
+      ; fail
 
-  /**
-   * @type List(S-Option) -> String
-   */
   gpp-vs-text =
-    gpp-vs-chars
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-text", "359,2,361,19")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "360,4,361,19")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "360,4,360,15") ; gpp-vs-chars)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "361,6,361,19")
     ; implode-string
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-text", "359,2,361,19")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-text", "359,2,361,19")
+      ; fail
 
   gpp-vs-chars =
-    gpp-vs-chars(|[])
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-chars", "363,2,364,20")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "364,4,364,20")
+    ; gpp-vs-chars(|[])
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-chars", "363,2,364,20")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-chars", "363,2,364,20")
+      ; fail
 
   gpp-vs-chars(|cont) =
-    gpp-vs-length
-    ; inc
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-chars", "366,2,369,26")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "367,4,369,26")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "367,4,367,16") ; gpp-vs-length)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "368,6,369,26")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "368,6,368,8") ; inc)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "369,6,369,26")
     ; gpp-copy(|'\n', cont)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-chars", "366,2,369,26")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vs-chars", "366,2,369,26")
+      ; fail
 
-  /**
-   * @type List(S-Option) -> String
-   */
   gpp-is-text =
-    gpp-is-chars
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-text", "374,2,376,19")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "375,4,376,19")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "375,4,375,15") ; gpp-is-chars)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "376,6,376,19")
     ; implode-string
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-text", "374,2,376,19")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-text", "374,2,376,19")
+      ; fail
 
   gpp-is-chars =
-    gpp-is-chars(|[])
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-chars", "378,2,379,20")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "379,4,379,20")
+    ; gpp-is-chars(|[])
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-chars", "378,2,379,20")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-chars", "378,2,379,20")
+      ; fail
 
   gpp-is-chars(|cont) =
-    gpp-is-length
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-chars", "381,2,383,25")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "382,4,383,25")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "382,4,382,16") ; gpp-is-length)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "383,6,383,25")
     ; gpp-copy(|' ', cont)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-chars", "381,2,383,25")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-chars", "381,2,383,25")
+      ; fail
+
 
 strategies
-
   gpp-copy(|t) =
-    gpp-copy(|t, [])
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-copy", "387,2,388,19")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "388,4,388,19")
+    ; gpp-copy(|t, [])
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-copy", "387,2,388,19")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-copy", "387,2,388,19")
+      ; fail
 
   gpp-copy(|t, ts) =
-    \ 0 -> ts \
-    <+ ?n
-       ; <subt> (n, 1)
-       ; gpp-copy(|t, [t | ts])
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-copy", "390,2,394,30")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "391,4,394,30")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "391,4,391,14")
+       ; \ 0 -> ts \
+       <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "392,7,394,30")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "392,7,392,8") ; ?n)
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "393,9,394,30")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "393,9,393,21")
+             ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "393,10,393,13") ; subt)> (n, 1))
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "394,9,394,30")
+          ; gpp-copy(|t, [t|ts]))
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-copy", "390,2,394,30")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-copy", "390,2,394,30")
+      ; fail
+
 
 strategies
-
-  /**
-   * @type Box ->? Box
-   */
   gpp-is-real-vbox =
-    not(
-      ?[]
-    + ?_#([_,[]])
-    + ?_#([_,[[]]])
-    )
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-real-vbox", "401,2,406,4")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "402,4,406,4")
+    ; not(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "403,6,405,18")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "403,6,403,8")
+             ; ?[]
+             + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "404,6,405,18")
+               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "404,6,404,16")
+                  ; ?_#([_, []])
+                  + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "405,6,405,18")
+                    ; ?_#([_, [[]]]))))
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-real-vbox", "401,2,406,4")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-real-vbox", "401,2,406,4")
+      ; fail
 
-  /**
-   * @type Box ->? Box
-   */
   gpp-is-real-hbox =
-    not(?[] + ?H([],[]))
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-real-hbox", "411,2,412,23")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "412,4,412,23")
+    ; not(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "412,8,412,22")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "412,8,412,10")
+             ; ?[]
+             + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "412,14,412,22")
+               ; ?H([], [])))
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-real-hbox", "411,2,412,23")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-is-real-hbox", "411,2,412,23")
+      ; fail
+
 
 strategies
+  gpp-format-vbox(|sopt, xpos):
+    strs -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-format-vbox", "421,2,434,14")> (result, last-xpos)
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-format-vbox", "421,2,434,14")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-format-vbox", "421,2,434,14")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "424,6,434,14")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "424,6,424,42")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "424,6,424,35")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "424,7,424,29")
+                    ; gpp-vertical-sep(|xpos))> sopt) => sep)
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "425,8,434,14")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "425,8,425,36")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "425,8,425,18")
+                ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "425,9,425,12") ; last)> strs) => (_, last-xpos))
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "426,8,434,14")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "426,8,426,12") ; !strs)
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "428,8,434,14")
+          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "428,9,433,11")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "428,9,428,10") ; []
+                + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "428,14,433,11")
+                  ; [s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "428,15,428,17") ; Fst|s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "429,10,433,10")
+                                                                                                                        ; rec x (
+                                                                                                                            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "430,12,432,26")
+                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "430,12,430,13") ; []
+                                                                                                                               + s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "431,12,432,26")
+                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "431,12,431,20")
+                                                                                                                                    ; [s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "431,13,431,15") ; Fst|s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "431,19,431,19") ; x])
+                                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "432,14,432,26")
+                                                                                                                                 ; ![sep|<s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "432,23,432,24") ; id>])
+                                                                                                                          )]))
+          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "434,8,434,14")
+          ; ?result
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-format-vbox", "421,2,434,14")
+             ; fail
 
-  /**
-   * @param List(S-Option)
-   * @param Int
-   * @type List((Strings, Int)) -> (List(Strings), Int)
-   */
-  gpp-format-vbox(|sopt, xpos) :
-    strs -> (result, last-xpos)
-    where
-      <gpp-vertical-sep(|xpos)> sopt => sep
-      ; <last> strs => (_, last-xpos)
-      ; !strs
-      // separate-by + Fst
-      ; ([] + [Fst |
-          rec x(
-            []
-          + [Fst | x]
-            ; ![sep | <id>]
-          )])
-      ; ?result
-
-  /**
-   * @param Int
-   * @type List(S-Option) -> String
-   */
   gpp-vertical-sep(|xpos) =
-    ?sopt
-    ; <gpp-vs-chars(|
-         <gpp-is-chars(|
-            <gpp-copy(|' ')> xpos
-         )> sopt
-      )> sopt
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vertical-sep", "440,2,447,19")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "441,4,447,19")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "441,4,441,8") ; ?sopt)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "442,6,447,19")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "442,6,446,12")
+       ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "442,7,446,6")
+           ; gpp-vs-chars(
+             | <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "443,10,445,9")
+                ; gpp-is-chars(
+                  | <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "444,13,444,26")
+                     ; gpp-copy(|' ')> xpos
+                  )> sopt
+             ))> sopt)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "447,6,447,19")
     ; implode-string
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vertical-sep", "440,2,447,19")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/BoxToText.str", "gpp-vertical-sep", "440,2,447,19")
+      ; fail

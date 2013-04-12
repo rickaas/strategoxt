@@ -1,82 +1,232 @@
 module strategoxt-xtc-tools
 
-/**
- * asfix
- */
-strategies
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
+
+strategies
   xtc-implode-asfix =
-    xtc-transform(!"implode-asfix", pass-verbose)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-implode-asfix", "8,2,9,48")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "9,4,9,48")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "9,18,9,33")
+        ; !"implode-asfix"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "9,36,9,47") ; pass-verbose
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-implode-asfix", "8,2,9,48")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-implode-asfix", "8,2,9,48")
+      ; fail
 
   xtc-asfix-yield =
-    xtc-transform(!"asfix-yield", pass-verbose)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-asfix-yield", "11,2,12,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "12,4,12,46")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "12,18,12,31")
+        ; !"asfix-yield"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "12,34,12,45") ; pass-verbose
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-asfix-yield", "11,2,12,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-asfix-yield", "11,2,12,46")
+      ; fail
 
-/**
- * gpp/box
- */
+
 strategies
-
   xtc-abox-format =
-    xtc-transform(!"abox-format", pass-verbose)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox-format", "19,2,20,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "20,4,20,46")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "20,18,20,31")
+        ; !"abox-format"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "20,34,20,45") ; pass-verbose
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox-format", "19,2,20,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox-format", "19,2,20,46")
+      ; fail
 
   xtc-ast2abox(pps) =
-    xtc-transform(!"ast2abox",
-      <conc> (
-        <pass-verbose> ()
-      , <pps; map(xtc-find); <add-arg-flags> ("-p", <id>)> ()
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-ast2abox", "22,2,28,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "23,4,28,4")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "23,18,23,28")
+        ; !"ast2abox"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "24,6,27,6")
+        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "24,7,24,10") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "25,9,25,20") ; pass-verbose> ()
+                                                                                                              , <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,9,26,56")
+                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,9,26,11") ; pps)
+                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,14,26,56")
+                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,14,26,26")
+                                                                                                                    ; map(
+                                                                                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,18,26,25") ; xtc-find
+                                                                                                                      ))
+                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,29,26,56")
+                                                                                                                 ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,30,26,42") ; add-arg-flags)> ( "-p"
+                                                                                                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "26,53,26,54") ; id>
+                                                                                                                                                                                                                                 )> ()
+                                                                                                              )
       )
-    )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-ast2abox", "22,2,28,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-ast2abox", "22,2,28,4")
+      ; fail
 
   xtc-abox2text =
-    xtc-transform(!"abox2text", pass-verbose)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox2text", "30,2,31,44")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "31,4,31,44")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "31,18,31,29")
+        ; !"abox2text"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "31,32,31,43") ; pass-verbose
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox2text", "30,2,31,44")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox2text", "30,2,31,44")
+      ; fail
 
   xtc-abox2text(width) =
-    xtc-transform(!"abox2text", <conc> (["--width", <width; int-to-string> ()], <pass-verbose> ()))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox2text", "33,2,34,98")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,4,34,98")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,18,34,29")
+        ; !"abox2text"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,32,34,97")
+        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,33,34,36") ; conc)> ( [ "--width"
+                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,53,34,72")
+                                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,53,34,57") ; width)
+                                                                                                                    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,60,34,72")
+                                                                                                                    ; int-to-string> ()
+                                                                                                                 ]
+                                                                                                               , <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "34,81,34,92") ; pass-verbose> ()
+                                                                                                               )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox2text", "33,2,34,98")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-abox2text", "33,2,34,98")
+      ; fail
 
   xtc-parse-pp-table =
-    xtc-transform(!"parse-pp-table")
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-parse-pp-table", "36,2,37,35")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "37,4,37,35")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "37,18,37,34")
+        ; !"parse-pp-table"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-parse-pp-table", "36,2,37,35")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-parse-pp-table", "36,2,37,35")
+      ; fail
 
-/**
- * sglr
- */
+
 strategies
-
   xtc-sglr(tbl) =
-    xtc-transform(!"sglr", !["-2A", "-p", <tbl; xtc-find> () | <pass-v-verbose> ()])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglr", "44,2,45,83")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,4,45,83")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,18,45,24")
+        ; !"sglr"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,27,45,82")
+        ; !["-2A", "-p", <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,43,45,55")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,43,45,45") ; tbl)
+                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,48,45,55")
+                          ; xtc-find> ()|<s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "45,64,45,77") ; pass-v-verbose> ()]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglr", "44,2,45,83")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglr", "44,2,45,83")
+      ; fail
 
   xtc-sglr(tbl, sort) =
-    xtc-transform(!"sglr", !["-2A", "-p", <tbl; xtc-find> (), "-s", <sort> () | <pass-v-verbose> ()])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglr", "47,2,48,100")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,4,48,100")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,18,48,24")
+        ; !"sglr"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,27,48,99")
+        ; !["-2A", "-p", <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,43,48,55")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,43,48,45") ; tbl)
+                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,48,48,55")
+                          ; xtc-find> (), "-s", <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,69,48,72") ; sort> ()|<s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "48,81,48,94") ; pass-v-verbose> ()]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglr", "47,2,48,100")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglr", "47,2,48,100")
+      ; fail
 
-/**
- * sglri
- */
+
 strategies
-
   xtc-sglri(|tbl) =
-    xtc-transform(!"sglri", !["-p", <xtc-find> tbl | <pass-verbose> ()])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglri", "55,2,56,71")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "56,4,56,71")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "56,18,56,25")
+        ; !"sglri"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "56,28,56,70")
+        ; !["-p", <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "56,37,56,44") ; xtc-find> tbl|<s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "56,54,56,65") ; pass-verbose> ()]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglri", "55,2,56,71")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglri", "55,2,56,71")
+      ; fail
 
   xtc-sglri(|tbl, sort) =
-    xtc-transform(!"sglri", !["-p", <xtc-find> tbl, "--start", sort | <pass-verbose> ()])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglri", "58,2,59,88")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "59,4,59,88")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "59,18,59,25")
+        ; !"sglri"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "59,28,59,87")
+        ; !["-p", <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "59,37,59,44") ; xtc-find> tbl, "--start", sort|<s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "59,71,59,82") ; pass-verbose> ()]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglri", "58,2,59,88")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-sglri", "58,2,59,88")
+      ; fail
 
-/**
- * stratego
- */
+
 strategies
-
   xtc-pp-astratego =
-      xtc-stratego-ensugar
-    ; xtc-ast2abox(!["Stratego-pretty.pp"])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-pp-astratego", "66,2,69,18")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "67,6,69,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "67,6,67,25") ; xtc-stratego-ensugar)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "68,6,69,18")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "68,6,68,42")
+       ; xtc-ast2abox(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "68,19,68,41")
+           ; !["Stratego-pretty.pp"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "69,6,69,18")
     ; xtc-abox2text
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-pp-astratego", "66,2,69,18")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-pp-astratego", "66,2,69,18")
+      ; fail
 
-  xtc-stratego-ensugar = 
-    xtc-transform(!"stratego-ensugar", pass-verbose)
-
-  /* tools */
+  xtc-stratego-ensugar =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-stratego-ensugar", "71,2,72,51")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "72,4,72,51")
+    ; xtc-transform(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "72,18,72,36")
+        ; !"stratego-ensugar"
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "72,39,72,50") ; pass-verbose
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-stratego-ensugar", "71,2,72,51")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "xtc-stratego-ensugar", "71,2,72,51")
+      ; fail
 
   pass-v-verbose =
-      ![]; if-verbose3(!["-v"])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "pass-v-verbose", "76,2,77,30")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "77,6,77,30")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "77,6,77,8")
+       ; ![])
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "77,11,77,30")
+    ; if-verbose3(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "77,23,77,29")
+        ; !["-v"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "pass-v-verbose", "76,2,77,30")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "pass-v-verbose", "76,2,77,30")
+      ; fail
 
-  // :: String * [String] -> [String]
   add-arg-flags =
-       \ (_   , []    ) -> [] \
-    <+ \ (flag, values) -> [flag | <<separate-by> (flag, <id>)> values ] \
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "add-arg-flags", "80,2,82,73")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "81,7,82,73")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "81,7,81,30")
+       ; \ (_, []) -> [] \
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "82,7,82,73")
+          ; \ (flag, values) -> [flag|<s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "82,36,82,61")
+                                       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "82,37,82,47") ; separate-by)> ( flag
+                                                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "82,58,82,59") ; id>
+                                                                                                                                                     )> values] \)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "add-arg-flags", "80,2,82,73")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/strategoxt-xtc-tools.str", "add-arg-flags", "80,2,82,73")
+      ; fail

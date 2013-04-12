@@ -1,20 +1,54 @@
 module test78
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
-  main-test78 = 
-    asd123(|1) 
-    ; asd321(|1) 
+  main-test78 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "main-test78", "6,2,9,15")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "7,4,9,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "7,4,7,13")
+       ; asd123(|1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "8,6,9,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "8,6,8,15")
+       ; asd321(|1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "9,6,9,15")
     ; asd111(|1)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "main-test78", "6,2,9,15")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "main-test78", "6,2,9,15")
+      ; fail
 
   asd123(|t) =
-    ?a
-    ; rules( asd+a : _ -> t depends on [] )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd123", "11,2,13,42")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "12,4,13,42")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "12,4,12,5") ; ?a)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "13,6,13,42")
+    ; rules ( asd+a : _ -> t depends on [] )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd123", "11,2,13,42")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd123", "11,2,13,42")
+      ; fail
 
   asd321(|t) =
-    ?a
-    ; rules( asd1+a : _ -> t )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd321", "15,2,17,29")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "16,4,17,29")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "16,4,16,5") ; ?a)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "17,6,17,29")
+    ; rules ( asd1+a :
+                _ -> t )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd321", "15,2,17,29")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd321", "15,2,17,29")
+      ; fail
 
   asd111(|t) =
-    rules(asd : _ -> t)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd111", "19,2,20,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "20,4,20,22")
+    ; rules ( asd :
+                _ -> t )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd111", "19,2,20,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test78.str", "asd111", "19,2,20,22")
+      ; fail

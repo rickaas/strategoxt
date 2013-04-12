@@ -1,124 +1,259 @@
 module system/posix/process-abstractions
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   system/posix/process
   system/posix/signal
   util/log
 
-/**
- * Fork abstractions
- */
-strategies   
 
-  /**
-   * Executes "child" in the child process and returns a tuple
-   * of the pid of the child process and the current term in the
-   * parent process.
-   */
+strategies
   fork(child) =
-    fork(child, id)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork", "17,2,18,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "18,4,18,18")
+    ; fork(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "18,9,18,13") ; child
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "18,16,18,17") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork", "17,2,18,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork", "17,2,18,18")
+      ; fail
 
   fork(child, parent) =
-    ?t; fork; ?pid; (?0 < <child> t + <parent> (pid, t))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork", "20,2,21,55")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,4,21,55")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,4,21,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,8,21,55")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,8,21,11") ; fork)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,14,21,55")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,14,21,17") ; ?pid)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,21,21,54")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,21,21,22")
+       ; ?0
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,26,21,34")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,27,21,31") ; child)> t
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,38,21,54")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "21,39,21,44") ; parent)> (pid, t))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork", "20,2,21,55")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork", "20,2,21,55")
+      ; fail
 
   fork-and-wait(child) =
-    fork(child, ?(<waitpid>, t); warn-ifsignaled; ?WaitStatus(0,_,_); !t)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork-and-wait", "23,2,24,72")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,4,24,72")
+    ; fork(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,9,24,13") ; child
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,16,24,71")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,16,24,30")
+           ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,19,24,25") ; waitpid>
+              , t
+              ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,33,24,71")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,33,24,47") ; warn-ifsignaled)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,50,24,71")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,50,24,67")
+           ; ?WaitStatus(0, _, _))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "24,70,24,71")
+        ; !t
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork-and-wait", "23,2,24,72")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "fork-and-wait", "23,2,24,72")
+      ; fail
 
-/**
- * Call abstractions
- */
+
 strategies
-
-  /**
-   * Call a program with list of string arguments.
-   *
-   * @type (String, List(String)) -> (String, List(String))
-   */
   call =
-    call(id)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "36,2,37,11")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "37,4,37,11")
+    ; call(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "37,9,37,10") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "36,2,37,11")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "36,2,37,11")
+      ; fail
 
   call(init-child) =
-    ?(prog,args)
-    ; fork-and-wait(init-child; <execvp> (prog, args); <exit> 1)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "39,2,41,63")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "40,4,41,63")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "40,4,40,15")
+       ; ?(prog, args))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,6,41,63")
+    ; fork-and-wait(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,20,41,62")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,20,41,29") ; init-child)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,32,41,62")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,32,41,52")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,33,41,38") ; execvp)> (prog, args))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,55,41,62")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "41,56,41,59") ; exit)> 1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "39,2,41,63")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "39,2,41,63")
+      ; fail
 
-  /**
-   * Call program with a list of strings arguments and print
-   * information to stderr.
-   *
-   * @type (String, List(String)) -> (String, List(String))
-   */
-  call-noisy = 
-    ?(prog,args)
-    ; fork-and-wait(<debug; execvp> (prog, args))
+  call-noisy =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call-noisy", "49,2,51,48")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "50,4,51,48")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "50,4,50,15")
+       ; ?(prog, args))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "51,6,51,48")
+    ; fork-and-wait(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "51,20,51,47")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "51,21,51,33")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "51,21,51,25") ; debug)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "51,28,51,33")
+            ; execvp)> (prog, args)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call-noisy", "49,2,51,48")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call-noisy", "49,2,51,48")
+      ; fail
 
-/**
- * Termination abstractions
- */
-strategies 
-   
-  /**
-   * Succeeds if the process of this WaitStatus exited.
-   *
-   * @type WaitStatus -> WaitStatus
-   */
+
+strategies
   exited =
-    ?WaitStatus(s,_,_)
-    ; where(<not(eq)> (s, -1))
-    ; if-verbose3(debug(!"the process exited: "))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "exited", "63,2,66,48")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "64,4,66,48")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "64,4,64,21")
+       ; ?WaitStatus(s, _, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "65,6,66,48")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "65,6,65,29")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "65,12,65,28")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "65,13,65,19")
+                   ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "65,17,65,18") ; eq))> (s, -1)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "66,6,66,48")
+    ; if-verbose3(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "66,18,66,47")
+        ; debug(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "66,24,66,46")
+            ; !"the process exited: "
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "exited", "63,2,66,48")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "exited", "63,2,66,48")
+      ; fail
 
-  /**
-   * Succeeds if the process of this WaitStatus was signaled.
-   *
-   * @type WaitStatus -> WaitStatus
-   */
   signaled =
-    ?WaitStatus(_,s,_)
-    ; where(<not(eq)> (s, -1))
-    ; if-verbose2(debug(!"the process was signaled"))
-     
-  /**
-   * Succeeds if the process of this WaitStatus was stopped.
-   *
-   * @type WaitStatus -> WaitStatus
-   */
-  stopped = 
-    ?WaitStatus(_,_,s)
-    ; where(<not(eq)> (s, -1))
-    ; if-verbose3(debug(!"the process stopped"))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "signaled", "73,2,76,52")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "74,4,76,52")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "74,4,74,21")
+       ; ?WaitStatus(_, s, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "75,6,76,52")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "75,6,75,29")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "75,12,75,28")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "75,13,75,19")
+                   ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "75,17,75,18") ; eq))> (s, -1)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "76,6,76,52")
+    ; if-verbose2(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "76,18,76,51")
+        ; debug(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "76,24,76,50")
+            ; !"the process was signaled"
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "signaled", "73,2,76,52")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "signaled", "73,2,76,52")
+      ; fail
 
-  /**
-   * Prints a warning if the process of this WaitStatus was signaled.
-   *
-   * @type WaitStatus -> WaitStatus
-   */
+  stopped =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "stopped", "83,2,86,47")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "84,4,86,47")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "84,4,84,21")
+       ; ?WaitStatus(_, _, s))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "85,6,86,47")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "85,6,85,29")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "85,12,85,28")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "85,13,85,19")
+                   ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "85,17,85,18") ; eq))> (s, -1)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "86,6,86,47")
+    ; if-verbose3(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "86,18,86,46")
+        ; debug(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "86,24,86,45")
+            ; !"the process stopped"
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "stopped", "83,2,86,47")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "stopped", "83,2,86,47")
+      ; fail
+
   warn-ifsignaled =
-    where(try(
-      ?WaitStatus(_, <id>, _)
-    ; not(?-1)
-    ; signal-from-number
-    ; signal-to-descr
-    ; log(|Warning(),<concat-strings>["process signaled: ",<id>])
-    ))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "warn-ifsignaled", "93,2,100,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "94,4,100,5")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "94,10,100,4")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "95,6,99,64")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "95,6,95,28")
+                   ; ?WaitStatus(
+                        _
+                      , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "95,22,95,23") ; id>
+                      , _
+                      ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "96,6,99,64")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "96,6,96,13")
+                   ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "96,10,96,12")
+                         ; ?-1))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "97,6,99,64")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "97,6,97,23") ; signal-from-number)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "98,6,99,64")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "98,6,98,20") ; signal-to-descr)
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "99,6,99,64")
+                ; log(
+                  | Warning()
+                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "99,22,99,35") ; concat-strings> [ "process signaled: "
+                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "99,60,99,61") ; id>
+                                                                                                                                              ]
+                  )
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "warn-ifsignaled", "93,2,100,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "warn-ifsignaled", "93,2,100,5")
+      ; fail
 
-  /**
-   * Execute program in a new process with list of string args, 
-   * with the specified exec strategy.
-   *
-   * Optionally you can define file descriptors to use for stdin, stdout,
-   * stderr.
-   *
-   * @param  opt-fdin   Option(FileDescr)
-   * @param  opt-fdout  Option(FileDescr)
-   * @param  opt-fderr  Option(FileDescr)
-   *
-   * @type  (String, List(String)) -> ()
-   */
   call(|opt-fdin, opt-fdout, opt-fderr) =
-      ?(prog, args)
-      ; fork-and-wait(
-          <option(<dup2> (<id>, <STDIN_FILENO> ))> opt-fdin
-          ; <option(<dup2> (<id>, <STDOUT_FILENO>))> opt-fdout
-          ; <option(<dup2> (<id>, <STDERR_FILENO>))> opt-fderr
-          ; <execvp> (prog, args)
-          ; <exit> 1
-        )
-      ; !()
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "115,2,124,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "116,6,124,10")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "116,6,116,18")
+       ; ?(prog, args))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "117,8,124,10")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "117,8,123,8")
+       ; fork-and-wait(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,10,122,19")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,10,118,58")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,11,118,48")
+                  ; option(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,18,118,47")
+                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,19,118,22") ; dup2)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,27,118,28") ; id>
+                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "118,33,118,44") ; STDIN_FILENO>
+                                                                                                                                            )
+                    ))> opt-fdin)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,12,122,19")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,12,119,61")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,13,119,50")
+                  ; option(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,20,119,49")
+                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,21,119,24") ; dup2)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,29,119,30") ; id>
+                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "119,35,119,47") ; STDOUT_FILENO>
+                                                                                                                                            )
+                    ))> opt-fdout)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,12,122,19")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,12,120,61")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,13,120,50")
+                  ; option(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,20,120,49")
+                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,21,120,24") ; dup2)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,29,120,30") ; id>
+                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "120,35,120,47") ; STDERR_FILENO>
+                                                                                                                                            )
+                    ))> opt-fderr)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "121,12,122,19")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "121,12,121,32")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "121,13,121,18") ; execvp)> (prog, args))
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "122,12,122,19")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "122,13,122,16") ; exit)> 1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "124,8,124,10")
+    ; !()
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "115,2,124,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process-abstractions.str", "call", "115,2,124,10")
+      ; fail

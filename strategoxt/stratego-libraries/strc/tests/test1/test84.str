@@ -1,21 +1,66 @@
 module test84
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 signature
   constructors
-    Nil   : List(a)
-    Cons  : a * List(a) -> List(a)
-    Call  : a * List(a) -> Call
+    Nil  : List(a)
+    Cons : a * List(a) -> List(a)
+    Call : a * List(a) -> Call
+
 
 rules
 
-  oncetd(s) = s <+ one(oncetd(s))
+  oncetd(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "oncetd", "11,2,11,32")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "11,14,11,32")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "11,14,11,14") ; s
+       <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "11,19,11,32")
+          ; one(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "11,23,11,31")
+                ; oncetd(
+                    s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "11,30,11,30") ; s
+                  )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "oncetd", "11,2,11,32")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "oncetd", "11,2,11,32")
+      ; fail
 
-  try(s) = s <+ id
+  try(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "try", "13,2,13,17")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "13,11,13,17")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "13,11,13,11") ; s
+       <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "13,16,13,17") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "try", "13,2,13,17")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "try", "13,2,13,17")
+      ; fail
+
 
 strategies
-
-  main = 
-    ?[prog | args]
-    ; oncetd(try(?(x,x)))
-    ; try(prim("SSL_fputs", x, x))
-
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "main", "17,2,20,33")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "18,4,20,33")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "18,4,18,17")
+       ; ?[prog|args])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "19,6,20,33")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "19,6,19,24")
+       ; oncetd(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "19,13,19,23")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "19,17,19,22")
+               ; ?(x, x)
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "20,6,20,33")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "20,10,20,32")
+        ; prim("SSL_fputs", x, x)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "main", "17,2,20,33")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test84.str", "main", "17,2,20,33")
+      ; fail

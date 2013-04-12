@@ -1,5 +1,12 @@
 module test69
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
@@ -7,47 +14,115 @@ signature
     If   : Exp * Exp * Exp -> Exp
     Skip : Exp
 
+
 rules
 
-  R1 : If(c, x) -> If(c, x, Skip)
-  R2 : If(c, x, Skip) -> If(c, x)
+  R1 :
+    If(c, x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "R1", "12,2,12,32")> If(c, x, Skip)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "R1", "12,2,12,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "R1", "12,2,12,32")
+             ; fail
+
+  R2 :
+    If(c, x, Skip) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "R2", "13,2,13,32")> If(c, x)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "R2", "13,2,13,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "R2", "13,2,13,32")
+             ; fail
+
 
 strategies
-
-  main-test69 = 
-    test-suite(!"explode-test",
-	explode-test1;
-	explode-test2;
-	explode-test3
-    )
+  main-test69 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "main-test69", "17,2,22,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "18,4,22,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "18,15,18,29")
+        ; !"explode-test"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "19,1,21,13")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "19,1,19,13") ; explode-test1)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "20,1,21,13")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "20,1,20,13") ; explode-test2)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "21,1,21,13")
+        ; explode-test3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "main-test69", "17,2,22,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "main-test69", "17,2,22,4")
+      ; fail
 
   explode-test1 =
-    apply-test(!"explode-test1a"
-	      ,id#(id)
-	      ,!If("a","b","c")
-	      ,!If("a","b","c")
-	      );
-    apply-test(!"explode-test1b"
-	      ,id#(id)
-	      ,!"abc"
-	      ,!"abc"
-	      );
-    apply-test(!"explode-test1c"
-	      ,id#(id)
-	      ,!12
-	      ,!12
-	      )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test1", "24,2,39,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "25,4,39,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "25,4,29,7")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "25,15,25,31")
+           ; !"explode-test1a"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "26,8,26,14")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "26,8,26,9") ; id)#((s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "26,12,26,13") ; id))
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "27,8,27,23")
+           ; !If("a", "b", "c")
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "28,8,28,23")
+           ; !If("a", "b", "c")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "30,4,39,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "30,4,34,7")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "30,15,30,31")
+           ; !"explode-test1b"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "31,8,31,14")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "31,8,31,9") ; id)#((s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "31,12,31,13") ; id))
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "32,8,32,13")
+           ; !"abc"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "33,8,33,13")
+           ; !"abc"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "35,4,39,7")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "35,15,35,31")
+        ; !"explode-test1c"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "36,8,36,14")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "36,8,36,9") ; id)#((s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "36,12,36,13") ; id))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "37,8,37,10")
+        ; !12
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "38,8,38,10")
+        ; !12
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test1", "24,2,39,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test1", "24,2,39,7")
+      ; fail
 
   explode-test2 =
-    apply-test(!"explode-test2"
-	      ,\ f#(xs) -> (f, xs)\
-	      ,!If("a","b","c")
-	      ,!("If", ["a","b","c"])
-	      )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test2", "41,2,46,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "42,4,46,7")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "42,15,42,30")
+        ; !"explode-test2"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "43,8,43,27")
+        ; \ f#(xs) -> (f, xs) \
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "44,8,44,23")
+        ; !If("a", "b", "c")
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "45,8,45,29")
+        ; !( "If"
+           , ["a", "b", "c"]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test2", "41,2,46,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test2", "41,2,46,7")
+      ; fail
 
   explode-test3 =
-    apply-test(!"explode-test3"
-	      ,\ (f, xs) -> f#(xs) \
-	      ,!("If", ["a","b","c"])
-	      ,!If("a","b","c")
-	      )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test3", "48,2,53,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "49,4,53,7")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "49,15,49,30")
+        ; !"explode-test3"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "50,8,50,28")
+        ; \ (f, xs) -> f#(xs) \
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "51,8,51,29")
+        ; !( "If"
+           , ["a", "b", "c"]
+           )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "52,8,52,23")
+        ; !If("a", "b", "c")
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test3", "48,2,53,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test69.str", "explode-test3", "48,2,53,7")
+      ; fail

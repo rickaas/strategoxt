@@ -1,54 +1,165 @@
 module share-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
-  sorts A
+  sorts
+    A
+
   constructors
-    F : A * A -> A
-    A : A 
+    F   : A * A -> A
+    A   : A
     Var : String -> A
     Let : String * A * A -> A
 
+
 strategies
+  main-share-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "main-share-test", "14,2,19,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "15,4,19,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "15,15,15,27")
+        ; !"share-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "16,1,18,5")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "16,1,16,5") ; test1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "17,1,18,5")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "17,1,17,5") ; test2)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "18,1,18,5")
+        ; test3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "main-share-test", "14,2,19,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "main-share-test", "14,2,19,4")
+      ; fail
 
-  main-share-test = 
-    test-suite(!"share-test",
-	test1;
-	test2;
-	test3
-    )
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test1", "21,2,31,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "22,4,31,1")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "22,20,22,27")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "23,3,26,8")
+        ; share(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "23,9,23,23")
+            ; \ x -> Var(x) \
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "24,16,24,19") ; fail
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "25,9,25,39")
+            ; \ (x, t, t') -> Let(x, t, t') \
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "27,3,27,34")
+        ; !F(
+             F(A, A)
+           , F(
+               F(A, A)
+             , F(A, A)
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "28,3,30,78")
+        ; ?Let(
+             Var(var1077592168)
+           , A
+           , Let(
+               Var(var1075859784)
+             , F(Var(var1077592168), Var(var1077592168))
+             , F(
+                 Var(var1075859784)
+               , F(Var(var1075859784), Var(var1075859784))
+               )
+             )
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test1", "21,2,31,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test1", "21,2,31,1")
+      ; fail
 
-  test1 = 
-    apply-and-check(!"test1"
-	, share(\ x -> Var(x) \
-               ,fail
-	       ,\ (x, t, t') -> Let(x, t, t') \
-	       )
-	, !F(F(A, A), F(F(A, A), F(A, A)))
-	, ?Let(Var(var1077592168),A,
-           Let(Var(var1075859784),F(Var(var1077592168),Var(var1077592168)),
-               F(Var(var1075859784),F(Var(var1075859784),Var(var1075859784)))))
-	)
+  test2 =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test2", "33,2,41,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "34,4,41,1")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "34,20,34,27")
+        ; !"test2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "35,3,35,25")
+        ; graph(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "35,9,35,23")
+            ; \ x -> Var(x) \
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "36,3,36,34")
+        ; !F(
+             F(A, A)
+           , F(
+               F(A, A)
+             , F(A, A)
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "37,3,40,27")
+        ; ?[ ( Var(var1076162904)
+             , F(Var(var1076162872), Var(var1076162888))
+             )
+           , ( Var(var1076162888)
+             , F(Var(var1076162872), Var(var1076162872))
+             )
+           , ( Var(var1076162872)
+             , F(Var(var1077895264), Var(var1077895264))
+             )
+           , (Var(var1077895264), A)
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test2", "33,2,41,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test2", "33,2,41,1")
+      ; fail
 
-  test2 = 
-    apply-and-check(!"test2"
-	, graph(\ x -> Var(x) \ )
-	, !F(F(A, A), F(F(A, A), F(A, A)))
-	, ?[(Var(var1076162904),F(Var(var1076162872),Var(var1076162888))), 
-	    (Var(var1076162888),F(Var(var1076162872),Var(var1076162872))), 
-	    (Var(var1076162872),F(Var(var1077895264),Var(var1077895264))),
-	    (Var(var1077895264),A)]
-	)
-
-  test3 = 
-    apply-and-check(!"test3"
-	, inline-graph(fail, \ (x, t, t') -> Let(x, t, t') \ )
-	, ![(Var(1076162904),F(Var(1076162872),Var(1076162888))), 
-	    (Var(1076162888),F(Var(1076162872),Var(1076162872))),
-	    (Var(1076162872),F(Var(1077895264),Var(1077895264))), 
-	    (Var(1077895264),A)]
-	, ?Let(Var(var1077895264),A,
-           Let(Var(var1076162872),F(Var(var1077895264),Var(var1077895264)),
-               F(Var(var1076162872),F(Var(var1076162872),Var(var1076162872)))))
-	)     
-
+  test3 =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test3", "43,2,53,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "44,4,53,1")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "44,20,44,27")
+        ; !"test3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "45,3,45,54")
+        ; inline-graph(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "45,16,45,19") ; fail
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "45,22,45,52")
+            ; \ (x, t, t') -> Let(x, t, t') \
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "46,3,49,24")
+        ; ![ ( Var(1076162904)
+             , F(
+                 Var(1076162872)
+               , Var(1076162888)
+               )
+             )
+           , ( Var(1076162888)
+             , F(
+                 Var(1076162872)
+               , Var(1076162872)
+               )
+             )
+           , ( Var(1076162872)
+             , F(
+                 Var(1077895264)
+               , Var(1077895264)
+               )
+             )
+           , (Var(1077895264), A)
+           ]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "50,3,52,78")
+        ; ?Let(
+             Var(var1077895264)
+           , A
+           , Let(
+               Var(var1076162872)
+             , F(Var(var1077895264), Var(var1077895264))
+             , F(
+                 Var(var1076162872)
+               , F(Var(var1076162872), Var(var1076162872))
+               )
+             )
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test3", "43,2,53,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/share-test.str", "test3", "43,2,53,1")
+      ; fail

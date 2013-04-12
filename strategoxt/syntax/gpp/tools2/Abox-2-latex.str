@@ -1,12 +1,9 @@
-/**
- * GT -- Grammar Tools
- *
- * Authors:
- * - Merijn de Jonge <mdejonge@cwi.nl>
- * - Eelco Visser <visser@acm.org>
- * - Joost Visser <jvisser@cwi.nl>
- */
 module Abox-2-latex
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
@@ -17,261 +14,850 @@ imports
   plain-text
   misc
 
-strategies
 
-  io-Abox-2-latex = 
-     option-wrap( Abox-2-latex-options + io-options, 
-      xtc-io(
-         load-latex-table
-         ; read-from
-         ; (
-            where(<get-config>"output"; "alltt" )
-            <    // Produced alltt environment
-                 try-abox2alltt(|0); Fst
-               ; <latex2text>ALLTT(<id>)
-            +    // Produce boxenv environment
-                 topdown(try(Abox2latex))
-               ; <latex2text> BOXENV(<BOXENV-args>, <id>)
-           )
-         ; <topdown-print-to>([<create-header>(),<id>], "\n")
-     ) )
+strategies
+  io-Abox-2-latex =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "io-Abox-2-latex", "22,2,37,7")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "23,5,37,7")
+    ; option-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "23,18,23,50")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "23,18,23,37") ; Abox-2-latex-options
+           + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "23,41,23,50") ; io-options)
+      , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "24,6,37,5")
+        ; xtc-io(
+            s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "25,9,36,60")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "25,9,25,24") ; load-latex-table)
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "26,11,36,60")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "26,11,26,19") ; read-from)
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "27,11,36,60")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "28,12,34,56")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "28,12,28,48")
+                  ; where(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "28,18,28,46")
+                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "28,18,28,37")
+                             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "28,19,28,28") ; get-config)> "output")
+                          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "28,40,28,46")
+                          ; "alltt")
+                  < s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "30,17,31,39")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "30,17,30,34")
+                       ; try-abox2alltt(|0))
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "30,37,31,39")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "30,37,30,39") ; Fst)
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "31,17,31,39")
+                    ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "31,18,31,27") ; latex2text)> ALLTT(
+                                                                                                                 <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "31,36,31,37") ; id>
+                                                                                                               )
+                  + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "33,17,34,56")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "33,17,33,40")
+                       ; topdown(
+                           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "33,25,33,39")
+                           ; try(
+                               s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "33,29,33,38") ; Abox2latex
+                             )
+                         ))
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "34,17,34,56")
+                    ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "34,18,34,27") ; latex2text)> BOXENV(
+                                                                                                                 <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "34,38,34,48") ; BOXENV-args>
+                                                                                                               , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "34,53,34,54") ; id>
+                                                                                                               )))
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "36,11,36,60")
+            ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "36,12,36,27") ; topdown-print-to)> ( [ <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "36,32,36,44") ; create-header> ()
+                                                                                                               , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "36,50,36,51") ; id>
+                                                                                                               ]
+                                                                                                             , "\n"
+                                                                                                             )
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "io-Abox-2-latex", "22,2,37,7")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "io-Abox-2-latex", "22,2,37,7")
+      ; fail
 
   Abox-2-latex-options =
-      Option( 
-         "--alltt",
-         <set-config>("output", "alltt"),
-         !"--alltt          Produce verbatim-like output with alltt environment")
-    + Option( 
-         "--boxenv",
-         <set-config>("output", "boxenv"),
-         !"--boxenv         Produce fully formatted LaTeX output (default)")
-    + ArgOption(
-         "-t" + "--latex-table", 
-         <set-config> ("--latex-table", <id>), 
-         !"-t|--latex-table f  Use LaTeX abbreviaitions from file f")
-    + ArgOption(
-         "-w"+ "--width", 
-         <set-config> ("--width", <id>), 
-         !"-w|--width w        Use page width w")
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox-2-latex-options", "39,2,55,48")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "40,6,55,48")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "40,6,43,80")
+       ; Option(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "41,9,41,17") ; "--alltt"
+         , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "42,9,42,39")
+           ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "42,10,42,19") ; set-config)> ("output", "alltt")
+         , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "43,9,43,79")
+           ; !"--alltt          Produce verbatim-like output with alltt environment"
+         )
+       + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "44,6,55,48")
+         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "44,6,47,75")
+            ; Option(
+                s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "45,9,45,18") ; "--boxenv"
+              , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "46,9,46,40")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "46,10,46,19") ; set-config)> ("output", "boxenv")
+              , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "47,9,47,74")
+                ; !"--boxenv         Produce fully formatted LaTeX output (default)"
+              )
+            + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "48,6,55,48")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "48,6,51,68")
+                 ; ArgOption(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "49,9,49,30")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "49,9,49,12") ; "-t"
+                        + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "49,16,49,30") ; "--latex-table")
+                   , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "50,9,50,44")
+                     ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "50,10,50,19") ; set-config)> ( "--latex-table"
+                                                                                                                , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "50,41,50,42") ; id>
+                                                                                                                )
+                   , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "51,9,51,67")
+                     ; !"-t|--latex-table f  Use LaTeX abbreviaitions from file f"
+                   )
+                 + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "52,6,55,48")
+                   ; ArgOption(
+                       s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "53,9,53,23")
+                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "53,9,53,12") ; "-w"
+                          + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "53,15,53,23") ; "--width")
+                     , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "54,9,54,38")
+                       ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "54,10,54,19") ; set-config)> ( "--width"
+                                                                                                                  , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "54,35,54,36") ; id>
+                                                                                                                  )
+                     , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "55,9,55,47")
+                       ; !"-w|--width w        Use page width w"
+                     ))))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox-2-latex-options", "39,2,55,48")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox-2-latex-options", "39,2,55,48")
+      ; fail
 
-  load-latex-table = where(
-      <table-create> "latex-abbrevs"
-    ; try(
-      <get-config> "--latex-table"
-    ; ReadFromFile
-    ; map( \ [s1, s2] -> <table-put> ("latex-abbrevs", s1, s2) \ )
-    ))
-
-//  abox2latex = (id, load-latex-table
-//                    ; topdown(try(Abox2latex))
-//                    ; <latex2text> BOXENV(<BOXENV-args>, <id>);
-//                      collect-set(is-string); concat-strings)
+  load-latex-table =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "load-latex-table", "57,2,63,5")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "57,21,63,5")
+    ; where(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "58,6,63,4")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "58,6,58,35")
+               ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "58,7,58,18") ; table-create)> "latex-abbrevs")
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "59,6,63,4")
+            ; try(
+                s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "60,6,62,65")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "60,6,60,33")
+                   ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "60,7,60,16") ; get-config)> "--latex-table")
+                ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "61,6,62,65")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "61,6,61,17") ; ReadFromFile)
+                ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "62,6,62,65")
+                ; map(
+                    s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "62,11,62,63")
+                    ; \ [s1, s2] -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "62,26,62,34") ; table-put> ("latex-abbrevs", s1, s2) \
+                  )
+              ))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "load-latex-table", "57,2,63,5")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "load-latex-table", "57,2,63,5")
+      ; fail
 
   try-abox2alltt(|xpos) =
-    where(<get-config> "--width" => width);
-
-    let local(|pos) =
-             abox2alltt(local | pos) 
-          <+ abox2text(local | pos, width)
-          <+ log(|Error(),"invalid box:", <id>)
-             ; <exit>1
-     in local(|xpos)
-    end
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "try-abox2alltt", "70,2,79,6")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "71,4,79,6")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "71,4,71,41")
+       ; where(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "71,10,71,40")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "71,10,71,31")
+                  ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "71,11,71,20") ; get-config)> "--width") => width))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "73,4,79,6")
+    ; let local(|pos) =
+            s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "local", "73,8,77,21")
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "74,13,77,21")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "74,13,74,35")
+               ; abox2alltt(
+                   s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "74,24,74,28") ; local
+                 | pos
+                 )
+               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "75,13,77,21")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "75,13,75,41")
+                     ; abox2text(
+                         s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "75,23,75,27") ; local
+                       | pos
+                       , width
+                       )
+                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "76,13,77,21")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "76,13,76,46")
+                           ; log(
+                             | Error()
+                             , "invalid box:"
+                             , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "76,43,76,44") ; id>
+                             ))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "77,15,77,21")
+                        ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "77,16,77,19") ; exit)> 1))
+            < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "local", "73,8,77,21")
+            + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "local", "73,8,77,21")
+              ; fail
+      in
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "78,8,78,19")
+        ; local(|xpos)
+      end
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "try-abox2alltt", "70,2,79,6")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "try-abox2alltt", "70,2,79,6")
+      ; fail
 
   BOXENV-args =
-    <get-config> "--width"; ![<id>] <+ ![]
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "BOXENV-args", "81,2,82,41")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,4,82,41")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,4,82,34")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,4,82,25")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,5,82,14") ; get-config)> "--width")
+       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,28,82,34")
+       ; ![<s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,31,82,32") ; id>]
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "82,39,82,41")
+          ; ![])
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "BOXENV-args", "81,2,82,41")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "BOXENV-args", "81,2,82,41")
+      ; fail
 
   Abox2latex :
-    S(s) -> <latex-string>s
+    S(s) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "84,2,85,26")> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "85,13,85,24") ; latex-string> s
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "84,2,85,26")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "84,2,85,26")
+             ; fail
 
   Abox2latex :
-    C( [], s ) -> CBOX( s' )
-      where <map( \ S(x) -> <make-latex-comment>x \ )>s => s'
+    C([], s) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "87,2,89,60")> CBOX(s')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "87,2,89,60")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "87,2,89,60")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "89,12,89,60")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "89,12,89,54")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "89,13,89,52")
+                 ; map(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "89,18,89,50")
+                     ; \ S(x) -> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "89,29,89,46") ; make-latex-comment> x \
+                   ))> s) => s'
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "87,2,89,60")
+             ; fail
 
-  Abox2latex:
-    FBOX(fo, b) -> BOXFONT(fo, b)
-      where <KW() + VAR() + NUM() + MATH()> fo
+  Abox2latex :
+    FBOX(fo, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "91,2,93,45")> BOXFONT(fo, b)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "91,2,93,45")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "91,2,93,45")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,12,93,45")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,13,93,41")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,13,93,16") ; KW
+                 + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,20,93,41")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,20,93,24") ; VAR
+                      + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,28,93,41")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,28,93,32") ; NUM
+                           + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "93,36,93,41") ; MATH))))> fo
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "91,2,93,45")
+             ; fail
 
-  Abox2latex:
-    FBOX(F([]), b) -> b
+  Abox2latex :
+    FBOX(F([]), b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "95,2,96,22")> b
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "95,2,96,22")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "95,2,96,22")
+             ; fail
 
-  Abox2latex:
-    FBOX(F([foption|xs]), b) -> BOXFONT(fo, FBOX(F(xs), b))
-    where <   FFID(FM(), ?fo)
-           <+ FFID(SE(), ?fo)
-           <+ FFID(SH(), ?fo)
-           <+ FFID(SZ(), ?fo)
-           <+ FFID(CL(), ?i ); !BOXCOLOR(i) => fo
-          > foption
+  Abox2latex :
+    FBOX(
+      F([foption|xs])
+    , b
+    ) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "98,2,105,18")> BOXFONT(
+                                                                                                   fo
+                                                                                                 , FBOX(F(xs), b)
+                                                                                                 )
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "98,2,105,18")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "98,2,105,18")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "100,10,105,18")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "100,14,104,48")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "100,14,100,28")
+                 ; FFID(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "100,19,100,22") ; FM
+                   , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "100,25,100,27") ; ?fo
+                   )
+                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "101,14,104,48")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "101,14,101,28")
+                       ; FFID(
+                           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "101,19,101,22") ; SE
+                         , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "101,25,101,27") ; ?fo
+                         )
+                       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "102,14,104,48")
+                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "102,14,102,28")
+                             ; FFID(
+                                 s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "102,19,102,22") ; SH
+                               , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "102,25,102,27") ; ?fo
+                               )
+                             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "103,14,104,48")
+                                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "103,14,103,28")
+                                   ; FFID(
+                                       s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "103,19,103,22") ; SZ
+                                     , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "103,25,103,27") ; ?fo
+                                     )
+                                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "104,14,104,48")
+                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "104,14,104,28")
+                                         ; FFID(
+                                             s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "104,19,104,22") ; CL
+                                           , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "104,25,104,26") ; ?i
+                                           ))
+                                      ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "104,31,104,48")
+                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "104,31,104,42")
+                                         ; !BOXCOLOR(i)) => fo)))))> foption
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "98,2,105,18")
+             ; fail
 
-  Abox2latex:
-    H(so, b ) -> HBOX(hs, b' )
-      where <Hspace>so => hs
-          ; <toh> b => b'
+  Abox2latex :
+    H(so, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "107,2,110,24")> HBOX(hs, b')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "107,2,110,24")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "107,2,110,24")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "109,12,110,24")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "109,12,109,27")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "109,12,109,21")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "109,13,109,18") ; Hspace)> so) => hs)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "110,12,110,24")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "110,12,110,18")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "110,13,110,15") ; toh)> b) => b'
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "107,2,110,24")
+             ; fail
 
-Abox2latex:
-   V(so, b ) -> VBOX( vs,  is, b' )
-   where
-      <Vspace>so => vs;
-      <Ispace>so => is;
-      <filter(not([]));separate-by(!"\n\n")>b => b'
+  Abox2latex :
+    V(so, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "112,0,117,50")> VBOX(vs, is, b')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "112,0,117,50")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "112,0,117,50")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "115,6,117,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "115,6,115,21")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "115,6,115,15")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "115,7,115,12") ; Vspace)> so) => vs)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "116,6,117,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "116,6,116,21")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "116,6,116,15")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "116,7,116,12") ; Ispace)> so) => is)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,6,117,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,6,117,44")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,7,117,42")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,7,117,21")
+                    ; filter(
+                        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,14,117,20")
+                        ; not(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,18,117,19") ; [])
+                      ))
+                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,23,117,42")
+                 ; separate-by(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "117,35,117,41")
+                     ; !"\n\n"
+                   ))> b) => b'
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "112,0,117,50")
+             ; fail
 
-Abox2latex:
-   HV(so, b ) -> HVBOX( hs, vs, is, b' )
-   where
-      <Hspace>so => hs;
-      <Vspace>so => vs;
-      <Ispace>so => is;
-      <filter(not([]));separate-by(!"\\ ")>b => b'
+  Abox2latex :
+    HV(so, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "119,0,125,49")> HVBOX(hs, vs, is, b')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "119,0,125,49")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "119,0,125,49")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "122,6,125,49")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "122,6,122,21")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "122,6,122,15")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "122,7,122,12") ; Hspace)> so) => hs)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "123,6,125,49")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "123,6,123,21")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "123,6,123,15")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "123,7,123,12") ; Vspace)> so) => vs)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "124,6,125,49")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "124,6,124,21")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "124,6,124,15")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "124,7,124,12") ; Ispace)> so) => is)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,6,125,49")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,6,125,43")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,7,125,41")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,7,125,21")
+                    ; filter(
+                        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,14,125,20")
+                        ; not(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,18,125,19") ; [])
+                      ))
+                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,23,125,41")
+                 ; separate-by(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "125,35,125,40")
+                     ; !"\\ "
+                   ))> b) => b'
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "119,0,125,49")
+             ; fail
 
-Abox2latex:
-   A(aos, so, b ) -> ABOX( tdef, bs' )
-   where
-      <construct-rows>b => bs;
-      <Vspace;string-to-int>so        => vs;
-      <conc>(<copy>(vs, EOR() ),[EOR(), "\n"])  => row-end;
-      <table-def>aos    => tdef;
-      <map(MkRows); separate-by(!row-end)>bs => bs'
+  Abox2latex :
+    A(aos, so, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "127,0,134,50")> ABOX(tdef, bs')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "127,0,134,50")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "127,0,134,50")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "130,6,134,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "130,6,130,28")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "130,6,130,22")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "130,7,130,20") ; construct-rows)> b) => bs)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "131,6,134,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "131,6,131,42")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "131,6,131,29")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "131,7,131,26")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "131,7,131,12") ; Vspace)
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "131,14,131,26")
+                    ; string-to-int)> so) => vs)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "132,6,134,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "132,6,132,57")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "132,6,132,45")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "132,7,132,10") ; conc)> ( <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "132,14,132,17") ; copy> (vs, EOR())
+                                                                                                      , [EOR(), "\n"]
+                                                                                                      )) => row-end)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "133,6,134,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "133,6,133,30")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "133,6,133,19")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "133,7,133,15") ; table-def)> aos) => tdef)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,6,134,50")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,6,134,43")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,7,134,40")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,7,134,17")
+                    ; map(
+                        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,11,134,16") ; MkRows
+                      ))
+                 ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,20,134,40")
+                 ; separate-by(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "134,32,134,39") ; !row-end
+                   ))> bs) => bs'
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "127,0,134,50")
+             ; fail
 
-Abox2latex:
-   ALT( b1, b2 ) -> ALTBOX( b1, b2 )
+  Abox2latex :
+    ALT(b1, b2) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "136,0,137,35")> ALTBOX(b1, b2)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "136,0,137,35")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "136,0,137,35")
+             ; fail
 
-Abox2latex:
-   L( f, b ) -> LBOX( f', b )
-   where
-      (  // Sequence of exactly f copies of b
-         <string-to-int>f => f'
-      <+
-         // Horizontal line (because b1 equals '=' character)
-         <explode-string>f;
-         [61|id]; ![61]; 
-         implode-string => f'
-      <+
-         // Sequence of copies of ordinary string b
-         !f => f'
-      )
+  Abox2latex :
+    L(f, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "139,0,152,6")> LBOX(f', b)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "139,0,152,6")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "139,0,152,6")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "143,9,151,16")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "143,9,143,30")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "143,9,143,24")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "143,10,143,22") ; string-to-int)> f) => f'
+             <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "146,9,151,16")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "146,9,148,28")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "146,9,146,25")
+                      ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "146,10,146,23") ; explode-string)> f)
+                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "147,9,148,28")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "147,9,147,15")
+                      ; [s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "147,10,147,11") ; 61|s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "147,13,147,14") ; id])
+                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "147,18,148,28")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "147,18,147,22")
+                      ; ![61])
+                   ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "148,9,148,28")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "148,9,148,22") ; implode-string) => f'
+                   <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "151,9,151,16")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "151,9,151,10") ; !f) => f'))
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "139,0,152,6")
+             ; fail
 
-Abox2latex:
-   LBL( s, b ) -> LBLBOX( s, b)
+  Abox2latex :
+    LBL(s, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "154,0,155,30")> LBLBOX(s, b)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "154,0,155,30")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "154,0,155,30")
+             ; fail
 
-Abox2latex:
-   REF( s, b ) -> REFBOX( s, b )
-   
-// This is a simplified implementation. The originalused a space as
-// separator between horzontal boxes whenever the rightmost or left most box
-// contains comments. 
+  Abox2latex :
+    REF(s, b) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "157,0,158,31")> REFBOX(s, b)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "157,0,158,31")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Abox2latex", "157,0,158,31")
+             ; fail
+
   toh =
-    filter(not([]));separate-by( !"~" )
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "toh", "163,2,164,38")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "164,4,164,38")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "164,4,164,18")
+       ; filter(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "164,11,164,17")
+           ; not(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "164,15,164,16") ; [])
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "164,20,164,38")
+    ; separate-by(
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "164,33,164,36")
+        ; !"~"
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "toh", "163,2,164,38")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "toh", "163,2,164,38")
+      ; fail
 
-  Hspace = hs-length; int-to-string
-  Vspace = vs-length; int-to-string
-  Ispace = is-length; int-to-string
+  Hspace =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Hspace", "166,2,166,34")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "166,11,166,34")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "166,11,166,19") ; hs-length)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "166,22,166,34")
+    ; int-to-string
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Hspace", "166,2,166,34")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Hspace", "166,2,166,34")
+      ; fail
 
-table-def =
-   ?AOPTIONS( aos ); !aos;
-   map(  \ AL(so) -> [L(),<copy>(<Hspace;string-to-int>so, "~")] \
-        +
-         \ AC(so) -> [C(),<copy>(<Hspace;string-to-int>so, "~")] \
-        +
-         \ AR(so) -> [R(),<copy>(<Hspace;string-to-int>so, "~")] \
-      );
-      separate-by(![CSEP()]);concat;at-last(![EOR()])
+  Vspace =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Vspace", "167,2,167,34")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "167,11,167,34")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "167,11,167,19") ; vs-length)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "167,22,167,34")
+    ; int-to-string
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Vspace", "167,2,167,34")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Vspace", "167,2,167,34")
+      ; fail
 
-table-row =
-   ?R(_,bs );!bs;
-   rec x ({e1, e2, xs:
-      []
-   <+ [id]
-   <+ [C(id,id),id|x]
-   <+ [id,C(id,id)|x]
-   <+ ?[e1,e2|xs];![e1,CSEP()|<x>[e2|xs]]
-   })
-   
-MkRows =
-   (
-      ?LBL(s, b );
-      <table-row>b;
-      !LBLBOX(s, <table-row>b)
-   <+
-      table-row
-   )
+  Ispace =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Ispace", "168,2,168,34")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "168,11,168,34")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "168,11,168,19") ; is-length)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "168,22,168,34")
+    ; int-to-string
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Ispace", "168,2,168,34")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "Ispace", "168,2,168,34")
+      ; fail
 
-make-latex-comment =
-   explode-string;
-   reverse;
-   split(id,![]);
-   rec x ({xs,ys,a:
-      ?([],ys);![<LatexComment>ys]
-      <+
-      ?([10|xs], ys);
-      ![<LatexComment>ys| <x>(xs, [])]
-      <+
-      ?([a|xs],ys);
-      <x>(xs, [a|ys])
-   }   );
-   remove-trailing(?"");
-   reverse;
-   remove-trailing(?"");
-   map( \x -> [x,"\n"] \ )
+  table-def =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "table-def", "170,0,178,52")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "171,3,178,52")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "171,3,171,18")
+       ; ?AOPTIONS(aos))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "171,21,178,52")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "171,21,171,24") ; !aos)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,3,178,52")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,3,177,6")
+       ; map(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,9,176,65")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,9,172,65")
+              ; \ AL(so) -> [ L()
+                            , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,27,172,30") ; copy> ( <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,34,172,53")
+                                                                                                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,34,172,39") ; Hspace)
+                                                                                                                    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "172,41,172,53")
+                                                                                                                    ; string-to-int> so
+                                                                                                                 , "~"
+                                                                                                                 )
+                            ] \
+              + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "174,9,176,65")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "174,9,174,65")
+                   ; \ AC(so) -> [ C()
+                                 , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "174,27,174,30") ; copy> ( <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "174,34,174,53")
+                                                                                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "174,34,174,39") ; Hspace)
+                                                                                                                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "174,41,174,53")
+                                                                                                                         ; string-to-int> so
+                                                                                                                      , "~"
+                                                                                                                      )
+                                 ] \
+                   + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "176,9,176,65")
+                     ; \ AR(so) -> [ R()
+                                   , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "176,27,176,30") ; copy> ( <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "176,34,176,53")
+                                                                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "176,34,176,39") ; Hspace)
+                                                                                                                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "176,41,176,53")
+                                                                                                                           ; string-to-int> so
+                                                                                                                        , "~"
+                                                                                                                        )
+                                   ] \))
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,6,178,52")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,6,178,27")
+       ; separate-by(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,18,178,26")
+           ; ![CSEP()]
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,29,178,52")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,29,178,34") ; concat)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,36,178,52")
+    ; at-last(
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "178,44,178,51")
+        ; ![EOR()]
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "table-def", "170,0,178,52")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "table-def", "170,0,178,52")
+      ; fail
 
-// Remove trailing layout (tabs and spaces) and comment characters (%%)
-LatexComment = 
-   remove-trailing(9+32);
-   try(at-suffix([37,37|?xs];!xs));
-   implode-string
+  table-row =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "table-row", "180,0,188,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "181,3,188,4")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "181,3,181,11")
+       ; ?R(_, bs))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "181,13,188,4")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "181,13,181,15") ; !bs)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "182,3,188,4")
+    ; rec x (
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "182,10,188,3")
+        ; {e1, e2, xs:
+            s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "183,6,187,40")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "183,6,183,7") ; []
+               <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "184,6,187,40")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "184,6,184,9")
+                     ; [s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "184,7,184,8") ; id]
+                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,6,187,40")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,6,185,20")
+                           ; [s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,7,185,14")
+                              ; C(
+                                  s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,9,185,10") ; id
+                                , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,12,185,13") ; id
+                                ), s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,16,185,17") ; id|s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "185,19,185,19") ; x]
+                           <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,6,187,40")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,6,186,20")
+                                 ; [s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,7,186,8") ; id, s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,10,186,17")
+                                                                                                                  ; C(
+                                                                                                                      s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,12,186,13") ; id
+                                                                                                                    , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,15,186,16") ; id
+                                                                                                                    )|s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "186,19,186,19") ; x]
+                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "187,6,187,40")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "187,6,187,16")
+                                       ; ?[e1, e2|xs])
+                                    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "187,18,187,40")
+                                    ; ![e1, CSEP()|<s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "187,31,187,31") ; x> [e2|xs]]))))
+          }
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "table-row", "180,0,188,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "table-row", "180,0,188,4")
+      ; fail
 
-// Stuff for generating LaTeX alltt environment
-  abox2alltt(rec : t * t -> t | xpos):
-    (FBOX(fo, b), xpos) -> (BOXFONT(fo, b'), xpos')
-      where 
-         <KW() + VAR() + NUM() + MATH()> fo
-         ; <rec(|xpos)> b => (b',xpos')
+  MkRows =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "MkRows", "190,0,197,3")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "192,6,196,14")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "192,6,194,29")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "192,6,192,16")
+          ; ?LBL(s, b))
+       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "193,6,194,29")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "193,6,193,17")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "193,7,193,15") ; table-row)> b)
+       ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "194,6,194,29")
+       ; !LBLBOX(
+            s
+          , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "194,18,194,26") ; table-row> b
+          )
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "196,6,196,14") ; table-row)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "MkRows", "190,0,197,3")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "MkRows", "190,0,197,3")
+      ; fail
 
-  abox2alltt(rec : t * t -> t | xpos):
-    (FBOX(F([]), b), xpos) -> <rec(|xpos)> b
+  make-latex-comment =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "make-latex-comment", "199,0,215,25")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "200,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "200,3,200,16") ; explode-string)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "201,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "201,3,201,9") ; reverse)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "202,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "202,3,202,15")
+       ; split(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "202,9,202,10") ; id
+         , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "202,12,202,14")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "203,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "203,3,211,7")
+       ; rec x (
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "203,10,211,3")
+           ; {xs, ys, a:
+               s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "204,6,210,20")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "204,6,204,33")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "204,6,204,13")
+                     ; ?([], ys))
+                  ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "204,15,204,33")
+                  ; ![ <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "204,18,204,29") ; LatexComment> ys
+                     ]
+                  <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "206,6,210,20")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "206,6,207,37")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "206,6,206,19")
+                           ; ?([10|xs], ys))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "207,6,207,37")
+                        ; ![<s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "207,9,207,20") ; LatexComment> ys|<s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "207,27,207,27") ; x> (xs, [])]
+                        <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "209,6,210,20")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "209,6,209,17")
+                              ; ?([a|xs], ys))
+                           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "210,6,210,20")
+                           ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "210,7,210,7") ; x)> (xs, [a|ys])))
+             }
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "212,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "212,3,212,22")
+       ; remove-trailing(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "212,19,212,21")
+           ; ?""
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "213,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "213,3,213,9") ; reverse)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "214,3,215,25")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "214,3,214,22")
+       ; remove-trailing(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "214,19,214,21")
+           ; ?""
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "215,3,215,25")
+    ; map(
+        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "215,8,215,23")
+        ; \ x -> [x, "\n"] \
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "make-latex-comment", "199,0,215,25")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "make-latex-comment", "199,0,215,25")
+      ; fail
 
-  abox2alltt(rec : t * t -> t | xpos):
-    FBOX(F([foption|xs]), b) -> (BOXFONT(fo, b'), xpos')
-    where 
-     <   FFID(FM(), ?fo)
-           <+ FFID(SE(), ?fo)
-           <+ FFID(SH(), ?fo)
-           <+ FFID(SZ(), ?fo)
-           <+ FFID(CL(), ?i ); !BOXCOLOR(i) => fo
-          > foption;
-          <rec(|xpos)> FBOX(F(xs), b) => (b', xpos')
-          
-  // S
-  abox2alltt(rec : t * t -> t | xpos) :
-     S(s) -> (<alltt-string> s, <add> (xpos, <rel-string-length(|xpos)> s))
+  LatexComment =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "LatexComment", "218,0,221,16")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "219,3,221,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "219,3,219,23")
+       ; remove-trailing(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "219,19,219,22")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "219,19,219,19") ; 9
+              + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "219,21,219,22") ; 32)
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,3,221,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,3,220,33")
+       ; try(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,7,220,32")
+           ; at-suffix(
+               s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,17,220,31")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,17,220,27")
+                  ; [s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,18,220,19") ; 37, s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,21,220,22") ; 37|s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,24,220,26") ; ?xs])
+               ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "220,29,220,31")
+               ; !xs
+             )
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "221,3,221,16")
+    ; implode-string
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "LatexComment", "218,0,221,16")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "LatexComment", "218,0,221,16")
+      ; fail
+
+  abox2alltt(rec : t * t -> t|xpos):
+    (FBOX(fo, b), xpos) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "224,2,228,38")> (BOXFONT(fo, b'), xpos')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "224,2,228,38")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "224,2,228,38")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,9,228,38")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,9,227,42")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,10,227,38")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,10,227,13") ; KW
+                    + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,17,227,38")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,17,227,21") ; VAR
+                         + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,25,227,38")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,25,227,29") ; NUM
+                              + s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "227,33,227,38") ; MATH))))> fo)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "228,11,228,38")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "228,11,228,24")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "228,12,228,21")
+                 ; rec(|xpos))> b) => (b', xpos')
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "224,2,228,38")
+             ; fail
+
+  abox2alltt(rec : t * t -> t|xpos):
+    ( FBOX(F([]), b)
+    , xpos
+    ) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "230,2,231,43")> <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "231,31,231,40")
+                                                                                                   ; rec(|xpos)> b
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "230,2,231,43")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "230,2,231,43")
+             ; fail
+
+  abox2alltt(rec : t * t -> t|xpos):
+    FBOX(
+      F([foption|xs])
+    , b
+    ) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "233,2,242,51")> (BOXFONT(fo, b'), xpos')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "233,2,242,51")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "233,2,242,51")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "236,5,242,51")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "236,5,241,18")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "236,9,240,48")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "236,9,236,23")
+                    ; FFID(
+                        s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "236,14,236,17") ; FM
+                      , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "236,20,236,22") ; ?fo
+                      )
+                    <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "237,14,240,48")
+                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "237,14,237,28")
+                          ; FFID(
+                              s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "237,19,237,22") ; SE
+                            , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "237,25,237,27") ; ?fo
+                            )
+                          <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "238,14,240,48")
+                             ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "238,14,238,28")
+                                ; FFID(
+                                    s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "238,19,238,22") ; SH
+                                  , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "238,25,238,27") ; ?fo
+                                  )
+                                <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "239,14,240,48")
+                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "239,14,239,28")
+                                      ; FFID(
+                                          s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "239,19,239,22") ; SZ
+                                        , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "239,25,239,27") ; ?fo
+                                        )
+                                      <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "240,14,240,48")
+                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "240,14,240,28")
+                                            ; FFID(
+                                                s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "240,19,240,22") ; CL
+                                              , s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "240,25,240,26") ; ?i
+                                              ))
+                                         ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "240,31,240,48")
+                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "240,31,240,42")
+                                            ; !BOXCOLOR(i)) => fo)))))> foption)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "242,10,242,51")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "242,10,242,36")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "242,11,242,20")
+                 ; rec(|xpos))> FBOX(F(xs), b)) => (b', xpos')
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "233,2,242,51")
+             ; fail
+
+  abox2alltt(rec : t * t -> t|xpos):
+    S(s) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "245,2,246,74")> ( <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "246,15,246,26") ; alltt-string> s
+                                                                                                     , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "246,33,246,35") ; add> ( xpos
+                                                                                                                                                                                         , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "246,46,246,69")
+                                                                                                                                                                                            ; rel-string-length(|xpos)> s
+                                                                                                                                                                                         )
+                                                                                                     )
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "245,2,246,74")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "abox2alltt", "245,2,246,74")
+             ; fail
 
   alltt-string =
-        latex-abbrev
-     <+ string-as-chars(escape-special-characters)
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "alltt-string", "248,2,250,49")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "249,8,250,49")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "249,8,249,19") ; latex-abbrev
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "250,8,250,49")
+          ; string-as-chars(
+              s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "250,24,250,48") ; escape-special-characters
+            ))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "alltt-string", "248,2,250,49")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "alltt-string", "248,2,250,49")
+      ; fail
 
   create-header =
-    !["% \n",
-      "% This file is generated automatically by \n",
-      "% \n",
-      "%    abox2latex (C) 2001-2004 Merijn de Jonge (mdejonge@cs.uu.nl) \n",
-      "% \n",
-      "% Tokens from the BOX term are formatted using the LaTeX macros  \n",
-      "% defined in the table(s):  \n",
-      <tables2text>(),
-      "% \n",
-      "% To use this file add: \n",
-      "%    \\usepackage{boxenv} to your documents preamble \n",
-      "% and  \n",
-      "%    \\input{<this_file>}  \n",
-      "% to your LaTeX document. \n",
-      "% \n",
-      "% If you don't have boxenv.sty already, generate it with:: \n",
-      "%    gen-latex-boxstyle -o boxenv.sty \n",
-      "% \n"
-    ]; concat-strings
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "create-header", "252,2,271,20")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "253,4,271,20")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "253,4,271,4")
+       ; ![ "% \n"
+          , "% This file is generated automatically by \n"
+          , "% \n"
+          , "%    abox2latex (C) 2001-2004 Merijn de Jonge (mdejonge@cs.uu.nl) \n"
+          , "% \n"
+          , "% Tokens from the BOX term are formatted using the LaTeX macros  \n"
+          , "% defined in the table(s):  \n"
+          , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "260,7,260,17") ; tables2text> ()
+          , "% \n"
+          , "% To use this file add: \n"
+          , "%    \\usepackage{boxenv} to your documents preamble \n"
+          , "% and  \n"
+          , "%    \\input{<this_file>}  \n"
+          , "% to your LaTeX document. \n"
+          , "% \n"
+          , "% If you don't have boxenv.sty already, generate it with:: \n"
+          , "%    gen-latex-boxstyle -o boxenv.sty \n"
+          , "% \n"
+          ])
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "271,7,271,20")
+    ; concat-strings
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "create-header", "252,2,271,20")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "create-header", "252,2,271,20")
+      ; fail
 
-// Create list of abbreviation tables
-tables2text =
-      (<get-config> "--latex-tables" <+ ![]);
-      map( !["%   ", <id>, "\n"]; concat-strings );
-      concat-strings
+  tables2text =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "tables2text", "274,0,277,19")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "275,6,277,19")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "275,7,275,42")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "275,7,275,35")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "275,8,275,17") ; get-config)> "--latex-tables"
+          <+ s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "275,40,275,42")
+             ; ![]))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "276,6,277,19")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "276,6,276,49")
+       ; map(
+           s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "276,11,276,47")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "276,11,276,31")
+              ; ![ "%   "
+                 , <s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "276,22,276,23") ; id>
+                 , "\n"
+                 ])
+           ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "276,34,276,47")
+           ; concat-strings
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "277,6,277,19")
+    ; concat-strings
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "tables2text", "274,0,277,19")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Abox-2-latex.str", "tables2text", "274,0,277,19")
+      ; fail

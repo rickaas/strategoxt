@@ -1,128 +1,388 @@
-/**
- * @author Merijn de Jonge (mdejonge@cwi.nl)
- */
 module layout
-imports pp-table
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  pp-table
+
 
 signature
-   constructors
-      layout-place-holder : LPH
+  constructors
+    layout-place-holder : LPH
+
 
 strategies
+  insert-layout =
+    s-enter(|"strategoxt/syntax/gpp/tools2/layout.str", "insert-layout", "13,0,77,3")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "14,3,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "14,3,14,32")
+       ; ( s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "14,4,14,5") ; id
+         , s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "14,8,14,31")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "14,8,14,27")
+              ; ?[initial-layout|_])
+           ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "14,30,14,31")
+           ; Tl
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "15,3,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "15,3,62,7")
+       ; rec x (
+           s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "15,10,62,3")
+           ; {a, a', b, w, b', w', w'':
+               s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "16,6,61,7")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "16,6,18,20")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "16,6,16,18")
+                     ; ?(H(a, b), w))
+                  ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "17,6,18,20")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "17,6,17,36")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "17,6,17,25")
+                        ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "17,7,17,18")
+                            ; InsLayout(
+                                s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "17,17,17,17") ; x
+                              ))> (b, w)) => (b', w'))
+                  ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "18,6,18,20")
+                  ; !(H(a, b'), w')
+                  <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "20,6,61,7")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "20,6,22,21")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "20,6,20,19")
+                           ; ?(HV(a, b), w))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "21,6,22,21")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "21,6,21,36")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "21,6,21,25")
+                              ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "21,7,21,18")
+                                  ; InsLayout(
+                                      s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "21,17,21,17") ; x
+                                    ))> (b, w)) => (b', w'))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "22,6,22,21")
+                        ; !(HV(a, b'), w')
+                        <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "24,6,61,7")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "24,6,26,20")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "24,6,24,18")
+                                 ; ?(V(a, b), w))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "25,6,26,20")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "25,6,25,36")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "25,6,25,25")
+                                    ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "25,7,25,18")
+                                        ; InsLayout(
+                                            s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "25,17,25,17") ; x
+                                          ))> (b, w)) => (b', w'))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "26,6,26,20")
+                              ; !(V(a, b'), w')
+                              <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "28,6,61,7")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "28,6,30,24")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "28,6,28,22")
+                                       ; ?(A(a, a', b), w))
+                                    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "29,6,30,24")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "29,6,29,36")
+                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "29,6,29,25")
+                                          ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "29,7,29,18")
+                                              ; InsLayout(
+                                                  s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "29,17,29,17") ; x
+                                                ))> (b, w)) => (b', w'))
+                                    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "30,6,30,24")
+                                    ; !(A(a, a', b'), w')
+                                    <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "32,6,61,7")
+                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "32,6,34,20")
+                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "32,6,32,18")
+                                             ; ?(R(a, b), w))
+                                          ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "33,6,34,20")
+                                          ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "33,6,33,36")
+                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "33,6,33,25")
+                                                ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "33,7,33,18")
+                                                    ; InsLayout(
+                                                        s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "33,17,33,17") ; x
+                                                      ))> (b, w)) => (b', w'))
+                                          ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "34,6,34,20")
+                                          ; !(R(a, b'), w')
+                                          <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "36,6,61,7")
+                                             ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "36,6,39,24")
+                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "36,6,36,19")
+                                                   ; ?(ALT(a, b), w))
+                                                ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "37,6,39,24")
+                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "37,6,37,36")
+                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "37,6,37,25")
+                                                      ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "37,7,37,18")
+                                                          ; InsLayout(
+                                                              s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "37,17,37,17") ; x
+                                                            ))> (a, w)) => (a', w'))
+                                                ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "38,6,39,24")
+                                                ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "38,6,38,38")
+                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "38,6,38,25")
+                                                      ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "38,7,38,18")
+                                                          ; InsLayout(
+                                                              s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "38,17,38,17") ; x
+                                                            ))> (b, w)) => (b', w''))
+                                                ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "39,6,39,24")
+                                                ; !(ALT(a', b'), w'')
+                                                <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "41,6,61,7")
+                                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "41,6,43,21")
+                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "41,6,41,18")
+                                                         ; ?(LBL(a, b), w))
+                                                      ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "42,6,43,21")
+                                                      ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "42,6,42,37")
+                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "42,6,42,25")
+                                                            ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "42,7,42,18")
+                                                                ; InsLayout(
+                                                                    s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "42,17,42,17") ; x
+                                                                  ))> (b, w)) => (b', w'))
+                                                      ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "43,6,43,21")
+                                                      ; !(LBL(a, b'), w')
+                                                      <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "45,6,61,7")
+                                                         ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "45,6,47,21")
+                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "45,6,45,18")
+                                                               ; ?(REF(a, b), w))
+                                                            ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "46,6,47,21")
+                                                            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "46,6,46,37")
+                                                               ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "46,6,46,25")
+                                                                  ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "46,7,46,18")
+                                                                      ; InsLayout(
+                                                                          s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "46,17,46,17") ; x
+                                                                        ))> (b, w)) => (b', w'))
+                                                            ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "47,6,47,21")
+                                                            ; !(REF(a, b'), w')
+                                                            <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "49,6,61,7")
+                                                               ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "49,6,51,19")
+                                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "49,6,49,16")
+                                                                     ; ?(L(a, b), w))
+                                                                  ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "50,6,51,19")
+                                                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "50,6,50,37")
+                                                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "50,6,50,25")
+                                                                        ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "50,7,50,18")
+                                                                            ; InsLayout(
+                                                                                s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "50,17,50,17") ; x
+                                                                              ))> (b, w)) => (b', w'))
+                                                                  ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "51,6,51,19")
+                                                                  ; !(L(a, b'), w')
+                                                                  <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "53,6,61,7")
+                                                                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "53,6,55,22")
+                                                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "53,6,53,19")
+                                                                           ; ?(LNAT(a, b), w))
+                                                                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "54,6,55,22")
+                                                                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "54,6,54,37")
+                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "54,6,54,25")
+                                                                              ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "54,7,54,18")
+                                                                                  ; InsLayout(
+                                                                                      s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "54,17,54,17") ; x
+                                                                                    ))> (b, w)) => (b', w'))
+                                                                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "55,6,55,22")
+                                                                        ; !(LNAT(a, b'), w')
+                                                                        <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,6,61,7")
+                                                                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,6,59,30")
+                                                                              ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,6,59,17")
+                                                                                 ; ( s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,7,59,13")
+                                                                                     ; [s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,8,59,9") ; id|s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,11,59,12") ; id]
+                                                                                   , s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,15,59,16") ; id
+                                                                                   ))
+                                                                              ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,19,59,30")
+                                                                              ; InsLayout(
+                                                                                  s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "59,29,59,29") ; x
+                                                                                )
+                                                                              <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "61,6,61,7") ; id)))))))))))
+             }
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,3,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,3,65,41")
+       ; ( s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,4,65,35")
+           ; try(
+               s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,8,65,33")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,8,65,14") ; is-list)
+               ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,17,65,33")
+               ; \ x -> HV([], x) \
+             )
+         , s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "65,38,65,39") ; id
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "66,3,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "66,3,66,31")
+       ; ?(abox, [trailing-layout|xs]))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "69,3,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "69,3,69,42")
+       ; ![initial-layout, abox, trailing-layout])
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "70,3,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "70,3,74,3")
+       ; filter(
+           s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "71,7,73,82")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "71,7,71,21")
+              ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "71,11,71,20")
+                    ; layout(
+                        s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "71,18,71,19") ; id
+                      ))
+              <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,7,73,82")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,7,72,65")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,7,72,16")
+                       ; layout(
+                           s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,14,72,15") ; id
+                         ))
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,18,72,65")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,18,72,43") ; is-pp-conservative-enabled)
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,45,72,65")
+                    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,45,72,54") ; has-layout)
+                    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "72,56,72,65")
+                    ; layout2box
+                    <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,7,73,82")
+                       ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,7,73,16")
+                          ; layout(
+                              s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,14,73,15") ; id
+                            ))
+                       ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,18,73,82")
+                       ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,18,73,48")
+                          ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,22,73,47") ; is-pp-conservative-enabled))
+                       ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,50,73,82")
+                       ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,50,73,71") ; has-significant-layout)
+                       ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "73,73,73,82")
+                       ; layout2box))
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "74,5,77,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "74,5,74,13") ; flat-list)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "75,6,76,37")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "75,6,75,17")
+       ; \ [x] -> x \
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "76,6,76,37")
+          ; \ x -> H(
+                     [SOpt(HS(), "0")]
+                   , x
+                   ) \)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "insert-layout", "13,0,77,3")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "insert-layout", "13,0,77,3")
+      ; fail
 
-insert-layout =
-   (id, ?[initial-layout| _]; Tl);
-   rec x ({a,a',b,w,b',w',w'': 
-      ?(H(a, b), w);
-      <InsLayout(x)>(b, w) => (b',w');
-      !(H(a, b'), w')
-   <+
-      ?(HV(a, b), w);
-      <InsLayout(x)>(b, w) => (b',w');
-      !(HV(a, b'), w')
-   <+
-      ?(V(a, b), w);
-      <InsLayout(x)>(b, w) => (b',w');
-      !(V(a, b'), w')
-   <+
-      ?(A(a, a', b), w);
-      <InsLayout(x)>(b, w) => (b',w');
-      !(A(a, a', b'), w')
-   <+
-      ?(R(a, b), w);
-      <InsLayout(x)>(b, w) => (b',w');
-      !(R(a, b'), w')
-   <+
-      ?(ALT(a,b), w);
-      <InsLayout(x)>(a, w) => (a',w');
-      <InsLayout(x)>(b, w) => (b', w'');
-      !(ALT(a', b'), w'')
-   <+
-      ?(LBL(a,b),w);
-      <InsLayout(x)>(b, w) => (b', w');
-      !(LBL(a,b'), w')
-   <+
-      ?(REF(a,b),w);
-      <InsLayout(x)>(b, w) => (b', w');
-      !(REF(a,b'), w')
-   <+
-      ?(L(a,b),w);
-      <InsLayout(x)>(b, w) => (b', w');
-      !(L(a,b'), w')
-   <+
-      ?(LNAT(a,b),w);
-      <InsLayout(x)>(b, w) => (b', w');
-      !(LNAT(a,b'), w')
-
-
-   <+
-      ([id|id],id);InsLayout(x)
-   <+
-      id
-   }   );
-
-   // Put box in HV box when it is a list of boxes
-   (try(is-list; \x -> HV([], x) \ ), id );
-   ?(abox, [trailing-layout|xs]);
-   
-   // Put optional initial + trailing layout in H box
-   ![initial-layout, abox, trailing-layout];
-   filter(
-       not(layout(id))
-     <+layout(id);is-pp-conservative-enabled;has-layout;layout2box
-     <+layout(id);not(is-pp-conservative-enabled);has-significant-layout;layout2box
-   );flat-list;
-   (  \ [x] -> x \ 
-   <+ \ x -> H([SOpt(HS(),"0")], x ) \
-   )
-
-InsLayout(s) = 
-   rec x ( {a,a',w,b,b',xs, ws, ws', ws'',xs',ws''':
-      ([], id)
-   <+
-      ?([a], ws);<s>(a,ws);?(a',ws');!([a'],ws')
-   <+
-      ?([a,b|xs], ws); 
-      <s>(a,ws) => (a',[w|ws']);
-      <x>([b|xs], ws');?([b'|xs'], ws'');
-      (
-         // In case of conservative pretty-printing we insert original
-         // layout (when it exists) in the generated BOX expression. When
-         // No layout exists, we use the layout of te generated BOX
-         // expressions.
-         is-pp-conservative-enabled
-         ; <has-layout> w
-         ; !([H([SOpt(HS(),"0")],[H([],[a']), <layout2box>w, H([],[b'])])|xs']
-            , ws''
-            )
-      <+
-         // For non-conservative pretty-printing, we only insert significant
-         // layout (i.e., layout other than spaces, tabs, and new lines).
-         not(is-pp-conservative-enabled)
-         ; <has-significant-layout> w
-         ; !([a', <layout2box>w, b'|xs'], ws'')
-     <+
-         // No existing layout used. Instead, generated layout is used.
-         !([a', b'|xs'],ws'')
+  InsLayout(s) =
+    s-enter(|"strategoxt/syntax/gpp/tools2/layout.str", "InsLayout", "79,0,108,5")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "80,3,108,5")
+    ; rec x (
+        s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "80,11,108,3")
+        ; {a, a', w, b, b', xs, ws, ws', ws'', xs', ws''':
+            s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "81,6,107,6")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "81,6,81,13")
+               ; ( s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "81,7,81,8") ; []
+                 , s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "81,11,81,12") ; id
+                 )
+               <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,6,107,6")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,6,83,47")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,6,83,15")
+                        ; ?([a], ws))
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,17,83,47")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,17,83,25")
+                        ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,18,83,18") ; s)> (a, ws))
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,27,83,47")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,27,83,35")
+                        ; ?(a', ws'))
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "83,37,83,47")
+                     ; !([a'], ws')
+                     <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "85,6,107,6")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "85,6,85,20")
+                           ; ?([a, b|xs], ws))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "86,6,107,6")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "86,6,86,30")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "86,6,86,14")
+                              ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "86,7,86,7") ; s)> (a, ws)) => (a', [w|ws']))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "87,6,107,6")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "87,6,87,21")
+                           ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "87,7,87,7") ; x)> ([b|xs], ws'))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "87,23,107,6")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "87,23,87,39")
+                           ; ?([b'|xs'], ws''))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "93,9,106,28")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "93,9,97,12")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "93,9,93,34") ; is-pp-conservative-enabled)
+                           ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "94,11,97,12")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "94,11,94,24")
+                              ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "94,12,94,21") ; has-layout)> w)
+                           ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "95,11,97,12")
+                           ; !( [H(
+                                   [SOpt(HS(), "0")]
+                                 , [ H([], [a'])
+                                   , <s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "95,47,95,56") ; layout2box> w
+                                   , H([], [b'])
+                                   ]
+                                 )|xs']
+                              , ws''
+                              )
+                           <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "101,9,106,28")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "101,9,103,46")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "101,9,101,39")
+                                    ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "101,13,101,38") ; is-pp-conservative-enabled))
+                                 ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "102,11,103,46")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "102,11,102,36")
+                                    ; <(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "102,12,102,33") ; has-significant-layout)> w)
+                                 ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "103,11,103,46")
+                                 ; !( [a', <s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "103,19,103,28") ; layout2box> w, b'|xs']
+                                    , ws''
+                                    )
+                                 <+ s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "106,9,106,28")
+                                    ; !([a', b'|xs'], ws'')))))
+          }
       )
-   } )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "InsLayout", "79,0,108,5")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "InsLayout", "79,0,108,5")
+      ; fail
 
-  has-layout = 
-    not(layout(layout-place-holder))
+  has-layout =
+    s-enter(|"strategoxt/syntax/gpp/tools2/layout.str", "has-layout", "110,2,111,35")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "111,4,111,35")
+    ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "111,8,111,34")
+          ; layout(
+              s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "111,15,111,33") ; layout-place-holder
+            ))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "has-layout", "110,2,111,35")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "has-layout", "110,2,111,35")
+      ; fail
 
   has-significant-layout =
-    where(
-      not(layout(layout-place-holder))
-    ; ?layout(<concat-strings>)
-    ; explode-string
-    ; filter(not(9 + 10 + 13 + 32))
-    ; not([])
-    )
+    s-enter(|"strategoxt/syntax/gpp/tools2/layout.str", "has-significant-layout", "113,2,120,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "114,4,120,4")
+    ; where(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "115,6,119,12")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "115,6,115,37")
+               ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "115,10,115,36")
+                     ; layout(
+                         s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "115,17,115,35") ; layout-place-holder
+                       )))
+            ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "116,6,119,12")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "116,6,116,30")
+               ; ?layout(
+                    <s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "116,15,116,28") ; concat-strings>
+                  ))
+            ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "117,6,119,12")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "117,6,117,19") ; explode-string)
+            ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,6,119,12")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,6,118,34")
+               ; filter(
+                   s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,13,118,33")
+                   ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,17,118,32")
+                         ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,17,118,17") ; 9
+                            + s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,21,118,32")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,21,118,22") ; 10
+                                 + s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,26,118,32")
+                                   ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,26,118,27") ; 13
+                                      + s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "118,31,118,32") ; 32))))
+                 ))
+            ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "119,6,119,12")
+            ; not(s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "119,10,119,11") ; []))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "has-significant-layout", "113,2,120,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "has-significant-layout", "113,2,120,4")
+      ; fail
 
   layout2box =
-    ?layout(x)
-    ; if has-significant-layout then
-        !C([],[S(<concat-strings> x)])
+    s-enter(|"strategoxt/syntax/gpp/tools2/layout.str", "layout2box", "122,2,128,8")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "123,4,128,8")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "123,4,123,13")
+       ; ?layout(x))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "124,6,128,8")
+    ; if s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "124,9,124,30") ; has-significant-layout then
+        s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "125,8,125,37")
+        ; !C(
+             []
+           , [ S(
+                 <s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "125,18,125,31") ; concat-strings> x
+               )
+             ]
+           )
       else
-        !S(<concat-strings> x)
+        s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "127,8,127,29")
+        ; !S(
+             <s-step(|"strategoxt/syntax/gpp/tools2/layout.str", "127,12,127,25") ; concat-strings> x
+           )
       end
+    < s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "layout2box", "122,2,128,8")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/layout.str", "layout2box", "122,2,128,8")
+      ; fail

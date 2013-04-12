@@ -1,203 +1,508 @@
-/**
- * This module offers strategies to format a ComponentTime to a String.
- *
- * You have to specify the output with a list of patterns. The
- * patterns are the ones used in the SimpleDateFormat class of Java.
- * Not all of the patterns are however implemented in this module.
- * 
- * Supported patterns: yyyy, yy, M, MM, MMM, MMMM, d, dd, D, DD, EEE, EEEE,
- * a, HH, kk, hh, KK, mm, ss. For documentation of the meaning of the
- * patterns please visit:
- * http://java.sun.com/j2se/1.4.1/docs/api/java/text/SimpleDateFormat.html
- *
- * Limitations (and future work):
- *   - No way of using i18n and locales. Introduction of locales might
- *     change the type of pattern-to rules. It's wise to use the 
- *     date-format strategy as long as possible: this strategy is stable
- *     and will use the default locale in the future.
- *   - This modules doesn't parse a String containing patterns like 
- *     Java's SimpleDateFormat. This simplifies the implementation
- *     and is not a big deal because of the list syntax in Stratego.
- *
- * Examples:
- *   - ["EEEE", " ", "dd", " ", "MMMM", " ", "yyyy"]
- *     "Thursday 02 January 2003"
- *   - ["EEE", " ", "HH", ":", "mm", ":", "ss"]
- *     "Thu 21:35:30"
- *   - ["EEE", " ", "hh", ":", "mm", ":", "ss", " ", "a"]
- *     "Thu 09:38:46 p.m."
- *
- * @author Martin Bravenboer <martin@mbravenboer.org>
- */
 module util/date-format
-imports 
-  util/time 
-  term/string 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  util/time
+  term/string
   term/integer
   collection/list/common
 
-strategies
-
-  /**
-   * @type List(String) * ComponentTime -> String
-   */
-  date-format:
-    (ps, t) -> <map(<date-pattern-to-string <+ Fst> (<id>, t)); concat-strings> ps
 
 strategies
+  date-format :
+    (ps, t) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-format", "44,2,45,81")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,16,45,77")
+                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,16,45,61")
+                                                                                                                         ; map(
+                                                                                                                             s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,20,45,60")
+                                                                                                                             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,21,45,49")
+                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,21,45,42") ; date-pattern-to-string
+                                                                                                                                    <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,47,45,49") ; Fst))> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,54,45,55") ; id>
+                                                                                                                                                                                                                                      , t
+                                                                                                                                                                                                                                      )
+                                                                                                                           ))
+                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "45,64,45,77")
+                                                                                                                      ; concat-strings> ps
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-format", "44,2,45,81")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-format", "44,2,45,81")
+             ; fail
 
-  /**
-   * @type String * ComponentTime -> String
-   */
+
+strategies
   date-pattern-to-string =
-      ?(p, _)
-    ; date-pattern-to-int
-    ; <align-right> ('0', <int-to-string>, <string-length> p)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "52,2,55,60")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "53,6,55,60")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "53,6,53,12")
+       ; ?(p, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "54,6,55,60")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "54,6,54,24") ; date-pattern-to-int)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "55,6,55,60")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "55,7,55,17") ; align-right)> ( '0'
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "55,27,55,39") ; int-to-string>
+                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "55,44,55,56") ; string-length> p
+                                                                                                             )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "52,2,55,60")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "52,2,55,60")
+      ; fail
+
 
 rules
 
-  /**
-   * @type String * ComponentTime -> Int
-   */
+  date-pattern-to-int :
+    ( "yyyy"
+    , ComponentTime(Date(y, _, _), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "64,2,64,72")> y
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "64,2,64,72")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "64,2,64,72")
+             ; fail
 
-  /* year */
-  date-pattern-to-int : ("yyyy", ComponentTime(Date(y, _, _), _, _)) -> y
-  date-pattern-to-int : ("yy",   ComponentTime(Date(y, _, _), _, _)) -> <<mod> (<id>, 100)> y
+  date-pattern-to-int :
+    ( "yy"
+    , ComponentTime(Date(y, _, _), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "65,2,65,92")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "65,73,65,89")
+                                                                                                                        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "65,74,65,76") ; mod)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "65,81,65,82") ; id>
+                                                                                                                                                                                                                          , 100
+                                                                                                                                                                                                                          )> y
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "65,2,65,92")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "65,2,65,92")
+             ; fail
 
-  /* month */
-  date-pattern-to-int    : ("M",    ComponentTime(Date(_, m, _), _, _)) -> <month2index; inc> m
-  date-pattern-to-int    : ("MM",   ComponentTime(Date(_, m, _), _, _)) -> <month2index; inc> m
+  date-pattern-to-int :
+    ( "M"
+    , ComponentTime(Date(_, m, _), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "68,2,68,94")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "68,76,68,91")
+                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "68,76,68,86") ; month2index)
+                                                                                                                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "68,89,68,91")
+                                                                                                                        ; inc> m
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "68,2,68,94")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "68,2,68,94")
+             ; fail
 
-  /**
-   * @type String * ComponentTime -> String
-   */
+  date-pattern-to-int :
+    ( "MM"
+    , ComponentTime(Date(_, m, _), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "69,2,69,94")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "69,76,69,91")
+                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "69,76,69,86") ; month2index)
+                                                                                                                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "69,89,69,91")
+                                                                                                                        ; inc> m
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "69,2,69,94")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "69,2,69,94")
+             ; fail
 
-  /* month */
-  date-pattern-to-string : ("MMM",  ComponentTime(Date(_, m, _), _, _)) -> <month2abbr> m
-  date-pattern-to-string : ("MMMM", ComponentTime(Date(_, m, _), _, _)) -> <month2text> m
+  date-pattern-to-string :
+    ( "MMM"
+    , ComponentTime(Date(_, m, _), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "76,2,76,88")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "76,76,76,85") ; month2abbr> m
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "76,2,76,88")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "76,2,76,88")
+             ; fail
 
-  /**
-   * @type String * ComponentTime -> Int
-   */
-  /* day of */
-  date-pattern-to-int    : ("d",    ComponentTime(Date(_, _, d), _, _)) -> d
-  date-pattern-to-int    : ("dd",   ComponentTime(Date(_, _, d), _, _)) -> d
-  date-pattern-to-int    : ("D",    ComponentTime(_, _, Dupl(_, dy)))   -> dy
-  date-pattern-to-int    : ("DD",   ComponentTime(_, _, Dupl(_, dy)))   -> dy
+  date-pattern-to-string :
+    ( "MMMM"
+    , ComponentTime(Date(_, m, _), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "77,2,77,88")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "77,76,77,85") ; month2text> m
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "77,2,77,88")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "77,2,77,88")
+             ; fail
 
-  /**
-   * @type String * ComponentTime -> String
-   */
-  /* day of */
-  date-pattern-to-string : ("EEE",  ComponentTime(_, _, Dupl(dw, _)))   -> <day-of-week2abbr> dw
-  date-pattern-to-string : ("EEEE", ComponentTime(_, _, Dupl(dw, _)))   -> <day-of-week2text> dw
+  date-pattern-to-int :
+    ( "d"
+    , ComponentTime(Date(_, _, d), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "83,2,83,75")> d
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "83,2,83,75")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "83,2,83,75")
+             ; fail
 
-  /* am/pm marker */
-  date-pattern-to-string : ("a", ComponentTime(_, DayTime(h, _, _), _)) -> "a.m."
-      where <leq-lt> (0, h, 12)
+  date-pattern-to-int :
+    ( "dd"
+    , ComponentTime(Date(_, _, d), _, _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "84,2,84,75")> d
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "84,2,84,75")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "84,2,84,75")
+             ; fail
 
-  date-pattern-to-string : ("a", ComponentTime(_, DayTime(h, _, _), _)) -> "p.m."
-      where <leq-leq> (12, h, 23)
+  date-pattern-to-int :
+    ( "D"
+    , ComponentTime(_, _, Dupl(_, dy))
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "85,2,85,76")> dy
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "85,2,85,76")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "85,2,85,76")
+             ; fail
 
-  /**
-   * @type String * ComponentTime -> Int
-   */
-  /* hour */
-  date-pattern-to-int : ("HH", ComponentTime(_, DayTime(h, _, _), _)) -> h
-  date-pattern-to-int : ("kk", ComponentTime(_, DayTime(h, _, _), _)) -> <inc> h
-  date-pattern-to-int : ("hh", ComponentTime(_, DayTime(0, _, _), _)) -> 12
-  date-pattern-to-int : ("hh", ComponentTime(_, DayTime(h, _, _), _)) -> h
-      where <leq-leq> (1, h, 12)
+  date-pattern-to-int :
+    ( "DD"
+    , ComponentTime(_, _, Dupl(_, dy))
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "86,2,86,76")> dy
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "86,2,86,76")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "86,2,86,76")
+             ; fail
 
-  date-pattern-to-int : ("hh", ComponentTime(_, DayTime(h, _, _), _)) -> <subt> (h, 12)
-      where <leq-leq> (12, h, 23)
+  date-pattern-to-string :
+    ( "EEE"
+    , ComponentTime(_, _, Dupl(dw, _))
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "92,2,92,95")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "92,76,92,91") ; day-of-week2abbr> dw
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "92,2,92,95")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "92,2,92,95")
+             ; fail
 
-  date-pattern-to-int : ("KK", ComponentTime(_, DayTime(h, _, _), _)) -> h
-      where <leq-lt> (0, h, 12)
+  date-pattern-to-string :
+    ( "EEEE"
+    , ComponentTime(_, _, Dupl(dw, _))
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "93,2,93,95")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "93,76,93,91") ; day-of-week2text> dw
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "93,2,93,95")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "93,2,93,95")
+             ; fail
 
-  date-pattern-to-int : ("KK", ComponentTime(_, DayTime(h, _, _), _)) -> <subt> (h, 12)
-      where <leq-leq> (12, h, 23)
+  date-pattern-to-string :
+    ( "a"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "96,2,97,30")> "a.m."
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "96,2,97,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "96,2,97,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "97,12,97,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "97,13,97,18") ; leq-lt)> (0, h, 12)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "96,2,97,30")
+             ; fail
 
-  /* minutes */
-  date-pattern-to-int : ("mm", ComponentTime(_, DayTime(_, m, _), _)) -> m
+  date-pattern-to-string :
+    ( "a"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "99,2,100,32")> "p.m."
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "99,2,100,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "99,2,100,32")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "100,12,100,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "100,13,100,19") ; leq-leq)> (12, h, 23)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-string", "99,2,100,32")
+             ; fail
 
-  /* seconds */
-  date-pattern-to-int : ("ss", ComponentTime(_, DayTime(_, _, s), _)) -> s
+  date-pattern-to-int :
+    ( "HH"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "106,2,106,73")> h
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "106,2,106,73")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "106,2,106,73")
+             ; fail
 
-/**
- * Translate a day constructor to corresponding abbreviation.
- *
- * E.g. <day-of-week2abbr>Monday() => "Mon"      
- *
- * @type DayOfWeek -> String
- */
+  date-pattern-to-int :
+    ( "kk"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "107,2,107,79")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "107,74,107,76") ; inc> h
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "107,2,107,79")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "107,2,107,79")
+             ; fail
+
+  date-pattern-to-int :
+    ( "hh"
+    , ComponentTime(_, DayTime(0, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "108,2,108,74")> 12
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "108,2,108,74")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "108,2,108,74")
+             ; fail
+
+  date-pattern-to-int :
+    ( "hh"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "109,2,110,31")> h
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "109,2,110,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "109,2,110,31")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "110,12,110,31")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "110,13,110,19") ; leq-leq)> (1, h, 12)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "109,2,110,31")
+             ; fail
+
+  date-pattern-to-int :
+    ( "hh"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "112,2,113,32")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "112,74,112,77") ; subt> (h, 12)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "112,2,113,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "112,2,113,32")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "113,12,113,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "113,13,113,19") ; leq-leq)> (12, h, 23)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "112,2,113,32")
+             ; fail
+
+  date-pattern-to-int :
+    ( "KK"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "115,2,116,30")> h
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "115,2,116,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "115,2,116,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "116,12,116,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "116,13,116,18") ; leq-lt)> (0, h, 12)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "115,2,116,30")
+             ; fail
+
+  date-pattern-to-int :
+    ( "KK"
+    , ComponentTime(_, DayTime(h, _, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "118,2,119,32")> <s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "118,74,118,77") ; subt> (h, 12)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "118,2,119,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "118,2,119,32")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "119,12,119,32")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "119,13,119,19") ; leq-leq)> (12, h, 23)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "118,2,119,32")
+             ; fail
+
+  date-pattern-to-int :
+    ( "mm"
+    , ComponentTime(_, DayTime(_, m, _), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "122,2,122,73")> m
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "122,2,122,73")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "122,2,122,73")
+             ; fail
+
+  date-pattern-to-int :
+    ( "ss"
+    , ComponentTime(_, DayTime(_, _, s), _)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "125,2,125,73")> s
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "125,2,125,73")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "date-pattern-to-int", "125,2,125,73")
+             ; fail
+
+
 rules
-  day-of-week2abbr : Sunday()    -> "Sun"
-  day-of-week2abbr : Monday()    -> "Mon"
-  day-of-week2abbr : Tuesday()   -> "Tue"
-  day-of-week2abbr : Wednesday() -> "Wed"
-  day-of-week2abbr : Thursday()  -> "Thu"
-  day-of-week2abbr : Friday()    -> "Fri"
-  day-of-week2abbr : Saturday()  -> "Sat"
 
-/**
- * Translate a day constructor to a full text representation.
- *
- * E.g. <day-of-week2text>Tuesday() => "Tuesday"
- *
- * @type DayOfWeek -> String
- */
+  day-of-week2abbr :
+    Sunday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "135,2,135,40")> "Sun"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "135,2,135,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "135,2,135,40")
+             ; fail
+
+  day-of-week2abbr :
+    Monday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "136,2,136,40")> "Mon"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "136,2,136,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "136,2,136,40")
+             ; fail
+
+  day-of-week2abbr :
+    Tuesday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "137,2,137,40")> "Tue"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "137,2,137,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "137,2,137,40")
+             ; fail
+
+  day-of-week2abbr :
+    Wednesday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "138,2,138,40")> "Wed"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "138,2,138,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "138,2,138,40")
+             ; fail
+
+  day-of-week2abbr :
+    Thursday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "139,2,139,40")> "Thu"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "139,2,139,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "139,2,139,40")
+             ; fail
+
+  day-of-week2abbr :
+    Friday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "140,2,140,40")> "Fri"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "140,2,140,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "140,2,140,40")
+             ; fail
+
+  day-of-week2abbr :
+    Saturday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "141,2,141,40")> "Sat"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "141,2,141,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2abbr", "141,2,141,40")
+             ; fail
+
+
 rules
-  day-of-week2text : Sunday()    -> "Sunday"
-  day-of-week2text : Monday()    -> "Monday"
-  day-of-week2text : Tuesday()   -> "Tuesday"
-  day-of-week2text : Wednesday() -> "Wednesday"
-  day-of-week2text : Thursday()  -> "Thursday"
-  day-of-week2text : Friday()    -> "Friday"
-  day-of-week2text : Saturday()  -> "Saturday"
+
+  day-of-week2text :
+    Sunday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "151,2,151,43")> "Sunday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "151,2,151,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "151,2,151,43")
+             ; fail
+
+  day-of-week2text :
+    Monday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "152,2,152,43")> "Monday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "152,2,152,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "152,2,152,43")
+             ; fail
+
+  day-of-week2text :
+    Tuesday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "153,2,153,44")> "Tuesday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "153,2,153,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "153,2,153,44")
+             ; fail
+
+  day-of-week2text :
+    Wednesday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "154,2,154,46")> "Wednesday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "154,2,154,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "154,2,154,46")
+             ; fail
+
+  day-of-week2text :
+    Thursday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "155,2,155,45")> "Thursday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "155,2,155,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "155,2,155,45")
+             ; fail
+
+  day-of-week2text :
+    Friday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "156,2,156,43")> "Friday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "156,2,156,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "156,2,156,43")
+             ; fail
+
+  day-of-week2text :
+    Saturday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "157,2,157,45")> "Saturday"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "157,2,157,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "day-of-week2text", "157,2,157,45")
+             ; fail
 
 
-/**
- * Translate a month constructor to corresponding abbreviation.
- *
- * E.g. <month2abbr>September() => "Sep"
- *
- * @type Month -> String
- */
 rules
-  month2abbr : January()     -> "Jan"
-  month2abbr : February()    -> "Feb"
-  month2abbr : March()       -> "Mar"
-  month2abbr : April()       -> "Apr"
-  month2abbr : May()         -> "May"
-  month2abbr : June()        -> "Jun"
-  month2abbr : July()        -> "Jul"
-  month2abbr : August()      -> "Aug"
-  month2abbr : September()   -> "Sep"
-  month2abbr : October()     -> "Oct"
-  month2abbr : November()    -> "Nov"
-  month2abbr : December()    -> "Dec"
+
+  month2abbr :
+    January() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "168,2,168,36")> "Jan"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "168,2,168,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "168,2,168,36")
+             ; fail
+
+  month2abbr :
+    February() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "169,2,169,36")> "Feb"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "169,2,169,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "169,2,169,36")
+             ; fail
+
+  month2abbr :
+    March() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "170,2,170,36")> "Mar"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "170,2,170,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "170,2,170,36")
+             ; fail
+
+  month2abbr :
+    April() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "171,2,171,36")> "Apr"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "171,2,171,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "171,2,171,36")
+             ; fail
+
+  month2abbr :
+    May() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "172,2,172,36")> "May"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "172,2,172,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "172,2,172,36")
+             ; fail
+
+  month2abbr :
+    June() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "173,2,173,36")> "Jun"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "173,2,173,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "173,2,173,36")
+             ; fail
+
+  month2abbr :
+    July() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "174,2,174,36")> "Jul"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "174,2,174,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "174,2,174,36")
+             ; fail
+
+  month2abbr :
+    August() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "175,2,175,36")> "Aug"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "175,2,175,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "175,2,175,36")
+             ; fail
+
+  month2abbr :
+    September() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "176,2,176,36")> "Sep"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "176,2,176,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "176,2,176,36")
+             ; fail
+
+  month2abbr :
+    October() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "177,2,177,36")> "Oct"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "177,2,177,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "177,2,177,36")
+             ; fail
+
+  month2abbr :
+    November() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "178,2,178,36")> "Nov"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "178,2,178,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "178,2,178,36")
+             ; fail
+
+  month2abbr :
+    December() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "179,2,179,36")> "Dec"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "179,2,179,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2abbr", "179,2,179,36")
+             ; fail
 
 
-/**
- * Translate a month constructor to a full text representation.
- *
- * E.g. <month2text>September() => "September" 
- *
- * @type Month -> String
- */
 rules
-  month2text : January()     -> "January"
-  month2text : February()    -> "February"
-  month2text : March()       -> "March"
-  month2text : April()       -> "April"
-  month2text : May()         -> "May"
-  month2text : June()        -> "June"
-  month2text : July()        -> "July"
-  month2text : August()      -> "August"
-  month2text : September()   -> "September"
-  month2text : October()     -> "October"
-  month2text : November()    -> "November"
-  month2text : December()    -> "December"
 
+  month2text :
+    January() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "190,2,190,40")> "January"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "190,2,190,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "190,2,190,40")
+             ; fail
 
+  month2text :
+    February() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "191,2,191,41")> "February"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "191,2,191,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "191,2,191,41")
+             ; fail
+
+  month2text :
+    March() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "192,2,192,38")> "March"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "192,2,192,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "192,2,192,38")
+             ; fail
+
+  month2text :
+    April() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "193,2,193,38")> "April"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "193,2,193,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "193,2,193,38")
+             ; fail
+
+  month2text :
+    May() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "194,2,194,36")> "May"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "194,2,194,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "194,2,194,36")
+             ; fail
+
+  month2text :
+    June() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "195,2,195,37")> "June"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "195,2,195,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "195,2,195,37")
+             ; fail
+
+  month2text :
+    July() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "196,2,196,37")> "July"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "196,2,196,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "196,2,196,37")
+             ; fail
+
+  month2text :
+    August() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "197,2,197,39")> "August"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "197,2,197,39")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "197,2,197,39")
+             ; fail
+
+  month2text :
+    September() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "198,2,198,42")> "September"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "198,2,198,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "198,2,198,42")
+             ; fail
+
+  month2text :
+    October() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "199,2,199,40")> "October"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "199,2,199,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "199,2,199,40")
+             ; fail
+
+  month2text :
+    November() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "200,2,200,41")> "November"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "200,2,200,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "200,2,200,41")
+             ; fail
+
+  month2text :
+    December() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "201,2,201,41")> "December"
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "201,2,201,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/date-format.str", "month2text", "201,2,201,41")
+             ; fail

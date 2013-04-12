@@ -1,46 +1,110 @@
 module test57
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
-   constructors
-     Let : List(Dec) * List(Exp) -> Exp
-     Seq : Seq(Exp) -> Exp
-     Foo : Int -> Dec
-     Bar : Int -> Exp
+  constructors
+    Let : List(Dec) * List(Exp) -> Exp
+    Seq : Seq(Exp) -> Exp
+    Foo : Int -> Dec
+    Bar : Int -> Exp
+
 
 strategies
+  main-test57 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "main-test57", "13,3,28,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "14,5,28,7")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "14,6,14,24")
+        ; innermost(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "14,16,14,23") ; Simplify
+          ))> Seq(
+                [ Bar(1)
+                , Bar(2)
+                , Let(
+                    [Foo(3)]
+                  , [Bar(3)]
+                  )
+                , Bar(4)
+                , Let(
+                    [Foo(4)]
+                  , [Bar(5)]
+                  )
+                ]
+              )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "main-test57", "13,3,28,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "main-test57", "13,3,28,7")
+      ; fail
 
-   main-test57 =
-     <innermost(Simplify)>
-       Seq(
-         [ Bar(1)
-         , Bar(2)
-         , Let(
-             [Foo(3)]
-           , [Bar(3)]
-           )
-         , Bar(4)
-         , Let(
-             [Foo(4)]
-           , [Bar(5)]
-           )
-         ]
-       )
 
 rules
 
-   Simplify :
-    Seq(es1) -> Let(ds, es3)
-      where <one((Let(ds, es2) -> Seq(es2)))> es1 => es3
+  Simplify :
+    Seq(es1) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "32,3,34,55")> Let(ds, es3)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "32,3,34,55")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "32,3,34,55")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "34,12,34,55")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "34,12,34,48")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "34,13,34,43")
+                 ; one(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "34,17,34,42")
+                       ; ( Let(ds, es2) -> Seq(es2) )))> es1) => es3
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "32,3,34,55")
+             ; fail
 
-   Simplify :
-    Let(ds1, es1) -> Let(<conc> (ds1, ds2), es3)
-      where <one((Let(ds2, es2) -> Seq(es2)))> es1 => es3
+  Simplify :
+    Let(ds1, es1) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "36,3,38,56")> Let(
+                                                                                                                               <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "37,26,37,29") ; conc> (ds1, ds2)
+                                                                                                                             , es3
+                                                                                                                             )
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "36,3,38,56")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "36,3,38,56")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "38,12,38,56")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "38,12,38,49")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "38,13,38,44")
+                 ; one(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "38,17,38,43")
+                       ; ( Let(ds2, es2) -> Seq(es2) )))> es1) => es3
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "36,3,38,56")
+             ; fail
 
-   Simplify :
-    Let(ds, es1) -> Let(ds, es2)
-      where <some(?Seq(<id>)); flatten-list> es1 => es2
+  Simplify :
+    Let(ds, es1) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "40,3,42,54")> Let(ds, es2)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "40,3,42,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "40,3,42,54")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,12,42,54")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,12,42,47")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,13,42,42")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,13,42,28")
+                    ; some(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,18,42,27")
+                           ; ?Seq(
+                                <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,24,42,25") ; id>
+                              )))
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "42,31,42,42")
+                 ; flatten-list)> es1) => es2
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "40,3,42,54")
+             ; fail
 
-   Simplify :
-    Seq(es) -> Seq(es2)
-      where <some(?Seq(<id>)); flatten-list> es => es2
+  Simplify :
+    Seq(es) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "44,3,46,53")> Seq(es2)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "44,3,46,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "44,3,46,53")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,12,46,53")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,12,46,46")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,13,46,42")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,13,46,28")
+                    ; some(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,18,46,27")
+                           ; ?Seq(
+                                <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,24,46,25") ; id>
+                              )))
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "46,31,46,42")
+                 ; flatten-list)> es) => es2
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test57.str", "Simplify", "44,3,46,53")
+             ; fail

@@ -1,88 +1,287 @@
 module rename-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 strategies
+  main-rename-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "main-rename-test", "5,2,9,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "6,4,9,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "6,15,6,28")
+        ; !"rename-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "7,1,8,5")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "7,1,7,5") ; test1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "8,1,8,5")
+        ; test2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "main-rename-test", "5,2,9,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "main-rename-test", "5,2,9,4")
+      ; fail
 
-  main-rename-test = 
-    test-suite(!"rename-test",
-	test1;
-	test2
-    )
 
-// First example: untyped lambda calculus
 signature
-  sorts Exp
+  sorts
+    Exp
+
   constructors
     Abs : String * Exp -> Exp
     Var : String -> Exp
     App : Exp * Exp -> Exp
+
+
 rules
 
-  EBnd : Abs(x, e) -> [x]
+  EBnd :
+    Abs(x, e) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EBnd", "20,2,20,24")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EBnd", "20,2,20,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EBnd", "20,2,20,24")
+             ; fail
+
 
 strategies
-
-  is-evar(s) = Var(s)
+  is-evar(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "is-evar", "24,2,24,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "24,15,24,20")
+    ; Var(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "24,19,24,19") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "is-evar", "24,2,24,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "is-evar", "24,2,24,20")
+      ; fail
 
   EPaste(nwvars) =
-    Abs(nwvars; Hd, id)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EPaste", "26,2,27,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "27,4,27,22")
+    ; Abs(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "27,8,27,17")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "27,8,27,13") ; nwvars)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "27,16,27,17")
+        ; Hd
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "27,20,27,21") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EPaste", "26,2,27,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EPaste", "26,2,27,22")
+      ; fail
 
-  EBoundIn(bndvars, ubndvars,ignore) =
-    Abs(ignore, bndvars)
+  EBoundIn(bndvars, ubndvars, ignore) =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EBoundIn", "29,2,30,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "30,4,30,23")
+    ; Abs(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "30,8,30,13") ; ignore
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "30,16,30,22") ; bndvars
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EBoundIn", "29,2,30,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "EBoundIn", "29,2,30,23")
+      ; fail
 
-  erename = 
-    rename(is-evar, EBnd, EBoundIn, EPaste)
+  erename =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "erename", "32,2,33,42")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "33,4,33,42")
+    ; rename(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "33,11,33,17") ; is-evar
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "33,20,33,23") ; EBnd
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "33,26,33,33") ; EBoundIn
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "33,36,33,41") ; EPaste
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "erename", "32,2,33,42")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "erename", "32,2,33,42")
+      ; fail
+
 
 strategies
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "test1", "37,3,42,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "38,5,42,1")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "38,21,38,28")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "39,3,39,9") ; erename
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "40,3,40,36")
+        ; !App(
+             Abs("x", Var("x"))
+           , Var("x")
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,3,41,65")
+        ; {s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,4,41,64")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,4,41,35")
+              ; ?App(
+                   Abs(a_0, Var(a_0))
+                 , Var("x")
+                 ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,38,41,64")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,44,41,63")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,45,41,51")
+                       ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "41,49,41,50") ; eq))> (a_0, "x"))}
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "test1", "37,3,42,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "test1", "37,3,42,1")
+      ; fail
 
-   test1 = 
-     apply-and-check(!"test1"
-	, erename
-	, !App(Abs("x", Var("x")), Var("x"))
-	, {?App(Abs(a_0,Var(a_0)),Var("x")); where(<not(eq)> (a_0, "x"))}
-	)
 
-
-// Second example: typed lambda calculus
 signature
-  sorts Exp
+  sorts
+    Exp
+
   constructors
     Abs    : String * Type * Exp -> Exp
     Var    : String * Type -> Exp
     Letrec : List(Fdec) * Exp -> Exp
     Fdec   : String * Type * Exp -> Fdec
+
+
 rules
 
-  TBnd : Abs(x, t, e) -> [x]
-  TBnd : Letrec(fdecs, e) -> <map(Name)> fdecs
+  TBnd :
+    Abs(x, t, e) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBnd", "55,2,55,27")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBnd", "55,2,55,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBnd", "55,2,55,27")
+             ; fail
 
-  Name : Fdec(f, t, e) -> f
+  TBnd :
+    Letrec(fdecs, e) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBnd", "56,2,56,45")> <s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "56,30,56,38")
+                                                                                                                    ; map(
+                                                                                                                        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "56,34,56,37") ; Name
+                                                                                                                      )> fdecs
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBnd", "56,2,56,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBnd", "56,2,56,45")
+             ; fail
+
+  Name :
+    Fdec(f, t, e) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "Name", "58,2,58,26")> f
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "Name", "58,2,58,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "Name", "58,2,58,26")
+             ; fail
+
 
 strategies
-
-  is-var(s) = Var(debug; s; debug, id)
+  is-var(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "is-var", "62,2,62,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,14,62,37")
+    ; Var(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,18,62,32")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,18,62,22") ; debug)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,25,62,32")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,25,62,25") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,28,62,32")
+        ; debug
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "62,35,62,36") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "is-var", "62,2,62,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "is-var", "62,2,62,37")
+      ; fail
 
   TBoundIn(bndvars, ubndvars, ignore) =
-    Abs(ignore, ignore, bndvars) +
-    Letrec(bndvars, bndvars)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBoundIn", "64,2,66,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "65,4,66,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "65,4,65,31")
+       ; Abs(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "65,8,65,13") ; ignore
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "65,16,65,21") ; ignore
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "65,24,65,30") ; bndvars
+         )
+       + s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "66,4,66,27")
+         ; Letrec(
+             s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "66,11,66,17") ; bndvars
+           , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "66,20,66,26") ; bndvars
+           ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBoundIn", "64,2,66,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TBoundIn", "64,2,66,27")
+      ; fail
 
-  TPaste(nwvars) = debug; (
-    Abs(nwvars; Hd, id, id) +
-    Letrec(split(id,nwvars); zip(PasteFdec), id)
-  ); debug
+  TPaste(nwvars) =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TPaste", "68,2,71,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "68,19,71,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "68,19,68,23") ; debug)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "68,26,71,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,4,70,47")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,4,69,26")
+          ; Abs(
+              s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,8,69,17")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,8,69,13") ; nwvars)
+              ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,16,69,17")
+              ; Hd
+            , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,20,69,21") ; id
+            , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "69,24,69,25") ; id
+            )
+          + s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,4,70,47")
+            ; Letrec(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,11,70,42")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,11,70,26")
+                   ; split(
+                       s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,17,70,18") ; id
+                     , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,20,70,25") ; nwvars
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,29,70,42")
+                ; zip(
+                    s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,33,70,41") ; PasteFdec
+                  )
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "70,45,70,46") ; id
+              )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "71,5,71,9")
+    ; debug
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TPaste", "68,2,71,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "TPaste", "68,2,71,9")
+      ; fail
 
-  PasteFdec : 
-    (Fdec(f, t, e), g) -> Fdec(g, t, e)
+  PasteFdec :
+    (Fdec(f, t, e), g) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "PasteFdec", "73,2,74,38")> Fdec(g, t, e)
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "PasteFdec", "73,2,74,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "PasteFdec", "73,2,74,38")
+             ; fail
 
-  trename = 
-    rename(is-var, TBnd, TBoundIn, TPaste)
+  trename =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "trename", "76,2,77,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "77,4,77,41")
+    ; rename(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "77,11,77,16") ; is-var
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "77,19,77,22") ; TBnd
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "77,25,77,32") ; TBoundIn
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "77,35,77,40") ; TPaste
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "trename", "76,2,77,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "trename", "76,2,77,41")
+      ; fail
 
 
-//  Tests
 strategies
-
-   test2 = 
-     apply-and-check(!"test2"
-	, trename
-	, !App(Abs("x",   "a", Var("x",   "a")), Var("x", "a"))
-	, {?App(Abs(b_0, "a", Var(b_0, "a")), Var("x", "a")); where(<not(eq)> (b_0, "a"))}
-	)
+  test2 =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "test2", "83,3,88,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "84,5,88,1")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "84,21,84,28")
+        ; !"test2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "85,3,85,9") ; trename
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "86,3,86,55")
+        ; !App(
+             Abs(
+               "x"
+             , "a"
+             , Var("x", "a")
+             )
+           , Var("x", "a")
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,3,87,82")
+        ; {s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,4,87,81")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,4,87,52")
+              ; ?App(
+                   Abs(
+                     b_0
+                   , "a"
+                   , Var(b_0, "a")
+                   )
+                 , Var("x", "a")
+                 ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,55,87,81")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,61,87,80")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,62,87,68")
+                       ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "87,66,87,67") ; eq))> (b_0, "a"))}
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "test2", "83,3,88,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/rename-test.str", "test2", "83,3,88,1")
+      ; fail

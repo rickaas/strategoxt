@@ -1,29 +1,82 @@
 module test22
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
-    Foo: String -> Fnord
-    Bar: String * String -> Fnord
+    Foo : String -> Fnord
+    Bar : String * String -> Fnord
+
 
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "main", "10,2,13,17")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "11,4,13,17")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "11,4,11,14")
+       ; !Foo("uck"))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "12,6,13,17")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "12,6,12,17")
+       ; check(
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "12,12,12,16") ; test1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "13,6,13,17")
+    ; check(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "13,12,13,16") ; test3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "main", "10,2,13,17")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "main", "10,2,13,17")
+      ; fail
 
-  main = 
-    !Foo("uck")
-    ; check(test1)
-    ; check(test3)
-
-  check(s) = 
-  where( debug(!"doing test on: ")
-  ; s
-  ; debug (!"succeeded with: ")
-  <+ say (!"failed")
-  )
+  check(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "check", "15,2,20,2")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "16,2,20,2")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "16,9,19,19")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "16,9,18,30")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "16,9,16,33")
+                  ; debug(
+                      s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "16,15,16,32")
+                      ; !"doing test on: "
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "17,4,18,30")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "17,4,17,4") ; s)
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "18,4,18,30")
+               ; debug(
+                   s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "18,11,18,29")
+                   ; !"succeeded with: "
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "19,5,19,19")
+                  ; say(
+                      s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "19,10,19,18")
+                      ; !"failed"
+                    )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "check", "15,2,20,2")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "check", "15,2,20,2")
+      ; fail
 
   test1 :
-    Foo(a) -> Bar(a,"B")
+    Foo(a) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test1", "22,2,23,23")> Bar(a, "B")
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test1", "22,2,23,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test1", "22,2,23,23")
+             ; fail
 
   test3 :
-    Foo(a) -> Foo(a)
-    where !"bla"
-	; debug(!"tekst: ")
-
+    Foo(a) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test3", "25,2,28,19")> Foo(a)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test3", "25,2,28,19")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test3", "25,2,28,19")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "27,10,28,19")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "27,10,27,15")
+             ; !"bla")
+          ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "28,3,28,19")
+          ; debug(
+              s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "28,9,28,18")
+              ; !"tekst: "
+            )
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test22.str", "test3", "25,2,28,19")
+             ; fail

@@ -1,98 +1,192 @@
-/**
- * @author  Martin Bravenboer
- */
 module stratego/aterm/Explode
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   ATerms
   libstratego-lib
 
-strategies
 
+strategies
   explode-aterm =
-       aterm-explode-annotated
-    <+ aterm-explode-list
-    <+ aterm-explode-int
-    <+ aterm-explode-fun
-    <+ aterm-explode-appl
+    s-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "explode-aterm", "11,2,16,24")
+    ; s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "12,7,16,24")
+    ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "12,7,12,29") ; aterm-explode-annotated
+       <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "13,7,16,24")
+          ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "13,7,13,24") ; aterm-explode-list
+             <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "14,7,16,24")
+                ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "14,7,14,23") ; aterm-explode-int
+                   <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "15,7,16,24")
+                      ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "15,7,15,23") ; aterm-explode-fun
+                         <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "16,7,16,24") ; aterm-explode-appl))))
+    < s-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "explode-aterm", "11,2,16,24")
+    + s-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "explode-aterm", "11,2,16,24")
+      ; fail
 
   implode-aterm =
-       aterm-implode-annotated
-    <+ aterm-implode-list
-    <+ aterm-implode-int
-    <+ aterm-implode-fun
-    <+ aterm-implode-appl
+    s-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "implode-aterm", "18,2,23,24")
+    ; s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "19,7,23,24")
+    ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "19,7,19,29") ; aterm-implode-annotated
+       <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "20,7,23,24")
+          ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "20,7,20,24") ; aterm-implode-list
+             <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "21,7,23,24")
+                ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "21,7,21,23") ; aterm-implode-int
+                   <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "22,7,23,24")
+                      ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "22,7,22,23") ; aterm-implode-fun
+                         <+ s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "23,7,23,24") ; aterm-implode-appl))))
+    < s-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "implode-aterm", "18,2,23,24")
+    + s-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "implode-aterm", "18,2,23,24")
+      ; fail
+
 
 rules
 
-  /**
-   * list
-   */
   aterm-explode-list :
-    [x*]{} -> list(<map(explode-aterm)> x*)
+    [x*]{} -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-list", "30,2,31,42")> list(
+                                                                                                                                    <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "31,20,31,37")
+                                                                                                                                     ; map(
+                                                                                                                                         s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "31,24,31,36") ; explode-aterm
+                                                                                                                                       )> x*
+                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-list", "30,2,31,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-list", "30,2,31,42")
+             ; fail
 
   aterm-implode-list :
-    list(x*) -> <map(implode-aterm)> x*
+    list(x*) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-list", "33,2,34,38")> <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "34,17,34,34")
+                                                                                                                                     ; map(
+                                                                                                                                         s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "34,21,34,33") ; implode-aterm
+                                                                                                                                       )> x*
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-list", "33,2,34,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-list", "33,2,34,38")
+             ; fail
 
-  /**
-   * integer
-   */
   aterm-explode-int :
-    i{} -> int(natural(<int-to-string> i))
-    where
-      <is-int> i
+    i{} -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-int", "39,2,42,15")> int(
+                                                                                                                                natural(
+                                                                                                                                  <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "40,24,40,36") ; int-to-string> i
+                                                                                                                                )
+                                                                                                                              )
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-int", "39,2,42,15")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-int", "39,2,42,15")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "42,6,42,15")
+          ; <(s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "42,7,42,12") ; is-int)> i
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-int", "39,2,42,15")
+             ; fail
 
   aterm-implode-int :
-    int(natural(s)) -> <string-to-int> s
+    int(natural(s)) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-int", "44,2,45,39")> <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "45,24,45,36") ; string-to-int> s
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-int", "44,2,45,39")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-int", "44,2,45,39")
+             ; fail
 
-  /**
-   * just fun
-   */
   aterm-explode-fun :
-    s#([]){} -> fun(<aterm-explode-afun> s)
+    s#([]){} -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-fun", "50,2,51,42")> fun(
+                                                                                                                                     <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "51,21,51,38") ; aterm-explode-afun> s
+                                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-fun", "50,2,51,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-fun", "50,2,51,42")
+             ; fail
 
   aterm-implode-fun :
-    fun(s1) -> s2#([])
-    where
-      <aterm-implode-afun> s1 => s2
+    fun(s1) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-fun", "53,2,56,34")> s2#([])
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-fun", "53,2,56,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-fun", "53,2,56,34")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "56,6,56,34")
+          ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "56,6,56,28")
+             ; <(s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "56,7,56,24") ; aterm-implode-afun)> s1) => s2
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-fun", "53,2,56,34")
+             ; fail
 
-  /**
-   * appl
-   */
   aterm-explode-appl :
-    s#([x*]){} -> appl(<aterm-explode-afun> s, <map(explode-aterm)> x*)
+    s#([x*]){} -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-appl", "61,2,62,70")> appl(
+                                                                                                                                        <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "62,24,62,41") ; aterm-explode-afun> s
+                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "62,48,62,65")
+                                                                                                                                         ; map(
+                                                                                                                                             s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "62,52,62,64") ; explode-aterm
+                                                                                                                                           )> x*
+                                                                                                                                      )
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-appl", "61,2,62,70")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-appl", "61,2,62,70")
+             ; fail
 
   aterm-implode-appl :
-    appl(s1, x*) -> s2#(<map(implode-aterm)> x*)
-    where
-      <aterm-implode-afun> s1 => s2
+    appl(s1, x*) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-appl", "64,2,67,34")> s2#(<s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "65,25,65,42")
+                                                                                                                                             ; map(
+                                                                                                                                                 s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "65,29,65,41") ; implode-aterm
+                                                                                                                                               )> x*)
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-appl", "64,2,67,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-appl", "64,2,67,34")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "67,6,67,34")
+          ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "67,6,67,28")
+             ; <(s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "67,7,67,24") ; aterm-implode-afun)> s1) => s2
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-appl", "64,2,67,34")
+             ; fail
 
-  /**
-   * afun
-   */
   aterm-explode-afun :
-    s -> unquoted(s)
-    where
-      <not(is-double-quoted)> s
+    s -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "72,2,75,30")> unquoted(s)
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "72,2,75,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "72,2,75,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "75,6,75,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "75,7,75,27")
+              ; not(s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "75,11,75,26") ; is-double-quoted))> s
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "72,2,75,30")
+             ; fail
 
   aterm-explode-afun :
-    s -> quoted(s)
-    where
-      <is-double-quoted> s
+    s -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "77,2,80,25")> quoted(s)
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "77,2,80,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "77,2,80,25")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "80,6,80,25")
+          ; <(s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "80,7,80,22") ; is-double-quoted)> s
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-afun", "77,2,80,25")
+             ; fail
 
   aterm-implode-afun :
-    unquoted(s) -> s
+    unquoted(s) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-afun", "82,2,83,19")> s
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-afun", "82,2,83,19")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-afun", "82,2,83,19")
+             ; fail
 
   aterm-implode-afun :
-    quoted(s) -> s
+    quoted(s) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-afun", "85,2,86,17")> s
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-afun", "85,2,86,17")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-afun", "85,2,86,17")
+             ; fail
 
-  /**
-   * Anotations
-   */
   aterm-explode-annotated :
-    t{^as@[_ | _]} -> annotated(<explode-aterm> t{}, default(<map(explode-aterm)> as))
+    t{^as@[_|_]} -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-annotated", "91,2,92,85")> annotated(
+                                                                                                                                               <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "92,33,92,45") ; explode-aterm> t{}
+                                                                                                                                             , default(
+                                                                                                                                                 <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "92,62,92,79")
+                                                                                                                                                  ; map(
+                                                                                                                                                      s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "92,66,92,78") ; explode-aterm
+                                                                                                                                                    )> as
+                                                                                                                                               )
+                                                                                                                                             )
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-annotated", "91,2,92,85")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-explode-annotated", "91,2,92,85")
+             ; fail
 
   aterm-implode-annotated :
-    annotated(t, default(ts)) -> t'{^ts'}
-    where 
-      t'  := <implode-aterm> t
-    ; ts' := <map(implode-aterm)> ts
+    annotated(t, default(ts)) -> <r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-annotated", "94,2,98,35")> t'{^ts'}
+    where r-enter(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-annotated", "94,2,98,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-annotated", "94,2,98,35")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "97,6,98,35")
+          ; (s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "97,6,97,29")
+             ; t' := <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "97,14,97,26") ; implode-aterm> t)
+          ; s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "98,6,98,35")
+          ; ts' := <s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "98,14,98,31")
+                    ; map(
+                        s-step(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "98,18,98,30") ; implode-aterm
+                      )> ts
+          <+ r-exit(|"strategoxt/stratego-libraries/aterm/lib/stratego/aterm/Explode.str", "aterm-implode-annotated", "94,2,98,35")
+             ; fail

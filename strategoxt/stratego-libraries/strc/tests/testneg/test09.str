@@ -1,8 +1,19 @@
 module test09
 
-imports collection/list/cons  collection/tuple/cons 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
 
 strategies
-
   main =
-    !(_, 1)
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test09.str", "main", "7,2,8,10")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test09.str", "8,4,8,10")
+    ; !(_, 1)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test09.str", "main", "7,2,8,10")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test09.str", "main", "7,2,8,10")
+      ; fail

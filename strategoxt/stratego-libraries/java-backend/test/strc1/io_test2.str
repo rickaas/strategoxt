@@ -1,8 +1,25 @@
 module io-test2
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
-  main-io_test2 = 
-    <conc>(<id>, ["-i", "io-test10.in", "-o", "io-test10.out"])
-    ; io-wrap(id)
+  main-io_test2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "main-io_test2", "6,2,8,16")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "7,4,8,16")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "7,4,7,62")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "7,5,7,8") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "7,12,7,13") ; id>
+                                                                                                             , ["-i", "io-test10.in", "-o", "io-test10.out"]
+                                                                                                             ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "8,6,8,16")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "8,14,8,15") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "main-io_test2", "6,2,8,16")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/io_test2.str", "main-io_test2", "6,2,8,16")
+      ; fail

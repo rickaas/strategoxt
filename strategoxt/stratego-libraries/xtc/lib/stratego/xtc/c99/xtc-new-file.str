@@ -1,18 +1,28 @@
-/**
- * Used for C99 and POSIX.
- */
 module stratego/xtc/c99/xtc-new-file
-strategies
 
-  /**
-   * Creates a new and unique scoped temporary file.
-   *
-   * @type _ -> String
-   */
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   xtc-new-file =
-    f := <tmpnam>
-    ; where(
-        stream := <fopen> (f, "w")
-      ; <assert(!TempFiles())> (f, ())
-      ; <fclose> stream
-      )
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "xtc-new-file", "12,2,18,6")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "13,4,18,6")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "13,4,13,16")
+       ; f := <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "13,10,13,15") ; tmpnam>)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "14,6,18,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "15,8,17,22")
+            ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "15,8,15,33")
+               ; stream := <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "15,19,15,23") ; fopen> (f, "w"))
+            ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "16,8,17,22")
+            ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "16,8,16,37")
+               ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "16,9,16,28")
+                   ; assert(
+                       s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "16,16,16,27")
+                       ; !TempFiles()
+                     ))> (f, ()))
+            ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "17,8,17,22")
+            ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "17,9,17,14") ; fclose)> stream)
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "xtc-new-file", "12,2,18,6")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/c99/xtc-new-file.str", "xtc-new-file", "12,2,18,6")
+      ; fail

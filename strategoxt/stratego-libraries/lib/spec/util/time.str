@@ -1,22 +1,22 @@
-/**
- * The primitive \verb|dtime| returns the CPU time in seconds
- * since the last call to \verb|dtime|. Can be used to time
- * strategies.
- */
 module util/time
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   system/io/file
   util/log
+
 
 signature
   constructors
     EpochTime     : Int -> EpochTime
-
     ComponentTime : Date * DayTime * ComponentTimeDupl -> ComponentTime
-    DayTime       : Int * Int * Int -> DayTime // Hours, Minutes, Seconds
-    Date          : Int * Month * Int -> Date    // Year, DayOfMonth
-    Dupl          : Int * Int -> ComponentTimeDupl // DayOfWeek, DayOfYear
-   
+    DayTime       : Int * Int * Int -> DayTime
+    Date          : Int * Month * Int -> Date
+    Dupl          : Int * Int -> ComponentTimeDupl
+
   constructors
     January   : Month
     February  : Month
@@ -39,141 +39,396 @@ signature
     Thursday  : DayOfWeek
     Friday    : DayOfWeek
     Saturday  : DayOfWeek
-  
+
+
 strategies
+  time =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "time", "49,2,50,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "50,4,50,19")
+    ; prim("SSL_time")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "time", "49,2,50,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "time", "49,2,50,19")
+      ; fail
 
- /**
-  * Strategy time returns the time since the Epoch (00:00:00 UTC, January 1, 1970), 
-  * measured in seconds. It is an alias of now-epoch-time.
-  */
-  time = 
-    prim("SSL_time")
-
-  // :: _ -> EpochTime
   now-epoch-time =
-    prim("SSL_now_epoch_time"); !EpochTime(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-epoch-time", "53,2,54,47")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "54,4,54,47")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "54,4,54,29") ; prim("SSL_now_epoch_time"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "54,32,54,47")
+    ; !EpochTime(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "54,44,54,45") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-epoch-time", "53,2,54,47")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-epoch-time", "53,2,54,47")
+      ; fail
 
-  // :: _ -> ComponentTime
   now-local-time =
-      now-epoch-time; epoch2local-time
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-local-time", "57,2,58,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "58,6,58,37")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "58,6,58,19") ; now-epoch-time)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "58,22,58,37")
+    ; epoch2local-time
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-local-time", "57,2,58,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-local-time", "57,2,58,37")
+      ; fail
 
-  // :: _ -> ComponentTime
   now-UTC =
-      now-epoch-time; epoch2UTC
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-UTC", "61,2,62,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "62,6,62,30")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "62,6,62,19") ; now-epoch-time)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "62,22,62,30")
+    ; epoch2UTC
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-UTC", "61,2,62,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "now-UTC", "61,2,62,30")
+      ; fail
 
-  // :: EpochTime -> ComponentTime
   epoch2local-time =
-    ?EpochTime(t); prim("SSL_epoch2localtime", t); prim-tuple-to-ComponentTime
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2local-time", "65,2,66,77")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "66,4,66,77")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "66,4,66,16")
+       ; ?EpochTime(t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "66,19,66,77")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "66,19,66,48")
+       ; prim("SSL_epoch2localtime", t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "66,51,66,77")
+    ; prim-tuple-to-ComponentTime
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2local-time", "65,2,66,77")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2local-time", "65,2,66,77")
+      ; fail
 
-  // :: EpochTime -> ComponentTime
   epoch2utc =
-    ?EpochTime(t); prim("SSL_epoch2UTC", t); prim-tuple-to-ComponentTime
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2utc", "69,2,70,71")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "70,4,70,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "70,4,70,16")
+       ; ?EpochTime(t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "70,19,70,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "70,19,70,42")
+       ; prim("SSL_epoch2UTC", t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "70,45,70,71")
+    ; prim-tuple-to-ComponentTime
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2utc", "69,2,70,71")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2utc", "69,2,70,71")
+      ; fail
 
   epoch2UTC =
-    ?EpochTime(t); prim("SSL_epoch2UTC", t); prim-tuple-to-ComponentTime
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2UTC", "72,2,73,71")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "73,4,73,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "73,4,73,16")
+       ; ?EpochTime(t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "73,19,73,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "73,19,73,42")
+       ; prim("SSL_epoch2UTC", t))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "73,45,73,71")
+    ; prim-tuple-to-ComponentTime
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2UTC", "72,2,73,71")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "epoch2UTC", "72,2,73,71")
+      ; fail
 
-  // :: ComponentTime -> DayTime
   just-day-time =
-    ?ComponentTime(_, <id>, _)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "just-day-time", "76,2,77,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "77,4,77,29")
+    ; ?ComponentTime(
+         _
+       , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "77,23,77,24") ; id>
+       , _
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "just-day-time", "76,2,77,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "just-day-time", "76,2,77,29")
+      ; fail
 
-  // :: ComponentTime -> Date
   just-date =
-    ?ComponentTime(<id>, _, _)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "just-date", "80,2,81,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "81,4,81,29")
+    ; ?ComponentTime(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "81,20,81,21") ; id>
+       , _
+       , _
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "just-date", "80,2,81,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "just-date", "80,2,81,29")
+      ; fail
 
-  prim-tuple-to-ComponentTime:
-    (s, mi, h, dm, mo, y, dw, dy)
-      ->
-    ComponentTime(Date(y, <index2month> mo, dm), DayTime(h, mi, s) , Dupl(<index2day-of-week> dw, dy))
+  prim-tuple-to-ComponentTime :
+    ( s
+    , mi
+    , h
+    , dm
+    , mo
+    , y
+    , dw
+    , dy
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "prim-tuple-to-ComponentTime", "83,2,86,101")> ComponentTime(
+                                                                                                                           Date(
+                                                                                                                             y
+                                                                                                                           , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "86,27,86,37") ; index2month> mo
+                                                                                                                           , dm
+                                                                                                                           )
+                                                                                                                         , DayTime(h, mi, s)
+                                                                                                                         , Dupl(
+                                                                                                                             <s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "86,75,86,91") ; index2day-of-week> dw
+                                                                                                                           , dy
+                                                                                                                           )
+                                                                                                                         )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "prim-tuple-to-ComponentTime", "83,2,86,101")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "prim-tuple-to-ComponentTime", "83,2,86,101")
+             ; fail
 
 
-/**
- * Translates a day index into the corresponding day constructor. Sunday is the beginning
- * of the week, starting with day 0.
- *
- * E.g. 
- * <index2day-of-week>0 => Sunday()
- * <index2day-of-week>6 => Saturday()
- */
 rules
-  // :: Int -> DayOfWeek
-  index2day-of-week : 0 -> Sunday()
-  index2day-of-week : 1 -> Monday()   
-  index2day-of-week : 2 -> Tuesday() 
-  index2day-of-week : 3 -> Wednesday()
-  index2day-of-week : 4 -> Thursday()
-  index2day-of-week : 5 -> Friday()
-  index2day-of-week : 6 -> Saturday()
 
-/**
- * Translates a day constructor into the corresponding day index. Sunday is the beginning
- * of the week, starting with day 0.
- *
- * E.g.
- * <day-of-week2index>Sunday()    => 0
- * <day-of-week2index>Wednesday() => 3
- */
-rules
-  // :: DayOfWeek -> Int
-  day-of-week2index : Sunday()    -> 0
-  day-of-week2index : Monday()    -> 1
-  day-of-week2index : Tuesday()   -> 2
-  day-of-week2index : Wednesday() -> 3
-  day-of-week2index : Thursday()  -> 4
-  day-of-week2index : Friday()    -> 5
-  day-of-week2index : Saturday()  -> 6
+  index2day-of-week :
+    0 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "99,2,99,34")> Sunday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "99,2,99,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "99,2,99,34")
+             ; fail
 
-/**
- * Translates a month constructor into the corresponding month index. The year
- * starts with January which has index 0.
- * 
- * E.g. 
- * <month2index>January()   => 0
- * <month2index>September() => 8
- */
-rules
-  // :: Month -> Int
-  month2index : January()     ->  0
-  month2index : February()    ->  1
-  month2index : March()       ->  2
-  month2index : April()       ->  3
-  month2index : May()         ->  4
-  month2index : June()        ->  5
-  month2index : July()        ->  6
-  month2index : August()      ->  7
-  month2index : September()   ->  8
-  month2index : October()     ->  9
-  month2index : November()    -> 10
-  month2index : December()    -> 11
+  index2day-of-week :
+    1 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "100,2,100,34")> Monday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "100,2,100,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "100,2,100,34")
+             ; fail
 
-/**
- * Translates a month index into the corresponding month constructor. The year 
- * starts with January which has index 0.
- *
- * E.g.
- * <index2month>0  => January()
- * <index2month>10 => November()
- */
+  index2day-of-week :
+    2 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "101,2,101,35")> Tuesday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "101,2,101,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "101,2,101,35")
+             ; fail
+
+  index2day-of-week :
+    3 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "102,2,102,37")> Wednesday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "102,2,102,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "102,2,102,37")
+             ; fail
+
+  index2day-of-week :
+    4 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "103,2,103,36")> Thursday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "103,2,103,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "103,2,103,36")
+             ; fail
+
+  index2day-of-week :
+    5 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "104,2,104,34")> Friday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "104,2,104,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "104,2,104,34")
+             ; fail
+
+  index2day-of-week :
+    6 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "105,2,105,36")> Saturday()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "105,2,105,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2day-of-week", "105,2,105,36")
+             ; fail
+
+
 rules
-  // :: Int -> Month
-  index2month : 0  -> January() 
-  index2month : 1  -> February()
-  index2month : 2  -> March()   
-  index2month : 3  -> April()   
-  index2month : 4  -> May()     
-  index2month : 5  -> June()    
-  index2month : 6  -> July()    
-  index2month : 7  -> August()  
-  index2month : 8  -> September() 
-  index2month : 9  -> October()   
-  index2month : 10 -> November()  
-  index2month : 11 -> December()
+
+  day-of-week2index :
+    Sunday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "117,2,117,37")> 0
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "117,2,117,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "117,2,117,37")
+             ; fail
+
+  day-of-week2index :
+    Monday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "118,2,118,37")> 1
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "118,2,118,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "118,2,118,37")
+             ; fail
+
+  day-of-week2index :
+    Tuesday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "119,2,119,37")> 2
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "119,2,119,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "119,2,119,37")
+             ; fail
+
+  day-of-week2index :
+    Wednesday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "120,2,120,37")> 3
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "120,2,120,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "120,2,120,37")
+             ; fail
+
+  day-of-week2index :
+    Thursday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "121,2,121,37")> 4
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "121,2,121,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "121,2,121,37")
+             ; fail
+
+  day-of-week2index :
+    Friday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "122,2,122,37")> 5
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "122,2,122,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "122,2,122,37")
+             ; fail
+
+  day-of-week2index :
+    Saturday() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "123,2,123,37")> 6
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "123,2,123,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "day-of-week2index", "123,2,123,37")
+             ; fail
+
+
+rules
+
+  month2index :
+    January() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "135,2,135,34")> 0
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "135,2,135,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "135,2,135,34")
+             ; fail
+
+  month2index :
+    February() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "136,2,136,34")> 1
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "136,2,136,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "136,2,136,34")
+             ; fail
+
+  month2index :
+    March() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "137,2,137,34")> 2
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "137,2,137,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "137,2,137,34")
+             ; fail
+
+  month2index :
+    April() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "138,2,138,34")> 3
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "138,2,138,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "138,2,138,34")
+             ; fail
+
+  month2index :
+    May() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "139,2,139,34")> 4
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "139,2,139,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "139,2,139,34")
+             ; fail
+
+  month2index :
+    June() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "140,2,140,34")> 5
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "140,2,140,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "140,2,140,34")
+             ; fail
+
+  month2index :
+    July() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "141,2,141,34")> 6
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "141,2,141,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "141,2,141,34")
+             ; fail
+
+  month2index :
+    August() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "142,2,142,34")> 7
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "142,2,142,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "142,2,142,34")
+             ; fail
+
+  month2index :
+    September() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "143,2,143,34")> 8
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "143,2,143,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "143,2,143,34")
+             ; fail
+
+  month2index :
+    October() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "144,2,144,34")> 9
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "144,2,144,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "144,2,144,34")
+             ; fail
+
+  month2index :
+    November() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "145,2,145,34")> 10
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "145,2,145,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "145,2,145,34")
+             ; fail
+
+  month2index :
+    December() -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "146,2,146,34")> 11
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "146,2,146,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "month2index", "146,2,146,34")
+             ; fail
+
+
+rules
+
+  index2month :
+    0 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "158,2,158,30")> January()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "158,2,158,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "158,2,158,30")
+             ; fail
+
+  index2month :
+    1 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "159,2,159,31")> February()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "159,2,159,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "159,2,159,31")
+             ; fail
+
+  index2month :
+    2 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "160,2,160,28")> March()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "160,2,160,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "160,2,160,28")
+             ; fail
+
+  index2month :
+    3 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "161,2,161,28")> April()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "161,2,161,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "161,2,161,28")
+             ; fail
+
+  index2month :
+    4 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "162,2,162,26")> May()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "162,2,162,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "162,2,162,26")
+             ; fail
+
+  index2month :
+    5 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "163,2,163,27")> June()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "163,2,163,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "163,2,163,27")
+             ; fail
+
+  index2month :
+    6 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "164,2,164,27")> July()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "164,2,164,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "164,2,164,27")
+             ; fail
+
+  index2month :
+    7 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "165,2,165,29")> August()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "165,2,165,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "165,2,165,29")
+             ; fail
+
+  index2month :
+    8 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "166,2,166,32")> September()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "166,2,166,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "166,2,166,32")
+             ; fail
+
+  index2month :
+    9 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "167,2,167,30")> October()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "167,2,167,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "167,2,167,30")
+             ; fail
+
+  index2month :
+    10 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "168,2,168,31")> November()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "168,2,168,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "168,2,168,31")
+             ; fail
+
+  index2month :
+    11 -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "169,2,169,31")> December()
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "169,2,169,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "index2month", "169,2,169,31")
+             ; fail
+
 
 strategies
+  clock-to-seconds =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "clock-to-seconds", "175,1,176,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "176,4,176,36")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "176,4,176,5") ; ?c)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "176,8,176,36")
+    ; prim("SSL_ClockToSeconds", c)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "clock-to-seconds", "175,1,176,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "clock-to-seconds", "175,1,176,36")
+      ; fail
 
-  // RELATIVE TIME ; TIME OF PROCESS
-
- clock-to-seconds = 
-    ?c; prim("SSL_ClockToSeconds", c)
-
-  clock = 
-    prim("SSL_clock")
+  clock =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "clock", "178,2,179,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "179,4,179,20")
+    ; prim("SSL_clock")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "clock", "178,2,179,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/time.str", "clock", "178,2,179,20")
+      ; fail

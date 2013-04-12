@@ -1,84 +1,315 @@
-/**
- * Note: this testsuite only tests the old style of option
- * handling. Please don't use this as an example.
- */
 module old-parse-options-test
-imports libstratego-lib
-signature
-  sorts Option
-  constructors
-    Dir      : String -> Option
-    ExecDir  : String -> Option
-    InclDir  : String -> Option
-    CInclDir : String -> Option
-    CLibDir  : String -> Option
-    Input    : String -> Option
-    Main     : String -> Option
-    AST      : Option
-    Ignore   : Option
-    CC       : Option
-    NORM     : Option
-    FUSION   : Option
-    FRONTEND : Option
-    CSYNTAX  : Option
-    TraceAll : Option
-    Trace    : String -> Option
 
-    Silent  : Term 
-    Verbose : Term -> Term 
-    Version : Term
-    
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+signature
+  sorts
+    Option
+
+  constructors
+    Dir         : String -> Option
+    ExecDir     : String -> Option
+    InclDir     : String -> Option
+    CInclDir    : String -> Option
+    CLibDir     : String -> Option
+    Input       : String -> Option
+    Main        : String -> Option
+    AST         : Option
+    Ignore      : Option
+    CC          : Option
+    NORM        : Option
+    FUSION      : Option
+    FRONTEND    : Option
+    CSYNTAX     : Option
+    TraceAll    : Option
+    Trace       : String -> Option
+    Silent      : Term
+    Verbose     : Term -> Term
+    Version     : Term
     DeclVersion : Term -> Term
-    
-    Output : Term -> Term
-    Binary : Term
+    Output      : Term -> Term
+    Binary      : Term
+
 
 strategies
-
-  main-old-parse-options-test = 
-    test-suite(!"old-parse-options-test",
-      test1;
-      test2
-    )
+  main-old-parse-options-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "main-old-parse-options-test", "38,2,42,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "39,4,42,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "39,15,39,39")
+        ; !"old-parse-options-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "40,6,41,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "40,6,40,10") ; test1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "41,6,41,10")
+        ; test2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "main-old-parse-options-test", "38,2,42,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "main-old-parse-options-test", "38,2,42,4")
+      ; fail
 
   sc-options =
-	ArgOption("-e",          \x -> ExecDir(x)\ )
-	+ ArgOption("-I",        !Ignore) // \x -> InclDir(x)\ )
-	+ ArgOption("--Include", !Ignore) // \x -> InclDir(x)\ ) 
-	+ ArgOption("-CI",       !Ignore) // \ (x,y) -> CInclDir(x)\ )
-	+ ArgOption("-CL",       !Ignore) // \ (x,y) -> CLibDir(x)\ )
-	+ Option("-CC",          !CC )
-	+ Option("--norm",        !NORM )
-	+ ArgOption("-i",        \x -> Input(<remove-extension> x)\ )
-	+ ArgOption("--main",    \x -> Main(x)\ )
-	+ ArgOption("-m",        \x -> Main(x)\ ) 
-	+ Option("--ast",        !AST )
-	+ Option("-F",           !FRONTEND )
-	+ Option("--fusion",     !FUSION )
-	+ Option("--csyntax",	 !CSYNTAX )
-	+ Option("--trace-all",  !TraceAll; rules(TraceAllFuns : () -> ()))
-	+ ArgOption("-t",        \x -> Trace(x) where rules(TraceFun : x -> ()) \ )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "sc-options", "44,2,60,75")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "45,1,60,75")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "45,1,45,44")
+       ; ArgOption(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "45,11,45,14") ; "-e"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "45,26,45,42")
+           ; \ x -> ExecDir(x) \
+         )
+       + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "46,3,60,75")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "46,3,46,33")
+            ; ArgOption(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "46,13,46,16") ; "-I"
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "46,26,46,32") ; !Ignore
+              )
+            + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "47,3,60,75")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "47,3,47,33")
+                 ; ArgOption(
+                     s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "47,13,47,23") ; "--Include"
+                   , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "47,26,47,32") ; !Ignore
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "48,3,60,75")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "48,3,48,33")
+                      ; ArgOption(
+                          s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "48,13,48,17") ; "-CI"
+                        , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "48,26,48,32") ; !Ignore
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "49,3,60,75")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "49,3,49,33")
+                           ; ArgOption(
+                               s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "49,13,49,17") ; "-CL"
+                             , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "49,26,49,32") ; !Ignore
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "50,3,60,75")
+                             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "50,3,50,30")
+                                ; Option(
+                                    s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "50,10,50,14") ; "-CC"
+                                  , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "50,26,50,28") ; !CC
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "51,3,60,75")
+                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "51,3,51,33")
+                                     ; Option(
+                                         s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "51,10,51,17") ; "--norm"
+                                       , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "51,27,51,31") ; !NORM
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "52,3,60,75")
+                                       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "52,3,52,61")
+                                          ; ArgOption(
+                                              s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "52,13,52,16") ; "-i"
+                                            , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "52,26,52,59")
+                                              ; \ x -> Input(
+                                                         <s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "52,39,52,54") ; remove-extension> x
+                                                       ) \
+                                            )
+                                          + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "53,3,60,75")
+                                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "53,3,53,41")
+                                               ; ArgOption(
+                                                   s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "53,13,53,20") ; "--main"
+                                                 , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "53,26,53,39")
+                                                   ; \ x -> Main(x) \
+                                                 )
+                                               + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "54,3,60,75")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "54,3,54,41")
+                                                    ; ArgOption(
+                                                        s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "54,13,54,16") ; "-m"
+                                                      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "54,26,54,39")
+                                                        ; \ x -> Main(x) \
+                                                      )
+                                                    + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "55,3,60,75")
+                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "55,3,55,31")
+                                                         ; Option(
+                                                             s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "55,10,55,16") ; "--ast"
+                                                           , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "55,26,55,29") ; !AST
+                                                           )
+                                                         + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "56,3,60,75")
+                                                           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "56,3,56,36")
+                                                              ; Option(
+                                                                  s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "56,10,56,13") ; "-F"
+                                                                , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "56,26,56,34") ; !FRONTEND
+                                                                )
+                                                              + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "57,3,60,75")
+                                                                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "57,3,57,34")
+                                                                   ; Option(
+                                                                       s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "57,10,57,19") ; "--fusion"
+                                                                     , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "57,26,57,32") ; !FUSION
+                                                                     )
+                                                                   + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "58,3,60,75")
+                                                                     ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "58,3,58,33")
+                                                                        ; Option(
+                                                                            s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "58,10,58,20") ; "--csyntax"
+                                                                          , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "58,24,58,31") ; !CSYNTAX
+                                                                          )
+                                                                        + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "59,3,60,75")
+                                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "59,3,59,67")
+                                                                             ; Option(
+                                                                                 s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "59,10,59,22") ; "--trace-all"
+                                                                               , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "59,26,59,66")
+                                                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "59,26,59,34") ; !TraceAll)
+                                                                                 ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "59,37,59,66")
+                                                                                 ; rules ( TraceAllFuns :
+                                                                                             () -> () )
+                                                                               )
+                                                                             + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "60,3,60,75")
+                                                                               ; ArgOption(
+                                                                                   s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "60,13,60,16") ; "-t"
+                                                                                 , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "60,26,60,73")
+                                                                                   ; \ x -> Trace(x)
+                                                                                       where s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "60,47,60,71")
+                                                                                             ; rules ( TraceFun :
+                                                                                                         x -> () ) \
+                                                                                 ))))))))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "sc-options", "44,2,60,75")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "sc-options", "44,2,60,75")
+      ; fail
 
   my-io-options =
-	Option("-S"+"--silent",       !Silent(),          !"-S|--silent      Silent execution")
-	+ ArgOption("--verbose",      !Verbose(<id>),     !"--verbose        Verbose execution")
-	+ Option("-v"+"--version",    !Version(),         !"-v|--version     Display prgram's version")
-	+ ArgOption("@version",       !DeclVersion(<id>), !"@version         Unknown" )
-	+ ArgOption("-i" + "--input", !Input(<id>),       !"-i f|--input f   Read input from f")
-	+ ArgOption("-o"+"--output",  !Output(<id>),      !"-o f|--output f  Write output to f" )
-	+ Option("-b",                !Binary(),          !"-b               Write binary output")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "my-io-options", "62,2,69,90")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,1,69,90")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,1,63,87")
+       ; Option(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,8,63,22")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,8,63,11") ; "-S"
+              + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,13,63,22") ; "--silent")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,31,63,39")
+           ; !Silent()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "63,51,63,86")
+           ; !"-S|--silent      Silent execution"
+         )
+       + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "64,3,69,90")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "64,3,64,88")
+            ; ArgOption(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "64,13,64,23") ; "--verbose"
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "64,31,64,44")
+                ; !Verbose(
+                     <s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "64,41,64,42") ; id>
+                   )
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "64,51,64,87")
+                ; !"--verbose        Verbose execution"
+              )
+            + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,3,69,90")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,3,65,95")
+                 ; Option(
+                     s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,10,65,25")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,10,65,13") ; "-v"
+                        + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,15,65,25") ; "--version")
+                   , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,31,65,40")
+                     ; !Version()
+                   , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "65,51,65,94")
+                     ; !"-v|--version     Display prgram's version"
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "66,3,69,90")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "66,3,66,79")
+                      ; ArgOption(
+                          s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "66,13,66,22") ; "@version"
+                        , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "66,31,66,48")
+                          ; !DeclVersion(
+                               <s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "66,45,66,46") ; id>
+                             )
+                        , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "66,51,66,77")
+                          ; !"@version         Unknown"
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,3,69,90")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,3,67,88")
+                           ; ArgOption(
+                               s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,13,67,28")
+                               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,13,67,16") ; "-i"
+                                  + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,20,67,28") ; "--input")
+                             , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,31,67,42")
+                               ; !Input(
+                                    <s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,39,67,40") ; id>
+                                  )
+                             , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "67,51,67,87")
+                               ; !"-i f|--input f   Read input from f"
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,3,69,90")
+                             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,3,68,89")
+                                ; ArgOption(
+                                    s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,13,68,27")
+                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,13,68,16") ; "-o"
+                                       + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,18,68,27") ; "--output")
+                                  , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,31,68,43")
+                                    ; !Output(
+                                         <s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,40,68,41") ; id>
+                                       )
+                                  , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "68,51,68,87")
+                                    ; !"-o f|--output f  Write output to f"
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "69,3,69,90")
+                                  ; Option(
+                                      s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "69,10,69,13") ; "-b"
+                                    , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "69,31,69,39")
+                                      ; !Binary()
+                                    , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "69,51,69,89")
+                                      ; !"-b               Write binary output"
+                                    )))))))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "my-io-options", "62,2,69,90")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "my-io-options", "62,2,69,90")
+      ; fail
 
   test1 =
-    apply-test(!"test1"
-	, where(<table-put>("usage-table", "usage", []));
-          parse-options'( sc-options <+ my-io-options + system-usage-switch)
-	, !["pack-stratego", "-I", ".", "-I", "..", "-CI", "-I/tmp/include"]
-	, ![Program("pack-stratego"),Ignore,Ignore,Ignore]
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "test1", "71,2,77,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "72,4,77,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "72,15,72,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "73,3,74,75")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "73,3,73,48")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "73,9,73,47")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "73,10,73,18") ; table-put)> ("usage-table", "usage", [])))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "74,10,74,75")
+        ; parse-options'(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "74,26,74,74")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "74,26,74,35") ; sc-options
+               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "74,40,74,74")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "74,40,74,52") ; my-io-options
+                     + s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "74,56,74,74") ; system-usage-switch))
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "75,3,75,68")
+        ; ![ "pack-stratego"
+           , "-I"
+           , "."
+           , "-I"
+           , ".."
+           , "-CI"
+           , "-I/tmp/include"
+           ]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "76,3,76,50")
+        ; ![Program("pack-stratego"), Ignore, Ignore, Ignore]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "test1", "71,2,77,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "test1", "71,2,77,1")
+      ; fail
 
   test2 =
-    apply-test(!"test2"
-	, parse-options(sc-options <+ my-io-options)
-	, !["pack-stratego", "-I", ".", "-I", "..", "-CI", "-I/tmp/include"]
-	, ![Program("pack-stratego"),Ignore,Ignore,Ignore] 
-	)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "test2", "79,2,84,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "80,4,84,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "80,15,80,22")
+        ; !"test2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "81,3,81,44")
+        ; parse-options(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "81,17,81,43")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "81,17,81,26") ; sc-options
+               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "81,31,81,43") ; my-io-options)
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "82,3,82,68")
+        ; ![ "pack-stratego"
+           , "-I"
+           , "."
+           , "-I"
+           , ".."
+           , "-CI"
+           , "-I/tmp/include"
+           ]
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "83,3,83,50")
+        ; ![Program("pack-stratego"), Ignore, Ignore, Ignore]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "test2", "79,2,84,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/old-parse-options-test.str", "test2", "79,2,84,1")
+      ; fail

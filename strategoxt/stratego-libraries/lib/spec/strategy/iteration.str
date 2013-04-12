@@ -1,83 +1,178 @@
-/**
- * Various iteration strategies.
- */
 module strategy/iteration
-imports strategy/conditional
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  strategy/conditional
+
+
 strategies
-
-  /**
-   * Repeatedly apply s until it fails.
-   */
   repeat(s) =
-    try(s; repeat(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "11,2,12,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "12,4,12,20")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "12,8,12,19")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "12,8,12,8") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "12,11,12,19")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "12,18,12,18") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "11,2,12,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "11,2,12,20")
+      ; fail
 
-  /** 
-   * Repeatedly apply s until it fails and terminate with application of c.
-   */ 
   repeat(s, c) =
-    (s; repeat(s, c)) <+ c
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "17,2,18,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,4,18,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,5,18,19")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,5,18,5") ; s)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,8,18,19")
+       ; repeat(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,15,18,15") ; s
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,18,18,18") ; c
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "18,25,18,25") ; c)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "17,2,18,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "17,2,18,25")
+      ; fail
 
-  /**
-   * Repeatedly apply s (at least once) and terminate with application of c.
-   */ 
-  repeat1(s, c) = 
-    s; (repeat1(s, c) <+ c)
+  repeat1(s, c) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat1", "23,2,24,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,4,24,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,4,24,4") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,8,24,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,8,24,20")
+       ; repeat1(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,16,24,16") ; s
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,19,24,19") ; c
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "24,25,24,25") ; c)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat1", "23,2,24,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat1", "23,2,24,26")
+      ; fail
 
-  /**
-   * Repeatedly apply s (at least once).
-   */ 
-  repeat1(s) = 
-    repeat1(s, id)
+  repeat1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat1", "29,2,30,17")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "30,4,30,17")
+    ; repeat1(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "30,12,30,12") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "30,15,30,16") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat1", "29,2,30,17")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat1", "29,2,30,17")
+      ; fail
 
-  /**
-   * Repeatedly apply s until c succeeds.
-   */
-  repeat-until(s, c) = 
-    s; (c <+ repeat-until(s, c))
+  repeat-until(s, c) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat-until", "35,2,36,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,4,36,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,4,36,4") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,8,36,30")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,8,36,8") ; c
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,13,36,30")
+          ; repeat-until(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,26,36,26") ; s
+            , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "36,29,36,29") ; c
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat-until", "35,2,36,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat-until", "35,2,36,31")
+      ; fail
 
-  /**
-   * Applies s repeatedly exactly n times. If s fails at some point during
-   * the n applications, the entire strategy fails. The result of the
-   * strategy is that of the nth application of s.
-   */
-  repeat(s | n) =
-    if <eq>(n, 0)
-    then
-      id
-    else
-      s; repeat(s|<dec>n)
-    end
+  repeat(s|n) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "43,2,49,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "44,4,49,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "44,7,44,16")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "44,8,44,9") ; eq)> (n, 0) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "46,6,46,7") ; id
+      else
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "48,6,48,24")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "48,6,48,6") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "48,9,48,24")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "48,16,48,16") ; s
+          | <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "48,19,48,21") ; dec> n
+          )
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "43,2,49,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "repeat", "43,2,49,6")
+      ; fail
 
-  /**
-   * While c succeeds apply s.
-   */
-  while(c, s) = 
-    try(c; s; while(c, s))
+  while(c, s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "while", "54,2,55,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,4,55,25")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,8,55,24")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,8,55,8") ; c)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,11,55,24")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,11,55,11") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,14,55,24")
+        ; while(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,20,55,20") ; c
+          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "55,23,55,23") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "while", "54,2,55,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "while", "54,2,55,25")
+      ; fail
 
-  /**
-   * While c does not succeed apply s.
-   */
-  while-not(c, s) = 
-    c <+ (s; while-not(c, s))
+  while-not(c, s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "while-not", "60,2,61,28")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,4,61,28")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,4,61,4") ; c
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,10,61,27")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,10,61,10") ; s)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,13,61,27")
+          ; while-not(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,23,61,23") ; c
+            , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "61,26,61,26") ; s
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "while-not", "60,2,61,28")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "while-not", "60,2,61,28")
+      ; fail
 
-  /**
-   * Apply s at least once and then repeat while c succeeds.
-   */
   do-while(s, c) =
-    s; while(c, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "do-while", "66,2,67,17")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "67,4,67,17")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "67,4,67,4") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "67,7,67,17")
+    ; while(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "67,13,67,13") ; c
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "67,16,67,16") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "do-while", "66,2,67,17")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "do-while", "66,2,67,17")
+      ; fail
 
-  /**
-   * Repeat application of s after initialization with i 
-   * while c fails.
-   */
-  for(i, c, s) = 
-    i; while-not(c, s)
+  for(i, c, s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "for", "73,2,74,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "74,4,74,21")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "74,4,74,4") ; i)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "74,7,74,21")
+    ; while-not(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "74,17,74,17") ; c
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "74,20,74,20") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "for", "73,2,74,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "for", "73,2,74,21")
+      ; fail
 
-  /**
-   * Apply s for each integer from low to up (inclusive).
-   */
-  for(s : Int * a -> a | low, up) =
-    if <leq>(low, up) then
-      s(|low)
-      ; for(s | <inc>low, up)
-    end
+  for(s : Int * a -> a|low, up) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "for", "79,2,83,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "80,4,83,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "80,7,80,20")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "80,8,80,10") ; leq)> (low, up) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "81,6,82,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "81,6,81,12")
+           ; s(|low))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "82,8,82,28")
+        ; for(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "82,12,82,12") ; s
+          | <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "82,17,82,19") ; inc> low
+          , up
+          )
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "for", "79,2,83,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/iteration.str", "for", "79,2,83,6")
+      ; fail

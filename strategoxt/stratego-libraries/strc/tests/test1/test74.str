@@ -1,28 +1,73 @@
 module test74
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "main", "5,2,8,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "6,4,8,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "6,15,6,23")
+        ; !"test74"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "7,6,7,10") ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "main", "5,2,8,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "main", "5,2,8,4")
+      ; fail
 
-  main = 
-    test-suite(!"test74",
-      test1
-    )
-
-  test1 = 
-    apply-test(!"test1"
-	, define-rule
-          ; transform
-          ; test-rule
-	, !"a"
-	, !("a", "a", "b")
-    )
-
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "test1", "10,2,17,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "11,4,17,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "11,15,11,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "12,3,14,20")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "12,3,12,13") ; define-rule)
+        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "13,12,14,20")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "13,12,13,20") ; transform)
+        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "14,12,14,20")
+        ; test-rule
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "15,3,15,6")
+        ; !"a"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "16,3,16,18")
+        ; !("a", "a", "b")
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "test1", "10,2,17,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "test1", "10,2,17,4")
+      ; fail
 
   define-rule =
-    ?x
-    ; rules( A : (x, _, _) )
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "define-rule", "20,2,22,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "21,4,22,27")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "21,4,21,5") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "22,6,22,27")
+    ; rules ( A :
+                (x, _, _) )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "define-rule", "20,2,22,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "define-rule", "20,2,22,27")
+      ; fail
 
-  transform = 
-    !(<id>, <id>, "b")
+  transform =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "transform", "24,2,25,21")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "25,4,25,21")
+    ; !( <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "25,7,25,8") ; id>
+       , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "25,13,25,14") ; id>
+       , "b"
+       )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "transform", "24,2,25,21")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "transform", "24,2,25,21")
+      ; fail
 
-  test-rule = 
-    A
+  test-rule =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "test-rule", "27,2,28,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "28,4,28,4")
+    ; A
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "test-rule", "27,2,28,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test74.str", "test-rule", "27,2,28,4")
+      ; fail

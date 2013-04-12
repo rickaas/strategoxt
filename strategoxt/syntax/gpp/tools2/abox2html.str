@@ -1,62 +1,174 @@
 module abox2html
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
 
-strategies
 
+strategies
   io-abox2html =
-    option-wrap(abox2html-options, gen-css <+ abox2html)
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "io-abox2html", "8,2,9,55")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "9,4,9,55")
+    ; option-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "9,16,9,32") ; abox2html-options
+      , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "9,35,9,54")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "9,35,9,41") ; gen-css
+           <+ s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "9,46,9,54") ; abox2html)
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "io-abox2html", "8,2,9,55")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "io-abox2html", "8,2,9,55")
+      ; fail
 
   abox2html-options =
-        input-option
-    +  output-option
-    + general-options
-    + Option("-c"
-      , where(<set-config> ("--mode", "gen-css"))
-      ,	!"-c          Only generate cascading style sheet"
-      )
-    + ArgOption("-t" + "--title"
-      , where(<set-config> ("--title", <id>))
-      ,	!"-t title    Title of HTML document"
-      )
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "abox2html-options", "11,2,22,6")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "12,8,22,6")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "12,8,12,19") ; input-option
+       + s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "13,7,22,6")
+         ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "13,7,13,19") ; output-option
+            + s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "14,6,22,6")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "14,6,14,20") ; general-options
+                 + s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "15,6,22,6")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "15,6,18,6")
+                      ; Option(
+                          s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "15,13,15,16") ; "-c"
+                        , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "16,8,16,48")
+                          ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "16,14,16,47")
+                                  ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "16,15,16,24") ; set-config)> ("--mode", "gen-css"))
+                        , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "17,8,17,57")
+                          ; !"-c          Only generate cascading style sheet"
+                        )
+                      + s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "19,6,22,6")
+                        ; ArgOption(
+                            s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "19,16,19,31")
+                            ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "19,16,19,19") ; "-t"
+                               + s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "19,23,19,31") ; "--title")
+                          , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "20,8,20,44")
+                            ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "20,14,20,43")
+                                    ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "20,15,20,24") ; set-config)> ( "--title"
+                                                                                                                            , <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "20,40,20,41") ; id>
+                                                                                                                            ))
+                          , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "21,8,21,44")
+                            ; !"-t title    Title of HTML document"
+                          )))))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "abox2html-options", "11,2,22,6")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "abox2html-options", "11,2,22,6")
+      ; fail
 
   gen-css =
-      where(<get-config> "--mode" => "gen-css")
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "gen-css", "24,2,28,6")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "25,6,28,6")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "25,6,25,46")
+       ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "25,12,25,45")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "25,12,25,32")
+                  ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "25,13,25,22") ; get-config)> "--mode") => "gen-css"))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "26,6,28,6")
     ; xtc-output(
-        xtc-generate(!"gen-css-boxstyle", pass-verbose)
+        s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "27,8,27,54")
+        ; xtc-generate(
+            s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "27,21,27,39")
+            ; !"gen-css-boxstyle"
+          , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "27,42,27,53") ; pass-verbose
+          )
       )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "gen-css", "24,2,28,6")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "gen-css", "24,2,28,6")
+      ; fail
 
   abox2html =
-    xtc-io(
-      ![ <create-header; print-to>
-       , <xtc-transform(!"Abox-2-html", pass-verbose)>
-       , <create-footer; print-to>
-       ]
-    ; xtc-cat
-    )
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "abox2html", "30,2,37,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "31,4,37,4")
+    ; xtc-io(
+        s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "32,6,36,12")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "32,6,35,7")
+           ; ![ <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "32,10,32,32")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "32,10,32,22") ; create-header)
+                 ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "32,25,32,32")
+                 ; print-to>
+              , <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "33,10,33,52")
+                 ; xtc-transform(
+                     s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "33,24,33,37")
+                     ; !"Abox-2-html"
+                   , s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "33,40,33,51") ; pass-verbose
+                   )>
+              , <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "34,10,34,32")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "34,10,34,22") ; create-footer)
+                 ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "34,25,34,32")
+                 ; print-to>
+              ])
+        ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "36,6,36,12")
+        ; xtc-cat
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "abox2html", "30,2,37,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "abox2html", "30,2,37,4")
+      ; fail
 
   get-title =
-    <get-config> "--title" <+ <fatal-error> ["** ERROR: no title specified for HTML document"]
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "get-title", "39,2,40,93")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "40,4,40,93")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "40,4,40,25")
+       ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "40,5,40,14") ; get-config)> "--title"
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "40,30,40,93")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "40,31,40,41") ; fatal-error)> ["** ERROR: no title specified for HTML document"])
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "get-title", "39,2,40,93")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "get-title", "39,2,40,93")
+      ; fail
 
-  create-header = 
-    get-title;
-    !["<!-- \n",
-      "   This file is generated at ", <create-time> (), " \n",
-      "   by abox2html (C) 2001 Merijn de Jonge (mdejonge@cwi.nl)\n",
-      "-->\n",
-      "<!doctype html public \"-//W3C//DTD WWW HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\"> \n",
-      "<html>\n",
-      "  <head>\n",
-      "    <title>", <id>, "</title>\n",
-      "    <link rel=\"stylesheet\" type=\"text/css\" href=\"boxstyle.css\">\n",
-      "  </head>\n",
-      "  <body>\n"
-    ]
+  create-header =
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-header", "42,2,55,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "43,4,55,4")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "43,4,43,12") ; get-title)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "44,4,55,4")
+    ; ![ "<!-- \n"
+       , "   This file is generated at "
+       , <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "45,40,45,50") ; create-time> ()
+       , " \n"
+       , "   by abox2html (C) 2001 Merijn de Jonge (mdejonge@cwi.nl)\n"
+       , "-->\n"
+       , "<!doctype html public \"-//W3C//DTD WWW HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\"> \n"
+       , "<html>\n"
+       , "  <head>\n"
+       , "    <title>"
+       , <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "51,22,51,23") ; id>
+       , "</title>\n"
+       , "    <link rel=\"stylesheet\" type=\"text/css\" href=\"boxstyle.css\">\n"
+       , "  </head>\n"
+       , "  <body>\n"
+       ]
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-header", "42,2,55,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-header", "42,2,55,4")
+      ; fail
 
-  create-time = 
-    <date-format> (["EEEE", " ", "d", " ", "MMMM", " ", "yyyy", " ", "HH", ":", "mm", ":", "ss"], <now-local-time> ())
+  create-time =
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-time", "57,2,58,117")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "58,4,58,117")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "58,5,58,15") ; date-format)> ( [ "EEEE"
+                                                                                              , " "
+                                                                                              , "d"
+                                                                                              , " "
+                                                                                              , "MMMM"
+                                                                                              , " "
+                                                                                              , "yyyy"
+                                                                                              , " "
+                                                                                              , "HH"
+                                                                                              , ":"
+                                                                                              , "mm"
+                                                                                              , ":"
+                                                                                              , "ss"
+                                                                                              ]
+                                                                                            , <s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "58,99,58,112") ; now-local-time> ()
+                                                                                            )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-time", "57,2,58,117")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-time", "57,2,58,117")
+      ; fail
 
-  create-footer = 
-    !["  </body>\n",
-      "</html>\n"]
+  create-footer =
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-footer", "60,2,62,17")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2html.str", "61,4,62,17")
+    ; !["  </body>\n", "</html>\n"]
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-footer", "60,2,62,17")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2html.str", "create-footer", "60,2,62,17")
+      ; fail

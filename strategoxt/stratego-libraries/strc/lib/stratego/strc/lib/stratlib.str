@@ -1,200 +1,1076 @@
-/**
- * Library for Strategies
- *
- * This module instantiates several language independent
- * functions to the strategy language.
- * 
- * @author Eelco Visser
- */
-
 module stratlib
-imports libstratego-lib Stratego-Sugar
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  Stratego-Sugar
+
 
 strategies
+  seqs =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "seqs", "15,2,16,45")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "16,4,16,45")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "16,10,16,14")
+        ; !Id()
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "16,17,16,43")
+        ; \ (s1, s2) -> Seq(s1, s2) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "seqs", "15,2,16,45")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "seqs", "15,2,16,45")
+      ; fail
 
-  seqs = 
-    foldr(!Id(), \ (s1, s2) -> Seq(s1, s2) \ )
+  lchoices =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "lchoices", "18,2,19,51")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "19,4,19,51")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "19,10,19,16")
+        ; !Fail()
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "19,19,19,49")
+        ; \ (s1, s2) -> LChoice(s1, s2) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "lchoices", "18,2,19,51")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "lchoices", "18,2,19,51")
+      ; fail
 
-  lchoices = 
-    foldr(!Fail(), \ (s1, s2) -> LChoice(s1, s2) \ )
 
 strategies
-
   ignore-anno-def(s) =
-    ?AnnoDef(_, _) < AnnoDef(id, s) + s
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ignore-anno-def", "23,2,24,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "24,4,24,38")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "24,4,24,17")
+       ; ?AnnoDef(_, _)
+       < s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "24,21,24,34")
+         ; AnnoDef(
+             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "24,29,24,30") ; id
+           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "24,33,24,33") ; s
+           )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "24,38,24,38") ; s)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ignore-anno-def", "23,2,24,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ignore-anno-def", "23,2,24,38")
+      ; fail
+
 
 rules
 
-  Add1 : Var(x)  -> [x]
-  Add2 : SVar(x) -> [x]
- 
-  IsVar  : Var(x) -> x
-  IsSVar : Call(SVar(x), []) -> x
-  IsSVar : CallT(SVar(x), [], []) -> x
-  MkCall : x -> CallT(SVar(x), [], [])
+  Add1 :
+    Var(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Add1", "28,2,28,22")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Add1", "28,2,28,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Add1", "28,2,28,22")
+             ; fail
+
+  Add2 :
+    SVar(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Add2", "29,2,29,22")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Add2", "29,2,29,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Add2", "29,2,29,22")
+             ; fail
+
+  IsVar :
+    Var(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsVar", "31,2,31,21")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsVar", "31,2,31,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsVar", "31,2,31,21")
+             ; fail
+
+  IsSVar :
+    Call(SVar(x), []) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsSVar", "32,2,32,32")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsSVar", "32,2,32,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsSVar", "32,2,32,32")
+             ; fail
+
+  IsSVar :
+    CallT(SVar(x), [], []) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsSVar", "33,2,33,37")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsSVar", "33,2,33,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "IsSVar", "33,2,33,37")
+             ; fail
+
+  MkCall :
+    x -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "MkCall", "34,2,34,37")> CallT(SVar(x), [], [])
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "MkCall", "34,2,34,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "MkCall", "34,2,34,37")
+             ; fail
+
 
 strategies
 
-/*
-  Bound Variables
-
-  The following rules and strategies define which constructs
-	bind variables. The \verb|Bnd| rules define which variables
-	are bound. The \verb|paste| strategies define where new variables
-	should be pasted in case of renaming. The \verb|boundin|
-	strategies
-	define in which arguments of the constructs the variables are 
-	binding.
-*/
 
 rules
 
-  Bind0 : Scope(xs, s) -> xs
-  Bind0 : LRule(Rule(t1, t2, s)) -> <tvars> t1
-  Bind1 : Let(defs, s2) -> <map(ignore-anno-def(?SDef(<id>,_,_) + ?SDefT(<id>,_,_,_) + ?RDef(<id>,_,_) + ?RDefT(<id>,_,_,_)))> defs
-  Bind2 : SDef(f, xs, s) -> <declared-vars> xs
-  Bind3 : Rec(x, s) -> [x]
+  Bind0 :
+    Scope(xs, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind0", "52,2,52,27")> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind0", "52,2,52,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind0", "52,2,52,27")
+             ; fail
 
-  Bind4 : GenDynRules(rs) -> <tvars> rs
+  Bind0 :
+    LRule(Rule(t1, t2, s)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind0", "53,2,53,45")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "53,37,53,41") ; tvars> t1
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind0", "53,2,53,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind0", "53,2,53,45")
+             ; fail
 
-  Bind5 : SDefT(f, xs, ys, s) -> <declared-vars> xs
-  Bind6 : SDefT(f, xs, ys, s) -> <declared-vars> ys
+  Bind1 :
+    Let(defs, s2) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind1", "54,2,54,130")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,28,54,124")
+                                                                                                                                 ; map(
+                                                                                                                                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,32,54,123")
+                                                                                                                                     ; ignore-anno-def(
+                                                                                                                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,48,54,122")
+                                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,48,54,62")
+                                                                                                                                            ; ?SDef(
+                                                                                                                                                 <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,55,54,56") ; id>
+                                                                                                                                               , _
+                                                                                                                                               , _
+                                                                                                                                               )
+                                                                                                                                            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,66,54,122")
+                                                                                                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,66,54,83")
+                                                                                                                                                 ; ?SDefT(
+                                                                                                                                                      <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,74,54,75") ; id>
+                                                                                                                                                    , _
+                                                                                                                                                    , _
+                                                                                                                                                    , _
+                                                                                                                                                    )
+                                                                                                                                                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,87,54,122")
+                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,87,54,101")
+                                                                                                                                                      ; ?RDef(
+                                                                                                                                                           <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,94,54,95") ; id>
+                                                                                                                                                         , _
+                                                                                                                                                         , _
+                                                                                                                                                         )
+                                                                                                                                                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,105,54,122")
+                                                                                                                                                        ; ?RDefT(
+                                                                                                                                                             <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "54,113,54,114") ; id>
+                                                                                                                                                           , _
+                                                                                                                                                           , _
+                                                                                                                                                           , _
+                                                                                                                                                           ))))
+                                                                                                                                       )
+                                                                                                                                   )> defs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind1", "54,2,54,130")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind1", "54,2,54,130")
+             ; fail
 
-  Bind5 : ExtSDef(f, xs, ys) -> <declared-vars> xs
-  Bind6 : ExtSDef(f, xs, ys) -> <declared-vars> ys
+  Bind2 :
+    SDef(f, xs, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind2", "55,2,55,45")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "55,29,55,41") ; declared-vars> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind2", "55,2,55,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind2", "55,2,55,45")
+             ; fail
 
-  Bind5 : ExtSDefInl(f, xs, ys, s) -> <declared-vars> xs
-  Bind6 : ExtSDefInl(f, xs, ys, s) -> <declared-vars> ys
+  Bind3 :
+    Rec(x, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind3", "56,2,56,25")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind3", "56,2,56,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind3", "56,2,56,25")
+             ; fail
 
-  Bind7 : RDefT(f, xs, ys, s) -> <declared-vars> xs
-  Bind7 : RDecT(f, xs, ys)    -> <declared-vars> xs
+  Bind4 :
+    GenDynRules(rs) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind4", "58,2,58,38")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "58,30,58,34") ; tvars> rs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind4", "58,2,58,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind4", "58,2,58,38")
+             ; fail
 
-  Bind8 : RDefT(f, xs, ys, s) -> <declared-vars> ys
-  Bind8 : RDecT(f, xs, ys)    -> <declared-vars> ys
+  Bind5 :
+    SDefT(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "60,2,60,50")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "60,34,60,46") ; declared-vars> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "60,2,60,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "60,2,60,50")
+             ; fail
+
+  Bind6 :
+    SDefT(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "61,2,61,50")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "61,34,61,46") ; declared-vars> ys
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "61,2,61,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "61,2,61,50")
+             ; fail
+
+  Bind5 :
+    ExtSDef(f, xs, ys) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "63,2,63,49")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "63,33,63,45") ; declared-vars> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "63,2,63,49")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "63,2,63,49")
+             ; fail
+
+  Bind6 :
+    ExtSDef(f, xs, ys) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "64,2,64,49")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "64,33,64,45") ; declared-vars> ys
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "64,2,64,49")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "64,2,64,49")
+             ; fail
+
+  Bind5 :
+    ExtSDefInl(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "66,2,66,55")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "66,39,66,51") ; declared-vars> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "66,2,66,55")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind5", "66,2,66,55")
+             ; fail
+
+  Bind6 :
+    ExtSDefInl(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "67,2,67,55")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "67,39,67,51") ; declared-vars> ys
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "67,2,67,55")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind6", "67,2,67,55")
+             ; fail
+
+  Bind7 :
+    RDefT(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind7", "69,2,69,50")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "69,34,69,46") ; declared-vars> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind7", "69,2,69,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind7", "69,2,69,50")
+             ; fail
+
+  Bind7 :
+    RDecT(f, xs, ys) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind7", "70,2,70,50")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "70,34,70,46") ; declared-vars> xs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind7", "70,2,70,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind7", "70,2,70,50")
+             ; fail
+
+  Bind8 :
+    RDefT(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind8", "72,2,72,50")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "72,34,72,46") ; declared-vars> ys
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind8", "72,2,72,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind8", "72,2,72,50")
+             ; fail
+
+  Bind8 :
+    RDecT(f, xs, ys) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind8", "73,2,73,50")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "73,34,73,46") ; declared-vars> ys
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind8", "73,2,73,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind8", "73,2,73,50")
+             ; fail
+
 
 strategies
+  Bind9 =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind9", "77,2,77,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "77,11,77,38")
+    ; dynrule-sargs(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "77,25,77,37") ; declared-vars
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind9", "77,2,77,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind9", "77,2,77,38")
+      ; fail
 
-  Bind9  = dynrule-sargs(declared-vars)
-  Bind10 = dynrule-targs(declared-vars)
+  Bind10 =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind10", "78,2,78,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "78,11,78,38")
+    ; dynrule-targs(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "78,25,78,37") ; declared-vars
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind10", "78,2,78,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "Bind10", "78,2,78,38")
+      ; fail
 
   dynrule-lhs(s) =
-    ?UndefineDynRule(_, <s>)
-  + ?SetDynRule(_, Rule(<s>, _, _))
-  + ?AddDynRule(_, Rule(<s>, _, _))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-lhs", "80,2,83,34")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "81,4,83,34")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "81,4,81,27")
+       ; ?UndefineDynRule(
+            _
+          , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "81,25,81,25") ; s>
+          )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "82,4,83,34")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "82,4,82,34")
+            ; ?SetDynRule(
+                 _
+               , Rule(
+                   <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "82,25,82,25") ; s>
+                 , _
+                 , _
+                 )
+               )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "83,4,83,34")
+              ; ?AddDynRule(
+                   _
+                 , Rule(
+                     <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "83,25,83,25") ; s>
+                   , _
+                   , _
+                   )
+                 )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-lhs", "80,2,83,34")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-lhs", "80,2,83,34")
+      ; fail
 
   dynrule-sargs(s) =
-    ?UndefineDynRule(DynRuleId(RDecT(_,<id>,_)), _)
-  + ?SetDynRule(DynRuleId(RDecT(_,<id>,_)), _)
-  + ?AddDynRule(DynRuleId(RDecT(_,<id>,_)), _)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-sargs", "85,2,88,45")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "86,4,88,45")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "86,4,86,50")
+       ; ?UndefineDynRule(
+            DynRuleId(
+              RDecT(
+                _
+              , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "86,40,86,41") ; id>
+              , _
+              )
+            )
+          , _
+          )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "87,4,88,45")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "87,4,87,45")
+            ; ?SetDynRule(
+                 DynRuleId(
+                   RDecT(
+                     _
+                   , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "87,35,87,36") ; id>
+                   , _
+                   )
+                 )
+               , _
+               )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "88,4,88,45")
+              ; ?AddDynRule(
+                   DynRuleId(
+                     RDecT(
+                       _
+                     , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "88,35,88,36") ; id>
+                     , _
+                     )
+                   )
+                 , _
+                 )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-sargs", "85,2,88,45")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-sargs", "85,2,88,45")
+      ; fail
 
   dynrule-targs(s) =
-    ?UndefineDynRule(DynRuleId(RDecT(_,_,<id>)), _)
-  + ?SetDynRule(DynRuleId(RDecT(_,_,<id>)), _)
-  + ?AddDynRule(DynRuleId(RDecT(_,_,<id>)), _)
-    
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-targs", "90,2,93,45")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "91,4,93,45")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "91,4,91,50")
+       ; ?UndefineDynRule(
+            DynRuleId(
+              RDecT(
+                _
+              , _
+              , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "91,42,91,43") ; id>
+              )
+            )
+          , _
+          )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "92,4,93,45")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "92,4,92,45")
+            ; ?SetDynRule(
+                 DynRuleId(
+                   RDecT(
+                     _
+                   , _
+                   , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "92,37,92,38") ; id>
+                   )
+                 )
+               , _
+               )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "93,4,93,45")
+              ; ?AddDynRule(
+                   DynRuleId(
+                     RDecT(
+                       _
+                     , _
+                     , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "93,37,93,38") ; id>
+                     )
+                   )
+                 , _
+                 )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-targs", "90,2,93,45")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-targs", "90,2,93,45")
+      ; fail
+
   dynrule-cong(name, sargs, targs, lhs, rhs, cond) =
-    UndefineDynRule(DynRuleId(RDecT(name,sargs,targs)), lhs)
-  + SetDynRule(DynRuleId(RDecT(name,sargs,targs)), Rule(lhs, rhs, cond))
-  + AddDynRule(DynRuleId(RDecT(name,sargs,targs)), Rule(lhs, rhs, cond))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-cong", "95,2,98,71")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,4,98,71")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,4,96,59")
+       ; UndefineDynRule(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,20,96,53")
+           ; DynRuleId(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,30,96,52")
+               ; RDecT(
+                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,36,96,39") ; name
+                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,41,96,45") ; sargs
+                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,47,96,51") ; targs
+                 )
+             )
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "96,56,96,58") ; lhs
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,4,98,71")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,4,97,71")
+            ; SetDynRule(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,15,97,48")
+                ; DynRuleId(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,25,97,47")
+                    ; RDecT(
+                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,31,97,34") ; name
+                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,36,97,40") ; sargs
+                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,42,97,46") ; targs
+                      )
+                  )
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,51,97,70")
+                ; Rule(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,56,97,58") ; lhs
+                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,61,97,63") ; rhs
+                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "97,66,97,69") ; cond
+                  )
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,4,98,71")
+              ; AddDynRule(
+                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,15,98,48")
+                  ; DynRuleId(
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,25,98,47")
+                      ; RDecT(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,31,98,34") ; name
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,36,98,40") ; sargs
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,42,98,46") ; targs
+                        )
+                    )
+                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,51,98,70")
+                  ; Rule(
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,56,98,58") ; lhs
+                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,61,98,63") ; rhs
+                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "98,66,98,69") ; cond
+                    )
+                )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-cong", "95,2,98,71")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-cong", "95,2,98,71")
+      ; fail
 
   dynrule-cong(drid, rule) =
-    UndefineDynRule(drid, rule)
-  + SetDynRule(drid, rule)
-  + AddDynRule(drid, rule)
-  
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-cong", "100,2,103,25")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "101,4,103,25")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "101,4,101,30")
+       ; UndefineDynRule(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "101,20,101,23") ; drid
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "101,26,101,29") ; rule
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "102,4,103,25")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "102,4,102,25")
+            ; SetDynRule(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "102,15,102,18") ; drid
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "102,21,102,24") ; rule
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "103,4,103,25")
+              ; AddDynRule(
+                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "103,15,103,18") ; drid
+                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "103,21,103,24") ; rule
+                )))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-cong", "100,2,103,25")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "dynrule-cong", "100,2,103,25")
+      ; fail
+
 
 strategies
-
   tpaste(nwvars) =
-    Scope(nwvars, id)
-    + LRule(id) // Let the tboundin handle this, or zip tvars of LHS and nwvars here?
-    + RDecT(id, id, split(id, nwvars); zip(ReplaceVar))
-    + SDefT(id, id, split(id, nwvars); zip(ReplaceVar), id)
-    + ExtSDef(id, id, split(id, nwvars); zip(ReplaceVar))
-    + ExtSDefInl(id, id, split(id, nwvars); zip(ReplaceVar), id)
-    + RDefT(id, id, split(id, nwvars); zip(ReplaceVar), id)
-    + dynrule-cong(id, id, split(id, nwvars); zip(ReplaceVar), id, id, id)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tpaste", "108,2,116,73")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "109,4,116,73")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "109,4,109,20")
+       ; Scope(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "109,10,109,15") ; nwvars
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "109,18,109,19") ; id
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "110,6,116,73")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "110,6,110,14")
+            ; LRule(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "110,12,110,13") ; id
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,6,116,73")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,6,111,54")
+                 ; RDecT(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,12,111,13") ; id
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,16,111,17") ; id
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,20,111,53")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,20,111,36")
+                        ; split(
+                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,26,111,27") ; id
+                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,30,111,35") ; nwvars
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,39,111,53")
+                     ; zip(
+                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "111,43,111,52") ; ReplaceVar
+                       )
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,6,116,73")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,6,112,58")
+                      ; SDefT(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,12,112,13") ; id
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,16,112,17") ; id
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,20,112,53")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,20,112,36")
+                             ; split(
+                                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,26,112,27") ; id
+                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,30,112,35") ; nwvars
+                               ))
+                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,39,112,53")
+                          ; zip(
+                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,43,112,52") ; ReplaceVar
+                            )
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "112,56,112,57") ; id
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,6,116,73")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,6,113,56")
+                           ; ExtSDef(
+                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,14,113,15") ; id
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,18,113,19") ; id
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,22,113,55")
+                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,22,113,38")
+                                  ; split(
+                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,28,113,29") ; id
+                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,32,113,37") ; nwvars
+                                    ))
+                               ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,41,113,55")
+                               ; zip(
+                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "113,45,113,54") ; ReplaceVar
+                                 )
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,6,116,73")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,6,114,63")
+                                ; ExtSDefInl(
+                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,17,114,18") ; id
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,21,114,22") ; id
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,25,114,58")
+                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,25,114,41")
+                                       ; split(
+                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,31,114,32") ; id
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,35,114,40") ; nwvars
+                                         ))
+                                    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,44,114,58")
+                                    ; zip(
+                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,48,114,57") ; ReplaceVar
+                                      )
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "114,61,114,62") ; id
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,6,116,73")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,6,115,58")
+                                     ; RDefT(
+                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,12,115,13") ; id
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,16,115,17") ; id
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,20,115,53")
+                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,20,115,36")
+                                            ; split(
+                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,26,115,27") ; id
+                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,30,115,35") ; nwvars
+                                              ))
+                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,39,115,53")
+                                         ; zip(
+                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,43,115,52") ; ReplaceVar
+                                           )
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "115,56,115,57") ; id
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,6,116,73")
+                                       ; dynrule-cong(
+                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,19,116,20") ; id
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,23,116,24") ; id
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,27,116,60")
+                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,27,116,43")
+                                              ; split(
+                                                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,33,116,34") ; id
+                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,37,116,42") ; nwvars
+                                                ))
+                                           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,46,116,60")
+                                           ; zip(
+                                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,50,116,59") ; ReplaceVar
+                                             )
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,63,116,64") ; id
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,67,116,68") ; id
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "116,71,116,72") ; id
+                                         ))))))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tpaste", "108,2,116,73")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tpaste", "108,2,116,73")
+      ; fail
 
   ReplaceVar :
-    (VarDec(x,t), y) -> VarDec(y,t)
+    (VarDec(x, t), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ReplaceVar", "118,2,119,34")> VarDec(y, t)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ReplaceVar", "118,2,119,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ReplaceVar", "118,2,119,34")
+             ; fail
 
   ReplaceVar :
-    (DefaultVarDec(x), y) -> DefaultVarDec(y)
+    (DefaultVarDec(x), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ReplaceVar", "121,2,122,44")> DefaultVarDec(y)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ReplaceVar", "121,2,122,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ReplaceVar", "121,2,122,44")
+             ; fail
 
   tboundin(bnd, ubnd, ignore) =
-    Scope(ignore, bnd)
-    + LRule(Rule(bnd, bnd, bnd))
-    + RDecT(ignore, ignore, ignore)
-    + SDefT(ignore, ignore, ignore, bnd)
-    + ExtSDef(ignore, ignore, ignore)
-    + ExtSDefInl(ignore, ignore, ignore, bnd)
-    + RDefT(ignore, ignore, ignore, bnd)
-    + ExtSDefInl(ignore, ignore, ignore, bnd)
-    + ExtSDef(ignore, ignore, ignore)
-    + dynrule-cong(ignore, bnd)
-
-    + GenDynRules(bnd)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tboundin", "124,2,136,21")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "125,4,136,21")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "125,4,125,21")
+       ; Scope(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "125,10,125,15") ; ignore
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "125,18,125,20") ; bnd
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "126,6,136,21")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "126,6,126,31")
+            ; LRule(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "126,12,126,30")
+                ; Rule(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "126,17,126,19") ; bnd
+                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "126,22,126,24") ; bnd
+                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "126,27,126,29") ; bnd
+                  )
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "127,6,136,21")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "127,6,127,34")
+                 ; RDecT(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "127,12,127,17") ; ignore
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "127,20,127,25") ; ignore
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "127,28,127,33") ; ignore
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "128,6,136,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "128,6,128,39")
+                      ; SDefT(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "128,12,128,17") ; ignore
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "128,20,128,25") ; ignore
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "128,28,128,33") ; ignore
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "128,36,128,38") ; bnd
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "129,6,136,21")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "129,6,129,36")
+                           ; ExtSDef(
+                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "129,14,129,19") ; ignore
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "129,22,129,27") ; ignore
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "129,30,129,35") ; ignore
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "130,6,136,21")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "130,6,130,44")
+                                ; ExtSDefInl(
+                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "130,17,130,22") ; ignore
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "130,25,130,30") ; ignore
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "130,33,130,38") ; ignore
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "130,41,130,43") ; bnd
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "131,6,136,21")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "131,6,131,39")
+                                     ; RDefT(
+                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "131,12,131,17") ; ignore
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "131,20,131,25") ; ignore
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "131,28,131,33") ; ignore
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "131,36,131,38") ; bnd
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "132,6,136,21")
+                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "132,6,132,44")
+                                          ; ExtSDefInl(
+                                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "132,17,132,22") ; ignore
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "132,25,132,30") ; ignore
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "132,33,132,38") ; ignore
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "132,41,132,43") ; bnd
+                                            )
+                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "133,6,136,21")
+                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "133,6,133,36")
+                                               ; ExtSDef(
+                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "133,14,133,19") ; ignore
+                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "133,22,133,27") ; ignore
+                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "133,30,133,35") ; ignore
+                                                 )
+                                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "134,6,136,21")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "134,6,134,30")
+                                                    ; dynrule-cong(
+                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "134,19,134,24") ; ignore
+                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "134,27,134,29") ; bnd
+                                                      )
+                                                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "136,6,136,21")
+                                                      ; GenDynRules(
+                                                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "136,18,136,20") ; bnd
+                                                        )))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tboundin", "124,2,136,21")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tboundin", "124,2,136,21")
+      ; fail
 
   spaste(nwvars) =
-      Let(split(id,nwvars); 
-          zip(\ (SDef(_,xs,s), f) -> SDef(f,xs,s)\ + 
-              \ (SDefT(_,xs,ys,s), f) -> SDefT(f,xs,ys,s)\ + 
-              \ (RDef(_,xs,s), f) -> RDef(f,xs,s)\ + 
-              \ (RDefT(_,xs,ys,s), f) -> RDefT(f,xs,ys,s)\)
-         , id)
-    + SDef(id,  split(id, nwvars); zip(ReplaceVar), id)
-    + SDefT(id, split(id, nwvars); zip(ReplaceVar), id, id)
-    + ExtSDef(id, split(id, nwvars); zip(ReplaceVar), id)
-    + ExtSDefInl(id, split(id, nwvars); zip(ReplaceVar), id, id)
-    + RDefT(id, split(id, nwvars); zip(ReplaceVar), id, id)
-    + RDecT(id, split(id, nwvars); zip(ReplaceVar), id)
-    + dynrule-cong(id, split(id, nwvars); zip(ReplaceVar), id, id, id, id)
-    + Rec(nwvars; Hd, id)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "spaste", "138,2,152,24")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "139,6,152,24")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "139,6,144,13")
+       ; Let(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "139,10,143,58")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "139,10,139,25")
+              ; split(
+                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "139,16,139,17") ; id
+                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "139,19,139,24") ; nwvars
+                ))
+           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "140,10,143,58")
+           ; zip(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "140,14,143,57")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "140,14,140,49")
+                  ; \ (SDef(_, xs, s), f) -> SDef(f, xs, s) \
+                  + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "141,14,143,57")
+                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "141,14,141,57")
+                       ; \ (SDefT(_, xs, ys, s), f) -> SDefT(f, xs, ys, s) \
+                       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "142,14,143,57")
+                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "142,14,142,49")
+                            ; \ (RDef(_, xs, s), f) -> RDef(f, xs, s) \
+                            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "143,14,143,57")
+                              ; \ (RDefT(_, xs, ys, s), f) -> RDefT(f, xs, ys, s) \)))
+             )
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "144,11,144,12") ; id
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,6,152,24")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,6,145,54")
+            ; SDef(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,11,145,12") ; id
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,16,145,49")
+                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,16,145,32")
+                   ; split(
+                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,22,145,23") ; id
+                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,26,145,31") ; nwvars
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,35,145,49")
+                ; zip(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,39,145,48") ; ReplaceVar
+                  )
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "145,52,145,53") ; id
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,6,152,24")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,6,146,58")
+                 ; SDefT(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,12,146,13") ; id
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,16,146,49")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,16,146,32")
+                        ; split(
+                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,22,146,23") ; id
+                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,26,146,31") ; nwvars
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,35,146,49")
+                     ; zip(
+                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,39,146,48") ; ReplaceVar
+                       )
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,52,146,53") ; id
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "146,56,146,57") ; id
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,6,152,24")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,6,147,56")
+                      ; ExtSDef(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,14,147,15") ; id
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,18,147,51")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,18,147,34")
+                             ; split(
+                                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,24,147,25") ; id
+                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,28,147,33") ; nwvars
+                               ))
+                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,37,147,51")
+                          ; zip(
+                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,41,147,50") ; ReplaceVar
+                            )
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "147,54,147,55") ; id
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,6,152,24")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,6,148,63")
+                           ; ExtSDefInl(
+                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,17,148,18") ; id
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,21,148,54")
+                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,21,148,37")
+                                  ; split(
+                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,27,148,28") ; id
+                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,31,148,36") ; nwvars
+                                    ))
+                               ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,40,148,54")
+                               ; zip(
+                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,44,148,53") ; ReplaceVar
+                                 )
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,57,148,58") ; id
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "148,61,148,62") ; id
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,6,152,24")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,6,149,58")
+                                ; RDefT(
+                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,12,149,13") ; id
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,16,149,49")
+                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,16,149,32")
+                                       ; split(
+                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,22,149,23") ; id
+                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,26,149,31") ; nwvars
+                                         ))
+                                    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,35,149,49")
+                                    ; zip(
+                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,39,149,48") ; ReplaceVar
+                                      )
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,52,149,53") ; id
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "149,56,149,57") ; id
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,6,152,24")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,6,150,54")
+                                     ; RDecT(
+                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,12,150,13") ; id
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,16,150,49")
+                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,16,150,32")
+                                            ; split(
+                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,22,150,23") ; id
+                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,26,150,31") ; nwvars
+                                              ))
+                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,35,150,49")
+                                         ; zip(
+                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,39,150,48") ; ReplaceVar
+                                           )
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "150,52,150,53") ; id
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,6,152,24")
+                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,6,151,73")
+                                          ; dynrule-cong(
+                                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,19,151,20") ; id
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,23,151,56")
+                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,23,151,39")
+                                                 ; split(
+                                                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,29,151,30") ; id
+                                                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,33,151,38") ; nwvars
+                                                   ))
+                                              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,42,151,56")
+                                              ; zip(
+                                                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,46,151,55") ; ReplaceVar
+                                                )
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,59,151,60") ; id
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,63,151,64") ; id
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,67,151,68") ; id
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "151,71,151,72") ; id
+                                            )
+                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "152,6,152,24")
+                                            ; Rec(
+                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "152,10,152,19")
+                                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "152,10,152,15") ; nwvars)
+                                                ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "152,18,152,19")
+                                                ; Hd
+                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "152,22,152,23") ; id
+                                              )))))))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "spaste", "138,2,152,24")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "spaste", "138,2,152,24")
+      ; fail
 
   sboundin(bnd, ubnd, ignore) =
-      Let(bnd, bnd)
-    + SDef(ignore, ignore, bnd)
-    + SDefT(ignore, ignore, ignore, bnd)
-    + ExtSDef(ignore, ignore, ignore)
-    + ExtSDefInl(ignore, ignore, ignore, bnd)
-    + RDefT(ignore, ignore, ignore, bnd)
-    + RDecT(ignore, ignore, ignore)
-    + dynrule-cong(ignore, bnd)
-    + Rec(ignore, bnd)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "sboundin", "154,2,163,21")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "155,6,163,21")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "155,6,155,18")
+       ; Let(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "155,10,155,12") ; bnd
+         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "155,15,155,17") ; bnd
+         )
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "156,6,163,21")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "156,6,156,30")
+            ; SDef(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "156,11,156,16") ; ignore
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "156,19,156,24") ; ignore
+              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "156,27,156,29") ; bnd
+              )
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "157,6,163,21")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "157,6,157,39")
+                 ; SDefT(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "157,12,157,17") ; ignore
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "157,20,157,25") ; ignore
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "157,28,157,33") ; ignore
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "157,36,157,38") ; bnd
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "158,6,163,21")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "158,6,158,36")
+                      ; ExtSDef(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "158,14,158,19") ; ignore
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "158,22,158,27") ; ignore
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "158,30,158,35") ; ignore
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "159,6,163,21")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "159,6,159,44")
+                           ; ExtSDefInl(
+                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "159,17,159,22") ; ignore
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "159,25,159,30") ; ignore
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "159,33,159,38") ; ignore
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "159,41,159,43") ; bnd
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "160,6,163,21")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "160,6,160,39")
+                                ; RDefT(
+                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "160,12,160,17") ; ignore
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "160,20,160,25") ; ignore
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "160,28,160,33") ; ignore
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "160,36,160,38") ; bnd
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "161,6,163,21")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "161,6,161,34")
+                                     ; RDecT(
+                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "161,12,161,17") ; ignore
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "161,20,161,25") ; ignore
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "161,28,161,33") ; ignore
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "162,6,163,21")
+                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "162,6,162,30")
+                                          ; dynrule-cong(
+                                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "162,19,162,24") ; ignore
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "162,27,162,29") ; bnd
+                                            )
+                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "163,6,163,21")
+                                            ; Rec(
+                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "163,10,163,15") ; ignore
+                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "163,18,163,20") ; bnd
+                                              )))))))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "sboundin", "154,2,163,21")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "sboundin", "154,2,163,21")
+      ; fail
 
-// Free Variables and Renaming
 
 strategies
-
   declared-vars =
-    map(?VarDec(<id>,_) + ?DefaultVarDec(<id>))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "declared-vars", "169,2,170,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "170,4,170,46")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "170,8,170,45")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "170,8,170,22")
+           ; ?VarDec(
+                <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "170,17,170,18") ; id>
+              , _
+              )
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "170,26,170,45")
+             ; ?DefaultVarDec(
+                  <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "170,42,170,43") ; id>
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "declared-vars", "169,2,170,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "declared-vars", "169,2,170,46")
+      ; fail
 
-  tvars = 
-    free-vars(Add1, Bind0 + Bind4 + Bind6 + Bind8 + Bind10, tboundin)
+  tvars =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tvars", "172,2,173,68")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,4,173,68")
+    ; free-vars(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,14,173,17") ; Add1
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,20,173,57")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,20,173,24") ; Bind0
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,28,173,57")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,28,173,32") ; Bind4
+                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,36,173,57")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,36,173,40") ; Bind6
+                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,44,173,57")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,44,173,48") ; Bind8
+                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,52,173,57") ; Bind10))))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "173,60,173,67") ; tboundin
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tvars", "172,2,173,68")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tvars", "172,2,173,68")
+      ; fail
 
-  svars = 
-    free-vars(Add2, Bind1 + Bind2 + Bind3 + Bind5 + Bind7 + Bind9, sboundin)
+  svars =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "svars", "175,2,176,75")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,4,176,75")
+    ; free-vars(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,14,176,17") ; Add2
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,20,176,64")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,20,176,24") ; Bind1
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,28,176,64")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,28,176,32") ; Bind2
+                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,36,176,64")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,36,176,40") ; Bind3
+                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,44,176,64")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,44,176,48") ; Bind5
+                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,52,176,64")
+                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,52,176,56") ; Bind7
+                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,60,176,64") ; Bind9)))))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "176,67,176,74") ; sboundin
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "svars", "175,2,176,75")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "svars", "175,2,176,75")
+      ; fail
 
-  trename = 
-    rename(Var, Bind0 + Bind6 + Bind8 + Bind10, tboundin, tpaste)
+  trename =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "trename", "178,2,179,64")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,4,179,64")
+    ; rename(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,11,179,13") ; Var
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,16,179,45")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,16,179,20") ; Bind0
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,24,179,45")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,24,179,28") ; Bind6
+                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,32,179,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,32,179,36") ; Bind8
+                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,40,179,45") ; Bind10)))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,48,179,55") ; tboundin
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "179,58,179,63") ; tpaste
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "trename", "178,2,179,64")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "trename", "178,2,179,64")
+      ; fail
 
-  srename = 
-    rename(SVar, Bind1 + Bind2 + Bind3 + Bind5 + Bind7 + Bind9, sboundin, spaste)
+  srename =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "srename", "181,2,182,80")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,4,182,80")
+    ; rename(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,11,182,14") ; SVar
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,17,182,61")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,17,182,21") ; Bind1
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,25,182,61")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,25,182,29") ; Bind2
+                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,33,182,61")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,33,182,37") ; Bind3
+                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,41,182,61")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,41,182,45") ; Bind5
+                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,49,182,61")
+                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,49,182,53") ; Bind7
+                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,57,182,61") ; Bind9)))))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,64,182,71") ; sboundin
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "182,74,182,79") ; spaste
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "srename", "181,2,182,80")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "srename", "181,2,182,80")
+      ; fail
 
-  svars-arity = 
-    free-vars2(\CallT(SVar(f), as1, as2) -> [(f, (<length> as1, <length> as2))]\
-              ,Bind1 + Bind2 + Bind3 + Bind5 + Bind7 + Bind9
-              ,sboundin
-              ,{f:?((f,_),f)})
+  svars-arity =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "svars-arity", "184,2,188,29")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "185,4,188,29")
+    ; free-vars2(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "185,15,185,79")
+        ; \ CallT(SVar(f), as1, as2) -> [ ( f
+                                          , ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "185,51,185,56") ; length> as1
+                                            , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "185,65,185,70") ; length> as2
+                                            )
+                                          )
+                                        ] \
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,15,186,59")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,15,186,19") ; Bind1
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,23,186,59")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,23,186,27") ; Bind2
+                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,31,186,59")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,31,186,35") ; Bind3
+                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,39,186,59")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,39,186,43") ; Bind5
+                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,47,186,59")
+                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,47,186,51") ; Bind7
+                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "186,55,186,59") ; Bind9)))))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "187,15,187,22") ; sboundin
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "188,15,188,28")
+        ; {f:
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "188,18,188,27")
+            ; ?((f, _), f)
+          }
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "svars-arity", "184,2,188,29")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "svars-arity", "184,2,188,29")
+      ; fail
 
-  strename = 
-    trename ; srename
+  strename =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "strename", "190,2,191,20")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "191,4,191,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "191,4,191,10") ; trename)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "191,14,191,20")
+    ; srename
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "strename", "190,2,191,20")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "strename", "190,2,191,20")
+      ; fail
 
-  tsubstitute = 
-    substitute(IsVar, Var, Bind0 + Bind4 + Bind6 + Bind8 + Bind10, tboundin, tpaste)
+  tsubstitute =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tsubstitute", "193,2,194,83")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,4,194,83")
+    ; substitute(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,15,194,19") ; IsVar
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,22,194,24") ; Var
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,27,194,64")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,27,194,31") ; Bind0
+           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,35,194,64")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,35,194,39") ; Bind4
+                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,43,194,64")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,43,194,47") ; Bind6
+                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,51,194,64")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,51,194,55") ; Bind8
+                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,59,194,64") ; Bind10))))
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,67,194,74") ; tboundin
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "194,77,194,82") ; tpaste
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tsubstitute", "193,2,194,83")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tsubstitute", "193,2,194,83")
+      ; fail
 
-  tsubs = 
-    substitute(IsVar)
+  tsubs =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tsubs", "196,2,197,20")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "197,4,197,20")
+    ; substitute(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "197,15,197,19") ; IsVar
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tsubs", "196,2,197,20")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "tsubs", "196,2,197,20")
+      ; fail
 
-  ssubs = 
-    substitute(IsSVar)
+  ssubs =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ssubs", "199,2,200,21")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "200,4,200,21")
+    ; substitute(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "200,15,200,20") ; IsSVar
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ssubs", "199,2,200,21")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/stratlib.str", "ssubs", "199,2,200,21")
+      ; fail

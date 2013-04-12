@@ -1,21 +1,57 @@
 module stratego/asfix/yield
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   stratego/asfix/signature
 
 
 strategies
-
   asfix-yield(|stream) =
-    leaves(
-         <fputs> (<is-string>, stream)
-      <+ <fputc> (<id>, stream)
-    , is-leaf
-    , asfix-skip
-    )
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "asfix-yield", "9,2,15,4")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "10,4,15,4")
+    ; leaves(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "11,9,12,30")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "11,9,11,37")
+           ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "11,10,11,14") ; fputs)> ( <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "11,19,11,27") ; is-string>
+                                                                                                                   , stream
+                                                                                                                   )
+           <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "12,9,12,30")
+              ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "12,10,12,14") ; fputc)> ( <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "12,19,12,20") ; id>
+                                                                                                                      , stream
+                                                                                                                      ))
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "13,6,13,12") ; is-leaf
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "14,6,14,15") ; asfix-skip
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "asfix-yield", "9,2,15,4")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "asfix-yield", "9,2,15,4")
+      ; fail
 
   asfix-skip(x) =
-      appl(id, list(x))
-    + amb([x|id])
-    + parsetree(x,id)
-
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "asfix-skip", "17,2,20,20")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "18,6,20,20")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "18,6,18,22")
+       ; appl(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "18,11,18,12") ; id
+         , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "18,15,18,21")
+           ; list(
+               s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "18,20,18,20") ; x
+             )
+         )
+       + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "19,6,20,20")
+         ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "19,6,19,16")
+            ; amb(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "19,10,19,15")
+                ; [s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "19,11,19,11") ; x|s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "19,13,19,14") ; id]
+              )
+            + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "20,6,20,20")
+              ; parsetree(
+                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "20,16,20,16") ; x
+                , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "20,18,20,19") ; id
+                )))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "asfix-skip", "17,2,20,20")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/yield.str", "asfix-skip", "17,2,20,20")
+      ; fail

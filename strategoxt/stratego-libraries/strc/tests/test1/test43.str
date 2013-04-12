@@ -1,24 +1,69 @@
 module test43
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 signature
   constructors
-    Bar : a -> b
+    Bar    : a -> b
     Foobar : a * b -> c
-    Foo : a * b -> c
+    Foo    : a * b -> c
+
 
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "main", "11,3,14,15")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "11,10,14,15")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "11,10,11,11") ; ?y)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "12,5,14,15")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "12,5,14,7")
+       ; let s(|x) =
+               s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "s", "12,9,12,23")
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "12,17,12,23")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "12,17,12,18") ; !x)
+               ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "12,21,12,23")
+               ; foo
+               < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "s", "12,9,12,23")
+               + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "s", "12,9,12,23")
+                 ; fail
+         in
+           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "13,9,13,13")
+           ; s(|1)
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "14,10,14,15")
+    ; !(y, y)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "main", "11,3,14,15")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "main", "11,3,14,15")
+      ; fail
 
-   main = ?y;  
-     let s(|x) = !x; foo
-      in s(|1)
-     end; !(y,y)
+  foo =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foo", "16,3,17,34")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "17,5,17,34")
+    ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "17,9,17,32")
+          ; \ Bar(x) -> (x, "bar") \)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foo", "16,3,17,34")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foo", "16,3,17,34")
+      ; fail
 
-   foo = 
-     all(\ Bar(x) -> (x, "bar") \ )
+  foobar :
+    Foobar(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foobar", "19,3,20,34")> Foo(Bar(x), y)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foobar", "19,3,20,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foobar", "19,3,20,34")
+             ; fail
 
-   foobar :
-     Foobar(x, y) -> Foo(Bar(x), y)
-
-   foobar2 =
-     ?Foo(Bar(x), y)
-     ; !Foobar(x, y)
+  foobar2 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foobar2", "22,3,24,19")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "23,5,24,19")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "23,5,23,19")
+       ; ?Foo(Bar(x), y))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "24,7,24,19")
+    ; !Foobar(x, y)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foobar2", "22,3,24,19")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test43.str", "foobar2", "22,3,24,19")
+      ; fail

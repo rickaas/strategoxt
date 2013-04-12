@@ -1,163 +1,458 @@
-/**
- * Test module for string-misc
- */
 module string-misc-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 strategies
-
   main-string-misc-test =
-    test-suite(!"String Misc test suite",
-      test-all-lines
-    ; test-string-tokenize
-    ; test-indent-text
-    ; test-trim-trailing
-    ; test-get-all-lines
-    ; test-starts-with
-    ; test-ends-with
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "main-string-misc-test", "8,2,21,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "9,4,21,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "9,15,9,39")
+        ; !"String Misc test suite"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "10,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "10,6,10,19") ; test-all-lines)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "11,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "11,6,11,25") ; test-string-tokenize)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "12,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "12,6,12,21") ; test-indent-text)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "13,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "13,6,13,23") ; test-trim-trailing)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "14,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "14,6,14,23") ; test-get-all-lines)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "15,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "15,6,15,21") ; test-starts-with)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "16,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "16,6,16,19") ; test-ends-with)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "18,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "18,6,18,19") ; test-shuffle-1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "19,6,20,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "19,6,19,29") ; test-shuffle-word-mids-1)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "20,6,20,29")
+        ; test-shuffle-word-mids-2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "main-string-misc-test", "8,2,21,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "main-string-misc-test", "8,2,21,4")
+      ; fail
 
-    ; test-shuffle-1
-    ; test-shuffle-word-mids-1
-    ; test-shuffle-word-mids-2
-    )
-    
   test-all-lines =
-     apply-test(!"test-all-lines-1"
-        , all-lines(<conc-strings> (<id>, "EOL"))
-        , !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty should not follow\n"
-        , !"the first lineEOL\nSecond line, third will be emptyEOL\nEOL\nThis is the fourth, a final empty should not followEOL\n")
-   ; apply-test(!"test-all-lines-2"
-        , all-lines(<conc-strings> (<id>, "EOL"))
-        , !"\nAfter first empty line: Second line, third will be empty\n\nThis is the fourth, a final empty should not follow"
-        , !"EOL\nAfter first empty line: Second line, third will be emptyEOL\nEOL\nThis is the fourth, a final empty should not followEOL")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-all-lines", "23,2,31,138")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "24,5,31,138")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "24,5,27,130")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "24,16,24,34")
+           ; !"test-all-lines-1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "25,10,25,48")
+           ; all-lines(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "25,20,25,47")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "25,21,25,32") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "25,37,25,38") ; id>
+                                                                                                                           , "EOL"
+                                                                                                                           )
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "26,10,26,117")
+           ; !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty should not follow\n"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "27,10,27,129")
+           ; !"the first lineEOL\nSecond line, third will be emptyEOL\nEOL\nThis is the fourth, a final empty should not followEOL\n"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "28,5,31,138")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "28,16,28,34")
+        ; !"test-all-lines-2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "29,10,29,48")
+        ; all-lines(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "29,20,29,47")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "29,21,29,32") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "29,37,29,38") ; id>
+                                                                                                                        , "EOL"
+                                                                                                                        )
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "30,10,30,125")
+        ; !"\nAfter first empty line: Second line, third will be empty\n\nThis is the fourth, a final empty should not follow"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "31,10,31,137")
+        ; !"EOL\nAfter first empty line: Second line, third will be emptyEOL\nEOL\nThis is the fourth, a final empty should not followEOL"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-all-lines", "23,2,31,138")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-all-lines", "23,2,31,138")
+      ; fail
 
   test-string-tokenize =
-     apply-test(!"test-string-tokenize-keep-empty-1"
-        , string-tokenize-keep-empty(|['\n'])
-        , !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty will follow\n"
-        , !["the first line", "Second line, third will be empty", "", "This is the fourth, a final empty will follow", ""])
-   ; apply-test(!"test-string-tokenize-keep-empty-2"
-        , string-tokenize-keep-empty(|['\n'])
-        , !""
-        , ![""])
-   ; apply-test(!"test-string-tokenize-keep-empty-3"
-        , string-tokenize-keep-empty(|['\n'])
-        , !"\n\n"
-        , !["","",""])
-   ; apply-test(!"test-string-tokenize-keep-all-1"
-        , string-tokenize-keep-all(|['\n'])
-        , !"the first line\nSecond line, third will be empty and tokenized\n\nThis is the fourth, a final empty will follow\n"
-        , !["the first line", "\n","Second line, third will be empty and tokenized", "\n", "", "\n", "This is the fourth, a final empty will follow", "\n", ""])
-   ; apply-test(!"test-string-tokenize-keep-all-2"
-        , string-tokenize-keep-all(|['\n'])
-        , !""
-        , ![""])
-   ; apply-test(!"test-string-tokenize-keep-all-3"
-        , string-tokenize-keep-all(|['\n'])
-        , !"\n\n"
-        , !["","\n","","\n",""])
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-string-tokenize", "33,2,57,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "34,5,57,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "34,5,37,122")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "34,16,34,51")
+           ; !"test-string-tokenize-keep-empty-1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "35,10,35,44")
+           ; string-tokenize-keep-empty(|['\n'])
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "36,10,36,111")
+           ; !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty will follow\n"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "37,10,37,121")
+           ; ![ "the first line"
+              , "Second line, third will be empty"
+              , ""
+              , "This is the fourth, a final empty will follow"
+              , ""
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "38,5,57,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "38,5,41,15")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "38,16,38,51")
+           ; !"test-string-tokenize-keep-empty-2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "39,10,39,44")
+           ; string-tokenize-keep-empty(|['\n'])
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "40,10,40,12")
+           ; !""
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "41,10,41,14")
+           ; ![""]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "42,5,57,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "42,5,45,21")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "42,16,42,51")
+           ; !"test-string-tokenize-keep-empty-3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "43,10,43,44")
+           ; string-tokenize-keep-empty(|['\n'])
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "44,10,44,16")
+           ; !"\n\n"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "45,10,45,20")
+           ; !["", "", ""]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "46,5,57,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "46,5,49,159")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "46,16,46,49")
+           ; !"test-string-tokenize-keep-all-1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "47,10,47,42")
+           ; string-tokenize-keep-all(|['\n'])
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "48,10,48,125")
+           ; !"the first line\nSecond line, third will be empty and tokenized\n\nThis is the fourth, a final empty will follow\n"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "49,10,49,158")
+           ; ![ "the first line"
+              , "\n"
+              , "Second line, third will be empty and tokenized"
+              , "\n"
+              , ""
+              , "\n"
+              , "This is the fourth, a final empty will follow"
+              , "\n"
+              , ""
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "50,5,57,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "50,5,53,15")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "50,16,50,49")
+           ; !"test-string-tokenize-keep-all-2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "51,10,51,42")
+           ; string-tokenize-keep-all(|['\n'])
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "52,10,52,12")
+           ; !""
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "53,10,53,14")
+           ; ![""]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "54,5,57,31")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "54,16,54,49")
+        ; !"test-string-tokenize-keep-all-3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "55,10,55,42")
+        ; string-tokenize-keep-all(|['\n'])
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "56,10,56,16")
+        ; !"\n\n"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "57,10,57,30")
+        ; ![ ""
+           , "\n"
+           , ""
+           , "\n"
+           , ""
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-string-tokenize", "33,2,57,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-string-tokenize", "33,2,57,31")
+      ; fail
 
   test-indent-text =
-     apply-test(!"test-indent-text-1"
-        , indent-text(|4)
-        , !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty should not follow\n"
-        , !"    the first line\n    Second line, third will be empty\n    \n    This is the fourth, a final empty should not follow\n")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-indent-text", "59,2,63,134")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "60,5,63,134")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "60,16,60,36")
+        ; !"test-indent-text-1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "61,10,61,24")
+        ; indent-text(|4)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "62,10,62,117")
+        ; !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty should not follow\n"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "63,10,63,133")
+        ; !"    the first line\n    Second line, third will be empty\n    \n    This is the fourth, a final empty should not follow\n"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-indent-text", "59,2,63,134")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-indent-text", "59,2,63,134")
+      ; fail
 
   test-trim-trailing =
-     apply-test(!"test-trim-trailing-1"
-        , all-lines(trim-trailing-whitespace)
-        , !"the first line    \nSecond line, third will be empty\n \nThis is the fourth, a final empty should not follow\n   "
-        , !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty should not follow\n")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-trim-trailing", "65,2,69,118")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "66,5,69,118")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "66,16,66,38")
+        ; !"test-trim-trailing-1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "67,10,67,44")
+        ; all-lines(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "67,20,67,43") ; trim-trailing-whitespace
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "68,10,68,125")
+        ; !"the first line    \nSecond line, third will be empty\n \nThis is the fourth, a final empty should not follow\n   "
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "69,10,69,117")
+        ; !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty should not follow\n"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-trim-trailing", "65,2,69,118")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-trim-trailing", "65,2,69,118")
+      ; fail
 
-  test-get-all-lines = id
-    ; apply-test(!"test-get-all-lines-1"
-      , get-lines
-      , !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty will follow\n"
-      , !["the first line","Second line, third will be empty","","This is the fourth, a final empty will follow",""]
+  test-get-all-lines =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-get-all-lines", "71,2,131,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "71,23,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "71,23,71,24") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "72,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "72,6,76,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "72,17,72,39")
+           ; !"test-get-all-lines-1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "73,8,73,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "74,8,74,109")
+           ; !"the first line\nSecond line, third will be empty\n\nThis is the fourth, a final empty will follow\n"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "75,8,75,115")
+           ; ![ "the first line"
+              , "Second line, third will be empty"
+              , ""
+              , "This is the fourth, a final empty will follow"
+              , ""
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "77,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "77,6,81,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "77,17,77,39")
+           ; !"test-get-all-lines-2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "78,8,78,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "79,8,79,14")
+           ; !"1\n2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "80,8,80,18")
+           ; !["1", "2"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "82,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "82,6,86,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "82,17,82,39")
+           ; !"test-get-all-lines-3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "83,8,83,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "84,8,84,16")
+           ; !"1\r\n2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "85,8,85,18")
+           ; !["1", "2"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "87,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "87,6,91,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "87,17,87,39")
+           ; !"test-get-all-lines-4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "88,8,88,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "89,8,89,14")
+           ; !"1\r2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "90,8,90,18")
+           ; !["1", "2"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "92,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "92,6,96,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "92,17,92,39")
+           ; !"test-get-all-lines-5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "93,8,93,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "94,8,94,16")
+           ; !"1\n\n2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "95,8,95,22")
+           ; !["1", "", "2"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "97,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "97,6,101,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "97,17,97,39")
+           ; !"test-get-all-lines-6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "98,8,98,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "99,8,99,20")
+           ; !"1\r\n\r\n2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "100,8,100,22")
+           ; !["1", "", "2"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "102,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "102,6,106,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "102,17,102,39")
+           ; !"test-get-all-lines-7"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "103,8,103,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "104,8,104,16")
+           ; !"1\r\r2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "105,8,105,22")
+           ; !["1", "", "2"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "107,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "107,6,111,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "107,17,107,39")
+           ; !"test-get-all-lines-8"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "108,8,108,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "109,8,109,17")
+           ; !"1\n2\n3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "110,8,110,23")
+           ; !["1", "2", "3"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "112,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "112,6,116,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "112,17,112,39")
+           ; !"test-get-all-lines-9"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "113,8,113,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "114,8,114,21")
+           ; !"1\r\n2\r\n3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "115,8,115,23")
+           ; !["1", "2", "3"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "117,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "117,6,121,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "117,17,117,40")
+           ; !"test-get-all-lines-10"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "118,8,118,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "119,8,119,17")
+           ; !"1\r2\r3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "120,8,120,23")
+           ; !["1", "2", "3"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "122,6,131,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "122,6,126,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "122,17,122,40")
+           ; !"test-get-all-lines-11"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "123,8,123,16") ; get-lines
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "124,8,124,11")
+           ; !"1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "125,8,125,13")
+           ; !["1"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "127,6,131,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "127,17,127,40")
+        ; !"test-get-all-lines-12"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "128,8,128,16") ; get-lines
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "129,8,129,10")
+        ; !""
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "130,8,130,12")
+        ; ![""]
       )
-    ; apply-test(!"test-get-all-lines-2"
-      , get-lines
-      , !"1\n2"
-      , !["1", "2"]
-      )
-    ; apply-test(!"test-get-all-lines-3"
-      , get-lines
-      , !"1\r\n2"
-      , !["1", "2"]
-      )
-    ; apply-test(!"test-get-all-lines-4"
-      , get-lines
-      , !"1\r2"
-      , !["1", "2"]
-      )
-    ; apply-test(!"test-get-all-lines-5"
-      , get-lines
-      , !"1\n\n2"
-      , !["1", "", "2"]
-      )
-    ; apply-test(!"test-get-all-lines-6"
-      , get-lines
-      , !"1\r\n\r\n2"
-      , !["1", "", "2"]
-      )
-    ; apply-test(!"test-get-all-lines-7"
-      , get-lines
-      , !"1\r\r2"
-      , !["1", "", "2"]
-      )
-    ; apply-test(!"test-get-all-lines-8"
-      , get-lines
-      , !"1\n2\n3"
-      , !["1", "2", "3"]
-      )
-    ; apply-test(!"test-get-all-lines-9"
-      , get-lines
-      , !"1\r\n2\r\n3"
-      , !["1", "2", "3"]
-      )
-    ; apply-test(!"test-get-all-lines-10"
-      , get-lines
-      , !"1\r2\r3"
-      , !["1", "2", "3"]
-      )
-    ; apply-test(!"test-get-all-lines-11"
-      , get-lines
-      , !"1"
-      , !["1"]
-      )
-    ; apply-test(!"test-get-all-lines-12"
-      , get-lines
-      , !""
-      , ![""]
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-get-all-lines", "71,2,131,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-get-all-lines", "71,2,131,6")
+      ; fail
 
-  test-starts-with = 
-     apply-test(!"test-string-starts-with-1"
-       , string-starts-with(|"foo")
-       , !"foobar"
-       , !"foobar")
-   ; apply-and-fail(!"test-string-starts-with-2"
-       , string-starts-with(|"foo")
-       , !"frobbar")
+  test-starts-with =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-starts-with", "133,2,140,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "134,5,140,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "134,5,137,18")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "134,16,134,43")
+           ; !"test-string-starts-with-1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "135,9,135,34")
+           ; string-starts-with(|"foo")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "136,9,136,17")
+           ; !"foobar"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "137,9,137,17")
+           ; !"foobar"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "138,5,140,19")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "138,20,138,47")
+        ; !"test-string-starts-with-2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "139,9,139,34")
+        ; string-starts-with(|"foo")
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "140,9,140,18")
+        ; !"frobbar"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-starts-with", "133,2,140,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-starts-with", "133,2,140,19")
+      ; fail
 
-  test-ends-with = 
-     apply-test(!"test-string-ends-with-1"
-       , string-ends-with(|"bar")
-       , !"foobar"
-       , !"foobar")
-   ; apply-and-fail(!"test-string-ends-with-2"
-       , string-ends-with(|"bar")
-       , !"foobaz")
-       
+  test-ends-with =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-ends-with", "142,2,149,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "143,5,149,18")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "143,5,146,18")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "143,16,143,41")
+           ; !"test-string-ends-with-1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "144,9,144,32")
+           ; string-ends-with(|"bar")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "145,9,145,17")
+           ; !"foobar"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "146,9,146,17")
+           ; !"foobar"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "147,5,149,18")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "147,20,147,45")
+        ; !"test-string-ends-with-2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "148,9,148,32")
+        ; string-ends-with(|"bar")
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "149,9,149,17")
+        ; !"foobaz"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-ends-with", "142,2,149,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-ends-with", "142,2,149,18")
+      ; fail
+
   test-shuffle-1 =
-     testing(!"test-shuffle-1"
-        , <shuffle> [1, 2, 3, 4, 5, 6, 7, 8, 9])
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-1", "151,2,153,47")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "152,5,153,47")
+    ; testing(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "152,13,152,29")
+        ; !"test-shuffle-1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "153,10,153,46")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "153,11,153,17") ; shuffle)> [ 1
+                                                                                                                 , 2
+                                                                                                                 , 3
+                                                                                                                 , 4
+                                                                                                                 , 5
+                                                                                                                 , 6
+                                                                                                                 , 7
+                                                                                                                 , 8
+                                                                                                                 , 9
+                                                                                                                 ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-1", "151,2,153,47")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-1", "151,2,153,47")
+      ; fail
 
   test-shuffle-word-mids-1 =
-     testing(!"test-shuffle-word-mids-1"
-        , <shuffle-word-mids> "Goedemorgen")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-word-mids-1", "155,2,157,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "156,5,157,43")
+    ; testing(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "156,13,156,39")
+        ; !"test-shuffle-word-mids-1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "157,10,157,42")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "157,11,157,27") ; shuffle-word-mids)> "Goedemorgen"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-word-mids-1", "155,2,157,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-word-mids-1", "155,2,157,43")
+      ; fail
 
   test-shuffle-word-mids-2 =
-     testing(!"test-shuffle-word-mids-2"
-        , <shuffle-word-mids> "Stratego/XT is a framework for the development of transformation systems aiming to support a wide range of program transformations. The framework consists of the transformation language Stratego and the XT collection of transformation tools.")
-        
-        
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-word-mids-2", "159,2,161,273")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "160,5,161,273")
+    ; testing(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "160,13,160,39")
+        ; !"test-shuffle-word-mids-2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "161,10,161,272")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "161,11,161,27") ; shuffle-word-mids)> "Stratego/XT is a framework for the development of transformation systems aiming to support a wide range of program transformations. The framework consists of the transformation language Stratego and the XT collection of transformation tools."
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-word-mids-2", "159,2,161,273")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/string-misc-test.str", "test-shuffle-word-mids-2", "159,2,161,273")
+      ; fail

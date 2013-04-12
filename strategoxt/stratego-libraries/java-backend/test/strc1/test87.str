@@ -1,138 +1,451 @@
 module test87
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
-    ExtSDef : String * List(String) * List(String) -> SDef
+    ExtSDef    : String * List(String) * List(String) -> SDef
     ExtSDefInl : String * List(String) * List(String) * String -> SDef
-    SDefT : String * List(String) * List(String) * String -> SDef
+    SDefT      : String * List(String) * List(String) * String -> SDef
+
 
 strategies
-
-  main-test87 = 
-    test-suite(!"test87",
-      test1
-      ; test2
-      ; test3
-      ; test4
-      ; test5
-      ; test6
-      ; test7
-    )
+  main-test87 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "main-test87", "11,2,20,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "12,4,20,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "12,15,12,23")
+        ; !"test87"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "13,6,19,12")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "13,6,13,10") ; test1)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "14,8,19,12")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "14,8,14,12") ; test2)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "15,8,19,12")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "15,8,15,12") ; test3)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "16,8,19,12")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "16,8,16,12") ; test4)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "17,8,19,12")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "17,8,17,12") ; test5)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "18,8,19,12")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "18,8,18,12") ; test6)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "19,8,19,12")
+        ; test7
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "main-test87", "11,2,20,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "main-test87", "11,2,20,4")
+      ; fail
 
   test1 =
-    apply-test(!"test1"
-	, joindefs
-	, ![ExtSDef("a", ["b"], ["c"]), ExtSDef("a", ["d"], ["e"])]
-	, ExtSDef("a", ["b"], ["c"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test1", "22,2,27,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "23,4,27,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "23,15,23,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "24,3,24,10") ; joindefs
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "25,3,25,59")
+        ; ![ ExtSDef(
+               "a"
+             , ["b"]
+             , ["c"]
+             )
+           , ExtSDef(
+               "a"
+             , ["d"]
+             , ["e"]
+             )
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "26,3,26,28")
+        ; ExtSDef(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "26,11,26,13") ; "a"
+          , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "26,16,26,20")
+            ; [s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "26,17,26,19") ; "b"]
+          , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "26,23,26,27")
+            ; [s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "26,24,26,26") ; "c"]
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test1", "22,2,27,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test1", "22,2,27,1")
+      ; fail
 
   test2 =
-    apply-test(!"test2"
-	, JoinDefsExt1
-	, ![ExtSDef("a", ["b"], ["c"]), ExtSDef("a", ["d"], ["e"])]
-	, !ExtSDef("a", ["b"], ["c"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test2", "29,2,34,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "30,4,34,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "30,15,30,22")
+        ; !"test2"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "31,3,31,14") ; JoinDefsExt1
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "32,3,32,59")
+        ; ![ ExtSDef(
+               "a"
+             , ["b"]
+             , ["c"]
+             )
+           , ExtSDef(
+               "a"
+             , ["d"]
+             , ["e"]
+             )
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "33,3,33,29")
+        ; !ExtSDef(
+             "a"
+           , ["b"]
+           , ["c"]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test2", "29,2,34,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test2", "29,2,34,1")
+      ; fail
 
-  joindefs = debug(!"joindefs: "); (
-    JoinDefs1 <+ JoinDefs2 <+ JoinDefsExt1 <+ JoinDefsExt2
-  )
+  joindefs =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "joindefs", "36,2,38,2")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "36,13,38,2")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "36,13,36,32")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "36,19,36,31")
+           ; !"joindefs: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,4,37,57")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,4,37,12") ; JoinDefs1
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,17,37,57")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,17,37,25") ; JoinDefs2
+             <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,30,37,57")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,30,37,41") ; JoinDefsExt1
+                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "37,46,37,57") ; JoinDefsExt2)))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "joindefs", "36,2,38,2")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "joindefs", "36,2,38,2")
+      ; fail
 
-  JoinDefs1 : 
-    [sdef] -> sdef
-    where debug(!"JoinDefs1: ")
+  JoinDefs1 :
+    [sdef] -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs1", "40,2,42,30")> sdef
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs1", "40,2,42,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs1", "40,2,42,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "42,10,42,30")
+          ; debug(
+              s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "42,16,42,29")
+              ; !"JoinDefs1: "
+            )
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs1", "40,2,42,30")
+             ; fail
 
-  JoinDefs2 : 
-    defs @ [SDefT(f, xs1, xs2, s) | _] -> "foo"
+  JoinDefs2 :
+    defs@[SDefT(f, xs1, xs2, s)|_] -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs2", "44,2,45,46")> "foo"
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs2", "44,2,45,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefs2", "44,2,45,46")
+             ; fail
 
-  JoinDefsExt1 = debug(!"JoinDefsExt1: "); 
-    where(map(
-      ?ExtSDef(f, <length => i>, <length => j>)
-    + ?ExtSDefInl(f, <length => i>, <length => j>, s)
-    ))
-    ; debug(!"JoinDefsExt1 yes: ") 
-    ; (fetch-elem(?ExtSDefInl(_,_,_,_)) <+ Hd)
+  JoinDefsExt1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefsExt1", "47,2,53,45")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "47,17,53,45")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "47,17,47,40")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "47,23,47,39")
+           ; !"JoinDefsExt1: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "48,4,53,45")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "48,4,51,5")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "48,10,51,4")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "49,6,50,52")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "49,6,49,46")
+                      ; ?ExtSDef(
+                           f
+                         , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "49,19,49,29")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "49,19,49,24") ; length) => i>
+                         , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "49,34,49,44")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "49,34,49,39") ; length) => j>
+                         )
+                      + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "50,6,50,52")
+                        ; ?ExtSDefInl(
+                             f
+                           , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "50,22,50,32")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "50,22,50,27") ; length) => i>
+                           , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "50,37,50,47")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "50,37,50,42") ; length) => j>
+                           , s
+                           ))
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "52,6,53,45")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "52,6,52,33")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "52,12,52,32")
+           ; !"JoinDefsExt1 yes: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "53,7,53,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "53,7,53,38")
+       ; fetch-elem(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "53,18,53,37")
+           ; ?ExtSDefInl(_, _, _, _)
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "53,43,53,44") ; Hd)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefsExt1", "47,2,53,45")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefsExt1", "47,2,53,45")
+      ; fail
 
-  JoinDefsExt2 = debug(!"JoinDefsExt2: "); 
-    fetch(?ExtSDef(f,_,_) + ?ExtSDefInl(f,_,_,_))
-    ; fetch(?SDefT(f,_,_,_))
-    ; <debug(!"error: redefining external definition: ")> f
+  JoinDefsExt2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefsExt2", "55,2,59,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "55,17,59,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "55,17,55,40")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "55,23,55,39")
+           ; !"JoinDefsExt2: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "56,4,59,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "56,4,56,48")
+       ; fetch(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "56,10,56,47")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "56,10,56,24")
+              ; ?ExtSDef(f, _, _)
+              + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "56,28,56,47")
+                ; ?ExtSDefInl(f, _, _, _))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "57,6,59,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "57,6,57,27")
+       ; fetch(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "57,12,57,26")
+           ; ?SDefT(f, _, _, _)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "58,6,59,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "58,6,58,58")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "58,7,58,55")
+           ; debug(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "58,13,58,54")
+               ; !"error: redefining external definition: "
+             ))> f)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "59,6,59,14")
     ; giving-up
-
-// ---------------
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefsExt2", "55,2,59,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "JoinDefsExt2", "55,2,59,14")
+      ; fail
 
   test3 =
-    apply-test(!"test3"
-	, foo3
-	, ![("a", ["b"], ["c"]), ("a", ["d"], ["e"])]
-	, !("a", ["b"], ["c"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test3", "63,2,68,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "64,4,68,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "64,15,64,22")
+        ; !"test3"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "65,3,65,6") ; foo3
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "66,3,66,45")
+        ; ![ ( "a"
+             , ["b"]
+             , ["c"]
+             )
+           , ( "a"
+             , ["d"]
+             , ["e"]
+             )
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "67,3,67,22")
+        ; !( "a"
+           , ["b"]
+           , ["c"]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test3", "63,2,68,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test3", "63,2,68,1")
+      ; fail
 
   foo3 =
-    where(map(
-      ?(f, <length => i>, <length => j>)
-    + ?(f, <length => i>, <length => j>, s)
-    ))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo3", "70,2,75,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "71,4,75,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "71,4,74,5")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "71,10,74,4")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "72,6,73,42")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "72,6,72,39")
+                      ; ?( f
+                         , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "72,12,72,22")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "72,12,72,17") ; length) => i>
+                         , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "72,27,72,37")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "72,27,72,32") ; length) => j>
+                         )
+                      + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "73,6,73,42")
+                        ; ?( f
+                           , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "73,12,73,22")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "73,12,73,17") ; length) => i>
+                           , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "73,27,73,37")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "73,27,73,32") ; length) => j>
+                           , s
+                           ))
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "75,6,75,7")
     ; Hd
-
-// ---------------
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo3", "70,2,75,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo3", "70,2,75,7")
+      ; fail
 
   test4 =
-    apply-test(!"test4"
-	, foo4
-	, ![("a", ["b"]), ("a", ["d"])]
-	, !("a", ["b"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test4", "79,2,84,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "80,4,84,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "80,15,80,22")
+        ; !"test4"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "81,3,81,6") ; foo4
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "82,3,82,31")
+        ; ![ ("a", ["b"])
+           , ("a", ["d"])
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "83,3,83,15")
+        ; !("a", ["b"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test4", "79,2,84,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test4", "79,2,84,1")
+      ; fail
 
   foo4 =
-    where(map(
-      ?(f, <length => i>)
-    + ?(f, <length => i>, s)
-    )) 
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo4", "86,2,91,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "87,4,91,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "87,4,90,5")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "87,10,90,4")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "88,6,89,27")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "88,6,88,24")
+                      ; ?( f
+                         , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "88,12,88,22")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "88,12,88,17") ; length) => i>
+                         )
+                      + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "89,6,89,27")
+                        ; ?( f
+                           , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "89,12,89,22")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "89,12,89,17") ; length) => i>
+                           , s
+                           ))
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "91,6,91,7")
     ; Hd
-
-// ---------------
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo4", "86,2,91,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo4", "86,2,91,7")
+      ; fail
 
   test5 =
-    apply-test(!"test5"
-	, foo5
-	, ![("a", ["b"]), ("a", ["d"])]
-	, !("a", ["b"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test5", "95,2,100,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "96,4,100,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "96,15,96,22")
+        ; !"test5"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "97,3,97,6") ; foo5
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "98,3,98,31")
+        ; ![ ("a", ["b"])
+           , ("a", ["d"])
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "99,3,99,15")
+        ; !("a", ["b"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test5", "95,2,100,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test5", "95,2,100,1")
+      ; fail
 
   foo5 =
-    where(map(
-      ?(f, _)
-    + ?(f, _, s)
-    ))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo5", "102,2,107,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "103,4,107,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "103,4,106,5")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "103,10,106,4")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "104,6,105,15")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "104,6,104,12")
+                      ; ?(f, _)
+                      + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "105,6,105,15")
+                        ; ?(f, _, s))
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "107,6,107,7")
     ; Hd
-
-// ---------------
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo5", "102,2,107,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo5", "102,2,107,7")
+      ; fail
 
   test6 =
-    apply-test(!"test6"
-	, foo6
-	, ![("a", ["b"]), ("a", ["d"])]
-	, !("a", ["b"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test6", "111,2,116,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "112,4,116,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "112,15,112,22")
+        ; !"test6"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "113,3,113,6") ; foo6
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "114,3,114,31")
+        ; ![ ("a", ["b"])
+           , ("a", ["d"])
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "115,3,115,15")
+        ; !("a", ["b"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test6", "111,2,116,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test6", "111,2,116,1")
+      ; fail
 
   foo6 =
-    where(map(
-      {a : ?(f, a); <length> a => i}
-    + {a : ?(f, a, s); <length> a => i}
-    ))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo6", "118,2,123,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "119,4,123,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "119,4,122,5")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "119,10,122,4")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,6,121,38")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,6,120,35")
+                      ; {a:
+                          s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,11,120,34")
+                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,11,120,17")
+                             ; ?(f, a))
+                          ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,20,120,34")
+                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,20,120,29")
+                             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "120,21,120,26") ; length)> a) => i
+                        }
+                      + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "121,6,121,38")
+                        ; {a:
+                            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "121,11,121,37")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "121,11,121,20")
+                               ; ?(f, a, s))
+                            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "121,23,121,37")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "121,23,121,32")
+                               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "121,24,121,29") ; length)> a) => i
+                          })
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "123,6,123,7")
     ; Hd
-
-// ---------------
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo6", "118,2,123,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo6", "118,2,123,7")
+      ; fail
 
   test7 =
-    apply-test(!"test7"
-	, foo7
-	, ![("a", ["b"]), ("a", ["d"])]
-	, !("a", ["b"])
-	)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test7", "127,2,132,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "128,4,132,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "128,15,128,22")
+        ; !"test7"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "129,3,129,6") ; foo7
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "130,3,130,31")
+        ; ![ ("a", ["b"])
+           , ("a", ["d"])
+           ]
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "131,3,131,15")
+        ; !("a", ["b"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test7", "127,2,132,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "test7", "127,2,132,1")
+      ; fail
 
   foo7 =
-    where(map(
-      {a: ?(f, a); <length> a => i}
-    ))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo7", "134,2,138,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "135,4,138,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "135,4,137,5")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "135,10,137,4")
+               ; map(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "136,6,136,34")
+                   ; {a:
+                       s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "136,10,136,33")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "136,10,136,16")
+                          ; ?(f, a))
+                       ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "136,19,136,33")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "136,19,136,28")
+                          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "136,20,136,25") ; length)> a) => i
+                     }
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "138,6,138,7")
     ; Hd
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo7", "134,2,138,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test87.str", "foo7", "134,2,138,7")
+      ; fail

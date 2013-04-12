@@ -1,71 +1,178 @@
-/**
- * Utility that inserts brackets in the AST of SDF modules such that:
- *   implode(parse(sdf-bracket(AST))) = AST
- *
- *
- * Currently this is implemented as follows:
- * SDF infix operators  "alt", "pair", and sequence (represented as lists)
- * are put inside a "bracket-symbol" in the context of nested SDF symbols
- * iter, iter-star, opt, alt, and sequence (represented as list).
- *
- * Example:
- * The AST for the symbol (A|B)* is
- *    iter-star(alt(sort("A"),sort("B")))
- * sdf-bracket transforms this AST into
- *    iter-star(bracket-symbol(alt(sort("A"),sort("B"))))
- */
 module sdf-bracket
-imports libstratego-lib Sdf2 Bracket-Symbol AsFix
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  Sdf2
+  Bracket-Symbol
+  AsFix
+
 
 strategies
-
   sdf-bracket-usage =
-    default-system-usage(
-      !["Usage: sdf-bracket [options]"]
-    , ![ "This program generates a disambiguated AST of SDF modules\n"
-       , "by inserting bracket symbols for SDF infix operators.\n"
-       , "Use this program before pretty-printing ASTs of SDF modules.\n"
-       ]
-    )
+    s-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket-usage", "22,2,29,4")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "23,4,29,4")
+    ; default-system-usage(
+        s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "24,6,24,38")
+        ; !["Usage: sdf-bracket [options]"]
+      , s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "25,6,28,7")
+        ; !["This program generates a disambiguated AST of SDF modules\n", "by inserting bracket symbols for SDF infix operators.\n", "Use this program before pretty-printing ASTs of SDF modules.\n"]
+      )
+    < s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket-usage", "22,2,29,4")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket-usage", "22,2,29,4")
+      ; fail
 
   sdf-bracket-about =
-    system-about
+    s-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket-about", "31,2,32,15")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "32,4,32,15")
+    ; system-about
+    < s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket-about", "31,2,32,15")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket-about", "31,2,32,15")
+      ; fail
 
-  io-sdf-bracket = 
-    io-wrap(fail, sdf-bracket-usage, sdf-bracket-about, sdf-bracket)
+  io-sdf-bracket =
+    s-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "io-sdf-bracket", "34,2,35,67")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "35,4,35,67")
+    ; io-wrap(
+        s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "35,12,35,15") ; fail
+      , s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "35,18,35,34") ; sdf-bracket-usage
+      , s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "35,37,35,53") ; sdf-bracket-about
+      , s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "35,56,35,66") ; sdf-bracket
+      )
+    < s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "io-sdf-bracket", "34,2,35,67")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "io-sdf-bracket", "34,2,35,67")
+      ; fail
 
   sdf-bracket =
-      topdown(try(Bracket))
-    ; topdown(try(DeBracket))
+    s-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket", "37,2,39,28")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "38,6,39,28")
+    ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "38,6,38,26")
+       ; topdown(
+           s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "38,14,38,25")
+           ; try(
+               s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "38,18,38,24") ; Bracket
+             )
+         ))
+    ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "39,6,39,28")
+    ; topdown(
+        s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "39,14,39,27")
+        ; try(
+            s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "39,18,39,26") ; DeBracket
+          )
+      )
+    < s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket", "37,2,39,28")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "sdf-bracket", "37,2,39,28")
+      ; fail
 
-  infix-op = alt(id, id) + is-list
+  infix-op =
+    s-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "infix-op", "41,2,41,33")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "41,13,41,33")
+    ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "41,13,41,23")
+       ; alt(
+           s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "41,17,41,18") ; id
+         , s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "41,21,41,22") ; id
+         )
+       + s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "41,27,41,33") ; is-list)
+    < s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "infix-op", "41,2,41,33")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "infix-op", "41,2,41,33")
+      ; fail
+
 
 rules
 
   Bracket :
-    iter(s) -> iter(bracket-symbol(s)) where <infix-op>s
+    iter(s) -> <r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "45,2,46,55")> iter(bracket-symbol(s))
+    where r-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "45,2,46,55")
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "45,2,46,55")
+             ; fail
+    where s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "46,45,46,55")
+          ; <(s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "46,46,46,53") ; infix-op)> s
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "45,2,46,55")
+             ; fail
 
   Bracket :
-    iter-star(s) -> iter-star(bracket-symbol(s)) where <infix-op>s
+    iter-star(s) -> <r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "48,2,49,65")> iter-star(bracket-symbol(s))
+    where r-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "48,2,49,65")
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "48,2,49,65")
+             ; fail
+    where s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "49,55,49,65")
+          ; <(s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "49,56,49,63") ; infix-op)> s
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "48,2,49,65")
+             ; fail
 
   Bracket :
-    opt(s) -> opt(bracket-symbol(s)) where <infix-op>s
+    opt(s) -> <r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "51,2,52,53")> opt(bracket-symbol(s))
+    where r-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "51,2,52,53")
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "51,2,52,53")
+             ; fail
+    where s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "52,43,52,53")
+          ; <(s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "52,44,52,51") ; infix-op)> s
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "51,2,52,53")
+             ; fail
 
   Bracket :
-    alt(s1, s2) -> alt(<try(infix-op;!bracket-symbol(s1))>s1, 
-                       <try(not(alt(id,id));infix-op;!bracket-symbol(s2))>s2)
+    alt(s1, s2) -> <r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "54,2,56,76")> alt(
+                                                                                                             <s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "55,24,55,56")
+                                                                                                              ; try(
+                                                                                                                  s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "55,28,55,55")
+                                                                                                                  ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "55,28,55,35") ; infix-op)
+                                                                                                                  ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "55,37,55,55")
+                                                                                                                  ; !bracket-symbol(s1)
+                                                                                                                )> s1
+                                                                                                           , <s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,24,56,72")
+                                                                                                              ; try(
+                                                                                                                  s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,28,56,71")
+                                                                                                                  ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,28,56,42")
+                                                                                                                     ; not(s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,32,56,41")
+                                                                                                                           ; alt(
+                                                                                                                               s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,36,56,37") ; id
+                                                                                                                             , s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,39,56,40") ; id
+                                                                                                                             )))
+                                                                                                                  ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,44,56,71")
+                                                                                                                  ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,44,56,51") ; infix-op)
+                                                                                                                  ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "56,53,56,71")
+                                                                                                                  ; !bracket-symbol(s2)
+                                                                                                                )> s2
+                                                                                                           )
+    where r-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "54,2,56,76")
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "54,2,56,76")
+             ; fail
 
-  // This rule is for sequences  which are represented as lists.
   Bracket :
-     [x|xs] -> xs'
-  where
-     map( \s -> <try(infix-op;!bracket-symbol(s))>s \ ) => xs'
+    [x|xs] -> <r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "59,2,62,61")> xs'
+    where r-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "59,2,62,61")
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "59,2,62,61")
+             ; fail
+    where s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,5,62,61")
+          ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,5,62,54")
+             ; map(
+                 s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,10,62,52")
+                 ; \ s -> <s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,17,62,48")
+                           ; try(
+                               s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,21,62,47")
+                               ; (s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,21,62,28") ; infix-op)
+                               ; s-step(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "62,30,62,47")
+                               ; !bracket-symbol(s)
+                             )> s \
+               )) => xs'
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "Bracket", "59,2,62,61")
+             ; fail
 
-
-  // Remove inserted brackets for productions of the form
-  //     prod( [lit(f), bracket-symbol(s)], sort, attrs) 
-  // because after unparsing it corresponds to an SDF prod-fun (i.e., the
-  // definition of a prefix function f(s) ).
   DeBracket :
-    prod([lit(f), bracket-symbol(alt(s1,s2))],s,a) -> prod( [lit(f), alt(s1, s2)], s, a)
-
+    prod(
+      [ lit(f)
+      , bracket-symbol(alt(s1, s2))
+      ]
+    , s
+    , a
+    ) -> <r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "DeBracket", "69,2,70,87")> prod(
+                                                                                                     [lit(f), alt(s1, s2)]
+                                                                                                   , s
+                                                                                                   , a
+                                                                                                   )
+    where r-enter(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "DeBracket", "69,2,70,87")
+          <+ r-exit(|"_cellar/sdf-tools/src/sdf-bracket/sdf-bracket.str", "DeBracket", "69,2,70,87")
+             ; fail

@@ -1,129 +1,547 @@
 module system-posix-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main-system-posix-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "main-system-posix-test", "6,2,19,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "7,4,19,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "7,15,7,29")
+        ; !"system-posix"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "8,6,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "8,6,8,17") ; fileno-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "9,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "9,8,9,19") ; access-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "10,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "10,8,10,21") ; strerror-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "11,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "11,8,11,19") ; perror-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "12,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "12,8,12,19") ; getcwd-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "13,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "13,8,13,20") ; abspath-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "14,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "14,8,14,23") ; is-abspath-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "15,8,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "15,8,15,23") ; file-props-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "16,8,16,20")
+        ; readdir-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "main-system-posix-test", "6,2,19,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "main-system-posix-test", "6,2,19,4")
+      ; fail
 
-  main-system-posix-test = 
-    test-suite(!"system-posix",
-      fileno-tests
-      ; access-tests
-      ; strerror-tests
-      ; perror-tests
-      ; getcwd-tests
-      ; abspath-tests
-      ; is-abspath-tests
-      ; file-props-tests
-      ; readdir-tests
-      // ; kill-tests // UNDONE. not supported on Java. (Vlad)
-      // ; times-tests // UNDONE missing primitive on Java (Vlad)
-    )
 
 strategies
-
   times-tests =
-      apply-and-check(!"test1b"
-      , <call>("ls", []); times
-      , !()
-      , ?b; debug; (is-int,is-int,is-int,is-int)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "times-tests", "23,2,33,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "24,6,33,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "24,6,28,6")
+       ; apply-and-check(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "24,22,24,30")
+           ; !"test1b"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "25,8,25,30")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "25,8,25,23")
+              ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "25,9,25,12") ; call)> ("ls", []))
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "25,26,25,30")
+           ; times
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "26,8,26,10")
+           ; !()
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,8,27,47")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,8,27,9") ; ?b)
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,12,27,47")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,12,27,16") ; debug)
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,19,27,47")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,20,27,25") ; is-int
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,27,27,32") ; is-int
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,34,27,39") ; is-int
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "27,41,27,46") ; is-int
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "29,6,33,6")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "29,22,29,39")
+        ; !"times and clock"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,8,30,44")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,8,30,12") ; times)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,15,30,44")
+        ; test(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,20,30,43")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,20,30,24") ; clock)
+               ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,27,30,43")
+               ; debug(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "30,33,30,42")
+                   ; !"clock: "
+                 ))
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "31,8,31,10")
+        ; !()
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,8,32,47")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,8,32,9") ; ?a)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,12,32,47")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,12,32,16") ; debug)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,19,32,47")
+        ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,20,32,25") ; is-int
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,27,32,32") ; is-int
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,34,32,39") ; is-int
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "32,41,32,46") ; is-int
+          )
       )
-    ; apply-and-check(!"times and clock"
-      , times; test(clock; debug(!"clock: "))
-      , !()
-      , ?a; debug; (is-int,is-int,is-int,is-int)
-      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "times-tests", "23,2,33,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "times-tests", "23,2,33,6")
+      ; fail
+
 
 strategies
-
-  /**
-   * @todo SIGKILL cannot be used because of problems with overlays over library boundaries.
-   */
   kill-tests =
-    apply-test(!"kill own process", fork-wait-test(kill-myself), !(), !Signal("KILL",  9, "Kill"))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "kill-tests", "40,2,41,97")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "41,4,41,97")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "41,15,41,33")
+        ; !"kill own process"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "41,36,41,62")
+        ; fork-wait-test(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "41,51,41,61") ; kill-myself
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "41,65,41,67")
+        ; !()
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "41,70,41,96")
+        ; !Signal("KILL", 9, "Kill")
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "kill-tests", "40,2,41,97")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "kill-tests", "40,2,41,97")
+      ; fail
 
-  kill-myself = 
-    <kill> (<get-pid>, Signal("KILL",  9, "Kill"))
+  kill-myself =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "kill-myself", "43,2,44,49")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "44,4,44,49")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "44,5,44,8") ; kill)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "44,13,44,19") ; get-pid>
+                                                                                                       , Signal("KILL", 9, "Kill")
+                                                                                                       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "kill-myself", "43,2,44,49")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "kill-myself", "43,2,44,49")
+      ; fail
 
   fork-wait-test(child) =
-    fork(child, ?(<waitpid>, t); ?WaitStatus(_, <signal-from-number>, _))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "fork-wait-test", "46,2,47,72")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,4,47,72")
+    ; fork(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,9,47,13") ; child
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,16,47,71")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,16,47,30")
+           ; ?( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,19,47,25") ; waitpid>
+              , t
+              ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,33,47,71")
+        ; ?WaitStatus(
+             _
+           , <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "47,49,47,66") ; signal-from-number>
+           , _
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "fork-wait-test", "46,2,47,72")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "fork-wait-test", "46,2,47,72")
+      ; fail
+
 
 strategies
-
   readdir-tests =
-    apply-test(!"readdir"
-    , readdir; fetch-elem(?"system-posix-test.c")
-    , !"."
-    , !"system-posix-test.c"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "readdir-tests", "51,2,56,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "52,4,56,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "52,15,52,24")
+        ; !"readdir"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "53,6,53,48")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "53,6,53,12") ; readdir)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "53,15,53,48")
+        ; fetch-elem(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "53,26,53,47")
+            ; ?"system-posix-test.c"
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "54,6,54,9")
+        ; !"."
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "55,6,55,27")
+        ; !"system-posix-test.c"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "readdir-tests", "51,2,56,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "readdir-tests", "51,2,56,4")
+      ; fail
+
 
 strategies
+  file-props-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "file-props-tests", "60,2,72,1")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "60,21,72,1")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "60,21,60,22") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "62,6,72,1")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "62,6,62,83")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "62,17,62,31")
+           ; !"create? -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "62,34,62,48") ; can-create-file
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "62,51,62,65")
+           ; !"/tmp/bla.txt"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "62,68,62,82")
+           ; !"/tmp/bla.txt"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "63,6,72,1")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "63,6,67,1")
+       ; apply-and-check(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "63,22,63,30")
+           ; !"test2a"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "64,3,64,19") ; modification-time
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "65,3,65,26")
+           ; !"system-posix-test.str"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "66,3,66,15")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "66,3,66,7") ; debug)
+           ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "66,10,66,15")
+           ; is-int
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "68,6,72,1")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "68,22,68,30")
+        ; !"test2b"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "69,3,69,12") ; file-newer
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "70,3,70,51")
+        ; !("system-posix-test.c", "system-posix-test.str")
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "71,3,71,7") ; debug
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "file-props-tests", "60,2,72,1")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "file-props-tests", "60,2,72,1")
+      ; fail
 
-  file-props-tests = id
-    // ; apply-and-fail(!"create? -- 1", can-create-file, !"/root/bla.txt")
-    ; apply-test(!"create? -- 2", can-create-file, !"/tmp/bla.txt", !"/tmp/bla.txt")
-    ; apply-and-check(!"test2a"
-	, modification-time
-	, !"system-posix-test.str"
-	, debug; is-int
-	)
-    ; apply-and-check(!"test2b"
-	, file-newer
-	, !("system-posix-test.c", "system-posix-test.str")
-	, debug
-	)
 
 strategies
-
   is-abspath-tests =
-      apply-test(!"is-abspath -- 1", is-abspath, !"/", !"/")
-    ; apply-test(!"is-abspath -- 2", is-abspath, !"/bla", !"/bla")
-    ; apply-and-fail(!"is-abspath -- 3", is-abspath, !"bla")
-    ; apply-and-fail(!"is-abspath -- 4", is-abspath, !"./bla")
-      // Windows paths
-    ; apply-test(!"is-abspath -- 5", is-abspath, !"C:\\", !"C:\\")
-    ; apply-test(!"is-abspath -- 6", is-abspath, !"C:/", !"C:/")
-    ; apply-test(!"is-abspath -- 7", is-abspath, !"a:\\bla", !"a:\\bla")
-      // only letters are allowed before the colon according to the documentation
-      // (though colon isn't allowed anywhere on Windows, so strictly speaking,
-      // the next path is neither absolute nor relative...)
-    ; apply-and-fail(!"is-abspath -- 8", is-abspath, !"!:/")
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "is-abspath-tests", "76,2,88,59")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "77,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "77,6,77,59")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "77,17,77,34")
+           ; !"is-abspath -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "77,37,77,46") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "77,49,77,52")
+           ; !"/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "77,55,77,58")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "78,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "78,6,78,65")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "78,17,78,34")
+           ; !"is-abspath -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "78,37,78,46") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "78,49,78,55")
+           ; !"/bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "78,58,78,64")
+           ; !"/bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "79,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "79,6,79,59")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "79,21,79,38")
+           ; !"is-abspath -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "79,41,79,50") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "79,53,79,58")
+           ; !"bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "80,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "80,6,80,61")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "80,21,80,38")
+           ; !"is-abspath -- 4"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "80,41,80,50") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "80,53,80,60")
+           ; !"./bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "82,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "82,6,82,65")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "82,17,82,34")
+           ; !"is-abspath -- 5"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "82,37,82,46") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "82,49,82,55")
+           ; !"C:\\"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "82,58,82,64")
+           ; !"C:\\"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "83,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "83,6,83,63")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "83,17,83,34")
+           ; !"is-abspath -- 6"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "83,37,83,46") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "83,49,83,54")
+           ; !"C:/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "83,57,83,62")
+           ; !"C:/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "84,6,88,59")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "84,6,84,71")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "84,17,84,34")
+           ; !"is-abspath -- 7"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "84,37,84,46") ; is-abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "84,49,84,58")
+           ; !"a:\\bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "84,61,84,70")
+           ; !"a:\\bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "88,6,88,59")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "88,21,88,38")
+        ; !"is-abspath -- 8"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "88,41,88,50") ; is-abspath
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "88,53,88,58")
+        ; !"!:/"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "is-abspath-tests", "76,2,88,59")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "is-abspath-tests", "76,2,88,59")
+      ; fail
 
   getcwd-tests =
-      apply-test(!"getcwd -- 1", getcwd, !())
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "getcwd-tests", "90,2,91,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "91,6,91,44")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "91,17,91,30")
+        ; !"getcwd -- 1"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "91,33,91,38") ; getcwd
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "91,41,91,43")
+        ; !()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "getcwd-tests", "90,2,91,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "getcwd-tests", "90,2,91,44")
+      ; fail
 
   abspath-tests =
-      where(getcwd => cwd)
-    ; apply-test(!"abspath -- 1", abspath, !"/", !"/")
-    ; apply-test(!"abspath -- 2", abspath, !"/bla", !"/bla")
-    ; apply-test(!"abspath -- 3", abspath, !"bla", <conc-strings> (cwd, "/bla"))
-    ; apply-test(!"abspath -- 4", abspath, !"./bla", <conc-strings> (cwd, "/./bla"))
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "abspath-tests", "93,2,98,83")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "94,6,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "94,6,94,25")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "94,12,94,24")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "94,12,94,17") ; getcwd) => cwd))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "95,6,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "95,6,95,53")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "95,17,95,31")
+           ; !"abspath -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "95,34,95,40") ; abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "95,43,95,46")
+           ; !"/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "95,49,95,52")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "96,6,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "96,6,96,59")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "96,17,96,31")
+           ; !"abspath -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "96,34,96,40") ; abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "96,43,96,49")
+           ; !"/bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "96,52,96,58")
+           ; !"/bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,6,98,83")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,6,97,79")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,17,97,31")
+           ; !"abspath -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,34,97,40") ; abspath
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,43,97,48")
+           ; !"bla"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,51,97,78")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "97,52,97,63") ; conc-strings)> (cwd, "/bla")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "98,6,98,83")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "98,17,98,31")
+        ; !"abspath -- 4"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "98,34,98,40") ; abspath
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "98,43,98,50")
+        ; !"./bla"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "98,53,98,82")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "98,54,98,65") ; conc-strings)> (cwd, "/./bla")
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "abspath-tests", "93,2,98,83")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "abspath-tests", "93,2,98,83")
+      ; fail
 
 
 strategies
-
   fileno-tests =
-      apply-test(!"fileno on stdin  -- 1", fileno, stdin-stream, !0)
-    ; apply-test(!"fileno on stdin  -- 2", fileno, stdin-stream, STDIN_FILENO)
-    ; apply-test(!"fileno on stdout -- 1", fileno, stdout-stream, !1)
-    ; apply-test(!"fileno on stdout -- 2", fileno, stdout-stream, STDOUT_FILENO)
-    ; apply-test(!"fileno on stderr -- 1", fileno, stderr-stream, !2)
-    ; apply-test(!"fileno on stderr -- 2", fileno, stderr-stream, STDERR_FILENO)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "fileno-tests", "103,2,109,79")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "104,6,109,79")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "104,6,104,67")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "104,17,104,40")
+           ; !"fileno on stdin  -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "104,43,104,48") ; fileno
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "104,51,104,62") ; stdin-stream
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "104,65,104,66")
+           ; !0
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "105,6,109,79")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "105,6,105,77")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "105,17,105,40")
+           ; !"fileno on stdin  -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "105,43,105,48") ; fileno
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "105,51,105,62") ; stdin-stream
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "105,65,105,76") ; STDIN_FILENO
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "106,6,109,79")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "106,6,106,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "106,17,106,40")
+           ; !"fileno on stdout -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "106,43,106,48") ; fileno
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "106,51,106,63") ; stdout-stream
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "106,66,106,67")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "107,6,109,79")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "107,6,107,79")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "107,17,107,40")
+           ; !"fileno on stdout -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "107,43,107,48") ; fileno
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "107,51,107,63") ; stdout-stream
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "107,66,107,78") ; STDOUT_FILENO
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "108,6,109,79")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "108,6,108,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "108,17,108,40")
+           ; !"fileno on stderr -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "108,43,108,48") ; fileno
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "108,51,108,63") ; stderr-stream
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "108,66,108,67")
+           ; !2
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "109,6,109,79")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "109,17,109,40")
+        ; !"fileno on stderr -- 2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "109,43,109,48") ; fileno
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "109,51,109,63") ; stderr-stream
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "109,66,109,78") ; STDERR_FILENO
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "fileno-tests", "103,2,109,79")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "fileno-tests", "103,2,109,79")
+      ; fail
+
 
 strategies
+  access-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "access-tests", "113,2,119,72")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,6,119,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,6,114,69")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,17,114,30")
+           ; !"access -- 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,33,114,57")
+           ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,34,114,39") ; access)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,44,114,45") ; id>
+                                                                                                                    , [F_OK()]
+                                                                                                                    )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,60,114,63")
+           ; !"/"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "114,66,114,68") ; "/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,6,119,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,6,115,69")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,17,115,30")
+           ; !"access -- 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,33,115,62")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,37,115,61")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,38,115,43") ; access)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,48,115,49") ; id>
+                                                                                                                        , [R_OK()]
+                                                                                                                        )
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "115,65,115,68")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,6,119,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,6,118,77")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,17,118,30")
+           ; !"access -- 3"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,33,118,70")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,37,118,69")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,38,118,43") ; access)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,48,118,49") ; id>
+                                                                                                                        , [R_OK()|[]{1}]
+                                                                                                                        )
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "118,73,118,76")
+           ; !"/"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,6,119,72")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,17,119,30")
+        ; !"access -- 4"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,33,119,65")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,37,119,64")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,38,119,43") ; access)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,48,119,49") ; id>
+                                                                                                                     , [R_OK()]{1}
+                                                                                                                     )
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "119,68,119,71")
+        ; !"/"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "access-tests", "113,2,119,72")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "access-tests", "113,2,119,72")
+      ; fail
 
-  access-tests = 
-      apply-test(!"access -- 1", <access> (<id>, [F_OK()]), !"/", "/")
-    ; apply-test(!"access -- 2", try(<access> (<id>, [R_OK()])), !"/")
-
-    // this used to result in a segmentation fault
-    ; apply-test(!"access -- 3", try(<access> (<id>, [R_OK() | []{1}])), !"/")
-    ; apply-test(!"access -- 4", try(<access> (<id>, [R_OK()]{1})), !"/")
 
 strategies
-
   strerror-tests =
-    apply-and-check(!"strerror on EXDEV", strerror, EXDEV, debug)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "strerror-tests", "123,2,124,64")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "124,4,124,64")
+    ; apply-and-check(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "124,20,124,39")
+        ; !"strerror on EXDEV"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "124,42,124,49") ; strerror
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "124,52,124,56") ; EXDEV
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "124,59,124,63") ; debug
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "strerror-tests", "123,2,124,64")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "strerror-tests", "123,2,124,64")
+      ; fail
 
   perror-tests =
-      where(try(<close> 200))
-    ; apply-test(!"perror 1", perror, !"foo")
-    ; apply-test(!"perror 2", perror, !())
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "perror-tests", "126,2,129,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "127,6,129,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "127,6,127,28")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "127,12,127,27")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "127,16,127,26")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "127,17,127,21") ; close)> 200
+                 )))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "128,6,129,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "128,6,128,44")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "128,17,128,27")
+           ; !"perror 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "128,30,128,35") ; perror
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "128,38,128,43")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "129,6,129,41")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "129,17,129,27")
+        ; !"perror 2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "129,30,129,35") ; perror
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "129,38,129,40")
+        ; !()
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "perror-tests", "126,2,129,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/system-posix-test.str", "perror-tests", "126,2,129,41")
+      ; fail

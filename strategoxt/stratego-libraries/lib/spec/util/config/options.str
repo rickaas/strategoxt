@@ -1,319 +1,670 @@
-/**
- * This module contains strategies for handling command line options
- * and simple serialization/unserialization of ATerms. These strategies
- * are particularly useful for writing command line tools in Stratego
- * that may be connected into pipelines by the standard Unix piping
- * mechanism.
- *
- */
 module util/config/options
-imports 
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   system/io/char
   system/io/term
   system/io/dir
   system/io/file
   system/io/process
-  
-  util/config/parse-options 
-  util/config/common 
-  util/config/verbose 
-  util/config/keep 
-  util/time 
+  util/config/parse-options
+  util/config/common
+  util/config/verbose
+  util/config/keep
+  util/time
   util/log
-
   term/string
+
+
 strategies
+  io-wrap(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "33,2,34,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "34,4,34,19")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "34,12,34,15") ; fail
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "34,18,34,18") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "33,2,34,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "33,2,34,19")
+      ; fail
 
-  /**
-   * Wraps a strategy into a strategy handling options and io of terms.
-   *
-   * @param  strategy to apply on the input term
-   */
-  io-wrap(s) = 
-    io-wrap(fail, s)
-
-  /**
-   * Wraps a strategy into a strategy handling options and io of terms.
-   *
-   * @param   extra options besides the default io-options
-   *          use fail if you have no additional options.
-   * @param   strategy to apply on the input term
-   */
   io-wrap(extra-opts, s) =
-    io-wrap(extra-opts, system-usage, system-about, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "43,2,44,53")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "44,4,44,53")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "44,12,44,21") ; extra-opts
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "44,24,44,35") ; system-usage
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "44,38,44,49") ; system-about
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "44,52,44,52") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "43,2,44,53")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "43,2,44,53")
+      ; fail
 
-  /**
-   *
-   * @param   extra options besides the default io-options.
-   *          use fail if you have no additional options.
-   *
-   * @param   strategy to apply on the input term
-   */
   io-wrap(extra-opts, usage, about, s) =
-    option-wrap(extra-opts <+ io-options,  usage, about, id, io(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "53,2,54,66")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,4,54,66")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,16,54,39")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,16,54,25") ; extra-opts
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,30,54,39") ; io-options)
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,43,54,47") ; usage
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,50,54,54") ; about
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,57,54,58") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,61,54,65")
+        ; io(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "54,64,54,64") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "53,2,54,66")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-wrap", "53,2,54,66")
+      ; fail
 
   output-wrap(s) =
-    output-wrap(fail, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-wrap", "56,2,57,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "57,4,57,23")
+    ; output-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "57,16,57,19") ; fail
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "57,22,57,22") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-wrap", "56,2,57,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-wrap", "56,2,57,23")
+      ; fail
 
   output-wrap(extra-opts, s) =
-    option-wrap(extra-opts <+ output-options,  output(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-wrap", "59,2,60,56")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "60,4,60,56")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "60,16,60,43")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "60,16,60,25") ; extra-opts
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "60,30,60,43") ; output-options)
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "60,47,60,55")
+        ; output(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "60,54,60,54") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-wrap", "59,2,60,56")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-wrap", "59,2,60,56")
+      ; fail
 
   input-wrap(s) =
-    input-wrap(fail, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-wrap", "62,2,63,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "63,4,63,22")
+    ; input-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "63,15,63,18") ; fail
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "63,21,63,21") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-wrap", "62,2,63,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-wrap", "62,2,63,22")
+      ; fail
 
   input-wrap(extra-opts, s) =
-    option-wrap(extra-opts <+ input-options,  input(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-wrap", "65,2,66,54")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "66,4,66,54")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "66,16,66,42")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "66,16,66,25") ; extra-opts
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "66,30,66,42") ; input-options)
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "66,46,66,53")
+        ; input(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "66,52,66,52") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-wrap", "65,2,66,54")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-wrap", "65,2,66,54")
+      ; fail
+
 
 strategies
-
-  /**
-   * Wraps a strategy into a strategy that handles io options.
-   *
-   * Reads a term from the file specified by the -i option (or stdin).
-   * Writes to a file specified by the -o option (or stdout).
-   *
-   * @param   strategy to apply on the input term
-   */
   io(s) =
-    input(output(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io", "78,2,79,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "79,4,79,19")
+    ; input(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "79,10,79,18")
+        ; output(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "79,17,79,17") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io", "78,2,79,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io", "78,2,79,19")
+      ; fail
 
- /**
-  * Wraps a strategy into a strategy that handles output options.
-  *
-  * Writes to a file specified by the -o option (or stdout).
-  */ 
   output(s) =
-      s
-    ; !(<<get-config> "-o" <+ !stdout()>, <id>)
-    ; ( where(<get-config> "-b") < WriteToBinaryFile + WriteToTextFile )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output", "86,2,89,71")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "87,6,89,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "87,6,87,6") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,6,89,71")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,6,88,46")
+       ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,9,88,38")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,9,88,25")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,10,88,19") ; get-config)> "-o"
+                <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,30,88,38")
+                   ; !stdout())>
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "88,43,88,44") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "89,8,89,69")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "89,8,89,31")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "89,14,89,30")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "89,15,89,24") ; get-config)> "-b")
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "89,35,89,51") ; WriteToBinaryFile
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "89,55,89,69") ; WriteToTextFile)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output", "86,2,89,71")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output", "86,2,89,71")
+      ; fail
 
- /**
-  * Wraps a strategy into a strategy that handles input options.
-  *
-  * Reads a term from the file specified by the -i option (or stdin).
-  */ 
   input(s) =
-      ( <get-config> "-i" <+ !stdin() )
-    ; ReadFromFile
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input", "96,2,99,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "97,6,99,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "97,8,97,36")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "97,8,97,24")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "97,9,97,18") ; get-config)> "-i"
+          <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "97,29,97,36")
+             ; !stdin()))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "98,6,99,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "98,6,98,17") ; ReadFromFile)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "99,6,99,6")
     ; s
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input", "96,2,99,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input", "96,2,99,6")
+      ; fail
 
-/**
- * Stream based wrappers
- */
+
 strategies
-
-  /**
-   * Wraps a strategy into a strategy that handles input and output options.
-   * The strategy arguments is applied to a tuple of streams: the input and the output stream. 
-   *
-   * @param (Stream, Stream) -> _
-   */
-  io-stream-wrap(s) = 
-    io-stream-wrap(fail, s)
+  io-stream-wrap(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "112,2,113,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "113,4,113,26")
+    ; io-stream-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "113,19,113,22") ; fail
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "113,25,113,25") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "112,2,113,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "112,2,113,26")
+      ; fail
 
   io-stream-wrap(extra-opts, s) =
-    io-stream-wrap(extra-opts, system-usage, system-about, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "115,2,116,60")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "116,4,116,60")
+    ; io-stream-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "116,19,116,28") ; extra-opts
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "116,31,116,42") ; system-usage
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "116,45,116,56") ; system-about
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "116,59,116,59") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "115,2,116,60")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "115,2,116,60")
+      ; fail
 
   io-stream-wrap(extra-opts, usage, about, s) =
-    option-wrap(extra-opts <+ io-options,  usage, about, id, io-stream(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "118,2,119,73")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,4,119,73")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,16,119,39")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,16,119,25") ; extra-opts
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,30,119,39") ; io-options)
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,43,119,47") ; usage
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,50,119,54") ; about
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,57,119,58") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,61,119,72")
+        ; io-stream(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "119,71,119,71") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "118,2,119,73")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream-wrap", "118,2,119,73")
+      ; fail
 
   io-stream(s) =
-    let open =
-          open-stream <+ ?(<id>, _); perror; <exit> 1
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream", "121,2,136,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "122,4,136,6")
+    ; let open =
+            s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "open", "122,8,123,52")
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,10,123,52")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,10,123,20") ; open-stream
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,25,123,52")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,25,123,34")
+                     ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,28,123,29") ; id>
+                        , _
+                        ))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,37,123,52")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,37,123,42") ; perror)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,45,123,52")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "123,46,123,49") ; exit)> 1)
+            < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "open", "122,8,123,52")
+            + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "open", "122,8,123,52")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,8,135,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,8,125,68")
+           ; fin := <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,17,125,62")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,17,125,26") ; get-config
+                        < s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,30,125,47")
+                          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,31,125,34") ; open)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,39,125,40") ; id>
+                                                                                                                                  , "r"
+                                                                                                                                  )
+                        + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "125,51,125,62") ; stdin-stream)> "-i")
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,8,135,10")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,8,126,69")
+           ; fout := <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,17,126,63")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,17,126,26") ; get-config
+                         < s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,30,126,47")
+                           ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,31,126,34") ; open)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,39,126,40") ; id>
+                                                                                                                                   , "w"
+                                                                                                                                   )
+                         + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "126,51,126,63") ; stdout-stream)> "-o")
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "127,8,135,10")
+        ; if s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "127,11,127,25")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "127,12,127,12") ; s)> (fin, fout) then
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,10,129,25")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,10,128,27")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,14,128,26")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,15,128,20") ; fclose)> fout
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,30,129,25")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,30,128,46")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,34,128,45")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "128,35,128,40") ; fclose)> fin
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "129,12,129,25")
+            ; report-success
+          else
+            s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "131,12,134,33")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "131,12,131,62")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "131,12,131,53") ; prim("SSL_stacktrace_get_all_frame_names")) => trace)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,12,134,33")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,12,132,29")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,16,132,28")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,17,132,22") ; fclose)> fout
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,32,134,33")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,32,132,48")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,36,132,47")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "132,37,132,42") ; fclose)> fin
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "133,12,134,33")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "133,12,133,46")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "133,16,133,45")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "133,16,133,32")
+                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "133,17,133,26") ; get-config)> "-o")
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "133,35,133,45")
+                   ; remove-file
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "134,12,134,33")
+            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "134,13,134,26") ; report-failure)> trace
+          end
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream", "121,2,136,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-stream", "121,2,136,6")
+      ; fail
 
-     in fin  := <get-config < <open> (<id>, "r") + stdin-stream> "-i"
-      ; fout := <get-config < <open> (<id>, "w") + stdout-stream> "-o"
-      ; if <s> (fin, fout) then
-          try(<fclose> fout); try(<fclose> fin)
-          ; report-success
-        else
-            prim("SSL_stacktrace_get_all_frame_names") => trace
-          ; try(<fclose> fout); try(<fclose> fin)     
-          ; try(<get-config> "-o"; remove-file)
-          ; <report-failure> trace
-        end
-    end
 
 strategies
-
   option-wrap(opts, s) =
-    option-wrap(opts, system-usage, id, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "140,2,141,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "141,4,141,41")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "141,16,141,19") ; opts
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "141,22,141,33") ; system-usage
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "141,36,141,37") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "141,40,141,40") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "140,2,141,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "140,2,141,41")
+      ; fail
 
   option-wrap(opts, usage, announce, s) =
-    option-wrap(opts, usage, system-about, announce, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "143,2,144,54")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "144,4,144,54")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "144,16,144,19") ; opts
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "144,22,144,26") ; usage
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "144,29,144,40") ; system-about
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "144,43,144,50") ; announce
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "144,53,144,53") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "143,2,144,54")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "143,2,144,54")
+      ; fail
 
-  /**
-   * Read options, display help, report success or failure, call strategy
-   */
   option-wrap(opts, usage, about, announce, s) =
-    parse-options(opts, usage, about)
-    ; announce
-    ; (s; report-success <+ prim("SSL_stacktrace_get_all_frame_names") ; report-failure)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "149,2,152,87")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "150,4,152,87")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "150,4,150,36")
+       ; parse-options(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "150,18,150,21") ; opts
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "150,24,150,28") ; usage
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "150,31,150,35") ; about
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "151,6,152,87")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "151,6,151,13") ; announce)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,7,152,86")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,7,152,23")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,7,152,7") ; s)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,10,152,23")
+       ; report-success
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,28,152,86")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,28,152,69") ; prim("SSL_stacktrace_get_all_frame_names"))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "152,73,152,86")
+          ; report-failure)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "149,2,152,87")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "option-wrap", "149,2,152,87")
+      ; fail
+
 
 strategies
-
-  /**
-   * Handles all common options for a transformation tool.
-   */
   io-options =
-      input-option
-    + aterm-output-option
-    + general-options
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-options", "159,2,162,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "160,6,162,20")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "160,6,160,17") ; input-option
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "161,6,162,20")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "161,6,161,24") ; aterm-output-option
+            + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "162,6,162,20") ; general-options))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-options", "159,2,162,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "io-options", "159,2,162,20")
+      ; fail
 
   input-options =
-      input-option
-    + general-options
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-options", "164,2,166,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "165,6,166,20")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "165,6,165,17") ; input-option
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "166,6,166,20") ; general-options)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-options", "164,2,166,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-options", "164,2,166,20")
+      ; fail
 
   output-options =
-      aterm-output-option
-    + general-options
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-options", "168,2,170,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "169,6,170,20")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "169,6,169,24") ; aterm-output-option
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "170,6,170,20") ; general-options)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-options", "168,2,170,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-options", "168,2,170,20")
+      ; fail
 
   general-options =
-      verbose-option
-    + keep-option
-    + statistics-option
-    + aterm-lib-options
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "general-options", "172,2,176,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "173,6,176,22")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "173,6,173,19") ; verbose-option
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "174,6,176,22")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "174,6,174,16") ; keep-option
+            + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "175,6,176,22")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "175,6,175,22") ; statistics-option
+                 + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "176,6,176,22") ; aterm-lib-options)))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "general-options", "172,2,176,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "general-options", "172,2,176,22")
+      ; fail
 
- /** 
-  * Allow all flag starting with -at-* (these are ATerm library flags)
-  */
   aterm-lib-options =
-    Option(
-      string-starts-with(|"-at-")
-	  , id
-	  , fail
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "aterm-lib-options", "181,2,186,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "182,4,186,4")
+    ; Option(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "183,6,183,32")
+        ; string-starts-with(|"-at-")
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "184,5,184,6") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "185,5,185,8") ; fail
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "aterm-lib-options", "181,2,186,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "aterm-lib-options", "181,2,186,4")
+      ; fail
 
-
-
-  /**
-   * Option specifcation for level of keeping intermediate results.
-   */
   keep-option =
-    ArgOption("-k" + "--keep"
-    , where(<set-config> ("--keep", <string-to-int>))
-    , !"-k i | --keep i  Keep intermediates (default 0)"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "keep-option", "193,2,197,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "194,4,197,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "194,14,194,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "194,14,194,17") ; "-k"
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "194,21,194,28") ; "--keep")
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "195,6,195,52")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "195,12,195,51")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "195,13,195,22") ; set-config)> ( "--keep"
+                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "195,37,195,49") ; string-to-int>
+                                                                                                                              ))
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "196,6,196,55")
+        ; !"-k i | --keep i  Keep intermediates (default 0)"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "keep-option", "193,2,197,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "keep-option", "193,2,197,4")
+      ; fail
 
-  /**
-   * Option specifcation for level of statistics printing
-   */
   statistics-option =
-    ArgOption("--statistics"
-    , where(<set-config> ("--statistics", <string-to-int>))
-    , !"--statistics i   Print statistics (default 0 = none)"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "statistics-option", "202,2,206,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "203,4,206,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "203,14,203,27") ; "--statistics"
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "204,6,204,58")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "204,12,204,57")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "204,13,204,22") ; set-config)> ( "--statistics"
+                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "204,43,204,55") ; string-to-int>
+                                                                                                                              ))
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "205,6,205,60")
+        ; !"--statistics i   Print statistics (default 0 = none)"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "statistics-option", "202,2,206,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "statistics-option", "202,2,206,4")
+      ; fail
 
-  /**
-   * Option specifications for reading input.
-   *
-   * Defines -i.
-   */
   input-option =
-    ArgOption("-i" + "--input"
-    , where(<set-config> ("-i",<id>))
-    , !"-i f|--input f   Read input from f"
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-option", "213,2,217,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "214,4,217,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "214,14,214,29")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "214,14,214,17") ; "-i"
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "214,21,214,29") ; "--input")
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "215,6,215,36")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "215,12,215,35")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "215,13,215,22") ; set-config)> ( "-i"
+                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "215,32,215,33") ; id>
+                                                                                                                              ))
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "216,6,216,42")
+        ; !"-i f|--input f   Read input from f"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-option", "213,2,217,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "input-option", "213,2,217,4")
+      ; fail
 
-  /**
-   * Option specifications for writing output.
-   *
-   * Defines -o.
-   */
   output-option =
-    ArgOption("-o" + "--output"
-    , where(<set-config> ("-o",<id>))
-    , !"-o f|--output f  Write output to f" 
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-option", "224,2,228,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "225,4,228,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "225,14,225,30")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "225,14,225,17") ; "-o"
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "225,21,225,30") ; "--output")
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "226,6,226,36")
+        ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "226,12,226,35")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "226,13,226,22") ; set-config)> ( "-o"
+                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "226,32,226,33") ; id>
+                                                                                                                              ))
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "227,6,227,42")
+        ; !"-o f|--output f  Write output to f"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-option", "224,2,228,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "output-option", "224,2,228,4")
+      ; fail
 
-  /**
-   * Option specifications for ATerm output.
-   *
-   * Defines -b option for binary output.
-   */
   aterm-output-option =
-      output-option
-    + Option("-b"
-      , where(<set-config> ("-b",()))
-      , !"-b               Write binary output"
-      )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "aterm-output-option", "235,2,240,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "236,6,240,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "236,6,236,18") ; output-option
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "237,6,240,6")
+         ; Option(
+             s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "237,13,237,16") ; "-b"
+           , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "238,8,238,36")
+             ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "238,14,238,35")
+                     ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "238,15,238,24") ; set-config)> ("-b", ()))
+           , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "239,8,239,46")
+             ; !"-b               Write binary output"
+           ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "aterm-output-option", "235,2,240,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "aterm-output-option", "235,2,240,6")
+      ; fail
 
-  /**
-   * Option specifications for verbosity.
-   *
-   * Defines -S, --silent, --verbose and -s.
-   */
   verbose-option =
-      Option("-S"+"--silent"
-      , where(<set-verbosity> 0)
-      , !"-S|--silent      Silent execution (same as --verbose 0)"
-      )
-    + ArgOption("--verbose"
-      , where(verbose-to-int; set-verbosity)
-      , !"--verbose i      Verbosity level i (default 1)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "verbose-option", "247,2,258,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "248,6,258,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "248,6,251,6")
+       ; Option(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "248,13,248,27")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "248,13,248,16") ; "-S"
+              + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "248,18,248,27") ; "--silent")
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "249,8,249,31")
+           ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "249,14,249,30")
+                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "249,15,249,27") ; set-verbosity)> 0)
+         , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "250,8,250,65")
+           ; !"-S|--silent      Silent execution (same as --verbose 0)"
+         )
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "252,6,258,6")
+         ; ArgOption(
+             s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "252,16,252,26") ; "--verbose"
+           , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "253,8,253,43")
+             ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "253,14,253,42")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "253,14,253,27") ; verbose-to-int)
+                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "253,30,253,42")
+                     ; set-verbosity)
+           , s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "254,8,257,59")
+             ; !"--verbose i      Verbosity level i (default 1)
                     ( i as a number or as a verbosity descriptor:
                       emergency, alert, critical, error, 
                       warning, notice, info, debug, vomit )"
-      )
+           ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "verbose-option", "247,2,258,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "verbose-option", "247,2,258,6")
+      ; fail
+
 
 strategies
+  verbose-to-int =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "verbose-to-int", "262,2,265,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "263,6,265,18")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "263,6,263,20") ; string-to-level
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "265,6,265,18") ; string-to-int)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "verbose-to-int", "262,2,265,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "verbose-to-int", "262,2,265,18")
+      ; fail
 
-  verbose-to-int = 
-      string-to-level
-        <+
-      string-to-int
-  
   need-help(u) =
-    <get-config> "--help"
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "need-help", "267,2,269,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "268,4,269,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "268,4,268,24")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "268,5,268,14") ; get-config)> "--help")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "269,6,269,6")
     ; u
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "need-help", "267,2,269,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "need-help", "267,2,269,6")
+      ; fail
 
   if-not-silent(s) =
-    test(verbosity => 0) <+ s
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "if-not-silent", "271,2,272,28")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "272,4,272,28")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "272,4,272,23")
+       ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "272,9,272,22")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "272,9,272,17") ; verbosity) => 0)
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "272,28,272,28") ; s)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "if-not-silent", "271,2,272,28")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "if-not-silent", "271,2,272,28")
+      ; fail
 
   report-success =
-      report-run-time
-    ; <exit> 0
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-success", "274,2,276,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "275,6,276,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "275,6,275,20") ; report-run-time)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "276,6,276,13")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "276,7,276,10") ; exit)> 0
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-success", "274,2,276,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-success", "274,2,276,13")
+      ; fail
 
-  /** 
-   * Report the failure of this program. Must be applied to a list of
-   * strings obtained by calling the SSL_stacktrace_get_all_frame_names
-   * directly after the failure occurred (without any intervening calls
-   * to any rules/strategies).
-   *
-   * @type List(String) -> _
-   *
-   * @param exit
-   *          The exit strategy to use, e.g., xtc-exit.
-   */
   report-failure(exit) =
-      ?stacktrace
-    ; report-run-time
-    ; <fprintnl> (stderr(), [<log-src> (), ": rewriting failed, trace:"])
-    ; <reverse ; map(<fprintnl> (stderr(), ["\t", <id>]))> stacktrace
-    ; <exit> 1
-  
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "289,2,294,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "290,6,294,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "290,6,290,16") ; ?stacktrace)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "291,6,294,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "291,6,291,20") ; report-run-time)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "292,6,294,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "292,6,292,72")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "292,7,292,14") ; fprintnl)> ( stderr()
+                                                                                                                  , [ <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "292,30,292,36") ; log-src> ()
+                                                                                                                    , ": rewriting failed, trace:"
+                                                                                                                    ]
+                                                                                                                  ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,6,294,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,6,293,68")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,7,293,56")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,7,293,13") ; reverse)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,17,293,56")
+           ; map(
+               s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,21,293,55")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,22,293,29") ; fprintnl)> ( stderr()
+                                                                                                                           , [ "\t"
+                                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "293,51,293,52") ; id>
+                                                                                                                             ]
+                                                                                                                           )
+             ))> stacktrace)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "294,6,294,13")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "294,7,294,10") ; exit)> 1
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "289,2,294,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "289,2,294,13")
+      ; fail
+
   report-failure =
-    report-failure(exit)
-  
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "296,2,297,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "297,4,297,23")
+    ; report-failure(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "297,19,297,22") ; exit
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "296,2,297,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "296,2,297,23")
+      ; fail
+
   report-failure(|message, term) =
-    report-failure(
-      log(|Critical(), message, term)
-    ; <exit> 1
-    )
-  
-  /**
-   * Report the failure of this program, without showing a stack trace.
-   *
-   * @see report-failure
-   * @see fatal-err(|msg)
-   */
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "299,2,303,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "300,4,303,4")
+    ; report-failure(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "301,6,302,13")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "301,6,301,36")
+           ; log(|Critical(), message, term))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "302,6,302,13")
+        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "302,7,302,10") ; exit)> 1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "299,2,303,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure", "299,2,303,4")
+      ; fail
+
   report-failure-no-trace =
-    report-failure-no-trace(exit)
-  
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure-no-trace", "311,2,312,32")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "312,4,312,32")
+    ; report-failure-no-trace(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "312,28,312,31") ; exit
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure-no-trace", "311,2,312,32")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure-no-trace", "311,2,312,32")
+      ; fail
+
   report-failure-no-trace(exit) =
-      <fprintnl> (stderr(), [<log-src> (), ": rewriting failed"])
-    ; <exit> 1
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure-no-trace", "314,2,316,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "315,6,316,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "315,6,315,64")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "315,7,315,14") ; fprintnl)> ( stderr()
+                                                                                                                  , [ <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "315,30,315,36") ; log-src> ()
+                                                                                                                    , ": rewriting failed"
+                                                                                                                    ]
+                                                                                                                  ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "316,6,316,13")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "316,7,316,10") ; exit)> 1
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure-no-trace", "314,2,316,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "report-failure-no-trace", "314,2,316,13")
+      ; fail
 
   whoami =
-    <get-config> "program"
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "whoami", "318,2,319,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "319,4,319,25")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "319,5,319,14") ; get-config)> "program"
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "whoami", "318,2,319,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/options.str", "whoami", "318,2,319,25")
+      ; fail

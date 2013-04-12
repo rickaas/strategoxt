@@ -1,10 +1,29 @@
 module test3
-imports xtc-lib libstratego-lib
-strategies
 
-  test3 = 
-    xtc-io-wrap(
-      read-from
-      ; !(<id>,<id>)
-      ; write-to
-    )
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  xtc-lib
+  libstratego-lib
+
+
+strategies
+  test3 =
+    s-enter(|"_cellar/xtc/src/test3.str", "test3", "5,2,10,4")
+    ; s-step(|"_cellar/xtc/src/test3.str", "6,4,10,4")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/xtc/src/test3.str", "7,6,9,15")
+        ; (s-step(|"_cellar/xtc/src/test3.str", "7,6,7,14") ; read-from)
+        ; s-step(|"_cellar/xtc/src/test3.str", "8,8,9,15")
+        ; (s-step(|"_cellar/xtc/src/test3.str", "8,8,8,19")
+           ; !( <s-step(|"_cellar/xtc/src/test3.str", "8,11,8,12") ; id>
+              , <s-step(|"_cellar/xtc/src/test3.str", "8,16,8,17") ; id>
+              ))
+        ; s-step(|"_cellar/xtc/src/test3.str", "9,8,9,15")
+        ; write-to
+      )
+    < s-exit(|"_cellar/xtc/src/test3.str", "test3", "5,2,10,4")
+    + s-exit(|"_cellar/xtc/src/test3.str", "test3", "5,2,10,4")
+      ; fail

@@ -1,38 +1,152 @@
 module repair-types
-imports Stratego-Sugar 
-	stratego/strc/lib/stratlib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  Stratego-Sugar
+  stratego/strc/lib/stratlib
+
+
 strategies
-
   m-repair-types =
-    try(RepairDefinition)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "m-repair-types", "6,2,7,24")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "7,4,7,24")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "7,8,7,23") ; RepairDefinition
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "m-repair-types", "6,2,7,24")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "m-repair-types", "6,2,7,24")
+      ; fail
 
-  repair-types = 
-    try(sometd(RepairDefinition); where(explanation))
+  repair-types =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "repair-types", "9,2,10,52")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "10,4,10,52")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "10,8,10,51")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "10,8,10,31")
+           ; sometd(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "10,15,10,30") ; RepairDefinition
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "10,34,10,51")
+        ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "10,40,10,50") ; explanation)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "repair-types", "9,2,10,52")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "repair-types", "9,2,10,52")
+      ; fail
 
   RepairDefinition :
-    SDef(f, xs, s) -> SDef(f, xs', s)
-    where <map1(RepairVarDec(!"definition", !f))> xs => xs'
+    SDef(f, xs, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "12,2,14,58")> SDef(f, xs', s)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "12,2,14,58")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "12,2,14,58")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "14,10,14,58")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "14,10,14,51")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "14,11,14,47")
+                 ; map1(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "14,16,14,46")
+                     ; RepairVarDec(
+                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "14,29,14,41")
+                         ; !"definition"
+                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "14,44,14,45") ; !f
+                       )
+                   ))> xs) => xs'
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "12,2,14,58")
+             ; fail
 
   RepairDefinition :
-    SDefT(f, xs, ys, s) -> SDefT(f, xs', ys, s)
-    where <map1(RepairVarDec(!"definition", !f))> xs => xs'
+    SDefT(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "16,2,18,58")> SDefT(f, xs', ys, s)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "16,2,18,58")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "16,2,18,58")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "18,10,18,58")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "18,10,18,51")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "18,11,18,47")
+                 ; map1(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "18,16,18,46")
+                     ; RepairVarDec(
+                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "18,29,18,41")
+                         ; !"definition"
+                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "18,44,18,45") ; !f
+                       )
+                   ))> xs) => xs'
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "16,2,18,58")
+             ; fail
 
   RepairDefinition :
-    RDef(f, xs, s) -> RDef(f, xs', s)
-    where <map1(RepairVarDec(!"rule", !f))> xs => xs'
+    RDef(f, xs, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "20,2,22,52")> RDef(f, xs', s)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "20,2,22,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "20,2,22,52")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "22,10,22,52")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "22,10,22,45")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "22,11,22,41")
+                 ; map1(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "22,16,22,40")
+                     ; RepairVarDec(
+                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "22,29,22,35")
+                         ; !"rule"
+                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "22,38,22,39") ; !f
+                       )
+                   ))> xs) => xs'
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "20,2,22,52")
+             ; fail
 
   RepairDefinition :
-    RDefT(f, xs, ys, s) -> RDefT(f, xs', ys, s)
-    where <map1(RepairVarDec(!"rule", !f))> xs => xs'
+    RDefT(f, xs, ys, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "24,2,26,52")> RDefT(f, xs', ys, s)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "24,2,26,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "24,2,26,52")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "26,10,26,52")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "26,10,26,45")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "26,11,26,41")
+                 ; map1(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "26,16,26,40")
+                     ; RepairVarDec(
+                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "26,29,26,35")
+                         ; !"rule"
+                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "26,38,26,39") ; !f
+                       )
+                   ))> xs) => xs'
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairDefinition", "24,2,26,52")
+             ; fail
 
   RepairVarDec(def, op) :
-    VarDec(x, FunType([ConstType(t1) | ts@[FunType(_,_) | _]], t2)) ->
-    VarDec(x, FunType(<conc>(ts, [ConstType(t1)]), t2))
-    where fatal-err(| <concat-strings>["argument '", x, "' of ", <def>, " '", <op>, 
-	                               "' starts with constant type"] )
-	      
+    VarDec(
+      x
+    , FunType(
+        [ConstType(t1)|ts@[FunType(_, _)|_]]
+      , t2
+      )
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairVarDec", "28,2,32,63")> VarDec(
+                                                                                                                                  x
+                                                                                                                                , FunType(
+                                                                                                                                    <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "30,23,30,26") ; conc> (ts, [ConstType(t1)])
+                                                                                                                                  , t2
+                                                                                                                                  )
+                                                                                                                                )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairVarDec", "28,2,32,63")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairVarDec", "28,2,32,63")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "31,10,32,63")
+          ; fatal-err(
+            | <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "31,23,31,36") ; concat-strings> [ "argument '"
+                                                                                                                                       , x
+                                                                                                                                       , "' of "
+                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "31,66,31,68") ; def>
+                                                                                                                                       , " '"
+                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "31,79,31,80") ; op>
+                                                                                                                                       , "' starts with constant type"
+                                                                                                                                       ]
+            )
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "RepairVarDec", "28,2,32,63")
+             ; fail
+
   explanation =
-    <fprintnl>(stderr(), ["
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "explanation", "34,2,44,2")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "35,4,44,2")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "35,5,35,12") ; fprintnl)> (stderr(), ["
 ** Warning: Starting with Stratego 0.9.3 the calling convention of
    strategies has been changed such that the current term is the *last*
    argument. For most strategy definitions this is not a problem. Only
@@ -42,3 +156,6 @@ strategies
    is currently done automatically by the compiler. In the future source
    programs are expected to incorporate this change.
 "])
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "explanation", "34,2,44,2")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/repair-types.str", "explanation", "34,2,44,2")
+      ; fail

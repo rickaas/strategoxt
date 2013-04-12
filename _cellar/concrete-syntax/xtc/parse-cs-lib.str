@@ -1,210 +1,791 @@
 module parse-cs-lib
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc 
+  libstratego-xtc
   strategoxt-xtc-tools
 
-/**
- * Options
- */
-strategies
 
+strategies
   syntax-option =
-    ArgOption("--syntax", where(<set-config>("--syntax", <id>)),
-	      !"--syntax syn        use syntax syn")
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "syntax-option", "12,2,14,44")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "13,4,14,44")
+    ; ArgOption(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "13,14,13,23") ; "--syntax"
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "13,26,13,62")
+        ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "13,32,13,61")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "13,33,13,42") ; set-config)> ( "--syntax"
+                                                                                                          , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "13,58,13,59") ; id>
+                                                                                                          ))
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "14,7,14,43")
+        ; !"--syntax syn        use syntax syn"
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "syntax-option", "12,2,14,44")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "syntax-option", "12,2,14,44")
+      ; fail
 
   ensugar-option =
-    ArgOption("--ensugar", where(<set-config>("--ensugar", <debug; string-to-int; debug>)),
-	      !"--ensugar n       ensugaring level")
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "ensugar-option", "16,2,18,44")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,4,18,44")
+    ; ArgOption(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,14,17,24") ; "--ensugar"
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,27,17,89")
+        ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,33,17,88")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,34,17,43") ; set-config)> ( "--ensugar"
+                                                                                                          , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,60,17,86")
+                                                                                                             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,60,17,64") ; debug)
+                                                                                                             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,67,17,86")
+                                                                                                             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,67,17,79") ; string-to-int)
+                                                                                                             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "17,82,17,86")
+                                                                                                             ; debug>
+                                                                                                          ))
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "18,7,18,43")
+        ; !"--ensugar n       ensugaring level"
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "ensugar-option", "16,2,18,44")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "ensugar-option", "16,2,18,44")
+      ; fail
 
   pretty-print-option =
-    Option("--pretty-print" + "-pp", 
-	   where(<set-config>("-pp", ())),
-	   !"--pretty-print | -pp        pretty-print")
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pretty-print-option", "20,2,23,47")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "21,4,23,47")
+    ; Option(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "21,11,21,34")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "21,11,21,26") ; "--pretty-print"
+           + s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "21,30,21,34") ; "-pp")
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "22,4,22,33")
+        ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "22,10,22,32")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "22,11,22,20") ; set-config)> ("-pp", ()))
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "23,4,23,46")
+        ; !"--pretty-print | -pp        pretty-print"
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pretty-print-option", "20,2,23,47")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pretty-print-option", "20,2,23,47")
+      ; fail
 
   pass-ensugar =
-    !["--ensugar", <get-config; int-to-string> "--ensugar"]
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pass-ensugar", "25,2,26,58")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "26,4,26,58")
+    ; ![ "--ensugar"
+       , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "26,20,26,44")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "26,20,26,29") ; get-config)
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "26,32,26,44")
+          ; int-to-string> "--ensugar"
+       ]
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pass-ensugar", "25,2,26,58")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pass-ensugar", "25,2,26,58")
+      ; fail
 
-strategies 
 
+strategies
   pcs-input-file =
-    where(<extend-config> ("-I", ["./"]))
-    ; resolve-file-name
-    ; where(?FILE(file); <set-config> ("input-file", file))
-    ; if-verbose3(debug(!"file: "))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-input-file", "30,2,34,34")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "31,4,34,34")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "31,4,31,40")
+       ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "31,10,31,39")
+               ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "31,11,31,23") ; extend-config)> ("-I", ["./"])))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "32,6,34,34")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "32,6,32,22") ; resolve-file-name)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "33,6,34,34")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "33,6,33,58")
+       ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "33,12,33,57")
+               ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "33,12,33,22")
+                  ; ?FILE(file))
+               ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "33,25,33,57")
+               ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "33,26,33,35") ; set-config)> ("input-file", file)))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "34,6,34,34")
+    ; if-verbose3(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "34,18,34,33")
+        ; debug(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "34,24,34,32")
+            ; !"file: "
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-input-file", "30,2,34,34")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-input-file", "30,2,34,34")
+      ; fail
 
   init-language-binding =
-    where(
-      fetch-meta-data(!Meta([]))
-      ; syntax-override
-      ; if-verbose2(debug(!"meta-data: "))
-      ; meta-data-to-rules
-      ; where(get-parse-table)
-    )
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "init-language-binding", "36,2,43,4")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "37,4,43,4")
+    ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "38,6,42,29")
+            ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "38,6,38,31")
+               ; fetch-meta-data(
+                   s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "38,22,38,30")
+                   ; !Meta([])
+                 ))
+            ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "39,8,42,29")
+            ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "39,8,39,22") ; syntax-override)
+            ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "40,8,42,29")
+            ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "40,8,40,41")
+               ; if-verbose2(
+                   s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "40,20,40,40")
+                   ; debug(
+                       s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "40,26,40,39")
+                       ; !"meta-data: "
+                     )
+                 ))
+            ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "41,8,42,29")
+            ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "41,8,41,25") ; meta-data-to-rules)
+            ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "42,8,42,29")
+            ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "42,14,42,28") ; get-parse-table))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "init-language-binding", "36,2,43,4")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "init-language-binding", "36,2,43,4")
+      ; fail
 
-  syntax-override = 
-    if <get-config> "--syntax" => syn then
-      Meta(fetch(Syntax(!syn)) <+ ![Syntax(syn) | <id>])
-    else
-      id
-    end
+  syntax-override =
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "syntax-override", "45,2,50,6")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "46,4,50,6")
+    ; if s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "46,7,46,36")
+         ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "46,7,46,29")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "46,8,46,17") ; get-config)> "--syntax") => syn then
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,6,47,55")
+        ; Meta(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,11,47,54")
+            ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,11,47,29")
+               ; fetch(
+                   s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,17,47,28")
+                   ; Syntax(
+                       s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,24,47,27") ; !syn
+                     )
+                 )
+               <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,34,47,54")
+                  ; ![Syntax(syn)|<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "47,51,47,52") ; id>])
+          )
+      else
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "49,6,49,7") ; id
+      end
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "syntax-override", "45,2,50,6")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "syntax-override", "45,2,50,6")
+      ; fail
 
   pcs-parse-asfix2 =
-    if <MetaData> "TopSort" then
-      xtc-sglr-asfix2(|<MetaData> "ParseTable", <MetaData> "TopSort")
-    else
-      xtc-sglr-asfix2(|<MetaData> "ParseTable")
-    end
-    ; if-keep1(copy-to(<add-extension> (<get-config> "input-file", "asfix2")))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-asfix2", "52,2,58,77")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "53,4,58,77")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "53,4,57,6")
+       ; if s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "53,7,53,26")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "53,8,53,15") ; MetaData)> "TopSort" then
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "54,6,54,68")
+           ; xtc-sglr-asfix2(
+             | <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "54,24,54,31") ; MetaData> "ParseTable"
+             , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "54,49,54,56") ; MetaData> "TopSort"
+             )
+         else
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "56,6,56,46")
+           ; xtc-sglr-asfix2(
+             | <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "56,24,56,31") ; MetaData> "ParseTable"
+             )
+         end)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "58,6,58,77")
+    ; if-keep1(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "58,15,58,76")
+        ; copy-to(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "58,23,58,75")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "58,24,58,36") ; add-extension)> ( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "58,41,58,50") ; get-config> "input-file"
+                                                                                                         , "asfix2"
+                                                                                                         )
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-asfix2", "52,2,58,77")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-asfix2", "52,2,58,77")
+      ; fail
 
   pcs-parse-asfix2me =
-    if <MetaData> "TopSort" then
-      xtc-sglr-asfix2me(|<MetaData> "ParseTable", <MetaData> "TopSort")
-    else
-      xtc-sglr-asfix2me(|<MetaData> "ParseTable")
-    end
-    ; if-keep1(copy-to(<add-extension> (<get-config> "input-file", "asfix2me")))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-asfix2me", "60,2,66,79")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "61,4,66,79")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "61,4,65,6")
+       ; if s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "61,7,61,26")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "61,8,61,15") ; MetaData)> "TopSort" then
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "62,6,62,70")
+           ; xtc-sglr-asfix2me(
+             | <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "62,26,62,33") ; MetaData> "ParseTable"
+             , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "62,51,62,58") ; MetaData> "TopSort"
+             )
+         else
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "64,6,64,48")
+           ; xtc-sglr-asfix2me(
+             | <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "64,26,64,33") ; MetaData> "ParseTable"
+             )
+         end)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "66,6,66,79")
+    ; if-keep1(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "66,15,66,78")
+        ; copy-to(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "66,23,66,77")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "66,24,66,36") ; add-extension)> ( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "66,41,66,50") ; get-config> "input-file"
+                                                                                                         , "asfix2me"
+                                                                                                         )
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-asfix2me", "60,2,66,79")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-asfix2me", "60,2,66,79")
+      ; fail
 
   pcs-parse-ast =
-    if <MetaData> "TopSort" then
-      xtc-sglri(|<MetaData> "ParseTable", <MetaData> "TopSort")
-    else
-      xtc-sglri(|<MetaData> "ParseTable")
-    end
-    ; if-keep1(copy-to(<add-extension> (<get-config> "input-file", "ast")))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-ast", "68,2,74,74")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "69,4,74,74")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "69,4,73,6")
+       ; if s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "69,7,69,26")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "69,8,69,15") ; MetaData)> "TopSort" then
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "70,6,70,62")
+           ; xtc-sglri(
+             | <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "70,18,70,25") ; MetaData> "ParseTable"
+             , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "70,43,70,50") ; MetaData> "TopSort"
+             )
+         else
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "72,6,72,40")
+           ; xtc-sglri(
+             | <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "72,18,72,25") ; MetaData> "ParseTable"
+             )
+         end)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "74,6,74,74")
+    ; if-keep1(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "74,15,74,73")
+        ; copy-to(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "74,23,74,72")
+            ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "74,24,74,36") ; add-extension)> ( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "74,41,74,50") ; get-config> "input-file"
+                                                                                                         , "ast"
+                                                                                                         )
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-ast", "68,2,74,74")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse-ast", "68,2,74,74")
+      ; fail
 
   pcs-parse =
-    pcs-parse-ast
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse", "76,2,77,16")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "77,4,77,16")
+    ; pcs-parse-ast
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse", "76,2,77,16")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-parse", "76,2,77,16")
+      ; fail
 
   pcs-pre-explode-desugar =
-    try(
-      xtc-transform(<MetaData> "PreExplodeDesugar", pass-ensugar)
-      ; if-keep3(copy-to(<add-extension> (<get-config> "input-file", "ds1")))
-    )
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-pre-explode-desugar", "79,2,83,4")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "80,4,83,4")
+    ; try(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "81,6,82,76")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "81,6,81,64")
+           ; xtc-transform(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "81,20,81,49")
+               ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "81,21,81,28") ; MetaData)> "PreExplodeDesugar"
+             , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "81,52,81,63") ; pass-ensugar
+             ))
+        ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "82,8,82,76")
+        ; if-keep3(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "82,17,82,75")
+            ; copy-to(
+                s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "82,25,82,74")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "82,26,82,38") ; add-extension)> ( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "82,43,82,52") ; get-config> "input-file"
+                                                                                                             , "ds1"
+                                                                                                             )
+              )
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-pre-explode-desugar", "79,2,83,4")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-pre-explode-desugar", "79,2,83,4")
+      ; fail
 
   pcs-explode =
-    try(
-      xtc-transform(<MetaData> "Explode")
-      ; if-keep2(copy-to(<add-extension> (<get-config> "input-file", "exp")))
-    )
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-explode", "85,2,89,4")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "86,4,89,4")
+    ; try(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "87,6,88,76")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "87,6,87,40")
+           ; xtc-transform(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "87,20,87,39")
+               ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "87,21,87,28") ; MetaData)> "Explode"
+             ))
+        ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "88,8,88,76")
+        ; if-keep2(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "88,17,88,75")
+            ; copy-to(
+                s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "88,25,88,74")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "88,26,88,38") ; add-extension)> ( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "88,43,88,52") ; get-config> "input-file"
+                                                                                                             , "exp"
+                                                                                                             )
+              )
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-explode", "85,2,89,4")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-explode", "85,2,89,4")
+      ; fail
 
   pcs-post-explode-desugar =
-    try(
-      xtc-transform(<MetaData> "PostExplodeDesugar", pass-ensugar)
-      ; if-keep3(copy-to(<add-extension> (<get-config> "input-file", "ds2")))
-    )
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-post-explode-desugar", "91,2,95,4")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "92,4,95,4")
+    ; try(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "93,6,94,76")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "93,6,93,65")
+           ; xtc-transform(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "93,20,93,50")
+               ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "93,21,93,28") ; MetaData)> "PostExplodeDesugar"
+             , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "93,53,93,64") ; pass-ensugar
+             ))
+        ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "94,8,94,76")
+        ; if-keep3(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "94,17,94,75")
+            ; copy-to(
+                s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "94,25,94,74")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "94,26,94,38") ; add-extension)> ( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "94,43,94,52") ; get-config> "input-file"
+                                                                                                             , "ds2"
+                                                                                                             )
+              )
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-post-explode-desugar", "91,2,95,4")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-post-explode-desugar", "91,2,95,4")
+      ; fail
 
   pcs-pretty-print =
-    try(
-      where(<get-config> "-pp"; get-pp-table)
-      ; xtc-transform(!"ast2abox", !["-p", <MetaData> "PrettyPrintTable"])
-      ; xtc-transform(!"abox2text")
-    )
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-pretty-print", "97,2,102,4")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "98,4,102,4")
+    ; try(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "99,6,101,34")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "99,6,99,44")
+           ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "99,12,99,43")
+                   ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "99,12,99,29")
+                      ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "99,13,99,22") ; get-config)> "-pp")
+                   ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "99,32,99,43")
+                   ; get-pp-table))
+        ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "100,8,101,34")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "100,8,100,73")
+           ; xtc-transform(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "100,22,100,32")
+               ; !"ast2abox"
+             , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "100,35,100,72")
+               ; ![ "-p"
+                  , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "100,44,100,51") ; MetaData> "PrettyPrintTable"
+                  ]
+             ))
+        ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "101,8,101,34")
+        ; xtc-transform(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "101,22,101,33")
+            ; !"abox2text"
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-pretty-print", "97,2,102,4")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "pcs-pretty-print", "97,2,102,4")
+      ; fail
 
-strategies // obtain parse table
 
+strategies
   get-parse-table =
-    if-verbose6(debug(!"get-parse-table: "))
-    ; <MetaData> "Syntax" => syntax
-    ; if-verbose6(debug(!"Syntax: "))
-    ; try(where(
-        <extend-config> ("-I", ["./", <conc-strings; xtc-find-silent; dirname> (syntax, ".sdf")])
-      ))
-    ; guarantee-extension(|"tbl") => tbl
-    ; (<resolve-file-name> FILE(tbl)
-       ; if-verbose2(debug(!"using parse table: "))
-      <+ if-verbose2(say(!"creating parse table"))
-       ; <get-syntax-definition> syntax
-       ; xtc-transform(!"sdf2table", !["-m", syntax])
-       ; rename-to(!tbl)
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-parse-table", "106,2,122,47")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "107,4,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "107,4,107,43")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "107,16,107,42")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "107,22,107,41")
+               ; !"get-parse-table: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "108,6,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "108,6,108,34")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "108,6,108,24")
+          ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "108,7,108,14") ; MetaData)> "Syntax") => syntax)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "109,6,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "109,6,109,36")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "109,18,109,35")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "109,24,109,34")
+               ; !"Syntax: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "110,6,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "110,6,112,7")
+       ; try(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "110,10,112,6")
+           ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,8,111,96")
+                   ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,9,111,21") ; extend-config)> ( "-I"
+                                                                                                                 , [ "./"
+                                                                                                                   , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,39,111,76")
+                                                                                                                      ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,39,111,50") ; conc-strings)
+                                                                                                                      ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,53,111,76")
+                                                                                                                      ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,53,111,67") ; xtc-find-silent)
+                                                                                                                      ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "111,70,111,76")
+                                                                                                                      ; dirname> (syntax, ".sdf")
+                                                                                                                   ]
+                                                                                                                 ))
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "113,6,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "113,6,113,39")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "113,6,113,32")
+          ; guarantee-extension(|"tbl")) => tbl)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "114,6,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "114,7,119,23")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "114,7,115,50")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "114,7,114,35")
+             ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "114,8,114,24") ; resolve-file-name)> FILE(tbl))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "115,9,115,50")
+          ; if-verbose2(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "115,21,115,49")
+              ; debug(
+                  s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "115,27,115,48")
+                  ; !"using parse table: "
+                )
+            )
+          <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "116,9,119,23")
+             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "116,9,116,49")
+                ; if-verbose2(
+                    s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "116,21,116,48")
+                    ; say(
+                        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "116,25,116,47")
+                        ; !"creating parse table"
+                      )
+                  ))
+             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "117,9,119,23")
+             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "117,9,117,38")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "117,10,117,30") ; get-syntax-definition)> syntax)
+             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "118,9,119,23")
+             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "118,9,118,52")
+                ; xtc-transform(
+                    s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "118,23,118,34")
+                    ; !"sdf2table"
+                  , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "118,37,118,51")
+                    ; !["-m", syntax]
+                  ))
+             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "119,9,119,23")
+             ; rename-to(
+                 s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "119,19,119,22") ; !tbl
+               )))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,6,122,47")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,6,121,57")
+       ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,12,121,56")
+               ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,12,121,37")
+                  ; !ParseTable(
+                       <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,25,121,35")
+                        ; ?FILE(
+                             <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,32,121,33") ; id>
+                           )>
+                     ))
+               ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "121,40,121,56")
+               ; meta-data-to-rule))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "122,6,122,47")
+    ; if-verbose6(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "122,18,122,46")
+        ; debug(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "122,24,122,45")
+            ; !"using parse table: "
+          )
       )
-    ; where(!ParseTable(<?FILE(<id>)>); meta-data-to-rule)
-    ; if-verbose6(debug(!"using parse table: "))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-parse-table", "106,2,122,47")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-parse-table", "106,2,122,47")
+      ; fail
 
-strategies // obtain syntax definition 
 
+strategies
   get-syntax-definition =
-    if-verbose6(debug(!"get-syntax-definition: "))
-    ; where(guarantee-extension(|"def") => def)
-    ; ( <resolve-file-name> FILE(def)
-      ; if-verbose2(!"using syntax definition: ")
-     <+ if-verbose2(say(!"creating syntax definition"))
-      ; !FILE(<guarantee-extension(|"sdf")>)
-      ; xtc-transform(!"pack-sdf", get-includes)
-      ; xtc-transform(!"asfix-yield")
-      ; rename-to(!def)
-      )
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-syntax-definition", "126,2,136,6")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "127,4,136,6")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "127,4,127,49")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "127,16,127,48")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "127,22,127,47")
+               ; !"get-syntax-definition: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "128,6,136,6")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "128,6,128,46")
+       ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "128,12,128,45")
+               ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "128,12,128,38")
+                  ; guarantee-extension(|"def")) => def))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "129,8,135,22")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "129,8,130,48")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "129,8,129,36")
+          ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "129,9,129,25") ; resolve-file-name)> FILE(def))
+       ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "130,8,130,48")
+       ; if-verbose2(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "130,20,130,47")
+           ; !"using syntax definition: "
+         )
+       <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "131,8,135,22")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "131,8,131,54")
+             ; if-verbose2(
+                 s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "131,20,131,53")
+                 ; say(
+                     s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "131,24,131,52")
+                     ; !"creating syntax definition"
+                   )
+               ))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "132,8,135,22")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "132,8,132,43")
+             ; !FILE(
+                  <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "132,15,132,41")
+                   ; guarantee-extension(|"sdf")>
+                ))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "133,8,135,22")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "133,8,133,47")
+             ; xtc-transform(
+                 s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "133,22,133,32")
+                 ; !"pack-sdf"
+               , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "133,35,133,46") ; get-includes
+               ))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "134,8,135,22")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "134,8,134,36")
+             ; xtc-transform(
+                 s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "134,22,134,35")
+                 ; !"asfix-yield"
+               ))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "135,8,135,22")
+          ; rename-to(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "135,18,135,21") ; !def
+            ))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-syntax-definition", "126,2,136,6")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-syntax-definition", "126,2,136,6")
+      ; fail
 
-strategies // obtain pretty-print table
 
+strategies
   get-pp-table =
-    if-verbose6(debug(!"get-pp-table: "))
-    ; <MetaData> "PrettyPrintTable" => pptbl
-    ; if-verbose6(debug(!"PrettyPrintTable: "))
-    //; guarantee-extension(!"pp") => pptbl
-    ; (<resolve-file-name <+ FILE(xtc-find)> FILE(pptbl)
-       ; if-verbose2(debug(!"using pp table: "))
-      <+ if-verbose2(say(!"creating pp table"))
-       ; <MetaData; get-syntax-definition> "Syntax"
-       ; xtc-transform(!"ppgen")
-       ; rename-to(!pptbl)
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-pp-table", "140,2,153,44")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "141,4,153,44")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "141,4,141,40")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "141,16,141,39")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "141,22,141,38")
+               ; !"get-pp-table: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "142,6,153,44")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "142,6,142,43")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "142,6,142,34")
+          ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "142,7,142,14") ; MetaData)> "PrettyPrintTable") => pptbl)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "143,6,153,44")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "143,6,143,46")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "143,18,143,45")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "143,24,143,44")
+               ; !"PrettyPrintTable: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,6,153,44")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,7,150,25")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,7,146,47")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,7,145,55")
+             ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,8,145,42")
+                 ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,8,145,24") ; resolve-file-name
+                    <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,29,145,42")
+                       ; FILE(
+                           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "145,34,145,41") ; xtc-find
+                         )))> FILE(pptbl))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "146,9,146,47")
+          ; if-verbose2(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "146,21,146,46")
+              ; debug(
+                  s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "146,27,146,45")
+                  ; !"using pp table: "
+                )
+            )
+          <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "147,9,150,25")
+             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "147,9,147,46")
+                ; if-verbose2(
+                    s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "147,21,147,45")
+                    ; say(
+                        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "147,25,147,44")
+                        ; !"creating pp table"
+                      )
+                  ))
+             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "148,9,150,25")
+             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "148,9,148,50")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "148,10,148,40")
+                    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "148,10,148,17") ; MetaData)
+                    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "148,20,148,40")
+                    ; get-syntax-definition)> "Syntax")
+             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "149,9,150,25")
+             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "149,9,149,31")
+                ; xtc-transform(
+                    s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "149,23,149,30")
+                    ; !"ppgen"
+                  ))
+             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "150,9,150,25")
+             ; rename-to(
+                 s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "150,19,150,24") ; !pptbl
+               )))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,6,153,44")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,6,152,63")
+       ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,12,152,62")
+               ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,12,152,43")
+                  ; !PrettyPrintTable(
+                       <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,31,152,41")
+                        ; ?FILE(
+                             <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,38,152,39") ; id>
+                           )>
+                     ))
+               ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "152,46,152,62")
+               ; meta-data-to-rule))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "153,6,153,44")
+    ; if-verbose6(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "153,18,153,43")
+        ; debug(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "153,24,153,42")
+            ; !"using pp table: "
+          )
       )
-    ; where(!PrettyPrintTable(<?FILE(<id>)>); meta-data-to-rule)
-    ; if-verbose6(debug(!"using pp table: "))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-pp-table", "140,2,153,44")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-pp-table", "140,2,153,44")
+      ; fail
 
-strategies // parsing
 
+strategies
   xtc-sglr-asfix2(|tbl) =
-    xtc-transform(!"sglr", !["-2", "-p", <file-exists <+ xtc-find> tbl | <pass-v-verbose> ])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2", "157,2,158,91")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,4,158,91")
+    ; xtc-transform(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,18,158,24")
+        ; !"sglr"
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,27,158,90")
+        ; !["-2", "-p", <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,42,158,64")
+                         ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,42,158,52") ; file-exists
+                            <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,57,158,64") ; xtc-find)> tbl|<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "158,74,158,87") ; pass-v-verbose>]
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2", "157,2,158,91")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2", "157,2,158,91")
+      ; fail
 
   xtc-sglr-asfix2(|tbl, sort) =
-    xtc-transform(!"sglr", !["-2", "-p", <file-exists <+ xtc-find> tbl, "-s", sort | <pass-v-verbose> ()])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2", "160,2,161,105")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,4,161,105")
+    ; xtc-transform(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,18,161,24")
+        ; !"sglr"
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,27,161,104")
+        ; !["-2", "-p", <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,42,161,64")
+                         ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,42,161,52") ; file-exists
+                            <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,57,161,64") ; xtc-find)> tbl, "-s", sort|<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "161,86,161,99") ; pass-v-verbose> ()]
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2", "160,2,161,105")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2", "160,2,161,105")
+      ; fail
 
   xtc-sglr-asfix2me(|tbl) =
-    xtc-transform(!"sglr", !["-m", "-p", <file-exists <+ xtc-find> tbl | <pass-v-verbose> ()])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2me", "163,2,164,93")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,4,164,93")
+    ; xtc-transform(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,18,164,24")
+        ; !"sglr"
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,27,164,92")
+        ; !["-m", "-p", <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,42,164,64")
+                         ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,42,164,52") ; file-exists
+                            <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,57,164,64") ; xtc-find)> tbl|<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "164,74,164,87") ; pass-v-verbose> ()]
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2me", "163,2,164,93")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2me", "163,2,164,93")
+      ; fail
 
   xtc-sglr-asfix2me(|tbl, sort) =
-    xtc-transform(!"sglr", !["-m", "-p", <file-exists <+ xtc-find> tbl, "-s", sort | <pass-v-verbose> ()])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2me", "166,2,167,105")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,4,167,105")
+    ; xtc-transform(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,18,167,24")
+        ; !"sglr"
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,27,167,104")
+        ; !["-m", "-p", <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,42,167,64")
+                         ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,42,167,52") ; file-exists
+                            <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,57,167,64") ; xtc-find)> tbl, "-s", sort|<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "167,86,167,99") ; pass-v-verbose> ()]
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2me", "166,2,167,105")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "xtc-sglr-asfix2me", "166,2,167,105")
+      ; fail
 
-/**
- * Include path -- file name resolution
- * 
- * File names are often specified in an incomplete manner relative to
- * an include path (or the current working directory)
- * The following strategies resolve file names with respect to
- * an include path.
- */
 
-strategies // includes
-
+strategies
   include-options =
-    ArgOption("-I" + "--Include", where(<extend-config>("-I", [<id>])),
-	      !"-I p|--Include p   include modules from directory p")
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "include-options", "180,2,182,61")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,4,182,61")
+    ; ArgOption(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,14,181,31")
+        ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,14,181,17") ; "-I"
+           + s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,21,181,31") ; "--Include")
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,34,181,69")
+        ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,40,181,68")
+                ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,41,181,53") ; extend-config)> ( "-I"
+                                                                                                               , [<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "181,64,181,65") ; id>]
+                                                                                                               ))
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "182,7,182,60")
+        ; !"-I p|--Include p   include modules from directory p"
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "include-options", "180,2,182,61")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "include-options", "180,2,182,61")
+      ; fail
 
   resolve-file-name =
-    find-in-includes(!"")
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "resolve-file-name", "184,2,185,24")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "185,4,185,24")
+    ; find-in-includes(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "185,21,185,23")
+        ; !""
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "resolve-file-name", "184,2,185,24")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "resolve-file-name", "184,2,185,24")
+      ; fail
 
   find-in-includes(msg) =
-    !(<?FILE(<id>)>, <get-config> "-I")
-    ; if-verbose5(debug(!"find-in-includes: "))
-    ; find-in-path
-    ; if-verbose2(debug(msg))
-    ; !FILE(<id>)
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "find-in-includes", "187,2,192,16")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "188,4,192,16")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "188,4,188,38")
+       ; !( <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "188,7,188,17")
+             ; ?FILE(
+                  <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "188,14,188,15") ; id>
+                )>
+          , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "188,22,188,31") ; get-config> "-I"
+          ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "189,6,192,16")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "189,6,189,46")
+       ; if-verbose5(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "189,18,189,45")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "189,24,189,44")
+               ; !"find-in-includes: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "190,6,192,16")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "190,6,190,17") ; find-in-path)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "191,6,192,16")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "191,6,191,28")
+       ; if-verbose2(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "191,18,191,27")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "191,24,191,26") ; msg
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "192,6,192,16")
+    ; !FILE(
+         <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "192,13,192,14") ; id>
+       )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "find-in-includes", "187,2,192,16")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "find-in-includes", "187,2,192,16")
+      ; fail
 
   get-includes =
-    <get-config> "-I"
-    ; foldr(id, conc, !["-I", <id>])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-includes", "194,2,196,35")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "195,4,196,35")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "195,4,195,20")
+       ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "195,5,195,14") ; get-config)> "-I")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "196,6,196,35")
+    ; foldr(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "196,12,196,13") ; id
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "196,16,196,19") ; conc
+      , s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "196,22,196,34")
+        ; ![ "-I"
+           , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "196,31,196,32") ; id>
+           ]
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-includes", "194,2,196,35")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-includes", "194,2,196,35")
+      ; fail
 
-/**
- * Meta data
- *
- * meta-data express properties about files (data)
- * meta-data is stored in a separate file (e.g., file.meta)
- * a FILE descriptor can be annotated with its meta-data
- */
 
-signature // meta data
-
+signature
   constructors
     Meta               : List(MetaProperty) -> MetaData
     Syntax             : String -> MetaProperty
@@ -215,70 +796,234 @@ signature // meta data
     PrettyPrintTable   : String -> MetaProperty
     TopSort            : String -> MetaProperty
 
-strategies 
 
-  /** 
-   * fetching meta data
-   * 
-   * Meta data can be found in various places: a .meta file for the file being
-   * processed, a file bound to the extension of the file found in XTC.
-   */
+strategies
   fetch-meta-data(default) =
-    <merge-metas>[<read-meta-file>,<read-syn-file>,<read-language-binding>,<default>]
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "fetch-meta-data", "226,2,227,84")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "227,4,227,84")
+    ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "227,5,227,15") ; merge-metas)> [ <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "227,19,227,32") ; read-meta-file>
+                                                                                                , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "227,36,227,48") ; read-syn-file>
+                                                                                                , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "227,52,227,72") ; read-language-binding>
+                                                                                                , <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "227,76,227,82") ; default>
+                                                                                                ]
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "fetch-meta-data", "226,2,227,84")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "fetch-meta-data", "226,2,227,84")
+      ; fail
 
   read-meta-file =
-    FILE(guarantee-extension(|"meta"))
-    ; read-from
-   <+ !Meta([])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-meta-file", "229,2,232,14")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "230,4,232,14")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "230,4,231,14")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "230,4,230,37")
+          ; FILE(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "230,9,230,36")
+              ; guarantee-extension(|"meta")
+            ))
+       ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "231,6,231,14")
+       ; read-from
+       <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "232,6,232,14")
+          ; !Meta([]))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-meta-file", "229,2,232,14")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-meta-file", "229,2,232,14")
+      ; fail
 
   read-syn-file =
-    FILE(guarantee-extension(|"syn"))
-    ; read-from => syntax#(_)
-    ; !Meta([Syntax(syntax)])
-   <+ !Meta([])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-syn-file", "234,2,238,14")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "235,4,238,14")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "235,4,237,28")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "235,4,235,36")
+          ; FILE(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "235,9,235,35")
+              ; guarantee-extension(|"syn")
+            ))
+       ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "236,6,237,28")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "236,6,236,28")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "236,6,236,14") ; read-from) => syntax#(_))
+       ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "237,6,237,28")
+       ; !Meta([Syntax(syntax)])
+       <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "238,6,238,14")
+          ; !Meta([]))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-syn-file", "234,2,238,14")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-syn-file", "234,2,238,14")
+      ; fail
 
   read-language-binding =
-    FILE(<concat-strings; xtc-find-silent> [<get-extension>, ".meta"])
-    ; read-from
-   <+ !Meta([])
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-language-binding", "240,2,243,14")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,4,243,14")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,4,242,14")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,4,241,69")
+          ; FILE(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,9,241,68")
+              ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,10,241,40")
+                  ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,10,241,23") ; concat-strings)
+                  ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,26,241,40")
+                  ; xtc-find-silent)> [ <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "241,45,241,57") ; get-extension>
+                                      , ".meta"
+                                      ]
+            ))
+       ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "242,6,242,14")
+       ; read-from
+       <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "243,6,243,14")
+          ; !Meta([]))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-language-binding", "240,2,243,14")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "read-language-binding", "240,2,243,14")
+      ; fail
 
-  merge-metas = 
-    !Meta(<map(?Meta(<id>)); concat>)
-
-  /** 
-   * meta data in dynamic rules
-   * 
-   * Generate dynamic MetaData rules mapping the type to the value
-   */
+  merge-metas =
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "merge-metas", "245,2,246,36")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "246,4,246,36")
+    ; !Meta(
+         <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "246,11,246,34")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "246,11,246,26")
+             ; map(
+                 s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "246,15,246,25")
+                 ; ?Meta(
+                      <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "246,22,246,23") ; id>
+                    )
+               ))
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "246,29,246,34")
+          ; concat>
+       )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "merge-metas", "245,2,246,36")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "merge-metas", "245,2,246,36")
+      ; fail
 
   meta-data-to-rules =
-    Meta(reverse-map(meta-data-to-rule))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "meta-data-to-rules", "254,2,255,39")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "255,4,255,39")
+    ; Meta(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "255,9,255,38")
+        ; reverse-map(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "255,21,255,37") ; meta-data-to-rule
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "meta-data-to-rules", "254,2,255,39")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "meta-data-to-rules", "254,2,255,39")
+      ; fail
 
   meta-data-to-rule =
-    where(?x@(prop#([val])); rules(MetaData : prop -> val))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "meta-data-to-rule", "257,2,258,58")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "258,4,258,58")
+    ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "258,10,258,57")
+            ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "258,10,258,26")
+               ; ?x@(prop#([val])))
+            ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "258,29,258,57")
+            ; rules ( MetaData :
+                        prop -> val ))
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "meta-data-to-rule", "257,2,258,58")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "meta-data-to-rule", "257,2,258,58")
+      ; fail
 
-//  rules-to-meta-data = 
-//    <table-get-list> "MetaData"
-//    ; !Meta(<filter(\ (prop@<is-string>, vals) -> prop#(vals) \ )>)
-
-  // meta data as annotation
-
-  get-meta-data(default) = 
-    if-verbose6(debug(!"get-meta: "))
-    ; annotate-with-meta-data(default)
-    ; check-meta-data
-    ; if-verbose6(debug(!"get-meta: "))
+  get-meta-data(default) =
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-meta-data", "266,2,270,38")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "267,4,270,38")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "267,4,267,36")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "267,16,267,35")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "267,22,267,34")
+               ; !"get-meta: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "268,6,270,38")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "268,6,268,37")
+       ; annotate-with-meta-data(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "268,30,268,36") ; default
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "269,6,270,38")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "269,6,269,20") ; check-meta-data)
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "270,6,270,38")
+    ; if-verbose6(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "270,18,270,37")
+        ; debug(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "270,24,270,36")
+            ; !"get-meta: "
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-meta-data", "266,2,270,38")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "get-meta-data", "266,2,270,38")
+      ; fail
 
   annotate-with-meta-data(default) =
-    if-verbose6(debug(!"annotate-with-meta-data: "))
-    ; !<id>{<fetch-meta-data(default)>}
-    ; if-verbose6(debug(!"annotate-with-meta-data: "))
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "annotate-with-meta-data", "272,2,275,53")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "273,4,275,53")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "273,4,273,51")
+       ; if-verbose6(
+           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "273,16,273,50")
+           ; debug(
+               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "273,22,273,49")
+               ; !"annotate-with-meta-data: "
+             )
+         ))
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "274,6,275,53")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "274,6,274,38")
+       ; !<s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "274,8,274,9") ; id>{ <s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "274,13,274,36")
+                                                                                          ; fetch-meta-data(
+                                                                                              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "274,29,274,35") ; default
+                                                                                            )>
+                                                                                       })
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "275,6,275,53")
+    ; if-verbose6(
+        s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "275,18,275,52")
+        ; debug(
+            s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "275,24,275,51")
+            ; !"annotate-with-meta-data: "
+          )
+      )
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "annotate-with-meta-data", "272,2,275,53")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "annotate-with-meta-data", "272,2,275,53")
+      ; fail
 
   check-meta-data =
-    ?FILE(file){attr*}
-    ; (where(<fetch(Meta(map(?_#(_))))> attr*)
-       <+ <error> ["Meta data ", attr*, " for file ", file, " not valid: "]; fail)
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "check-meta-data", "277,2,280,81")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "278,4,280,81")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "278,4,278,21")
+       ; ?FILE(file){attr*})
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,7,280,80")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,7,279,45")
+       ; where(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,13,279,44")
+               ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,14,279,37")
+                   ; fetch(
+                       s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,20,279,36")
+                       ; Meta(
+                           s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,25,279,35")
+                           ; map(
+                               s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "279,29,279,34")
+                               ; ?_#(_)
+                             )
+                         )
+                     ))> attr*)
+       <+ s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "280,10,280,80")
+          ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "280,10,280,74")
+             ; <(s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "280,11,280,15") ; error)> ["Meta data ", attr*, " for file ", file, " not valid: "])
+          ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "280,77,280,80")
+          ; fail)
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "check-meta-data", "277,2,280,81")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "check-meta-data", "277,2,280,81")
+      ; fail
 
   fetch-meta-datum(s) =
-    FILE(id){fetch(Meta(fetch(s; ?x)))}; !x
-
+    s-enter(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "fetch-meta-datum", "282,2,283,42")
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,4,283,42")
+    ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,4,283,38")
+       ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,4,283,11")
+          ; FILE(
+              s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,9,283,10") ; id
+            )) { s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,13,283,37")
+                 ; fetch(
+                     s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,19,283,36")
+                     ; Meta(
+                         s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,24,283,35")
+                         ; fetch(
+                             s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,30,283,34")
+                             ; (s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,30,283,30") ; s)
+                             ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,33,283,34")
+                             ; ?x
+                           )
+                       )
+                   ) })
+    ; s-step(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "283,41,283,42")
+    ; !x
+    < s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "fetch-meta-datum", "282,2,283,42")
+    + s-exit(|"_cellar/concrete-syntax/xtc/parse-cs-lib.str", "fetch-meta-datum", "282,2,283,42")
+      ; fail

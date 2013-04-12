@@ -1,7 +1,22 @@
 module lchoice_1
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
 
-strategies
 
-  main-lchoice_1 = id < !0 + !1
+strategies
+  main-lchoice_1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "main-lchoice_1", "7,2,7,30")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "7,19,7,30")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "7,19,7,20") ; id
+       < s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "7,24,7,25")
+         ; !0
+       + s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "7,29,7,30")
+         ; !1)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "main-lchoice_1", "7,2,7,30")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/lchoice_1.str", "main-lchoice_1", "7,2,7,30")
+      ; fail

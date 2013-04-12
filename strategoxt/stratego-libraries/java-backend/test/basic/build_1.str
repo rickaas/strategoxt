@@ -1,5 +1,12 @@
 module build_1
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
@@ -7,13 +14,43 @@ signature
     Module  : String * List(a) -> Module(a)
     Content : String -> Section
 
-strategies
 
-  main-build_1 = 
-    !("module1", 
-      [Module("module3",[Imports(["module1"]),Content("module3")]),
-       Module("module2",[Imports([]),Content("module2")]),
-       Module("module1",[Imports(["module2","module3"]),Content("module1")])])
-  ; debug
-  ; collect-one(?Imports(<id>))
-  ; length => 1
+strategies
+  main-build_1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "main-build_1", "12,2,19,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "13,4,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "13,4,16,77")
+       ; !( "module1"
+          , [ Module(
+                "module3"
+              , [ Imports(["module1"])
+                , Content("module3")
+                ]
+              )
+            , Module(
+                "module2"
+              , [Imports([]), Content("module2")]
+              )
+            , Module(
+                "module1"
+              , [ Imports(["module2", "module3"])
+                , Content("module1")
+                ]
+              )
+            ]
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "17,4,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "17,4,17,8") ; debug)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "18,4,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "18,4,18,30")
+       ; collect-one(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "18,16,18,29")
+           ; ?Imports(
+                <s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "18,26,18,27") ; id>
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "19,4,19,14")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "19,4,19,9") ; length) => 1
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "main-build_1", "12,2,19,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_1.str", "main-build_1", "12,2,19,14")
+      ; fail

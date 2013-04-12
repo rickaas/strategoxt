@@ -1,343 +1,1102 @@
 module strc-options
-imports stratego/strc/front/stratego-warnings-options
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratego/strc/front/stratego-warnings-options
+
 
 signature
   constructors
     LibDir         : ConfigKey
     DisableInstall : ConfigKey
 
-strategies
 
+strategies
   strc-command-line-options =
-    strc-init-strc-config
-    ; parse-options(strc-options)
-    ; strc-post-process-strc-config
-    ; display-version
-    ; main-module-required
-    ; strc-announce
-    ; log(|Info(), ["Compiling '", <get-config> "-i", "'"])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-command-line-options", "11,2,18,58")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "12,4,18,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "12,4,12,24") ; strc-init-strc-config)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "13,6,18,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "13,6,13,32")
+       ; parse-options(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "13,20,13,31") ; strc-options
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "14,6,18,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "14,6,14,34") ; strc-post-process-strc-config)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "15,6,18,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "15,6,15,20") ; display-version)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "16,6,18,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "16,6,16,25") ; main-module-required)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "17,6,18,58")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "17,6,17,18") ; strc-announce)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "18,6,18,58")
+    ; log(
+      | Info()
+      , [ "Compiling '"
+        , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "18,36,18,45") ; get-config> "-i"
+        , "'"
+        ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-command-line-options", "11,2,18,58")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-command-line-options", "11,2,18,58")
+      ; fail
 
   display-version =
-    try(<get-config> "-v"
-        ; strc-version
-        ; <exit> 0)
-        
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "display-version", "20,2,23,18")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "21,4,23,18")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "21,8,23,17")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "21,8,21,24")
+           ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "21,9,21,18") ; get-config)> "-v")
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "22,10,23,17")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "22,10,22,21") ; strc-version)
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "23,10,23,17")
+        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "23,11,23,14") ; exit)> 0
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "display-version", "20,2,23,18")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "display-version", "20,2,23,18")
+      ; fail
+
   main-module-required =
-    if not(<get-config> "-i") then <fatal-error> ["no main module specified"] end
-    
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "main-module-required", "25,2,26,80")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "26,4,26,80")
+    ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "26,7,26,28")
+         ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "26,11,26,27")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "26,12,26,21") ; get-config)> "-i") then
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "26,35,26,76")
+        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "26,36,26,46") ; fatal-error)> ["no main module specified"]
+      end
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "main-module-required", "25,2,26,80")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "main-module-required", "25,2,26,80")
+      ; fail
+
+
 strategies
-    
-  strc-init-strc-config = 
-  where(
-    <set-config> ("VERSION", <strc-version-number>)
-    ; <set-config> ("--verbose", 1)
-    ; <set-config> ("--keep", 0)
-    ; <set-config> ("--format-check", 1)
-    ; <set-config> ("--statistics", 1)
-    ; <set-config> ("-O", 2)
-    ; <set-config> ("-I", [])
-    ; <set-config> ("--C-include", 
-		   ["<srts/stratego.h>", "<stratego-lib/stratego-lib.h>"])
-
-    // @todo consider to include CFLAGS from the environment
-    ; <set-config> ("-Xcc",
-        [ "-I", <xtc-find-path> "SRTS-include"
-        , "-I", <xtc-find-path> "stratego-lib-include"
-        , "-I", <conc-strings>(<xtc-find-path> "ATERM", "/include")
-        | <strc-system-cflags> ()
-        ])
-
-    ; <set-config> ("-Xlinker",
-        [ <xtc-find> "libstratego-lib-native.la"
-        , <xtc-find> "libstratego-runtime.la"
-        , <xtc-find> "libATerm.la"
-        , "-lm"
-        | <strc-system-ldflags> ()
-        ])
-
-    ; <set-config> ("--dr", "new")
-    ; <set-config> ("--cc", <xtc-find> "cc")
-  )
+  strc-init-strc-config =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-init-strc-config", "30,2,60,2")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "31,2,60,2")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "32,4,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "32,4,32,50")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "32,5,32,14") ; set-config)> ( "VERSION"
+                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "32,30,32,48") ; strc-version-number>
+                                                                                                                                      ))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "33,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "33,6,33,34")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "33,7,33,16") ; set-config)> ("--verbose", 1))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "34,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "34,6,34,31")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "34,7,34,16") ; set-config)> ("--keep", 0))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "35,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "35,6,35,39")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "35,7,35,16") ; set-config)> ("--format-check", 1))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "36,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "36,6,36,37")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "36,7,36,16") ; set-config)> ("--statistics", 1))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "37,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "37,6,37,27")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "37,7,37,16") ; set-config)> ("-O", 2))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "38,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "38,6,38,28")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "38,7,38,16") ; set-config)> ("-I", []))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "39,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "39,6,40,59")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "39,7,39,16") ; set-config)> ("--C-include", ["<srts/stratego.h>", "<stratego-lib/stratego-lib.h>"]))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "43,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "43,6,48,9")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "43,7,43,16") ; set-config)> ( "-Xcc"
+                                                                                                                                      , ["-I", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "44,17,44,29") ; xtc-find-path> "SRTS-include", "-I", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "45,17,45,29") ; xtc-find-path> "stratego-lib-include", "-I", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "46,17,46,28") ; conc-strings> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "46,32,46,44") ; xtc-find-path> "ATERM"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       , "/include"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       )|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "47,11,47,28") ; strc-system-cflags> ()]
+                                                                                                                                      ))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "50,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "50,6,56,9")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "50,7,50,16") ; set-config)> ( "-Xlinker"
+                                                                                                                                      , [<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "51,11,51,18") ; xtc-find> "libstratego-lib-native.la", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "52,11,52,18") ; xtc-find> "libstratego-runtime.la", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "53,11,53,18") ; xtc-find> "libATerm.la", "-lm"|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "55,11,55,29") ; strc-system-ldflags> ()]
+                                                                                                                                      ))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "58,6,59,43")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "58,6,58,33")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "58,7,58,16") ; set-config)> ("--dr", "new"))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "59,6,59,43")
+            ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "59,7,59,16") ; set-config)> ( "--cc"
+                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "59,29,59,36") ; xtc-find> "cc"
+                                                                                                                                   ))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-init-strc-config", "30,2,60,2")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-init-strc-config", "30,2,60,2")
+      ; fail
 
   strc-post-process-strc-config =
-    where(
-      if not(<get-config> "--ld") then
-        <set-config> ("--ld", <get-config> "--cc")
-      end
-    )
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-post-process-strc-config", "62,2,67,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "63,4,67,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "64,6,66,8")
+            ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "64,9,64,32")
+                 ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "64,13,64,31")
+                       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "64,14,64,23") ; get-config)> "--ld") then
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "65,8,65,49")
+                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "65,9,65,18") ; set-config)> ( "--ld"
+                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "65,31,65,40") ; get-config> "--cc"
+                                                                                                                                       )
+              end)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-post-process-strc-config", "62,2,67,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-post-process-strc-config", "62,2,67,4")
+      ; fail
 
-  /**
-   * @todo This does not supported quoted options (with spaces)
-   */
   strc-system-ldflags =
-    <prim("STRC_SYSTEM_LDFLAGS")> ()
-    ; string-tokenize(| ['\ ', '\n', '\r'])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-system-ldflags", "72,2,74,42")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "73,4,74,42")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "73,4,73,35")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "73,5,73,31") ; prim("STRC_SYSTEM_LDFLAGS"))> ())
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "74,6,74,42")
+    ; string-tokenize(
+      | ['\ ', '\n', '\r']
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-system-ldflags", "72,2,74,42")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-system-ldflags", "72,2,74,42")
+      ; fail
 
-  /**
-   * @todo This does not supported quoted options (with spaces)
-   */
   strc-system-cflags =
-    <prim("STRC_SYSTEM_CFLAGS")> ()
-    ; string-tokenize(| ['\ ', '\n', '\r'])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-system-cflags", "79,2,81,42")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "80,4,81,42")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "80,4,80,34")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "80,5,80,30") ; prim("STRC_SYSTEM_CFLAGS"))> ())
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "81,6,81,42")
+    ; string-tokenize(
+      | ['\ ', '\n', '\r']
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-system-cflags", "79,2,81,42")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-system-cflags", "79,2,81,42")
+      ; fail
 
   strc-get-include-dirs =
-    <conc> (<get-config> "-I"
-           , ["-I", <xtc-find-path> "lib.rtree",
-              "-I", <xtc-find-path> "strategoxt-datadir",
-              "-I", <xtc-find-path> "Stratego.rtree",
-              "-I", <xtc-find-path> "StrategoRenamed.sdf"]
-           )
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-get-include-dirs", "83,2,89,11")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "84,4,89,11")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "84,5,84,8") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "84,13,84,22") ; get-config> "-I"
+                                                                                                                    , [ "-I"
+                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "85,21,85,33") ; xtc-find-path> "lib.rtree"
+                                                                                                                      , "-I"
+                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "86,21,86,33") ; xtc-find-path> "strategoxt-datadir"
+                                                                                                                      , "-I"
+                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "87,21,87,33") ; xtc-find-path> "Stratego.rtree"
+                                                                                                                      , "-I"
+                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "88,21,88,33") ; xtc-find-path> "StrategoRenamed.sdf"
+                                                                                                                      ]
+                                                                                                                    )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-get-include-dirs", "83,2,89,11")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-get-include-dirs", "83,2,89,11")
+      ; fail
 
   olevel(n, s) =
-    try(where(<geq>(<get-config> "-O", <n>)); s)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel", "91,2,92,47")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,4,92,47")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,8,92,46")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,8,92,43")
+           ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,14,92,42")
+                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,15,92,17") ; geq)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,21,92,30") ; get-config> "-O"
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,40,92,40") ; n>
+                                                                                                                                    )))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "92,46,92,46")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel", "91,2,92,47")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel", "91,2,92,47")
+      ; fail
 
-  olevel1(s) = olevel(!1, s)
-  olevel2(s) = olevel(!2, s)
-  olevel3(s) = olevel(!3, s)
-  olevel4(s) = olevel(!4, s)
-  olevel5(s) = olevel(!5, s)
-  olevel6(s) = olevel(!6, s)
+  olevel1(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel1", "94,2,94,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "94,15,94,27")
+    ; olevel(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "94,22,94,23")
+        ; !1
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "94,26,94,26") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel1", "94,2,94,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel1", "94,2,94,27")
+      ; fail
+
+  olevel2(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel2", "95,2,95,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "95,15,95,27")
+    ; olevel(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "95,22,95,23")
+        ; !2
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "95,26,95,26") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel2", "95,2,95,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel2", "95,2,95,27")
+      ; fail
+
+  olevel3(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel3", "96,2,96,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "96,15,96,27")
+    ; olevel(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "96,22,96,23")
+        ; !3
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "96,26,96,26") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel3", "96,2,96,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel3", "96,2,96,27")
+      ; fail
+
+  olevel4(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel4", "97,2,97,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "97,15,97,27")
+    ; olevel(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "97,22,97,23")
+        ; !4
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "97,26,97,26") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel4", "97,2,97,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel4", "97,2,97,27")
+      ; fail
+
+  olevel5(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel5", "98,2,98,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "98,15,98,27")
+    ; olevel(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "98,22,98,23")
+        ; !5
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "98,26,98,26") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel5", "98,2,98,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel5", "98,2,98,27")
+      ; fail
+
+  olevel6(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel6", "99,2,99,27")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "99,15,99,27")
+    ; olevel(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "99,22,99,23")
+        ; !6
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "99,26,99,26") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel6", "99,2,99,27")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "olevel6", "99,2,99,27")
+      ; fail
 
   strc-options =
-    input-option
-  + output-option
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-options", "101,2,258,28")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "102,4,258,28")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "102,4,102,15") ; input-option
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "103,4,258,28")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "103,4,103,16") ; output-option
+            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "105,4,258,28")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "105,4,107,55")
+                 ; ArgOption(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "105,14,105,31")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "105,14,105,17") ; "-I"
+                        + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "105,21,105,31") ; "--Include")
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "106,1,106,52")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "106,1,106,47")
+                        ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "106,7,106,46")
+                                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "106,8,106,25") ; post-extend-config)> ( "-I"
+                                                                                                                                                                 , [ "-I"
+                                                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "106,42,106,43") ; id>
+                                                                                                                                                                   ]
+                                                                                                                                                                 )))
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "106,50,106,52")
+                     ; !()
+                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "107,1,107,54")
+                     ; !"-I d | --Include d Include modules from directory d"
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "109,4,258,28")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "109,4,111,65")
+                      ; ArgOption(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "109,14,109,28")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "109,14,109,21") ; "--main"
+                             + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "109,25,109,28") ; "-m")
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "110,1,110,36")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "110,1,110,31")
+                             ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "110,7,110,30")
+                                     ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "110,8,110,17") ; set-config)> ( "-m"
+                                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "110,27,110,28") ; id>
+                                                                                                                                                              )))
+                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "110,34,110,36")
+                          ; !()
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "111,1,111,64")
+                          ; !"--main f | -m f    Main strategy to compile (default: main)\n"
+                        )
+                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "113,4,258,28")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "113,4,115,69")
+                           ; ArgOption(
+                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "113,14,113,26") ; "--C-include"
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "114,1,114,55")
+                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "114,1,114,50")
+                                  ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "114,7,114,49")
+                                          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "114,8,114,25") ; post-extend-config)> ( "--C-include"
+                                                                                                                                                                           , [<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "114,45,114,46") ; id>]
+                                                                                                                                                                           )))
+                               ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "114,53,114,55")
+                               ; !()
+                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "115,1,115,68")
+                               ; !"--C-include h      Include header file h (\"file.h\" or <file.h>)"
+                             )
+                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "120,4,258,28")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "120,4,120,29")
+                                ; ArgOption(
+                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "120,14,120,17") ; fail
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "120,20,120,23") ; fail
+                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "120,26,120,28")
+                                    ; !""
+                                  )
+                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "121,4,258,28")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "121,4,121,60")
+                                     ; ArgOption(
+                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "121,14,121,17") ; fail
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "121,20,121,23") ; fail
+                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "121,26,121,59")
+                                         ; !"Options for creating libraries:"
+                                       )
+                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "122,4,258,28")
+                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "122,4,122,29")
+                                          ; ArgOption(
+                                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "122,14,122,17") ; fail
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "122,20,122,23") ; fail
+                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "122,26,122,28")
+                                              ; !""
+                                            )
+                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "123,4,258,28")
+                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "123,4,125,48")
+                                               ; Option(
+                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "123,11,123,20") ; "--old-pp"
+                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "124,1,124,40")
+                                                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "124,1,124,35")
+                                                      ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "124,7,124,34")
+                                                              ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "124,8,124,17") ; set-config)> ("--old-pp", ())))
+                                                   ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "124,38,124,40")
+                                                   ; !()
+                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "125,1,125,47")
+                                                   ; !"--old-pp           Use old C pretty-printer."
+                                                 )
+                                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "127,4,258,28")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "127,4,129,64")
+                                                    ; Option(
+                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "127,11,127,31")
+                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "127,11,127,21") ; "--library"
+                                                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "127,25,127,31") ; "--lib")
+                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "128,1,128,41")
+                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "128,1,128,36")
+                                                           ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "128,7,128,35")
+                                                                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "128,8,128,17") ; set-config)> ("--library", ())))
+                                                        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "128,39,128,41")
+                                                        ; !()
+                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "129,1,129,63")
+                                                        ; !"--library | --lib  Build a library instead of an application"
+                                                      )
+                                                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "131,4,258,28")
+                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "131,4,133,99")
+                                                         ; ArgOption(
+                                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "131,14,131,23") ; "--libdir"
+                                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "132,8,132,43")
+                                                             ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "132,14,132,42")
+                                                                     ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "132,15,132,24") ; set-config)> ( LibDir()
+                                                                                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "132,39,132,40") ; id>
+                                                                                                                                                                                               ))
+                                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "133,8,133,98")
+                                                             ; !"--libdir <dir>     If the output is a library, then it will will be installed in libdir."
+                                                           )
+                                                         + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "135,4,258,28")
+                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "135,4,137,94")
+                                                              ; Option(
+                                                                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "135,11,135,29") ; "--disable-install"
+                                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "136,8,136,49")
+                                                                  ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "136,14,136,48")
+                                                                          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "136,15,136,24") ; set-config)> (DisableInstall(), ()))
+                                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "137,8,137,93")
+                                                                  ; !"--disable-install  If the output is a library, then don't install it in the libdir."
+                                                                )
+                                                              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "142,4,258,28")
+                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "142,4,142,29")
+                                                                   ; ArgOption(
+                                                                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "142,14,142,17") ; fail
+                                                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "142,20,142,23") ; fail
+                                                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "142,26,142,28")
+                                                                       ; !""
+                                                                     )
+                                                                   + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "143,4,258,28")
+                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "143,4,143,48")
+                                                                        ; ArgOption(
+                                                                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "143,14,143,17") ; fail
+                                                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "143,20,143,23") ; fail
+                                                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "143,26,143,47")
+                                                                            ; !"C compiler options:"
+                                                                          )
+                                                                        + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "144,4,258,28")
+                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "144,4,144,29")
+                                                                             ; ArgOption(
+                                                                                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "144,14,144,17") ; fail
+                                                                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "144,20,144,23") ; fail
+                                                                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "144,26,144,28")
+                                                                                 ; !""
+                                                                               )
+                                                                             + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "146,4,258,28")
+                                                                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "146,4,148,47")
+                                                                                  ; ArgOption(
+                                                                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "146,14,146,19") ; "--cc"
+                                                                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "147,1,147,38")
+                                                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "147,1,147,33")
+                                                                                         ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "147,7,147,32")
+                                                                                                 ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "147,8,147,17") ; set-config)> ( "--cc"
+                                                                                                                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "147,29,147,30") ; id>
+                                                                                                                                                                                                                          )))
+                                                                                      ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "147,36,147,38")
+                                                                                      ; !()
+                                                                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "148,1,148,46")
+                                                                                      ; !"--cc <path>        Use C compiler at <path>"
+                                                                                    )
+                                                                                  + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "150,4,258,28")
+                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "150,4,152,54")
+                                                                                       ; ArgOption(
+                                                                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "150,14,150,19") ; "-Xcc"
+                                                                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "151,1,151,48")
+                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "151,1,151,43")
+                                                                                              ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "151,7,151,42")
+                                                                                                      ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "151,8,151,25") ; post-extend-config)> ( "-Xcc"
+                                                                                                                                                                                                                                       , [<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "151,38,151,39") ; id>]
+                                                                                                                                                                                                                                       )))
+                                                                                           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "151,46,151,48")
+                                                                                           ; !()
+                                                                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "152,1,152,53")
+                                                                                           ; !"-Xcc <arg>         Pass <arg> on to the C compiler"
+                                                                                         )
+                                                                                       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "154,4,258,28")
+                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "154,4,156,57")
+                                                                                            ; ArgOption(
+                                                                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "154,14,154,18") ; "-CI"
+                                                                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "155,1,155,54")
+                                                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "155,1,155,49")
+                                                                                                   ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "155,7,155,48")
+                                                                                                           ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "155,8,155,25") ; post-extend-config)> ( "-Xcc"
+                                                                                                                                                                                                                                            , [ "-I"
+                                                                                                                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "155,44,155,45") ; id>
+                                                                                                                                                                                                                                              ]
+                                                                                                                                                                                                                                            )))
+                                                                                                ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "155,52,155,54")
+                                                                                                ; !()
+                                                                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "156,1,156,56")
+                                                                                                ; !"-CI d              Include C headers from directory d"
+                                                                                              )
+                                                                                            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "158,4,258,28")
+                                                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "158,4,160,70")
+                                                                                                 ; ArgOption(
+                                                                                                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "158,14,158,18") ; "-CD"
+                                                                                                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,1,159,71")
+                                                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,1,159,66")
+                                                                                                        ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,7,159,65")
+                                                                                                                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,8,159,25") ; post-extend-config)> ( "-Xcc"
+                                                                                                                                                                                                                                                 , [ <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,38,159,49") ; conc-strings> ( "-D"
+                                                                                                                                                                                                                                                                                                                                                                             , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,60,159,61") ; id>
+                                                                                                                                                                                                                                                                                                                                                                             )
+                                                                                                                                                                                                                                                   ]
+                                                                                                                                                                                                                                                 )))
+                                                                                                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "159,69,159,71")
+                                                                                                     ; !()
+                                                                                                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "160,1,160,69")
+                                                                                                     ; !"-CD name=def       Predefine name as a macro, with definition def."
+                                                                                                   )
+                                                                                                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "165,4,258,28")
+                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "165,4,165,29")
+                                                                                                      ; ArgOption(
+                                                                                                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "165,14,165,17") ; fail
+                                                                                                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "165,20,165,23") ; fail
+                                                                                                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "165,26,165,28")
+                                                                                                          ; !""
+                                                                                                        )
+                                                                                                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "166,4,258,28")
+                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "166,4,166,44")
+                                                                                                           ; ArgOption(
+                                                                                                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "166,14,166,17") ; fail
+                                                                                                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "166,20,166,23") ; fail
+                                                                                                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "166,26,166,43")
+                                                                                                               ; !"Linker options:"
+                                                                                                             )
+                                                                                                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "167,4,258,28")
+                                                                                                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "167,4,167,29")
+                                                                                                                ; ArgOption(
+                                                                                                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "167,14,167,17") ; fail
+                                                                                                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "167,20,167,23") ; fail
+                                                                                                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "167,26,167,28")
+                                                                                                                    ; !""
+                                                                                                                  )
+                                                                                                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "169,4,258,28")
+                                                                                                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "169,4,171,65")
+                                                                                                                     ; ArgOption(
+                                                                                                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "169,14,169,19") ; "--ld"
+                                                                                                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "170,1,170,38")
+                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "170,1,170,33")
+                                                                                                                            ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "170,7,170,32")
+                                                                                                                                    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "170,8,170,17") ; set-config)> ( "--ld"
+                                                                                                                                                                                                                                                             , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "170,29,170,30") ; id>
+                                                                                                                                                                                                                                                             )))
+                                                                                                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "170,36,170,38")
+                                                                                                                         ; !()
+                                                                                                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "171,1,171,64")
+                                                                                                                         ; !"--ld <path>        Use linker at <path> (default: C compiler)"
+                                                                                                                       )
+                                                                                                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "173,4,258,28")
+                                                                                                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "173,4,175,50")
+                                                                                                                          ; ArgOption(
+                                                                                                                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "173,14,173,23") ; "-Xlinker"
+                                                                                                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "174,1,174,52")
+                                                                                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "174,1,174,47")
+                                                                                                                                 ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "174,7,174,46")
+                                                                                                                                         ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "174,8,174,25") ; post-extend-config)> ( "-Xlinker"
+                                                                                                                                                                                                                                                                          , [<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "174,42,174,43") ; id>]
+                                                                                                                                                                                                                                                                          )))
+                                                                                                                              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "174,50,174,52")
+                                                                                                                              ; !()
+                                                                                                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "175,1,175,49")
+                                                                                                                              ; !"-Xlinker <arg>     Pass <arg> on to the linker"
+                                                                                                                            )
+                                                                                                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "177,4,258,28")
+                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "177,4,179,64")
+                                                                                                                               ; ArgOption(
+                                                                                                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "177,14,177,18") ; "-CL"
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,1,178,75")
+                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,1,178,70")
+                                                                                                                                      ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,7,178,69")
+                                                                                                                                              ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,8,178,25") ; post-extend-config)> ( "-Xlinker"
+                                                                                                                                                                                                                                                                               , [ <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,42,178,53") ; conc-strings> ( "-L"
+                                                                                                                                                                                                                                                                                                                                                                                                           , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,64,178,65") ; id>
+                                                                                                                                                                                                                                                                                                                                                                                                           )
+                                                                                                                                                                                                                                                                                 ]
+                                                                                                                                                                                                                                                                               )))
+                                                                                                                                   ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "178,73,178,75")
+                                                                                                                                   ; !()
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "179,1,179,63")
+                                                                                                                                   ; !"-CL d              Include binary libraries from directory d"
+                                                                                                                                 )
+                                                                                                                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "181,4,258,28")
+                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "181,4,183,67")
+                                                                                                                                    ; ArgOption(
+                                                                                                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "181,14,181,18") ; "-Cl"
+                                                                                                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,1,182,75")
+                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,1,182,70")
+                                                                                                                                           ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,7,182,69")
+                                                                                                                                                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,8,182,25") ; post-extend-config)> ( "-Xlinker"
+                                                                                                                                                                                                                                                                                    , [ <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,42,182,53") ; conc-strings> ( "-l"
+                                                                                                                                                                                                                                                                                                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,64,182,65") ; id>
+                                                                                                                                                                                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                                                                    )))
+                                                                                                                                        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "182,73,182,75")
+                                                                                                                                        ; !()
+                                                                                                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "183,1,183,66")
+                                                                                                                                        ; !"-Cl <lib>          Search the library named <lib> when linking."
+                                                                                                                                      )
+                                                                                                                                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "185,4,258,28")
+                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "185,4,187,76")
+                                                                                                                                         ; ArgOption(
+                                                                                                                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "185,14,185,18") ; "-la"
+                                                                                                                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,1,186,124")
+                                                                                                                                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,1,186,119")
+                                                                                                                                                ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,7,186,118")
+                                                                                                                                                        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,8,186,25") ; post-extend-config)> ( "-Xlinker"
+                                                                                                                                                                                                                                                                                         , [ <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,42,186,115")
+                                                                                                                                                                                                                                                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,42,186,52") ; file-exists
+                                                                                                                                                                                                                                                                                                 <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,57,186,115")
+                                                                                                                                                                                                                                                                                                    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,58,186,93")
+                                                                                                                                                                                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,58,186,81")
+                                                                                                                                                                                                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,58,186,71") ; concat-strings)
+                                                                                                                                                                                                                                                                                                           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,74,186,81")
+                                                                                                                                                                                                                                                                                                           ; xtc-find
+                                                                                                                                                                                                                                                                                                           <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,86,186,93")
+                                                                                                                                                                                                                                                                                                              ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,87,186,90") ; exit)> 1))> [ "lib"
+                                                                                                                                                                                                                                                                                                                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,105,186,106") ; id>
+                                                                                                                                                                                                                                                                                                                                                                                                                                       , ".la"
+                                                                                                                                                                                                                                                                                                                                                                                                                                       ])>
+                                                                                                                                                                                                                                                                                           ]
+                                                                                                                                                                                                                                                                                         )))
+                                                                                                                                             ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "186,122,186,124")
+                                                                                                                                             ; !()
+                                                                                                                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "187,1,187,75")
+                                                                                                                                             ; !"-la <name>         Search the libtool library lib<name>.la when linking."
+                                                                                                                                           )
+                                                                                                                                         + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "190,4,258,28")
+                                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "190,4,190,29")
+                                                                                                                                              ; ArgOption(
+                                                                                                                                                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "190,14,190,17") ; fail
+                                                                                                                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "190,20,190,23") ; fail
+                                                                                                                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "190,26,190,28")
+                                                                                                                                                  ; !""
+                                                                                                                                                )
+                                                                                                                                              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "191,4,258,28")
+                                                                                                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "191,4,191,64")
+                                                                                                                                                   ; ArgOption(
+                                                                                                                                                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "191,14,191,17") ; fail
+                                                                                                                                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "191,20,191,23") ; fail
+                                                                                                                                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "191,26,191,63")
+                                                                                                                                                       ; !"Configuration of Stratego Compiler:"
+                                                                                                                                                     )
+                                                                                                                                                   + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "192,4,258,28")
+                                                                                                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "192,4,192,29")
+                                                                                                                                                        ; ArgOption(
+                                                                                                                                                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "192,14,192,17") ; fail
+                                                                                                                                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "192,20,192,23") ; fail
+                                                                                                                                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "192,26,192,28")
+                                                                                                                                                            ; !""
+                                                                                                                                                          )
+                                                                                                                                                        + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "194,4,258,28")
+                                                                                                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "194,4,196,92")
+                                                                                                                                                             ; ArgOption(
+                                                                                                                                                                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "194,14,194,25") ; "--xtc-repo"
+                                                                                                                                                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,1,195,99")
+                                                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,1,195,94")
+                                                                                                                                                                    ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,7,195,93")
+                                                                                                                                                                            ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,8,195,20") ; extend-config)> ( "-Xcc"
+                                                                                                                                                                                                                                                                                                        , [ <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,33,195,46") ; concat-strings> [ "-DDEFAULT_XTC_REPOSITORY=\""
+                                                                                                                                                                                                                                                                                                                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,82,195,83") ; id>
+                                                                                                                                                                                                                                                                                                                                                                                                                                      , "\""
+                                                                                                                                                                                                                                                                                                                                                                                                                                      ]
+                                                                                                                                                                                                                                                                                                          ]
+                                                                                                                                                                                                                                                                                                        )))
+                                                                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "195,97,195,99")
+                                                                                                                                                                 ; !()
+                                                                                                                                                               , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "196,1,196,91")
+                                                                                                                                                                 ; !"--xtc-repo file    Set default XTC repository in output program to file (default: none)."
+                                                                                                                                                               )
+                                                                                                                                                             + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "198,4,258,28")
+                                                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "198,4,200,59")
+                                                                                                                                                                  ; Option(
+                                                                                                                                                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "198,11,198,14") ; "-c"
+                                                                                                                                                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "199,1,199,33")
+                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "199,1,199,28")
+                                                                                                                                                                         ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "199,7,199,27")
+                                                                                                                                                                                 ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "199,8,199,17") ; set-config)> ("-c", ())))
+                                                                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "199,31,199,33")
+                                                                                                                                                                      ; !()
+                                                                                                                                                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "200,1,200,57")
+                                                                                                                                                                      ; !"-c                 Produce C code only (don't compile)"
+                                                                                                                                                                    )
+                                                                                                                                                                  + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "202,4,258,28")
+                                                                                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "202,4,204,70")
+                                                                                                                                                                       ; Option(
+                                                                                                                                                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "202,11,202,17") ; "--ast"
+                                                                                                                                                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "203,1,203,36")
+                                                                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "203,1,203,31")
+                                                                                                                                                                              ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "203,7,203,30")
+                                                                                                                                                                                      ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "203,8,203,17") ; set-config)> ("--ast", ())))
+                                                                                                                                                                           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "203,34,203,36")
+                                                                                                                                                                           ; !()
+                                                                                                                                                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "204,1,204,68")
+                                                                                                                                                                           ; !"--ast              Produce abstract syntax tree of packed program"
+                                                                                                                                                                         )
+                                                                                                                                                                       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "206,4,258,28")
+                                                                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "206,4,208,52")
+                                                                                                                                                                            ; Option(
+                                                                                                                                                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "206,11,206,14") ; "-F"
+                                                                                                                                                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "207,1,207,33")
+                                                                                                                                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "207,1,207,28")
+                                                                                                                                                                                   ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "207,7,207,27")
+                                                                                                                                                                                           ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "207,8,207,17") ; set-config)> ("-F", ())))
+                                                                                                                                                                                ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "207,31,207,33")
+                                                                                                                                                                                ; !()
+                                                                                                                                                                              , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "208,1,208,50")
+                                                                                                                                                                                ; !"-F                 Produce core after front-end"
+                                                                                                                                                                              )
+                                                                                                                                                                            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "210,4,258,28")
+                                                                                                                                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "210,4,212,110")
+                                                                                                                                                                                 ; ArgOption(
+                                                                                                                                                                                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "210,14,210,29") ; "--format-check"
+                                                                                                                                                                                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "211,8,211,66")
+                                                                                                                                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "211,8,211,61")
+                                                                                                                                                                                        ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "211,14,211,60")
+                                                                                                                                                                                                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "211,15,211,24") ; set-config)> ( "--format-check"
+                                                                                                                                                                                                                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "211,46,211,58") ; string-to-int>
+                                                                                                                                                                                                                                                                                                                          )))
+                                                                                                                                                                                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "211,64,211,66")
+                                                                                                                                                                                     ; !()
+                                                                                                                                                                                   , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "212,1,212,108")
+                                                                                                                                                                                     ; !"--format-check n   Format check intermediate results (default 1 = basic checking, use 0 for no checking.)"
+                                                                                                                                                                                   )
+                                                                                                                                                                                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "214,4,258,28")
+                                                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "214,4,216,65")
+                                                                                                                                                                                      ; Option(
+                                                                                                                                                                                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "214,11,214,24") ; "--prefer-str"
+                                                                                                                                                                                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "215,8,215,52")
+                                                                                                                                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "215,8,215,47")
+                                                                                                                                                                                             ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "215,14,215,46")
+                                                                                                                                                                                                     ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "215,15,215,24") ; set-config)> ("--prefer-str", "")))
+                                                                                                                                                                                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "215,50,215,52")
+                                                                                                                                                                                          ; !()
+                                                                                                                                                                                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "216,8,216,64")
+                                                                                                                                                                                          ; !"--prefer-str       Prefer .str files over .rtree files"
+                                                                                                                                                                                        )
+                                                                                                                                                                                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,4,258,28")
+                                                                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,4,219,63")
+                                                                                                                                                                                           ; ArgOption(
+                                                                                                                                                                                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,14,218,31") ; "--default-syntax"
+                                                                                                                                                                                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,34,218,78")
+                                                                                                                                                                                               ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,40,218,77")
+                                                                                                                                                                                                       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,41,218,50") ; set-config)> ( "--default-syntax"
+                                                                                                                                                                                                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "218,74,218,75") ; id>
+                                                                                                                                                                                                                                                                                                                                 ))
+                                                                                                                                                                                             , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "219,7,219,62")
+                                                                                                                                                                                               ; !"--default-syntax syn        use syntax syn as default"
+                                                                                                                                                                                             )
+                                                                                                                                                                                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "221,4,258,28")
+                                                                                                                                                                                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "221,4,223,67")
+                                                                                                                                                                                                ; ArgOption(
+                                                                                                                                                                                                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "221,14,221,26") ; "--cache-dir"
+                                                                                                                                                                                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,8,222,95")
+                                                                                                                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,8,222,90")
+                                                                                                                                                                                                       ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,14,222,89")
+                                                                                                                                                                                                               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,15,222,24") ; set-config)> ( "--cache-dir"
+                                                                                                                                                                                                                                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,44,222,87")
+                                                                                                                                                                                                                                                                                                                                            ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,50,222,86")
+                                                                                                                                                                                                                                                                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,50,222,77")
+                                                                                                                                                                                                                                                                                                                                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,50,222,60") ; file-exists)
+                                                                                                                                                                                                                                                                                                                                                       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,63,222,77")
+                                                                                                                                                                                                                                                                                                                                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,63,222,70") ; filemode)
+                                                                                                                                                                                                                                                                                                                                                       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,73,222,77")
+                                                                                                                                                                                                                                                                                                                                                       ; isdir
+                                                                                                                                                                                                                                                                                                                                                       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,82,222,86") ; mkdir))>
+                                                                                                                                                                                                                                                                                                                                         )))
+                                                                                                                                                                                                    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "222,93,222,95")
+                                                                                                                                                                                                    ; !()
+                                                                                                                                                                                                  , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "223,8,223,66")
+                                                                                                                                                                                                    ; !"--cache-dir <dir>  Maintain a compilation cache in <dir>"
+                                                                                                                                                                                                  )
+                                                                                                                                                                                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "225,4,258,28")
+                                                                                                                                                                                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "225,4,227,64")
+                                                                                                                                                                                                     ; ArgOption(
+                                                                                                                                                                                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "225,14,225,17") ; "-O"
+                                                                                                                                                                                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,8,226,75")
+                                                                                                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,8,226,70")
+                                                                                                                                                                                                            ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,14,226,69")
+                                                                                                                                                                                                                    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,15,226,24") ; set-config)> ( "-O"
+                                                                                                                                                                                                                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,34,226,66")
+                                                                                                                                                                                                                                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,34,226,46") ; string-to-int)
+                                                                                                                                                                                                                                                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,49,226,66")
+                                                                                                                                                                                                                                                                                                                                                 ; strc-set-opt-level>
+                                                                                                                                                                                                                                                                                                                                              )))
+                                                                                                                                                                                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "226,73,226,75")
+                                                                                                                                                                                                         ; !()
+                                                                                                                                                                                                       , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "227,1,227,62")
+                                                                                                                                                                                                         ; !"-O n               Optimization level (0 = no optimization)"
+                                                                                                                                                                                                       )
+                                                                                                                                                                                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "229,4,258,28")
+                                                                                                                                                                                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "229,4,231,81")
+                                                                                                                                                                                                          ; Option(
+                                                                                                                                                                                                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "229,11,229,20") ; "--fusion"
+                                                                                                                                                                                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "230,1,230,42")
+                                                                                                                                                                                                              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "230,1,230,37")
+                                                                                                                                                                                                                 ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "230,7,230,36")
+                                                                                                                                                                                                                         ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "230,8,230,20") ; toggle-config)> ("--fusion", ())))
+                                                                                                                                                                                                              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "230,40,230,42")
+                                                                                                                                                                                                              ; !()
+                                                                                                                                                                                                            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "231,1,231,79")
+                                                                                                                                                                                                              ; !"--fusion           Toggle specialize applications of innermost (default: on)"
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "233,4,258,28")
+                                                                                                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "233,4,235,68")
+                                                                                                                                                                                                               ; Option(
+                                                                                                                                                                                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "233,11,233,19") ; "--asfix"
+                                                                                                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "234,8,234,45")
+                                                                                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "234,8,234,40")
+                                                                                                                                                                                                                      ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "234,14,234,39")
+                                                                                                                                                                                                                              ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "234,15,234,24") ; set-config)> ("--asfix", ())))
+                                                                                                                                                                                                                   ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "234,43,234,45")
+                                                                                                                                                                                                                   ; !()
+                                                                                                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "235,8,235,67")
+                                                                                                                                                                                                                   ; !"--asfix            Concrete syntax parts are not imploded"
+                                                                                                                                                                                                                 )
+                                                                                                                                                                                                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "237,4,258,28")
+                                                                                                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "237,4,239,89")
+                                                                                                                                                                                                                    ; Option(
+                                                                                                                                                                                                                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "237,11,237,22") ; "--indent-c"
+                                                                                                                                                                                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "238,1,238,42")
+                                                                                                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "238,1,238,37")
+                                                                                                                                                                                                                           ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "238,7,238,36")
+                                                                                                                                                                                                                                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "238,8,238,17") ; set-config)> ("--indent-c", ())))
+                                                                                                                                                                                                                        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "238,40,238,42")
+                                                                                                                                                                                                                        ; !()
+                                                                                                                                                                                                                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "239,1,239,88")
+                                                                                                                                                                                                                        ; !"--indent-c         Use this flag if you want the generated C code to use indentation."
+                                                                                                                                                                                                                      )
+                                                                                                                                                                                                                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "240,4,258,28")
+                                                                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "240,4,242,118")
+                                                                                                                                                                                                                         ; Option(
+                                                                                                                                                                                                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "240,11,240,25") ; "--dump-aterms"
+                                                                                                                                                                                                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "241,1,241,45")
+                                                                                                                                                                                                                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "241,1,241,40")
+                                                                                                                                                                                                                                ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "241,7,241,39")
+                                                                                                                                                                                                                                        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "241,8,241,17") ; set-config)> ("--dump-aterms", ())))
+                                                                                                                                                                                                                             ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "241,43,241,45")
+                                                                                                                                                                                                                             ; !()
+                                                                                                                                                                                                                           , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "242,1,242,117")
+                                                                                                                                                                                                                             ; !"--dump-aterms      Use this flag if you want to dump ATerms for all imported modules (for analysis) in dump.aterm."
+                                                                                                                                                                                                                           )
+                                                                                                                                                                                                                         + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "244,4,258,28")
+                                                                                                                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "244,4,244,29")
+                                                                                                                                                                                                                              ; ArgOption(
+                                                                                                                                                                                                                                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "244,14,244,17") ; fail
+                                                                                                                                                                                                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "244,20,244,23") ; fail
+                                                                                                                                                                                                                                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "244,26,244,28")
+                                                                                                                                                                                                                                  ; !""
+                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "245,4,258,28")
+                                                                                                                                                                                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "245,4,245,45")
+                                                                                                                                                                                                                                   ; ArgOption(
+                                                                                                                                                                                                                                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "245,14,245,17") ; fail
+                                                                                                                                                                                                                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "245,20,245,23") ; fail
+                                                                                                                                                                                                                                     , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "245,26,245,44")
+                                                                                                                                                                                                                                       ; !"General options:"
+                                                                                                                                                                                                                                     )
+                                                                                                                                                                                                                                   + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "246,4,258,28")
+                                                                                                                                                                                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "246,4,246,29")
+                                                                                                                                                                                                                                        ; ArgOption(
+                                                                                                                                                                                                                                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "246,14,246,17") ; fail
+                                                                                                                                                                                                                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "246,20,246,23") ; fail
+                                                                                                                                                                                                                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "246,26,246,28")
+                                                                                                                                                                                                                                            ; !""
+                                                                                                                                                                                                                                          )
+                                                                                                                                                                                                                                        + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "248,4,258,28")
+                                                                                                                                                                                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "248,4,248,18") ; general-options
+                                                                                                                                                                                                                                             + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "250,4,258,28")
+                                                                                                                                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "250,4,252,32")
+                                                                                                                                                                                                                                                  ; Option(
+                                                                                                                                                                                                                                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "250,11,250,25")
+                                                                                                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "250,11,250,14") ; "-h"
+                                                                                                                                                                                                                                                         + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "250,18,250,25") ; "--help")
+                                                                                                                                                                                                                                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "251,1,251,38")
+                                                                                                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "251,1,251,33")
+                                                                                                                                                                                                                                                         ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "251,7,251,32")
+                                                                                                                                                                                                                                                                 ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "251,8,251,17") ; set-config)> ("--help", ())))
+                                                                                                                                                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "251,36,251,38")
+                                                                                                                                                                                                                                                      ; !()
+                                                                                                                                                                                                                                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "252,1,252,31")
+                                                                                                                                                                                                                                                      ; !"-h | --help        Show help"
+                                                                                                                                                                                                                                                    )
+                                                                                                                                                                                                                                                  + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "254,4,258,28")
+                                                                                                                                                                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "254,4,256,48")
+                                                                                                                                                                                                                                                       ; Option(
+                                                                                                                                                                                                                                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "254,11,254,26")
+                                                                                                                                                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "254,11,254,14") ; "-v"
+                                                                                                                                                                                                                                                              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "254,16,254,26") ; "--version")
+                                                                                                                                                                                                                                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "255,1,255,34")
+                                                                                                                                                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "255,1,255,29")
+                                                                                                                                                                                                                                                              ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "255,7,255,28")
+                                                                                                                                                                                                                                                                      ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "255,8,255,17") ; set-config)> ("-v", ())))
+                                                                                                                                                                                                                                                           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "255,32,255,34")
+                                                                                                                                                                                                                                                           ; !()
+                                                                                                                                                                                                                                                         , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "256,1,256,47")
+                                                                                                                                                                                                                                                           ; !"-v | --version     Display program's version"
+                                                                                                                                                                                                                                                         )
+                                                                                                                                                                                                                                                       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "258,4,258,28") ; stratego-warnings-options)))))))))))))))))))))))))))))))))))))))))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-options", "101,2,258,28")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-options", "101,2,258,28")
+      ; fail
 
-  + ArgOption("-I" + "--Include",        
-	where(<post-extend-config>("-I", ["-I", <id>])); !(),
-	!"-I d | --Include d Include modules from directory d")
-
-  + ArgOption("--main" + "-m",
-	where(<set-config>("-m", <id>)); !(),
-	!"--main f | -m f    Main strategy to compile (default: main)\n")
-
-  + ArgOption("--C-include",       
-	where(<post-extend-config>("--C-include", [<id>])); !(), 
-	!"--C-include h      Include header file h (\"file.h\" or <file.h>)")
-
-  /**
-   * Library options
-   */
-  + ArgOption(fail, fail, !"")
-  + ArgOption(fail, fail, !"Options for creating libraries:")
-  + ArgOption(fail, fail, !"")
-  + Option("--old-pp",
-	where(<set-config>("--old-pp", ())); !(),
-	!"--old-pp           Use old C pretty-printer.")
-
-  + Option("--library" + "--lib",
-	where(<set-config>("--library", ())); !(),
-	!"--library | --lib  Build a library instead of an application")
-
-  + ArgOption("--libdir",
-        where(<set-config> (LibDir(), <id>)),
-        !"--libdir <dir>     If the output is a library, then it will will be installed in libdir.")
-
-  + Option("--disable-install",
-        where(<set-config> (DisableInstall(), ())),
-        !"--disable-install  If the output is a library, then don't install it in the libdir.")
-
-  /**
-   * C compiler flags
-   */
-  + ArgOption(fail, fail, !"")
-  + ArgOption(fail, fail, !"C compiler options:")
-  + ArgOption(fail, fail, !"")
-
-  + ArgOption("--cc",
-	where(<set-config>("--cc", <id>)); !(),
-	!"--cc <path>        Use C compiler at <path>")
-
-  + ArgOption("-Xcc",
-	where(<post-extend-config>("-Xcc", [<id>])); !(),
-	!"-Xcc <arg>         Pass <arg> on to the C compiler")
-
-  + ArgOption("-CI",
-	where(<post-extend-config>("-Xcc", ["-I", <id>])); !(),
-	!"-CI d              Include C headers from directory d")
-
-  + ArgOption("-CD",
-	where(<post-extend-config>("-Xcc", [<conc-strings> ("-D", <id>)])); !(),
-	!"-CD name=def       Predefine name as a macro, with definition def.")
-
-  /**
-   * Linker flags.
-   */
-  + ArgOption(fail, fail, !"")
-  + ArgOption(fail, fail, !"Linker options:")
-  + ArgOption(fail, fail, !"")
-
-  + ArgOption("--ld",
-	where(<set-config>("--ld", <id>)); !(),
-	!"--ld <path>        Use linker at <path> (default: C compiler)")
-
-  + ArgOption("-Xlinker",
-	where(<post-extend-config>("-Xlinker", [<id>])); !(),
-	!"-Xlinker <arg>     Pass <arg> on to the linker")
-
-  + ArgOption("-CL",
-	where(<post-extend-config>("-Xlinker", [<conc-strings> ("-L", <id>)])); !(),
-	!"-CL d              Include binary libraries from directory d")
-
-  + ArgOption("-Cl",
-	where(<post-extend-config>("-Xlinker", [<conc-strings> ("-l", <id>)])); !(),
-	!"-Cl <lib>          Search the library named <lib> when linking.")
-
-  + ArgOption("-la",
-	where(<post-extend-config>("-Xlinker", [<file-exists <+ <concat-strings; xtc-find <+ <exit> 1> ["lib", <id>, ".la"]>])); !(),
-	!"-la <name>         Search the libtool library lib<name>.la when linking.")
-
-  // newline
-  + ArgOption(fail, fail, !"")
-  + ArgOption(fail, fail, !"Configuration of Stratego Compiler:")
-  + ArgOption(fail, fail, !"")
-
-  + ArgOption("--xtc-repo",
-	where(<extend-config>("-Xcc", [<concat-strings> ["-DDEFAULT_XTC_REPOSITORY=\"", <id>, "\""]])); !(),
-	!"--xtc-repo file    Set default XTC repository in output program to file (default: none).")
-
-  + Option("-c",          
-	where(<set-config>("-c",())); !(),
-	!"-c                 Produce C code only (don't compile)" )
-
-  + Option("--ast",
-	where(<set-config>("--ast",())); !(),
-	!"--ast              Produce abstract syntax tree of packed program" )
-
-  + Option("-F",           
-	where(<set-config>("-F",())); !(),
-	!"-F                 Produce core after front-end" )
-
-  + ArgOption("--format-check",
-        where(<set-config>("--format-check", <string-to-int>)); !(),
-	!"--format-check n   Format check intermediate results (default 1 = basic checking, use 0 for no checking.)" )
-
-  + Option("--prefer-str",
-        where(<set-config> ("--prefer-str", "")); !(),
-        !"--prefer-str       Prefer .str files over .rtree files")
-
-  + ArgOption("--default-syntax", where(<set-config>("--default-syntax", <id>)),
-	      !"--default-syntax syn        use syntax syn as default")
-
-  + ArgOption("--cache-dir",
-        where(<set-config> ("--cache-dir", <where(file-exists; filemode; isdir <+ mkdir)>)); !(),
-        !"--cache-dir <dir>  Maintain a compilation cache in <dir>")
- 
-  + ArgOption("-O",
-        where(<set-config>("-O", <string-to-int; strc-set-opt-level> )); !(),
-	!"-O n               Optimization level (0 = no optimization)" )
-
-  + Option("--fusion",     
-	where(<toggle-config>("--fusion",())); !(),
-	!"--fusion           Toggle specialize applications of innermost (default: on)" )
-
-  + Option("--asfix",
-        where(<set-config>("--asfix",())); !(),
-        !"--asfix            Concrete syntax parts are not imploded")
-
-  + Option("--indent-c",    
-	where(<set-config> ("--indent-c",())); !(),         
-	!"--indent-c         Use this flag if you want the generated C code to use indentation.")
-  + Option("--dump-aterms",    
-	where(<set-config> ("--dump-aterms",())); !(),         
-	!"--dump-aterms      Use this flag if you want to dump ATerms for all imported modules (for analysis) in dump.aterm.")
-
-  + ArgOption(fail, fail, !"")
-  + ArgOption(fail, fail, !"General options:")
-  + ArgOption(fail, fail, !"")
-
-  + general-options
-
-  + Option("-h" + "--help",         
-	where(<set-config> ("--help",())); !(),         
-	!"-h | --help        Show help")
-
-  + Option("-v"+"--version",     
-	where(<set-config> ("-v",())); !(),         
-	!"-v | --version     Display program's version")
-
-  + stratego-warnings-options
-
-
-
-  strc-set-opt-level = 
-    id
+  strc-set-opt-level =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-set-opt-level", "262,2,263,5")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "263,4,263,5")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-set-opt-level", "262,2,263,5")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-set-opt-level", "262,2,263,5")
+      ; fail
 
   strc-set-opt-level-old =
-    string-to-int
-  ; if <lt>(<id>,2) then
-      !2 ; log(|Warning(),"Optimization levels < 2 are broken, setting optimization level to 2.")
-    end
-      
-  strc-pass-dr = !["--dr", <get-config> "--dr"]
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-set-opt-level-old", "265,2,269,6")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "266,4,269,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "266,4,266,16") ; string-to-int)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "267,4,269,6")
+    ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "267,7,267,18")
+         ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "267,8,267,9") ; lt)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "267,13,267,14") ; id>
+                                                                                                                         , 2
+                                                                                                                         ) then
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "268,6,268,96")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "268,6,268,7")
+           ; !2)
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "268,11,268,96")
+        ; log(|Warning(), "Optimization levels < 2 are broken, setting optimization level to 2.")
+      end
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-set-opt-level-old", "265,2,269,6")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-set-opt-level-old", "265,2,269,6")
+      ; fail
+
+  strc-pass-dr =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-pass-dr", "271,2,271,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "271,17,271,46")
+    ; ![ "--dr"
+       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "271,28,271,37") ; get-config> "--dr"
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-pass-dr", "271,2,271,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-pass-dr", "271,2,271,46")
+      ; fail
 
   strc-pass-maybe-unbound-warnings =
-    <get-config>"--warning"
-  ; fetch-elem("maybe-unbound-variables")
-  ; !["--warning", "maybe-unbound-variables"]
- <+ !["--warning", "no-maybe-unbound-variables"]
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-pass-maybe-unbound-warnings", "273,2,277,47")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "274,4,277,47")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "274,4,276,44")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "274,4,274,26")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "274,5,274,14") ; get-config)> "--warning")
+       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "275,4,276,44")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "275,4,275,40")
+          ; fetch-elem(
+              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "275,15,275,39") ; "maybe-unbound-variables"
+            ))
+       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "276,4,276,44")
+       ; !["--warning", "maybe-unbound-variables"]
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "277,4,277,47")
+          ; !["--warning", "no-maybe-unbound-variables"])
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-pass-maybe-unbound-warnings", "273,2,277,47")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-pass-maybe-unbound-warnings", "273,2,277,47")
+      ; fail
 
-  strc-conflict-short-description(p) = 
-      !["STRC compiles Stratego programs to C or executable code.\n",
-	"\n",
-	"Stratego is a language for program transformation based on the\n",
-	"paradigm of rewriting strategies.\n",
-	"\n",
-	"For documentation see http://www.stratego-language.org\n",  
-	"\n",
-	"Usage: ", <p>(), " -i file [options]"]
+  strc-conflict-short-description(p) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-conflict-short-description", "279,2,287,39")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "280,6,287,39")
+    ; ![ "STRC compiles Stratego programs to C or executable code.\n"
+       , "\n"
+       , "Stratego is a language for program transformation based on the\n"
+       , "paradigm of rewriting strategies.\n"
+       , "\n"
+       , "For documentation see http://www.stratego-language.org\n"
+       , "\n"
+       , "Usage: "
+       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "287,13,287,13") ; p> ()
+       , " -i file [options]"
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-conflict-short-description", "279,2,287,39")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-conflict-short-description", "279,2,287,39")
+      ; fail
 
-  strc-conflict-long-description(p) = ![
-	"Examples:\n",
-	"Compile module M.str to an executable\n",
-	"  strc -i M\n",
-	"Use strategy foo as main strategy instead of main\n",
-	"  strc -i M --main foo\n",
-	"Compile module M.str to C code in file M.c\n",
-	"  strc -i M -c\n",
-	"Include modules from directory ../sig\n",
-	"  strc -i M -I ../sig\n",
-	"\n",  
-	"Note that strc is a whole program compiler, i.e, it\n",  
-	"compiles all (recursively) imported modules into\n",  
-	"a single C source file.\n",  
-	"\n",  
-	"Report bugs to <stratego-bugs@cs.uu.nl>\n"
-  ]
+  strc-conflict-long-description(p) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-conflict-long-description", "289,2,305,2")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "289,38,305,2")
+    ; ![ "Examples:\n"
+       , "Compile module M.str to an executable\n"
+       , "  strc -i M\n"
+       , "Use strategy foo as main strategy instead of main\n"
+       , "  strc -i M --main foo\n"
+       , "Compile module M.str to C code in file M.c\n"
+       , "  strc -i M -c\n"
+       , "Include modules from directory ../sig\n"
+       , "  strc -i M -I ../sig\n"
+       , "\n"
+       , "Note that strc is a whole program compiler, i.e, it\n"
+       , "compiles all (recursively) imported modules into\n"
+       , "a single C source file.\n"
+       , "\n"
+       , "Report bugs to <stratego-bugs@cs.uu.nl>\n"
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-conflict-long-description", "289,2,305,2")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-conflict-long-description", "289,2,305,2")
+      ; fail
 
   strc-version =
-    where(<fprintnl>(stdout(), 
-	  ["STRC ", <get-config> "VERSION", " (revision ", <svn-revision-number> (), ")\n\n",
-	  "Copyright (C) 1998-2008 Eelco Visser <visser@acm.org>\n",
-	  "\n",
-	  "This library is free software; you can redistribute it and/or\n",
-	  "modify it under the terms of the GNU Lesser General Public\n",
-	  "License as published by the Free Software Foundation; either\n",
-	  "version 2 of the License, or (at your option) any later version.\n"
-	  ]))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-version", "307,2,316,5")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "308,4,316,5")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "308,10,316,4")
+            ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "308,11,308,18") ; fprintnl)> ( stdout()
+                                                                                                                                    , [ "STRC "
+                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "309,14,309,23") ; get-config> "VERSION"
+                                                                                                                                      , " (revision "
+                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "309,53,309,71") ; svn-revision-number> ()
+                                                                                                                                      , ")\n\n"
+                                                                                                                                      , "Copyright (C) 1998-2008 Eelco Visser <visser@acm.org>\n"
+                                                                                                                                      , "\n"
+                                                                                                                                      , "This library is free software; you can redistribute it and/or\n"
+                                                                                                                                      , "modify it under the terms of the GNU Lesser General Public\n"
+                                                                                                                                      , "License as published by the Free Software Foundation; either\n"
+                                                                                                                                      , "version 2 of the License, or (at your option) any later version.\n"
+                                                                                                                                      ]
+                                                                                                                                    ))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-version", "307,2,316,5")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-version", "307,2,316,5")
+      ; fail
 
-  strc-version-number = prim("VERSION_TERM")
-  svn-revision-number = prim("SVN_REVISION_TERM")
+  strc-version-number =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-version-number", "318,2,318,43")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "318,24,318,43")
+    ; prim("VERSION_TERM")
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-version-number", "318,2,318,43")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-version-number", "318,2,318,43")
+      ; fail
+
+  svn-revision-number =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "svn-revision-number", "319,2,319,48")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "319,24,319,48")
+    ; prim("SVN_REVISION_TERM")
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "svn-revision-number", "319,2,319,48")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "svn-revision-number", "319,2,319,48")
+      ; fail
 
   strc-announce =
-    if-verbose2(strc-version)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-announce", "321,2,322,28")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "322,4,322,28")
+    ; if-verbose2(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "322,16,322,27") ; strc-version
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-announce", "321,2,322,28")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-announce", "321,2,322,28")
+      ; fail
 
 
 strategies
   strc-maybe-create-depfile =
-    where(try(strc-create-dep-file))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-maybe-create-depfile", "326,2,327,35")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "327,4,327,35")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "327,10,327,34")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "327,14,327,33") ; strc-create-dep-file
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-maybe-create-depfile", "326,2,327,35")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-maybe-create-depfile", "326,2,327,35")
+      ; fail
 
-  strc-depfile-from-config = 
-    <get-config> "-o" <+ <get-config> "baseout"
-  
+  strc-depfile-from-config =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-depfile-from-config", "329,2,330,46")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "330,4,330,46")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "330,4,330,20")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "330,5,330,14") ; get-config)> "-o"
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "330,25,330,46")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "330,26,330,35") ; get-config)> "baseout")
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-depfile-from-config", "329,2,330,46")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-depfile-from-config", "329,2,330,46")
+      ; fail
+
   strc-create-dep-file =
-    strc-create-dep-file(|<strc-depfile-from-config>)
-      
-  strc-create-dep-file(|outfile) =
-    bagof-FileDependencies 
-    ; uniq => files
-    ; where(
-        <fopen> (<add-extension>(outfile,"dep"), "w") => stream
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-create-dep-file", "332,2,333,52")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "333,4,333,52")
+    ; strc-create-dep-file(
+      | <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "333,27,333,50") ; strc-depfile-from-config>
       )
-    ; ![outfile | <separate-by(|" \\\n\t")> [":" | files]]
-    ; map(<fputs> (<id>, stream))
-    ; <fclose> stream
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-create-dep-file", "332,2,333,52")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-create-dep-file", "332,2,333,52")
+      ; fail
+
+  strc-create-dep-file(|outfile) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-create-dep-file", "335,2,343,20")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "336,4,343,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "336,4,336,25") ; bagof-FileDependencies)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "337,6,343,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "337,6,337,18")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "337,6,337,9") ; uniq) => files)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "338,6,343,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "338,6,340,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "339,8,339,62")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "339,8,339,52")
+                  ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "339,9,339,13") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "339,18,339,30") ; add-extension> (outfile, "dep")
+                                                                                                                                      , "w"
+                                                                                                                                      )) => stream))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "341,6,343,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "341,6,341,57")
+       ; ![outfile|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "341,19,341,41")
+                    ; separate-by(|" \\\n\t")> [":"|files]])
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "342,6,343,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "342,6,342,32")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "342,10,342,31")
+           ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "342,11,342,15") ; fputs)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "342,20,342,21") ; id>
+                                                                                                                                , stream
+                                                                                                                                )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "343,6,343,20")
+    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "343,7,343,12") ; fclose)> stream
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-create-dep-file", "335,2,343,20")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/strc-options.str", "strc-create-dep-file", "335,2,343,20")
+      ; fail

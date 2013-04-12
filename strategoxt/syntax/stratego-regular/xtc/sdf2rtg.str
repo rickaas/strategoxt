@@ -1,5 +1,10 @@
 module sdf2rtg
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-xtc
   pp-rtg
@@ -8,52 +13,100 @@ imports
   core-sdf-grammar2rtg
   regular-xtc-tools
 
+
 strategies
-
   main-sdf2rtg =
-    xtc-io-wrap(
-      sdf-main-module-option + ignore-option
-    , sdf2rtg-usage
-    , sdf2rtg-about
-    , !["sdf2table", "implodePT", "sdf-desugar"]
-    , sdf2rtg
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "main-sdf2rtg", "13,2,20,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "14,4,20,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "15,6,15,43")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "15,6,15,27") ; sdf-main-module-option
+           + s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "15,31,15,43") ; ignore-option)
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "16,6,16,18") ; sdf2rtg-usage
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "17,6,17,18") ; sdf2rtg-about
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "18,6,18,47")
+        ; !["sdf2table", "implodePT", "sdf-desugar"]
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "19,6,19,12") ; sdf2rtg
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "main-sdf2rtg", "13,2,20,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "main-sdf2rtg", "13,2,20,4")
+      ; fail
 
-  sdf2rtg = 
-      xtc-transform(!"sdf2table", !["-n", "-m", <get-sdf-main-module> | <pass-v-verbose>])
-    ; xtc-transform(!"implodePT")
-    ; xtc-transform(!"sdf-desugar", pass-verbose)
-    ; read-from
-    ; core-sdf-grammar2rtg
-    ; xtc-pp-rtg
-    <+ <xtc-exit> 1
+  sdf2rtg =
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg", "22,2,29,18")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,6,29,18")
+    ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,6,28,15")
+       ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,6,23,89")
+          ; xtc-transform(
+              s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,20,23,31")
+              ; !"sdf2table"
+            , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,34,23,88")
+              ; !["-n", "-m", <s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,49,23,67") ; get-sdf-main-module>|<s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "23,73,23,86") ; pass-v-verbose>]
+            ))
+       ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "24,6,28,15")
+       ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "24,6,24,32")
+          ; xtc-transform(
+              s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "24,20,24,31")
+              ; !"implodePT"
+            ))
+       ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "25,6,28,15")
+       ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "25,6,25,48")
+          ; xtc-transform(
+              s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "25,20,25,33")
+              ; !"sdf-desugar"
+            , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "25,36,25,47") ; pass-verbose
+            ))
+       ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "26,6,28,15")
+       ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "26,6,26,14") ; read-from)
+       ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "27,6,28,15")
+       ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "27,6,27,25") ; core-sdf-grammar2rtg)
+       ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "28,6,28,15")
+       ; xtc-pp-rtg
+       <+ s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "29,7,29,18")
+          ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "29,8,29,15") ; xtc-exit)> 1)
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg", "22,2,29,18")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg", "22,2,29,18")
+      ; fail
 
   ignore-option =
-    Option("--ignore-missing-cons"
-    , <set-config> (IgnoreMissingCons(), ())
-    , !HelpString("--ignore-missing-cons", "Ignore productions that do not have a constructor (default: produce error)")
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "ignore-option", "31,2,35,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "32,4,35,4")
+    ; Option(
+        s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "32,11,32,33") ; "--ignore-missing-cons"
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "33,6,33,43")
+        ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "33,7,33,16") ; set-config)> (IgnoreMissingCons(), ())
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "34,6,34,119")
+        ; !HelpString("--ignore-missing-cons", "Ignore productions that do not have a constructor (default: produce error)")
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "ignore-option", "31,2,35,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "ignore-option", "31,2,35,4")
+      ; fail
 
   sdf2rtg-usage =
-    <tool-doc>
-      [ Usage("sdf2rtg [OPTIONS]")
-      , Summary(
-         "Generates an abstract syntax definition in the rtg language
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg-usage", "37,2,45,6")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "38,4,45,6")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "38,5,38,12") ; tool-doc)> [ Usage("sdf2rtg [OPTIONS]")
+                                                                                                 , Summary("Generates an abstract syntax definition in the rtg language
           from a SDF concrete syntax definition.")
-      , OptionUsage()
-      , AutoReportBugs()
-      ]
+                                                                                                 , OptionUsage()
+                                                                                                 , AutoReportBugs()
+                                                                                                 ]
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg-usage", "37,2,45,6")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg-usage", "37,2,45,6")
+      ; fail
 
   sdf2rtg-about =
-    <tool-doc>
-      [ AutoProgram()
-      , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
-      , GNU_LGPL("2002-2008", "Stratego Software Foundation <stratego@cs.uu.nl>")
-      , Config([
-          DefaultXTCRepository()
-        , CurrentXTCRepository()
-        ]) 
-      ]
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg-about", "47,2,56,6")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "48,4,56,6")
+    ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "48,5,48,12") ; tool-doc)> [ AutoProgram()
+                                                                                                 , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
+                                                                                                 , GNU_LGPL("2002-2008", "Stratego Software Foundation <stratego@cs.uu.nl>")
+                                                                                                 , Config([DefaultXTCRepository(), CurrentXTCRepository()])
+                                                                                                 ]
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg-about", "47,2,56,6")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/sdf2rtg.str", "sdf2rtg-about", "47,2,56,6")
+      ; fail
+
 
 signature
   constructors

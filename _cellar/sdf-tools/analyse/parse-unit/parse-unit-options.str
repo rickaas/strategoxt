@@ -1,162 +1,372 @@
-/**
- * Options for parse-unit
- *
- * @author Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module parse-unit-options
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   tool-doc
+
 
 signature
   constructors
     ParseTable : ConfigKey
     TopSort    : ConfigKey
 
-strategies
 
+strategies
   parse-unit-usage =
-    <tool-doc>
-      [ Usage("parse-unit -p <file.tbl> -i <file.testsuite>")
-      , Summary(
-         "Performs the test cases in a testsuite for an SDF syntax definition")
-      , OptionUsage()
-      , AutoReportBugs()
-      ]
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-usage", "17,2,24,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "18,4,24,6")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "18,5,18,12") ; tool-doc)> [ Usage("parse-unit -p <file.tbl> -i <file.testsuite>")
+                                                                                                          , Summary("Performs the test cases in a testsuite for an SDF syntax definition")
+                                                                                                          , OptionUsage()
+                                                                                                          , AutoReportBugs()
+                                                                                                          ]
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-usage", "17,2,24,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-usage", "17,2,24,6")
+      ; fail
 
   parse-unit-about =
-    <tool-doc>
-      [ AutoProgram()
-      , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
-      , GNU_LGPL("2003-2008", "Stratego Software Foundation <stratego@cs.uu.nl>")
-      , Config([
-          DefaultXTCRepository()
-        , CurrentXTCRepository()
-        ])
-      ]
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-about", "26,2,35,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "27,4,35,6")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "27,5,27,12") ; tool-doc)> [ AutoProgram()
+                                                                                                          , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
+                                                                                                          , GNU_LGPL("2003-2008", "Stratego Software Foundation <stratego@cs.uu.nl>")
+                                                                                                          , Config([DefaultXTCRepository(), CurrentXTCRepository()])
+                                                                                                          ]
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-about", "26,2,35,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-about", "26,2,35,6")
+      ; fail
+
 
 strategies
-
   process-testsuite-options =
-    parse-testsuite(id, options(map(where(process-testsuite-option <+ unknown-testsuite-option))), id)
-    ; where(
-        if not(<get-config> TopSort()) then
-          log(|Critical(), "The options of the testsuite do not specify a topsort.")
-          ; <xtc-exit> 1
-        end
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-options", "39,2,46,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,4,46,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,4,40,101")
+       ; parse-testsuite(
+           s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,20,40,21") ; id
+         , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,24,40,96")
+           ; options(
+               s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,32,40,95")
+               ; map(
+                   s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,36,40,94")
+                   ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,42,40,93")
+                           ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,42,40,65") ; process-testsuite-option
+                              <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,70,40,93") ; unknown-testsuite-option))
+                 )
+             )
+         , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "40,99,40,100") ; id
+         ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "41,6,46,6")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "42,8,45,10")
+            ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "42,11,42,37")
+                 ; not(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "42,15,42,36")
+                       ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "42,16,42,25") ; get-config)> TopSort()) then
+                s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "43,10,44,23")
+                ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "43,10,43,83")
+                   ; log(|Critical(), "The options of the testsuite do not specify a topsort."))
+                ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "44,12,44,23")
+                ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "44,13,44,20") ; xtc-exit)> 1
+              end)
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-options", "39,2,46,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-options", "39,2,46,6")
+      ; fail
+
+  process-testsuite-option =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "48,2,50,32")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "49,4,50,32")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "49,4,49,24")
+       ; ?option("topsort", s))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "50,6,50,32")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "50,7,50,16") ; set-config)> (TopSort(), s)
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "48,2,50,32")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "48,2,50,32")
+      ; fail
+
+  process-testsuite-option =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "52,2,54,33")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "53,4,54,33")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "53,4,53,32")
+       ; ?option("ambiguity", "fails"))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "54,6,54,33")
+    ; set-ambiguity-is-error(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "54,29,54,32") ; true
       )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "52,2,54,33")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "52,2,54,33")
+      ; fail
 
   process-testsuite-option =
-    ?option("topsort", s)
-    ; <set-config> (TopSort(), s)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "56,2,58,34")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "57,4,58,34")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "57,4,57,35")
+       ; ?option("ambiguity", "succeeds"))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "58,6,58,34")
+    ; set-ambiguity-is-error(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "58,29,58,33") ; false
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "56,2,58,34")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "56,2,58,34")
+      ; fail
 
   process-testsuite-option =
-    ?option("ambiguity", "fails")
-    ; set-ambiguity-is-error(true)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "60,2,62,33")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "61,4,62,33")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "61,4,61,38")
+       ; ?option("heuristic-filters", "off"))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "62,6,62,33")
+    ; set-heuristic-filters(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "62,28,62,32") ; false
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "60,2,62,33")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "60,2,62,33")
+      ; fail
 
   process-testsuite-option =
-    ?option("ambiguity", "succeeds")
-    ; set-ambiguity-is-error(false)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "64,2,66,32")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "65,4,66,32")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "65,4,65,37")
+       ; ?option("heuristic-filters", "on"))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "66,6,66,32")
+    ; set-heuristic-filters(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "66,28,66,31") ; true
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "64,2,66,32")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "64,2,66,32")
+      ; fail
 
   process-testsuite-option =
-    ?option("heuristic-filters", "off")
-    ; set-heuristic-filters(false)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "68,2,70,31")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "69,4,70,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "69,4,69,47")
+       ; ?option("post-parse-priority-filter", "off"))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "70,6,70,31")
+    ; set-filter-priority(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "70,26,70,30") ; false
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "68,2,70,31")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "68,2,70,31")
+      ; fail
 
   process-testsuite-option =
-    ?option("heuristic-filters", "on")
-    ; set-heuristic-filters(true)
-
-  process-testsuite-option =
-    ?option("post-parse-priority-filter", "off")
-    ; set-filter-priority(false)
-
-  process-testsuite-option =
-    ?option("post-parse-priority-filter", "on")
-    ; set-filter-priority(true)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "72,2,74,30")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "73,4,74,30")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "73,4,73,46")
+       ; ?option("post-parse-priority-filter", "on"))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "74,6,74,30")
+    ; set-filter-priority(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "74,26,74,29") ; true
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "72,2,74,30")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "process-testsuite-option", "72,2,74,30")
+      ; fail
 
   unknown-testsuite-option =
-    ?option(k, v)
-    ; log(|Warning(), ["Unknown option specified in testsuite: ", k, " ", v])
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "unknown-testsuite-option", "76,2,78,76")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "77,4,78,76")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "77,4,77,16")
+       ; ?option(k, v))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "78,6,78,76")
+    ; log(
+      | Warning()
+      , ["Unknown option specified in testsuite: ", k, " ", v]
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "unknown-testsuite-option", "76,2,78,76")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "unknown-testsuite-option", "76,2,78,76")
+      ; fail
+
 
 strategies
-
   parse-unit-options =
-       sglr-parse-table-option
-    <+ sglr-filter-option
-    <+ single-option
-    <+ single-asfix2-option
-    <+ single-ast-option
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-options", "82,2,87,23")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "83,7,87,23")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "83,7,83,29") ; sglr-parse-table-option
+       <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "84,7,87,23")
+          ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "84,7,84,24") ; sglr-filter-option
+             <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "85,7,87,23")
+                ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "85,7,85,19") ; single-option
+                   <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "86,7,87,23")
+                      ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "86,7,86,26") ; single-asfix2-option
+                         <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "87,7,87,23") ; single-ast-option))))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-options", "82,2,87,23")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "parse-unit-options", "82,2,87,23")
+      ; fail
 
   init-parse-unit-options =
-    where(
-      <set-verbosity> 1
-      ; set-heuristic-filters(false)
-      ; set-ambiguity-is-error(true)
-    )
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "init-parse-unit-options", "89,2,94,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "90,4,94,4")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "91,6,93,35")
+            ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "91,6,91,22")
+               ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "91,7,91,19") ; set-verbosity)> 1)
+            ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "92,8,93,35")
+            ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "92,8,92,35")
+               ; set-heuristic-filters(
+                   s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "92,30,92,34") ; false
+                 ))
+            ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "93,8,93,35")
+            ; set-ambiguity-is-error(
+                s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "93,31,93,34") ; true
+              ))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "init-parse-unit-options", "89,2,94,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "init-parse-unit-options", "89,2,94,4")
+      ; fail
 
-/**
- * @todo These options should really be in libstratego-sglr
- * Warning: the default
- */
+
 strategies
-
-  /**
-   * Parse table
-   */
   sglr-parse-table-option =
-    ArgOption("-p"
-    , where(<set-config> (ParseTable(), <id>))
-    , !"-p <file.tbl>         Use parse table <file.tbl> (required)"
-    )
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "sglr-parse-table-option", "105,2,109,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "106,4,109,4")
+    ; ArgOption(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "106,14,106,17") ; "-p"
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "107,6,107,45")
+        ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "107,12,107,44")
+                ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "107,13,107,22") ; set-config)> ( ParseTable()
+                                                                                                                           , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "107,41,107,42") ; id>
+                                                                                                                           ))
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "108,6,108,67")
+        ; !"-p <file.tbl>         Use parse table <file.tbl> (required)"
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "sglr-parse-table-option", "105,2,109,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "sglr-parse-table-option", "105,2,109,4")
+      ; fail
 
-  /**
-   * Filters
-   */
   sglr-filter-option =
-      ArgOption("--heuristic-filters"
-      , switch id
-          case "off" : set-heuristic-filters(false)
-          case "on"  : set-heuristic-filters(true)
-          otherwise  : fatal-err(|"Invalid value for option --heurstic-filters: use on or off")
-        end
-      , !"--heuristic-filters <on|off>  Enable heuristic disambiguation filters (default: off)"
-      )
-    + Option("--no-heuristic-filters"
-      , set-heuristic-filters(false)
-      , !"--no-heuristic-filters        Disable heuristic disambiguation filters (deprecated option)"
-      )
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "sglr-filter-option", "114,2,126,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "115,6,126,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "115,6,122,6")
+       ; ArgOption(
+           s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "115,16,115,36") ; "--heuristic-filters"
+         , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "116,8,120,10")
+           ; switch s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "116,15,116,16") ; id
+               case s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "117,15,117,19") ; "off" :
+                 s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "117,23,117,50")
+                 ; set-heuristic-filters(
+                     s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "117,45,117,49") ; false
+                   )
+               case s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "118,15,118,18") ; "on" :
+                 s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "118,23,118,49")
+                 ; set-heuristic-filters(
+                     s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "118,45,118,48") ; true
+                   )
+               otherwise :
+                 s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "119,23,119,94")
+                 ; fatal-err(|"Invalid value for option --heurstic-filters: use on or off")
+             end
+         , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "121,8,121,94")
+           ; !"--heuristic-filters <on|off>  Enable heuristic disambiguation filters (default: off)"
+         )
+       + s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "123,6,126,6")
+         ; Option(
+             s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "123,13,123,36") ; "--no-heuristic-filters"
+           , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "124,8,124,35")
+             ; set-heuristic-filters(
+                 s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "124,30,124,34") ; false
+               )
+           , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "125,8,125,100")
+             ; !"--no-heuristic-filters        Disable heuristic disambiguation filters (deprecated option)"
+           ))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "sglr-filter-option", "114,2,126,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "sglr-filter-option", "114,2,126,6")
+      ; fail
+
 
 strategies
-
   single-option =
-    ArgOption("--single"
-    , where(<set-config> ("--single", <string-to-int>))
-    , !"--single <nr>     Parse test <nr> and output the result to the output"
-    )
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-option", "130,2,134,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "131,4,134,4")
+    ; ArgOption(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "131,14,131,23") ; "--single"
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "132,6,132,54")
+        ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "132,12,132,53")
+                ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "132,13,132,22") ; set-config)> ( "--single"
+                                                                                                                           , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "132,39,132,51") ; string-to-int>
+                                                                                                                           ))
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "133,6,133,77")
+        ; !"--single <nr>     Parse test <nr> and output the result to the output"
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-option", "130,2,134,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-option", "130,2,134,4")
+      ; fail
 
   get-single-test =
-    <get-config> "--single"
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-single-test", "136,2,137,26")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "137,4,137,26")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "137,5,137,14") ; get-config)> "--single"
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-single-test", "136,2,137,26")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-single-test", "136,2,137,26")
+      ; fail
 
   get-single-test-output =
-    <get-config> "--single-output"
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-single-test-output", "139,2,140,33")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "140,4,140,33")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "140,5,140,14") ; get-config)> "--single-output"
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-single-test-output", "139,2,140,33")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-single-test-output", "139,2,140,33")
+      ; fail
 
   is-single-test-output-asfix2 =
-    get-single-test-output => "asfix2"
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "is-single-test-output-asfix2", "142,2,143,37")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "143,4,143,37")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "143,4,143,25") ; get-single-test-output) => "asfix2"
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "is-single-test-output-asfix2", "142,2,143,37")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "is-single-test-output-asfix2", "142,2,143,37")
+      ; fail
 
   single-asfix2-option =
-    Option("--asfix2"
-    , where(<set-config> ("--single-output", "asfix2"))
-    , !"--asfix2          Parse to AsFix2 (only applicable when --single is used)"
-    )
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-asfix2-option", "145,2,149,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "146,4,149,4")
+    ; Option(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "146,11,146,20") ; "--asfix2"
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "147,6,147,54")
+        ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "147,12,147,53")
+                ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "147,13,147,22") ; set-config)> ("--single-output", "asfix2"))
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "148,6,148,81")
+        ; !"--asfix2          Parse to AsFix2 (only applicable when --single is used)"
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-asfix2-option", "145,2,149,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-asfix2-option", "145,2,149,4")
+      ; fail
 
   single-ast-option =
-    Option("--ast"
-    , where(<set-config> ("--single-output", "ast"))
-    , !"--ast             Parse to AST (only applicable when --single is used)"
-    )
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-ast-option", "151,2,155,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "152,4,155,4")
+    ; Option(
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "152,11,152,17") ; "--ast"
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "153,6,153,51")
+        ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "153,12,153,50")
+                ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "153,13,153,22") ; set-config)> ("--single-output", "ast"))
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "154,6,154,78")
+        ; !"--ast             Parse to AST (only applicable when --single is used)"
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-ast-option", "151,2,155,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "single-ast-option", "151,2,155,4")
+      ; fail
 
   abs-test-file =
-    <conc-strings> (<get-relative-prefix> "-i", <id>)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "abs-test-file", "157,2,158,52")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "158,4,158,52")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "158,5,158,16") ; conc-strings)> ( <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "158,21,158,39") ; get-relative-prefix> "-i"
+                                                                                                                , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "158,49,158,50") ; id>
+                                                                                                                )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "abs-test-file", "157,2,158,52")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "abs-test-file", "157,2,158,52")
+      ; fail
 
   get-relative-prefix =
-    (get-config; dirname <+ getcwd)
-    ; <conc-strings> (<id>, "/")
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-relative-prefix", "160,2,162,31")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "161,4,162,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "161,5,161,33")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "161,5,161,23")
+          ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "161,5,161,14") ; get-config)
+          ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "161,17,161,23")
+          ; dirname
+          <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "161,28,161,33") ; getcwd))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "162,6,162,31")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "162,7,162,18") ; conc-strings)> ( <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "162,23,162,24") ; id>
+                                                                                                                , "/"
+                                                                                                                )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-relative-prefix", "160,2,162,31")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-options.str", "get-relative-prefix", "160,2,162,31")
+      ; fail

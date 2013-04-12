@@ -1,8 +1,27 @@
 module simplify1
-imports stratego/strc/opt/stratego-laws stratego/strc/opt/opt-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratego/strc/opt/stratego-laws
+  stratego/strc/opt/opt-lib
+
+
+strategies
   simplify1 =
-    try( \ Specification([x, y, z]) -> Specification([x, z]) \ )
-    ; apply-to-bodies(simplify)
- 
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "simplify1", "5,2,7,30")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "6,4,7,30")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "6,4,6,63")
+       ; try(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "6,9,6,61")
+           ; \ Specification([x, y, z]) -> Specification([x, z]) \
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "7,6,7,30")
+    ; apply-to-bodies(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "7,22,7,29") ; simplify
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "simplify1", "5,2,7,30")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/simplify1.str", "simplify1", "5,2,7,30")
+      ; fail

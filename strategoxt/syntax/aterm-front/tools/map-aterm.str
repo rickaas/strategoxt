@@ -1,32 +1,84 @@
-/**
- * @author  Martin Bravenboer
- */
 module map-aterm
+
 imports
-  libstratego-lib	
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
   libstratego-xtc
 
+
 strategies
-
   io-map-aterm =
-    ?[_, prg | args]
-    ; ![]
-    ; where(
-        stdin-stream => stdinstream
-        ; STDERR_FILENO => stderrfd
-        ; <dup> stderrfd => stderr-orig
-        ; <dup2> (<open> "/dev/null", <STDERR_FILENO>)
-      )
-      
-    ; repeat(<conc> (<id>, [<read-from-stream> stdinstream]))
-    ; where(<dup2> (stderr-orig, <STDERR_FILENO>))
-
-    ; xtc-temp-files(
-        map({fd:
-          write-to
-          ; where(?FILE(<id>); open => fd)
-          ; <call(|Some(fd), None(), None())> (prg, args)
-        })
-      )
-
-    ; <exit> 0
+    s-enter(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "io-map-aterm", "11,2,32,13")
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "12,4,32,13")
+    ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "12,4,12,19")
+       ; ?[_, prg|args])
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "13,6,32,13")
+    ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "13,6,13,8")
+       ; ![])
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "14,6,32,13")
+    ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "14,6,19,6")
+       ; where(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "15,8,18,53")
+               ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "15,8,15,34")
+                  ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "15,8,15,19") ; stdin-stream) => stdinstream)
+               ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "16,10,18,53")
+               ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "16,10,16,34")
+                  ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "16,10,16,22") ; STDERR_FILENO) => stderrfd)
+               ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "17,10,18,53")
+               ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "17,10,17,38")
+                  ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "17,10,17,23")
+                     ; <(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "17,11,17,13") ; dup)> stderrfd) => stderr-orig)
+               ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "18,10,18,53")
+               ; <(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "18,11,18,14") ; dup2)> ( <s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "18,19,18,22") ; open> "/dev/null"
+                                                                                                        , <s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "18,39,18,51") ; STDERR_FILENO>
+                                                                                                        )))
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "21,6,32,13")
+    ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "21,6,21,60")
+       ; repeat(
+           s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "21,13,21,59")
+           ; <(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "21,14,21,17") ; conc)> ( <s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "21,22,21,23") ; id>
+                                                                                                    , [ <s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "21,29,21,44") ; read-from-stream> stdinstream
+                                                                                                      ]
+                                                                                                    )
+         ))
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "22,6,32,13")
+    ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "22,6,22,49")
+       ; where(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "22,12,22,48")
+               ; <(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "22,13,22,16") ; dup2)> ( stderr-orig
+                                                                                                        , <s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "22,34,22,46") ; STDERR_FILENO>
+                                                                                                        )))
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "24,6,32,13")
+    ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "24,6,30,6")
+       ; xtc-temp-files(
+           s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "25,8,29,9")
+           ; map(
+               s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "25,12,29,8")
+               ; {fd:
+                   s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "26,10,28,56")
+                   ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "26,10,26,17") ; write-to)
+                   ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,12,28,56")
+                   ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,12,27,41")
+                      ; where(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,18,27,40")
+                              ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,18,27,28")
+                                 ; ?FILE(
+                                      <s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,25,27,26") ; id>
+                                    ))
+                              ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,31,27,40")
+                              ; (s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "27,31,27,34") ; open) => fd))
+                   ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "28,12,28,56")
+                   ; <(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "28,13,28,43")
+                       ; call(
+                         | Some(fd)
+                         , None()
+                         , None()
+                         ))> (prg, args)
+                 }
+             )
+         ))
+    ; s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "32,6,32,13")
+    ; <(s-step(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "32,7,32,10") ; exit)> 0
+    < s-exit(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "io-map-aterm", "11,2,32,13")
+    + s-exit(|"strategoxt/syntax/aterm-front/tools/map-aterm.str", "io-map-aterm", "11,2,32,13")
+      ; fail

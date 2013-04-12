@@ -1,7 +1,9 @@
-/**
- * @author Merijn de Jonge (mdjonge@cwi.nl)
- */
 module Asfix-2-abox
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
@@ -16,343 +18,875 @@ imports
   Bracket-Symbol
   Sdf2
 
+
 signature
-   constructors
-      layout:    String -> Layout  
+  constructors
+    layout : String -> Layout
+
 
 strategies
-
-  io-Asfix-2-abox = 
-    io-wrap(asfix2abox-options
-    , asfix2abox-process-config
-      ; asfix2abox
-    )
+  io-Asfix-2-abox =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "io-Asfix-2-abox", "25,2,29,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "26,4,29,4")
+    ; io-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "26,12,26,29") ; asfix2abox-options
+      , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "27,6,28,17")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "27,6,27,30") ; asfix2abox-process-config)
+        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "28,8,28,17")
+        ; asfix2abox
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "io-Asfix-2-abox", "25,2,29,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "io-Asfix-2-abox", "25,2,29,4")
+      ; fail
 
   asfix2abox-options =
-    pp-conservative-option <+ pp-options
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox-options", "31,2,32,39")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "32,4,32,39")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "32,4,32,25") ; pp-conservative-option
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "32,30,32,39") ; pp-options)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox-options", "31,2,32,39")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox-options", "31,2,32,39")
+      ; fail
 
-  /**
-   * Obtain list of pp tables. Reverse to get correct ordering of tables     
-   */
   asfix2abox-process-config =
-     where(
-       get-config-p
-       ; reverse
-       ; read-pp-tables
-     )
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox-process-config", "37,2,42,5")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "38,5,42,5")
+    ; where(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "39,7,41,22")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "39,7,39,18") ; get-config-p)
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "40,9,41,22")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "40,9,40,15") ; reverse)
+            ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "41,9,41,22")
+            ; read-pp-tables)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox-process-config", "37,2,42,5")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox-process-config", "37,2,42,5")
+      ; fail
 
   asfix2abox =
-    ?term
-    ; repeat( sometd(?cf(<id>)))
-
-    // Retrieve a list of all layout nodes and apply "appl2abox" to
-    // the parse-tree where the layout nodes have been removed
-    ; split( 
-        topdown(
-          try(is-list;filter(not(opt(layout()));not(layout(id))))
-        )
-        ; appl2abox
-      , collect'(layout(id))
-      )
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox", "44,2,57,18")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "45,4,57,18")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "45,4,45,8") ; ?term)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "46,6,57,18")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "46,6,46,31")
+       ; repeat(
+           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "46,14,46,30")
+           ; sometd(
+               s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "46,21,46,29")
+               ; ?cf(
+                    <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "46,26,46,27") ; id>
+                  )
+             )
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "50,6,57,18")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "50,6,56,6")
+       ; split(
+           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "51,8,54,18")
+           ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "51,8,53,8")
+              ; topdown(
+                  s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,10,52,64")
+                  ; try(
+                      s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,14,52,63")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,14,52,20") ; is-list)
+                      ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,22,52,63")
+                      ; filter(
+                          s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,29,52,62")
+                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,29,52,46")
+                             ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,33,52,45")
+                                   ; opt(
+                                       s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,37,52,44") ; layout
+                                     )))
+                          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,48,52,62")
+                          ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,52,52,61")
+                                ; layout(
+                                    s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "52,59,52,60") ; id
+                                  ))
+                        )
+                    )
+                ))
+           ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "54,10,54,18")
+           ; appl2abox
+         , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "55,8,55,27")
+           ; collect'(
+               s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "55,17,55,26")
+               ; layout(
+                   s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "55,24,55,25") ; id
+                 )
+             )
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "57,6,57,18")
     ; insert-layout
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox", "44,2,57,18")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "asfix2abox", "44,2,57,18")
+      ; fail
+
 
 rules
 
-  symbol2abox: 
-    (lit(s), _, path, number ) -> S(s)
+  symbol2abox :
+    (lit(s), _, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "61,2,62,37")> S(s)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "61,2,62,37")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "61,2,62,37")
+             ; fail
 
-  symbol2abox: 
-    (sort(s), str, path, number ) -> S(str)
-     where
-       <is-string> str
+  symbol2abox :
+    (sort(s), str, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "64,2,67,21")> S(str)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "64,2,67,21")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "64,2,67,21")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "67,7,67,21")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "67,8,67,16") ; is-string)> str
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "64,2,67,21")
+             ; fail
 
-symbol2abox: 
-   (char-class(s), char, path, number ) -> S(<implode-string>[char])
+  symbol2abox :
+    (char-class(s), char, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "69,0,70,67")> S(
+                                                                                                                                     <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "70,46,70,59") ; implode-string> [char]
+                                                                                                                                   )
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "69,0,70,67")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "69,0,70,67")
+             ; fail
 
-symbol2abox: 
-   (sort(s), t, path, number ) -> abox
-   where
-      <not(is-string)>t;
-      <appl2abox>t => abox
-      
-symbol2abox: 
-   (opt(s), appl(_,[]), path, number ) -> []
+  symbol2abox :
+    (sort(s), t, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "72,0,76,25")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "72,0,76,25")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "72,0,76,25")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "75,6,76,25")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "75,6,75,22")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "75,7,75,20")
+                 ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "75,11,75,19") ; is-string))> t)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "76,6,76,25")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "76,6,76,17")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "76,7,76,15") ; appl2abox)> t) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "72,0,76,25")
+             ; fail
 
-symbol2abox: 
-   (opt(s), appl(syms,[x]), path, number ) -> abox
-   where
-      <make-path>(path, number) => new-path;
-      <get-pp-entry>(opt(s), new-path) => template;
-      <symbol2abox>(s, x, new-path, 1) => abox';
-      <filter-literals;instantiate>(template, [abox']) => abox
+  symbol2abox :
+    ( opt(s)
+    , appl(_, [])
+    , path
+    , number
+    ) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "78,0,79,43")> []
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "78,0,79,43")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "78,0,79,43")
+             ; fail
 
-symbol2abox: 
-   (iter(s), lst, path, number) -> abox
-   where
-      <build-list>(iter(s), lst, path, number ) => abox
+  symbol2abox :
+    ( opt(s)
+    , appl(syms, [x])
+    , path
+    , number
+    ) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "81,0,87,61")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "81,0,87,61")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "81,0,87,61")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "84,6,87,61")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "84,6,84,42")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "84,6,84,30")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "84,7,84,15") ; make-path)> (path, number)) => new-path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "85,6,87,61")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "85,6,85,49")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "85,6,85,37")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "85,7,85,18") ; get-pp-entry)> (opt(s), new-path)) => template)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "86,6,87,61")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "86,6,86,46")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "86,6,86,37")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "86,7,86,17") ; symbol2abox)> (s, x, new-path, 1)) => abox')
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "87,6,87,61")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "87,6,87,53")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "87,7,87,33")
+                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "87,7,87,21") ; filter-literals)
+                 ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "87,23,87,33")
+                 ; instantiate)> (template, [abox'])) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "81,0,87,61")
+             ; fail
 
-symbol2abox: 
-   (iter-star(s), lst, path, number ) -> abox
-   where
-      <build-list>(iter-star(s), lst, path, number ) => abox
-      
-build-list: 
-   ( s, lst, path, number) -> abox
-   where
-      <make-path>(path, number ) => new-path;
-      !s;(iter(?sym)+iter-star(?sym));
-      <get-pp-entry>(s, new-path) => pp-entry;
-      !lst;
+  symbol2abox :
+    (iter(s), lst, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "89,0,92,54")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "89,0,92,54")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "89,0,92,54")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "92,6,92,54")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "92,6,92,46")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "92,7,92,16") ; build-list)> (iter(s), lst, path, number)) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "89,0,92,54")
+             ; fail
 
-      map({t, ab: \ t -> ab 
-         where
-           <symbol2abox>(sym, t, new-path, 1) => ab \
-         } ) => aboxes;
-      <instantiate-list(|pp-entry)>aboxes => abox
+  symbol2abox :
+    (iter-star(s), lst, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "94,0,97,59")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "94,0,97,59")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "94,0,97,59")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "97,6,97,59")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "97,6,97,51")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "97,7,97,16") ; build-list)> (iter-star(s), lst, path, number)) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "94,0,97,59")
+             ; fail
 
-symbol2abox: 
-   (iter-sep(sym,sep), lst, path, number) -> aboxes
-   where 
-      <build-sep-list>(iter-sep(sym, sep), lst, path, number ) => aboxes
+  build-list :
+    (s, lst, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-list", "99,0,111,48")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-list", "99,0,111,48")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-list", "99,0,111,48")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "102,6,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "102,6,102,43")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "102,6,102,31")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "102,7,102,15") ; make-path)> (path, number)) => new-path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,6,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,6,103,7") ; !s)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,9,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,10,103,35")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,10,103,19")
+                ; iter(
+                    s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,15,103,18") ; ?sym
+                  )
+                + s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,21,103,35")
+                  ; iter-star(
+                      s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "103,31,103,34") ; ?sym
+                    )))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "104,6,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "104,6,104,44")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "104,6,104,32")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "104,7,104,18") ; get-pp-entry)> (s, new-path)) => pp-entry)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "105,6,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "105,6,105,9") ; !lst)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "107,6,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "107,6,110,21")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "107,6,110,11")
+                ; map(
+                    s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "107,10,110,9")
+                    ; {t, ab:
+                        s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "107,18,109,52")
+                        ; \ t -> ab
+                            where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "109,11,109,50")
+                                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "109,11,109,44")
+                                     ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "109,12,109,22") ; symbol2abox)> (sym, t, new-path, 1)) => ab \
+                      }
+                  )) => aboxes)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "111,6,111,48")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "111,6,111,40")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "111,7,111,33")
+                 ; instantiate-list(|pp-entry))> aboxes) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-list", "99,0,111,48")
+             ; fail
 
-symbol2abox: 
-   (iter-star-sep(sym,sep), lst, path, number) -> aboxes
-   where 
-      <build-sep-list>(iter-star-sep(sym, sep), lst, path, number ) => aboxes
+  symbol2abox :
+    (iter-sep(sym, sep), lst, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "113,0,116,71")> aboxes
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "113,0,116,71")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "113,0,116,71")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "116,6,116,71")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "116,6,116,61")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "116,7,116,20") ; build-sep-list)> (iter-sep(sym, sep), lst, path, number)) => aboxes
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "113,0,116,71")
+             ; fail
 
-build-sep-list:
-   (s, lst, path, number ) -> abox
-   where
-      <make-path>(path, number ) => new-path;
-      !s;(iter-sep(?sym, ?sep)+iter-star-sep(?sym, ?sep) );
-      <get-pp-entry>(s, new-path) => pp-entry;
-      <nzip( BuildSepList(!sym, !sep, !new-path, !number) )>lst => aboxes;
-      <instantiate-sep-list(|pp-entry)>aboxes
-       => abox
+  symbol2abox :
+    (iter-star-sep(sym, sep), lst, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "118,0,121,76")> aboxes
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "118,0,121,76")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "118,0,121,76")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "121,6,121,76")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "121,6,121,66")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "121,7,121,20") ; build-sep-list)> (iter-star-sep(sym, sep), lst, path, number)) => aboxes
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "118,0,121,76")
+             ; fail
 
-BuildSepList(sym, sep, path, number):
-   (number, trm) -> abox
-   where
-   (
-      <even>number;
-      !(<sep>(), trm,  <path>(), 2);
-      symbol2abox;
-      try( \ x -> [x] where not(is-list) \ )
-   <+
-      !(<sym>(), trm, <path>(), 1);
-      symbol2abox; 
-      try(\ x -> [x] where not(is-list) \ )
-   )
-   => abox
+  build-sep-list :
+    (s, lst, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-sep-list", "123,0,131,13")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-sep-list", "123,0,131,13")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-sep-list", "123,0,131,13")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "126,6,131,13")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "126,6,126,43")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "126,6,126,31")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "126,7,126,15") ; make-path)> (path, number)) => new-path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,6,131,13")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,6,127,7") ; !s)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,9,131,13")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,10,127,55")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,10,127,29")
+                ; iter-sep(
+                    s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,19,127,22") ; ?sym
+                  , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,25,127,28") ; ?sep
+                  )
+                + s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,31,127,55")
+                  ; iter-star-sep(
+                      s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,45,127,48") ; ?sym
+                    , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "127,51,127,54") ; ?sep
+                    )))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "128,6,131,13")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "128,6,128,44")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "128,6,128,32")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "128,7,128,18") ; get-pp-entry)> (s, new-path)) => pp-entry)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,6,131,13")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,6,129,72")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,6,129,62")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,7,129,58")
+                    ; nzip(
+                        s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,13,129,56")
+                        ; BuildSepList(
+                            s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,26,129,29") ; !sym
+                          , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,32,129,35") ; !sep
+                          , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,38,129,46") ; !new-path
+                          , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "129,49,129,55") ; !number
+                          )
+                      ))> lst) => aboxes)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "130,6,131,13")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "130,6,130,44")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "130,7,130,37")
+                 ; instantiate-sep-list(|pp-entry))> aboxes) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "build-sep-list", "123,0,131,13")
+             ; fail
 
+  BuildSepList(sym, sep, path, number) :
+    (number, trm) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "BuildSepList", "133,0,146,9")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "BuildSepList", "133,0,146,9")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "BuildSepList", "133,0,146,9")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "136,3,146,9")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "137,6,144,42")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "137,6,140,43")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "137,6,137,17")
+                   ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "137,7,137,10") ; even)> number)
+                ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "138,6,140,43")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "138,6,138,34")
+                   ; !( <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "138,9,138,11") ; sep> ()
+                      , trm
+                      , <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "138,24,138,27") ; path> ()
+                      , 2
+                      ))
+                ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "139,6,140,43")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "139,6,139,16") ; symbol2abox)
+                ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "140,6,140,43")
+                ; try(
+                    s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "140,11,140,41")
+                    ; \ x -> [x]
+                        where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "140,28,140,39")
+                              ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "140,32,140,38") ; is-list) \
+                  )
+                <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "142,6,144,42")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "142,6,142,33")
+                      ; !( <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "142,9,142,11") ; sym> ()
+                         , trm
+                         , <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "142,23,142,26") ; path> ()
+                         , 1
+                         ))
+                   ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "143,6,144,42")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "143,6,143,16") ; symbol2abox)
+                   ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "144,6,144,42")
+                   ; try(
+                       s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "144,10,144,40")
+                       ; \ x -> [x]
+                           where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "144,27,144,38")
+                                 ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "144,31,144,37") ; is-list) \
+                     ))) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "BuildSepList", "133,0,146,9")
+             ; fail
 
-symbol2abox:
-   (alt(s1,s2), appl, path, number ) -> abox
-   where
-      <make-path>(path, number ) => new-path;
-      !(alt(s1,s2), appl, new-path, 1 ) =>s;
-      where(!alt(s1,s2) => s');
-   rec x(
-   { s0, s1, s2, arg, attrs, prod, number, path:
-      ?(alt(s1, s2), appl(prod([s1], alt(s1,s2), attrs),arg), path, number );
-      !(s1,          appl(prod([s1], s1,         attrs),arg), path, number ); 
-      x
-      
-   <+
-      ?(alt(s1, s2), appl(prod([s0], alt(s1,s2),attrs),arg), path, number );
-      !(s2,          appl(prod([s0], s2,attrs),arg), path, <add>(number, 1) );
-      x
-   <+
-      ?(s1, appl( prod, [arg] ), path, number );
-      <get-pp-entry>(s', path) => pp-entry;
-      !(s1, arg, path, 1 );
-      symbol2abox => abox';
-      <instantiate>([<index>(number, pp-entry)], [abox'] )
-   }
-   ) => abox
+  symbol2abox :
+    (alt(s1, s2), appl, path, number) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "149,0,172,11")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "149,0,172,11")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "149,0,172,11")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "152,6,172,11")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "152,6,152,43")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "152,6,152,31")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "152,7,152,15") ; make-path)> (path, number)) => new-path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "153,6,172,11")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "153,6,153,42")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "153,6,153,38")
+                ; !( alt(s1, s2)
+                   , appl
+                   , new-path
+                   , 1
+                   )) => s)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "154,6,172,11")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "154,6,154,29")
+             ; where(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "154,12,154,28")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "154,12,154,22")
+                        ; !alt(s1, s2)) => s'))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "155,3,172,11")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "155,3,172,3")
+             ; rec x (
+                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "156,3,171,3")
+                 ; {s0, s1, s2, arg, attrs, prod, number, path:
+                     s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "157,6,170,57")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "157,6,159,6")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "157,6,157,75")
+                           ; ?( alt(s1, s2)
+                              , appl(
+                                  prod(
+                                    [s1]
+                                  , alt(s1, s2)
+                                  , attrs
+                                  )
+                                , arg
+                                )
+                              , path
+                              , number
+                              ))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "158,6,159,6")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "158,6,158,75")
+                           ; !( s1
+                              , appl(
+                                  prod([s1], s1, attrs)
+                                , arg
+                                )
+                              , path
+                              , number
+                              ))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "159,6,159,6")
+                        ; x
+                        <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "162,6,170,57")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "162,6,164,6")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "162,6,162,74")
+                                 ; ?( alt(s1, s2)
+                                    , appl(
+                                        prod(
+                                          [s0]
+                                        , alt(s1, s2)
+                                        , attrs
+                                        )
+                                      , arg
+                                      )
+                                    , path
+                                    , number
+                                    ))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "163,6,164,6")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "163,6,163,76")
+                                 ; !( s2
+                                    , appl(
+                                        prod([s0], s2, attrs)
+                                      , arg
+                                      )
+                                    , path
+                                    , <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "163,60,163,62") ; add> (number, 1)
+                                    ))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "164,6,164,6")
+                              ; x
+                              <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "166,6,170,57")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "166,6,166,46")
+                                    ; ?( s1
+                                       , appl(prod, [arg])
+                                       , path
+                                       , number
+                                       ))
+                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "167,6,170,57")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "167,6,167,41")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "167,6,167,29")
+                                       ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "167,7,167,18") ; get-pp-entry)> (s', path)) => pp-entry)
+                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "168,6,170,57")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "168,6,168,25")
+                                    ; !(s1, arg, path, 1))
+                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "169,6,170,57")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "169,6,169,25")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "169,6,169,16") ; symbol2abox) => abox')
+                                 ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "170,6,170,57")
+                                 ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "170,7,170,17") ; instantiate)> ( [ <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "170,22,170,26") ; index> (number, pp-entry)
+                                                                                                                                ]
+                                                                                                                              , [abox']
+                                                                                                                              )))
+                   }
+               )) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "149,0,172,11")
+             ; fail
 
-symbol2abox:
-   (seq(syms), appl(_,args), path, number ) -> abox
-   where
-      <make-path>(path, number ) => new-path;
-      <get-pp-entry>(seq(syms), new-path) =>  template;
-      <seq2abox>( <filter(not(lit(id)))>syms,<filter(not(lit(id)))>args, new-path, 1) => abox';
-      <instantiate>(template, abox') => abox
+  symbol2abox :
+    ( seq(syms)
+    , appl(_, args)
+    , path
+    , number
+    ) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "174,0,180,43")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "174,0,180,43")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "174,0,180,43")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "177,6,180,43")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "177,6,177,43")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "177,6,177,31")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "177,7,177,15") ; make-path)> (path, number)) => new-path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "178,6,180,43")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "178,6,178,53")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "178,6,178,40")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "178,7,178,18") ; get-pp-entry)> (seq(syms), new-path)) => template)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,6,180,43")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,6,179,93")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,6,179,84")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,7,179,14") ; seq2abox)> ( <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,19,179,38")
+                                                                                                             ; filter(
+                                                                                                                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,26,179,37")
+                                                                                                                 ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,30,179,36")
+                                                                                                                       ; lit(
+                                                                                                                           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,34,179,35") ; id
+                                                                                                                         ))
+                                                                                                               )> syms
+                                                                                                          , <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,46,179,65")
+                                                                                                             ; filter(
+                                                                                                                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,53,179,64")
+                                                                                                                 ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,57,179,63")
+                                                                                                                       ; lit(
+                                                                                                                           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "179,61,179,62") ; id
+                                                                                                                         ))
+                                                                                                               )> args
+                                                                                                          , new-path
+                                                                                                          , 1
+                                                                                                          )) => abox')
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "180,6,180,43")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "180,6,180,35")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "180,7,180,17") ; instantiate)> (template, abox')) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "symbol2abox", "174,0,180,43")
+             ; fail
+
 
 rules
-make-path: (path, n ) -> ys
-   where
-      <conc>(path, [n]) => ys
-   
+
+  make-path :
+    (path, n) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "make-path", "183,0,185,28")> ys
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "make-path", "183,0,185,28")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "make-path", "183,0,185,28")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "185,6,185,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "185,6,185,22")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "185,7,185,10") ; conc)> (path, [n])) => ys
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "make-path", "183,0,185,28")
+             ; fail
+
+
 strategies
-seq2abox =
-   rec x ({s1,ss,a1,as,number, abox1, aboxes1, path:
-      ?([], [], _, _);![]
-   <+
-      ?([lit(_)|ss], [lit(_)|as], path, number );
-      !(ss, as, path, number);
-      x      
-   <+
-      ?([s1|ss], [a1|as], path, number );
-       !(s1,a1, path, number);
-       symbol2abox => abox1;
-       !(ss, as, path, <add>(number,1) );
-       x => aboxes1;
-       ![abox1| aboxes1]
-   })
-
-
-rules
-
-
-/**
- * Obtain or create a box template from an appl. Two following cases have to
- * be considered:
- *  
- * A constructor attribute exists for the term and the pretty-print table 
- * contains an entry. Obtain the entry and return.
- *
- * A constructor attribute exists for the term and the pretty-print table
- * does not contain an entry. Create a new template and store it in the
- * table.
- *
- * No constructor exists for the term. Create a new template and store it
- * in the table. Generate a constructor name form the
- * symbols+literals+result sort of the production. If that fails for some
- * reason, use "no-cons-name" as constructor name.
- */
-get-templ: 
-   appl(prod(syms, sym, attrs), args) -> (cons-name, abox)
-   where
-   (
-      // Obtain constructor name of production.
-      <oncetd(?cons(cons-name))>attrs
-   <+
-      // Production does not contain a constructor attribute, try to use
-      // its result sort name as constructor name.
-      (
-         !sym;sort(id);
-         <prodcons>prod(syms, sym, attrs);
-         prod(id,id,oncetd(?cons(cons-name)))
-
-      <+
-            !"no-cons-name" => cons-name
+  seq2abox =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "seq2abox", "188,0,202,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "189,3,202,4")
+    ; rec x (
+        s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "189,10,202,3")
+        ; {s1, ss, a1, as, number, abox1, aboxes1, path:
+            s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "190,6,201,23")
+            ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "190,6,190,24")
+               ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "190,6,190,20")
+                  ; ?([], [], _, _))
+               ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "190,22,190,24")
+               ; ![]
+               <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "192,6,201,23")
+                  ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "192,6,194,6")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "192,6,192,47")
+                        ; ?( [lit(_)|ss]
+                           , [lit(_)|as]
+                           , path
+                           , number
+                           ))
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "193,6,194,6")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "193,6,193,28")
+                        ; !(ss, as, path, number))
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "194,6,194,6")
+                     ; x
+                     <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "196,6,201,23")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "196,6,196,39")
+                           ; ?( [s1|ss]
+                              , [a1|as]
+                              , path
+                              , number
+                              ))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "197,7,201,23")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "197,7,197,28")
+                           ; !(s1, a1, path, number))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "198,7,201,23")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "198,7,198,26")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "198,7,198,17") ; symbol2abox) => abox1)
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "199,7,201,23")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "199,7,199,39")
+                           ; !( ss
+                              , as
+                              , path
+                              , <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "199,24,199,26") ; add> (number, 1)
+                              ))
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "200,7,201,23")
+                        ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "200,7,200,18")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "200,7,200,7") ; x) => aboxes1)
+                        ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "201,7,201,23")
+                        ; ![abox1|aboxes1]))
+          }
       )
-   );
-   <get-pp-entry>
-      (prod(syms, sym, attrs([cons(cons-name)])), [cons-name]) => abox
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "seq2abox", "188,0,202,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "seq2abox", "188,0,202,4")
+      ; fail
 
 
-// Obtain a BOX template, or generate templates  when no template
-// is available. Two cases re considered: templates for productions and
-// templates for symbols
+rules
+
+  get-templ :
+    appl(prod(syms, sym, attrs), args) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-templ", "224,0,243,69")> (cons-name, abox)
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-templ", "224,0,243,69")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-templ", "224,0,243,69")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "227,3,243,69")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "229,6,240,6")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "229,6,229,36")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "229,7,229,30")
+                    ; oncetd(
+                        s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "229,14,229,29")
+                        ; ?cons(cons-name)
+                      ))> attrs
+                <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "234,9,239,39")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "234,9,236,44")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "234,9,234,12") ; !sym)
+                      ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "234,14,236,44")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "234,14,234,21")
+                         ; sort(
+                             s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "234,19,234,20") ; id
+                           ))
+                      ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "235,9,236,44")
+                      ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "235,9,235,40")
+                         ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "235,10,235,17") ; prodcons)> prod(syms, sym, attrs))
+                      ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "236,9,236,44")
+                      ; prod(
+                          s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "236,14,236,15") ; id
+                        , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "236,17,236,18") ; id
+                        , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "236,20,236,43")
+                          ; oncetd(
+                              s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "236,27,236,42")
+                              ; ?cons(cons-name)
+                            )
+                        )
+                      <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "239,12,239,39")
+                         ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "239,12,239,26")
+                            ; !"no-cons-name") => cons-name)))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "242,3,243,69")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "242,3,243,61")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "242,4,242,15") ; get-pp-entry)> ( prod(
+                                                                                                               syms
+                                                                                                             , sym
+                                                                                                             , attrs([cons(cons-name)])
+                                                                                                             )
+                                                                                                           , [cons-name]
+                                                                                                           )) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-templ", "224,0,243,69")
+             ; fail
 
 
 strategies
+  get-pp-entry =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-pp-entry", "254,0,267,3")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "255,3,267,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "255,3,255,33")
+       ; ?(prod(syms, sym, attrs), path))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "257,6,266,28")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "257,6,257,28")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "257,6,257,23")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "257,7,257,18") ; pp-table-get)> path)
+       ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "257,26,257,28")
+       ; Snd
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "261,6,266,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "261,6,265,6")
+             ; where(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "262,9,264,34")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "262,9,262,31")
+                        ; !prod(syms, sym, attrs))
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "263,9,264,34")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "263,9,263,27") ; generate-pp-entries)
+                     ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "264,9,264,34")
+                     ; map(
+                         s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "264,13,264,33") ; StoreEntryIfNotExists
+                       )))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "266,6,266,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "266,6,266,23")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "266,7,266,18") ; pp-table-get)> path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "266,26,266,28")
+          ; Snd)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-pp-entry", "254,0,267,3")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-pp-entry", "254,0,267,3")
+      ; fail
 
-// Obtain template for production
-get-pp-entry =
-   ?(prod(syms, sym, attrs), path);
-   (
-      <pp-table-get>path; Snd
-   <+
-      // No template exists; generate a new box template for constructor
-      // 'cons-name' and all its nested symbols
-      where(
-         !prod(syms, sym, attrs);
-         generate-pp-entries;
-         map(StoreEntryIfNotExists)
-      );
-      <pp-table-get>path; Snd
-   )   
+  get-pp-entry =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-pp-entry", "270,0,303,3")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "271,3,303,3")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "271,3,271,15")
+       ; ?(sym, path))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "273,6,302,28")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "273,6,273,28")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "273,6,273,23")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "273,7,273,18") ; pp-table-get)> path)
+       ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "273,26,273,28")
+       ; Snd
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,6,293,18")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,7,293,13") ; reverse)> path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,20,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,20,293,37")
+             ; [s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,21,293,24") ; ?num|s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,27,293,36")
+                                                                                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "293,27,293,33") ; reverse) => p])
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "294,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "294,6,294,7") ; !p)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "295,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "295,6,295,17") ; pp-table-get)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "295,20,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "295,20,295,22") ; Fst)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "296,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "296,6,299,19")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "297,8,298,35")
+                ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "297,8,297,35")
+                   ; \ Path(c, [p]) -> (c, [p]) \
+                   + s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "298,8,298,35")
+                     ; \ Path1(c) -> (c, []) \)) => full-path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "300,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "300,6,300,42")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "300,7,300,31")
+                 ; symbol2abox(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "300,20,300,29") ; !full-path
+                   ))> (num, sym))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "301,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "301,6,301,31")
+             ; map(
+                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "301,10,301,30") ; StoreEntryIfNotExists
+               ))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "302,6,302,28")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "302,6,302,23")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "302,7,302,18") ; pp-table-get)> path)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "302,26,302,28")
+          ; Snd)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-pp-entry", "270,0,303,3")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "get-pp-entry", "270,0,303,3")
+      ; fail
 
-// Obtain template for symbol
-get-pp-entry =
-   ?(sym, path );
-   (
-      <pp-table-get>path; Snd
-   <+
-/*
- No template exists; generate a new box template for the symbol and
- all its nested symbols.
- It works as follows:
+  appl2abox =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "appl2abox", "305,0,306,40")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "306,3,306,40")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "306,3,306,21") ; application-to-abox
+       <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "306,26,306,40") ; fatal-ambiguity)
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "appl2abox", "305,0,306,40")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "appl2abox", "305,0,306,40")
+      ; fail
 
- 1) path looks like [constr,n_1,..,n_j]
- this indicates that a template for the n_j th symbol has to be
- constructed. 
- 2) We obtain the number n_j and remove it from path
- 3) From this path consisting of only numbers, we have to construct
-    a completa path (including symbol names etc.). We assume the a template
-    already exists for the parent symbol (with path [constr, n_i,...,n_j-1]
- 4) We retrieve this template and also get the corresponding complete path.
- 5) With the full path, we can call symbol2abox to build all templates
- 6) We store all generated templates in case they don not already exist
- 7) Finally, we retrieve the template that we were looking for
+  application-to-abox :
+    appl(prod(syms, sym, attrs), args) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "application-to-abox", "308,0,315,47")> abox
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "application-to-abox", "308,0,315,47")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "application-to-abox", "308,0,315,47")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "311,6,315,47")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "311,6,311,75")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "311,6,311,50")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "311,7,311,15") ; get-templ)> appl(prod(syms, sym, attrs), args)) => (cons-name, pp-entry))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,6,315,47")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,6,314,44")
+             ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,6,314,31")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,7,312,14") ; seq2abox)> ( <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,18,312,37")
+                                                                                                             ; filter(
+                                                                                                                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,25,312,36")
+                                                                                                                 ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,29,312,35")
+                                                                                                                       ; lit(
+                                                                                                                           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "312,33,312,34") ; id
+                                                                                                                         ))
+                                                                                                               )> syms
+                                                                                                          , <s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "313,18,313,37")
+                                                                                                             ; filter(
+                                                                                                                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "313,25,313,36")
+                                                                                                                 ; not(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "313,29,313,35")
+                                                                                                                       ; lit(
+                                                                                                                           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "313,33,313,34") ; id
+                                                                                                                         ))
+                                                                                                               )> args
+                                                                                                          , [cons-name]
+                                                                                                          , 1
+                                                                                                          )) => sub-boxes)
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "315,6,315,47")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "315,6,315,39")
+             ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "315,7,315,17") ; instantiate)> (pp-entry, sub-boxes)) => abox
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "application-to-abox", "308,0,315,47")
+             ; fail
 
-*/
-      <reverse>path;[?num| reverse=>p];
-      !p;
-      pp-table-get; Fst;
-      ( 
-        \  Path(c, [p]) -> (c,[p]) \ +
-        \ Path1(c)      -> (c, []) \
-      ) => full-path;
-      <symbol2abox( !full-path )>(num, sym);
-      map(StoreEntryIfNotExists);
-      <pp-table-get>path; Snd
-   )
-   
-appl2abox =
-   application-to-abox <+ fatal-ambiguity
+  fatal-ambiguity =
+    s-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "fatal-ambiguity", "317,0,319,75")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "318,3,319,75")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "318,3,318,9")
+       ; amb(
+           s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "318,7,318,8") ; id
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "319,3,319,75")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "319,3,319,65")
+       ; log(|Error(), "Unable to pretty-print term due to ambiguities."))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "319,69,319,75")
+    ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "319,70,319,73") ; exit)> 1
+    < s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "fatal-ambiguity", "317,0,319,75")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "fatal-ambiguity", "317,0,319,75")
+      ; fail
 
-application-to-abox: 
-   appl(prod(syms, sym, attrs), args) -> abox
-   where
-      <get-templ>appl(prod(syms, sym, attrs), args) => (cons-name, pp-entry);
-      <seq2abox>(<filter(not(lit(id)))>syms,
-                 <filter(not(lit(id)))>args,
-                 [cons-name], 1) => sub-boxes;
-      <instantiate>(pp-entry, sub-boxes) => abox
-
-fatal-ambiguity = 
-   amb(id);
-   log(|Error(),"Unable to pretty-print term due to ambiguities.") ; <exit>1
-  
-/**
- * This strategy traverse a box template and the corresponding argument
- * boxes, and removes any abox from the argument list that does not correspond
- * to a box place holder.
- * 
- * example:
- * 
- * <filter-literals>([S("aap"), Arg(i), S("mies")],
- *                   [S("aap"), S("noot"), S("mies")]0
- * yields
- *    ([S("aap"), Arg(i), S("mies")],
- *     [S("noot")])
- * 
- * The result tuple is suitable for instantiation
- */
-filter-literals:
-  (templ, args) -> (templ, args')
-  where
-    (collect'(Arg(id) + Arg2(id,id) + S(id)), id );
-       rec x ( { i, xs, xs', ys, ys', s, a:
-      ([], [])
-      <+
-      ?([Arg(i)|xs], [s|ys]);
-      <x>(xs, ys);
-      ?(xs',ys');
-      !([Arg(i)|xs'], [s|ys'])
-      <+
-      ?([Arg2(i,j)|xs], [s|ys]);
-      <x>(xs, ys);
-      ?(xs',ys');
-      !([Arg2(i,j)|xs'], [s|ys'])
-      <+
-       ?([a|xs], [s|ys]);
-       <x>(xs,ys);
-       ?(xs',ys');
-       !([a|xs'], ys')
-    }     
-    ) => (_, args')
+  filter-literals :
+    (templ, args) -> <r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "filter-literals", "336,0,358,18")> (templ, args')
+    where r-enter(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "filter-literals", "336,0,358,18")
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "filter-literals", "336,0,358,18")
+             ; fail
+    where s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,4,358,18")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,4,339,49")
+             ; ( s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,5,339,43")
+                 ; collect'(
+                     s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,14,339,42")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,14,339,20")
+                        ; Arg(
+                            s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,18,339,19") ; id
+                          )
+                        + s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,24,339,42")
+                          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,24,339,34")
+                             ; Arg2(
+                                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,29,339,30") ; id
+                               , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,32,339,33") ; id
+                               )
+                             + s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,38,339,42")
+                               ; S(
+                                   s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,40,339,41") ; id
+                                 )))
+                   )
+               , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "339,46,339,47") ; id
+               ))
+          ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "340,7,358,18")
+          ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "340,7,358,4")
+             ; rec x (
+                 s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "340,15,357,4")
+                 ; {i, xs, xs', ys, ys', s, a:
+                     s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "341,6,356,21")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "341,6,341,13")
+                        ; ( s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "341,7,341,8") ; []
+                          , s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "341,11,341,12") ; []
+                          )
+                        <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "343,6,356,21")
+                           ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "343,6,346,29")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "343,6,343,27")
+                                 ; ?( [Arg(i)|xs]
+                                    , [s|ys]
+                                    ))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "344,6,346,29")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "344,6,344,16")
+                                 ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "344,7,344,7") ; x)> (xs, ys))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "345,6,346,29")
+                              ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "345,6,345,15")
+                                 ; ?(xs', ys'))
+                              ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "346,6,346,29")
+                              ; !( [Arg(i)|xs']
+                                 , [s|ys']
+                                 )
+                              <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "348,6,356,21")
+                                 ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "348,6,351,32")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "348,6,348,30")
+                                       ; ?( [Arg2(i, j)|xs]
+                                          , [s|ys]
+                                          ))
+                                    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "349,6,351,32")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "349,6,349,16")
+                                       ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "349,7,349,7") ; x)> (xs, ys))
+                                    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "350,6,351,32")
+                                    ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "350,6,350,15")
+                                       ; ?(xs', ys'))
+                                    ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "351,6,351,32")
+                                    ; !( [Arg2(i, j)|xs']
+                                       , [s|ys']
+                                       )
+                                    <+ s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "353,7,356,21")
+                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "353,7,353,23")
+                                          ; ?([a|xs], [s|ys]))
+                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "354,7,356,21")
+                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "354,7,354,16")
+                                          ; <(s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "354,8,354,8") ; x)> (xs, ys))
+                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "355,7,356,21")
+                                       ; (s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "355,7,355,16")
+                                          ; ?(xs', ys'))
+                                       ; s-step(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "356,7,356,21")
+                                       ; !([a|xs'], ys'))))
+                   }
+               )) => (_, args')
+          <+ r-exit(|"strategoxt/syntax/gpp/tools2/Asfix-2-abox.str", "filter-literals", "336,0,358,18")
+             ; fail

@@ -1,6 +1,22 @@
 module test40
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 strategies
-
-  main-test40 = foldr(id, conc, explode-string)
-
+  main-test40 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "main-test40", "5,2,5,46")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "5,16,5,46")
+    ; foldr(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "5,22,5,23") ; id
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "5,26,5,29") ; conc
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "5,32,5,45") ; explode-string
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "main-test40", "5,2,5,46")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test40.str", "main-test40", "5,2,5,46")
+      ; fail

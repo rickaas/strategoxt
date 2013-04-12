@@ -1,41 +1,130 @@
 module test08
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
   constructors
-    Nil   : List(a)
-    Cons  : a * List(a) -> List(a)
+    Nil  : List(a)
+    Cons : a * List(a) -> List(a)
+    Zero : Nat
+    Succ : Nat -> Nat
+    Plus : Nat * Nat -> Nat
 
-    Zero  : Nat
-    Succ  : Nat -> Nat
-    Plus  : Nat * Nat -> Nat
 
 rules
 
-  A : Plus(Zero, x) -> x
-  B : Plus(Succ(x), y) -> Succ(Plus(x, y))
+  A :
+    Plus(Zero, x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "A", "13,2,13,23")> x
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "A", "13,2,13,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "A", "13,2,13,23")
+             ; fail
+
+  B :
+    Plus(Succ(x), y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "B", "14,2,14,41")> Succ(Plus(x, y))
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "B", "14,2,14,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "B", "14,2,14,41")
+             ; fail
+
 
 strategies
+  try(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "try", "18,2,19,10")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "19,4,19,10")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "19,4,19,4") ; s
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "19,9,19,10") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "try", "18,2,19,10")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "try", "18,2,19,10")
+      ; fail
 
-  try(s) = 
-    s <+ id
- 
-  topdown(s) = 
-    s; all(topdown(s))
+  topdown(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "topdown", "21,2,22,21")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "22,4,22,21")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "22,4,22,4") ; s)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "22,7,22,21")
+    ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "22,11,22,20")
+          ; topdown(
+              s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "22,19,22,19") ; s
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "topdown", "21,2,22,21")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "topdown", "21,2,22,21")
+      ; fail
 
-  bottomup(s) = 
-    all(bottomup(s)); s
- 
-  repeat(s) = 
-    try(s; repeat(s))
-  
-  innermost(s)  = 
-    bottomup(rec x(try(s; bottomup(x))))
+  bottomup(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "bottomup", "24,2,25,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "25,4,25,22")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "25,4,25,19")
+       ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "25,8,25,18")
+             ; bottomup(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "25,17,25,17") ; s
+               )))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "25,22,25,22")
+    ; s
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "bottomup", "24,2,25,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "bottomup", "24,2,25,22")
+      ; fail
 
-//  innermost(s)  = 
-//    bottomup(try(s; innermost(s)))
+  repeat(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "repeat", "27,2,28,20")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "28,4,28,20")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "28,8,28,19")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "28,8,28,8") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "28,11,28,19")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "28,18,28,18") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "repeat", "27,2,28,20")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "repeat", "27,2,28,20")
+      ; fail
 
-  eval = 
-    innermost(A + B)
+  innermost(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "innermost", "30,2,31,39")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,4,31,39")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,13,31,38")
+        ; rec x (
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,19,31,37")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,23,31,36")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,23,31,23") ; s)
+                ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,26,31,36")
+                ; bottomup(
+                    s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "31,35,31,35") ; x
+                  )
+              )
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "innermost", "30,2,31,39")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "innermost", "30,2,31,39")
+      ; fail
 
-  main-test08 =  
-    !Plus(Succ(Plus(Succ(Zero), Succ(Zero))), Succ(Zero));
-    eval
+  eval =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "eval", "36,2,37,19")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "37,4,37,19")
+    ; innermost(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "37,14,37,18")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "37,14,37,14") ; A
+           + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "37,18,37,18") ; B)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "eval", "36,2,37,19")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "eval", "36,2,37,19")
+      ; fail
+
+  main-test08 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "main-test08", "39,2,41,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "40,4,41,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "40,4,40,56")
+       ; !Plus(
+            Succ(
+              Plus(Succ(Zero), Succ(Zero))
+            )
+          , Succ(Zero)
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "41,4,41,7")
+    ; eval
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "main-test08", "39,2,41,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test08.str", "main-test08", "39,2,41,7")
+      ; fail

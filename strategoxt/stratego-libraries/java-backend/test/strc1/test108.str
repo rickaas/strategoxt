@@ -1,68 +1,130 @@
-/**
- * Test for rules ( := ) syntax
- */
 module test108
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
-
-  main-test108 = id
-    ; not(Foo)
-
-    ; {| Foo :
-        rules(Foo := 2)
-      ; Foo => 2
+  main-test108 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "main-test108", "9,2,68,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "9,17,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "9,17,9,18") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "10,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "10,6,10,13")
+       ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "10,10,10,12") ; Foo))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "12,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "12,6,15,7")
+       ; {|Foo:
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "13,8,14,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "13,8,13,22")
+               ; rules ( Foo := 2 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "14,8,14,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "14,8,14,10") ; Foo) => 2
+         |})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "17,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "17,6,17,13")
+       ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "17,10,17,12") ; Foo))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "19,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "19,6,24,7")
+       ; {|Foo:
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "20,8,23,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "20,8,20,22")
+               ; rules ( Foo := 2 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "21,8,23,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "21,8,21,15")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "21,8,21,10") ; Foo) => 2)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "22,8,23,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "22,8,22,22")
+               ; rules ( Foo := 3 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "23,8,23,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "23,8,23,10") ; Foo) => 3
+         |})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "26,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "26,6,26,13")
+       ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "26,10,26,12") ; Foo))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "31,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "31,6,39,7")
+       ; {|Foo:
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "32,8,38,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "32,8,32,22")
+               ; rules ( Foo := 2 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "33,8,38,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "33,8,33,15")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "33,8,33,10") ; Foo) => 2)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "34,8,38,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "34,8,37,9")
+               ; {|Foo:
+                    s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "35,10,36,17")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "35,10,35,24")
+                       ; rules ( Foo := 3 ))
+                    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "36,10,36,17")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "36,10,36,12") ; Foo) => 3
+                 |})
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "38,8,38,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "38,8,38,10") ; Foo) => 2
+         |})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "44,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "44,6,51,7")
+       ; {|Foo, Bar:
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "45,8,50,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "45,8,45,24")
+               ; rules ( Bar := "a" ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "46,8,50,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "46,8,46,26")
+               ; rules (
+                   Foo := <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "46,22,46,24") ; Bar>
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "47,8,50,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "47,8,47,24")
+               ; rules ( Bar := "b" ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "48,8,50,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "48,8,48,17")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "48,8,48,10") ; Foo) => "a")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "49,8,50,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "49,8,49,26")
+               ; rules (
+                   Foo := <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "49,22,49,24") ; Bar>
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "50,8,50,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "50,8,50,10") ; Foo) => "b"
+         |})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "53,6,68,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "53,6,58,7")
+       ; {|Foo:
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "54,8,57,29")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "54,8,54,23")
+               ; rules ( Foo :+= 1 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "55,8,57,29")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "55,8,55,23")
+               ; rules ( Foo :+= 2 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "56,8,57,29")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "56,8,56,23")
+               ; rules ( Foo :+= 3 ))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "57,8,57,29")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "57,8,57,16") ; bagof-Foo) => [3, 2, 1]
+         |})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "63,6,68,7")
+    ; {|Foo, Bar, Fred:
+         s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "64,8,67,23")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "64,8,64,50")
+            ; rules (
+                Bar := "a"
+                Foo := 1
+                Fred := (2, "c")
+              ))
+         ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "65,8,67,23")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "65,8,65,17")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "65,8,65,10") ; Bar) => "a")
+         ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "66,8,67,23")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "66,8,66,15")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "66,8,66,10") ; Foo) => 1)
+         ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "67,8,67,23")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "67,8,67,11") ; Fred) => (2, "c")
       |}
-
-    ; not(Foo)
-
-    ; {| Foo :
-        rules(Foo := 2)
-      ; Foo => 2
-      ; rules(Foo := 3)
-      ; Foo => 3
-      |}
-
-    ; not(Foo)
-
-    /**
-     * Global variables are scoped
-     */
-    ; {| Foo :
-        rules(Foo := 2)
-      ; Foo => 2
-      ; {| Foo :
-          rules(Foo := 3)
-        ; Foo => 3
-        |}
-      ; Foo => 2
-      |}
-
-    /**
-     * RHS is evaluated at definition time.
-     */
-    ; {| Foo, Bar :
-        rules(Bar := "a")
-      ; rules(Foo := <Bar>)
-      ; rules(Bar := "b")
-      ; Foo => "a"
-      ; rules(Foo := <Bar>)
-      ; Foo => "b"
-      |}
-
-    ; {| Foo :
-        rules(Foo :+= 1)
-      ; rules(Foo :+= 2)
-      ; rules(Foo :+= 3)
-      ; bagof-Foo => [3, 2, 1]
-      |}
-
-    /**
-     * Multiple definition
-     */
-    ; {| Foo, Bar, Fred :
-        rules(Bar := "a" Foo := 1 Fred := (2, "c"))
-      ; Bar => "a"
-      ; Foo => 1
-      ; Fred => (2, "c")
-      |}
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "main-test108", "9,2,68,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test108.str", "main-test108", "9,2,68,7")
+      ; fail

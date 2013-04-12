@@ -1,13 +1,11 @@
-/**
- * Generates a description of conflicts in an AST from an SDF syntax definition.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- * @since   0.11
- */
 module sdf2ast-conflicts
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
-//  Stratego
   libstratego-sdf
   libstratego-xtc
   lib/ast-conflicts
@@ -17,114 +15,360 @@ imports
 
 
 strategies
-
   main-sdf2ast-conflicts =
-    xtc-io-wrap(sdf-main-module-option + tbl-option + native-executables-option,
-      sdf2ast-conflicts
-    )
-    
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "main-sdf2ast-conflicts", "21,2,24,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "22,4,24,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "22,16,22,78")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "22,16,22,37") ; sdf-main-module-option
+           + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "22,41,22,78")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "22,41,22,50") ; tbl-option
+                + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "22,54,22,78") ; native-executables-option))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "23,6,23,22") ; sdf2ast-conflicts
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "main-sdf2ast-conflicts", "21,2,24,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "main-sdf2ast-conflicts", "21,2,24,4")
+      ; fail
+
   sdf2ast-conflicts =
-      if not(<get-config> "--tbl" + FILE(has-extension(|"tbl"))) then
-        native-transform(!"sdf2table", !["-m", <get-sdf-main-module> | <pass-v-verbose>])
-      end
-    ; read-from
-    ; ?parse-table(_, _, labels, _, priorities(<id>))
-    ; core-sdf2conflicts(|labels)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "sdf2ast-conflicts", "26,2,33,13")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,6,33,13")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,6,29,8")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,9,27,63")
+            ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,13,27,62")
+                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,13,27,32")
+                     ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,14,27,23") ; get-config)> "--tbl"
+                     + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,36,27,62")
+                       ; FILE(
+                           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "27,41,27,61")
+                           ; has-extension(|"tbl")
+                         ))) then
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "28,8,28,88")
+           ; native-transform(
+               s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "28,25,28,36")
+               ; !"sdf2table"
+             , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "28,39,28,87")
+               ; !["-m", <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "28,48,28,66") ; get-sdf-main-module>|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "28,72,28,85") ; pass-v-verbose>]
+             )
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "30,6,33,13")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "30,6,30,14") ; read-from)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "31,6,33,13")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "31,6,31,52")
+       ; ?parse-table(
+            _
+          , _
+          , labels
+          , _
+          , priorities(
+              <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "31,48,31,49") ; id>
+            )
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "32,6,33,13")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "32,6,32,32")
+       ; core-sdf2conflicts(|labels))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "33,6,33,13")
     ; write-to
-  	
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "sdf2ast-conflicts", "26,2,33,13")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "sdf2ast-conflicts", "26,2,33,13")
+      ; fail
 
   tbl-option =
-    Option("--tbl"
-    , <set-config> ("--tbl", ())
-    , !"--tbl            Input is a parse table"
-    )  
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "tbl-option", "36,2,40,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "37,4,40,4")
+    ; Option(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "37,11,37,17") ; "--tbl"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "38,6,38,31")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "38,7,38,16") ; set-config)> ("--tbl", ())
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "39,6,39,47")
+        ; !"--tbl            Input is a parse table"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "tbl-option", "36,2,40,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "tbl-option", "36,2,40,4")
+      ; fail
 
-  core-sdf2conflicts(|labels) = id
-    ; lookup-labels(|labels)
-    ; check-empty-table
-    ; retain-all(all-prods-have-cons)
-    ; map(Priority2Conflicts <+ log(|Error(), "Could not handle priority", <id>); fail)
+  core-sdf2conflicts(|labels) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "core-sdf2conflicts", "42,2,47,11")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "42,32,47,11")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "42,32,42,33") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "43,6,47,11")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "43,6,43,27")
+       ; lookup-labels(|labels))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "44,6,47,11")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "44,6,44,22") ; check-empty-table)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "45,6,47,11")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "45,6,45,36")
+       ; retain-all(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "45,17,45,35") ; all-prods-have-cons
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,6,47,11")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,6,46,86")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,10,46,85")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,10,46,27") ; Priority2Conflicts
+              <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,32,46,85")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,32,46,79")
+                    ; log(
+                      | Error()
+                      , "Could not handle priority"
+                      , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,76,46,77") ; id>
+                      ))
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "46,82,46,85")
+                 ; fail)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "47,6,47,11")
     ; concat
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "core-sdf2conflicts", "42,2,47,11")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "core-sdf2conflicts", "42,2,47,11")
+      ; fail
 
   check-empty-table =
-    if ?[arg-gtr-prio(
-           prod([cf(layout()), cf(layout())], cf(layout()), _)
-         , 1
-         , prod([cf(layout()), cf(layout())], cf(layout()), _))
-        ]
-    then
-      log(|Error(), "No priorities in parse table. Did you specify the right main module?")
-      ; <xtc-exit> 1
-    end
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "check-empty-table", "49,2,58,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "50,4,58,6")
+    ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "50,7,54,8")
+         ; ?[ arg-gtr-prio(
+                prod(
+                  [ cf(layout())
+                  , cf(layout())
+                  ]
+                , cf(layout())
+                , _
+                )
+              , 1
+              , prod(
+                  [ cf(layout())
+                  , cf(layout())
+                  ]
+                , cf(layout())
+                , _
+                )
+              )
+            ] then
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "56,6,57,19")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "56,6,56,90")
+           ; log(|Error(), "No priorities in parse table. Did you specify the right main module?"))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "57,8,57,19")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "57,9,57,16") ; xtc-exit)> 1
+      end
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "check-empty-table", "49,2,58,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "check-empty-table", "49,2,58,6")
+      ; fail
+
 
 strategies
-
   lookup-labels(|labels) =
-    {| LookupLabel :
-      where(<map(define-label)> labels)
-      ; map(LookupLabels <+ log(|Error(), "Could not find labels for priority", <id>); fail)
-    |}
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "lookup-labels", "62,2,66,5")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "63,4,66,5")
+    ; {|LookupLabel:
+         s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "64,6,65,91")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "64,6,64,38")
+            ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "64,12,64,37")
+                    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "64,13,64,29")
+                        ; map(
+                            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "64,17,64,28") ; define-label
+                          ))> labels))
+         ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,8,65,91")
+         ; map(
+             s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,12,65,90")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,12,65,23") ; LookupLabels
+                <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,28,65,90")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,28,65,84")
+                      ; log(
+                        | Error()
+                        , "Could not find labels for priority"
+                        , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,81,65,82") ; id>
+                        ))
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "65,87,65,90")
+                   ; fail)
+           )
+      |}
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "lookup-labels", "62,2,66,5")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "lookup-labels", "62,2,66,5")
+      ; fail
 
   define-label =
-    ?label(prod, nr)
-    ; rules(LookupLabel: nr -> prod)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "define-label", "68,2,70,35")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "69,4,70,35")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "69,4,69,19")
+       ; ?label(prod, nr))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "70,6,70,35")
+    ; rules ( LookupLabel :
+                nr -> prod )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "define-label", "68,2,70,35")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "define-label", "68,2,70,35")
+      ; fail
 
   LookupLabels =
-    gtr-prio(LookupLabel, LookupLabel)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "LookupLabels", "72,2,73,37")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "73,4,73,37")
+    ; gtr-prio(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "73,13,73,23") ; LookupLabel
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "73,26,73,36") ; LookupLabel
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "LookupLabels", "72,2,73,37")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "LookupLabels", "72,2,73,37")
+      ; fail
 
   LookupLabels =
-    arg-gtr-prio(LookupLabel, id, LookupLabel)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "LookupLabels", "75,2,76,45")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "76,4,76,45")
+    ; arg-gtr-prio(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "76,17,76,27") ; LookupLabel
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "76,30,76,31") ; id
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "76,34,76,44") ; LookupLabel
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "LookupLabels", "75,2,76,45")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "LookupLabels", "75,2,76,45")
+      ; fail
 
-  /**
-   * @type Priority -> Priority
-   */
   all-prods-have-cons =
-    ?arg-gtr-prio(p1, _, p2)
-    ; where(<cons-of-prod> p1; <cons-of-prod> p2)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "all-prods-have-cons", "81,2,83,48")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "82,4,83,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "82,4,82,27")
+       ; ?arg-gtr-prio(p1, _, p2))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "83,6,83,48")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "83,12,83,47")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "83,12,83,28")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "83,13,83,24") ; cons-of-prod)> p1)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "83,31,83,47")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "83,32,83,43") ; cons-of-prod)> p2)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "all-prods-have-cons", "81,2,83,48")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "all-prods-have-cons", "81,2,83,48")
+      ; fail
 
   all-prods-have-cons =
-    ?gtr-prio(p1, p2)
-    ; where(<cons-of-prod> p1; <cons-of-prod> p2)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "all-prods-have-cons", "85,2,87,48")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "86,4,87,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "86,4,86,20")
+       ; ?gtr-prio(p1, p2))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "87,6,87,48")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "87,12,87,47")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "87,12,87,28")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "87,13,87,24") ; cons-of-prod)> p1)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "87,31,87,47")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "87,32,87,43") ; cons-of-prod)> p2)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "all-prods-have-cons", "85,2,87,48")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "all-prods-have-cons", "85,2,87,48")
+      ; fail
+
 
 rules
 
   Priority2Conflicts :
-    gtr-prio(p1, p2) -> <map(!SubtermConflict(sym1, <id>, sym2))> args
-    where
-      sym1@Symbol(_, n) := <Prod2Symbol> p1
-      ; sym2 := <Prod2Symbol> p2
-      ; args := <range> (0, n)
+    gtr-prio(p1, p2) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "91,2,96,29")> <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "92,25,92,63")
+                                                                                                                                                                               ; map(
+                                                                                                                                                                                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "92,29,92,62")
+                                                                                                                                                                                   ; !SubtermConflict(
+                                                                                                                                                                                        sym1
+                                                                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "92,53,92,54") ; id>
+                                                                                                                                                                                      , sym2
+                                                                                                                                                                                      )
+                                                                                                                                                                                 )> args
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "91,2,96,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "91,2,96,29")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "94,6,96,29")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "94,6,94,42")
+             ; sym1@Symbol(_, n) := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "94,28,94,38") ; Prod2Symbol> p1)
+          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "95,8,96,29")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "95,8,95,31")
+             ; sym2 := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "95,17,95,27") ; Prod2Symbol> p2)
+          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "96,8,96,29")
+          ; args := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "96,17,96,21") ; range> (0, n)
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "91,2,96,29")
+             ; fail
 
   Priority2Conflicts =
-    ?arg-gtr-prio(p1, arg, p2)
-    ; sym1 := <Prod2Symbol> p1
-    ; sym2 := <Prod2Symbol> p2
-    ; arg' := <arg-for-symbol(|p1)> arg
-    ; if arg' := () then
-        ![]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "98,2,107,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "99,4,107,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "99,4,99,29")
+       ; ?arg-gtr-prio(p1, arg, p2))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "100,6,107,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "100,6,100,29")
+       ; sym1 := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "100,15,100,25") ; Prod2Symbol> p1)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "101,6,107,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "101,6,101,29")
+       ; sym2 := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "101,15,101,25") ; Prod2Symbol> p2)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "102,6,107,8")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "102,6,102,38")
+       ; arg' := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "102,15,102,33")
+                  ; arg-for-symbol(|p1)> arg)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "103,6,107,8")
+    ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "103,9,103,18")
+         ; arg' := () then
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "104,8,104,10")
+        ; ![]
       else
-        ![SubtermConflict(sym1, arg', sym2)]
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "106,8,106,43")
+        ; ![SubtermConflict(sym1, arg', sym2)]
       end
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "98,2,107,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Priority2Conflicts", "98,2,107,8")
+      ; fail
 
   Prod2Symbol :
-    p@prod(syms, _, _) -> Symbol(x, n)
-    where
-      n := <filter(not(is-empty-sym)); length> syms
-      ; x := <cons-of-prod> p
+    p@prod(syms, _, _) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Prod2Symbol", "109,2,113,28")> Symbol(x, n)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Prod2Symbol", "109,2,113,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Prod2Symbol", "109,2,113,28")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,6,113,28")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,6,112,50")
+             ; n := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,12,112,44")
+                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,12,112,36")
+                        ; filter(
+                            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,19,112,35")
+                            ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,23,112,34") ; is-empty-sym)
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "112,39,112,44")
+                     ; length> syms)
+          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "113,8,113,28")
+          ; x := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "113,14,113,25") ; cons-of-prod> p
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "Prod2Symbol", "109,2,113,28")
+             ; fail
+
 
 strategies
-
-  /**
-   * @type Int -> Int
-   */
   arg-for-symbol(|p) =
-    ?arg
-    ; prod(syms, _, _) := p
-    ; syms' := <add-indices; retain-all((id, not(is-empty-sym)); ?(<id>, _))> syms
-    ; (<get-index; dec> (<inc> arg, syms') <+ !())
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "arg-for-symbol", "120,2,124,49")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "121,4,124,49")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "121,4,121,7") ; ?arg)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "122,6,124,49")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "122,6,122,26")
+       ; prod(syms, _, _) := p)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,6,124,49")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,6,123,81")
+       ; syms' := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,16,123,75")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,16,123,26") ; add-indices)
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,29,123,75")
+                   ; retain-all(
+                       s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,40,123,74")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,40,123,62")
+                          ; ( s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,41,123,42") ; id
+                            , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,45,123,61")
+                              ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,49,123,60") ; is-empty-sym)
+                            ))
+                       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,65,123,74")
+                       ; ?( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "123,68,123,69") ; id>
+                          , _
+                          )
+                     )> syms)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,7,124,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,7,124,41")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,8,124,21")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,8,124,16") ; get-index)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,19,124,21")
+           ; dec)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,26,124,28") ; inc> arg
+                   , syms'
+                   )
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "124,46,124,48")
+          ; !())
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "arg-for-symbol", "120,2,124,49")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf2ast-conflicts.str", "arg-for-symbol", "120,2,124,49")
+      ; fail
+
 
 signature
   constructors
-    gtr-prio : Int * Int -> Priority
+    gtr-prio     : Int * Int -> Priority
     arg-gtr-prio : Int * Int * Int -> Priority
-    parse-table : Int * Int * Labels * States * Priorities -> ParseTable
+    parse-table  : Int * Int * Labels * States * Priorities -> ParseTable

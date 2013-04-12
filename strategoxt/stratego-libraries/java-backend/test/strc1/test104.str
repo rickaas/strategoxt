@@ -1,22 +1,46 @@
-/**
- * Test for issue STR-577: support import of an ATerm from a file
- */
 module test104
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
-    Foo : A * () * Tuple([B,C]) -> D
+    Foo : A * (  ) * Tuple([ B, C ]) -> D
     Bar : List(String) -> A
     Baz : B
     Aap : C
 
-strategies
 
+strategies
   main-test104 =
-    test1
-    ; debug(!"the term: ")
-    ; ?Foo(Bar(["a","b"]), None(), (Baz(),Aap()))
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "main-test104", "16,2,19,48")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "17,4,19,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "17,4,17,8") ; test1)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "18,6,19,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "18,6,18,25")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "18,12,18,24")
+           ; !"the term: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "19,6,19,48")
+    ; ?Foo(
+         Bar(["a", "b"])
+       , None()
+       , (Baz(), Aap())
+       )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "main-test104", "16,2,19,48")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "main-test104", "16,2,19,48")
+      ; fail
 
   test1 =
-    import-term(./test104.trm)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "test1", "21,2,22,29")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "22,4,22,29")
+    ; import-term(./test104.trm)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "test1", "21,2,22,29")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test104.str", "test1", "21,2,22,29")
+      ; fail

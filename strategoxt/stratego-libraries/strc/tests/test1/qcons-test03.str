@@ -1,20 +1,38 @@
-/**
- * Quoted constructors in a rewrite rule.
- */
 module qconc-test03
-imports collection/list/cons collection/tuple/cons
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
+strategies
   main =
-    !"aap"(1)
-    ; do-aap
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "main", "8,2,11,14")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "9,4,11,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "9,4,9,12")
+       ; !"aap"(1))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "10,6,11,14")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "10,6,10,11") ; do-aap)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "11,6,11,14")
     ; ?"aap"(2)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "main", "8,2,11,14")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "main", "8,2,11,14")
+      ; fail
+
 
 rules
 
   do-aap :
-    "aap"(1) -> "aap"(2)
+    "aap"(1) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "do-aap", "15,2,16,23")> "aap"(2)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "do-aap", "15,2,16,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test03.str", "do-aap", "15,2,16,23")
+             ; fail
+
 
 signature
   constructors
-   "aap" : Term -> Term
+    "aap" : Term -> Term

@@ -1,94 +1,244 @@
 module stratego/gpp/Util
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   gpp-topdown-fputs(|stream) =
-    where(Stream(pointer) := stream)
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-topdown-fputs", "4,2,11,6")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "5,4,11,6")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "5,4,5,35")
+       ; where(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "5,10,5,34")
+               ; Stream(pointer) := stream))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "6,6,11,6")
     ; topdown(
-        try(
-          is-string
-          ; where(gpp-fputs(|pointer))
-        )
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "7,8,10,8")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "8,10,9,37")
+            ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "8,10,8,18") ; is-string)
+            ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "9,12,9,37")
+            ; where(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "9,18,9,36")
+                    ; gpp-fputs(|pointer))
+          )
       )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-topdown-fputs", "4,2,11,6")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-topdown-fputs", "4,2,11,6")
+      ; fail
 
-  /**
-   * Writes a String to a Stream
-   *
-   * @type (String, Stream) -> Stream
-   */
   gpp-fputs(|stream) =
-    ?str; prim("SSL_fputs", str, stream)
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-fputs", "18,2,19,39")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "19,4,19,39")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "19,4,19,7") ; ?str)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "19,10,19,39")
+    ; prim("SSL_fputs", str, stream)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-fputs", "18,2,19,39")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-fputs", "18,2,19,39")
+      ; fail
+
 
 strategies
-    
-  /**
-   * Try to flatten lists but do not change to total number of
-   * elements. This means that empty lists (containg for a single
-   * element) are not removed.
-   */
   gpp-flat-list =
-    gpp-flat-list(![])
-    
-  gpp-flat-list(cont) =  
-    ?[]; cont
-    
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "28,2,29,21")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "29,4,29,21")
+    ; gpp-flat-list(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "29,18,29,20")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "28,2,29,21")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "28,2,29,21")
+      ; fail
+
   gpp-flat-list(cont) =
-    ?[hd | tl]
-    ; if !hd => [] then
-        ![[] | <gpp-flat-list(cont)> tl]
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "31,2,32,12")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "32,4,32,12")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "32,4,32,6")
+       ; ?[])
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "32,9,32,12")
+    ; cont
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "31,2,32,12")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "31,2,32,12")
+      ; fail
+
+  gpp-flat-list(cont) =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "34,2,44,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "35,4,44,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "35,4,35,13")
+       ; ?[hd|tl])
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "36,6,44,8")
+    ; if s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "36,9,36,17")
+         ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "36,9,36,11") ; !hd) => [] then
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "37,8,37,39")
+        ; ![[]|<s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "37,16,37,34")
+                ; gpp-flat-list(
+                    s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "37,30,37,33") ; cont
+                  )> tl]
       else
-        if !hd => [_ | _] then
-          <gpp-flat-list(<gpp-flat-list(cont)> tl)> hd
-        else
-          ![hd | <gpp-flat-list(cont)> tl]
-        end
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "39,8,43,10")
+        ; if s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "39,11,39,24")
+             ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "39,11,39,13") ; !hd) => [_|_] then
+            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "40,10,40,53")
+            ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "40,11,40,49")
+                ; gpp-flat-list(
+                    s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "40,25,40,48")
+                    ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "40,26,40,44")
+                        ; gpp-flat-list(
+                            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "40,40,40,43") ; cont
+                          ))> tl
+                  ))> hd
+          else
+            s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "42,10,42,41")
+            ; ![hd|<s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "42,18,42,36")
+                    ; gpp-flat-list(
+                        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "42,32,42,35") ; cont
+                      )> tl]
+          end
       end
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "34,2,44,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-flat-list", "34,2,44,8")
+      ; fail
+
 
 strategies
+  gpp-hs-length =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-hs-length", "51,2,51,44")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "51,18,51,44")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "51,18,51,38")
+       ; gpp-SOpt-value(|HS())
+       <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "51,43,51,44")
+          ; !1)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-hs-length", "51,2,51,44")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-hs-length", "51,2,51,44")
+      ; fail
 
-  /**
-   * @type List(S-Option) -> Int
-   */
-  gpp-hs-length = gpp-SOpt-value(|HS()) <+ !1
-  gpp-vs-length = gpp-SOpt-value(|VS()) <+ !0
-  gpp-is-length = gpp-SOpt-value(|IS()) <+ !0
+  gpp-vs-length =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-vs-length", "52,2,52,44")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "52,18,52,44")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "52,18,52,38")
+       ; gpp-SOpt-value(|VS())
+       <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "52,43,52,44")
+          ; !0)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-vs-length", "52,2,52,44")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-vs-length", "52,2,52,44")
+      ; fail
+
+  gpp-is-length =
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-is-length", "53,2,53,44")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "53,18,53,44")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "53,18,53,38")
+       ; gpp-SOpt-value(|IS())
+       <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "53,43,53,44")
+          ; !0)
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-is-length", "53,2,53,44")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-is-length", "53,2,53,44")
+      ; fail
 
   gpp-SOpt-value(|opt) =
-    fetch(?SOpt(opt, value))
-    ; <string-to-int> value
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpt-value", "55,2,57,26")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "56,4,57,26")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "56,4,56,27")
+       ; fetch(
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "56,10,56,26")
+           ; ?SOpt(opt, value)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "57,6,57,26")
+    ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "57,7,57,19") ; string-to-int)> value
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpt-value", "55,2,57,26")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpt-value", "55,2,57,26")
+      ; fail
 
-  gpp-SOpts-of-alignment : AL(sopts) -> sopts
-  gpp-SOpts-of-alignment : AR(sopts) -> sopts
-  gpp-SOpts-of-alignment : AC(sopts) -> sopts
+  gpp-SOpts-of-alignment :
+    AL(sopts) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "59,2,59,44")> sopts
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "59,2,59,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "59,2,59,44")
+             ; fail
 
-  // Make sure that every element in the list occurs within a R box
-  // For instance:
-  //    [R([],[1,2,3]), a,b,c, R([],[4,5,6])]
-  // is tranformed to
-  //    [R([],[1,2,3]), R([],[a,b,c]), R([],[4,5,6])]
+  gpp-SOpts-of-alignment :
+    AR(sopts) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "60,2,60,44")> sopts
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "60,2,60,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "60,2,60,44")
+             ; fail
+
+  gpp-SOpts-of-alignment :
+    AC(sopts) -> <r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "61,2,61,44")> sopts
+    where r-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "61,2,61,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-SOpts-of-alignment", "61,2,61,44")
+             ; fail
+
   gpp-construct-rows =
-    split(id, ![]);
-    rec x ({a,b,xs,ys:
-      ?([],xs);![R([],<reverse>xs)]
-    <+
-      ?([R(a,b)|xs], ys);
-      ![R([],<reverse>ys), R(a,b)|<x>(xs, [] )]
-    <+
-     ?( [a|xs],ys);
-     <x>( xs, [a|ys])
-    }); 
-    filter( not( R(id,[]) ) )
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-construct-rows", "68,2,79,28")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "69,4,79,28")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "69,4,69,17")
+       ; split(
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "69,10,69,11") ; id
+         , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "69,14,69,16")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "70,4,79,28")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "70,4,78,5")
+       ; rec x (
+           s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "70,11,78,4")
+           ; {a, b, xs, ys:
+               s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "71,6,77,20")
+               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "71,6,71,34")
+                  ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "71,6,71,13")
+                     ; ?([], xs))
+                  ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "71,15,71,34")
+                  ; ![ R(
+                         []
+                       , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "71,23,71,29") ; reverse> xs
+                       )
+                     ]
+                  <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "73,6,77,20")
+                     ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "73,6,74,46")
+                        ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "73,6,73,23")
+                           ; ?( [R(a, b)|xs]
+                              , ys
+                              ))
+                        ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "74,6,74,46")
+                        ; ![R(
+                              []
+                            , <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "74,14,74,20") ; reverse> ys
+                            ), R(a, b)|<s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "74,35,74,35") ; x> (xs, [])]
+                        <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "76,5,77,20")
+                           ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "76,5,76,17")
+                              ; ?([a|xs], ys))
+                           ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "77,5,77,20")
+                           ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "77,6,77,6") ; x)> (xs, [a|ys])))
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "79,4,79,28")
+    ; filter(
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "79,12,79,26")
+        ; not(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "79,17,79,24")
+              ; R(
+                  s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "79,19,79,20") ; id
+                , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "79,22,79,23") ; []
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-construct-rows", "68,2,79,28")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-construct-rows", "68,2,79,28")
+      ; fail
 
-  /**
-   * Calculate relative string length. That is, by taking new lines and
-   * current horizontal position into account
-   * 
-   * <string-length'(x)>"my_string" => 9
-   * <string-length'(x)>"my\nstring" => 6 - x
-   */
   gpp-rel-string-length(|xpos) =
-    explode-string => chars
-    ; if at-suffix(?['\n' | tail]) then
-        <subt> (<length> tail, xpos)
+    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-rel-string-length", "88,2,94,8")
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "89,4,94,8")
+    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "89,4,89,26")
+       ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "89,4,89,17") ; explode-string) => chars)
+    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "90,6,94,8")
+    ; if s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "90,9,90,33")
+         ; at-suffix(
+             s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "90,19,90,32")
+             ; ?['\n'|tail]
+           ) then
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "91,8,91,35")
+        ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "91,9,91,12") ; subt)> ( <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "91,17,91,22") ; length> tail
+                                                                                                          , xpos
+                                                                                                          )
       else
-        <length> chars
+        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "93,8,93,21")
+        ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "93,9,93,14") ; length)> chars
       end
+    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-rel-string-length", "88,2,94,8")
+    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Util.str", "gpp-rel-string-length", "88,2,94,8")
+      ; fail

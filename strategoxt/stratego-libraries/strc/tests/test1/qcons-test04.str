@@ -1,15 +1,29 @@
-/**
- * The constructors "aap" and aap are different.
- */
 module qconc-test04
-imports collection/list/cons collection/tuple/cons
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
+strategies
   main =
-    !"aap"(1)
-    ; not(?aap(_))
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "main", "8,2,10,17")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "9,4,10,17")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "9,4,9,12")
+       ; !"aap"(1))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "10,6,10,17")
+    ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "10,10,10,16")
+          ; ?aap(_))
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "main", "8,2,10,17")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/qcons-test04.str", "main", "8,2,10,17")
+      ; fail
+
 
 signature
   constructors
-   "aap" : Term -> Term
-   aap   : Term -> Term
+    "aap" : Term -> Term
+    aap   : Term -> Term

@@ -1,26 +1,96 @@
 module til-rename-vars
-imports TIL libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  TIL
+  libstratego-lib
+
+
+strategies
   io-til-rename-vars =
-    io-wrap(til-rename-vars)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "io-til-rename-vars", "5,2,6,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "6,4,6,27")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "6,12,6,26") ; til-rename-vars
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "io-til-rename-vars", "5,2,6,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "io-til-rename-vars", "5,2,6,27")
+      ; fail
 
   til-rename-vars =
-    Var(RenameVar)
-    <+ Assign(RenameVar, til-rename-vars)
-    <+ Read(RenameVar)
-    <+ For(RenameVar, til-rename-vars, til-rename-vars, til-rename-vars)
-    <+ RenameDeclaration
-    <+ Block({| RenameVar : map(til-rename-vars) |})
-    <+ all(til-rename-vars)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "til-rename-vars", "8,2,15,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "9,4,15,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "9,4,9,17")
+       ; Var(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "9,8,9,16") ; RenameVar
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "10,7,15,26")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "10,7,10,40")
+             ; Assign(
+                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "10,14,10,22") ; RenameVar
+               , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "10,25,10,39") ; til-rename-vars
+               )
+             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "11,7,15,26")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "11,7,11,21")
+                   ; Read(
+                       s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "11,12,11,20") ; RenameVar
+                     )
+                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "12,7,15,26")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "12,7,12,71")
+                         ; For(
+                             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "12,11,12,19") ; RenameVar
+                           , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "12,22,12,36") ; til-rename-vars
+                           , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "12,39,12,53") ; til-rename-vars
+                           , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "12,56,12,70") ; til-rename-vars
+                           )
+                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "13,7,15,26")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "13,7,13,23") ; RenameDeclaration
+                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "14,7,15,26")
+                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "14,7,14,51")
+                                     ; Block(
+                                         s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "14,13,14,50")
+                                         ; {|RenameVar:
+                                              s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "14,28,14,47")
+                                              ; map(
+                                                  s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "14,32,14,46") ; til-rename-vars
+                                                )
+                                           |}
+                                       )
+                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "15,7,15,26")
+                                        ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "15,11,15,25") ; til-rename-vars)))))))
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "til-rename-vars", "8,2,15,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "til-rename-vars", "8,2,15,26")
+      ; fail
 
   RenameDeclaration :
-    Declaration(x) -> Declaration(y)
-    where <newname> x => y
-        ; rules( RenameVar : x -> y )
+    Declaration(x) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "17,2,20,36")> Declaration(y)
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "17,2,20,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "17,2,20,36")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "19,10,20,36")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "19,10,19,25")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "19,10,19,20")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "19,11,19,17") ; newname)> x) => y)
+          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "20,10,20,36")
+          ; rules ( RenameVar :
+                      x -> y )
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "17,2,20,36")
+             ; fail
 
   RenameDeclaration :
-    DeclarationTyped(x, t) -> DeclarationTyped(y, t)
-    where <newname> x => y
-        ; rules( RenameVar : x -> y )
-        
+    DeclarationTyped(x, t) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "22,2,25,36")> DeclarationTyped(y, t)
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "22,2,25,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "22,2,25,36")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "24,10,25,36")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "24,10,24,25")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "24,10,24,20")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "24,11,24,17") ; newname)> x) => y)
+          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "25,10,25,36")
+          ; rules ( RenameVar :
+                      x -> y )
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/renaming/til-rename-vars.str", "RenameDeclaration", "22,2,25,36")
+             ; fail

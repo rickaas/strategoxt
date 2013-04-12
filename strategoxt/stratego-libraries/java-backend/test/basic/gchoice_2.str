@@ -1,17 +1,33 @@
 module gchoice_2
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
 
-signature constructors
-  Nil  : Nil
-  Cons : Term -> Cons
+
+signature
+  constructors
+    Nil  : Nil
+    Cons : Term -> Cons
+
 
 rules
 
   main-gchoice_2 =
-    not(
-      id
-      < (id < fail + !3)
-      + !2
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "main-gchoice_2", "12,2,17,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "13,4,17,4")
+    ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "14,6,16,9")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "14,6,14,7") ; id
+             < s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "15,9,15,22")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "15,9,15,10") ; id
+                  < s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "15,14,15,17") ; fail
+                  + s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "15,21,15,22")
+                    ; !3)
+             + s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "16,8,16,9")
+               ; !2))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "main-gchoice_2", "12,2,17,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/gchoice_2.str", "main-gchoice_2", "12,2,17,4")
+      ; fail

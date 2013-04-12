@@ -1,314 +1,481 @@
-/**
- * Portable file operations.
- */
 module system/io/file
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   system/io/-
   collection/list/-
   term/string
 
-/**
- * Stream and file representations
- */
+
 signature
   constructors
-    Stream    : ImplDep -> Stream
+    Stream : ImplDep -> Stream
+    Path   : String -> FileLoc
+    stdin  : FileLoc
+    stdout : FileLoc
+    stderr : FileLoc
 
-    Path      : String -> FileLoc
 
-    stdin     : FileLoc
-    stdout    : FileLoc
-    stderr    : FileLoc
-
-/**
- * Abstractions for streams
- */
 strategies
+  open-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "open-stream", "33,2,37,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "33,16,37,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "33,16,33,22")
+       ; ?(_, _))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "34,7,36,30")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "34,7,34,23")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "34,7,34,9") ; Fst)
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "34,12,34,23")
+       ; stdio-stream
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,7,36,30")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,7,35,30")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,7,35,23")
+                ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,8,35,18")
+                    ; ?Path(
+                         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,15,35,16") ; id>
+                       )
+                  , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,21,35,22") ; id
+                  ))
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "35,26,35,30")
+             ; fopen
+             <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "36,7,36,30")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "36,7,36,23")
+                   ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "36,8,36,16") ; is-string
+                     , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "36,21,36,22") ; id
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "36,26,36,30")
+                ; fopen))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "open-stream", "33,2,37,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "open-stream", "33,2,37,4")
+      ; fail
 
-  /**
-   * Opens a Stream associated to a FileLoc
-   *
-   * @type (FileLoc, String) -> Stream
-   */
-  open-stream = ?(_, _);
-    (  Fst; stdio-stream
-    <+ (?Path(<id>), id); fopen
-    <+ (is-string,   id); fopen
-    )
+  stdio-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "42,2,42,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "42,17,42,39")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "42,17,42,24")
+       ; ?stdin())
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "42,28,42,39")
+    ; stdin-stream
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "42,2,42,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "42,2,42,39")
+      ; fail
 
-  /**
-   * @type FileLoc -> Stream
-   */
-  stdio-stream = ?stdin() ; stdin-stream
-  stdio-stream = ?stdout(); stdout-stream
-  stdio-stream = ?stderr(); stderr-stream
+  stdio-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "43,2,43,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "43,17,43,40")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "43,17,43,25")
+       ; ?stdout())
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "43,28,43,40")
+    ; stdout-stream
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "43,2,43,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "43,2,43,40")
+      ; fail
 
-  /**
-   * Returns the Stream for stdin, stdout and stderr
-   *
-   * @type _ -> Stream
-   */
-  stdin-stream  = prim("SSL_stdin_stream") ; !Stream(<id>)
-  stdout-stream = prim("SSL_stdout_stream"); !Stream(<id>)
-  stderr-stream = prim("SSL_stderr_stream"); !Stream(<id>)
+  stdio-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "44,2,44,40")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "44,17,44,40")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "44,17,44,25")
+       ; ?stderr())
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "44,28,44,40")
+    ; stderr-stream
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "44,2,44,40")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdio-stream", "44,2,44,40")
+      ; fail
 
-/**
- * Stream operations
- */
+  stdin-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdin-stream", "51,2,51,57")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "51,18,51,57")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "51,18,51,41") ; prim("SSL_stdin_stream"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "51,45,51,57")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "51,54,51,55") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdin-stream", "51,2,51,57")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdin-stream", "51,2,51,57")
+      ; fail
+
+  stdout-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdout-stream", "52,2,52,57")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "52,18,52,57")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "52,18,52,42") ; prim("SSL_stdout_stream"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "52,45,52,57")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "52,54,52,55") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdout-stream", "52,2,52,57")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stdout-stream", "52,2,52,57")
+      ; fail
+
+  stderr-stream =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stderr-stream", "53,2,53,57")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "53,18,53,57")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "53,18,53,42") ; prim("SSL_stderr_stream"))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "53,45,53,57")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "53,54,53,55") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stderr-stream", "53,2,53,57")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "stderr-stream", "53,2,53,57")
+      ; fail
+
+
 strategies
-
-  /**
-   * Opens the file whose name is the string pointed to by 
-   * pathname and returns a Stream associated with this file.
-   * For documentation on the mode string, see the man page of
-   * fopen.
-   *
-   * fails if the file couldn't be opened. 
-   *
-   * @type String * String -> Stream
-   */
   fopen =
-    ?(pathname, mode); prim("SSL_fopen", pathname, mode); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fopen", "70,2,71,70")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "71,4,71,70")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "71,4,71,20")
+       ; ?(pathname, mode))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "71,23,71,70")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "71,23,71,55")
+       ; prim("SSL_fopen", pathname, mode))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "71,58,71,70")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "71,67,71,68") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fopen", "70,2,71,70")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fopen", "70,2,71,70")
+      ; fail
 
-  /**
-   * Dissociates the named stream from its underlying file or set of functions.
-   * If the stream was being used for output, any buffered data is written 
-   * first, using fflush(3).
-   *
-   * @type Stream -> ()
-   */
   fclose =
-    ?Stream(stream); prim("SSL_fclose", stream)
-      <+ ?stream-old; prim("SSL_fclose", stream-old) // legacy
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fclose", "80,2,82,51")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "81,4,82,51")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "81,4,81,46")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "81,4,81,18")
+          ; ?Stream(stream))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "81,21,81,46")
+       ; prim("SSL_fclose", stream)
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "82,9,82,51")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "82,9,82,19") ; ?stream-old)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "82,22,82,51")
+          ; prim("SSL_fclose", stream-old))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fclose", "80,2,82,51")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fclose", "80,2,82,51")
+      ; fail
 
-  /**
-   * Forces a write of all user-space buffered data for the given Stream
-   *
-   * @type Stream -> Stream
-   */
   fflush =
-    ?Stream(stream); prim("SSL_fflush", stream); !Stream(<id>)
-    <+ ?stream-old; prim("SSL_fflush", stream-old); !Stream(<id>) // legacy
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fflush", "89,2,91,64")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,4,91,64")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,4,90,61")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,4,90,18")
+          ; ?Stream(stream))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,21,90,61")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,21,90,46")
+          ; prim("SSL_fflush", stream))
+       ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,49,90,61")
+       ; !Stream(
+            <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "90,58,90,59") ; id>
+          )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "91,7,91,64")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "91,7,91,17") ; ?stream-old)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "91,20,91,64")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "91,20,91,49")
+             ; prim("SSL_fflush", stream-old))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "91,52,91,64")
+          ; !Stream(
+               <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "91,61,91,62") ; id>
+             ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fflush", "89,2,91,64")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fflush", "89,2,91,64")
+      ; fail
 
-/**
- * Character output to stream
- */
+
 strategies
-
-  /**
-   * Writes a String to a Stream
-   * @type (String, Stream) -> Stream
-   */
   fputs =
-    ?(str, Stream(stream)); prim("SSL_fputs", str, stream); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fputs", "102,2,103,72")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "103,4,103,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "103,4,103,25")
+       ; ?(str, Stream(stream)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "103,28,103,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "103,28,103,57")
+       ; prim("SSL_fputs", str, stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "103,60,103,72")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "103,69,103,70") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fputs", "102,2,103,72")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fputs", "102,2,103,72")
+      ; fail
 
-  /**
-   * Writes a String to stdout with a trailing newline and returns stdout.
-   *
-   * @type String -> Stream
-   */
   puts =
-    ?str; prim("SSL_puts", str); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "puts", "110,2,111,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "111,4,111,45")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "111,4,111,7") ; ?str)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "111,10,111,45")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "111,10,111,30")
+       ; prim("SSL_puts", str))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "111,33,111,45")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "111,42,111,43") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "puts", "110,2,111,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "puts", "110,2,111,45")
+      ; fail
 
-  /**
-   * Writes a Char to a Stream
-   *
-   * @type (Char, Stream) -> Stream
-   */
   fputc =
-    ?(c, Stream(stream)); prim("SSL_fputc", c, stream); !Stream(<id>)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fputc", "118,2,119,68")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "119,4,119,68")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "119,4,119,23")
+       ; ?(c, Stream(stream)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "119,26,119,68")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "119,26,119,53")
+       ; prim("SSL_fputc", c, stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "119,56,119,68")
+    ; !Stream(
+         <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "119,65,119,66") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fputc", "118,2,119,68")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fputc", "118,2,119,68")
+      ; fail
 
-/**
- * Character input from stream
- */
+
 strategies
+  fgetc =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fgetc", "132,2,133,45")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "133,4,133,45")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "133,4,133,18")
+       ; ?Stream(stream))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "133,21,133,45")
+    ; prim("SSL_fgetc", stream)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fgetc", "132,2,133,45")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "fgetc", "132,2,133,45")
+      ; fail
 
-  /**
-   * fgetc() reads the next character from the stream and returns the 
-   * ASCII code of the character as an Int. Fails on end of file or error.
-   *
-   * @type Stream -> Char
-   */
-  fgetc = 
-    ?Stream(stream); prim("SSL_fgetc", stream)
 
-/**
- * tmpnam
- */
 strategies
-
   tmpnam =
-    prim("SSL_tmpnam")
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "tmpnam", "140,2,141,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "141,4,141,21")
+    ; prim("SSL_tmpnam")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "tmpnam", "140,2,141,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "tmpnam", "140,2,141,21")
+      ; fail
 
-/**
- * Components of a pathname
- */
+
 strategies
-
-  /**
-   * Returns directory portion of pathname in a POSIX compatible way,
-   * after converting all backslashes to forward slashes.
-   *
-   * @inc   dirname
-   * @type  String -> String
-   */
   dirname =
-    string-as-chars(
-      /* (0) Convert backslashes to forward slashes */
-      all(try(\'\' -> '/'\))
-    ; /* (1) Strip trailing slashes */
-      try(split-init-last; ?(<id>, '/'))
-    ; /* (2) If string consists entirely of slash characters, string shall be
-             set to a single slash character.  In this case, skip steps (3)
-             through (8). */
-    ( ?[]
-      < !['/']
-      + ( /* (3) If there are any trailing slash characters in string, they
-                 shall be removed. */
-          init
-          /* (4) If there are no slash characters remaining in string, string
-                 shall be set to a single period character.  In this case, skip
-                 steps (5) through (8).
-
-             (5) If there are any trailing nonslash characters in string,
-                 they shall be removed. */
-
-        ; repeat(split-init-last; (id, not(?'/')); Fst)
-        ; (?[]
-          < !['.']
-          + ( /* (7) If there are any trailing slash characters in string, they
-                   shall be removed. */
-              repeat(split-init-last; ?(<id>, '/'))
-            ; (?[] < !['/'] + id))))))
-
-  /**
-   * Succeeds if the input pathname is an absolute path.
-   *
-   * A pathname is considered absolute if it starts with a /, a \,
-   * X:/ or X:\ for any letter X.
-   *
-   * @type  String -> String
-   * @since 0.9.4
-   * @inc   is-abs-path
-   */
-  is-abspath =
-    where(explode-string; (?[<'/' + '\'> | _] + ?[<is-alpha>, ':', <'/' + '\'> | _]))
-
-  /**
-   * Succeeds if the input pathname is a relative path.
-   *
-   * A pathname is relative if is-abspath fails.
-   *
-   * @type  String -> String
-   * @since 0.9.4
-   */
-  is-relpath =
-    not(is-abspath)
-
-  /**
-   * Strips the directory from a pathname.
-   *
-   * @type  String -> String
-   * @inc   base-filename-test
-   */
-  base-filename =
-      <string-tokenize> (['/','\'], <id>)
-    ; last
-  
-/**
- * Strategies for file extensions
- */
-strategies
-
-  /**
-   * Drops the current extension and replaces it with the specified extension.
-   *
-   * @type   String -> String
-   * @since  0.15
-   * @inc    guarantee-extension
-   */    
-  guarantee-extension(|ext) =
-    remove-extension
-    ; <add-extension> (<id>, ext)
-
-  /**
-   * Checks if the file extension is ext.
-   *
-   * @param  The required extension (without . )
-   * @type   String -> String
-   * @since  0.15
-   * @inc    has-extension
-   */
-  has-extension(|ext) =
-    test-extension(?ext)
-    
-  /**
-   * Tests if the file extension (everything after the . satisfies ext.
-   *
-   * @param  Test for the file extension. Is applied to the plain file extension (without the .)
-   * @since  0.15
-   * @inc    test-extension
-   */
-  test-extension(ext) =
-    where(
-      get-extension
-      ; ext
-    )
-
-  /**
-   * Adds an extension (second argument) to a path (first argument).
-   *
-   * @type (String, String) -> String
-   */
-  add-extension : 
-    (name, ext) -> <concat-strings> [name, ".", ext]
-
-  /**
-   * Remove an extension from a file name.
-   * Returns the input if the file does not have an extension.
-   *
-   * @inc  remove-extension
-   * @type String -> String
-   */
-  remove-extension =
-    if get-extension; explode-string; !['.' | <id>] => ext then
-      explode-string
-      ; at-suffix(?ext; ![])
-      ; implode-string
-    end
-
-  /**
-   * Get extension from filename
-   *
-   * @type   String -> String
-   */
-  get-extension =
-    explode-string
-    ; list-tokenize(|['.'])
-    
-    /**
-     * There should be at least two elements in the result, otherwise 
-     * there is not extension.
-     */
-    ; ?[_, _ | _]
-    
-    /**
-     * The match of ?[base, ext] cannot be placed in at-suffix due to
-     * the lack of unbinding of variables on backtracking.
-     */
-    ; at-suffix(?[_, _]; ?lastwo)
-    ; !lastwo => [base, ext]
-    ; where(
-        /**
-         * The n-th . part should not contain / \ :
-         * in that case it is not a real extension
-         */
-        <not(fetch(?'/' + ?'\'))> ext
-        
-        /**
-         * The (n-1)th part should not end with a / or \
-         * in that case, part n is not a real extension.
-         */
-      ; <last; not(?'/' + '\')> base
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "dirname", "155,2,182,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "156,4,182,37")
+    ; string-as-chars(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "158,6,182,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "158,6,158,27")
+           ; all(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "158,10,158,26")
+                 ; try(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "158,14,158,25")
+                     ; \ '\' -> '/' \
+                   )))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "160,6,182,36")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "160,6,160,39")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "160,10,160,38")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "160,10,160,24") ; split-init-last)
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "160,27,160,38")
+               ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "160,30,160,31") ; id>
+                  , '/'
+                  )
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "164,6,182,35")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "164,6,164,8")
+           ; ?[]
+           < s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "165,8,165,13")
+             ; !['/']
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "168,10,182,34")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "168,10,168,13") ; init)
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,10,182,34")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,10,176,54")
+                ; repeat(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,17,176,53")
+                    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,17,176,31") ; split-init-last)
+                    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,34,176,53")
+                    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,34,176,48")
+                       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,35,176,36") ; id
+                         , s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,39,176,47")
+                           ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,43,176,46")
+                                 ; ?'/')
+                         ))
+                    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "176,51,176,53")
+                    ; Fst
+                  ))
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "177,11,182,33")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "177,11,177,13")
+                ; ?[]
+                < s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "178,12,178,17")
+                  ; !['.']
+                + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "181,14,182,32")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "181,14,181,50")
+                     ; repeat(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "181,21,181,49")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "181,21,181,35") ; split-init-last)
+                         ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "181,38,181,49")
+                         ; ?( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "181,41,181,42") ; id>
+                            , '/'
+                            )
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "182,15,182,31")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "182,15,182,17")
+                     ; ?[]
+                     < s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "182,21,182,26")
+                       ; !['/']
+                     + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "182,30,182,31") ; id)))
       )
-    ; <implode-string> ext
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "dirname", "155,2,182,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "dirname", "155,2,182,37")
+      ; fail
+
+  is-abspath =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "is-abspath", "194,2,195,84")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,4,195,84")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,10,195,83")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,10,195,23") ; explode-string)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,27,195,82")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,27,195,44")
+               ; ?[<s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,30,195,38")
+                    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,30,195,32") ; '/'
+                       + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,36,195,38") ; '\')>|_]
+               + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,48,195,82")
+                 ; ?[<s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,51,195,58") ; is-alpha>, ':', <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,68,195,76")
+                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,68,195,70") ; '/'
+                                                                                                                                  + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "195,74,195,76") ; '\')>|_]))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "is-abspath", "194,2,195,84")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "is-abspath", "194,2,195,84")
+      ; fail
+
+  is-relpath =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "is-relpath", "205,2,206,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "206,4,206,18")
+    ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "206,8,206,17") ; is-abspath)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "is-relpath", "205,2,206,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "is-relpath", "205,2,206,18")
+      ; fail
+
+  base-filename =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "base-filename", "214,2,216,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "215,6,216,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "215,6,215,40")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "215,7,215,21") ; string-tokenize)> ( ['/', '\']
+                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "215,37,215,38") ; id>
+                                                                                                                    ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "216,6,216,9")
+    ; last
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "base-filename", "214,2,216,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "base-filename", "214,2,216,9")
+      ; fail
+
+
+strategies
+  guarantee-extension(|ext) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "guarantee-extension", "230,2,232,32")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "231,4,232,32")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "231,4,231,19") ; remove-extension)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "232,6,232,32")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "232,7,232,19") ; add-extension)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "232,24,232,25") ; id>
+                                                                                                               , ext
+                                                                                                               )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "guarantee-extension", "230,2,232,32")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "guarantee-extension", "230,2,232,32")
+      ; fail
+
+  has-extension(|ext) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "has-extension", "242,2,243,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "243,4,243,23")
+    ; test-extension(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "243,19,243,22") ; ?ext
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "has-extension", "242,2,243,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "has-extension", "242,2,243,23")
+      ; fail
+
+  test-extension(ext) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "test-extension", "252,2,256,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "253,4,256,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "254,6,255,10")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "254,6,254,18") ; get-extension)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "255,8,255,10")
+            ; ext)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "test-extension", "252,2,256,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "test-extension", "252,2,256,4")
+      ; fail
+
+  add-extension :
+    (name, ext) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "add-extension", "263,2,264,51")> <s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "264,20,264,33") ; concat-strings> [name, ".", ext]
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "add-extension", "263,2,264,51")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "add-extension", "263,2,264,51")
+             ; fail
+
+  remove-extension =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "remove-extension", "273,2,278,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,4,278,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,7,274,57")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,7,274,19") ; get-extension)
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,22,274,57")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,22,274,35") ; explode-string)
+         ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,38,274,57")
+         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,38,274,50")
+            ; !['.'|<s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "274,47,274,48") ; id>]) => ext then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "275,6,277,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "275,6,275,19") ; explode-string)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "276,8,277,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "276,8,276,27")
+           ; at-suffix(
+               s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "276,18,276,26")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "276,18,276,21") ; ?ext)
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "276,24,276,26")
+               ; ![]
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "277,8,277,21")
+        ; implode-string
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "remove-extension", "273,2,278,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "remove-extension", "273,2,278,6")
+      ; fail
+
+  get-extension =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "get-extension", "285,2,314,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "286,4,314,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "286,4,286,17") ; explode-string)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "287,6,314,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "287,6,287,26")
+       ; list-tokenize(|['.']))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "293,6,314,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "293,6,293,16")
+       ; ?[_, _|_])
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "299,6,314,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "299,6,299,32")
+       ; at-suffix(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "299,16,299,31")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "299,16,299,22")
+              ; ?[_, _])
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "299,25,299,31")
+           ; ?lastwo
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "300,6,314,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "300,6,300,27")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "300,6,300,12") ; !lastwo) => [base, ext])
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "301,6,314,25")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "301,6,313,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,8,312,35")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,8,306,36")
+                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,9,306,31")
+                      ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,13,306,30")
+                            ; fetch(
+                                s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,19,306,29")
+                                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,19,306,22")
+                                   ; ?'/'
+                                   + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "306,26,306,29")
+                                     ; ?'\')
+                              )))> ext)
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,8,312,35")
+               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,9,312,29")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,9,312,12") ; last)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,15,312,29")
+                   ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,19,312,28")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,19,312,22")
+                            ; ?'/'
+                            + s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "312,26,312,28") ; '\')))> base))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "314,6,314,25")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "314,7,314,20") ; implode-string)> ext
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "get-extension", "285,2,314,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/io/file.str", "get-extension", "285,2,314,25")
+      ; fail

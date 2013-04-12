@@ -1,37 +1,106 @@
 module test28a
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 signature
-  sorts Exp Type
+  sorts
+    Exp Type
+
   constructors
-    Var   : String -> Exp
-    Plus  : Exp * Exp -> Exp
-    Int   : Type
-    Float : Type 
-    Foo   : List(Type) -> Type
+    Var    : String -> Exp
+    Plus   : Exp * Exp -> Exp
+    Int    : Type
+    Float  : Type
+    Foo    : List(Type) -> Type
     stderr : Bla
 
-strategies
 
-  try(s) = 
-    s <+ id
+strategies
+  try(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "try", "15,2,16,10")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "16,4,16,10")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "16,4,16,4") ; s
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "16,9,16,10") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "try", "15,2,16,10")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "try", "15,2,16,10")
+      ; fail
 
   main-test28a =
-    !Var("a"){Int, Float}
-    ; try( \ Var(s){ts*} -> Var(s){Foo(ts*)} \ )
-    ; ?Var("a"){Foo([Int,Float])}
-    ; {a* : ?a* }
-    ; ?Var("a"){Foo([a, b*])}
-    ; ![b*,a,b*]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "main-test28a", "18,2,24,15")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "19,4,24,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "19,4,19,24")
+       ; !Var("a"){Int, Float})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "20,6,24,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "20,6,20,47")
+       ; try(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "20,11,20,45")
+           ; \ Var(s){ts*} -> Var(s){Foo(ts*)} \
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "21,6,24,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "21,6,21,32")
+       ; ?Var("a"){Foo([Int, Float])})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "22,6,24,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "22,6,22,16")
+       ; {a*:
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "22,12,22,14")
+           ; ?a*
+         })
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "23,6,24,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "23,6,23,28")
+       ; ?Var("a"){Foo([a, b*])})
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "24,6,24,15")
+    ; ![b*, a, b*]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "main-test28a", "18,2,24,15")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "main-test28a", "18,2,24,15")
+      ; fail
 
   conc :
-    ([x | xs], ys) -> [x | <conc>(xs, ys)]
+    ([x|xs], ys) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "conc", "26,2,27,41")> [x|<s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "27,28,27,31") ; conc> (xs, ys)]
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "conc", "26,2,27,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "conc", "26,2,27,41")
+             ; fail
 
   conc :
-    ([], ys) -> ys
+    ([], ys) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "conc", "29,2,30,17")> ys
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "conc", "29,2,30,17")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "conc", "29,2,30,17")
+             ; fail
 
   is-list =
-    ?[] <+ ?[_|_]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "is-list", "32,2,33,16")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "33,4,33,16")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "33,4,33,6")
+       ; ?[]
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "33,11,33,16")
+          ; ?[_|_])
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "is-list", "32,2,33,16")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "is-list", "32,2,33,16")
+      ; fail
 
   makeConc =
-    ?(xs, ys)
-    ; if <is-list> xs; <is-list>ys then <conc>(xs, ys) else !Conc(xs, ys) end
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "makeConc", "35,2,37,76")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "36,4,37,76")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "36,4,36,12")
+       ; ?(xs, ys))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,6,37,76")
+    ; if s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,9,37,33")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,9,37,20")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,10,37,16") ; is-list)> xs)
+         ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,23,37,33")
+         ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,24,37,30") ; is-list)> ys then
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,40,37,53")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,41,37,44") ; conc)> (xs, ys)
+      else
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "37,60,37,72")
+        ; !Conc(xs, ys)
+      end
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "makeConc", "35,2,37,76")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test28a.str", "makeConc", "35,2,37,76")
+      ; fail

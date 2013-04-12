@@ -1,27 +1,81 @@
-/**
- * @todo Import sdf/tool/options and remove definitions.
- */
 module sdf-options
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   sdf-main-module-option =
-    sdf-main-module-option(!"Specify main module in sdf definition")
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-option", "7,2,8,67")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "8,4,8,67")
+    ; sdf-main-module-option(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "8,27,8,66")
+        ; !"Specify main module in sdf definition"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-option", "7,2,8,67")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-option", "7,2,8,67")
+      ; fail
 
   sdf-main-module-option(s) =
-    ArgOption("-m" + "--main"
-    , where(<set-config> (SdfMainModuleFlag(), <id>))
-    , <concat-strings> ["-m mod | --main mod   ", <s> (), " [Main]"]
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-option", "10,2,14,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "11,4,14,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "11,14,11,28")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "11,14,11,17") ; "-m"
+           + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "11,21,11,28") ; "--main")
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "12,6,12,52")
+        ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "12,12,12,51")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "12,13,12,22") ; set-config)> ( SdfMainModuleFlag()
+                                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "12,48,12,49") ; id>
+                                                                                                                                                            ))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "13,6,13,67")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "13,7,13,20") ; concat-strings)> [ "-m mod | --main mod   "
+                                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "13,51,13,51") ; s> ()
+                                                                                                                                                       , " [Main]"
+                                                                                                                                                       ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-option", "10,2,14,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-option", "10,2,14,4")
+      ; fail
 
   pass-sdf-main-module =
-    !["--main", <get-sdf-main-module>]
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "pass-sdf-main-module", "16,2,17,37")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "17,4,17,37")
+    ; ![ "--main"
+       , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "17,17,17,35") ; get-sdf-main-module>
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "pass-sdf-main-module", "16,2,17,37")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "pass-sdf-main-module", "16,2,17,37")
+      ; fail
 
   get-sdf-main-module =
-    <get-config> SdfMainModuleFlag() <+ !"Main"
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "get-sdf-main-module", "19,2,20,46")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "20,4,20,46")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "20,4,20,35")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "20,5,20,14") ; get-config)> SdfMainModuleFlag()
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "20,40,20,46")
+          ; !"Main")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "get-sdf-main-module", "19,2,20,46")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "get-sdf-main-module", "19,2,20,46")
+      ; fail
 
   sdf-main-module-error =
-      say(!<concat-strings> ["** ERROR -- Specified main module (", <get-sdf-main-module> (), ") not found in definition"])
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-error", "22,2,24,9")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "23,6,24,9")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "23,6,23,122")
+       ; say(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "23,10,23,121")
+           ; !<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "23,12,23,25") ; concat-strings> [ "** ERROR -- Specified main module ("
+                                                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "23,69,23,87") ; get-sdf-main-module> ()
+                                                                                                                                                          , ") not found in definition"
+                                                                                                                                                          ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "24,6,24,9")
     ; fail
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-error", "22,2,24,9")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-options.str", "sdf-main-module-error", "22,2,24,9")
+      ; fail
+
 
 signature
   constructors

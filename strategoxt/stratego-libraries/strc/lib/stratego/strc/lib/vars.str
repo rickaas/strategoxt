@@ -1,6 +1,25 @@
 module vars
-imports stratlib libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratlib
+  libstratego-lib
+
+
 strategies
-
-  main = io-wrap(vars(Add1, fail))
-
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "main", "5,2,5,33")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "5,9,5,33")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "5,17,5,32")
+        ; vars(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "5,22,5,25") ; Add1
+          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "5,28,5,31") ; fail
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "main", "5,2,5,33")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/lib/vars.str", "main", "5,2,5,33")
+      ; fail

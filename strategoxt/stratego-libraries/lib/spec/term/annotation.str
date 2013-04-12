@@ -1,80 +1,129 @@
-/**
- * Primitives for getting and setting term annotations.
- *
- * The preferred way to access annotations, however,
- * is through the term syntax t1{t2}, which allows matching and
- * building terms with annotations.
- */
 module term/annotation
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
   constructors
     Anno : a * b -> a
 
+
 strategies
+  get-annos =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "get-annos", "20,2,21,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "21,4,21,18")
+    ; get-annotations
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "get-annos", "20,2,21,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "get-annos", "20,2,21,18")
+      ; fail
 
-  /**
-   * Alias of get-annotations.
-   *
-   * @inc test-get-annos
-   */
-  get-annos = 
-    get-annotations
-
-  /**
-   * Returns the list of annotations of the current term.
-   */
   get-annotations :
-    t{t*} -> t*
+    t{t*} -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "get-annotations", "26,2,27,14")> t*
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "get-annotations", "26,2,27,14")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "get-annotations", "26,2,27,14")
+             ; fail
 
-  /**
-   * Alias of set-annotations.
-   *
-   * @inc test-set-annos
-   */
-  set-annos = 
-    set-annotations
+  set-annos =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-annos", "34,2,35,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "35,4,35,18")
+    ; set-annotations
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-annos", "34,2,35,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-annos", "34,2,35,18")
+      ; fail
 
-  /**
-   * Sets the annotations of the given term t to the annotations a.
-   */
   set-annotations :
-    (t, t*) -> t{t*}
- 
+    (t, t*) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-annotations", "40,2,41,19")> t{t*}
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-annotations", "40,2,41,19")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-annotations", "40,2,41,19")
+             ; fail
+
   set-anno :
-    (t1, t2) -> t1{t2}
+    (t1, t2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-anno", "43,2,44,21")> t1{t2}
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-anno", "43,2,44,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "set-anno", "43,2,44,21")
+             ; fail
 
-  /**
-   * @todo The xs variable is a hack for issue STR-382.
-   */
   rm-annotations :
-    t -> t{}
+    t -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "rm-annotations", "49,2,50,11")> t{}
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "rm-annotations", "49,2,50,11")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "rm-annotations", "49,2,50,11")
+             ; fail
 
-  /**
-   * Succeeds if a term has annotations.
-   *
-   * @inc test-has-annos
-   */
   has-annos =
-    ?_{t,t*}
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "has-annos", "57,2,58,11")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "58,4,58,11")
+    ; ?_{t, t*}
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "has-annos", "57,2,58,11")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "has-annos", "57,2,58,11")
+      ; fail
 
-  has-annotation = 
-    has-annos 
+  has-annotation =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "has-annotation", "60,2,61,12")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "61,4,61,12")
+    ; has-annos
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "has-annotation", "60,2,61,12")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "has-annotation", "60,2,61,12")
+      ; fail
 
   if-annotation(s1, s2) =
-    has-annotation < s1 + s2
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "if-annotation", "63,2,64,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "64,4,64,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "64,4,64,17") ; has-annotation
+       < s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "64,21,64,22") ; s1
+       + s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "64,26,64,27") ; s2)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "if-annotation", "63,2,64,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "if-annotation", "63,2,64,27")
+      ; fail
 
-  strip-annos = 
-    bottomup(rm-annotations)
+  strip-annos =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "strip-annos", "66,2,67,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "67,4,67,27")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "67,13,67,26") ; rm-annotations
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "strip-annos", "66,2,67,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "strip-annos", "66,2,67,27")
+      ; fail
 
-  catch-annos = 
-    rec x(has-annotation < !Anno(<rm-annotations; all(x)>, <get-annotations>) + all(x))
+  catch-annos =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "catch-annos", "69,2,70,86")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,4,70,86")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,10,70,85")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,10,70,23") ; has-annotation
+           < s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,27,70,76")
+             ; !Anno(
+                  <s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,34,70,55")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,34,70,47") ; rm-annotations)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,50,70,55")
+                   ; all(s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,54,70,54") ; x)>
+                , <s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,60,70,74") ; get-annotations>
+                )
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,80,70,85")
+             ; all(s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "70,84,70,84") ; x))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "catch-annos", "69,2,70,86")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "catch-annos", "69,2,70,86")
+      ; fail
 
-  /**
-   * Alias of preserve-annos
-   */
   preserve-annotation(s) =
-    preserve-annos(s)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annotation", "75,2,76,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "76,4,76,20")
+    ; preserve-annos(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "76,19,76,19") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annotation", "75,2,76,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annotation", "75,2,76,20")
+      ; fail
 
-  preserve-annos(s):
-    t{a*} -> r{a*}
-      where <s> t => r
+  preserve-annos(s) :
+    t{a*} -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annos", "78,2,80,21")> r{a*}
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annos", "78,2,80,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annos", "78,2,80,21")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "80,12,80,21")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "80,12,80,16")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "80,13,80,13") ; s)> t) => r
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/annotation.str", "preserve-annos", "78,2,80,21")
+             ; fail

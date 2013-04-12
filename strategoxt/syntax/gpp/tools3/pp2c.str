@@ -1,44 +1,148 @@
 module pp2c
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
-  C pp-table
+  C
+  pp-table
   pp2c-load-grammar
   pp2c-box-to-c
 
 
 strategies
+  simplify-path =
+    s-enter(|"strategoxt/syntax/gpp/tools3/pp2c.str", "simplify-path", "12,2,14,27")
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "13,4,14,27")
+    ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "13,4,13,28")
+       ; ?PP-Entry(
+            Path1(
+              <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "13,21,13,22") ; id>
+            )
+          , b
+          ))
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "14,4,14,27")
+    ; !PP-Entry(
+         ( <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "14,16,14,17") ; id>
+         , []
+         )
+       , b
+       )
+    < s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "simplify-path", "12,2,14,27")
+    + s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "simplify-path", "12,2,14,27")
+      ; fail
 
   simplify-path =
-    ?PP-Entry(Path1(<id>), b)
-  ; !PP-Entry((<id>, []), b)
-
-  simplify-path =
-    ?PP-Entry(Path(name, <id>), b)
-  ; map(\ selector(n, _) -> n \)
-  ; reverse
-  ; !PP-Entry((name, <id>), b)
+    s-enter(|"strategoxt/syntax/gpp/tools3/pp2c.str", "simplify-path", "16,2,20,29")
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "17,4,20,29")
+    ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "17,4,17,33")
+       ; ?PP-Entry(
+            Path(
+              name
+            , <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "17,26,17,27") ; id>
+            )
+          , b
+          ))
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "18,4,20,29")
+    ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "18,4,18,31")
+       ; map(
+           s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "18,8,18,30")
+           ; \ selector(n, _) -> n \
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "19,4,20,29")
+    ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "19,4,19,10") ; reverse)
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "20,4,20,29")
+    ; !PP-Entry(
+         ( name
+         , <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "20,22,20,23") ; id>
+         )
+       , b
+       )
+    < s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "simplify-path", "16,2,20,29")
+    + s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "simplify-path", "16,2,20,29")
+      ; fail
 
   pp2c-options =
-    ArgOption("-p"
-     , load-grammar; ![]
-     , !"-p pptable    Use the pp-table.")
-  + ArgOption("-n"
-     , <set-config> ("-n", <id>); ![]
-     , !"-n name       Function name to generate.")
+    s-enter(|"strategoxt/syntax/gpp/tools3/pp2c.str", "pp2c-options", "22,2,28,50")
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "23,4,28,50")
+    ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "23,4,25,41")
+       ; ArgOption(
+           s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "23,14,23,17") ; "-p"
+         , s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "24,7,24,23")
+           ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "24,7,24,18") ; load-grammar)
+           ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "24,21,24,23")
+           ; ![]
+         , s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "25,7,25,40")
+           ; !"-p pptable    Use the pp-table."
+         )
+       + s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "26,4,28,50")
+         ; ArgOption(
+             s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "26,14,26,17") ; "-n"
+           , s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "27,7,27,36")
+             ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "27,7,27,31")
+                ; <(s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "27,8,27,17") ; set-config)> ( "-n"
+                                                                                                  , <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "27,28,27,29") ; id>
+                                                                                                  ))
+             ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "27,34,27,36")
+             ; ![]
+           , s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "28,7,28,49")
+             ; !"-n name       Function name to generate."
+           ))
+    < s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "pp2c-options", "22,2,28,50")
+    + s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "pp2c-options", "22,2,28,50")
+      ; fail
 
   pp2c =
-    xtc-io-wrap(pp2c-options,
-      xtc-ensure-file
-    ; try(xtc-transform(!"parse-pp-table"))
-    ; read-from
-    ; pptable-to-c
-    ; write-to
-    ; xtc-transform(!"pp-c")
-    ; where(
-        <xtc-new-file> ()
-      ; <copy-file> (<xtc-find> "pptools.c", <id>)
-      ; !FILE(<id>) => pptools
+    s-enter(|"strategoxt/syntax/gpp/tools3/pp2c.str", "pp2c", "30,2,44,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "31,4,44,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "31,16,31,27") ; pp2c-options
+      , s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "32,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "32,6,32,20") ; xtc-ensure-file)
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "33,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "33,6,33,42")
+           ; try(
+               s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "33,10,33,41")
+               ; xtc-transform(
+                   s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "33,24,33,40")
+                   ; !"parse-pp-table"
+                 )
+             ))
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "34,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "34,6,34,14") ; read-from)
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "35,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "35,6,35,17") ; pptable-to-c)
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "36,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "36,6,36,13") ; write-to)
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "37,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "37,6,37,27")
+           ; xtc-transform(
+               s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "37,20,37,26")
+               ; !"pp-c"
+             ))
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "38,6,43,30")
+        ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "38,6,42,6")
+           ; where(s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "39,8,41,29")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "39,8,39,24")
+                      ; <(s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "39,9,39,20") ; xtc-new-file)> ())
+                   ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "40,8,41,29")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "40,8,40,49")
+                      ; <(s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "40,9,40,17") ; copy-file)> ( <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "40,22,40,29") ; xtc-find> "pptools.c"
+                                                                                                       , <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "40,46,40,47") ; id>
+                                                                                                       ))
+                   ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "41,8,41,29")
+                   ; (s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "41,8,41,18")
+                      ; !FILE(
+                           <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "41,15,41,16") ; id>
+                         )) => pptools))
+        ; s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "43,6,43,30")
+        ; <(s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "43,7,43,13") ; xtc-cat)> [ pptools
+                                                                                       , <s-step(|"strategoxt/syntax/gpp/tools3/pp2c.str", "43,27,43,28") ; id>
+                                                                                       ]
       )
-    ; <xtc-cat> [pptools, <id>]
-    )
+    < s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "pp2c", "30,2,44,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools3/pp2c.str", "pp2c", "30,2,44,4")
+      ; fail

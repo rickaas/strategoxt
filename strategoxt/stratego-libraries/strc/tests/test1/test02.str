@@ -1,11 +1,26 @@
 module test02
-imports collection/list/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+
+
 signature
   constructors
     Call : a * List(a) -> Call
 
-strategies
 
-  main = 
-    ?[prog | args];
-    !Call(prog, args)
+strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test02.str", "main", "9,2,11,20")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test02.str", "10,4,11,20")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test02.str", "10,4,10,17")
+       ; ?[prog|args])
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test02.str", "11,4,11,20")
+    ; !Call(prog, args)
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test02.str", "main", "9,2,11,20")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test02.str", "main", "9,2,11,20")
+      ; fail

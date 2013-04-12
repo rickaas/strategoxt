@@ -1,14 +1,29 @@
 module parse-pp-table
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-xtc
 
-strategies
-  
-  main-parse-pp-table =
-    xtc-io-wrap(
-      xtc-ensure-file => FILE(<id>);
-      parse-pptable-file;
-      write-to
-    )
 
+strategies
+  main-parse-pp-table =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "main-parse-pp-table", "8,2,13,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "9,4,13,4")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "10,6,12,13")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "10,6,10,34")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "10,6,10,20") ; xtc-ensure-file) => FILE(
+                                                                                                                                                                 <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "10,31,10,32") ; id>
+                                                                                                                                                               ))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "11,6,12,13")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "11,6,11,23") ; parse-pptable-file)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "12,6,12,13")
+        ; write-to
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "main-parse-pp-table", "8,2,13,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/parse-pp-table.str", "main-parse-pp-table", "8,2,13,4")
+      ; fail

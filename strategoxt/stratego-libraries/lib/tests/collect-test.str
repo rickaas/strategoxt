@@ -1,20 +1,37 @@
-/**
- * Testing for collect strategies.
- */
 module collect-test
-imports libstratego-lib
 
-strategies 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
- main-collect-test = 
-  test-suite(!"collect-test",
-    collect-split-tests
-  ; collect-om-tests
-  ; collect-all-tests
-  ; crush-tests
-  ; collect-legacy-tests
-  ; occurrences-tests
-  )
+
+imports
+  libstratego-lib
+
+
+strategies
+  main-collect-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "main-collect-test", "9,1,17,2")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "10,2,17,2")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "10,13,10,27")
+        ; !"collect-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "11,4,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "11,4,11,22") ; collect-split-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "12,4,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "12,4,12,19") ; collect-om-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "13,4,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "13,4,13,20") ; collect-all-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "14,4,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "14,4,14,14") ; crush-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "15,4,16,20")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "15,4,15,23") ; collect-legacy-tests)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "16,4,16,20")
+        ; occurrences-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "main-collect-test", "9,1,17,2")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "main-collect-test", "9,1,17,2")
+      ; fail
+
 
 signature
   constructors
@@ -31,101 +48,391 @@ signature
     Plus   : Exp * Exp -> Exp
     Var    : String -> Exp
 
-strategies
-
-  occurrences-tests = id
-    ; apply-test(!"om occurences test 1"
-      , om-occurrences(?Var(_))
-      , !Plus(Var(Var(Var("x"))), Var("z"))
-      , !2
-      )
-    ; apply-test(!"om occurences test 2"
-      , om-occurrences(?Var(_))
-      , !Var("z")
-      , !1
-      )
-    ; apply-test(!"occurences test 1"
-      , occurrences(?Var(_))
-      , !Plus(Var(Var(Var("x"))), Var("z"))
-      , !4
-      )
-    ; apply-test(!"occurences test 2"
-      , occurrences(?Var(_))
-      , !Var("z")
-      , !1
-      )
-
-
 
 strategies
+  occurrences-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "occurrences-tests", "36,2,56,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "36,22,56,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "36,22,36,23") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "37,6,56,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "37,6,41,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "37,17,37,39")
+           ; !"om occurences test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "38,8,38,30")
+           ; om-occurrences(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "38,23,38,29")
+               ; ?Var(_)
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "39,8,39,42")
+           ; !Plus(
+                Var(Var(Var("x")))
+              , Var("z")
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "40,8,40,9")
+           ; !2
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "42,6,56,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "42,6,46,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "42,17,42,39")
+           ; !"om occurences test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "43,8,43,30")
+           ; om-occurrences(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "43,23,43,29")
+               ; ?Var(_)
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "44,8,44,16")
+           ; !Var("z")
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "45,8,45,9")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "47,6,56,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "47,6,51,6")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "47,17,47,36")
+           ; !"occurences test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "48,8,48,27")
+           ; occurrences(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "48,20,48,26")
+               ; ?Var(_)
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "49,8,49,42")
+           ; !Plus(
+                Var(Var(Var("x")))
+              , Var("z")
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "50,8,50,9")
+           ; !4
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "52,6,56,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "52,17,52,36")
+        ; !"occurences test 2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "53,8,53,27")
+        ; occurrences(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "53,20,53,26")
+            ; ?Var(_)
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "54,8,54,16")
+        ; !Var("z")
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "55,8,55,9")
+        ; !1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "occurrences-tests", "36,2,56,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "occurrences-tests", "36,2,56,6")
+      ; fail
 
-  collect-split-tests = 
-    apply-test(!"collect split tests 1"
-    , collect-split(\ H(x,y) -> I(x) \, \ H(x,y) -> [H(x,y)] \ )
-    , !F(G(A,H(A,B)),H(B,C))
-    , !(F(G(A,I(A)), I(B)), [H(A,B),H(B,C)])
-    )
-  ; apply-test(!"collect split tests 2"
-    , collect-split(\ H(x,y) -> I(x) \, \ H(x,y) -> [H(x,y)] \ )
-    , !F(G(A,H(A{"Test1"},B)){"Test2"},H(B,C))
-    , !(F(G(A,I(A{"Test1"})){"Test2"}, I(B)), [H(A{"Test1"},B),H(B,C)])
-    )
-  ; apply-test(!"collect split tests 3"
-    , collect-split(\ H(x,y) -> I(x) \, \ H(x,y) -> [H(x,y)] \ )
-    , !F(G("a",H(A,3.0)),H(1,C))
-    , !(F(G("a",I(A)), I(1)), [H(A,3.0),H(1,C)])
-    )
+
+strategies
+  collect-split-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-split-tests", "62,2,77,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "63,4,77,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "63,4,67,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "63,15,63,38")
+           ; !"collect split tests 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "64,6,64,63")
+           ; collect-split(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "64,20,64,37")
+               ; \ H(x, y) -> I(x) \
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "64,40,64,61")
+               ; \ H(x, y) -> [H(x, y)] \
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "65,6,65,27")
+           ; !F(
+                G(A, H(A, B))
+              , H(B, C)
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "66,6,66,43")
+           ; !( F(
+                  G(A, I(A))
+                , I(B)
+                )
+              , [ H(A, B)
+                , H(B, C)
+                ]
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "68,4,77,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "68,4,72,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "68,15,68,38")
+           ; !"collect split tests 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "69,6,69,63")
+           ; collect-split(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "69,20,69,37")
+               ; \ H(x, y) -> I(x) \
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "69,40,69,61")
+               ; \ H(x, y) -> [H(x, y)] \
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "70,6,70,45")
+           ; !F(
+                G(
+                  A
+                , H(A{"Test1"}, B)
+                ){"Test2"}
+              , H(B, C)
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "71,6,71,70")
+           ; !( F(
+                  G(
+                    A
+                  , I(A{"Test1"})
+                  ){"Test2"}
+                , I(B)
+                )
+              , [ H(A{"Test1"}, B)
+                , H(B, C)
+                ]
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "73,4,77,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "73,15,73,38")
+        ; !"collect split tests 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "74,6,74,63")
+        ; collect-split(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "74,20,74,37")
+            ; \ H(x, y) -> I(x) \
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "74,40,74,61")
+            ; \ H(x, y) -> [H(x, y)] \
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "75,6,75,31")
+        ; !F(
+             G("a", H(A, 3.0))
+           , H(1, C)
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "76,6,76,47")
+        ; !( F(
+               G("a", I(A))
+             , I(1)
+             )
+           , [ H(A, 3.0)
+             , H(1, C)
+             ]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-split-tests", "62,2,77,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-split-tests", "62,2,77,4")
+      ; fail
 
   collect-om-tests =
-    apply-test(!"collect-om test"
-    , collect-om(G(id,id))
-    , !F(G(A,G(A,B)),G(B,C))
-    , ![G(A,G(A,B)),G(B,C)]
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-om-tests", "79,2,84,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "80,4,84,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "80,15,80,32")
+        ; !"collect-om test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "81,6,81,25")
+        ; collect-om(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "81,17,81,24")
+            ; G(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "81,19,81,20") ; id
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "81,22,81,23") ; id
+              )
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "82,6,82,27")
+        ; !F(
+             G(A, G(A, B))
+           , G(B, C)
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "83,6,83,26")
+        ; ![ G(A, G(A, B))
+           , G(B, C)
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-om-tests", "79,2,84,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-om-tests", "79,2,84,4")
+      ; fail
 
   collect-all-tests =
-    apply-test(!"collect-all test"
-    , collect-all(G(id,id))
-    , !F(G(A,G(A,B)),G(B,C))
-    , ![G(A,G(A,B)),G(A,B),G(B,C)]
-    )
-  ; apply-test(!"collect-all skip test 1"
-    , collect-all(?Var(_), conc, \ Assign(_, e) -> e \)
-    , !Assign(Var("x"), Plus(Var("y"), Var("z")))
-    , ![Var("y"), Var("z")]
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-all-tests", "86,2,108,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "87,4,108,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "87,4,91,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "87,15,87,33")
+           ; !"collect-all test"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "88,6,88,26")
+           ; collect-all(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "88,18,88,25")
+               ; G(
+                   s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "88,20,88,21") ; id
+                 , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "88,23,88,24") ; id
+                 )
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "89,6,89,27")
+           ; !F(
+                G(A, G(A, B))
+              , G(B, C)
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "90,6,90,33")
+           ; ![ G(A, G(A, B))
+              , G(A, B)
+              , G(B, C)
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "92,4,108,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "92,4,96,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "92,15,92,40")
+           ; !"collect-all skip test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "93,6,93,54")
+           ; collect-all(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "93,18,93,24")
+               ; ?Var(_)
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "93,27,93,30") ; conc
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "93,33,93,53")
+               ; \ Assign(_, e) -> e \
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "94,6,94,48")
+           ; !Assign(
+                Var("x")
+              , Plus(
+                  Var("y")
+                , Var("z")
+                )
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "95,6,95,26")
+           ; ![Var("y"), Var("z")]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "98,4,108,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "98,4,102,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "98,15,98,40")
+           ; !"collect-all skip test 2"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "99,6,99,55")
+           ; collect-all(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "99,18,99,24")
+               ; ?Var(_)
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "99,27,99,31") ; union
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "99,34,99,54")
+               ; \ Assign(_, e) -> e \
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "100,6,100,48")
+           ; !Assign(
+                Var("x")
+              , Plus(
+                  Var("z")
+                , Var("z")
+                )
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "101,6,101,16")
+           ; ![Var("z")]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "104,4,108,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "104,15,104,40")
+        ; !"collect-all skip test 3"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "105,6,105,55")
+        ; collect-all(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "105,18,105,24")
+            ; ?Var(_)
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "105,27,105,31") ; union
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "105,34,105,54")
+            ; \ Assign(_, e) -> e \
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "106,6,106,32")
+        ; !Assign(
+             Var("x")
+           , Var("y")
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "107,6,107,16")
+        ; ![Var("y")]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-all-tests", "86,2,108,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-all-tests", "86,2,108,4")
+      ; fail
 
-  ; apply-test(!"collect-all skip test 2"
-    , collect-all(?Var(_), union, \ Assign(_, e) -> e \)
-    , !Assign(Var("x"), Plus(Var("z"), Var("z")))
-    , ![Var("z")]
-    )
-
-  ; apply-test(!"collect-all skip test 3"
-    , collect-all(?Var(_), union, \ Assign(_, e) -> e \)
-    , !Assign(Var("x"), Var("y"))
-    , ![Var("y")]
-    )
-
-
-  crush-tests = 
-    apply-test(!"crush test 1"
-    , crush(id, ![<Fst> | <Snd>])
-    , !F(G(A,G(A,B)),G(B,C))
-    , ![G(A,G(A,B)),G(B,C)]
-    )
-  ; apply-test(!"crush test 2"
-    , rec x(crush(id, ![<Fst> | <Snd>], x))
-    , !F(G(A,G(A,B)),G(B,C))
-    , ![[[],[[],[]]],[[],[]]]
-    )
+  crush-tests =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "crush-tests", "111,2,121,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "112,4,121,4")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "112,4,116,4")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "112,15,112,29")
+           ; !"crush test 1"
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "113,6,113,32")
+           ; crush(
+               s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "113,12,113,13") ; id
+             , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "113,16,113,31")
+               ; ![<s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "113,19,113,21") ; Fst>|<s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "113,27,113,29") ; Snd>]
+             )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "114,6,114,27")
+           ; !F(
+                G(A, G(A, B))
+              , G(B, C)
+              )
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "115,6,115,26")
+           ; ![ G(A, G(A, B))
+              , G(B, C)
+              ]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "117,4,121,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "117,15,117,29")
+        ; !"crush test 2"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,6,118,42")
+        ; rec x (
+            s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,12,118,41")
+            ; crush(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,18,118,19") ; id
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,22,118,37")
+                ; ![<s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,25,118,27") ; Fst>|<s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,33,118,35") ; Snd>]
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "118,40,118,40") ; x
+              )
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "119,6,119,27")
+        ; !F(
+             G(A, G(A, B))
+           , G(B, C)
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "120,6,120,28")
+        ; ![ [[], [[], []]]
+           , [[], []]
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "crush-tests", "111,2,121,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "crush-tests", "111,2,121,4")
+      ; fail
 
   collect-legacy-tests =
-    apply-test(!"collect test with skip argument"
-    , collect(G(id,id), not-under-f)
-    , !H(G(A,G(A,B)),F(G(B,C),G(A,B)))
-    , ![G(A,G(A,B)),G(A,B)]
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-legacy-tests", "123,2,128,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "124,4,128,4")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "124,15,124,48")
+        ; !"collect test with skip argument"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "125,6,125,35")
+        ; collect(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "125,14,125,21")
+            ; G(
+                s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "125,16,125,17") ; id
+              , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "125,19,125,20") ; id
+              )
+          , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "125,24,125,34") ; not-under-f
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "126,6,126,37")
+        ; !H(
+             G(A, G(A, B))
+           , F(
+               G(B, C)
+             , G(A, B)
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "127,6,127,26")
+        ; ![ G(A, G(A, B))
+           , G(A, B)
+           ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-legacy-tests", "123,2,128,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "collect-legacy-tests", "123,2,128,4")
+      ; fail
 
   not-under-f(coll, ignore) =
-    F(ignore, coll)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "not-under-f", "130,2,131,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "131,4,131,18")
+    ; F(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "131,6,131,11") ; ignore
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "131,14,131,17") ; coll
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "not-under-f", "130,2,131,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/collect-test.str", "not-under-f", "130,2,131,18")
+      ; fail

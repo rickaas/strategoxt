@@ -1,33 +1,103 @@
 module native-transform
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
   libstratego-tool-doc
 
+
 strategies
   native-transform(tool, args) =
-    if <get-config> "-Xnativepath" => nativepath; file-exists then
-      xtc-ensure-file => FILE(input)
-    ; xtc-new-file    => output
-    ; tool'  := <conc-strings> (nativepath, <tool>)
-    ; input' := <abspath> input
-    ; cwd    := <getcwd>
-    ; <chdir <+ fatal-err(|"Native tool path not found")> nativepath
-    ; <call> (tool', ["-i", input', "-o", output | <args>])
-    ; if not(<file-exists> output) then // (shouldn't be reachable)
-        fatal-err(|["Native tool ", tool', " failed to produce an output file."])
-      end
-    ; <chdir> cwd
-    ; !FILE(output)
-    else
-      xtc-transform(tool, args)
-    end
-  <+
-    <fatal-err(|["Native tool ", <tool>, " failed"])> <args <+ !"<args?>">
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "native-transform", "8,2,26,73")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,4,26,73")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,4,24,6")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,7,9,60")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,7,9,47")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,7,9,33")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,8,9,17") ; get-config)> "-Xnativepath") => nativepath)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "9,50,9,60")
+            ; file-exists then
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "10,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "10,6,10,35")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "10,6,10,20") ; xtc-ensure-file) => FILE(input))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "11,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "11,6,11,30")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "11,6,11,17") ; xtc-new-file) => output)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "12,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "12,6,12,50")
+              ; tool' := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "12,17,12,28") ; conc-strings> ( nativepath
+                                                                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "12,45,12,48") ; tool>
+                                                                                                                                                                        ))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "13,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "13,6,13,30")
+              ; input' := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "13,17,13,23") ; abspath> input)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "14,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "14,6,14,23")
+              ; cwd := <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "14,17,14,22") ; getcwd>)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "15,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "15,6,15,67")
+              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "15,7,15,55")
+                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "15,7,15,11") ; chdir
+                     <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "15,16,15,55")
+                        ; fatal-err(|"Native tool path not found")))> nativepath)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "16,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "16,6,16,58")
+              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "16,7,16,10") ; call)> ( tool'
+                                                                                                                                                        , ["-i", input', "-o", output|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "16,52,16,55") ; args>]
+                                                                                                                                                        ))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "17,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "17,6,19,8")
+              ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "17,9,17,33")
+                   ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "17,13,17,32")
+                         ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "17,14,17,24") ; file-exists)> output) then
+                  s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "18,8,18,80")
+                  ; fatal-err(
+                    | ["Native tool ", tool', " failed to produce an output file."]
+                    )
+                end)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "20,6,21,18")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "20,6,20,16")
+              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "20,7,20,11") ; chdir)> cwd)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "21,6,21,18")
+           ; !FILE(output)
+         else
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "23,6,23,30")
+           ; xtc-transform(
+               s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "23,20,23,23") ; tool
+             , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "23,26,23,29") ; args
+             )
+         end
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "26,4,26,73")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "26,5,26,51")
+              ; fatal-err(
+                | [ "Native tool "
+                  , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "26,34,26,37") ; tool>
+                  , " failed"
+                  ]
+                ))> <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "26,55,26,72")
+                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "26,55,26,58") ; args
+                        <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "26,63,26,72")
+                           ; !"<args?>")>)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "native-transform", "8,2,26,73")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "native-transform", "8,2,26,73")
+      ; fail
 
   native-executables-option =
-    ArgOption("-Xnativepath"
-    , <set-config> ("-Xnativepath", <id>)
-    , !HelpString("-Xnativepath", "Sets the path to the native sdf2table and implodePT executables")
-    )
-
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "native-executables-option", "28,2,32,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "29,4,32,4")
+    ; ArgOption(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "29,14,29,27") ; "-Xnativepath"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "30,6,30,40")
+        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "30,7,30,16") ; set-config)> ( "-Xnativepath"
+                                                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "30,37,30,38") ; id>
+                                                                                                                                                        )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "31,6,31,99")
+        ; !HelpString("-Xnativepath", "Sets the path to the native sdf2table and implodePT executables")
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "native-executables-option", "28,2,32,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/native-transform.str", "native-executables-option", "28,2,32,4")
+      ; fail

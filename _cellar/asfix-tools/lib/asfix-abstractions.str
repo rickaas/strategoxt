@@ -1,114 +1,302 @@
 module asfix-abstractions
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   AsFix
   Sdf2
   asfix-extra
 
+
 signature
-constructors
-   ConcLayout: Layout -> Conclayout
-   'id : a -> a
+  constructors
+    ConcLayout : Layout -> Conclayout
+    'id        : a -> a
 
-/**
- * Lists
- */
+
 overlays
+  conc-prod ( s ) =
+    prod(
+      [ cf(iter(s))
+      , cf(opt(layout()))
+      , cf(iter(s))
+      ]
+    , cf(iter(s))
+    , no-attrs()
+    )
 
-  conc-prod(s) = 
-    prod([cf(iter(s)),cf(opt(layout())),cf(iter(s))],cf(iter(s)),no-attrs())
+  iter-inj-prod ( s ) =
+    prod(
+      [cf(s)]
+    , cf(iter(s))
+    , no-attrs()
+    )
 
-  iter-inj-prod(s) =
-    prod([cf(s)], cf(iter(s)), no-attrs())
-
-  af-iter-inj(s, x) =
+  af-iter-inj ( s, x ) =
     appl(iter-inj-prod(s), [x])
 
-  af-conc(s,x,l,y) = 
-    appl(conc-prod(s), [x, l, y])
+  af-conc ( s, x, l, y ) =
+    appl(
+      conc-prod(s)
+    , [x, l, y]
+    )
 
-/**
- * START and LAYOUT
- */
+
 overlays
+  flatlit ( str ) =
+    flatlex(lit(str), str)
 
-  flatlit(str) = flatlex(lit(str), str)
+  white ( str ) =
+    flatlex(
+      cf(opt(layout()))
+    , str
+    )
 
-  white(str) = flatlex(cf(opt(layout())), str)
+  start ( s, l1, x, l2 ) =
+    appl(
+      prod(
+        [ cf(opt(layout()))
+        , cf(sort(s))
+        , cf(opt(layout()))
+        ]
+      , sort("<START>")
+      , no-attrs()
+      )
+    , [l1, x, l2]
+    )
 
-  start(s,l1,x,l2) =       
-    appl(prod([cf(opt(layout())),cf(sort(s)),cf(opt(layout()))],
-              sort("<START>"),no-attrs()),
-         [l1,x,l2])
+  CfLayout ( l ) =
+    appl(
+      prod(
+        [lex(layout())]
+      , cf(layout())
+      , no-attrs()
+      )
+    , [l]
+    )
 
-  CfLayout(l) =
-     appl(prod([lex(layout())], cf(layout()), no-attrs()), [l])
+  ConcCfLayout ( l1, l2 ) =
+    appl(
+      prod(
+        [ cf(layout())
+        , cf(layout())
+        ]
+      , cf(layout())
+      , attrs([assoc(left())])
+      )
+    , [l1, l2]
+    )
 
-  ConcCfLayout(l1, l2) = 
-     appl(prod([cf(layout()), cf(layout())], cf(layout()), attrs([assoc(left())])), [l1, l2])
+  NoCfLayout = appl(
+                 prod(
+                   []
+                 , cf(opt(layout()))
+                 , no-attrs()
+                 )
+               , []
+               )
 
-  NoCfLayout = 
-     appl(prod([], cf(opt(layout())), no-attrs()), [])
-     
-  CfOptLayout(l) =
-     appl(prod([cf(layout())], cf(opt(layout())), no-attrs()), [l])
+  CfOptLayout ( l ) =
+    appl(
+      prod(
+        [cf(layout())]
+      , cf(opt(layout()))
+      , no-attrs()
+      )
+    , [l]
+    )
 
-  Space =
-    CfLayout(appl(prod([char-class([range(9,10),13,32])],lex(layout()),attrs([prefer()])), [32]))
+  Space = CfLayout(
+            appl(
+              prod(
+                [ char-class(
+                    [ range(9, 10)
+                    , 13
+                    , 32
+                    ]
+                  )
+                ]
+              , lex(layout())
+              , attrs([prefer()])
+              )
+            , [32]
+            )
+          )
 
-  NewLine =
-    CfLayout(appl(prod([char-class([range(9,10),13,32])],lex(layout()),attrs([prefer()])), [10]))
+  NewLine = CfLayout(
+              appl(
+                prod(
+                  [ char-class(
+                      [ range(9, 10)
+                      , 13
+                      , 32
+                      ]
+                    )
+                  ]
+                , lex(layout())
+                , attrs([prefer()])
+                )
+              , [10]
+              )
+            )
 
-  OptNewLine =
-     CfOptLayout(NewLine())
+  OptNewLine = CfOptLayout(NewLine())
+
 
 strategies
+  yield =
+    s-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "yield", "66,2,69,23")
+    ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,10,69,23")
+    ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,10,68,25")
+       ; rec x (
+           s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,16,68,23")
+           ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,16,66,63")
+              ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,16,66,31")
+                 ; appl(
+                     s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,21,66,22") ; id
+                   , s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,25,66,30")
+                     ; map(
+                         s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,29,66,29") ; x
+                       )
+                   ))
+              ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,34,66,63")
+              ; \ appl(p, ts) -> <s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "66,52,66,57") ; concat> ts \
+              <+ s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "67,19,68,23")
+                 ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "67,19,67,61")
+                    ; \ flatlex(_, str) -> <s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "67,41,67,54") ; explode-string> str \
+                    <+ s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "68,12,68,23")
+                       ; \ a -> [a] \))
+         ))
+    ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "69,10,69,23")
+    ; implode-string
+    < s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "yield", "66,2,69,23")
+    + s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "yield", "66,2,69,23")
+      ; fail
 
-  yield = rec x(appl(id, map(x)); \ appl(p, ts) -> <concat> ts \
-                <+ \ flatlex(_, str) -> <explode-string> str \
-	        <+ \ a -> [a] \ ); 
-          implode-string
 
 rules
 
-  flatten : appl(prod(_,srt,_), ts) -> flatlex(srt, str)
-	    where yield => str
+  flatten :
+    appl(prod(_, srt, _), ts) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "73,2,74,22")> flatlex(srt, str)
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "73,2,74,22")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "73,2,74,22")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "74,11,74,22")
+          ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "74,11,74,15") ; yield) => str
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "73,2,74,22")
+             ; fail
 
-  flatten : flatlex(srt,str) -> flatlex(srt,str)
+  flatten :
+    flatlex(srt, str) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "76,2,76,47")> flatlex(srt, str)
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "76,2,76,47")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "flatten", "76,2,76,47")
+             ; fail
 
   lit-tree :
-    str -> appl(prod(char-sorts, lit(str), no-attrs()), chars)
-    where <explode-string> str => chars;
-          <map( \c -> char-class([c])\ )> chars => char-sorts
+    str -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "lit-tree", "78,2,81,60")> appl(
+                                                                                                   prod(char-sorts, lit(str), no-attrs())
+                                                                                                 , chars
+                                                                                                 )
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "lit-tree", "78,2,81,60")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "lit-tree", "78,2,81,60")
+             ; fail
+    where s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "80,10,81,60")
+          ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "80,10,80,38")
+             ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "80,10,80,29")
+                ; <(s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "80,11,80,24") ; explode-string)> str) => chars)
+          ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "81,10,81,60")
+          ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "81,10,81,46")
+             ; <(s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "81,11,81,39")
+                 ; map(
+                     s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "81,16,81,37")
+                     ; \ c -> char-class([c]) \
+                   ))> chars) => char-sorts
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "lit-tree", "78,2,81,60")
+             ; fail
 
-  conc-layout1 : 
-    (CfOptLayout(l1), CfOptLayout(l2)) -> 
-    CfOptLayout(ConcCfLayout(l1, l2))
+  conc-layout1 :
+    (CfOptLayout(l1), CfOptLayout(l2)) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout1", "83,2,85,36")> CfOptLayout(ConcCfLayout(l1, l2))
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout1", "83,2,85,36")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout1", "83,2,85,36")
+             ; fail
 
-  conc-layout2 : 
-    (NoCfLayout(), l) -> l
+  conc-layout2 :
+    (NoCfLayout(), l) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout2", "87,2,88,25")> l
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout2", "87,2,88,25")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout2", "87,2,88,25")
+             ; fail
 
-  conc-layout3 : 
-    (l, NoCfLayout()) -> l
+  conc-layout3 :
+    (l, NoCfLayout()) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout3", "90,2,91,25")> l
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout3", "90,2,91,25")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout3", "90,2,91,25")
+             ; fail
+
 
 strategies
+  conc-layout =
+    s-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout", "95,2,95,59")
+    ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "95,16,95,59")
+    ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "95,16,95,27") ; conc-layout1
+       <+ s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "95,32,95,59")
+          ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "95,32,95,43") ; conc-layout2
+             <+ s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "95,48,95,59") ; conc-layout3))
+    < s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout", "95,2,95,59")
+    + s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "conc-layout", "95,2,95,59")
+      ; fail
 
-  conc-layout = conc-layout1 <+ conc-layout2 <+ conc-layout3
 
 rules
 
-  UnStart : start(s,l1,x,l2) -> (l1, x, l2)
+  UnStart :
+    start(s, l1, x, l2) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "UnStart", "99,2,99,42")> (l1, x, l2)
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "UnStart", "99,2,99,42")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "UnStart", "99,2,99,42")
+             ; fail
 
-  CombineLayout(s1,s2) : 
-    ((l1, x, l2), (l3, y, l4)) -> 
-    (l1, <s1> (x, <s2>(l2, l3), y), l4)
+  CombineLayout(s1, s2) :
+    ( (l1, x, l2)
+    , (l3, y, l4)
+    ) -> <r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "CombineLayout", "101,2,103,38")> ( l1
+                                                                                                      , <s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "103,10,103,11") ; s1> ( x
+                                                                                                                                                                                          , <s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "103,19,103,20") ; s2> (l2, l3)
+                                                                                                                                                                                          , y
+                                                                                                                                                                                          )
+                                                                                                      , l4
+                                                                                                      )
+    where r-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "CombineLayout", "101,2,103,38")
+          <+ r-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "CombineLayout", "101,2,103,38")
+             ; fail
+
 
 strategies
-
   concat-layout =
-    foldr1a(conc-layout <+ !ConcLayout(<id>))
+    s-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "concat-layout", "107,2,108,44")
+    ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "108,4,108,44")
+    ; foldr1a(
+        s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "108,12,108,43")
+        ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "108,12,108,22") ; conc-layout
+           <+ s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "108,27,108,43")
+              ; !ConcLayout(
+                   <s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "108,40,108,41") ; id>
+                 ))
+      )
+    < s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "concat-layout", "107,2,108,44")
+    + s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "concat-layout", "107,2,108,44")
+      ; fail
 
   foldr1a(s) =
-    rec f( 
-       \ [x] -> x \
-    <+ \ [a,b|xs] -> <f>[<s>(a, b)|xs] \
-    )
+    s-enter(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "foldr1a", "110,2,114,4")
+    ; s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "111,4,114,4")
+    ; rec f (
+        s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "112,7,113,39")
+        ; (s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "112,7,112,18")
+           ; \ [x] -> x \
+           <+ s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "113,7,113,39")
+              ; \ [a, b|xs] -> <s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "113,22,113,22") ; f> [<s-step(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "113,26,113,26") ; s> (a, b)|xs] \)
+      )
+    < s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "foldr1a", "110,2,114,4")
+    + s-exit(|"_cellar/asfix-tools/lib/asfix-abstractions.str", "foldr1a", "110,2,114,4")
+      ; fail

@@ -1,12 +1,30 @@
-// with the new compilation scheme with stack-allocated closures,
-// SRTS_all expects a static link as first (of three) argument.
-// Therefore, it cannot be called as a prim anymore.
-
 module test48
-strategies
 
-  ALL(s) = 
-    ?t; prim("SRTS_all", s | t)
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
+  ALL(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "ALL", "8,2,9,30")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "9,4,9,30")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "9,4,9,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "9,8,9,30")
+    ; prim(
+        "SRTS_all"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "9,25,9,25") ; s
+      | t
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "ALL", "8,2,9,30")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "ALL", "8,2,9,30")
+      ; fail
 
   main =
-    ALL(id)
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "main", "11,2,12,10")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "12,4,12,10")
+    ; ALL(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "12,8,12,9") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "main", "11,2,12,10")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test48.str", "main", "11,2,12,10")
+      ; fail

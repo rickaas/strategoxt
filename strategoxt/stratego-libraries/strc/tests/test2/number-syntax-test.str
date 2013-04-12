@@ -1,14 +1,38 @@
 module number-syntax-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 rules
 
-  bla : 1 -> 2
+  bla :
+    1 -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "bla", "5,2,5,13")> 2
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "bla", "5,2,5,13")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "bla", "5,2,5,13")
+             ; fail
 
-  blabla : 0.2 -> 0.1
+  blabla :
+    0.2 -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "blabla", "7,2,7,20")> 0.1
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "blabla", "7,2,7,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "blabla", "7,2,7,20")
+             ; fail
+
 
 strategies
-
-  main = 
-   <bla> 1 => 2;
-   <blabla> 0.2 => 0.1
-
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "main", "11,2,13,21")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "12,3,13,21")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "12,3,12,14")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "12,3,12,9")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "12,4,12,6") ; bla)> 1) => 2)
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "13,3,13,21")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "13,3,13,14")
+       ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "13,4,13,9") ; blabla)> 0.2) => 0.1
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "main", "11,2,13,21")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/number-syntax-test.str", "main", "11,2,13,21")
+      ; fail

@@ -1,14 +1,53 @@
 module til-eval-exp
-imports til-eval
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  til-eval
+
+
 strategies
-
-  eval-exp(eval-var) = 
-    bottomup(try(
-      eval-var <+ EvalAdd <+ EvalMul <+ EvalSub <+ EvalDiv <+ EvalMod
-      <+ EvalLeq <+ EvalGeq <+ EvalLt <+ EvalGt <+ EvalEqu <+ EvalNeq
-      <+ EvalOr <+ EvalAnd <+ EvalS2I <+ EvalI2S
-    ))
-
-
-
-    
+  eval-exp(eval-var) =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "eval-exp", "5,2,10,5")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "6,4,10,5")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "6,13,10,4")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,6,9,47")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,6,7,13") ; eval-var
+               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,18,9,47")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,18,7,24") ; EvalAdd
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,29,9,47")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,29,7,35") ; EvalMul
+                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,40,9,47")
+                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,40,7,46") ; EvalSub
+                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,51,9,47")
+                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,51,7,57") ; EvalDiv
+                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,62,9,47")
+                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "7,62,7,68") ; EvalMod
+                                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,9,9,47")
+                                                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,9,8,15") ; EvalLeq
+                                                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,20,9,47")
+                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,20,8,26") ; EvalGeq
+                                                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,31,9,47")
+                                                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,31,8,36") ; EvalLt
+                                                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,41,9,47")
+                                                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,41,8,46") ; EvalGt
+                                                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,51,9,47")
+                                                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,51,8,57") ; EvalEqu
+                                                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,62,9,47")
+                                                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "8,62,8,68") ; EvalNeq
+                                                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,9,9,47")
+                                                                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,9,9,14") ; EvalOr
+                                                                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,19,9,47")
+                                                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,19,9,25") ; EvalAnd
+                                                                                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,30,9,47")
+                                                                                                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,30,9,36") ; EvalS2I
+                                                                                                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "9,41,9,47") ; EvalI2S)))))))))))))))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "eval-exp", "5,2,10,5")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-exp.str", "eval-exp", "5,2,10,5")
+      ; fail

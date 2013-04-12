@@ -1,33 +1,109 @@
 module conditional-innermost
-imports collection/list/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+
+
 signature
-  sorts Nat
+  sorts
+    Nat
+
   constructors
     Zero : Nat
     Succ : Nat -> Nat
     Plus : Nat * Nat -> Nat
 
+
 strategies
-
   bottomup(s) =
-    rec x(all(x); s)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "bottomup", "12,2,13,19")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "13,4,13,19")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "13,10,13,18")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "13,10,13,15")
+           ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "13,14,13,14") ; x))
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "13,18,13,18")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "bottomup", "12,2,13,19")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "bottomup", "12,2,13,19")
+      ; fail
 
-  innermost(s) = 
-    bottomup(red(s))
+  innermost(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "innermost", "15,2,16,19")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "16,4,16,19")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "16,13,16,18")
+        ; red(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "16,17,16,17") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "innermost", "15,2,16,19")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "innermost", "15,2,16,19")
+      ; fail
 
-  red(s) = 
-    rec x(s; bottomup(x) <+ id)
+  red(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "red", "18,2,19,30")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,4,19,30")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,10,19,29")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,10,19,23")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,10,19,10") ; s)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,13,19,23")
+           ; bottomup(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,22,19,22") ; x
+             )
+           <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "19,28,19,29") ; id)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "red", "18,2,19,30")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "red", "18,2,19,30")
+      ; fail
 
-  nf(s) = 
-    bottomup(not(s))
+  nf(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "nf", "21,2,22,19")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "22,4,22,19")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "22,13,22,18")
+        ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "22,17,22,17") ; s)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "nf", "21,2,22,19")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "nf", "21,2,22,19")
+      ; fail
+
 
 rules
 
-  A : Plus(Zero, x) -> x
+  A :
+    Plus(Zero, x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "A", "26,2,26,23")> x
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "A", "26,2,26,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "A", "26,2,26,23")
+             ; fail
 
-  B : Plus(Succ(x), y) -> Succ(Plus(x, z))
-      where <id> y => z
+  B :
+    Plus(Succ(x), y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "B", "28,2,29,22")> Succ(Plus(x, z))
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "B", "28,2,29,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "B", "28,2,29,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "29,12,29,22")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "29,12,29,17")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "29,13,29,14") ; id)> y) => z
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "B", "28,2,29,22")
+             ; fail
+
 
 strategies
-
-  main-conditional_innermost = innermost(A + B)
+  main-conditional_innermost =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "main-conditional_innermost", "33,2,33,46")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "33,31,33,46")
+    ; innermost(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "33,41,33,45")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "33,41,33,41") ; A
+           + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "33,45,33,45") ; B)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "main-conditional_innermost", "33,2,33,46")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/conditional_innermost.str", "main-conditional_innermost", "33,2,33,46")
+      ; fail

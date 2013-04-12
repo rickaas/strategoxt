@@ -1,96 +1,209 @@
-/**
- * The ATerm library preserves maximal sharing of subterms
- * through hash-consing. This sharing is not directly available
- * to the user of an ATerm. For some applications it is necessary
- * to make the implicit sharing in terms explicit in the form of
- * a let construct in which all occurences of a shared subterm
- * are replaced by a symbolic pointer (variable).
- */
 module term/share
-imports 
-  collection/list/set 
-  strategy/general/unification 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/set
+  strategy/general/unification
   term/common
 
-strategies
-
- /**
-  * The strategy share defined in this module achieves such
-  * an explicit sharing for arbitrary terms. The approach used by
-  * the strategy is to first turn the term into its underlying
-  * graph and then inlining those subterms that are not shared
-  * (only occur once) or that cannot be shared in this way (upto
-  * the needs of an application).
-  */
-  share(mkvar, always, mklet) = 
-	graph(mkvar); 
-	inline-graph(always, mklet)
 
 strategies
+  share(mkvar, always, mklet) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "share", "25,2,27,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "26,1,27,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "26,1,26,12")
+       ; graph(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "26,7,26,11") ; mkvar
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "27,1,27,27")
+    ; inline-graph(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "27,14,27,19") ; always
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "27,22,27,26") ; mklet
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "share", "25,2,27,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "share", "25,2,27,27")
+      ; fail
 
-  edge(mkvar)      = split(address; mkvar, all(address; mkvar))
-  list-edge(mkvar) = split(address; mkvar, map(address; mkvar))
 
- /**
-  * The graph of a term is obtained by turning each node
-  * \verb|F(t1,...,tn)| into an edge \verb|(a, F(a1,...,an))|,
-  * where \verb|a| is the address of the node and the \verb|ai|
-  * are the addresses of its direct subterms. The \verb|mkvar|
-  * parameter is used to embed the address in some constructor.
-  * (If \verb|mkvar| is \verb|id|, nothing is done.)
-  * 
-  * The first edge in the graph is the root of the tree. By
-  * definition it is never shared. The graph can be turned into
-  * one big let-expression with the root as its body. That is what
-  * the first line of the definition of \verb|inline-graph|
-  * accomplishes. 
-  * 
-  * Subsequently, nodes that are not shared, i.e., a pointer to
-  * which only occurs once, can be inlined. Some nodes may always
-  * have to be inlined (for application specific reasons). The
-  * shape of such nodes is specified by the parameter
-  * \verb|always|.  Edges that cannot be inlined are turned into a
-  * let-binding the form of which is determined by the parameter
-  * \verb|mklet|.
-  * 
-  * After all graph edges have either been inlined or turned into
-  * let-bindings the, now empty, \verb|GraphLet| is discarded and
-  * replaced by its body.
-  */
+strategies
+  edge(mkvar) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "edge", "31,2,31,62")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,21,31,62")
+    ; split(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,27,31,40")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,27,31,33") ; address)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,36,31,40")
+        ; mkvar
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,43,31,61")
+        ; all(s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,47,31,60")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,47,31,53") ; address)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "31,56,31,60")
+              ; mkvar)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "edge", "31,2,31,62")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "edge", "31,2,31,62")
+      ; fail
 
-  graph(mkvar) = 
-    rec x(is-list; split(list-edge(mkvar), map(x); unions); MkCons
-                <+ split(edge(mkvar), \ _#(xs) -> xs\ ; map(x); unions); 
-                   MkCons)
+  list-edge(mkvar) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "list-edge", "32,2,32,62")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,21,32,62")
+    ; split(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,27,32,40")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,27,32,33") ; address)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,36,32,40")
+        ; mkvar
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,43,32,61")
+        ; map(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,47,32,60")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,47,32,53") ; address)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "32,56,32,60")
+            ; mkvar
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "list-edge", "32,2,32,62")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "list-edge", "32,2,32,62")
+      ; fail
+
+  graph(mkvar) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "graph", "61,2,64,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,4,64,25")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,10,64,24")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,10,62,65")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,10,62,16") ; is-list)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,19,62,65")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,19,62,57")
+              ; split(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,25,62,40")
+                  ; list-edge(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,35,62,39") ; mkvar
+                    )
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,43,62,56")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,43,62,48")
+                     ; map(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,47,62,47") ; x
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,51,62,56")
+                  ; unions
+                ))
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "62,60,62,65")
+           ; MkCons
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,19,64,24")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,19,63,70")
+                 ; split(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,25,63,35")
+                     ; edge(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,30,63,34") ; mkvar
+                       )
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,38,63,69")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,38,63,52")
+                        ; \ _#(xs) -> xs \)
+                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,56,63,69")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,56,63,61")
+                        ; map(
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,60,63,60") ; x
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "63,64,63,69")
+                     ; unions
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "64,19,64,24")
+              ; MkCons)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "graph", "61,2,64,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "graph", "61,2,64,25")
+      ; fail
+
 
 signature
   constructors
-    GraphLet : List(Product([Int, Term])) * Term -> Term
+    GraphLet : List(Product([ Int, Term ])) * Term -> Term
+
 
 strategies
+  inline-graph(always, mklet) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "inline-graph", "72,2,78,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "73,1,78,24")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "73,1,73,42")
+       ; \ [(a, t)|graph] -> GraphLet(graph, t) \)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "74,1,78,24")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "74,1,77,39")
+       ; repeat(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,10,77,38")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,10,75,80")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,10,75,26") ; term-share-inline)
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,30,75,79")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,30,75,61")
+                 ; GraphLet(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,39,75,56")
+                     ; [s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,40,75,50")
+                        ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,41,75,42") ; id
+                          , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,44,75,49") ; always
+                          )|s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,54,75,55") ; id]
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,59,75,60") ; id
+                   )
+                 + s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "75,65,75,79") ; term-share-dead)
+              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "76,10,77,38")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "76,10,76,24") ; term-share-dead
+                    <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "77,10,77,38")
+                       ; term-share-dont-inline(
+                           s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "77,33,77,37") ; mklet
+                         )))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "78,1,78,24")
+    ; \ GraphLet([], t) -> t \
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "inline-graph", "72,2,78,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "inline-graph", "72,2,78,24")
+      ; fail
 
-  inline-graph(always, mklet) = 
-	\ [(a, t) | graph] -> GraphLet(graph, t) \ ;
-	repeat(
-          term-share-inline; (GraphLet([(id,always) | id], id) + term-share-dead) <+ 
-          term-share-dead <+
-          term-share-dont-inline(mklet));
-	\ GraphLet([], t) -> t \
 
 rules
 
-  term-share-inline : 
-	GraphLet([(a, skel) | graph], t) ->
-	GraphLet([(a, skel) | graph], t')
-	where <oncetd((a -> skel))> t => t'
+  term-share-inline :
+    GraphLet(
+      [(a, skel)|graph]
+    , t
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-inline", "82,2,85,35")> GraphLet(
+                                                                                                                 [(a, skel)|graph]
+                                                                                                               , t'
+                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-inline", "82,2,85,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-inline", "82,2,85,35")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "85,7,85,35")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "85,7,85,29")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "85,8,85,26")
+                 ; oncetd(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "85,15,85,25")
+                     ; ( a -> skel )
+                   ))> t) => t'
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-inline", "82,2,85,35")
+             ; fail
 
-  term-share-dead : 
-	GraphLet([(a, skel) | graph], t) -> 
-	GraphLet(graph, t)
-	where <not(is-subterm)> (a, t)
+  term-share-dead :
+    GraphLet(
+      [(a, skel)|graph]
+    , t
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dead", "87,2,90,30")> GraphLet(graph, t)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dead", "87,2,90,30")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dead", "87,2,90,30")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "90,7,90,30")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "90,8,90,22")
+              ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "90,12,90,21") ; is-subterm))> (a, t)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dead", "87,2,90,30")
+             ; fail
 
-  term-share-dont-inline(mklet) : 
-	GraphLet([(a, skel) | graph], t) -> 
-	GraphLet(graph, <mklet>(a, skel, t))
-
-
+  term-share-dont-inline(mklet) :
+    GraphLet(
+      [(a, skel)|graph]
+    , t
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dont-inline", "92,2,94,36")> GraphLet(
+                                                                                                                      graph
+                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "94,18,94,22") ; mklet> (a, skel, t)
+                                                                                                                    )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dont-inline", "92,2,94,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/share.str", "term-share-dont-inline", "92,2,94,36")
+             ; fail

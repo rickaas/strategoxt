@@ -1,6 +1,18 @@
 module test82
-imports libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
   main-test82 =
-    !Conc(1,2)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test82.str", "main-test82", "5,2,6,13")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test82.str", "6,4,6,13")
+    ; !Conc(1, 2)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test82.str", "main-test82", "5,2,6,13")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test82.str", "main-test82", "5,2,6,13")
+      ; fail

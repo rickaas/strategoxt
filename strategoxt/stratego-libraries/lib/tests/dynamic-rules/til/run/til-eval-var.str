@@ -1,27 +1,117 @@
 module til-eval-var
-imports til-eval-exp
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  til-eval-exp
+
+
 strategies
+  eval-declaration =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-declaration", "5,2,7,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "6,4,7,33")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "6,5,6,46")
+       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "6,5,6,19")
+          ; ?Declaration(x)
+          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "6,24,6,46")
+             ; ?DeclarationTyped(x, t)))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "7,6,7,33")
+    ; rules ( EvalVar+x :-
+                Var(x) )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-declaration", "5,2,7,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-declaration", "5,2,7,33")
+      ; fail
 
-  eval-declaration = 
-    (?Declaration(x) <+ ?DeclarationTyped(x, t))
-    ; rules( EvalVar+x :- Var(x) )
-
-  eval-assign = 
-    Assign(?x, eval-exp => val)
-    ; rules(EvalVar.x : Var(x) -> val)
+  eval-assign =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-assign", "9,2,11,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "10,4,11,37")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "10,4,10,30")
+       ; Assign(
+           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "10,11,10,12") ; ?x
+         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "10,15,10,29")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "10,15,10,22") ; eval-exp) => val
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "11,6,11,37")
+    ; rules (
+        EvalVar.x :
+          Var(x) -> val
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-assign", "9,2,11,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-assign", "9,2,11,37")
+      ; fail
 
   EvalRead :
-    FunCall("read", []) -> String(x)
-    where stdin-stream; read-text-line => x
+    FunCall("read", []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "EvalRead", "13,2,15,42")> String(x)
+    where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "EvalRead", "13,2,15,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "EvalRead", "13,2,15,42")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "15,10,15,42")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "15,10,15,21") ; stdin-stream)
+          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "15,24,15,42")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "15,24,15,37") ; read-text-line) => x
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "EvalRead", "13,2,15,42")
+             ; fail
 
-  eval-write = 
-    ?ProcCall("write", [<eval-exp>])
-    ; ?String(<try(un-double-quote); try(unescape)>)
-    ; <fprint>(<stdout-stream>, [<id>])
+  eval-write =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-write", "17,2,20,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "18,4,20,38")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "18,4,18,35")
+       ; ?ProcCall(
+            "write"
+          , [ <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "18,25,18,32") ; eval-exp>
+            ]
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,6,20,38")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,6,19,51")
+       ; ?String(
+            <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,15,19,49")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,15,19,34")
+                ; try(
+                    s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,19,19,33") ; un-double-quote
+                  ))
+             ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,37,19,49")
+             ; try(
+                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "19,41,19,48") ; unescape
+               )>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "20,6,20,38")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "20,7,20,12") ; fprint)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "20,16,20,28") ; stdout-stream>
+                                                                                                                           , [<s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "20,34,20,35") ; id>]
+                                                                                                                           )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-write", "17,2,20,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-write", "17,2,20,38")
+      ; fail
 
   VarUndefined =
-    ?Var(<id>)
-    ; fatal-err(|<concat-strings>["variable ", <id>, " used before being defined"])
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "VarUndefined", "22,2,24,82")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "23,4,24,82")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "23,4,23,13")
+       ; ?Var(
+            <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "23,10,23,11") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "24,6,24,82")
+    ; fatal-err(
+      | <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "24,18,24,31") ; concat-strings> [ "variable "
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "24,48,24,49") ; id>
+                                                                                                                                    , " used before being defined"
+                                                                                                                                    ]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "VarUndefined", "22,2,24,82")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "VarUndefined", "22,2,24,82")
+      ; fail
 
-  eval-exp = 
-    eval-exp(EvalVar <+ VarUndefined <+ EvalRead)
+  eval-exp =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-exp", "26,2,27,48")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "27,4,27,48")
+    ; eval-exp(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "27,13,27,47")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "27,13,27,19") ; EvalVar
+           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "27,24,27,47")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "27,24,27,35") ; VarUndefined
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "27,40,27,47") ; EvalRead))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-exp", "26,2,27,48")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-eval-var.str", "eval-exp", "26,2,27,48")
+      ; fail

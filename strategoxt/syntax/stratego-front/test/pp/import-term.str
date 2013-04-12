@@ -1,5 +1,14 @@
 module import-term
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   main =
-    import-term(foo.aterm)
+    s-enter(|"strategoxt/syntax/stratego-front/test/pp/import-term.str", "main", "4,2,5,25")
+    ; s-step(|"strategoxt/syntax/stratego-front/test/pp/import-term.str", "5,4,5,25")
+    ; import-term(foo.aterm)
+    < s-exit(|"strategoxt/syntax/stratego-front/test/pp/import-term.str", "main", "4,2,5,25")
+    + s-exit(|"strategoxt/syntax/stratego-front/test/pp/import-term.str", "main", "4,2,5,25")
+      ; fail

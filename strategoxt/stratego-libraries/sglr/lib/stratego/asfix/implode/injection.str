@@ -1,75 +1,310 @@
-/**
- * Implosion of AsFix injections.
- *
- * Injections are nodes in a tree with a single child. Such nodes
- * can be ignored if they only relate syntactic information
- * instead of structural information. For instance, bracket nodes
- * are only necessary for syntactic purposes.
- */
 module stratego/asfix/implode/injection
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 rules
 
-  ImplodeInjection : 
-    appl(p, [t]) -> t
-    where
-      <is-injection> p
+  ImplodeInjection :
+    appl(p, [t]) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "12,2,15,21")> t
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "12,2,15,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "12,2,15,21")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "15,6,15,21")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "15,7,15,18") ; is-injection)> p
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "12,2,15,21")
+             ; fail
 
-  /**
-   * Injection of a literal to a sort.
-   */
-  ImplodeInjection : 
-    appl(prod([lit(x)], sym, attrs), []) -> x
-    where
-      <asfix-is-sort + cf(asfix-is-sort)> sym
-      ; <not(oncetd(cons(id)))> attrs
+  ImplodeInjection :
+    appl(
+      prod(
+        [lit(x)]
+      , sym
+      , attrs
+      )
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "20,2,24,36")> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "20,2,24,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "20,2,24,36")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "23,6,24,36")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "23,6,23,44")
+             ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "23,7,23,39")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "23,7,23,19") ; asfix-is-sort
+                    + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "23,23,23,39")
+                      ; cf(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "23,26,23,38") ; asfix-is-sort
+                        )))> sym)
+          ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "24,8,24,36")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "24,9,24,29")
+              ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "24,13,24,28")
+                    ; oncetd(
+                        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "24,20,24,27")
+                        ; cons(
+                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "24,25,24,26") ; id
+                          )
+                      )))> attrs
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "20,2,24,36")
+             ; fail
 
-  /**
-   * Injection of a case insensitive literal to a sort.
-   */
-  ImplodeInjection : 
-    appl(prod([cilit(x)], sym, attrs), []) -> x
-    where
-      <asfix-is-sort + cf(asfix-is-sort)> sym
-      ; <not(oncetd(cons(id)))> attrs
+  ImplodeInjection :
+    appl(
+      prod(
+        [cilit(x)]
+      , sym
+      , attrs
+      )
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "29,2,33,36")> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "29,2,33,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "29,2,33,36")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "32,6,33,36")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "32,6,32,44")
+             ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "32,7,32,39")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "32,7,32,19") ; asfix-is-sort
+                    + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "32,23,32,39")
+                      ; cf(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "32,26,32,38") ; asfix-is-sort
+                        )))> sym)
+          ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "33,8,33,36")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "33,9,33,29")
+              ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "33,13,33,28")
+                    ; oncetd(
+                        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "33,20,33,27")
+                        ; cons(
+                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "33,25,33,26") ; id
+                          )
+                      )))> attrs
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "ImplodeInjection", "29,2,33,36")
+             ; fail
+
 
 strategies
-
-  is-injection = 
-    ?prod(_, sort("<START>"), _)
-
-  /**
-   * @todo Improve the bracket detection.
-   */
-  is-injection = 
-    prod(id, id, oncetd("bracket" + bracket))
-
-  is-injection = 
-    ?prod([cf(iter(x))],cf(iter-star(x)), attrs)
-    ; where(<not(oncetd(cons(id)))> attrs)
-
-  is-injection = 
-    ?prod([cf(iter-sep(x,l))],cf(iter-star-sep(x,l)), attrs)
-    ; where(<not(oncetd(cons(id)))> attrs)    
-
-  is-injection = 
-    prod([not(lit(id))]
-	 ,rec x(asfix-is-sort + cf(x) + lex(x) 
-		+ iter(x) + iter-star(x) 
-		+ iter-sep(x,lit(id)) + iter-star-sep(x,lit(id)))
-	, not(oncetd(cons(id))))
+  is-injection =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "37,2,38,31")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "38,4,38,31")
+    ; ?prod(_, sort("<START>"), _)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "37,2,38,31")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "37,2,38,31")
+      ; fail
 
   is-injection =
-    prod(
-      [asfix-is-sort + cf(asfix-is-sort)]
-    , is-injective-alt
-    , not(oncetd(cons(id)))
-    )
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "43,2,44,44")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,4,44,44")
+    ; prod(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,9,44,10") ; id
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,13,44,14") ; id
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,17,44,43")
+        ; oncetd(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,24,44,42")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,24,44,32") ; "bracket"
+               + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "44,36,44,42") ; bracket)
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "43,2,44,44")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "43,2,44,44")
+      ; fail
 
-  is-injection = 
-    prod([varsym(id)],id,not(oncetd(cons(id))))
+  is-injection =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "46,2,48,41")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "47,4,48,41")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "47,4,47,47")
+       ; ?prod(
+            [cf(iter(x))]
+          , cf(iter-star(x))
+          , attrs
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "48,6,48,41")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "48,12,48,40")
+            ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "48,13,48,33")
+                ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "48,17,48,32")
+                      ; oncetd(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "48,24,48,31")
+                          ; cons(
+                              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "48,29,48,30") ; id
+                            )
+                        )))> attrs)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "46,2,48,41")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "46,2,48,41")
+      ; fail
 
-  is-injective-alt = 
-    rec x(asfix-is-sort + cf(x) + alt(x,x))
+  is-injection =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "50,2,52,41")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "51,4,52,41")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "51,4,51,59")
+       ; ?prod(
+            [cf(iter-sep(x, l))]
+          , cf(iter-star-sep(x, l))
+          , attrs
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "52,6,52,41")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "52,12,52,40")
+            ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "52,13,52,33")
+                ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "52,17,52,32")
+                      ; oncetd(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "52,24,52,31")
+                          ; cons(
+                              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "52,29,52,30") ; id
+                            )
+                        )))> attrs)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "50,2,52,41")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "50,2,52,41")
+      ; fail
+
+  is-injection =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "54,2,59,24")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "55,4,59,24")
+    ; prod(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "55,9,55,22")
+        ; [ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "55,10,55,21")
+            ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "55,14,55,20")
+                  ; lit(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "55,18,55,19") ; id
+                    ))
+          ]
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,3,58,50")
+        ; rec x (
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,9,58,49")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,9,56,21") ; asfix-is-sort
+               + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,25,58,49")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,25,56,29")
+                    ; cf(
+                        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,28,56,28") ; x
+                      )
+                    + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,33,58,49")
+                      ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,33,56,38")
+                         ; lex(
+                             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "56,37,56,37") ; x
+                           )
+                         + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "57,4,58,49")
+                           ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "57,4,57,10")
+                              ; iter(
+                                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "57,9,57,9") ; x
+                                )
+                              + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "57,14,58,49")
+                                ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "57,14,57,25")
+                                   ; iter-star(
+                                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "57,24,57,24") ; x
+                                     )
+                                   + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,4,58,49")
+                                     ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,4,58,22")
+                                        ; iter-sep(
+                                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,13,58,13") ; x
+                                          , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,15,58,21")
+                                            ; lit(
+                                                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,19,58,20") ; id
+                                              )
+                                          )
+                                        + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,26,58,49")
+                                          ; iter-star-sep(
+                                              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,40,58,40") ; x
+                                            , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,42,58,48")
+                                              ; lit(
+                                                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "58,46,58,47") ; id
+                                                )
+                                            )))))))
+          )
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "59,3,59,23")
+        ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "59,7,59,22")
+              ; oncetd(
+                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "59,14,59,21")
+                  ; cons(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "59,19,59,20") ; id
+                    )
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "54,2,59,24")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "54,2,59,24")
+      ; fail
+
+  is-injection =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "61,2,66,4")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "62,4,66,4")
+    ; prod(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "63,6,63,40")
+        ; [ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "63,7,63,39")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "63,7,63,19") ; asfix-is-sort
+               + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "63,23,63,39")
+                 ; cf(
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "63,26,63,38") ; asfix-is-sort
+                   ))
+          ]
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "64,6,64,21") ; is-injective-alt
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "65,6,65,26")
+        ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "65,10,65,25")
+              ; oncetd(
+                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "65,17,65,24")
+                  ; cons(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "65,22,65,23") ; id
+                    )
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "61,2,66,4")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "61,2,66,4")
+      ; fail
+
+  is-injection =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "68,2,69,46")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,4,69,46")
+    ; prod(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,9,69,20")
+        ; [ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,10,69,19")
+            ; varsym(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,17,69,18") ; id
+              )
+          ]
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,22,69,23") ; id
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,25,69,45")
+        ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,29,69,44")
+              ; oncetd(
+                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,36,69,43")
+                  ; cons(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "69,41,69,42") ; id
+                    )
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "68,2,69,46")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injection", "68,2,69,46")
+      ; fail
+
+  is-injective-alt =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injective-alt", "71,2,72,42")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,4,72,42")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,10,72,41")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,10,72,22") ; asfix-is-sort
+           + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,26,72,41")
+             ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,26,72,30")
+                ; cf(
+                    s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,29,72,29") ; x
+                  )
+                + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,34,72,41")
+                  ; alt(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,38,72,38") ; x
+                    , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "72,40,72,40") ; x
+                    )))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injective-alt", "71,2,72,42")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "is-injective-alt", "71,2,72,42")
+      ; fail
 
   asfix-is-sort =
-    sort(id) + parameterized-sort(id, map(asfix-is-sort))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "asfix-is-sort", "74,2,75,56")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,4,75,56")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,4,75,11")
+       ; sort(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,9,75,10") ; id
+         )
+       + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,15,75,56")
+         ; parameterized-sort(
+             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,34,75,35") ; id
+           , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,38,75,55")
+             ; map(
+                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "75,42,75,54") ; asfix-is-sort
+               )
+           ))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "asfix-is-sort", "74,2,75,56")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/injection.str", "asfix-is-sort", "74,2,75,56")
+      ; fail

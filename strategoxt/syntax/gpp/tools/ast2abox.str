@@ -1,18 +1,36 @@
 module ast2abox
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-gpp
   lib-pp-table-args
 
-strategies
 
+strategies
   io-ast2abox =
-    io-wrap(
-      ast2abox-options
-    , system-usage
-    , system-about
-    , ast2box(|<read-pptables-config>)
-    )
+    s-enter(|"strategoxt/syntax/gpp/tools/ast2abox.str", "io-ast2abox", "9,2,15,4")
+    ; s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "10,4,15,4")
+    ; io-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "11,6,11,21") ; ast2abox-options
+      , s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "12,6,12,17") ; system-usage
+      , s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "13,6,13,17") ; system-about
+      , s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "14,6,14,37")
+        ; ast2box(
+          | <s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "14,16,14,35") ; read-pptables-config>
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools/ast2abox.str", "io-ast2abox", "9,2,15,4")
+    + s-exit(|"strategoxt/syntax/gpp/tools/ast2abox.str", "io-ast2abox", "9,2,15,4")
+      ; fail
 
   ast2abox-options =
-    pptable-option
+    s-enter(|"strategoxt/syntax/gpp/tools/ast2abox.str", "ast2abox-options", "17,2,18,17")
+    ; s-step(|"strategoxt/syntax/gpp/tools/ast2abox.str", "18,4,18,17")
+    ; pptable-option
+    < s-exit(|"strategoxt/syntax/gpp/tools/ast2abox.str", "ast2abox-options", "17,2,18,17")
+    + s-exit(|"strategoxt/syntax/gpp/tools/ast2abox.str", "ast2abox-options", "17,2,18,17")
+      ; fail

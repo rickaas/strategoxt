@@ -1,13 +1,30 @@
-/**
- * Test for STR-626
- */
 module test103
-imports libstratego-lib
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
+strategies
   main-test103 =
-    <not(foo)> Some("Hey")
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "main-test103", "8,2,9,25")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "9,4,9,25")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "9,5,9,12")
+        ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "9,9,9,11") ; foo))> Some("Hey")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "main-test103", "8,2,9,25")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "main-test103", "8,2,9,25")
+      ; fail
 
   foo =
-    ?f
-    ; rules(Foo : f#(_) -> [])
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "foo", "11,2,13,29")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "12,4,13,29")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "12,4,12,5") ; ?f)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "13,6,13,29")
+    ; rules ( Foo :
+                f#(_) -> [] )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "foo", "11,2,13,29")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test103.str", "foo", "11,2,13,29")
+      ; fail

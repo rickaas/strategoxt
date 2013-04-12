@@ -1,59 +1,56 @@
-/**
- * This module provides some basic strategies for inspecting
- * the runtime stack of strategies. 
- *
- * There are numerous caveats to be aware of:
- * 
- * <ul>
- * <li>Because of inlining, the trace might not contain all 
- *     strategies which are on the stack.</li>
- * <li>If libraries compiled with other compilers are called,
- *     stack frames from strategies here will be invisible.</li>
- * <li>Lifted strategies will appear in the trace, but the names
- *     might be non-instructive, depending on the compiler version
- *     used.</li>
- * </ul>
- *
- * @author Karl Trygve Kalleberg <karltk@strategoxt.org>
- * 
- */
 module lang/stacktrace
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
+  stacktrace-get-all-frame-names =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-all-frame-names", "32,2,32,76")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "32,35,32,76")
+    ; prim("SSL_stacktrace_get_all_frame_names")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-all-frame-names", "32,2,32,76")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-all-frame-names", "32,2,32,76")
+      ; fail
 
-  /**
-   * Return a list of all the current stack frame namess. A stack
-   * frame name is the name of the rule or strategy on a given 
-   * stack frame. The list might not be complete; refer to the module 
-   * documentation for lang/stacktrace for details.
-   *
-   * @type -> List(String)
-   */
-  stacktrace-get-all-frame-names = prim("SSL_stacktrace_get_all_frame_names")
-  
-  /**
-   * Return the name of the currently active stack frame. This 
-   * strategy returns the name of the strategy that calls 
-   * stacktrace-get-current-frame, with certain restrictions,
-   * see the lang/stacktrace module documentation.
-   *
-   * @type -> String
-   */
-  stacktrace-get-current-frame-name = prim("SSL_stacktrace_get_current_frame_name")
+  stacktrace-get-current-frame-name =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-current-frame-name", "42,2,42,82")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "42,38,42,82")
+    ; prim("SSL_stacktrace_get_current_frame_name")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-current-frame-name", "42,2,42,82")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-current-frame-name", "42,2,42,82")
+      ; fail
 
-  /**
-   * Return the index (depth) of the current stack, including the call to this
-   * strategy.
-   *
-   * @type -> Int
-   */
-  stacktrace-get-current-frame-index = prim("SSL_stacktrace_get_current_frame_index")
-  
+  stacktrace-get-current-frame-index =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-current-frame-index", "50,2,50,84")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "50,39,50,84")
+    ; prim("SSL_stacktrace_get_current_frame_index")
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-current-frame-index", "50,2,50,84")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "stacktrace-get-current-frame-index", "50,2,50,84")
+      ; fail
+
   print-stacktrace =
-    where(
-      prim("SSL_stacktrace_get_all_frame_names")
-    ; try(?["print_stacktrace_0_0" | <id>])
-    ; reverse
-    ; list-loop(<fprintnl> (stderr(), ["\t", <id>]))
-    )
-
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "print-stacktrace", "52,2,58,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "53,4,58,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "54,6,57,51")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "54,6,54,47") ; prim("SSL_stacktrace_get_all_frame_names"))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "55,6,57,51")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "55,6,55,42")
+               ; try(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "55,10,55,41")
+                   ; ?["print_stacktrace_0_0"|<s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "55,38,55,39") ; id>]
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "56,6,57,51")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "56,6,56,12") ; reverse)
+            ; s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "57,6,57,51")
+            ; list-loop(
+                s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "57,16,57,50")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "57,17,57,24") ; fprintnl)> ( stderr()
+                                                                                                                      , [ "\t"
+                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "57,46,57,47") ; id>
+                                                                                                                        ]
+                                                                                                                      )
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "print-stacktrace", "52,2,58,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/lang/stacktrace.str", "print-stacktrace", "52,2,58,4")
+      ; fail

@@ -1,51 +1,146 @@
-/**
- * Conc to Cons
- *
- * SDF2 lists are composed by means of a binary concatenation
- * operator (\verb|A+ A+ -> A+|) that we translated to
- * \verb|Conc| above. In abstract syntax trees we want to
- * represent lists by \verb|Cons/Nil| structures. The following
- * rules achieve this transformation.
- *
- * Note: these strategies are not used in the main implode-asfix.
- */
 module stratego/asfix/implode/conc
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 rules
 
-  CTC0 : Snoc(x, y) -> Conc(x, Ins(y))
-  CTC0 : [x | y] -> Conc(Ins(x), y)
+  CTC0 :
+    Snoc(x, y) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC0", "15,2,15,37")> Conc(x, Ins(y))
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC0", "15,2,15,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC0", "15,2,15,37")
+             ; fail
 
-  CTC1 : Conc(Conc(x, y), z) -> Conc(x, Conc(y, z))
+  CTC0 :
+    [x|y] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC0", "16,2,16,34")> Conc(Ins(x), y)
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC0", "16,2,16,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC0", "16,2,16,34")
+             ; fail
 
-  CTC1 : Conc( Conc( a, b, c ), d, e) ->
-         Conc( a, b, Conc( c, d, e ) )
-  CTC2 : Conc( x, y, z ) -> <concat>[x,[y],z]
+  CTC1 :
+    Conc(Conc(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "18,2,18,50")> Conc(x, Conc(y, z))
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "18,2,18,50")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "18,2,18,50")
+             ; fail
 
-  CTC1 : Conc([], x) -> x
-  CTC1 : Conc(x, []) -> x
+  CTC1 :
+    Conc(
+      Conc(a, b, c)
+    , d
+    , e
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "20,2,21,37")> Conc(
+                                                                                                                     a
+                                                                                                                   , b
+                                                                                                                   , Conc(c, d, e)
+                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "20,2,21,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "20,2,21,37")
+             ; fail
 
-  CTC2 : Conc(Ins(x), []) -> [x]
-  CTC2 : Conc(Ins(x), Ins(y)) -> [x, y]
-  CTC2 : Conc(Ins(x), [y | z]) -> [x, y | z]
+  CTC2 :
+    Conc(x, y, z) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "22,2,22,44")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "22,29,22,34") ; concat> [x, [y], z]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "22,2,22,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "22,2,22,44")
+             ; fail
 
-  CTC3 : Ins(x) -> [x]
+  CTC1 :
+    Conc([], x) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "24,2,24,24")> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "24,2,24,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "24,2,24,24")
+             ; fail
 
-  CTC4 : Conc([x | y], z) -> Conc(Ins(x), Conc(y, z))
+  CTC1 :
+    Conc(x, []) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "25,2,25,24")> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "25,2,25,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC1", "25,2,25,24")
+             ; fail
+
+  CTC2 :
+    Conc(Ins(x), []) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "27,2,27,31")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "27,2,27,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "27,2,27,31")
+             ; fail
+
+  CTC2 :
+    Conc(Ins(x), Ins(y)) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "28,2,28,38")> [x, y]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "28,2,28,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "28,2,28,38")
+             ; fail
+
+  CTC2 :
+    Conc(
+      Ins(x)
+    , [y|z]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "29,2,29,43")> [x, y|z]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "29,2,29,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC2", "29,2,29,43")
+             ; fail
+
+  CTC3 :
+    Ins(x) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC3", "31,2,31,21")> [x]
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC3", "31,2,31,21")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC3", "31,2,31,21")
+             ; fail
+
+  CTC4 :
+    Conc([x|y], z) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC4", "33,2,33,52")> Conc(
+                                                                                                                                  Ins(x)
+                                                                                                                                , Conc(y, z)
+                                                                                                                                )
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC4", "33,2,33,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "CTC4", "33,2,33,52")
+             ; fail
+
 
 signature
   constructors
     Ins  : a -> List(a)
     Conc : List(a) * List(a) -> List(a)
     Conc : List(a) * List(a) * List(a) -> List(a)
-
-    /**
-     * @todo Where is this Snoc coming from?
-     */
     Snoc : List(a) * a -> List(a)
 
-strategies
 
-  conc-to-cons = 
-    rec x(repeat(CTC0 + CTC1 + Conc(CTC0, id)); 
-          (Conc(id, x) <+ all(x)); 
-          try(CTC2; Cons(x, id) + CTC3))
+strategies
+  conc-to-cons =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "conc-to-cons", "48,2,51,39")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,4,51,39")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,10,51,38")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,10,49,45")
+           ; repeat(
+               s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,17,49,44")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,17,49,20") ; CTC0
+                  + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,24,49,44")
+                    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,24,49,27") ; CTC1
+                       + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,31,49,44")
+                         ; Conc(
+                             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,36,49,39") ; CTC0
+                           , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "49,42,49,43") ; id
+                           )))
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,10,51,38")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,11,50,31")
+           ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,11,50,21")
+              ; Conc(
+                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,16,50,17") ; id
+                , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,20,50,20") ; x
+                )
+              <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,26,50,31")
+                 ; all(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "50,30,50,30") ; x)))
+        ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,10,51,38")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,14,51,37")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,14,51,30")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,14,51,17") ; CTC2)
+               ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,20,51,30")
+               ; Cons(
+                   s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,25,51,25") ; x
+                 , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,28,51,29") ; id
+                 )
+               + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "51,34,51,37") ; CTC3)
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "conc-to-cons", "48,2,51,39")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/conc.str", "conc-to-cons", "48,2,51,39")
+      ; fail

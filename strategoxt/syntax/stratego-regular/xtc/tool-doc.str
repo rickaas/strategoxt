@@ -1,315 +1,361 @@
-/**
- * Offers facilities to show tool --help and --about information in a nice layout.
- *
- * The core tool-doc constructs are presentation oriented.
- * You can use the sugar in this module to abstract from the presentation.
- *
- * @author Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module tool-doc
-imports strategoxt-xtc-tools
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  strategoxt-xtc-tools
+
+
 strategies
-
-  /**
-   * Outputs formatted tool-doc to standard output.
-   *
-   * @type List(DocSection) -> List(DocSection)
-   */
   tool-doc =
-    where(
-      xtc-temp-files(
-        topdown(repeat(DesugarToolDoc))
-        ; write-to
-        ; xtc-transform(!"tool-doc2abox")
-        ; xtc-abox2text(!80)
-        ; where(FILE(read-text-file; echo))
-      )
-    )
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "tool-doc", "18,2,27,4")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "19,4,27,4")
+    ; where(s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "20,6,26,6")
+            ; xtc-temp-files(
+                s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "21,8,25,42")
+                ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "21,8,21,38")
+                   ; topdown(
+                       s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "21,16,21,37")
+                       ; repeat(
+                           s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "21,23,21,36") ; DesugarToolDoc
+                         )
+                     ))
+                ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "22,10,25,42")
+                ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "22,10,22,17") ; write-to)
+                ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "23,10,25,42")
+                ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "23,10,23,40")
+                   ; xtc-transform(
+                       s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "23,24,23,39")
+                       ; !"tool-doc2abox"
+                     ))
+                ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "24,10,25,42")
+                ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "24,10,24,27")
+                   ; xtc-abox2text(
+                       s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "24,24,24,26")
+                       ; !80
+                     ))
+                ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "25,10,25,42")
+                ; where(s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "25,16,25,41")
+                        ; FILE(
+                            s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "25,21,25,40")
+                            ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "25,21,25,34") ; read-text-file)
+                            ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "25,37,25,40")
+                            ; echo
+                          ))
+              ))
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "tool-doc", "18,2,27,4")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "tool-doc", "18,2,27,4")
+      ; fail
 
-/**
- * Defines the core tool-doc language.
- *
- * Usually you don't want to use these constructs: the overlays
- * in this module offer a more domain specific view on this language.
- */
-signature 
+
+signature
   constructors
-
     HSection  : String * List(DocSection) -> DocSection
     Paragraph : String -> DocSection
     Line      : String -> DocSection
-
     ItemList  : List(DocSection) -> DocSection
-    DefList   : List(Def)        -> DocSection
+    DefList   : List(Def) -> DocSection
     Def       : String * DocSection -> Def
 
   constructors
+    HelpString : String * String -> HelpString
+    HelpString : List(String) * String -> HelpString
 
-    HelpString  : String * String -> HelpString
-    HelpString  : List(String) * String -> HelpString
 
-/**
- * Sugar for usage, summary, description
- */
 signature
   constructors
-  
-    /**
-     * Single line of text, prefixed by "Usage: ".
-     */
-    Usage   : String -> DocSection
-
-    /**
-     * Section with the heading "Summary".
-     */
-    Summary : String -> DocSection
-
-    /**
-     * Section of paragraphs with the heading "Description".
-     */
-    Description : List(String) -> DocSection
-
-    /**
-     * Definition list of the available options and their description.
-     *
-     * The available options are taken from the "usage-table", "usage" key.
-     * The value of this key is set by parse-options in the standard library.
-     * The value of the key must be a list of strings. These strings are
-     * converted to HelpStrings using the ensure-help-string strategy.
-     */
-    OptionUsage : DocSection
-    
-    /**
-     * Authors with the heading "Authors".
-     */
-    Authors : List(DocSection) -> DocSection
-
-    /**
-     * Author section with the heading "Author".
-     */
-    Author : DocSection -> DocSection
-
-    /**
-     * Section of the given name and e-mail adress.
-     */
-    Person : String * String -> DocSection
-    
-    /**
-     * Section of the given website.
-     */
-    WebHome : String -> DocSection
-
-    /**
-     * Bug reporting section using the information provided by Autoconf.
-     */
-    AutoReportBugs : DocSection
-
-    /**
-     * Bug reporting section from a given email address.
-     */
-    ReportBugs : String -> DocSection
-
-    /**
-     * Program section using the information provided by Autoconf.
-     */
-    AutoProgram : DocSection
- 
-    /**
-     * Section with the name of the program, the package and the version.
-     */
-    Program : String * String * String -> DocSection
-    
-    /**
-     * Configuration section from a list of items.
-     */
-    Config : List(ConfigItem) -> DocSection
-
-    /**
-     * Config item for the default xtc repository.
-     */
+    Usage                : String -> DocSection
+    Summary              : String -> DocSection
+    Description          : List(String) -> DocSection
+    OptionUsage          : DocSection
+    Authors              : List(DocSection) -> DocSection
+    Author               : DocSection -> DocSection
+    Person               : String * String -> DocSection
+    WebHome              : String -> DocSection
+    AutoReportBugs       : DocSection
+    ReportBugs           : String -> DocSection
+    AutoProgram          : DocSection
+    Program              : String * String * String -> DocSection
+    Config               : List(ConfigItem) -> DocSection
     DefaultXTCRepository : Def
-    
-    /**
-     * Config item for the currently configured xtc repository.
-     */
     CurrentXTCRepository : Def
-    
-    /**
-     * Generic configuration item: key, value.
-     */
-    ConfigItem : String * String -> Def
+    ConfigItem           : String * String -> Def
+    License              : List(String) -> DocSection
+    GNU_GPL              : String * String -> DocSection
+    GNU_LGPL             : String * String -> DocSection
 
-    /**
-     * Section of paragraphs with the license heading.
-     */
-    License : List(String) -> DocSection
 
-    /**
-     * GPL license section
-     *
-     * @param Year
-     * @param Author
-     */
-    GNU_GPL : String * String -> DocSection
-
-    /**
-     * Creates a LGPL license.
-     *
-     * @param Year
-     * @param Author     
-     */
-    GNU_LGPL : String * String -> DocSection
-    
 rules
 
   DesugarToolDoc :
-    Usage(s) -> Line(<conc-strings> ("Usage: ", s))
+    Usage(s) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "165,2,166,50")> Line(
+                                                                                                                     <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "166,22,166,33") ; conc-strings> ("Usage: ", s)
+                                                                                                                   )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "165,2,166,50")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "165,2,166,50")
+             ; fail
 
   DesugarToolDoc :
-    Summary(p) -> HSection("Summary:", [Paragraph(p)])
+    Summary(p) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "168,2,169,53")> HSection("Summary:", [Paragraph(p)])
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "168,2,169,53")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "168,2,169,53")
+             ; fail
 
   DesugarToolDoc :
-    Description(ps) -> HSection("Description:", <map(!Paragraph(<id>))> ps)
+    Description(ps) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "171,2,172,74")> HSection(
+                                                                                                                            "Description:"
+                                                                                                                          , <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "172,49,172,69")
+                                                                                                                             ; map(
+                                                                                                                                 s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "172,53,172,68")
+                                                                                                                                 ; !Paragraph(
+                                                                                                                                      <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "172,65,172,66") ; id>
+                                                                                                                                    )
+                                                                                                                               )> ps
+                                                                                                                          )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "171,2,172,74")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "171,2,172,74")
+             ; fail
 
   DesugarToolDoc :
-    OptionUsage() ->
-      HSection("Options:", [
-        DefList(
-          < table-get 
-          ; reverse
-          ; map(ensure-help-string)
-          ; filter( \ HelpString(f, d) -> Def(f, Paragraph(d)) \ )
-          > ("usage-table", "usage")
-        )
-    ])
-    
-  DesugarToolDoc :    
-    Authors(ps) -> HSection("Authors:", [ItemList(ps)])
+    OptionUsage() -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "174,2,184,5")> HSection(
+                                                                                                                         "Options:"
+                                                                                                                       , [ DefList(
+                                                                                                                             <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "178,12,181,65")
+                                                                                                                              ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "178,12,178,20") ; table-get)
+                                                                                                                              ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "179,12,181,65")
+                                                                                                                              ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "179,12,179,18") ; reverse)
+                                                                                                                              ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "180,12,181,65")
+                                                                                                                              ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "180,12,180,34")
+                                                                                                                                 ; map(
+                                                                                                                                     s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "180,16,180,33") ; ensure-help-string
+                                                                                                                                   ))
+                                                                                                                              ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "181,12,181,65")
+                                                                                                                              ; filter(
+                                                                                                                                  s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "181,20,181,63")
+                                                                                                                                  ; \ HelpString(f, d) -> Def(f, Paragraph(d)) \
+                                                                                                                                )> ("usage-table", "usage")
+                                                                                                                           )
+                                                                                                                         ]
+                                                                                                                       )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "174,2,184,5")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "174,2,184,5")
+             ; fail
 
   DesugarToolDoc :
-    Author(p) -> HSection("Author:", [ItemList([p])])
+    Authors(ps) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "186,2,187,54")> HSection("Authors:", [ItemList(ps)])
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "186,2,187,54")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "186,2,187,54")
+             ; fail
 
   DesugarToolDoc :
-    Person(name, mail) -> Paragraph(<concat-strings> [name, " <", mail, ">"])
+    Author(p) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "189,2,190,52")> HSection(
+                                                                                                                      "Author:"
+                                                                                                                    , [ItemList([p])]
+                                                                                                                    )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "189,2,190,52")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "189,2,190,52")
+             ; fail
 
   DesugarToolDoc :
-    WebHome(s) -> HSection("Website:", [Line(s)])
+    Person(name, mail) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "192,2,193,76")> Paragraph(
+                                                                                                                               <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "193,37,193,50") ; concat-strings> [name, " <", mail, ">"]
+                                                                                                                             )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "192,2,193,76")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "192,2,193,76")
+             ; fail
 
   DesugarToolDoc :
-    AutoReportBugs() -> ReportBugs(<package-bugreport> ())
+    WebHome(s) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "195,2,196,48")> HSection("Website:", [Line(s)])
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "195,2,196,48")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "195,2,196,48")
+             ; fail
 
   DesugarToolDoc :
-    ReportBugs(s) -> Paragraph(<concat-strings> ["Please report bugs to ", s])
+    AutoReportBugs() -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "198,2,199,57")> ReportBugs(
+                                                                                                                             <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "199,36,199,52") ; package-bugreport> ()
+                                                                                                                           )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "198,2,199,57")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "198,2,199,57")
+             ; fail
 
   DesugarToolDoc :
-    AutoProgram() -> Program(<get-config> "program", <package-name> (), <package-version> ())
+    ReportBugs(s) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "201,2,202,77")> Paragraph(
+                                                                                                                          <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "202,32,202,45") ; concat-strings> ["Please report bugs to ", s]
+                                                                                                                        )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "201,2,202,77")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "201,2,202,77")
+             ; fail
 
   DesugarToolDoc :
-    Program(name, package, version) ->
-      HSection(name, [
-        DefList([
-          Def("Package", Paragraph(package))
-        , Def("Version", Paragraph(version))
-        ])
-      ])
+    AutoProgram() -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "204,2,205,92")> Program(
+                                                                                                                          <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "205,30,205,39") ; get-config> "program"
+                                                                                                                        , <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "205,54,205,65") ; package-name> ()
+                                                                                                                        , <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "205,73,205,87") ; package-version> ()
+                                                                                                                        )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "204,2,205,92")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "204,2,205,92")
+             ; fail
 
   DesugarToolDoc :
-    Config(items) -> HSection("Configuration:", [DefList(items)])
+    Program(name, package, version) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "207,2,214,7")> HSection(
+                                                                                                                                           name
+                                                                                                                                         , [ DefList(
+                                                                                                                                               [ Def("Package", Paragraph(package))
+                                                                                                                                               , Def("Version", Paragraph(version))
+                                                                                                                                               ]
+                                                                                                                                             )
+                                                                                                                                           ]
+                                                                                                                                         )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "207,2,214,7")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "207,2,214,7")
+             ; fail
 
   DesugarToolDoc :
-    DefaultXTCRepository() -> ConfigItem("Default XTC Repository", <GetInternalDefaultXtcRepository> ())
+    Config(items) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "216,2,217,64")> HSection("Configuration:", [DefList(items)])
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "216,2,217,64")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "216,2,217,64")
+             ; fail
 
   DesugarToolDoc :
-    CurrentXTCRepository() -> ConfigItem("Current XTC Repository", <xtc-location> ())
+    DefaultXTCRepository() -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "219,2,220,103")> ConfigItem(
+                                                                                                                                    "Default XTC Repository"
+                                                                                                                                  , <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "220,68,220,98") ; GetInternalDefaultXtcRepository> ()
+                                                                                                                                  )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "219,2,220,103")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "219,2,220,103")
+             ; fail
+
+  DesugarToolDoc :
+    CurrentXTCRepository() -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "222,2,223,84")> ConfigItem(
+                                                                                                                                   "Current XTC Repository"
+                                                                                                                                 , <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "223,68,223,79") ; xtc-location> ()
+                                                                                                                                 )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "222,2,223,84")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "222,2,223,84")
+             ; fail
 
   external GetInternalDefaultXtcRepository(|)
 
   DesugarToolDoc :
-    ConfigItem(k, v) -> Def(k, Line(v))
+    ConfigItem(k, v) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "227,2,228,38")> Def(k, Line(v))
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "227,2,228,38")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "227,2,228,38")
+             ; fail
 
   DesugarToolDoc :
-    License(ps) -> HSection("License:", <map(!Paragraph(<id>))> ps)
-    
-  DesugarToolDoc :    
-    GNU_GPL(year, author)
-      ->
-    License(
-      [ <concat-strings> ["Copyright (C) ", year, " ", author]
-      , "This program is free software; you can redistribute it and/or
+    License(ps) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "230,2,231,66")> HSection(
+                                                                                                                        "License:"
+                                                                                                                      , <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "231,41,231,61")
+                                                                                                                         ; map(
+                                                                                                                             s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "231,45,231,60")
+                                                                                                                             ; !Paragraph(
+                                                                                                                                  <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "231,57,231,58") ; id>
+                                                                                                                                )
+                                                                                                                           )> ps
+                                                                                                                      )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "230,2,231,66")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "230,2,231,66")
+             ; fail
+
+  DesugarToolDoc :
+    GNU_GPL(year, author) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "233,2,250,4")> License(
+                                                                                                                                 [ <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "237,9,237,22") ; concat-strings> ["Copyright (C) ", year, " ", author]
+                                                                                                                                 , "This program is free software; you can redistribute it and/or
         modify it under the terms of the GNU General Public License as published by the 
         Free Software Foundation; either version 2 of the License, or (at your option) 
         any later version."
-      , "This program is distributed in the hope that it will be useful, but 
+                                                                                                                                 , "This program is distributed in the hope that it will be useful, but 
         WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
         FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more 
         details."
-      , "You should have received a copy of the GNU General Public License 
+                                                                                                                                 , "You should have received a copy of the GNU General Public License 
         along with this program; if not, write to the Free Software Foundation, 
         Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA"
-      ]
-    )
+                                                                                                                                 ]
+                                                                                                                               )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "233,2,250,4")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "233,2,250,4")
+             ; fail
 
   DesugarToolDoc :
-    GNU_LGPL(year, author)
-      ->
-    License(
-      [ <concat-strings> ["Copyright (C) ", year, " ", author]
-      , "This library is free software; you can redistribute it and/or modify 
+    GNU_LGPL(year, author) -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "252,2,269,4")> License(
+                                                                                                                                  [ <s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "256,9,256,22") ; concat-strings> ["Copyright (C) ", year, " ", author]
+                                                                                                                                  , "This library is free software; you can redistribute it and/or modify 
          it under the terms of the GNU Lesser General Public License as published by the 
          Free Software Foundation; either version 2 of the License, or (at your option) 
          any later version."
-      , "This library is distributed in the hope that it will be useful, but 
+                                                                                                                                  , "This library is distributed in the hope that it will be useful, but 
          WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
          FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License 
          for more details."
-      , "You should have received a copy of the GNU Lesser General Public 
+                                                                                                                                  , "You should have received a copy of the GNU Lesser General Public 
          License along with this library; if not, write to the Free Software Foundation, 
          Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"
-      ]
-    )
-    
-strategies
+                                                                                                                                  ]
+                                                                                                                                )
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "252,2,269,4")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "DesugarToolDoc", "252,2,269,4")
+             ; fail
 
-  /**
-   * Returns the package name as defined by Autoconf.
-   *
-   * @type _ -> String
-   */
-  package-name      = prim("PACKAGE_NAME_TERM")
-
-  /**
-   * Returns the package version as defined by Autoconf.
-   *
-   * @type _ -> String
-   */
-  package-version   = prim("PACKAGE_VERSION_TERM")
-
-  /**
-   * Returns the email address to send bug reports to as defined by Autoconf.
-   *
-   * @type _ -> String
-   */
-  package-bugreport = prim("PACKAGE_BUGREPORT_TERM")
 
 strategies
+  package-name =
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-name", "278,2,278,46")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "278,22,278,46")
+    ; prim("PACKAGE_NAME_TERM")
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-name", "278,2,278,46")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-name", "278,2,278,46")
+      ; fail
 
-  /**
-   * Checks whether the current term is HelpString
-   *
-   * @type HelpString -> HelpString
-   */
+  package-version =
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-version", "285,2,285,49")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "285,22,285,49")
+    ; prim("PACKAGE_VERSION_TERM")
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-version", "285,2,285,49")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-version", "285,2,285,49")
+      ; fail
+
+  package-bugreport =
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-bugreport", "292,2,292,51")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "292,22,292,51")
+    ; prim("PACKAGE_BUGREPORT_TERM")
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-bugreport", "292,2,292,51")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "package-bugreport", "292,2,292,51")
+      ; fail
+
+
+strategies
   ensure-help-string =
-    HelpString(is-string + is-list, is-string)
+    s-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "301,2,302,45")
+    ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "302,4,302,45")
+    ; HelpString(
+        s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "302,15,302,33")
+        ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "302,15,302,23") ; is-string
+           + s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "302,27,302,33") ; is-list)
+      , s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "302,36,302,44") ; is-string
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "301,2,302,45")
+    + s-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "301,2,302,45")
+      ; fail
 
-  /**
-   * Converts a string to a HelpString by splitting it at the first two spaces.
-   *
-   * @type String -> HelpString
-   */
   ensure-help-string :
-    s -> HelpString(flags, descr)
-      where <is-string> s 
-          ; <split-before> (s, "  ") => (flags, descr)
+    s -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "309,2,312,53")> HelpString(flags, descr)
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "309,2,312,53")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "309,2,312,53")
+             ; fail
+    where s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "311,12,312,53")
+          ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "311,12,311,24")
+             ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "311,13,311,21") ; is-string)> s)
+          ; s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "312,12,312,53")
+          ; (s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "312,12,312,35")
+             ; <(s-step(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "312,13,312,24") ; split-before)> (s, "  ")) => (flags, descr)
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "309,2,312,53")
+             ; fail
 
   ensure-help-string :
-    "" -> HelpString("", "")
+    "" -> <r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "314,2,315,27")> HelpString("", "")
+    where r-enter(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "314,2,315,27")
+          <+ r-exit(|"strategoxt/syntax/stratego-regular/xtc/tool-doc.str", "ensure-help-string", "314,2,315,27")
+             ; fail

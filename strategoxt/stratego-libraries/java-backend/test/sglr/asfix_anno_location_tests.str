@@ -1,190 +1,379 @@
-/**
- * Based on: Tests for the Stratego SGLR Library.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module asfix-anno-location-tests
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
   libstratego-sglr
   ExpInt
 
-strategies
 
+strategies
   main-asfix_anno_location_tests =
-    test-suite(!"asfix-anno-location",
-      asfix-anno-location-tests
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "main-asfix_anno_location_tests", "15,2,18,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "16,4,18,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "16,15,16,36")
+        ; !"asfix-anno-location"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "17,6,17,30") ; asfix-anno-location-tests
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "main-asfix_anno_location_tests", "15,2,18,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "main-asfix_anno_location_tests", "15,2,18,4")
+      ; fail
 
   asfix-anno-location-tests =
-      where(
-        <ReadFromFile> "ExpInt.tbl"; open-parse-table => tbl
-      )
-
-    ; asfix-anno-location-test(|"Location of a simple expression", tbl
-      , "1 + 2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(1,5,1,6)}){Location(1,5,1,6)}
-        ){Location(1,1,1,6)}
-      )
-
-    ; asfix-anno-location-test(|"Location with newline 1", tbl
-      , "1 \n + 2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(2,4,2,5)}){Location(2,4,2,5)}
-        ){Location(1,1,2,5)}
-      )
-
-    ; asfix-anno-location-test(|"Location with newline 2", tbl
-      , "1 \n\n + 2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(3,4,3,5)}){Location(3,4,3,5)}
-        ){Location(1,1,3,5)}
-      )
-
-    ; asfix-anno-location-test(|"Location with newline 3", tbl
-      , "1 \n\n + \n\n 2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(5,2,5,3)}){Location(5,2,5,3)}
-        ){Location(1,1,5,3)}
-      )
-
-    ; asfix-anno-location-test(|"Location with newline 4", tbl
-      , "1\n+\n2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(3,1,3,2)}){Location(3,1,3,2)}
-        ){Location(1,1,3,2)}
-      )
-
-    ; asfix-anno-location-test(|"Location with newline 5", tbl
-      , "1\n\n+\n\n2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(5,1,5,2)}){Location(5,1,5,2)}
-        ){Location(1,1,5,2)}
-      )
-
-    ; asfix-anno-location-test(|"Location with \\r newline 1", tbl
-      , "1 \r\n + 2"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("2"{Location(2,4,2,5)}){Location(2,4,2,5)}
-        ){Location(1,1,2,5)}
-      )
-
-    ; asfix-anno-location-test(|"Location of a simple expression", tbl
-      , "1 + 234"
-      , Plus(
-          Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-        , Int("234"{Location(1,5,1,8)}){Location(1,5,1,8)}
-        ){Location(1,1,1,8)}
-      )
-
-    ; asfix-anno-location-test(|"Location of a simple expression with some whitespace", tbl
-      , "   1 + 234  "
-      , Plus(
-          Int("1"{Location(1,4,1,5)}){Location(1,4,1,5)}
-        , Int("234"{Location(1,8,1,11)}){Location(1,8,1,11)}
-        ){Location(1,4,1,11)}
-      )
-
-    ; asfix-anno-location-test(|"Location of simple expression with some whitespace", tbl
-      , "   1   +   234  "
-      , Plus(
-          Int("1"{Location(1,4,1,5)}){Location(1,4,1,5)}
-        , Int("234"{Location(1,12,1,15)}){Location(1,12,1,15)}
-        ){Location(1,4,1,15)}
-      )
-
-    ; where(
-        <close-parse-table> tbl
-      )
-
-    ; where(
-        <ReadFromFile> "ExpIntAmb.tbl"; open-parse-table => ambtbl
-      )
-
-    ; apply-and-check(!"Location for a simple ambiguous expression"
-      , asfix-anno-location-test-strategy(|ambtbl)
-      , !"1 + 2 + 3"
-      , ?amb(<id>)
-        ; fetch(
-            ?Plus(
-              Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-            , Plus(
-                Int("2"{Location(1,5,1,6)}){Location(1,5,1,6)}
-              , Int("3"{Location(1,9,1,10)}){Location(1,9,1,10)}
-              ){Location(1,5,1,10)}
-            ){Location(1,1,1,10)}
-          )
-        ; fetch(
-            ?Plus(
-              Plus(
-                Int("1"{Location(1,1,1,2)}){Location(1,1,1,2)}
-              , Int("2"{Location(1,5,1,6)}){Location(1,5,1,6)}
-              ){Location(1,1,1,6)}
-            , Int("3"{Location(1,9,1,10)}){Location(1,9,1,10)}
-            ){Location(1,1,1,10)}
-         )
-      )
-
-    ; where(
-        <close-parse-table> ambtbl
-      )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-tests", "20,2,139,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "21,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "21,6,23,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "22,8,22,59")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "22,8,22,34")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "22,9,22,20") ; ReadFromFile)> "ExpInt.tbl")
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "22,37,22,59")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "22,37,22,52") ; open-parse-table) => tbl))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "25,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "25,6,31,6")
+       ; asfix-anno-location-test(
+         | "Location of a simple expression"
+         , tbl
+         , "1 + 2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(1, 5, 1, 6)
+                  }
+             ){ Location(1, 5, 1, 6)
+              }
+           ){ Location(1, 1, 1, 6)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "33,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "33,6,39,6")
+       ; asfix-anno-location-test(
+         | "Location with newline 1"
+         , tbl
+         , "1 \n + 2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(2, 4, 2, 5)
+                  }
+             ){ Location(2, 4, 2, 5)
+              }
+           ){ Location(1, 1, 2, 5)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "41,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "41,6,47,6")
+       ; asfix-anno-location-test(
+         | "Location with newline 2"
+         , tbl
+         , "1 \n\n + 2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(3, 4, 3, 5)
+                  }
+             ){ Location(3, 4, 3, 5)
+              }
+           ){ Location(1, 1, 3, 5)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "49,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "49,6,55,6")
+       ; asfix-anno-location-test(
+         | "Location with newline 3"
+         , tbl
+         , "1 \n\n + \n\n 2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(5, 2, 5, 3)
+                  }
+             ){ Location(5, 2, 5, 3)
+              }
+           ){ Location(1, 1, 5, 3)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "57,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "57,6,63,6")
+       ; asfix-anno-location-test(
+         | "Location with newline 4"
+         , tbl
+         , "1\n+\n2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(3, 1, 3, 2)
+                  }
+             ){ Location(3, 1, 3, 2)
+              }
+           ){ Location(1, 1, 3, 2)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "65,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "65,6,71,6")
+       ; asfix-anno-location-test(
+         | "Location with newline 5"
+         , tbl
+         , "1\n\n+\n\n2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(5, 1, 5, 2)
+                  }
+             ){ Location(5, 1, 5, 2)
+              }
+           ){ Location(1, 1, 5, 2)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "73,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "73,6,79,6")
+       ; asfix-anno-location-test(
+         | "Location with \\r newline 1"
+         , tbl
+         , "1 \r\n + 2"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "2"{ Location(2, 4, 2, 5)
+                  }
+             ){ Location(2, 4, 2, 5)
+              }
+           ){ Location(1, 1, 2, 5)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "81,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "81,6,87,6")
+       ; asfix-anno-location-test(
+         | "Location of a simple expression"
+         , tbl
+         , "1 + 234"
+         , Plus(
+             Int(
+               "1"{ Location(1, 1, 1, 2)
+                  }
+             ){ Location(1, 1, 1, 2)
+              }
+           , Int(
+               "234"{ Location(1, 5, 1, 8)
+                    }
+             ){ Location(1, 5, 1, 8)
+              }
+           ){ Location(1, 1, 1, 8)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "89,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "89,6,95,6")
+       ; asfix-anno-location-test(
+         | "Location of a simple expression with some whitespace"
+         , tbl
+         , "   1 + 234  "
+         , Plus(
+             Int(
+               "1"{ Location(1, 4, 1, 5)
+                  }
+             ){ Location(1, 4, 1, 5)
+              }
+           , Int(
+               "234"{ Location(1, 8, 1, 11)
+                    }
+             ){ Location(1, 8, 1, 11)
+              }
+           ){ Location(1, 4, 1, 11)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "97,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "97,6,103,6")
+       ; asfix-anno-location-test(
+         | "Location of simple expression with some whitespace"
+         , tbl
+         , "   1   +   234  "
+         , Plus(
+             Int(
+               "1"{ Location(1, 4, 1, 5)
+                  }
+             ){ Location(1, 4, 1, 5)
+              }
+           , Int(
+               "234"{ Location(1, 12, 1, 15)
+                    }
+             ){ Location(1, 12, 1, 15)
+              }
+           ){ Location(1, 4, 1, 15)
+            }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "105,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "105,6,107,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "106,8,106,30")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "106,9,106,25") ; close-parse-table)> tbl))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "109,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "109,6,111,6")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "110,8,110,65")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "110,8,110,37")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "110,9,110,20") ; ReadFromFile)> "ExpIntAmb.tbl")
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "110,40,110,65")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "110,40,110,55") ; open-parse-table) => ambtbl))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "113,6,139,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "113,6,135,6")
+       ; apply-and-check(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "113,22,113,66")
+           ; !"Location for a simple ambiguous expression"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "114,8,114,49")
+           ; asfix-anno-location-test-strategy(|ambtbl)
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "115,8,115,19")
+           ; !"1 + 2 + 3"
+         , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "116,8,134,9")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "116,8,116,17")
+              ; ?amb(
+                   <s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "116,14,116,15") ; id>
+                 ))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "117,10,134,9")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "117,10,125,10")
+              ; fetch(
+                  s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "118,12,124,32")
+                  ; ?Plus(
+                       Int(
+                         "1"{ Location(1, 1, 1, 2)
+                            }
+                       ){ Location(1, 1, 1, 2)
+                        }
+                     , Plus(
+                         Int(
+                           "2"{ Location(1, 5, 1, 6)
+                              }
+                         ){ Location(1, 5, 1, 6)
+                          }
+                       , Int(
+                           "3"{ Location(1, 9, 1, 10)
+                              }
+                         ){ Location(1, 9, 1, 10)
+                          }
+                       ){ Location(1, 5, 1, 10)
+                        }
+                     ){ Location(1, 1, 1, 10)
+                      }
+                ))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "126,10,134,9")
+           ; fetch(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "127,12,133,32")
+               ; ?Plus(
+                    Plus(
+                      Int(
+                        "1"{ Location(1, 1, 1, 2)
+                           }
+                      ){ Location(1, 1, 1, 2)
+                       }
+                    , Int(
+                        "2"{ Location(1, 5, 1, 6)
+                           }
+                      ){ Location(1, 5, 1, 6)
+                       }
+                    ){ Location(1, 1, 1, 6)
+                     }
+                  , Int(
+                      "3"{ Location(1, 9, 1, 10)
+                         }
+                    ){ Location(1, 9, 1, 10)
+                     }
+                  ){ Location(1, 1, 1, 10)
+                   }
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "137,6,139,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "138,8,138,33")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "138,9,138,25") ; close-parse-table)> ambtbl)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-tests", "20,2,139,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-tests", "20,2,139,6")
+      ; fail
 
   asfix-anno-location-test(|msg, tbl, string, term) =
-      apply-test(!msg
-      , asfix-anno-location-test-strategy(|tbl)
-      , !string
-      , !term
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-test", "141,2,146,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "142,6,146,6")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "142,17,142,20") ; !msg
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "143,8,143,46")
+        ; asfix-anno-location-test-strategy(|tbl)
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "144,8,144,14") ; !string
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "145,8,145,12") ; !term
       )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-test", "141,2,146,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-test", "141,2,146,6")
+      ; fail
 
   asfix-anno-location-test-strategy(|tbl) =
-    parse-string-pt(|tbl)
-    ; asfix-anno-location
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-test-strategy", "148,2,151,18")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "149,4,151,18")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "149,4,149,24")
+       ; parse-string-pt(|tbl))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "150,6,151,18")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "150,6,150,24") ; asfix-anno-location)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "151,6,151,18")
     ; implode-asfix
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-test-strategy", "148,2,151,18")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/sglr/asfix_anno_location_tests.str", "asfix-anno-location-test-strategy", "148,2,151,18")
+      ; fail
+
 
 signature
   constructors
-    WithAnno   : A * B -> C
-    ToTerm     : A -> B
-    ToMetaExpr :  A -> B
-    FromTerm   : A -> B
-    FromApp    : A -> B
-    Empty      : A
-    appl       : A * B -> C
-
-    Iter : A -> B
-    Iter-sep : A -> B
-    Iter-star : A -> B
-    Iter-star-sep : A -> B
-    Nesting-iter-sep1 : A -> B
-    Nesting-iter-sep2 : A -> B
+    WithAnno              : A * B -> C
+    ToTerm                : A -> B
+    ToMetaExpr            : A -> B
+    FromTerm              : A -> B
+    FromApp               : A -> B
+    Empty                 : A
+    appl                  : A * B -> C
+    Iter                  : A -> B
+    Iter-sep              : A -> B
+    Iter-star             : A -> B
+    Iter-star-sep         : A -> B
+    Nesting-iter-sep1     : A -> B
+    Nesting-iter-sep2     : A -> B
     Nesting-iter-star-sep : A -> B
-    Empty-iter-star-sep : A -> B
-    
-    IterN : A -> B
-    IterSepN : A -> B
-
-    Alt1a : A -> B
-    Alt2a : A * B -> C
-    Alt4a : A -> B
-    Var1  : A -> B
-
-    Call : Id * List(Exp) -> B
-    Plus : A -> B    
-    Minus : A -> B
-    Id : A -> B
-    True : A
-    
-    Foo : A -> A
-    Foo : A * A -> A
-    Foo : A * A * A -> A
-
-    pos-info : AnnoKey
+    Empty-iter-star-sep   : A -> B
+    IterN                 : A -> B
+    IterSepN              : A -> B
+    Alt1a                 : A -> B
+    Alt2a                 : A * B -> C
+    Alt4a                 : A -> B
+    Var1                  : A -> B
+    Call                  : Id * List(Exp) -> B
+    Plus                  : A -> B
+    Minus                 : A -> B
+    Id                    : A -> B
+    True                  : A
+    Foo                   : A -> A
+    Foo                   : A * A -> A
+    Foo                   : A * A * A -> A
+    pos-info              : AnnoKey

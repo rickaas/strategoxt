@@ -1,10 +1,22 @@
-/**** WARNING **** THIS FILE WAS GENERATED **** DO NOT EDIT **** WARNING ****/
-
 module bol-syntax
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
   sorts
     BOLLambda BOLBndVar BOLVar
+
   constructors
-      BOL_Lambda : BOLVar * List(BOLBndVar) * BOLExp -> BOLLambda
+    BOL_Lambda : BOLVar * List(BOLBndVar) * BOLExp -> BOLLambda
+
+
 strategies
-  main = id
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/comment-test.str", "main", "10,2,10,10")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/comment-test.str", "10,9,10,10")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/comment-test.str", "main", "10,2,10,10")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/comment-test.str", "main", "10,2,10,10")
+      ; fail

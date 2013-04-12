@@ -1,4 +1,18 @@
 module test11
-strategies
 
-  main = rules(Foo: a -> b with clause) // only allowed in regular rules
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test11.str", "main", "4,2,4,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test11.str", "4,9,4,38")
+    ; rules (
+        Foo :
+          a -> b
+          with s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test11.str", "4,32,4,37") ; clause
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test11.str", "main", "4,2,4,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test11.str", "main", "4,2,4,38")
+      ; fail

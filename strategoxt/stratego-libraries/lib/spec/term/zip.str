@@ -1,77 +1,85 @@
-/**
- * This module contains general zipping strategies for arbitrary terms
- * and tuples.
- *
- * The zip strategy on lists takes a pair of lists and combines
- * the elements of the lists into a list of pairs. This can be
- * generalized by transforming a tuple of lists into a list of
- * tuples. This module further generalizes zip by allowing any
- * term structure instead of a list to be zipped.
- *
- * @author Eelco Visser <visser@acm.org>
- * @author Karl Trygve Kalleberg <karltk@strategoxt.org> - documentation
- *
- */
-module term/zip 
-imports collection/list/zip
-strategies
+module term/zip
 
-  /** Zips a two-element tuple of structurally similar terms recursively by 
-   * using the strategy leaf to detect leaves and node to post-transform 
-   * the result
-   *
-   * Example: <term-zip(add, id)> (N(1, N(2)), N(2, N(3))) => N(3,N(5))
-   *
-   * @param leaf       c -?> d
-   * @param node       d -> e
-   * @type             Tuple(a(c),a(c)) -> a(e)
-   * @see term-zip
-   */
-  pair-term-zip-bu(leaf, node) = 
-    rec x(leaf <+ TermZip(x); node)
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/zip
+
+
+strategies
+  pair-term-zip-bu(leaf, node) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "pair-term-zip-bu", "30,2,31,34")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,4,31,34")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,10,31,33")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,10,31,13") ; leaf
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,18,31,33")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,18,31,27")
+                 ; TermZip(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,26,31,26") ; x
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,30,31,33")
+              ; node)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "pair-term-zip-bu", "30,2,31,34")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "pair-term-zip-bu", "30,2,31,34")
+      ; fail
+
 
 rules
 
-  /** Zips the argument lists of two terms of the same type, given as
-   * a two element tuple, using strategy s to combine each pair. 
-   *
-   * Example: <TermZip(id)> (Foo(1,2,3),Foo(4,5,6)) => Foo((1,4),(2,5),(3,6))
-   *
-   * @type s           Tuple(a,b) -> c
-   * @type             Tuple(a,a) -> a
-   * @see zip
-   * @see TermTupleZip
-   */
-  TermZip(s) : 
-    (f#(xs), f#(ys)) -> f#(<zip(s)>(xs, ys))
+  TermZip(s) :
+    (f#(xs), f#(ys)) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermZip", "45,2,46,43")> f#(<s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "46,28,46,33")
+                                                                                                                      ; zip(
+                                                                                                                          s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "46,32,46,32") ; s
+                                                                                                                        )> (xs, ys))
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermZip", "45,2,46,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermZip", "45,2,46,43")
+             ; fail
+
 
 strategies
+  term-zip(leaf, node) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "term-zip", "59,2,60,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,4,60,39")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,10,60,38")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,10,60,13") ; leaf
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,18,60,38")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,18,60,32")
+                 ; TermTupleZip(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,31,60,31") ; x
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,35,60,38")
+              ; node)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "term-zip", "59,2,60,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "term-zip", "59,2,60,39")
+      ; fail
 
-  /** Zips a tuple of structurally similar terms recursively by using the
-   * strategy leaf to detect leaves and node to post-transform the result
-   *
-   * Example: <term-zip(add, id)> (N(1, N(2)), N(2, N(3))) => N(3,N(5))
-   *
-   * @param leaf       c -?> d
-   * @param node       d -> e
-   * @type             Tuple(a(c),a(c)) -> a(e)
-   */
-  term-zip(leaf, node) = 
-    rec x(leaf <+ TermTupleZip(x); node)
-
-  /** Zips the argument lists of an arbitrary length tuple of terms of the
-   * same type, using using strategy s to combine each pair. Note that
-   * all terms in the tuple must use the same constructor: both the name
-   * and arity must be equal. 
-   *
-   * Example: <TermZip(id)> (Foo(1,2),Foo(4,5),Foo(6,7)) => Foo((1,4,6),(2,5,7))
-   *
-   * @type s           Tuple(a,b) -> c
-   * @type             Tuple(a,a) -> a
-   * @see zip
-   */
   TermTupleZip(s) =
-    tmap({xs: ?f#(xs); !xs});
-    tuple-zip(s);
-    \ xs -> f#(xs) \
-
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermTupleZip", "73,2,76,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,4,76,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,4,74,27")
+       ; tmap(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,9,74,26")
+           ; {xs:
+               s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,14,74,25")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,14,74,20")
+                  ; ?f#(xs))
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,23,74,25")
+               ; !xs
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "75,4,76,19")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "75,4,75,15")
+       ; tuple-zip(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "75,14,75,14") ; s
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "76,4,76,19")
+    ; \ xs -> f#(xs) \
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermTupleZip", "73,2,76,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermTupleZip", "73,2,76,19")
+      ; fail

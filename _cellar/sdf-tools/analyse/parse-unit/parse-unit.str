@@ -1,4 +1,9 @@
 module parse-unit
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
@@ -10,122 +15,347 @@ imports
   parse-unit-options
   parse-unit-present
 
-strategies
 
+strategies
   main-parse-unit =
-    init-parse-unit-options
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "main-parse-unit", "15,2,23,4")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "16,4,23,4")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "16,4,16,26") ; init-parse-unit-options)
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "17,6,23,4")
     ; xtc-io-wrap(
-        parse-unit-options
-      , parse-unit-usage
-      , parse-unit-about
-      , ![]
-      , parse-unit
-    )
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "18,8,18,25") ; parse-unit-options
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "19,8,19,23") ; parse-unit-usage
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "20,8,20,23") ; parse-unit-about
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "21,8,21,10")
+        ; ![]
+      , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "22,8,22,17") ; parse-unit
+      )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "main-parse-unit", "15,2,23,4")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "main-parse-unit", "15,2,23,4")
+      ; fail
+
 
 strategies
-
-  parse-unit = 
-    read-parse-testsuite
-    ; process-testsuite-options
-    ; where(
-        tbl := <try-open-parse-table>
-        ; sort := <get-config> TopSort()
-      )
-    ; if get-single-test then
-        where(set-ambiguity-is-error(false))
-        ; do-single-test(|tbl, sort, <get-single-test> ())
-        ; write-to-text
-      else
-        do-full-testsuite(|tbl, sort)
-        ; <xtc-exit> 0
-      end
-    <+ <xtc-exit> 1
+  parse-unit =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit", "27,2,42,18")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "28,4,42,18")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "28,4,41,8")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "28,4,28,23") ; read-parse-testsuite)
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "29,6,41,8")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "29,6,29,30") ; process-testsuite-options)
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "30,6,41,8")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "30,6,33,6")
+          ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "31,8,32,39")
+                  ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "31,8,31,36")
+                     ; tbl := <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "31,16,31,35") ; try-open-parse-table>)
+                  ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "32,10,32,39")
+                  ; sort := <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "32,19,32,28") ; get-config> TopSort()))
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "34,6,41,8")
+       ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "34,9,34,23") ; get-single-test then
+           s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "35,8,37,22")
+           ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "35,8,35,43")
+              ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "35,14,35,42")
+                      ; set-ambiguity-is-error(
+                          s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "35,37,35,41") ; false
+                        )))
+           ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "36,10,37,22")
+           ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "36,10,36,57")
+              ; do-single-test(
+                | tbl
+                , sort
+                , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "36,38,36,52") ; get-single-test> ()
+                ))
+           ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "37,10,37,22")
+           ; write-to-text
+         else
+           s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "39,8,40,21")
+           ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "39,8,39,36")
+              ; do-full-testsuite(|tbl, sort))
+           ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "40,10,40,21")
+           ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "40,11,40,18") ; xtc-exit)> 0
+         end
+       <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "42,7,42,18")
+          ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "42,8,42,15") ; xtc-exit)> 1)
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit", "27,2,42,18")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit", "27,2,42,18")
+      ; fail
 
   do-full-testsuite(|tbl, sort) =
-    echo-start
-    ; ?parse-testsuite(name(name), _, <id>)
-    ; map-with-index(execute-test(|sort, tbl))
-    ; !TestResults(<id>)
-    ; where(<echo-results> (name, <id>))
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "do-full-testsuite", "44,2,50,31")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "45,4,50,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "45,4,45,13") ; echo-start)
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "46,6,50,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "46,6,46,42")
+       ; ?parse-testsuite(
+            name(name)
+          , _
+          , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "46,39,46,40") ; id>
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "47,6,50,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "47,6,47,45")
+       ; map-with-index(
+           s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "47,21,47,44")
+           ; execute-test(|sort, tbl)
+         ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "48,6,50,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "48,6,48,23")
+       ; !TestResults(
+            <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "48,20,48,21") ; id>
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "49,6,50,31")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "49,6,49,39")
+       ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "49,12,49,38")
+               ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "49,13,49,24") ; echo-results)> ( name
+                                                                                                                  , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "49,35,49,36") ; id>
+                                                                                                                  )))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "50,6,50,31")
     ; parse-unit-exit-on-failure
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "do-full-testsuite", "44,2,50,31")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "do-full-testsuite", "44,2,50,31")
+      ; fail
 
   parse-unit-exit-on-failure =
-    ?TestResults(<id>)
-    ; map(?Success())
-    <+ <xtc-exit> 1
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-exit-on-failure", "52,2,55,18")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "53,4,55,18")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "53,4,54,20")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "53,4,53,21")
+          ; ?TestResults(
+               <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "53,18,53,19") ; id>
+             ))
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "54,6,54,20")
+       ; map(
+           s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "54,10,54,19")
+           ; ?Success()
+         )
+       <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "55,7,55,18")
+          ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "55,8,55,15") ; xtc-exit)> 1)
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-exit-on-failure", "52,2,55,18")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-exit-on-failure", "52,2,55,18")
+      ; fail
 
   do-single-test(|tbl, sort, i) =
-    ?parse-testsuite(name(name), _, <id>)
-    ; ( <index> (i, <id>)
-      ; ?parse-test(description(s), input, output)
-        <+ say(!"error: parse-unit: no such test.")
-           ; fail
-      )
-    ; where(<debug(!"test : ")> s)
-    ; <parse-unit-parse(|tbl, sort)> input
-    ; ?ParseResult(_, Success(<id>))
-    ; if not(is-single-test-output-asfix2) then
-        implode-asfix
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "do-single-test", "57,2,69,8")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "58,4,69,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "58,4,58,40")
+       ; ?parse-testsuite(
+            name(name)
+          , _
+          , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "58,37,58,38") ; id>
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "59,6,69,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "59,8,62,16")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "59,8,60,49")
+          ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "59,8,59,24")
+             ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "59,9,59,13") ; index)> ( i
+                                                                                                        , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "59,21,59,22") ; id>
+                                                                                                        ))
+          ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "60,8,60,49")
+          ; ?parse-test(description(s), input, output)
+          <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "61,11,62,16")
+             ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "61,11,61,50")
+                ; say(
+                    s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "61,15,61,49")
+                    ; !"error: parse-unit: no such test."
+                  ))
+             ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "62,13,62,16")
+             ; fail))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "64,6,69,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "64,6,64,33")
+       ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "64,12,64,32")
+               ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "64,13,64,29")
+                   ; debug(
+                       s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "64,19,64,28")
+                       ; !"test : "
+                     ))> s))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "65,6,69,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "65,6,65,41")
+       ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "65,7,65,34")
+           ; parse-unit-parse(|tbl, sort))> input)
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "66,6,69,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "66,6,66,35")
+       ; ?ParseResult(
+            _
+          , Success(
+              <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "66,31,66,32") ; id>
+            )
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "67,6,69,8")
+    ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "67,9,67,41")
+         ; not(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "67,13,67,40") ; is-single-test-output-asfix2) then
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "68,8,68,20") ; implode-asfix
       end
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "do-single-test", "57,2,69,8")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "do-single-test", "57,2,69,8")
+      ; fail
+
 
 strategies
-
-  /**
-   * @type (Int, Input) -> Result
-   */
-  execute-test(|sort, tbl) = 
-      ?(i, <id>)
-    ; ?t@parse-test(description(n), <id>, expected)
-    ; parse-unit-parse(|tbl, sort)
-    ; parse-unit-implode
-    ; ?result
-    ; <create-test-result> (result, expected)
-    ; where(
-        <echo-report> (i, t, result, <id>)
-      )
+  execute-test(|sort, tbl) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "execute-test", "76,2,85,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "77,6,85,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "77,6,77,15")
+       ; ?( i
+          , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "77,12,77,13") ; id>
+          ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "78,6,85,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "78,6,78,50")
+       ; ?t@parse-test(
+              description(n)
+            , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "78,37,78,38") ; id>
+            , expected
+            ))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "79,6,85,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "79,6,79,33")
+       ; parse-unit-parse(|tbl, sort))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "80,6,85,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "80,6,80,23") ; parse-unit-implode)
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "81,6,85,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "81,6,81,12") ; ?result)
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "82,6,85,6")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "82,6,82,44")
+       ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "82,7,82,24") ; create-test-result)> (result, expected))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "83,6,85,6")
+    ; where(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "84,8,84,41")
+            ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "84,9,84,19") ; echo-report)> ( i
+                                                                                                             , t
+                                                                                                             , result
+                                                                                                             , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "84,38,84,39") ; id>
+                                                                                                             ))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "execute-test", "76,2,85,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "execute-test", "76,2,85,6")
+      ; fail
 
 
 strategies
+  parse-unit-parse(|tbl, sort) =
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-parse", "90,2,96,8")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "91,4,96,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "91,4,91,17")
+       ; ?input@file(f))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "92,6,96,8")
+    ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "92,9,92,43")
+         ; pt := <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "92,16,92,40")
+                  ; parse-file-pt(|tbl, sort)> f then
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "93,8,93,41")
+        ; !ParseResult(FILE(f), Success(pt))
+      else
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "95,8,95,63")
+        ; !ParseResult(
+             FILE(f)
+           , Failure(
+               Parse(
+                 <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "95,45,95,59") ; get-parse-error>
+               )
+             )
+           )
+      end
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-parse", "90,2,96,8")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-parse", "90,2,96,8")
+      ; fail
 
   parse-unit-parse(|tbl, sort) =
-    ?input@file(f)
-    ; if pt := <parse-file-pt(|tbl, sort)> f then
-        !ParseResult(FILE(f), Success(pt))
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-parse", "98,2,104,8")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "99,4,104,8")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "99,4,99,19")
+       ; ?input@string(s))
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "100,6,104,8")
+    ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "100,9,100,45")
+         ; pt := <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "100,16,100,42")
+                  ; parse-string-pt(|tbl, sort)> s then
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "101,8,101,35")
+        ; !ParseResult(s, Success(pt))
       else
-        !ParseResult(FILE(f), Failure(Parse(<get-parse-error>)))
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "103,8,103,57")
+        ; !ParseResult(
+             s
+           , Failure(
+               Parse(
+                 <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "103,39,103,53") ; get-parse-error>
+               )
+             )
+           )
       end
-
-  parse-unit-parse(|tbl, sort) =
-    ?input@string(s)
-    ; if pt := <parse-string-pt(|tbl, sort)> s then
-        !ParseResult(s, Success(pt))
-      else
-        !ParseResult(s, Failure(Parse(<get-parse-error>)))
-      end
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-parse", "98,2,104,8")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-parse", "98,2,104,8")
+      ; fail
 
   parse-unit-implode =
-    if ?ParseResult(input, Success(pt)) then
-      if ast := <implode-asfix> pt then
-        !ParseResult(input, Success(ast))
-       else
-         !ParseResult(input, Failure(Implode(pt)))
-       end
-    end
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-implode", "106,2,113,6")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "107,4,113,6")
+    ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "107,7,107,38")
+         ; ?ParseResult(input, Success(pt)) then
+        s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "108,6,112,9")
+        ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "108,9,108,33")
+             ; ast := <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "108,17,108,29") ; implode-asfix> pt then
+            s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "109,8,109,40")
+            ; !ParseResult(input, Success(ast))
+          else
+            s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "111,9,111,49")
+            ; !ParseResult(input, Failure(Implode(pt)))
+          end
+      end
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-implode", "106,2,113,6")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-implode", "106,2,113,6")
+      ; fail
+
 
 strategies
-
   try-open-parse-table =
-    (<get-config> ParseTable()
-       <+ log(|Critical(), "No parse table specified. Please use the -p option."); <xtc-exit> 1)
-    ; stream := <fopen <+ parse-unit-perror> (<id>, "r")
-    ; finally(read-from-stream, <fclose> stream)
-    ; if not(?"parse-table"#(_)) then
-        log(|Critical(), "The specified parse table file does not contain a parse table")
-        ; <xtc-exit> 1
-      end
-    ; open-parse-table
-    <+ log(|Critical(), "Could not open parse table")
-
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "try-open-parse-table", "117,2,127,52")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "118,4,127,52")
+    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "118,4,126,21")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "118,5,119,94")
+          ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "118,5,118,29")
+             ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "118,6,118,15") ; get-config)> ParseTable()
+             <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "119,10,119,94")
+                ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "119,10,119,80")
+                   ; log(|Critical(), "No parse table specified. Please use the -p option."))
+                ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "119,83,119,94")
+                ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "119,84,119,91") ; xtc-exit)> 1))
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "120,6,126,21")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "120,6,120,55")
+          ; stream := <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "120,17,120,42")
+                       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "120,17,120,21") ; fopen
+                          <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "120,26,120,42") ; parse-unit-perror)> ( <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "120,47,120,48") ; id>
+                                                                                                                                   , "r"
+                                                                                                                                   ))
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "121,6,126,21")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "121,6,121,47")
+          ; finally(
+              s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "121,14,121,29") ; read-from-stream
+            , s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "121,32,121,46")
+              ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "121,33,121,38") ; fclose)> stream
+            ))
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "122,6,126,21")
+       ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "122,6,125,8")
+          ; if s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "122,9,122,31")
+               ; not(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "122,13,122,30")
+                     ; ?"parse-table"#(_)) then
+              s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "123,8,124,21")
+              ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "123,8,123,88")
+                 ; log(|Critical(), "The specified parse table file does not contain a parse table"))
+              ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "124,10,124,21")
+              ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "124,11,124,18") ; xtc-exit)> 1
+            end)
+       ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "126,6,126,21")
+       ; open-parse-table
+       <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "127,7,127,52")
+          ; log(|Critical(), "Could not open parse table"))
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "try-open-parse-table", "117,2,127,52")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "try-open-parse-table", "117,2,127,52")
+      ; fail
 
   parse-unit-perror =
-    <conc-strings; perror; fail> ("parse-unit: ", <id>)
+    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-perror", "130,2,131,54")
+    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,4,131,54")
+    ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,5,131,30")
+        ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,5,131,16") ; conc-strings)
+        ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,19,131,30")
+        ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,19,131,24") ; perror)
+        ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,27,131,30")
+        ; fail)> ( "parse-unit: "
+                 , <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "131,51,131,52") ; id>
+                 )
+    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-perror", "130,2,131,54")
+    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit.str", "parse-unit-perror", "130,2,131,54")
+      ; fail

@@ -1,72 +1,225 @@
 module add-main
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
-
-  /**
-   * Adding main strategy
-   * 
-   * What happens if the specification already contains a main strategy? 
-   */
-
   add-main =
-    try(
-      where(
-        <get-config> "-m" => m
-      ; log(|Notice(),["Main strategy is : ",m])
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "add-main", "10,2,19,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "11,4,19,4")
+    ; try(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "12,6,18,8")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "12,6,15,6")
+           ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "13,8,14,47")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "13,8,13,29")
+                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "13,8,13,24")
+                         ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "13,9,13,18") ; get-config)> "-m") => m)
+                   ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "14,8,14,47")
+                   ; log(
+                     | Notice()
+                     , ["Main strategy is : ", m]
+                     )))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "16,8,18,8")
+        ; if-not-lib(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "17,10,17,25")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "17,14,17,24")
+                ; AddMain(|m)
+              )
+          )
       )
-      ; if-not-lib(
-          try(AddMain(|m))
-        )
-    )
-
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "add-main", "10,2,19,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "add-main", "10,2,19,4")
+      ; fail
 
   MkMain(|main) =
-    !SDef("main", [], Call(SVar(main), []))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "MkMain", "22,2,23,42")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "23,4,23,42")
+    ; !SDef(
+         "main"
+       , []
+       , Call(SVar(main), [])
+       )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "MkMain", "22,2,23,42")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "MkMain", "22,2,23,42")
+      ; fail
 
-  AddMain(|main) : 
-    Specification(sects) -> 
-    Specification([ Strategies([SDef("main", [], Call(SVar(main), []))])
-                  | sects ])
-      where
-        <not("main")>main
-      ; <try(check-other-main)>sects
+  AddMain(|main):
+    Specification(sects) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "AddMain", "25,2,31,35")> Specification(
+                                                                                                                                            [Strategies(
+                                                                                                                                               [ SDef(
+                                                                                                                                                   "main"
+                                                                                                                                                 , []
+                                                                                                                                                 , Call(SVar(main), [])
+                                                                                                                                                 )
+                                                                                                                                               ]
+                                                                                                                                             )|sects]
+                                                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "AddMain", "25,2,31,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "AddMain", "25,2,31,35")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "30,8,31,35")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "30,8,30,24")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "30,9,30,19")
+                 ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "30,13,30,18") ; "main"))> main)
+          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "31,8,31,35")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "31,9,31,29")
+              ; try(
+                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "31,13,31,28") ; check-other-main
+                ))> sects
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "AddMain", "25,2,31,35")
+             ; fail
 
   check-other-main =
-    fetch-elem( Strategies(fetch-elem(is-main)) + Rules(fetch-elem(is-main)) )
-  ; say(!"Adding main strategy even though one is already present!")
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "check-other-main", "33,2,35,67")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,4,35,67")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,4,34,77")
+       ; fetch-elem(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,16,34,75")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,16,34,46")
+              ; Strategies(
+                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,27,34,45")
+                  ; fetch-elem(
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,38,34,44") ; is-main
+                    )
+                )
+              + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,50,34,75")
+                ; Rules(
+                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,56,34,74")
+                    ; fetch-elem(
+                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "34,67,34,73") ; is-main
+                      )
+                  ))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "35,4,35,67")
+    ; say(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "35,8,35,66")
+        ; !"Adding main strategy even though one is already present!"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "check-other-main", "33,2,35,67")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "check-other-main", "33,2,35,67")
+      ; fail
 
   is-main =
-    ?SDef("main", [], _)
-  + ?RDef("main", [], _)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "is-main", "37,2,39,23")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "38,4,39,23")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "38,4,38,23")
+       ; ?SDef("main", [], _)
+       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "39,4,39,23")
+         ; ?RDef("main", [], _))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "is-main", "37,2,39,23")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "is-main", "37,2,39,23")
+      ; fail
 
-    // note: check not exhaustive (also test SDefT)
 
 strategies
-
   m-add-main =
-    if m := <get-config> "-m" then
-      log(|Notice(),["Setting main strategy to : ", m])
-      ; if-not-lib(
-          if <ModDefinition> ("main", 0, 0) then
-            say(!"Adding main strategy even though one is already present!")
-          else 
-            if not( <ModDefinition> (m, 0, 0) ) then
-              log(|Error(),["Could not find specified main strategy/rule called '",m,"'."])
-            ; <exit>1
-            end
-          end
-          ; where(MkMain(|m); m-add-def)
-        )
-    end
-  ; if not(<ModDefinition> ("main", 0, 0)) then
-      log(|Error(),["No 'main' strategy/rule found. Add strategy/rule called 'main' or use -m flag to specify the entry point of the application."])  
-    ; <exit>1
-    end
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "m-add-main", "45,2,63,6")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "46,4,63,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "46,4,59,6")
+       ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "46,7,46,28")
+            ; m := <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "46,13,46,22") ; get-config> "-m" then
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "47,6,58,8")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "47,6,47,54")
+              ; log(
+                | Notice()
+                , ["Setting main strategy to : ", m]
+                ))
+           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "48,8,58,8")
+           ; if-not-lib(
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "49,10,57,39")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "49,10,56,12")
+                  ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "49,13,49,42")
+                       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "49,14,49,26") ; ModDefinition)> ("main", 0, 0) then
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "50,12,50,75")
+                      ; say(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "50,16,50,74")
+                          ; !"Adding main strategy even though one is already present!"
+                        )
+                    else
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "52,12,55,14")
+                      ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "52,15,52,46")
+                           ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "52,20,52,44")
+                                 ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "52,21,52,33") ; ModDefinition)> (m, 0, 0)) then
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "53,14,54,20")
+                          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "53,14,53,90")
+                             ; log(
+                               | Error()
+                               , ["Could not find specified main strategy/rule called '", m, "'."]
+                               ))
+                          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "54,14,54,20")
+                          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "54,15,54,18") ; exit)> 1
+                        end
+                    end)
+               ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "57,12,57,39")
+               ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "57,18,57,38")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "57,18,57,27")
+                          ; MkMain(|m))
+                       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "57,30,57,38")
+                       ; m-add-def)
+             )
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "60,4,63,6")
+    ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "60,7,60,41")
+         ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "60,11,60,40")
+               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "60,12,60,24") ; ModDefinition)> ("main", 0, 0)) then
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "61,6,62,12")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "61,6,61,147")
+           ; log(|Error(), ["No 'main' strategy/rule found. Add strategy/rule called 'main' or use -m flag to specify the entry point of the application."]))
+        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "62,6,62,12")
+        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "62,7,62,10") ; exit)> 1
+      end
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "m-add-main", "45,2,63,6")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "m-add-main", "45,2,63,6")
+      ; fail
+
 
 strategies
+  if-lib(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-lib", "69,2,69,64")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "69,19,69,64")
+    ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "69,22,69,44")
+         ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "69,23,69,32") ; get-config)> "--library" then
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "69,51,69,52") ; s1
+      else
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "69,59,69,60") ; s2
+      end
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-lib", "69,2,69,64")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-lib", "69,2,69,64")
+      ; fail
 
-  // building a library
+  if-lib(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-lib", "70,2,70,31")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "70,19,70,31")
+    ; if-lib(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "70,26,70,26") ; s
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "70,29,70,30") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-lib", "70,2,70,31")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-lib", "70,2,70,31")
+      ; fail
 
-  if-lib(s1, s2) = if <get-config>"--library" then s1 else s2 end
-  if-lib(s)      = if-lib(s, id)
-  if-not-lib(s)  = if-lib(id, s)
-  pass-library   = if-lib(!["--library"], ![])
+  if-not-lib(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-not-lib", "71,2,71,31")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "71,19,71,31")
+    ; if-lib(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "71,26,71,27") ; id
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "71,30,71,30") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-not-lib", "71,2,71,31")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "if-not-lib", "71,2,71,31")
+      ; fail
+
+  pass-library =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "pass-library", "72,2,72,45")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "72,19,72,45")
+    ; if-lib(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "72,26,72,39")
+        ; !["--library"]
+      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "72,42,72,44")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "pass-library", "72,2,72,45")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/add-main.str", "pass-library", "72,2,72,45")
+      ; fail

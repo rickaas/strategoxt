@@ -1,14 +1,26 @@
 module congruence-thread
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main-congruence_thread =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "main-congruence_thread", "6,2,11,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "7,4,11,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "7,15,7,36")
+        ; !"congruence-env-test"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "10,1,10,23") ; congruence-thread-test2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "main-congruence_thread", "6,2,11,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "main-congruence_thread", "6,2,11,4")
+      ; fail
 
-  main-congruence_thread = 
-    test-suite(!"congruence-env-test",
-	//congruence-dist-test;
-	//congruence-thread-test;
-	congruence-thread-test2
-    )
 
 signature
   constructors
@@ -19,27 +31,15 @@ signature
     Zero : Nat
     Succ : Nat -> Nat
 
+
 rules
 
-  add-one : (Id,x) -> (Id,Succ(x))
+  add-one :
+    (Id, x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "add-one", "24,2,24,33")> (Id, Succ(x))
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "add-one", "24,2,24,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "add-one", "24,2,24,33")
+             ; fail
 
-/*
-strategies
-
-  congruence-dist-test = 
-    apply-test(!"congruence-dist-test"
-	      ,If^D(id,id,id)
-	      ,!(If(Id,Id,Id),[]) 
-	      ,!If((Id,[]),(Id,[]),(Id,[]))
-	      )
-
-  congruence-thread-test = 
-    apply-test(!"congruence-thread-test"
-	      ,If^T(add-one,add-one,add-one)
-	      ,!(If(Id,Id,Id),Zero)
-	      ,!(If(Id,Id,Id),Succ(Succ(Succ(Zero))))
-	      )
-*/
 
 signature
   constructors
@@ -47,19 +47,57 @@ signature
     lit  : String -> Symbol
     KW   : String -> Box
 
-strategies
 
-  congruence-thread-test2 = 
-    apply-test(!"congruence-thread-test2"
-	      , thread-map(number-sort <+ (pp-lit,id))
-	      ,!([sort("Do"),lit("1"),sort("Plus"),lit("2")],1)
-	      ,!([1, KW("1"), 2, KW("2")], 3)
-	      )
+strategies
+  congruence-thread-test2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "congruence-thread-test2", "52,2,57,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "53,4,57,7")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "53,15,53,40")
+        ; !"congruence-thread-test2"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "54,9,54,46")
+        ; thread-map(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "54,20,54,45")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "54,20,54,30") ; number-sort
+               <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "54,35,54,45")
+                  ; ( s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "54,36,54,41") ; pp-lit
+                    , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "54,43,54,44") ; id
+                    ))
+          )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "55,8,55,55")
+        ; !( [ sort("Do")
+             , lit("1")
+             , sort("Plus")
+             , lit("2")
+             ]
+           , 1
+           )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "56,8,56,37")
+        ; !( [ 1
+             , KW("1")
+             , 2
+             , KW("2")
+             ]
+           , 3
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "congruence-thread-test2", "52,2,57,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "congruence-thread-test2", "52,2,57,7")
+      ; fail
+
 
 rules
 
-  number-sort : 
-    (sort(x), i) -> (i, <add>(i,1))
+  number-sort :
+    (sort(x), i) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "number-sort", "61,2,62,34")> ( i
+                                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "62,25,62,27") ; add> (i, 1)
+                                                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "number-sort", "61,2,62,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "number-sort", "61,2,62,34")
+             ; fail
 
-  pp-lit : 
-    lit(x) -> KW(x)
+  pp-lit :
+    lit(x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "pp-lit", "64,2,65,18")> KW(x)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "pp-lit", "64,2,65,18")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/congruence_thread.str", "pp-lit", "64,2,65,18")
+             ; fail

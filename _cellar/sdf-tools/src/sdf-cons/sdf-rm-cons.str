@@ -1,19 +1,47 @@
-/**
- * Removes all cons(...) attributes from the productions in an Sdf grammar.
- *
- * @author Joost Visser (Joost.Visser@cwi.nl)
- */
 module sdf-rm-cons
-imports libstratego-lib Sdf2
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  Sdf2
+
 
 strategies
-
   io-sdf-rm-cons =
-    io-wrap(RmCons)
+    s-enter(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "io-sdf-rm-cons", "11,2,12,18")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "12,4,12,18")
+    ; io-wrap(
+        s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "12,12,12,17") ; RmCons
+      )
+    < s-exit(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "io-sdf-rm-cons", "11,2,12,18")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "io-sdf-rm-cons", "11,2,12,18")
+      ; fail
 
   RmCons =
-    alltd(attrs(filter(not(?term(cons(_)) + ?cons(_)))))
+    s-enter(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "RmCons", "14,2,15,55")
+    ; s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,4,15,55")
+    ; alltd(
+        s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,10,15,54")
+        ; attrs(
+            s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,16,15,53")
+            ; filter(
+                s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,23,15,52")
+                ; not(s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,27,15,51")
+                      ; (s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,27,15,40")
+                         ; ?term(cons(_))
+                         + s-step(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "15,44,15,51")
+                           ; ?cons(_)))
+              )
+          )
+      )
+    < s-exit(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "RmCons", "14,2,15,55")
+    + s-exit(|"_cellar/sdf-tools/src/sdf-cons/sdf-rm-cons.str", "RmCons", "14,2,15,55")
+      ; fail
+
 
 signature
   constructors
-    cons: ATerm -> Attribute
+    cons : ATerm -> Attribute

@@ -1,37 +1,31 @@
 module parse-xml-info
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc xml-xtc-tools
+  libstratego-xtc
+  xml-xtc-tools
+
 
 strategies
-  
   main-parse-xml-info =
-    xtc-io-wrap(
-      xtc-parse-xml-info
-      <+ say(!"parse-xml-info:error: Parsing xml failed.")
-         ; <xtc-exit> 1
-    )
-
-/*
-Usage:
-  parse-xml-info [-h] [-i file] [-o file]
-
-Options:
-  -h       Displays usage information.
-  -i file  Specifies the xml file to parse.
-  -o file  Specifies the file name of the resulting tree.
-
-Description:
-   parse-xml-info takes an xml document and outputs a DOM like 
-   representation of this document in ATerm format. The output is 
-   according to the xml signature in Stratego. This can be checked 
-   with the fc-xml-info tool.
-
-Copying:
-   Copyright (C) 2001-2002 Martin Bravenboer <martin@mbravenboer.org>
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
-*/
+    s-enter(|"_cellar/xml-front/xtc/parse-xml-info.str", "main-parse-xml-info", "8,2,13,4")
+    ; s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "9,4,13,4")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "10,6,12,22")
+        ; (s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "10,6,10,23") ; xtc-parse-xml-info
+           <+ s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "11,9,12,22")
+              ; (s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "11,9,11,57")
+                 ; say(
+                     s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "11,13,11,56")
+                     ; !"parse-xml-info:error: Parsing xml failed."
+                   ))
+              ; s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "12,11,12,22")
+              ; <(s-step(|"_cellar/xml-front/xtc/parse-xml-info.str", "12,12,12,19") ; xtc-exit)> 1)
+      )
+    < s-exit(|"_cellar/xml-front/xtc/parse-xml-info.str", "main-parse-xml-info", "8,2,13,4")
+    + s-exit(|"_cellar/xml-front/xtc/parse-xml-info.str", "main-parse-xml-info", "8,2,13,4")
+      ; fail

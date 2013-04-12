@@ -1,5 +1,12 @@
 module match-automaton-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
@@ -10,25 +17,81 @@ signature
     F : S * S -> S
     G : S * S -> S
 
-strategies
 
-  main-match_automaton_test = 
-    test-suite(!"match-automaton-test",
-	failure-in-case1;
-  	failure-in-case2
-    )
+strategies
+  main-match_automaton_test =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "main-match_automaton_test", "15,2,19,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "16,4,19,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "16,15,16,37")
+        ; !"match-automaton-test"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "17,1,18,18")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "17,1,17,16") ; failure-in-case1)
+        ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "18,3,18,18")
+        ; failure-in-case2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "main-match_automaton_test", "15,2,19,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "main-match_automaton_test", "15,2,19,4")
+      ; fail
 
   failure-in-case1 =
-    apply-test(!"failure-in-case1"
-              ,{x: ?F(A,x); !A} + {y: ?F(y,G(B,C)); !B}
-              ,!F(A,G(B,D))
-              ,!A
-              )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "failure-in-case1", "21,2,26,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "22,4,26,14")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "22,15,22,33")
+        ; !"failure-in-case1"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,15,23,54")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,15,23,30")
+           ; {x:
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,19,23,29")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,19,23,25")
+                  ; ?F(A, x))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,28,23,29")
+               ; !A
+             }
+           + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,34,23,54")
+             ; {y:
+                 s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,38,23,53")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,38,23,49")
+                    ; ?F(y, G(B, C)))
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "23,52,23,53")
+                 ; !B
+               })
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "24,15,24,26")
+        ; !F(A, G(B, D))
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "25,15,25,16") ; !A
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "failure-in-case1", "21,2,26,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "failure-in-case1", "21,2,26,14")
+      ; fail
 
   failure-in-case2 =
-    apply-test(!"failure-in-case2"
-              ,{x: ?F(A,x); !A} + {y: ?F(y,B); !B}  
-              ,!F(A,D)
-              ,!A
-              )
-
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "failure-in-case2", "28,2,33,14")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "29,4,33,14")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "29,15,29,33")
+        ; !"failure-in-case2"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,15,30,49")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,15,30,30")
+           ; {x:
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,19,30,29")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,19,30,25")
+                  ; ?F(A, x))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,28,30,29")
+               ; !A
+             }
+           + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,34,30,49")
+             ; {y:
+                 s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,38,30,48")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,38,30,44")
+                    ; ?F(y, B))
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "30,47,30,48")
+                 ; !B
+               })
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "31,15,31,21")
+        ; !F(A, D)
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "32,15,32,16") ; !A
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "failure-in-case2", "28,2,33,14")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/match_automaton_test.str", "failure-in-case2", "28,2,33,14")
+      ; fail

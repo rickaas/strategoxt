@@ -1,14 +1,31 @@
 module override_1
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
+
 
 rules
 
   main-override_1 =
-    not(<cify> "foo-bar" => "foo_bar")
-  ; <cify> "foosbar" => "foobar"
-    
-  override Cify(s) :
-    ['s' | tail] -> <s> tail
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "main-override_1", "8,2,10,31")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "9,4,10,31")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "9,4,9,37")
+       ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "9,8,9,36")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "9,8,9,23")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "9,9,9,12") ; cify)> "foo-bar") => "foo_bar"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "10,4,10,31")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "10,4,10,19")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "10,5,10,8") ; cify)> "foosbar") => "foobar"
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "main-override_1", "8,2,10,31")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "main-override_1", "8,2,10,31")
+      ; fail
 
+  override Cify(s) :
+             ['s'|tail] -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "Cify", "12,11,13,27")> <s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "13,21,13,21") ; s> tail
+             where r-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "Cify", "12,11,13,27")
+                   <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/override_1.str", "Cify", "12,11,13,27")
+                      ; fail

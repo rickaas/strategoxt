@@ -1,4 +1,9 @@
 module sglri
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-sglr
   libstratego-xtc
@@ -6,131 +11,370 @@ imports
   sglri-options
   implode-asfix
 
-strategies
 
+strategies
   main-sglri =
-    xtc-io-wrap(sglri-options,
-      where(additional-sglr-config)
-      ; if output(parse-and-implode) then
-          <xtc-exit> 0
-        else
-          <xtc-exit> 1
-        end
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "main-sglri", "11,2,19,6")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "12,4,19,6")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "12,16,12,28") ; sglri-options
+      , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "13,6,18,10")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "13,6,13,34")
+           ; where(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "13,12,13,33") ; additional-sglr-config))
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "14,8,18,10")
+        ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "14,11,14,35")
+             ; output(
+                 s-step(|"_cellar/asfix-tools/xtc/sglri.str", "14,18,14,34") ; parse-and-implode
+               ) then
+            s-step(|"_cellar/asfix-tools/xtc/sglri.str", "15,10,15,21")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "15,11,15,18") ; xtc-exit)> 0
+          else
+            s-step(|"_cellar/asfix-tools/xtc/sglri.str", "17,10,17,21")
+            ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "17,11,17,18") ; xtc-exit)> 1
+          end
       )
-      
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "main-sglri", "11,2,19,6")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "main-sglri", "11,2,19,6")
+      ; fail
+
   additional-sglr-config =
-    if <geq> (<get-config> "--statistics", 1) then
-      set-sglr-log-statistics(true)
-      ; log-stream
-      ; set-sglr-log-stream
-    end
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "additional-sglr-config", "21,2,26,6")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "22,4,26,6")
+    ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "22,7,22,44")
+         ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "22,8,22,10") ; geq)> ( <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "22,15,22,24") ; get-config> "--statistics"
+                                                                                , 1
+                                                                                ) then
+        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "23,6,25,26")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "23,6,23,34")
+           ; set-sglr-log-statistics(
+               s-step(|"_cellar/asfix-tools/xtc/sglri.str", "23,30,23,33") ; true
+             ))
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "24,8,25,26")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "24,8,24,17") ; log-stream)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "25,8,25,26")
+        ; set-sglr-log-stream
+      end
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "additional-sglr-config", "21,2,26,6")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "additional-sglr-config", "21,2,26,6")
+      ; fail
 
   print-config =
-    if get-ambiguity-is-error then
-      say(!"ambiguities: off")
-    else
-      say(!"ambiguities: on")
-    end
-
-strategies
-
-  parse-and-implode =
-    ?input;
-    let try-get-start-symbol =
-          <get-config> StartSymbol() <+ !None()
-
-     in where(
-          try-open-parse-table => tbl
-        ; try-get-start-symbol => sort
-        )
-      ; open-input-stream => stream
-      ; finally(
-          parse-stream-pt(report-parse-error | tbl, sort, <path-of-input> input)
-        , <fclose> stream
-          ; <close-parse-table> tbl
-        )
-
-      ; if must-preserve-comments then
-          asfix-anno-comments(| [ "ShortCom", "LongCom", "Comment" ] )
-        end
-  
-      ; if must-preserve-positions then
-          asfix-anno-position-info(|"")
-        end
-
-      ; if must-preserve-locations then
-          asfix-anno-location
-        end
-
-      ; implode-asfix-using-config
-    end
-
-strategies
-
-  path-of-input =
-    ?FILE(<id>)
-
-  path-of-input =
-    ?stdin(); !"stdin"
-
-  open-input-stream =
-    ?FILE(<id>)
-    ; (<fopen> (<id>, "r") <+ sglri-perror)
-
-  open-input-stream =
-    ?stdin(); stdin-stream
-    
-  try-open-parse-table =
-    (<get-config> ParseTable()
-       <+ log(|Critical(), "No parse table specified. Please use the -p option."); <xtc-exit> 1)
-    ; (<fopen> (<id>, "r") <+ sglri-perror) => stream
-    ; finally(read-from-stream, <fclose> stream)
-    ; if not(?"parse-table"#(_)) then
-        log(|Critical(), "The specified parse table file does not contain a parse table")
-        ; <xtc-exit> 1
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "print-config", "28,2,33,6")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "29,4,33,6")
+    ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "29,7,29,28") ; get-ambiguity-is-error then
+        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "30,6,30,29")
+        ; say(
+            s-step(|"_cellar/asfix-tools/xtc/sglri.str", "30,10,30,28")
+            ; !"ambiguities: off"
+          )
+      else
+        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "32,6,32,28")
+        ; say(
+            s-step(|"_cellar/asfix-tools/xtc/sglri.str", "32,10,32,27")
+            ; !"ambiguities: on"
+          )
       end
-    ; open-parse-table
-    <+ log(|Critical(), "Could not open parse table")
-    
-  sglri-perror = 
-    <conc-strings; perror; fail> ("sglri: ", <id>)
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "print-config", "28,2,33,6")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "print-config", "28,2,33,6")
+      ; fail
+
 
 strategies
+  parse-and-implode =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "parse-and-implode", "37,2,66,6")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "38,4,66,6")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "38,4,38,9") ; ?input)
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "39,4,66,6")
+    ; let try-get-start-symbol =
+            s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "try-get-start-symbol", "39,8,40,46")
+            ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "40,10,40,46")
+            ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "40,10,40,35")
+               ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "40,11,40,20") ; get-config)> StartSymbol()
+               <+ s-step(|"_cellar/asfix-tools/xtc/sglri.str", "40,40,40,46")
+                  ; !None())
+            < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "try-get-start-symbol", "39,8,40,46")
+            + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "try-get-start-symbol", "39,8,40,46")
+              ; fail
+      in
+        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "42,8,65,33")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "42,8,45,8")
+           ; where(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "43,10,44,37")
+                   ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "43,10,43,36")
+                      ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "43,10,43,29") ; try-open-parse-table) => tbl)
+                   ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "44,10,44,37")
+                   ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "44,10,44,29") ; try-get-start-symbol) => sort))
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "46,8,65,33")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "46,8,46,34")
+           ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "46,8,46,24") ; open-input-stream) => stream)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "47,8,65,33")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "47,8,51,8")
+           ; finally(
+               s-step(|"_cellar/asfix-tools/xtc/sglri.str", "48,10,48,79")
+               ; parse-stream-pt(
+                   s-step(|"_cellar/asfix-tools/xtc/sglri.str", "48,26,48,43") ; report-parse-error
+                 | tbl
+                 , sort
+                 , <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "48,59,48,71") ; path-of-input> input
+                 )
+             , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "49,10,50,34")
+               ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "49,10,49,24")
+                  ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "49,11,49,16") ; fclose)> stream)
+               ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "50,12,50,34")
+               ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "50,13,50,29") ; close-parse-table)> tbl
+             ))
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "53,8,65,33")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "53,8,55,10")
+           ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "53,11,53,32") ; must-preserve-comments then
+               s-step(|"_cellar/asfix-tools/xtc/sglri.str", "54,10,54,69")
+               ; asfix-anno-comments(
+                 | ["ShortCom", "LongCom", "Comment"]
+                 )
+             end)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "57,8,65,33")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "57,8,59,10")
+           ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "57,11,57,33") ; must-preserve-positions then
+               s-step(|"_cellar/asfix-tools/xtc/sglri.str", "58,10,58,38")
+               ; asfix-anno-position-info(|"")
+             end)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "61,8,65,33")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "61,8,63,10")
+           ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "61,11,61,33") ; must-preserve-locations then
+               s-step(|"_cellar/asfix-tools/xtc/sglri.str", "62,10,62,28") ; asfix-anno-location
+             end)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "65,8,65,33")
+        ; implode-asfix-using-config
+      end
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "parse-and-implode", "37,2,66,6")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "parse-and-implode", "37,2,66,6")
+      ; fail
 
+
+strategies
+  path-of-input =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "path-of-input", "70,2,71,14")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "71,4,71,14")
+    ; ?FILE(
+         <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "71,11,71,12") ; id>
+       )
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "path-of-input", "70,2,71,14")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "path-of-input", "70,2,71,14")
+      ; fail
+
+  path-of-input =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "path-of-input", "73,2,74,21")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "74,4,74,21")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "74,4,74,11")
+       ; ?stdin())
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "74,14,74,21")
+    ; !"stdin"
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "path-of-input", "73,2,74,21")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "path-of-input", "73,2,74,21")
+      ; fail
+
+  open-input-stream =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "open-input-stream", "76,2,78,42")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "77,4,78,42")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "77,4,77,14")
+       ; ?FILE(
+            <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "77,11,77,12") ; id>
+          ))
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "78,7,78,41")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "78,7,78,25")
+       ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "78,8,78,12") ; fopen)> ( <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "78,17,78,18") ; id>
+                                                                                , "r"
+                                                                                )
+       <+ s-step(|"_cellar/asfix-tools/xtc/sglri.str", "78,30,78,41") ; sglri-perror)
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "open-input-stream", "76,2,78,42")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "open-input-stream", "76,2,78,42")
+      ; fail
+
+  open-input-stream =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "open-input-stream", "80,2,81,25")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "81,4,81,25")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "81,4,81,11")
+       ; ?stdin())
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "81,14,81,25")
+    ; stdin-stream
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "open-input-stream", "80,2,81,25")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "open-input-stream", "80,2,81,25")
+      ; fail
+
+  try-open-parse-table =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "try-open-parse-table", "83,2,93,52")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "84,4,93,52")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "84,4,92,21")
+       ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "84,5,85,94")
+          ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "84,5,84,29")
+             ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "84,6,84,15") ; get-config)> ParseTable()
+             <+ s-step(|"_cellar/asfix-tools/xtc/sglri.str", "85,10,85,94")
+                ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "85,10,85,80")
+                   ; log(|Critical(), "No parse table specified. Please use the -p option."))
+                ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "85,83,85,94")
+                ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "85,84,85,91") ; xtc-exit)> 1))
+       ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,6,92,21")
+       ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,6,86,52")
+          ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,7,86,41")
+             ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,7,86,25")
+                ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,8,86,12") ; fopen)> ( <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,17,86,18") ; id>
+                                                                                         , "r"
+                                                                                         )
+                <+ s-step(|"_cellar/asfix-tools/xtc/sglri.str", "86,30,86,41") ; sglri-perror)) => stream)
+       ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "87,6,92,21")
+       ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "87,6,87,47")
+          ; finally(
+              s-step(|"_cellar/asfix-tools/xtc/sglri.str", "87,14,87,29") ; read-from-stream
+            , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "87,32,87,46")
+              ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "87,33,87,38") ; fclose)> stream
+            ))
+       ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "88,6,92,21")
+       ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "88,6,91,8")
+          ; if s-step(|"_cellar/asfix-tools/xtc/sglri.str", "88,9,88,31")
+               ; not(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "88,13,88,30")
+                     ; ?"parse-table"#(_)) then
+              s-step(|"_cellar/asfix-tools/xtc/sglri.str", "89,8,90,21")
+              ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "89,8,89,88")
+                 ; log(|Critical(), "The specified parse table file does not contain a parse table"))
+              ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "90,10,90,21")
+              ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "90,11,90,18") ; xtc-exit)> 1
+            end)
+       ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "92,6,92,21")
+       ; open-parse-table
+       <+ s-step(|"_cellar/asfix-tools/xtc/sglri.str", "93,7,93,52")
+          ; log(|Critical(), "Could not open parse table"))
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "try-open-parse-table", "83,2,93,52")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "try-open-parse-table", "83,2,93,52")
+      ; fail
+
+  sglri-perror =
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "sglri-perror", "95,2,96,49")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,4,96,49")
+    ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,5,96,30")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,5,96,16") ; conc-strings)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,19,96,30")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,19,96,24") ; perror)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,27,96,30")
+        ; fail)> ( "sglri: "
+                 , <s-step(|"_cellar/asfix-tools/xtc/sglri.str", "96,46,96,47") ; id>
+                 )
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "sglri-perror", "95,2,96,49")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "sglri-perror", "95,2,96,49")
+      ; fail
+
+
+strategies
   report-parse-error =
-    finally(
-      ?input
-      ; get-parse-error => error
-      ; <report-error(|error)> input
-    , fail
-    )
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "report-parse-error", "100,2,106,4")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "101,4,106,4")
+    ; finally(
+        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "102,6,104,35")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "102,6,102,11") ; ?input)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "103,8,104,35")
+        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "103,8,103,31")
+           ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "103,8,103,22") ; get-parse-error) => error)
+        ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "104,8,104,35")
+        ; <(s-step(|"_cellar/asfix-tools/xtc/sglri.str", "104,9,104,28")
+            ; report-error(|error))> input
+      , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "105,6,105,9") ; fail
+      )
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "report-parse-error", "100,2,106,4")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "report-parse-error", "100,2,106,4")
+      ; fail
+
 
 strategies
-
   sglri-options =
-      sglr-parse-table-option
-    + sglr-start-symbol-option
-    + Option(fail, fail, !"")
-
-    + Option(fail, fail, !"Parse options:")
-    + sglr-amb-option
-    + sglr-filter-option
-    + Option(fail, fail, !"")
-
-    + Option(fail, fail, !"Implode options:")
-    + implode-asfix-options
-    + Option(fail, fail, !"")
-
-    + custom-sglr-option
-    + custom-implode-option
-    + Option(fail, fail, !"")
-
-    + Option(fail, fail, !"Preserving options:")
-
-    + preserve-comments-option
-    + preserve-positions-option
-    + preserve-locations-option
-
-    + Option(fail, fail, !"")
-    + Option(fail, fail, !"Input/Output options:")
-
+    s-enter(|"_cellar/asfix-tools/xtc/sglri.str", "sglri-options", "110,2,135,49")
+    ; s-step(|"_cellar/asfix-tools/xtc/sglri.str", "111,6,135,49")
+    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "111,6,111,28") ; sglr-parse-table-option
+       + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "112,6,135,49")
+         ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "112,6,112,29") ; sglr-start-symbol-option
+            + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "113,6,135,49")
+              ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "113,6,113,28")
+                 ; Option(
+                     s-step(|"_cellar/asfix-tools/xtc/sglri.str", "113,13,113,16") ; fail
+                   , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "113,19,113,22") ; fail
+                   , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "113,25,113,27")
+                     ; !""
+                   )
+                 + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "115,6,135,49")
+                   ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "115,6,115,42")
+                      ; Option(
+                          s-step(|"_cellar/asfix-tools/xtc/sglri.str", "115,13,115,16") ; fail
+                        , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "115,19,115,22") ; fail
+                        , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "115,25,115,41")
+                          ; !"Parse options:"
+                        )
+                      + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "116,6,135,49")
+                        ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "116,6,116,20") ; sglr-amb-option
+                           + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "117,6,135,49")
+                             ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "117,6,117,23") ; sglr-filter-option
+                                + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "118,6,135,49")
+                                  ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "118,6,118,28")
+                                     ; Option(
+                                         s-step(|"_cellar/asfix-tools/xtc/sglri.str", "118,13,118,16") ; fail
+                                       , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "118,19,118,22") ; fail
+                                       , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "118,25,118,27")
+                                         ; !""
+                                       )
+                                     + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "120,6,135,49")
+                                       ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "120,6,120,44")
+                                          ; Option(
+                                              s-step(|"_cellar/asfix-tools/xtc/sglri.str", "120,13,120,16") ; fail
+                                            , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "120,19,120,22") ; fail
+                                            , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "120,25,120,43")
+                                              ; !"Implode options:"
+                                            )
+                                          + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "121,6,135,49")
+                                            ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "121,6,121,26") ; implode-asfix-options
+                                               + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "122,6,135,49")
+                                                 ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "122,6,122,28")
+                                                    ; Option(
+                                                        s-step(|"_cellar/asfix-tools/xtc/sglri.str", "122,13,122,16") ; fail
+                                                      , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "122,19,122,22") ; fail
+                                                      , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "122,25,122,27")
+                                                        ; !""
+                                                      )
+                                                    + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "124,6,135,49")
+                                                      ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "124,6,124,23") ; custom-sglr-option
+                                                         + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "125,6,135,49")
+                                                           ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "125,6,125,26") ; custom-implode-option
+                                                              + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "126,6,135,49")
+                                                                ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "126,6,126,28")
+                                                                   ; Option(
+                                                                       s-step(|"_cellar/asfix-tools/xtc/sglri.str", "126,13,126,16") ; fail
+                                                                     , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "126,19,126,22") ; fail
+                                                                     , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "126,25,126,27")
+                                                                       ; !""
+                                                                     )
+                                                                   + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "128,6,135,49")
+                                                                     ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "128,6,128,47")
+                                                                        ; Option(
+                                                                            s-step(|"_cellar/asfix-tools/xtc/sglri.str", "128,13,128,16") ; fail
+                                                                          , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "128,19,128,22") ; fail
+                                                                          , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "128,25,128,46")
+                                                                            ; !"Preserving options:"
+                                                                          )
+                                                                        + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "130,6,135,49")
+                                                                          ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "130,6,130,29") ; preserve-comments-option
+                                                                             + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "131,6,135,49")
+                                                                               ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "131,6,131,30") ; preserve-positions-option
+                                                                                  + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "132,6,135,49")
+                                                                                    ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "132,6,132,30") ; preserve-locations-option
+                                                                                       + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "134,6,135,49")
+                                                                                         ; (s-step(|"_cellar/asfix-tools/xtc/sglri.str", "134,6,134,28")
+                                                                                            ; Option(
+                                                                                                s-step(|"_cellar/asfix-tools/xtc/sglri.str", "134,13,134,16") ; fail
+                                                                                              , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "134,19,134,22") ; fail
+                                                                                              , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "134,25,134,27")
+                                                                                                ; !""
+                                                                                              )
+                                                                                            + s-step(|"_cellar/asfix-tools/xtc/sglri.str", "135,6,135,49")
+                                                                                              ; Option(
+                                                                                                  s-step(|"_cellar/asfix-tools/xtc/sglri.str", "135,13,135,16") ; fail
+                                                                                                , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "135,19,135,22") ; fail
+                                                                                                , s-step(|"_cellar/asfix-tools/xtc/sglri.str", "135,25,135,48")
+                                                                                                  ; !"Input/Output options:"
+                                                                                                )))))))))))))))))))
+    < s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "sglri-options", "110,2,135,49")
+    + s-exit(|"_cellar/asfix-tools/xtc/sglri.str", "sglri-options", "110,2,135,49")
+      ; fail

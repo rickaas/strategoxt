@@ -1,23 +1,39 @@
-/**
- * The memo operator makes a strategy
- * into a memoizing strategy that looks up the term to be transformed
- * in a memo table and only computes the transformation if the
- * term is not found.
- */
 module strategy/general/memo
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   lang/dynamic-rules
 
+
 strategies
+  memo-scope(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo-scope", "13,2,13,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "13,18,13,30")
+    ; {|Memo:
+         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "13,27,13,27") ; s
+      |}
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo-scope", "13,2,13,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo-scope", "13,2,13,30")
+      ; fail
 
-  memo-scope(s) = {| Memo: s |}
-
- /**
-  * <memo(tbl, s)> t first looks up the term t in the memo table. If 
-  * present the association in the table is produced, else the result 
-  * of <s> t is computed and stored in the table.
-  */
   memo(s) :
-    t -> t'
-    where ( <Memo> t => t' )
-       <+ ( <s> t => t'; rules(Memo: t -> t') )
+    t -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")> t'
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,10,23,46")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,12,22,25")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,12,22,19")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,13,22,16") ; Memo)> t) => t'
+             <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,12,23,44")
+                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,12,23,22")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,12,23,16")
+                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,13,23,13") ; s)> t) => t')
+                ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,25,23,44")
+                ; rules ( Memo :
+                            t -> t' ))
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")
+             ; fail

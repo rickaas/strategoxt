@@ -1,17 +1,46 @@
 module chars_1
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-sglr
+
 
 rules
 
   main-chars_1 =
-    !"öä";
-    explode-string;
-    implode-string; debug => "öä";
-    
-    !"module foo rules bar = !\"öä\"";
-    parse-string(|<import-term(Stratego-Sugar.tbl); open-parse-table>);
-    debug;
-    oncetd(?"\"öä\"")
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "main-chars_1", "9,2,17,20")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "10,4,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "10,4,10,8")
+       ; !"öä")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "11,4,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "11,4,11,17") ; explode-string)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "12,4,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "12,4,12,17") ; implode-string)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "12,20,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "12,20,12,32")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "12,20,12,24") ; debug) => "öä")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "14,4,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "14,4,14,36")
+       ; !"module foo rules bar = !\"öä\"")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "15,4,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "15,4,15,69")
+       ; parse-string(
+         | <s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "15,19,15,67")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "15,19,15,49") ; import-term(Stratego-Sugar.tbl))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "15,52,15,67")
+            ; open-parse-table>
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "16,4,17,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "16,4,16,8") ; debug)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "17,4,17,20")
+    ; oncetd(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "17,11,17,19")
+        ; ?"\"öä\""
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "main-chars_1", "9,2,17,20")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/chars_1.str", "main-chars_1", "9,2,17,20")
+      ; fail

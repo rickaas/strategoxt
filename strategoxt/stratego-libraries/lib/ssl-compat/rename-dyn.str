@@ -1,120 +1,175 @@
-/*
-	Renaming of bound variables is determined by the shape of
-	variables and binding constructs. Three generic strategies
-	are defined that cater for different complexities of binding
-	constructs.
-
-% Copyright (C) 1998-2001 Eelco Visser <visser@acm.org>
-% 
-% This program is free software; you can redistribute it and/or modify
-% it under the terms of the GNU General Public License as published by
-% the Free Software Foundation; either version 2, or (at your option)
-% any later version.
-% 
-% This program is distributed in the hope that it will be useful,
-% but WITHOUT ANY WARRANTY; without even the implied warranty of
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-% GNU General Public License for more details.
-% 
-% You should have received a copy of the GNU General Public License
-% along with this program; if not, write to the Free Software
-% Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
-% 02111-1307, USA.
-
-	Variable binding constructs protect variables from clashing
-	with variables in other parts of a program when their names
-	are the same. To prevent the introduction of name clashes
-	during program transformation it can be useful to give 
-	all variable bindings a unique name. This module defines three
-	generic strategies for bound variable renaming all based on
-	the same idea, but dealing with increasingly complex variable
-	binding models.
-
-	Renaming depends \emph{only} on the shape of variable bindings
-	and variable occurences. Other language constructs are irrelevant.
-
-	In the generic strategies the following assumptions about
-	binding constructs are made: (1)
-	There is a subtree that covers the scope in which the
-	variables are bound. (2) variables are atomic, i.e., do not
-	contain subterms that are
-	variables or binding constructs.
-
-	Approach: indicate shape of variable occurences and variable
-	binders
-
-	The strategy \verb|rename(isvar, mkvar, bnd)| renames all
-	bound variables in a term to fresh variables;
-
-	Parameters:
-
-  	isvar: Succeeds if applied to a variable
-
-  	newvar: Takes a string and builds a variable
-
-  	bnd: Maps a binding construct to the list of bound variables
-
-  	apply(a, b, c): reconstruct the binding construct with fresh
-  	variables;
-
-	- a should be applied to the subterm containing the
-	variable(s)
-
-	- b should be applied to the subterms in which the variables
-	are bound
-
-	- c should be applied to the subterms in which the variables
-	are not bound;
-
-*/
-
 module rename-dyn
-imports simple-traversal tuple list dynamic-rules
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  simple-traversal
+  tuple
+  list
+  dynamic-rules
+
+
 rules
 
   RnBinding(bndvrs) =
-    where(bndvrs; map({?x; new => y; rules( RenameVar : x -> y )}))
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "RnBinding", "75,2,76,66")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,4,76,66")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,10,76,65")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,10,76,15") ; bndvrs)
+            ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,18,76,65")
+            ; map(
+                s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,22,76,64")
+                ; {s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,23,76,63")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,23,76,24") ; ?x)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,27,76,63")
+                   ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,27,76,34")
+                      ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,27,76,29") ; new) => y)
+                   ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "76,37,76,63")
+                   ; rules ( RenameVar :
+                               x -> y )}
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "RnBinding", "75,2,76,66")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "RnBinding", "75,2,76,66")
+      ; fail
+
 
 strategies
+  rename(isvar : name * ( name -> env ) -> term, bndvars) =
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "85,2,88,63")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "87,4,88,63")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "87,10,88,62")
+        ; alltd(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "87,16,88,61")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "87,16,87,31")
+               ; isvar(
+                   s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "87,22,87,30") ; RenameVar
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "88,19,88,61")
+                  ; {|RenameVar:
+                       s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "88,33,88,58")
+                       ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "88,33,88,50")
+                          ; RnBinding(
+                              s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "88,43,88,49") ; bndvars
+                            ))
+                       ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "88,53,88,58")
+                       ; all(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "88,57,88,57") ; x)
+                    |})
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "85,2,88,63")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "85,2,88,63")
+      ; fail
 
-  // renaming bound variables assuming that variables are bound
-  // in all subterms of a binding construct
-  // variable declarations in binding constructs are assumed to
-  // have the same shape as variable uses 
-
-  rename(isvar : name * (name -> env) -> term
-        , bndvars) = 
-    rec x(alltd(isvar(RenameVar)
-                <+ {| RenameVar: RnBinding(bndvars); all(x) |}))
 
 strategies
+  rename(isvar : name * ( name -> env ) -> term, bndvars, boundin : term * ( term -> term ) * ( term -> term ) * ( term -> term ) -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "97,2,102,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "100,4,102,38")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "100,10,102,37")
+        ; alltd(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "100,16,102,36")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "100,16,100,31")
+               ; isvar(
+                   s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "100,22,100,30") ; RenameVar
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,19,102,36")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,19,101,71")
+                     ; {|RenameVar:
+                          s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,33,101,68")
+                          ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,33,101,50")
+                             ; RnBinding(
+                                 s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,43,101,49") ; bndvars
+                               ))
+                          ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,53,101,68")
+                          ; boundin(
+                              s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,61,101,61") ; x
+                            , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,63,101,64") ; id
+                            , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "101,66,101,67") ; id
+                            )
+                       |})
+                  ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "102,21,102,36")
+                  ; boundin(
+                      s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "102,29,102,30") ; id
+                    , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "102,32,102,32") ; x
+                    , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "102,34,102,35") ; id
+                    ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "97,2,102,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "97,2,102,38")
+      ; fail
 
-  // renaming while making a distinction between subterms
-  // in which the variables are bound or not
-  // variables at binding sites are assumed to have
-  // the same shape as other variable occurences
-
-  rename(isvar : name * (name -> env) -> term
-        , bndvars
-        , boundin : term * (term -> term) * (term -> term) * (term -> term) -> term) = 
-    rec x(alltd(isvar(RenameVar)
-                <+ {| RenameVar: RnBinding(bndvars); boundin(x,id,id) |}
-                   ; boundin(id,x,id)))
 
 rules
 
-  RnBinding(bndvrs, paste : term * (term -> vars) -> term) =
-    where(bndvrs; map({?x; new => y; rules( RenameVar : x -> y )}) => ys);
-    paste(!ys)
+  RnBinding(bndvrs, paste : term * ( term -> vars ) -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "RnBinding", "106,2,108,13")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,4,108,13")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,4,107,72")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,10,107,71")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,10,107,15") ; bndvrs)
+               ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,18,107,71")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,18,107,65")
+                  ; map(
+                      s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,22,107,64")
+                      ; {s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,23,107,63")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,23,107,24") ; ?x)
+                         ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,27,107,63")
+                         ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,27,107,34")
+                            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,27,107,29") ; new) => y)
+                         ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "107,37,107,63")
+                         ; rules ( RenameVar :
+                                     x -> y )}
+                    )) => ys))
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "108,4,108,13")
+    ; paste(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "108,10,108,12") ; !ys
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "RnBinding", "106,2,108,13")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "RnBinding", "106,2,108,13")
+      ; fail
+
 
 strategies
-
-  rename(isvar : name * (name -> env) -> term
-        , bndvars
-        , boundin : term * (term -> term) * (term -> term) * (term -> term) -> term
-        , paste : term * (term -> vars) -> term
-        )
-  = rec x(alltd(isvar(RenameVar)
-                <+ {| RenameVar: RnBinding(bndvars, paste); boundin(x,id,id) |}
-                   ; boundin(id,x,id)))
-
+  rename(isvar : name * ( name -> env ) -> term, bndvars, boundin : term * ( term -> term ) * ( term -> term ) * ( term -> term ) -> term, paste : term * ( term -> vars ) -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "112,2,119,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "117,4,119,38")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "117,10,119,37")
+        ; alltd(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "117,16,119,36")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "117,16,117,31")
+               ; isvar(
+                   s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "117,22,117,30") ; RenameVar
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,19,119,36")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,19,118,78")
+                     ; {|RenameVar:
+                          s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,33,118,75")
+                          ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,33,118,57")
+                             ; RnBinding(
+                                 s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,43,118,49") ; bndvars
+                               , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,52,118,56") ; paste
+                               ))
+                          ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,60,118,75")
+                          ; boundin(
+                              s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,68,118,68") ; x
+                            , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,70,118,71") ; id
+                            , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "118,73,118,74") ; id
+                            )
+                       |})
+                  ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "119,21,119,36")
+                  ; boundin(
+                      s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "119,29,119,30") ; id
+                    , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "119,32,119,32") ; x
+                    , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "119,34,119,35") ; id
+                    ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "112,2,119,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/rename-dyn.str", "rename", "112,2,119,38")
+      ; fail

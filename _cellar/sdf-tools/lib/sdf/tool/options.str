@@ -1,24 +1,81 @@
 module sdf/tools/options
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   sdf-main-module-option =
-    sdf-main-module-option(!"Specify main module in sdf definition")
+    s-enter(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-option", "4,2,5,67")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "5,4,5,67")
+    ; sdf-main-module-option(
+        s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "5,27,5,66")
+        ; !"Specify main module in sdf definition"
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-option", "4,2,5,67")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-option", "4,2,5,67")
+      ; fail
 
   sdf-main-module-option(s) =
-    ArgOption("-m" + "--main"
-    , where(<set-config> (SdfMainModuleFlag(), <id>))
-    , <concat-strings> ["-m mod | --main mod   ", <s> (), " [Main]"]
-    )
+    s-enter(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-option", "7,2,11,4")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "8,4,11,4")
+    ; ArgOption(
+        s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "8,14,8,28")
+        ; (s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "8,14,8,17") ; "-m"
+           + s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "8,21,8,28") ; "--main")
+      , s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "9,6,9,52")
+        ; where(s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "9,12,9,51")
+                ; <(s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "9,13,9,22") ; set-config)> ( SdfMainModuleFlag()
+                                                                                                      , <s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "9,48,9,49") ; id>
+                                                                                                      ))
+      , s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "10,6,10,67")
+        ; <(s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "10,7,10,20") ; concat-strings)> [ "-m mod | --main mod   "
+                                                                                                   , <s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "10,51,10,51") ; s> ()
+                                                                                                   , " [Main]"
+                                                                                                   ]
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-option", "7,2,11,4")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-option", "7,2,11,4")
+      ; fail
 
   pass-sdf-main-module =
-    !["--main", <get-sdf-main-module>]
+    s-enter(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "pass-sdf-main-module", "13,2,14,37")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "14,4,14,37")
+    ; ![ "--main"
+       , <s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "14,17,14,35") ; get-sdf-main-module>
+       ]
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "pass-sdf-main-module", "13,2,14,37")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "pass-sdf-main-module", "13,2,14,37")
+      ; fail
 
   get-sdf-main-module =
-    <get-config> SdfMainModuleFlag() <+ !"Main"
+    s-enter(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "get-sdf-main-module", "16,2,17,46")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "17,4,17,46")
+    ; (s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "17,4,17,35")
+       ; <(s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "17,5,17,14") ; get-config)> SdfMainModuleFlag()
+       <+ s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "17,40,17,46")
+          ; !"Main")
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "get-sdf-main-module", "16,2,17,46")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "get-sdf-main-module", "16,2,17,46")
+      ; fail
 
   sdf-main-module-error =
-      say(!<concat-strings> ["** ERROR -- Specified main module (", <get-sdf-main-module> (), ") not found in definition"])
+    s-enter(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-error", "19,2,21,9")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "20,6,21,9")
+    ; (s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "20,6,20,122")
+       ; say(
+           s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "20,10,20,121")
+           ; !<s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "20,12,20,25") ; concat-strings> [ "** ERROR -- Specified main module ("
+                                                                                                      , <s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "20,69,20,87") ; get-sdf-main-module> ()
+                                                                                                      , ") not found in definition"
+                                                                                                      ]
+         ))
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "21,6,21,9")
     ; fail
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-error", "19,2,21,9")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/tool/options.str", "sdf-main-module-error", "19,2,21,9")
+      ; fail
+
 
 signature
   constructors

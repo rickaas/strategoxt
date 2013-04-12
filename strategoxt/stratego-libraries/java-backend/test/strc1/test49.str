@@ -1,24 +1,87 @@
 module test49
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
-    FooBar: String -> FooBar
+    FooBar : String -> FooBar
+
 
 strategies
+  main-test49 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "main-test49", "10,0,12,15")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "10,14,12,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "10,14,10,22") ; tp-test-1)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "11,7,12,15")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "11,7,11,15") ; tp-test-2)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "12,7,12,15")
+    ; tp-test-3
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "main-test49", "10,0,12,15")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "main-test49", "10,0,12,15")
+      ; fail
 
-main-test49 = tp-test-1
-     ; tp-test-2
-     ; tp-test-3
+  tp-test-1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-1", "14,0,16,44")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "14,12,16,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "14,12,14,23")
+       ; !FooBar("x"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "15,12,16,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "15,12,15,24")
+       ; ?FooBar(
+            <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "15,21,15,22") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "16,12,16,44")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "16,18,16,43")
+        ; !"tp-test-1 match result:"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-1", "14,0,16,44")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-1", "14,0,16,44")
+      ; fail
 
-tp-test-1 = !FooBar("x")
-          ; ?FooBar(<id>)
-          ; debug(!"tp-test-1 match result:")
+  tp-test-2 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-2", "18,0,20,44")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "18,12,20,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "18,12,18,23")
+       ; !FooBar("x"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "19,12,20,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "19,12,19,26")
+       ; ?FooBar(
+            <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "19,21,19,24") ; ?bla>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "20,12,20,44")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "20,18,20,43")
+        ; !"tp-test-2 match result:"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-2", "18,0,20,44")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-2", "18,0,20,44")
+      ; fail
 
-tp-test-2 = !FooBar("x")
-          ; ?FooBar(<?bla>)
-          ; debug(!"tp-test-2 match result:")
-
-tp-test-3 = !FooBar("x")
-          ; ?FooBar(<id; ?bla>)
-          ; debug(!"tp-test-3 match result:")
+  tp-test-3 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-3", "22,0,24,44")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "22,12,24,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "22,12,22,23")
+       ; !FooBar("x"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "23,12,24,44")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "23,12,23,30")
+       ; ?FooBar(
+            <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "23,21,23,28")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "23,21,23,22") ; id)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "23,25,23,28")
+             ; ?bla>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "24,12,24,44")
+    ; debug(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "24,18,24,43")
+        ; !"tp-test-3 match result:"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-3", "22,0,24,44")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test49.str", "tp-test-3", "22,0,24,44")
+      ; fail

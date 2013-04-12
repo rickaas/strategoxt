@@ -1,101 +1,294 @@
-/**
- * This module defines a generic strategy for placing parentheses in
- * abstract syntax trees based on priority and associativity declarations. 
- *
- * Reference
- *
- * Eelco Visser. Syntax Definition for Language Prototyping. PhD Thesis,
- * University of Amsterdam, 1997.
- *
- * Typical usage: (from module Tiger-Ensugar in the tiger/tiger-front
- * package)
- *
- *  TigerParenthesize =
- *    !Seq([<id>])
- *
- *  tiger-parenthesize =
- *    parenthesize(TigerParenthesize, tiger-priorities)
- *   
- *  tiger-priorities =
- *    ![(None,			["Uminus","FieldVar","Subscript"]),
- *      (Some("left"),		["Power"]),
- *      (Some("left"),		["Times","Divide"]),
- *      (Some("left"),		["Plus","Minus"]),
- *      (Some("non-assoc"),	["CPlus","CMinus","Eq","Neq","Gt","Lt","Geq","Leq"]),
- *      (Some("left"),		["And"]),
- *      (Some("left"),		["Or"]),
- *      (None,			["Array"]),
- *      (None,			["Assign"]),
- *      (Some("right"),		["If","While","For"])]
- *
- */
 module strategy/general/parenthesize
-imports collection/list/common
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/common
+
 
 strategies
-
   parenthesize(paren, prios) =
-    where(prios; init-parenthesation-rules)
-    ; bottomup(try(Disambiguate(paren)))
-
-  // assumes parenthesation rules are already generated
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "parenthesize", "37,2,39,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "38,4,39,39")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "38,4,38,42")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "38,10,38,41")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "38,10,38,14") ; prios)
+               ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "38,17,38,41")
+               ; init-parenthesation-rules))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "39,6,39,39")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "39,15,39,38")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "39,19,39,37")
+            ; Disambiguate(
+                s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "39,32,39,36") ; paren
+              )
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "parenthesize", "37,2,39,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "parenthesize", "37,2,39,39")
+      ; fail
 
   parenthesize(paren) =
-    bottomup(try(Disambiguate(paren)))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "parenthesize", "43,2,44,37")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "44,4,44,37")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "44,13,44,36")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "44,17,44,35")
+            ; Disambiguate(
+                s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "44,30,44,34") ; paren
+              )
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "parenthesize", "43,2,44,37")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "parenthesize", "43,2,44,37")
+      ; fail
 
   Disambiguate(paren) :
-    e@op#([l | args]) -> (op#([l' | <conc>(mid', [r'])]))
-    where <split-init-last> args => (mid, r)
-        ; <try(test(<RightAssoc> (e,<id>)); paren)> l => l'
-	; <map(test(<GreaterThan>(e,<id>)); paren)> mid => mid'
-        ; <try(test(<LeftAssoc>  (e,<id>)); paren)> r => r'
+    e@op#([l|args]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "46,2,51,58")> ( op#([l'|<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "47,37,47,40") ; conc> (mid', [r'])])
+                                                                                                                                           )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "46,2,51,58")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "46,2,51,58")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "48,10,51,58")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "48,10,48,43")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "48,10,48,31")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "48,11,48,25") ; split-init-last)> args) => (mid, r))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,10,51,58")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,10,49,58")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,10,49,52")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,11,49,49")
+                    ; try(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,15,49,48")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,15,49,41")
+                           ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,20,49,40")
+                                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,21,49,30") ; RightAssoc)> ( e
+                                                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,37,49,38") ; id>
+                                                                                                                                                        )))
+                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "49,44,49,48")
+                        ; paren
+                      ))> l) => l')
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,3,51,58")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,3,50,55")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,3,50,47")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,4,50,42")
+                    ; map(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,8,50,41")
+                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,8,50,34")
+                           ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,13,50,33")
+                                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,14,50,24") ; GreaterThan)> ( e
+                                                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,30,50,31") ; id>
+                                                                                                                                                         )))
+                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "50,37,50,41")
+                        ; paren
+                      ))> mid) => mid')
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,10,51,58")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,10,51,52")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,11,51,49")
+                 ; try(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,15,51,48")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,15,51,41")
+                        ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,20,51,40")
+                               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,21,51,29") ; LeftAssoc)> ( e
+                                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,37,51,38") ; id>
+                                                                                                                                                    )))
+                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "51,44,51,48")
+                     ; paren
+                   ))> r) => r'
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "46,2,51,58")
+             ; fail
 
   Disambiguate(paren) :
-    e@op#([l]) -> (op#([l']))
-    where <test(<GreaterThan>(e,<id>)); paren> l => l'
+    e@op#([l]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "53,2,55,53")> (op#([l']))
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "53,2,55,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "53,2,55,53")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,10,55,53")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,10,55,47")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,11,55,44")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,11,55,37")
+                    ; test(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,16,55,36")
+                           ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,17,55,27") ; GreaterThan)> ( e
+                                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,33,55,34") ; id>
+                                                                                                                                                  )))
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "55,40,55,44")
+                 ; paren)> l) => l'
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "Disambiguate", "53,2,55,53")
+             ; fail
 
-/**
- * Generation of the parenthesation rules.
- */
+
 strategies
-
   init-parenthesation-rules =
-    !([], <id>)
-    ; repeat(gen-left + gen-right + gen-non-assoc + gen-none)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "init-parenthesation-rules", "62,2,64,60")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "63,4,64,60")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "63,4,63,14")
+       ; !( []
+          , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "63,11,63,12") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,6,64,60")
+    ; repeat(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,13,64,59")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,13,64,20") ; gen-left
+           + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,24,64,59")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,24,64,32") ; gen-right
+                + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,36,64,59")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,36,64,48") ; gen-non-assoc
+                     + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "64,52,64,59") ; gen-none)))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "init-parenthesation-rules", "62,2,64,60")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "init-parenthesation-rules", "62,2,64,60")
+      ; fail
 
   gen-left :
-    (greater, [(Some("left"), ops) | rest]) -> (<conc>(ops, greater), rest)
-    where <for-each-pair(GenLeftAssoc)> (ops, ops)
-        ; <for-each-pair(GenGreaterThan; GenLeftAssoc; GenRightAssoc)> (greater, ops)
+    ( greater
+    , [(Some("left"), ops)|rest]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-left", "66,2,69,84")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "67,49,67,52") ; conc> (ops, greater)
+                                                                                                                         , rest
+                                                                                                                         )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-left", "66,2,69,84")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-left", "66,2,69,84")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "68,10,69,84")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "68,10,68,49")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "68,11,68,37")
+                 ; for-each-pair(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "68,25,68,36") ; GenLeftAssoc
+                   ))> (ops, ops))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,10,69,84")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,11,69,68")
+              ; for-each-pair(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,25,69,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,25,69,38") ; GenGreaterThan)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,41,69,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,41,69,52") ; GenLeftAssoc)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "69,55,69,67")
+                  ; GenRightAssoc
+                ))> (greater, ops)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-left", "66,2,69,84")
+             ; fail
 
   gen-right :
-    (greater, [(Some("right"), ops) | rest]) -> (<conc>(ops, greater), rest)
-    where <for-each-pair(GenRightAssoc)> (ops, ops)
-        ; <for-each-pair(GenGreaterThan; GenLeftAssoc; GenRightAssoc)> (greater, ops)
+    ( greater
+    , [(Some("right"), ops)|rest]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-right", "71,2,74,84")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "72,50,72,53") ; conc> (ops, greater)
+                                                                                                                          , rest
+                                                                                                                          )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-right", "71,2,74,84")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-right", "71,2,74,84")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "73,10,74,84")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "73,10,73,50")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "73,11,73,38")
+                 ; for-each-pair(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "73,25,73,37") ; GenRightAssoc
+                   ))> (ops, ops))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,10,74,84")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,11,74,68")
+              ; for-each-pair(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,25,74,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,25,74,38") ; GenGreaterThan)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,41,74,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,41,74,52") ; GenLeftAssoc)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "74,55,74,67")
+                  ; GenRightAssoc
+                ))> (greater, ops)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-right", "71,2,74,84")
+             ; fail
 
   gen-non-assoc :
-    (greater, [(Some("non-assoc"), ops) | rest]) -> (<conc>(ops, greater), rest)
-    where <for-each-pair(GenLeftAssoc; GenRightAssoc)> (ops, ops)
-        ; <for-each-pair(GenGreaterThan; GenLeftAssoc; GenRightAssoc)> (greater, ops)
+    ( greater
+    , [(Some("non-assoc"), ops)|rest]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-non-assoc", "76,2,79,84")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "77,54,77,57") ; conc> (ops, greater)
+                                                                                                                              , rest
+                                                                                                                              )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-non-assoc", "76,2,79,84")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-non-assoc", "76,2,79,84")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "78,10,79,84")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "78,10,78,64")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "78,11,78,52")
+                 ; for-each-pair(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "78,25,78,51")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "78,25,78,36") ; GenLeftAssoc)
+                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "78,39,78,51")
+                     ; GenRightAssoc
+                   ))> (ops, ops))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,10,79,84")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,11,79,68")
+              ; for-each-pair(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,25,79,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,25,79,38") ; GenGreaterThan)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,41,79,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,41,79,52") ; GenLeftAssoc)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "79,55,79,67")
+                  ; GenRightAssoc
+                ))> (greater, ops)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-non-assoc", "76,2,79,84")
+             ; fail
 
   gen-none :
-    (greater, [(None(), ops) | rest]) -> (<conc>(ops, greater), rest)
-    where <for-each-pair(GenGreaterThan; GenLeftAssoc; GenRightAssoc)> (greater, ops)
+    ( greater
+    , [(None(), ops)|rest]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-none", "81,2,83,84")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "82,43,82,46") ; conc> (ops, greater)
+                                                                                                                         , rest
+                                                                                                                         )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-none", "81,2,83,84")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-none", "81,2,83,84")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,10,83,84")
+          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,11,83,68")
+              ; for-each-pair(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,25,83,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,25,83,38") ; GenGreaterThan)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,41,83,67")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,41,83,52") ; GenLeftAssoc)
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "83,55,83,67")
+                  ; GenRightAssoc
+                ))> (greater, ops)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "gen-none", "81,2,83,84")
+             ; fail
 
   GenLeftAssoc =
-    ?(op1, op2)
-    ; rules(
-        LeftAssoc : (op1#(_), op2#(_)) -> ()
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenLeftAssoc", "85,2,89,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "86,4,89,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "86,4,86,14")
+       ; ?(op1, op2))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "87,6,89,6")
+    ; rules (
+        LeftAssoc :
+          (op1#(_), op2#(_)) -> ()
       )
-     
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenLeftAssoc", "85,2,89,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenLeftAssoc", "85,2,89,6")
+      ; fail
+
   GenRightAssoc =
-    ?(op1, op2)
-    ; rules(
-        RightAssoc : (op1#(_), op2#(_)) -> ()
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenRightAssoc", "91,2,95,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "92,4,95,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "92,4,92,14")
+       ; ?(op1, op2))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "93,6,95,6")
+    ; rules (
+        RightAssoc :
+          (op1#(_), op2#(_)) -> ()
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenRightAssoc", "91,2,95,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenRightAssoc", "91,2,95,6")
+      ; fail
 
   GenGreaterThan =
-    ?(op1, op2)
-    ; rules(
-        GreaterThan : (op1#(_), op2#(_)) -> ()
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenGreaterThan", "97,2,101,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "98,4,101,6")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "98,4,98,14")
+       ; ?(op1, op2))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "99,6,101,6")
+    ; rules (
+        GreaterThan :
+          (op1#(_), op2#(_)) -> ()
       )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenGreaterThan", "97,2,101,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/parenthesize.str", "GenGreaterThan", "97,2,101,6")
+      ; fail

@@ -1,42 +1,78 @@
 module stratego-meta-markers
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
   constructors
-    ToTerm       : a -> Term       // quotation
-    FromTerm     : Term -> a       // antiquotation
-
-    ToBuild      : a -> Strategy   // quotation denoting !t
-
-    FromApp      : Strategy -> a   // antiquotation denoting <s>
-
+    ToTerm       : a -> Term
+    FromTerm     : Term -> a
+    ToBuild      : a -> Strategy
+    FromApp      : Strategy -> a
     ToStrategy   : a -> Strategy
     FromStrategy : Strategy -> a
-
     WithAnno     : a * ListTerm -> a
-
     meta-var     : String -> a
     meta-listvar : String -> a
     Cong         : String * List(Strategy) -> Strategy
     Conc         : Term * Term -> Term
     Ins          : Term -> Term
 
-strategies
 
+strategies
   is-anti-quotation =
-      ?FromTerm(_)
-    + ?FromStrategy(_)
-    + ?FromApp(_)
-    + ?meta-var(_)
-    + ?meta-listvar(_)
+    s-enter(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "is-anti-quotation", "25,2,30,21")
+    ; s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "26,6,30,21")
+    ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "26,6,26,17")
+       ; ?FromTerm(_)
+       + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "27,6,30,21")
+         ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "27,6,27,21")
+            ; ?FromStrategy(_)
+            + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "28,6,30,21")
+              ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "28,6,28,16")
+                 ; ?FromApp(_)
+                 + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "29,6,30,21")
+                   ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "29,6,29,17")
+                      ; ?meta-var(_)
+                      + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "30,6,30,21")
+                        ; ?meta-listvar(_)))))
+    < s-exit(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "is-anti-quotation", "25,2,30,21")
+    + s-exit(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "is-anti-quotation", "25,2,30,21")
+      ; fail
 
   is-quotation =
-      ?ToTerm(_)
-    + ?ToBuild(_)
-    + ?ToStrategy(_)
+    s-enter(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "is-quotation", "32,2,35,19")
+    ; s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "33,6,35,19")
+    ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "33,6,33,15")
+       ; ?ToTerm(_)
+       + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "34,6,35,19")
+         ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "34,6,34,16")
+            ; ?ToBuild(_)
+            + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "35,6,35,19")
+              ; ?ToStrategy(_)))
+    < s-exit(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "is-quotation", "32,2,35,19")
+    + s-exit(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "is-quotation", "32,2,35,19")
+      ; fail
+
 
 strategies
-
   all-quotation(s) =
-      ToTerm(s)
-    + ToBuild(s)
-    + ToStrategy(s)
+    s-enter(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "all-quotation", "39,2,42,18")
+    ; s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "40,6,42,18")
+    ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "40,6,40,14")
+       ; ToTerm(
+           s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "40,13,40,13") ; s
+         )
+       + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "41,6,42,18")
+         ; (s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "41,6,41,15")
+            ; ToBuild(
+                s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "41,14,41,14") ; s
+              )
+            + s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "42,6,42,18")
+              ; ToStrategy(
+                  s-step(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "42,17,42,17") ; s
+                )))
+    < s-exit(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "all-quotation", "39,2,42,18")
+    + s-exit(|"_cellar/xml-front/trans/str-xml-info/stratego-meta-markers.str", "all-quotation", "39,2,42,18")
+      ; fail

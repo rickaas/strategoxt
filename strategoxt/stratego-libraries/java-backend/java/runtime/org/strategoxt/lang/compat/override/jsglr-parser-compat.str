@@ -1,102 +1,319 @@
-/**
- * Overrides the standard libstratego-sglr SGLR/SGLRI strategies
- * with alternatives that provide better performance.
- *
- * @author Lennart Kats
- */
 module jsglr-parser-compat
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
 
 imports
   libstratego-lib
   libstratego-sglr
   libstratego-xtc
 
-strategies // parsing and parse tables
 
-  /**
-   * @type SerializedParseTable -> ParseTable
-   */
+strategies
   override open-parse-table =
-      ?tbl
-    ; ?"parse-table"#(_)
-    ; prim("STRSGLR_open_parse_table", tbl) => int
-    ; !ParseTable(int)
-  
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-parse-table", "19,11,23,21")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "20,6,23,21")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "20,6,20,9") ; ?tbl)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "21,6,23,21")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "21,6,21,23")
+                ; ?"parse-table"#(_))
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "22,6,23,21")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "22,6,22,49")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "22,6,22,42")
+                   ; prim("STRSGLR_open_parse_table", tbl)) => int)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "23,6,23,21")
+             ; !ParseTable(int)
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-parse-table", "19,11,23,21")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-parse-table", "19,11,23,21")
+               ; fail
+
   override close-parse-table =
-    id // no such thing
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "close-parse-table", "25,11,26,5")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "26,4,26,5")
+             ; id
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "close-parse-table", "25,11,26,5")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "close-parse-table", "25,11,26,5")
+               ; fail
 
-  // HACK: currently seems to inline close-parse-table
-  override open-parse-table-wrap-report-errors(s : OpenParseTable * a -> b | tbl) =
-    where(tbl' := <open-parse-table-report-errors> tbl)
-    ; finally(s(|tbl'), <close-parse-table> tbl')
+  override open-parse-table-wrap-report-errors(s : OpenParseTable * a -> b|tbl) =
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-parse-table-wrap-report-errors", "29,11,31,48")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "30,4,31,48")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "30,4,30,54")
+                ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "30,10,30,53")
+                        ; tbl' := <s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "30,19,30,48") ; open-parse-table-report-errors> tbl))
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "31,6,31,48")
+             ; finally(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "31,14,31,21")
+                 ; s(|tbl')
+               , s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "31,24,31,47")
+                 ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "31,25,31,41") ; close-parse-table)> tbl'
+               )
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-parse-table-wrap-report-errors", "29,11,31,48")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-parse-table-wrap-report-errors", "29,11,31,48")
+               ; fail
 
-  override parse-file(on-open-error, on-parse-error | tbl, start-symbol, path) =
-      (<fopen> (<id>, "r") => stream <+ on-open-error; fail)
-    ; finally(
-        parse-stream(on-parse-error | tbl, start-symbol, path)
-      , <fclose> stream
-      )
+  override parse-file(on-open-error, on-parse-error|tbl, start-symbol, path) =
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-file", "33,11,38,6")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,6,38,6")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,7,34,58")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,7,34,35")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,7,34,25")
+                      ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,8,34,12") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,17,34,18") ; id>
+                                                                                                                                                                                 , "r"
+                                                                                                                                                                                 )) => stream
+                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,40,34,58")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,40,34,52") ; on-open-error)
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "34,55,34,58")
+                      ; fail))
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "35,6,38,6")
+             ; finally(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "36,8,36,61")
+                 ; parse-stream(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "36,21,36,34") ; on-parse-error
+                   | tbl
+                   , start-symbol
+                   , path
+                   )
+               , s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "37,8,37,22")
+                 ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "37,9,37,14") ; fclose)> stream
+               )
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-file", "33,11,38,6")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-file", "33,11,38,6")
+               ; fail
 
-  override parse-xtc-file(on-open-error, on-parse-error |tbl, start-symbol, path) =
-      let open-stream =
-            ?FILE(<id>); (<fopen> (<id>, "r") <+ on-open-error)
-            <+ ?stdin(); stdin-stream
-            
-       in open-stream => stream
-          ; finally(
-              parse-stream(on-parse-error |tbl, start-symbol, path)
-            , <fclose> stream
-            )
-      end
-  
+  override parse-xtc-file(on-open-error, on-parse-error|tbl, start-symbol, path) =
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-xtc-file", "40,11,50,8")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "41,6,50,8")
+             ; let open-stream =
+                     s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-stream", "41,10,43,36")
+                     ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,12,43,36")
+                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,12,42,62")
+                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,12,42,22")
+                           ; ?FILE(
+                                <s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,19,42,20") ; id>
+                              ))
+                        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,26,42,61")
+                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,26,42,44")
+                           ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,27,42,31") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,36,42,37") ; id>
+                                                                                                                                                                                       , "r"
+                                                                                                                                                                                       )
+                           <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "42,49,42,61") ; on-open-error)
+                        <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "43,15,43,36")
+                           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "43,15,43,22")
+                              ; ?stdin())
+                           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "43,25,43,36")
+                           ; stdin-stream)
+                     < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-stream", "41,10,43,36")
+                     + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "open-stream", "41,10,43,36")
+                       ; fail
+               in
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "45,10,49,12")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "45,10,45,30")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "45,10,45,20") ; open-stream) => stream)
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "46,12,49,12")
+                 ; finally(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "47,14,47,66")
+                     ; parse-stream(
+                         s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "47,27,47,40") ; on-parse-error
+                       | tbl
+                       , start-symbol
+                       , path
+                       )
+                   , s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "48,14,48,28")
+                     ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "48,15,48,20") ; fclose)> stream
+                   )
+               end
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-xtc-file", "40,11,50,8")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-xtc-file", "40,11,50,8")
+               ; fail
+
   override parse-xtc-file-report-errors(|tbl, sort) =
-  	where(<try(memo-open-parse-table)> tbl => tbl');
-    parse-xtc-file(strsglr-perror, strsglr-report-parse-error | tbl', sort)
-  
-  override parse-stream(on-parse-error |tbl, start-symbol, path):
-    stream -> term
-    where
-      read-text-from-stream;
-      jsglr-parse-string(on-parse-error |tbl, start-symbol, path) => term
-  
-  override parse-stream-pt(on-parse-error |tbl, start-symbol, path):
-    stream -> term
-    where
-      read-text-from-stream;
-      jsglr-parse-string-pt(on-parse-error |tbl, start-symbol, path) => term
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-xtc-file-report-errors", "52,11,54,74")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "53,3,54,74")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "53,3,53,49")
+                ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "53,9,53,48")
+                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "53,9,53,40")
+                           ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "53,10,53,35")
+                               ; try(
+                                   s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "53,14,53,34") ; memo-open-parse-table
+                                 ))> tbl) => tbl'))
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "54,4,54,74")
+             ; parse-xtc-file(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "54,19,54,32") ; strsglr-perror
+               , s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "54,35,54,60") ; strsglr-report-parse-error
+               | tbl'
+               , sort
+               )
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-xtc-file-report-errors", "52,11,54,74")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-xtc-file-report-errors", "52,11,54,74")
+               ; fail
 
-  override parse-string(on-parse-error | tbl, start-symbol, path) =
-    jsglr-parse-string(on-parse-error | tbl, start-symbol, path)
-  
-  override parse-string-pt(on-parse-error | tbl, start-symbol, path) =
-    jsglr-parse-string-pt(on-parse-error | tbl, start-symbol, path)
+  override parse-stream(on-parse-error|tbl, start-symbol, path):
+             stream -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream", "56,11,60,72")> term
+             where r-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream", "56,11,60,72")
+                   <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream", "56,11,60,72")
+                      ; fail
+             where s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "59,6,60,72")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "59,6,59,26") ; read-text-from-stream)
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "60,6,60,72")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "60,6,60,64")
+                      ; jsglr-parse-string(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "60,25,60,38") ; on-parse-error
+                        | tbl
+                        , start-symbol
+                        , path
+                        )) => term
+                   <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream", "56,11,60,72")
+                      ; fail
+
+  override parse-stream-pt(on-parse-error|tbl, start-symbol, path):
+             stream -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream-pt", "62,11,66,75")> term
+             where r-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream-pt", "62,11,66,75")
+                   <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream-pt", "62,11,66,75")
+                      ; fail
+             where s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "65,6,66,75")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "65,6,65,26") ; read-text-from-stream)
+                   ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "66,6,66,75")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "66,6,66,67")
+                      ; jsglr-parse-string-pt(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "66,28,66,41") ; on-parse-error
+                        | tbl
+                        , start-symbol
+                        , path
+                        )) => term
+                   <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-stream-pt", "62,11,66,75")
+                      ; fail
+
+  override parse-string(on-parse-error|tbl, start-symbol, path) =
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-string", "68,11,69,63")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "69,4,69,63")
+             ; jsglr-parse-string(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "69,23,69,36") ; on-parse-error
+               | tbl
+               , start-symbol
+               , path
+               )
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-string", "68,11,69,63")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-string", "68,11,69,63")
+               ; fail
+
+  override parse-string-pt(on-parse-error|tbl, start-symbol, path) =
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-string-pt", "71,11,72,66")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "72,4,72,66")
+             ; jsglr-parse-string-pt(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "72,26,72,39") ; on-parse-error
+               | tbl
+               , start-symbol
+               , path
+               )
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-string-pt", "71,11,72,66")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "parse-string-pt", "71,11,72,66")
+               ; fail
+
 
 strategies
-
-    
   jsglr-parse-string(|tbl) =
-    jsglr-parse-string(fail | tbl, None(), "string")
-  
-  jsglr-parse-string(on-parse-error | tbl, start-symbol, path) =
-      where(<try(not(?ParseTable(_)); memo-open-parse-table)> tbl => ParseTable(internal-tbl))
-    ; ?string
-    ; prim("STRSGLR_parse_string", on-parse-error | string, internal-tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string", "77,2,78,51")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "78,4,78,51")
+    ; jsglr-parse-string(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "78,23,78,26") ; fail
+      | tbl
+      , None()
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string", "77,2,78,51")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string", "77,2,78,51")
+      ; fail
 
-  jsglr-parse-string-pt(on-parse-error | tbl, start-symbol, path) =
-      where(<try(not(?ParseTable(_)); memo-open-parse-table)> tbl => ParseTable(internal-tbl))
-    ; ?string
-    ; prim("STRSGLR_parse_string_pt", on-parse-error | string, internal-tbl, start-symbol, path)
+  jsglr-parse-string(on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string", "80,2,83,92")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,6,83,92")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,6,81,93")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,12,81,92")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,12,81,64")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,13,81,59")
+                      ; try(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,17,81,58")
+                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,17,81,35")
+                             ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,21,81,34")
+                                   ; ?ParseTable(_)))
+                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "81,38,81,58")
+                          ; memo-open-parse-table
+                        ))> tbl) => ParseTable(internal-tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "82,6,83,92")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "82,6,82,12") ; ?string)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "83,6,83,92")
+    ; prim(
+        "STRSGLR_parse_string"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "83,35,83,48") ; on-parse-error
+      | string
+      , internal-tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string", "80,2,83,92")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string", "80,2,83,92")
+      ; fail
+
+  jsglr-parse-string-pt(on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string-pt", "85,2,88,95")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,6,88,95")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,6,86,93")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,12,86,92")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,12,86,64")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,13,86,59")
+                      ; try(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,17,86,58")
+                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,17,86,35")
+                             ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,21,86,34")
+                                   ; ?ParseTable(_)))
+                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "86,38,86,58")
+                          ; memo-open-parse-table
+                        ))> tbl) => ParseTable(internal-tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "87,6,88,95")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "87,6,87,12") ; ?string)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "88,6,88,95")
+    ; prim(
+        "STRSGLR_parse_string_pt"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "88,38,88,51") ; on-parse-error
+      | string
+      , internal-tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string-pt", "85,2,88,95")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "jsglr-parse-string-pt", "85,2,88,95")
+      ; fail
+
 
 strategies
-
   override strsglr-perror =
-    err(|"Unable to open file:")
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "strsglr-perror", "92,11,93,31")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "93,4,93,31")
+             ; err(|"Unable to open file:")
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "strsglr-perror", "92,11,93,31")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "strsglr-perror", "92,11,93,31")
+               ; fail
 
-strategies // location information
 
+strategies
   override asfix-anno-location =
-    prim("STRSGLR_anno_location", <id>)
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "asfix-anno-location", "97,11,98,38")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "98,4,98,38")
+             ; prim(
+                 "STRSGLR_anno_location"
+               , <s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "98,35,98,36") ; id>
+               )
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "asfix-anno-location", "97,11,98,38")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "asfix-anno-location", "97,11,98,38")
+               ; fail
 
   override asfix-anno-position-info(|name) =
-    <fatal-err(|"Old-style asfix position annotation not supported on this platform; use asfix-anno-location instead")> name
-
+             s-enter(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "asfix-anno-position-info", "100,11,101,123")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "101,4,101,123")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "101,5,101,117")
+                 ; fatal-err(|"Old-style asfix position annotation not supported on this platform; use asfix-anno-location instead"))> name
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "asfix-anno-position-info", "100,11,101,123")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/java/runtime/org/strategoxt/lang/compat/override/jsglr-parser-compat.str", "asfix-anno-position-info", "100,11,101,123")
+               ; fail

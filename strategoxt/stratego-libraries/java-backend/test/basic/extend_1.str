@@ -1,14 +1,30 @@
 module extend_1
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
+
 
 rules
 
   main-extend_1 =
-    <cify> "foo-bar" => "foo_bar"
-  ; <cify> "foosbar" => "foobar"
-    
-  extend Cify(s) :
-    ['s' | tail] -> <s> tail
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "main-extend_1", "8,2,10,31")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "9,4,10,31")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "9,4,9,32")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "9,4,9,19")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "9,5,9,8") ; cify)> "foo-bar") => "foo_bar")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "10,4,10,31")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "10,4,10,19")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "10,5,10,8") ; cify)> "foosbar") => "foobar"
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "main-extend_1", "8,2,10,31")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "main-extend_1", "8,2,10,31")
+      ; fail
 
+  extend Cify(s) :
+           ['s'|tail] -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "Cify", "12,9,13,27")> <s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "13,21,13,21") ; s> tail
+           where r-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "Cify", "12,9,13,27")
+                 <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/extend_1.str", "Cify", "12,9,13,27")
+                    ; fail

@@ -1,16 +1,60 @@
 module til-simplify
-imports libstratego-lib til-eval til-desugar 
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  til-eval
+  til-desugar
+
+
+strategies
   io-til-simplify =
-    io-wrap(til-simplify)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "io-til-simplify", "5,2,6,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "6,4,6,24")
+    ; io-wrap(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "6,12,6,23") ; til-simplify
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "io-til-simplify", "5,2,6,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "io-til-simplify", "5,2,6,24")
+      ; fail
 
   til-simplify =
-    innermost(
-      ForToWhile <+ IfThenToIfElse
-      <+ AddZero <+ MulOne 
-      <+ EvalAdd <+ EvalMul <+ EvalSub <+ EvalDiv
-      <+ EvalLeq <+ EvalGeq <+ EvalEqu <+ EvalNeq
-      <+ DefaultDeclaration
-      <+ ReadInt <+ WriteInt
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "til-simplify", "8,2,16,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "9,4,16,4")
+    ; innermost(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "10,6,15,27")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "10,6,10,15") ; ForToWhile
+           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "10,20,15,27")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "10,20,10,33") ; IfThenToIfElse
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "11,9,15,27")
+                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "11,9,11,15") ; AddZero
+                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "11,20,15,27")
+                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "11,20,11,25") ; MulOne
+                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,9,15,27")
+                                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,9,12,15") ; EvalAdd
+                                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,20,15,27")
+                                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,20,12,26") ; EvalMul
+                                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,31,15,27")
+                                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,31,12,37") ; EvalSub
+                                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,42,15,27")
+                                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "12,42,12,48") ; EvalDiv
+                                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,9,15,27")
+                                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,9,13,15") ; EvalLeq
+                                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,20,15,27")
+                                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,20,13,26") ; EvalGeq
+                                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,31,15,27")
+                                                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,31,13,37") ; EvalEqu
+                                                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,42,15,27")
+                                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "13,42,13,48") ; EvalNeq
+                                                                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "14,9,15,27")
+                                                                                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "14,9,14,26") ; DefaultDeclaration
+                                                                                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "15,9,15,27")
+                                                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "15,9,15,15") ; ReadInt
+                                                                                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "15,20,15,27") ; WriteInt))))))))))))))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "til-simplify", "8,2,16,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/sim/til-simplify.str", "til-simplify", "8,2,16,4")
+      ; fail

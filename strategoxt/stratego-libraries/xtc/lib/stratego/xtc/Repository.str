@@ -1,58 +1,121 @@
 module stratego/xtc/Repository
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 signature
-  sorts XtcKey
+  sorts
+    XtcKey
+
   constructors
     Tool       : String -> XtcKey
-    Repository : XtcKey 
+    Repository : XtcKey
     Import     : XtcKey
     Imported   : String -> XtcKey
+    XTC        : Table
 
-    XTC	       : Table
 
-/**
- * Loading the repository
- */
 strategies
-
-  /**
-   * Returns the location of the XTC repository.
-   *
-   * @type _ -> String
-   */
   xtc-location =
-    <get-config> "-r"
-    <+ <getenv> "XTC_REPOSITORY"
-    <+ GetInternalDefaultXtcRepository
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-location", "22,2,25,37")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "23,4,25,37")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "23,4,23,20")
+       ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "23,5,23,14") ; get-config)> "-r"
+       <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "24,7,25,37")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "24,7,24,31")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "24,8,24,13") ; getenv)> "XTC_REPOSITORY"
+             <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "25,7,25,37") ; GetInternalDefaultXtcRepository))
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-location", "22,2,25,37")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-location", "22,2,25,37")
+      ; fail
 
   external GetInternalDefaultXtcRepository(|)
 
-  xtc-read = 
-      ?rep
-    ; not(<table-get>(XTC(), Imported(rep)))
-    ; where(<table-put>(XTC(), Repository(), [rep]))
-    ; log(|Vomit(),<conc-strings>("Reading repository ",rep))
-    ; read-repository-file
-    ; log(|Vomit(),<conc-strings>("Read repository ",rep))
-    ; <table-putlist(table-append)>(XTC(), <id>)
-    ; log(|Vomit(),"Repository stored in table")
-    ; <table-put>(XTC(), Imported(rep), [])
-    ; log(|Vomit(),"Registered repository as imported")
+  xtc-read =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-read", "29,2,39,54")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "30,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "30,6,30,9") ; ?rep)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "31,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "31,6,31,43")
+       ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "31,10,31,42")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "31,11,31,19") ; table-get)> (XTC(), Imported(rep))))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "32,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "32,6,32,51")
+       ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "32,12,32,50")
+               ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "32,13,32,21") ; table-put)> (XTC(), Repository(), [rep])))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "33,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "33,6,33,60")
+       ; log(
+         | Vomit()
+         , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "33,20,33,31") ; conc-strings> ("Reading repository ", rep)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "34,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "34,6,34,25") ; read-repository-file)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "35,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "35,6,35,57")
+       ; log(
+         | Vomit()
+         , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "35,20,35,31") ; conc-strings> ("Read repository ", rep)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "36,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "36,6,36,47")
+       ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "36,7,36,33")
+           ; table-putlist(
+               s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "36,21,36,32") ; table-append
+             ))> ( XTC()
+                 , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "36,44,36,45") ; id>
+                 ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "37,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "37,6,37,47")
+       ; log(|Vomit(), "Repository stored in table"))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "38,6,39,54")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "38,6,38,42")
+       ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "38,7,38,15") ; table-put)> (XTC(), Imported(rep), []))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "39,6,39,54")
+    ; log(|Vomit(), "Registered repository as imported")
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-read", "29,2,39,54")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-read", "29,2,39,54")
+      ; fail
 
-  // read-repository-file =
-
-  xtc-import = 
-    where(
-      repeat(<table-get>(XTC(), Import())
-             ; filter(xtc-read)
-             ; not([]))
-    )
+  xtc-import =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-import", "43,2,48,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "44,4,48,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "45,6,47,22")
+            ; repeat(
+                s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "45,13,47,21")
+                ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "45,13,45,40")
+                   ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "45,14,45,22") ; table-get)> (XTC(), Import()))
+                ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "46,15,47,21")
+                ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "46,15,46,30")
+                   ; filter(
+                       s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "46,22,46,29") ; xtc-read
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "47,15,47,21")
+                ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "47,19,47,20") ; [])
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-import", "43,2,48,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-import", "43,2,48,4")
+      ; fail
 
   xtc-load =
-    log(|Vomit(),"Loading repository") 
-  ; where(
-      <table-get>(XTC(), Repository())
-      <+ xtc-location
-         ; xtc-read
-	 ; xtc-import
-    )
-  ; log(|Vomit(),"Loaded repository ")
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-load", "50,2,58,37")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "51,4,58,37")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "51,4,51,37")
+       ; log(|Vomit(), "Loading repository"))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "52,4,58,37")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "52,4,57,4")
+       ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "53,6,56,13")
+               ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "53,6,53,37")
+                  ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "53,7,53,15") ; table-get)> (XTC(), Repository())
+                  <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "54,9,56,13")
+                     ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "54,9,54,20") ; xtc-location)
+                     ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "55,11,56,13")
+                     ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "55,11,55,18") ; xtc-read)
+                     ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "56,4,56,13")
+                     ; xtc-import)))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "58,4,58,37")
+    ; log(|Vomit(), "Loaded repository ")
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-load", "50,2,58,37")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Repository.str", "xtc-load", "50,2,58,37")
+      ; fail

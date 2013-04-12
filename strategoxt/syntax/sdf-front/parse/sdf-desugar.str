@@ -1,33 +1,74 @@
-/**
- * sdf-desugar implements the following desugarings:
- *
- *   - remove double quotes in String literals: cons, lit
- *   - replace no-attrs by attrs([])
- *
- * @author Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module sdf-desugar
-imports libstratego-lib libstratego-aterm libstratego-sglr
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  libstratego-aterm
+  libstratego-sglr
+
+
 strategies
-
   main-sdf-desugar =
-    io-wrap(
-      topdown(repeat(Desugar); try(DesugarOnce))
-    )
+    s-enter(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "main-sdf-desugar", "13,2,16,4")
+    ; s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "14,4,16,4")
+    ; io-wrap(
+        s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "15,6,15,47")
+        ; topdown(
+            s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "15,14,15,46")
+            ; (s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "15,14,15,28")
+               ; repeat(
+                   s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "15,21,15,27") ; Desugar
+                 ))
+            ; s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "15,31,15,46")
+            ; try(
+                s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "15,35,15,45") ; DesugarOnce
+              )
+          )
+      )
+    < s-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "main-sdf-desugar", "13,2,16,4")
+    + s-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "main-sdf-desugar", "13,2,16,4")
+      ; fail
 
   Desugar :
-    no-attrs() -> attrs([])
+    no-attrs() -> <r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "Desugar", "18,2,19,26")> attrs([])
+    where r-enter(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "Desugar", "18,2,19,26")
+          <+ r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "Desugar", "18,2,19,26")
+             ; fail
 
   Desugar :
-    term(default(t)) -> term(t)
+    term(default(t)) -> <r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "Desugar", "21,2,22,30")> term(t)
+    where r-enter(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "Desugar", "21,2,22,30")
+          <+ r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "Desugar", "21,2,22,30")
+             ; fail
+
 
 rules
 
   DesugarOnce =
-    term(implode-aterm)
+    s-enter(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "26,2,27,22")
+    ; s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "27,4,27,22")
+    ; term(
+        s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "27,9,27,21") ; implode-aterm
+      )
+    < s-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "26,2,27,22")
+    + s-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "26,2,27,22")
+      ; fail
 
   DesugarOnce :
-    lit(s) -> lit(<un-double-quote> s)
+    lit(s) -> <r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "29,2,30,37")> lit(
+                                                                                                            <s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "30,19,30,33") ; un-double-quote> s
+                                                                                                          )
+    where r-enter(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "29,2,30,37")
+          <+ r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "29,2,30,37")
+             ; fail
 
   DesugarOnce :
-    ci-lit(s) -> ci-lit(<un-single-quote> s)
+    ci-lit(s) -> <r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "32,2,33,43")> ci-lit(
+                                                                                                               <s-step(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "33,25,33,39") ; un-single-quote> s
+                                                                                                             )
+    where r-enter(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "32,2,33,43")
+          <+ r-exit(|"strategoxt/syntax/sdf-front/parse/sdf-desugar.str", "DesugarOnce", "32,2,33,43")
+             ; fail

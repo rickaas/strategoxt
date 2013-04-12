@@ -1,20 +1,48 @@
-// test for issue STR-260
 module test75
-imports  libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     Foo : String -> Foo
 
+
 strategies
-
   main-test75 =
-    test1
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "main-test75", "10,2,11,8")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "11,4,11,8")
+    ; test1
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "main-test75", "10,2,11,8")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "main-test75", "10,2,11,8")
+      ; fail
 
-  test1 = 
-    !"a"
-    ; undefine-rule-A
-    ; <not(A)> Foo("a")
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "test1", "13,2,16,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "14,4,16,22")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "14,4,14,7")
+       ; !"a")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "15,6,16,22")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "15,6,15,20") ; undefine-rule-A)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "16,6,16,22")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "16,7,16,12")
+        ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "16,11,16,11") ; A))> Foo("a")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "test1", "13,2,16,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "test1", "13,2,16,22")
+      ; fail
 
   undefine-rule-A =
-    ?x
-    ; rules( A :- Foo(x) )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "undefine-rule-A", "18,2,20,25")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "19,4,20,25")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "19,4,19,5") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "20,6,20,25")
+    ; rules ( A :-
+                Foo(x) )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "undefine-rule-A", "18,2,20,25")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test75.str", "undefine-rule-A", "18,2,20,25")
+      ; fail

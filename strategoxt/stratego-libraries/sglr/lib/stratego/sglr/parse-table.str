@@ -1,80 +1,128 @@
-/**
- * Stratego Bindings for opening and closing parse tables.
- *
- * @author Martin Bravenboer
- */
 module stratego/sglr/parse-table
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
 
-strategies
 
-  /**
-   * Open a parse table for use in parsing.
-   *
-   * @type SerializedParseTable -> ParseTable
-   */
+strategies
   open-parse-table =
-      prim("STRSGLR_open_parse_table", <id>)
-    ; !ParseTable(<id>)
-    
-  /**
-   * Open a parse table for use in parsing, memoizing the resulting table.
-   *
-   * @type SerializedParseTable -> ParseTable
-   */
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table", "17,2,19,22")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "18,6,19,22")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "18,6,18,43")
+       ; prim(
+           "STRSGLR_open_parse_table"
+         , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "18,40,18,41") ; id>
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "19,6,19,22")
+    ; !ParseTable(
+         <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "19,19,19,20") ; id>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table", "17,2,19,22")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table", "17,2,19,22")
+      ; fail
+
   memo-open-parse-table =
-    MemoOpenParseTable
-  <+
-    ?trm
-    ; not(?ParseTable(_))
-    ; open-parse-table => tbl
-    ; rules(MemoOpenParseTable : trm -> tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "memo-open-parse-table", "26,2,32,43")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "27,4,32,43")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "27,4,27,21") ; MemoOpenParseTable
+       <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "29,4,32,43")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "29,4,29,7") ; ?trm)
+          ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "30,6,32,43")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "30,6,30,24")
+             ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "30,10,30,23")
+                   ; ?ParseTable(_)))
+          ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "31,6,32,43")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "31,6,31,28")
+             ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "31,6,31,21") ; open-parse-table) => tbl)
+          ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "32,6,32,43")
+          ; rules ( MemoOpenParseTable :
+                      trm -> tbl ))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "memo-open-parse-table", "26,2,32,43")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "memo-open-parse-table", "26,2,32,43")
+      ; fail
 
-  /**
-   * Close an open parse table.
-   * This releases the memory that the open parse table occupies.
-   *
-   * @type ParseTable -> ()
-   */
   close-parse-table =
-    ?ParseTable(table)
-    ; prim("STRSGLR_close_parse_table", table)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "close-parse-table", "40,2,43,8")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "41,4,43,8")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "41,4,41,21")
+       ; ?ParseTable(table))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "42,6,43,8")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "42,6,42,45")
+       ; prim("STRSGLR_close_parse_table", table))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "43,6,43,8")
     ; !()
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "close-parse-table", "40,2,43,8")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "close-parse-table", "40,2,43,8")
+      ; fail
 
-  /**
-   * Succeeds if the table argument is open.
-   */
   is-parse-table-open(|tbl) =
-    where(!tbl => ParseTable(_))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "is-parse-table-open", "48,2,49,31")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "49,4,49,31")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "49,10,49,30")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "49,10,49,13") ; !tbl) => ParseTable(_))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "is-parse-table-open", "48,2,49,31")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "is-parse-table-open", "48,2,49,31")
+      ; fail
 
-/**
- * Opening parse table with error reporting.
- */
+
 strategies
+  open-parse-table-wrap-report-errors(s : OpenParseTable * a -> b|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table-wrap-report-errors", "56,2,58,48")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "57,4,58,48")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "57,4,57,54")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "57,10,57,53")
+               ; tbl' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "57,19,57,48") ; open-parse-table-report-errors> tbl))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "58,6,58,48")
+    ; finally(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "58,14,58,21")
+        ; s(|tbl')
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "58,24,58,47")
+        ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "58,25,58,41") ; close-parse-table)> tbl'
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table-wrap-report-errors", "56,2,58,48")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table-wrap-report-errors", "56,2,58,48")
+      ; fail
 
-  open-parse-table-wrap-report-errors(s : OpenParseTable * a -> b | tbl) =
-    where(tbl' := <open-parse-table-report-errors> tbl)
-    ; finally(s(|tbl'), <close-parse-table> tbl')
-
-  /**
-   * @type String or SerializedParseTable -> ParseTable
-   */
   open-parse-table-report-errors =
-    if is-string then
-      (<fopen> (<id>, "r") <+ strsglr-perror) => stream
-      ; finally(read-from-stream, <fclose> stream)
-    else
-      ?"parse-table"#(_)
-      <+ log(|Error(), "open-parse-table strategy applied to a non-parse-table")
-         ; fail
-    end
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table-report-errors", "63,2,72,21")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "64,4,72,21")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "64,4,71,6")
+       ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "64,7,64,15") ; is-string then
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,6,66,49")
+           ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,6,65,54")
+              ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,7,65,43")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,7,65,25")
+                    ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,8,65,12") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,17,65,18") ; id>
+                                                                                                                                , "r"
+                                                                                                                                )
+                    <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "65,30,65,43") ; strsglr-perror)) => stream)
+           ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "66,8,66,49")
+           ; finally(
+               s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "66,16,66,31") ; read-from-stream
+             , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "66,34,66,48")
+               ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "66,35,66,40") ; fclose)> stream
+             )
+         else
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "68,6,70,14")
+           ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "68,6,68,23")
+              ; ?"parse-table"#(_)
+              <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "69,9,70,14")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "69,9,69,79")
+                    ; log(|Error(), "open-parse-table strategy applied to a non-parse-table"))
+                 ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "70,11,70,14")
+                 ; fail)
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "72,6,72,21")
     ; open-parse-table
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table-report-errors", "63,2,72,21")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse-table.str", "open-parse-table-report-errors", "63,2,72,21")
+      ; fail
 
-/**
- * An open parse table is represented by a term in some internal
- * format, wrapped in a ParseTable constructor.
- */
+
 signature
   constructors
     ParseTable : Internal -> ParseTable

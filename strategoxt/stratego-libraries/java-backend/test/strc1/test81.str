@@ -1,20 +1,46 @@
 module test81
-imports libstratego-lib
-signature 
-   constructors 
-     "pp-tables-0" : Int -> Foo 
 
-strategies 
- 
- main-test81 = 
-   test-suite(!"test81: test quoted constructors",
-     test-match
-   )
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
- test-match =
-   apply-test(!"test-match"
-	, ?"pp-tables-0"(<id>)
-        , !"pp-tables-0"("a")
-	, !"a"
-	)
 
+imports
+  libstratego-lib
+
+
+signature
+  constructors
+    "pp-tables-0" : Int -> Foo
+
+
+strategies
+  main-test81 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "main-test81", "9,1,12,3")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "10,3,12,3")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "10,14,10,48")
+        ; !"test81: test quoted constructors"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "11,5,11,14") ; test-match
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "main-test81", "9,1,12,3")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "main-test81", "9,1,12,3")
+      ; fail
+
+  test-match =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "test-match", "14,1,19,1")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "15,3,19,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "15,14,15,26")
+        ; !"test-match"
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "16,3,16,22")
+        ; ?"pp-tables-0"(
+             <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "16,19,16,20") ; id>
+           )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "17,10,17,28")
+        ; !"pp-tables-0"("a")
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "18,3,18,6")
+        ; !"a"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "test-match", "14,1,19,1")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test81.str", "test-match", "14,1,19,1")
+      ; fail

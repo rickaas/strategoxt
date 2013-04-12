@@ -1,6 +1,17 @@
 module test08
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   main =
-    ?_(xs)
-    ; !xs 
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test08.str", "main", "4,2,6,8")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test08.str", "5,4,6,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test08.str", "5,4,5,9")
+       ; ?_(xs))
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test08.str", "6,6,6,8")
+    ; !xs
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test08.str", "main", "4,2,6,8")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test08.str", "main", "4,2,6,8")
+      ; fail

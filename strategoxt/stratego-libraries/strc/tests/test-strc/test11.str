@@ -1,3 +1,14 @@
 module test01
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
-  main = id
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test11.str", "main", "3,2,3,10")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test11.str", "3,9,3,10")
+    ; id
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test11.str", "main", "3,2,3,10")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test11.str", "main", "3,2,3,10")
+      ; fail

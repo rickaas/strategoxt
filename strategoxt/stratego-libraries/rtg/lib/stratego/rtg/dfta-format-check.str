@@ -1,186 +1,353 @@
-/**
- * Format check a term against a DFTA
- *
- * @author Martin Bravenboer
- */
 module stratego/rtg/dfta-format-check
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/rtg/dfta-accept
   libstratego-lib
 
-strategies
 
-  /**
-   * Checks that the current term has the format of the given DFTA.
-   *
-   * Fails if the current term has an incorrect format.
-   * Does not report errors.
-   *
-   * @param DFTA
-   * @type a -> a
-   */
+strategies
   dfta-format-check(|dfta) =
-    dfta-format-check(false, true | dfta)
-  
-  /**
-   * Checks that the current term has the format of the given DFTA.
-   *
-   * @param Report errors (true/false)
-   * @param Fail if incorrect format (true/false)
-   * @param DFTA
-   * @type a -> a
-   */
-  dfta-format-check(report-errors, fail-on-error | dfta) =
-    where(
-        if report-errors then 
-            dfta-accept(dftafc-report-failure | dfta)
-          ; dftafc-report-start(|dfta)
-        else
-          dfta-accept(id | dfta)
-        end
-      ; if fail-on-error then
-          dftafc-error-start(|dfta)
-        end
-    )
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dfta-format-check", "22,2,23,40")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "23,4,23,40")
+    ; dfta-format-check(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "23,22,23,26") ; false
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "23,29,23,32") ; true
+      | dfta
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dfta-format-check", "22,2,23,40")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dfta-format-check", "22,2,23,40")
+      ; fail
 
-/**
- * Reporting
- */
+  dfta-format-check(report-errors, fail-on-error|dfta) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dfta-format-check", "33,2,44,4")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "34,4,44,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "35,8,43,10")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "35,8,40,10")
+               ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "35,11,35,23") ; report-errors then
+                   s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "36,12,37,37")
+                   ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "36,12,36,52")
+                      ; dfta-accept(
+                          s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "36,24,36,44") ; dftafc-report-failure
+                        | dfta
+                        ))
+                   ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "37,12,37,37")
+                   ; dftafc-report-start(|dfta)
+                 else
+                   s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "39,10,39,31")
+                   ; dfta-accept(
+                       s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "39,22,39,23") ; id
+                     | dfta
+                     )
+                 end)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "41,8,43,10")
+            ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "41,11,41,23") ; fail-on-error then
+                s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "42,10,42,34")
+                ; dftafc-error-start(|dfta)
+              end)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dfta-format-check", "33,2,44,4")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dfta-format-check", "33,2,44,4")
+      ; fail
+
+
 strategies
-
-  /**
-   * Fails if the state is not one of the allowed start states.
-   *
-   * @param DFTA
-   * @type State -> State
-   */    
   dftafc-error-start(|dfta) =
-    ?state
-    ; where(
-        DFTA(starts, _) := dfta
-      ; <fetch(?state)> starts
-      )
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-error-start", "57,2,62,6")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "58,4,62,6")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "58,4,58,9") ; ?state)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "59,6,62,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "60,8,61,29")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "60,8,60,30")
+               ; DFTA(starts, _) := dfta)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "61,8,61,29")
+            ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "61,9,61,21")
+                ; fetch(
+                    s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "61,15,61,20") ; ?state
+                  ))> starts)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-error-start", "57,2,62,6")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-error-start", "57,2,62,6")
+      ; fail
 
-  /**
-   * Report an error if the final state is not a start state.
-   *
-   * @param DFTA
-   * @type State -> State
-   */
   dftafc-report-start(|dfta) =
-    ?state
-    ; where(
-        DFTA(starts, _) := dfta
-      ; if Failure() := state then
-          !1  // already reported
-        else
-          if <fetch(?state)> starts then
-            if-verbose2(
-              <dftafc-state-to-string; debug(!"info: term typed as ")> state
-            )
-            ; !0
-          else
-            <fprintnl> (<stderr-stream>,
-              ["error: term typed as ", <dftafc-state-to-string> state, 
-               " but expected ", <dftafc-states-to-string> starts])
-            ; !1
-          end
-        end
-      ; <set-config> ("--exit-code", <id>)
-      )
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-report-start", "70,2,90,6")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "71,4,90,6")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "71,4,71,9") ; ?state)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "72,6,90,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "73,8,89,41")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "73,8,73,30")
+               ; DFTA(starts, _) := dfta)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "74,8,89,41")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "74,8,88,10")
+               ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "74,11,74,28")
+                    ; Failure() := state then
+                   s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "75,10,75,11")
+                   ; !1
+                 else
+                   s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "77,10,87,12")
+                   ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "77,13,77,34")
+                        ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "77,14,77,26")
+                            ; fetch(
+                                s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "77,20,77,25") ; ?state
+                              ))> starts then
+                       s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "78,12,81,15")
+                       ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "78,12,80,12")
+                          ; if-verbose2(
+                              s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "79,14,79,75")
+                              ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "79,15,79,68")
+                                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "79,15,79,36") ; dftafc-state-to-string)
+                                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "79,39,79,68")
+                                  ; debug(
+                                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "79,45,79,67")
+                                      ; !"info: term typed as "
+                                    ))> state
+                            ))
+                       ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "81,14,81,15")
+                       ; !0
+                     else
+                       s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "83,12,86,15")
+                       ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "83,12,85,66")
+                          ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "83,13,83,20") ; fprintnl)> ( <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "83,25,83,37") ; stderr-stream>
+                                                                                                                                              , [ "error: term typed as "
+                                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "84,41,84,62") ; dftafc-state-to-string> state
+                                                                                                                                                , " but expected "
+                                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "85,34,85,56") ; dftafc-states-to-string> starts
+                                                                                                                                                ]
+                                                                                                                                              ))
+                       ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "86,14,86,15")
+                       ; !1
+                     end
+                 end)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "89,8,89,41")
+            ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "89,9,89,18") ; set-config)> ( "--exit-code"
+                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "89,38,89,39") ; id>
+                                                                                                                                 ))
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-report-start", "70,2,90,6")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-report-start", "70,2,90,6")
+      ; fail
 
-  /**
-   * Report the failure of format checking a term.
-   *
-   * @param the checked term.
-   * @type State -> State
-   */
   dftafc-report-failure(|t) =
-    ?Appl(_, arg-states)
-    ; where(
-        if not(<fetch(?Failure())> arg-states) then
-          <fprintnl> (<stderr-stream>, ["error: cannot type ", <write-to-string> t])
-          ; if not([] := arg-states) then
-              <fprintnl> (<stderr-stream>, ["    inferred types of subterms: "])
-              ; args := <dftafc-get-arguments> t
-              ; <zip> (args, arg-states)
-              ; map({arg,state:
-                  ?(arg, state)
-                  ; <fprintnl> (<stderr-stream>, [
-                        "    typed "
-                      , <write-to-string> arg
-                      , " as "
-                      , <dftafc-state-to-string> state
-                      ])
-                })
-          end
-        end
-      )
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-report-failure", "98,2,118,6")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "99,4,118,6")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "99,4,99,23")
+       ; ?Appl(_, arg-states))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "100,6,118,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "101,8,117,10")
+            ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "101,11,101,45")
+                 ; not(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "101,15,101,44")
+                       ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "101,16,101,32")
+                           ; fetch(
+                               s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "101,22,101,31")
+                               ; ?Failure()
+                             ))> arg-states) then
+                s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "102,10,116,12")
+                ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "102,10,102,83")
+                   ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "102,11,102,18") ; fprintnl)> ( <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "102,23,102,35") ; stderr-stream>
+                                                                                                                                         , [ "error: cannot type "
+                                                                                                                                           , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "102,64,102,78") ; write-to-string> t
+                                                                                                                                           ]
+                                                                                                                                         ))
+                ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "103,12,116,12")
+                ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "103,15,103,35")
+                     ; not(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "103,19,103,34")
+                           ; [] := arg-states) then
+                    s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "104,14,115,17")
+                    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "104,14,104,79")
+                       ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "104,15,104,22") ; fprintnl)> ( <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "104,27,104,39") ; stderr-stream>
+                                                                                                                                             , ["    inferred types of subterms: "]
+                                                                                                                                             ))
+                    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "105,16,115,17")
+                    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "105,16,105,47")
+                       ; args := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "105,25,105,44") ; dftafc-get-arguments> t)
+                    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "106,16,115,17")
+                    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "106,16,106,39")
+                       ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "106,17,106,19") ; zip)> (args, arg-states))
+                    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "107,16,115,17")
+                    ; map(
+                        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "107,20,115,16")
+                        ; {arg, state:
+                            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "108,18,114,23")
+                            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "108,18,108,30")
+                               ; ?(arg, state))
+                            ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "109,20,114,23")
+                            ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "109,21,109,28") ; fprintnl)> ( <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "109,33,109,45") ; stderr-stream>
+                                                                                                                                                  , [ "    typed "
+                                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "111,25,111,39") ; write-to-string> arg
+                                                                                                                                                    , " as "
+                                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "113,25,113,46") ; dftafc-state-to-string> state
+                                                                                                                                                    ]
+                                                                                                                                                  )
+                          }
+                      )
+                  end
+              end)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-report-failure", "98,2,118,6")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-report-failure", "98,2,118,6")
+      ; fail
 
   dftafc-get-arguments =
-    ( ?[x | xs]
-    < ![x, xs]
-    + ?[]
-    < ![]
-    + is-int
-    < ![]
-    + is-string
-    < ![]
-    + get-appl-arguments
-    )
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-get-arguments", "120,2,130,4")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "121,6,129,23")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "121,6,121,14")
+       ; ?[x|xs]
+       < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "122,6,122,13")
+         ; ![x, xs]
+       + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "123,6,129,23")
+         ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "123,6,123,8")
+            ; ?[]
+            < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "124,6,124,8")
+              ; ![]
+            + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "125,6,129,23")
+              ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "125,6,125,11") ; is-int
+                 < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "126,6,126,8")
+                   ; ![]
+                 + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "127,6,129,23")
+                   ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "127,6,127,14") ; is-string
+                      < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "128,6,128,8")
+                        ; ![]
+                      + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "129,6,129,23") ; get-appl-arguments))))
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-get-arguments", "120,2,130,4")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-get-arguments", "120,2,130,4")
+      ; fail
 
-/**
- * Pretty-printing for error reporting.
- */
+
 rules
 
   dftafc-state-to-string =
-    ?Set(<dftafc-states-to-string>) <+ rtg-to-string
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-state-to-string", "137,2,138,51")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "138,4,138,51")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "138,4,138,34")
+       ; ?Set(
+            <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "138,10,138,32") ; dftafc-states-to-string>
+          )
+       <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "138,39,138,51") ; rtg-to-string)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-state-to-string", "137,2,138,51")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-state-to-string", "137,2,138,51")
+      ; fail
 
   dftafc-states-to-string =
-    map(dftafc-state-to-string); separate-by(!", "); concat-strings
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-states-to-string", "140,2,141,66")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,4,141,66")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,4,141,30")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,8,141,29") ; dftafc-state-to-string
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,33,141,66")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,33,141,50")
+       ; separate-by(
+           s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,45,141,49")
+           ; !", "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "141,53,141,66")
+    ; concat-strings
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-states-to-string", "140,2,141,66")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "dftafc-states-to-string", "140,2,141,66")
+      ; fail
 
   rtg-to-string :
-    Nonterm(s) -> s
+    Nonterm(s) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "143,2,144,18")> s
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "143,2,144,18")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "143,2,144,18")
+             ; fail
 
   rtg-to-string :
-    Set(args) -> <concat-strings> [
-        "{"
-      , <map(rtg-to-string); separate-by(!", "); concat-strings> args
-      , "}"
-      ]
+    Set(args) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "146,2,151,6")> <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "147,18,147,31") ; concat-strings> [ "{"
+                                                                                                                                                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,9,149,62")
+                                                                                                                                                                                                                                                                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,9,149,26")
+                                                                                                                                                                                                                                                                     ; map(
+                                                                                                                                                                                                                                                                         s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,13,149,25") ; rtg-to-string
+                                                                                                                                                                                                                                                                       ))
+                                                                                                                                                                                                                                                                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,29,149,62")
+                                                                                                                                                                                                                                                                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,29,149,46")
+                                                                                                                                                                                                                                                                     ; separate-by(
+                                                                                                                                                                                                                                                                         s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,41,149,45")
+                                                                                                                                                                                                                                                                         ; !", "
+                                                                                                                                                                                                                                                                       ))
+                                                                                                                                                                                                                                                                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "149,49,149,62")
+                                                                                                                                                                                                                                                                  ; concat-strings> args
+                                                                                                                                                                                                                                                               , "}"
+                                                                                                                                                                                                                                                               ]
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "146,2,151,6")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "146,2,151,6")
+             ; fail
 
   rtg-to-string :
-    Generated(t) -> <rtg-to-string> t
+    Generated(t) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "153,2,154,36")> <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "154,21,154,33") ; rtg-to-string> t
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "153,2,154,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "153,2,154,36")
+             ; fail
 
   rtg-to-string :
-    Appl(t, args) -> <concat-strings> [
-        <rtg-to-string> t
-      , "("
-      , <map(rtg-to-string); separate-by(!", "); concat-strings> args
-      , ")"
-      ]
+    Appl(t, args) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "156,2,162,6")> <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "157,22,157,35") ; concat-strings> [ <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "158,9,158,21") ; rtg-to-string> t
+                                                                                                                                                                                                                                                                   , "("
+                                                                                                                                                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,9,160,62")
+                                                                                                                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,9,160,26")
+                                                                                                                                                                                                                                                                         ; map(
+                                                                                                                                                                                                                                                                             s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,13,160,25") ; rtg-to-string
+                                                                                                                                                                                                                                                                           ))
+                                                                                                                                                                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,29,160,62")
+                                                                                                                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,29,160,46")
+                                                                                                                                                                                                                                                                         ; separate-by(
+                                                                                                                                                                                                                                                                             s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,41,160,45")
+                                                                                                                                                                                                                                                                             ; !", "
+                                                                                                                                                                                                                                                                           ))
+                                                                                                                                                                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "160,49,160,62")
+                                                                                                                                                                                                                                                                      ; concat-strings> args
+                                                                                                                                                                                                                                                                   , ")"
+                                                                                                                                                                                                                                                                   ]
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "156,2,162,6")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "156,2,162,6")
+             ; fail
 
   rtg-to-string :
-    Ref(nt) -> <rtg-to-string> nt
+    Ref(nt) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "164,2,165,32")> <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "165,16,165,28") ; rtg-to-string> nt
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "164,2,165,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "164,2,165,32")
+             ; fail
 
   rtg-to-string :
-    Term(s) -> s
+    Term(s) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "167,2,168,15")> s
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "167,2,168,15")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "167,2,168,15")
+             ; fail
 
   rtg-to-string :
-    ConcTerm() -> "<conc>"
+    ConcTerm() -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "170,2,171,25")> "<conc>"
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "170,2,171,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "170,2,171,25")
+             ; fail
 
   rtg-to-string :
-    SomeTerm() -> "<some>"
+    SomeTerm() -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "173,2,174,25")> "<some>"
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "173,2,174,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "173,2,174,25")
+             ; fail
 
   rtg-to-string :
-    NoneTerm() -> "<none>"
+    NoneTerm() -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "176,2,177,25")> "<none>"
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "176,2,177,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "176,2,177,25")
+             ; fail
 
   rtg-to-string :
-    StringTerm() -> "<string>"
+    StringTerm() -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "179,2,180,29")> "<string>"
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "179,2,180,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "179,2,180,29")
+             ; fail
 
   rtg-to-string :
-    IntTerm() -> "<int>"
+    IntTerm() -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "182,2,183,23")> "<int>"
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "182,2,183,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "182,2,183,23")
+             ; fail
 
   rtg-to-string :
-    TupleTerm(x) -> <conc-strings> ("<(", <int-to-string> x, ")>")
+    TupleTerm(x) -> <r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "185,2,186,65")> <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "186,21,186,32") ; conc-strings> ( "<("
+                                                                                                                                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "186,43,186,55") ; int-to-string> x
+                                                                                                                                                                                                                                                                 , ")>"
+                                                                                                                                                                                                                                                                 )
+    where r-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "185,2,186,65")
+          <+ r-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-format-check.str", "rtg-to-string", "185,2,186,65")
+             ; fail

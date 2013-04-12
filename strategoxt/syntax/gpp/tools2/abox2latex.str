@@ -1,69 +1,147 @@
 module abox2latex
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
 
-strategies
 
+strategies
   io-abox2latex =
-    option-wrap(abox2latex-options + io-options, xtc-io(abox2latex))
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "io-abox2latex", "8,2,9,67")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "9,4,9,67")
+    ; option-wrap(
+        s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "9,16,9,46")
+        ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "9,16,9,33") ; abox2latex-options
+           + s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "9,37,9,46") ; io-options)
+      , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "9,49,9,66")
+        ; xtc-io(
+            s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "9,56,9,65") ; abox2latex
+          )
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "io-abox2latex", "8,2,9,67")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "io-abox2latex", "8,2,9,67")
+      ; fail
 
   abox2latex-options =
-      Option(
-         "--alltt",
-         where(<set-config>("output", "--alltt")),
-         !"--alltt          Produce verbatim-like output with alltt environment")
-    + Option(
-         "--boxenv",
-         where(<set-config>("output", "--boxenv")),
-         !"--boxenv         Produce fully formatted LaTeX output (default)")
-    + ArgOption(
-         "-t" + "--latex-table",
-         where(<set-config> ("--latex-tables", [<id>])),
-         !"-t|--latex-table f  Use LaTeX abbreviaitions from file f")
-    + ArgOption(
-         "-w"+ "--width",
-         where(<set-config> ("--width", <id>)),
-         !"-w|--width w        Use page width w")
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "abox2latex-options", "11,2,27,48")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "12,6,27,48")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "12,6,15,80")
+       ; Option(
+           s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "13,9,13,17") ; "--alltt"
+         , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "14,9,14,48")
+           ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "14,15,14,47")
+                   ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "14,16,14,25") ; set-config)> ("output", "--alltt"))
+         , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "15,9,15,79")
+           ; !"--alltt          Produce verbatim-like output with alltt environment"
+         )
+       + s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "16,6,27,48")
+         ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "16,6,19,75")
+            ; Option(
+                s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "17,9,17,18") ; "--boxenv"
+              , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "18,9,18,49")
+                ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "18,15,18,48")
+                        ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "18,16,18,25") ; set-config)> ("output", "--boxenv"))
+              , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "19,9,19,74")
+                ; !"--boxenv         Produce fully formatted LaTeX output (default)"
+              )
+            + s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "20,6,27,48")
+              ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "20,6,23,68")
+                 ; ArgOption(
+                     s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "21,9,21,30")
+                     ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "21,9,21,12") ; "-t"
+                        + s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "21,16,21,30") ; "--latex-table")
+                   , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "22,9,22,54")
+                     ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "22,15,22,53")
+                             ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "22,16,22,25") ; set-config)> ( "--latex-tables"
+                                                                                                                      , [<s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "22,49,22,50") ; id>]
+                                                                                                                      ))
+                   , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "23,9,23,67")
+                     ; !"-t|--latex-table f  Use LaTeX abbreviaitions from file f"
+                   )
+                 + s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "24,6,27,48")
+                   ; ArgOption(
+                       s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "25,9,25,23")
+                       ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "25,9,25,12") ; "-w"
+                          + s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "25,15,25,23") ; "--width")
+                     , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "26,9,26,45")
+                       ; where(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "26,15,26,44")
+                               ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "26,16,26,25") ; set-config)> ( "--width"
+                                                                                                                        , <s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "26,41,26,42") ; id>
+                                                                                                                        ))
+                     , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "27,9,27,47")
+                       ; !"-w|--width w        Use page width w"
+                     ))))
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "abox2latex-options", "11,2,27,48")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "abox2latex-options", "11,2,27,48")
+      ; fail
 
   abox2latex =
-     xtc-transform(!"Abox-2-latex", create-abox2latex-args)
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "abox2latex", "29,2,30,58")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "30,5,30,58")
+    ; xtc-transform(
+        s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "30,19,30,33")
+        ; !"Abox-2-latex"
+      , s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "30,36,30,57") ; create-abox2latex-args
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "abox2latex", "29,2,30,58")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "abox2latex", "29,2,30,58")
+      ; fail
 
   create-abox2latex-args =
-      !["-t", <create-table-file> () | <pass-verbose> ()]
-    ; try(!["-w", <<get-config> "--width"> | <id>])
-    ; try(![<get-config>"output" | <id>])
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "create-abox2latex-args", "32,2,35,40")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "33,6,35,40")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "33,6,33,56")
+       ; !["-t", <s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "33,15,33,31") ; create-table-file> ()|<s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "33,40,33,51") ; pass-verbose> ()])
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "34,6,35,40")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "34,6,34,50")
+       ; try(
+           s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "34,10,34,49")
+           ; !["-w", <s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "34,19,34,40")
+                      ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "34,20,34,29") ; get-config)> "--width">|<s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "34,46,34,47") ; id>]
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "35,6,35,40")
+    ; try(
+        s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "35,10,35,39")
+        ; ![<s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "35,13,35,22") ; get-config> "output"|<s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "35,36,35,37") ; id>]
+      )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "create-abox2latex-args", "32,2,35,40")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "create-abox2latex-args", "32,2,35,40")
+      ; fail
 
   create-table-file =
-      (<get-config> "--latex-tables" <+ ![])
-    ; map(ReadFromFile)
-    ; ![ [["->"   , "\\ensuremath{\\rightarrow}"],
-          [ "\\/" , "\\ensuremath{\\vee}"],
-          [ "/\\" , "\\ensuremath{\\wedge}"],
-          [ "=="  , "\\ensuremath{\\equiv}"],
-          [ "++"  , "\\ensuremath{+\\kern-.4em+}"],
-          [ "context-free syntax" , "context-free~syntax"]
-         ]
-       | <id> ]
-    ; concat
-    ; write-to 
-    ; ?FILE(<id>)
-
-/*
-usage:
-  abox2latex [--alltt] [--boxenv] [-h] [-i abox] [-o latex] [-t table ...] [-w width]
-
-where
-  --alltt     Produces LaTeX alltt environment
-  --boxenv    Produces fully formatted boxenv environment (default)
-  -h          Displays usage information.
-  -i abox     Specifies the BOX term to transform.
-  -o latex    Specifies the file name of the resulting LaTeX term.
-  -t table    Table containing box to latex macro mappings
-  -w          Specifies max width of output
-
-This tool reads from standard input (or from the file specified with the
--i option) a BOX term containing formatting information and writes to
-standard output (or to the file specified with the -o option)
-corresponding LaTeX code.
-*/
+    s-enter(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "create-table-file", "37,2,50,16")
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "38,6,50,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "38,7,38,42")
+       ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "38,7,38,35")
+          ; <(s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "38,8,38,17") ; get-config)> "--latex-tables"
+          <+ s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "38,40,38,42")
+             ; ![]))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "39,6,50,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "39,6,39,22")
+       ; map(
+           s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "39,10,39,21") ; ReadFromFile
+         ))
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "40,6,50,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "40,6,47,14")
+       ; ![[ ["->", "\\ensuremath{\\rightarrow}"]
+           , ["\\/", "\\ensuremath{\\vee}"]
+           , ["/\\", "\\ensuremath{\\wedge}"]
+           , ["==", "\\ensuremath{\\equiv}"]
+           , ["++", "\\ensuremath{+\\kern-.4em+}"]
+           , ["context-free syntax", "context-free~syntax"]
+           ]|<s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "47,10,47,11") ; id>])
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "48,6,50,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "48,6,48,11") ; concat)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "49,6,50,16")
+    ; (s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "49,6,49,13") ; write-to)
+    ; s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "50,6,50,16")
+    ; ?FILE(
+         <s-step(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "50,13,50,14") ; id>
+       )
+    < s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "create-table-file", "37,2,50,16")
+    + s-exit(|"strategoxt/syntax/gpp/tools2/abox2latex.str", "create-table-file", "37,2,50,16")
+      ; fail

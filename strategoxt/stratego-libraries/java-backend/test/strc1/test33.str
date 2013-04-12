@@ -1,5 +1,13 @@
 module test33
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     Var  : String -> Exp
@@ -8,51 +16,246 @@ signature
     Fdec : String * List(String) * Exp -> Decl
     Vdec : String * Exp -> Decl
 
+
 strategies
+  main-test33 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "main-test33", "13,2,18,32")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "14,3,18,32")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "14,3,16,26")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "14,4,14,12") ; my-inline)> Let(
+                                                                                                                     [ Fdec(
+                                                                                                                         "f"
+                                                                                                                       , ["x"]
+                                                                                                                       , Call(
+                                                                                                                           "h"
+                                                                                                                         , [Var("x")]
+                                                                                                                         )
+                                                                                                                       )
+                                                                                                                     , Vdec("y", Var("z"))
+                                                                                                                     ]
+                                                                                                                   , [ Call(
+                                                                                                                         "f"
+                                                                                                                       , [Var("y")]
+                                                                                                                       )
+                                                                                                                     ]
+                                                                                                                   )) => Let(
+                                                                                                                           [ Fdec(
+                                                                                                                               "f"
+                                                                                                                             , ["x"]
+                                                                                                                             , Call(
+                                                                                                                                 "h"
+                                                                                                                               , [Var("x")]
+                                                                                                                               )
+                                                                                                                             )
+                                                                                                                           , Vdec("y", Var("z"))
+                                                                                                                           ]
+                                                                                                                         , [ Call(
+                                                                                                                               "h"
+                                                                                                                             , [Var("z")]
+                                                                                                                             )
+                                                                                                                           ]
+                                                                                                                         )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "main-test33", "13,2,18,32")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "main-test33", "13,2,18,32")
+      ; fail
 
-  main-test33 = 
-   <my-inline>
-      Let([Fdec("f", ["x"], Call("h", [Var("x")])), Vdec("y", Var("z"))]
-	 ,[Call("f", [Var("y")])])
-   => Let([Fdec("f",["x"],Call("h",[Var("x")])),Vdec("y",Var("z"))],
-          [Call("h",[Var("z")])])
+  inlineDEBUG =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "inlineDEBUG", "20,2,27,2")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "21,2,27,2")
+    ; rec i (
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "21,8,26,9")
+        ; {|Subst, Inline:
+             s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,11,25,88")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,11,22,91")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,11,22,30")
+                   ; debug(
+                       s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,17,22,29")
+                       ; !"inline a: "
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,33,22,91")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,33,22,39") ; Declare)
+                ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,42,22,91")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,42,22,61")
+                   ; debug(
+                       s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,48,22,60")
+                       ; !"inline b: "
+                     ))
+                ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,64,22,91")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,64,22,69")
+                   ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,68,22,68") ; i))
+                ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,72,22,91")
+                ; debug(
+                    s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "22,78,22,90")
+                    ; !"inline c: "
+                  )
+                <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,14,25,88")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,14,23,90")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,14,23,33")
+                         ; debug(
+                             s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,20,23,32")
+                             ; !"inline d: "
+                           ))
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,36,23,90")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,36,23,41") ; Inline)
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,44,23,90")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,44,23,64")
+                         ; debug(
+                             s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,50,23,63")
+                             ; !"inline da: "
+                           ))
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,67,23,90")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,67,23,67") ; i)
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,70,23,90")
+                      ; debug(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "23,76,23,89")
+                          ; !"inline db: "
+                        )
+                      <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,7,25,88")
+                         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,7,24,81")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,7,24,26")
+                               ; debug(
+                                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,13,24,25")
+                                   ; !"inline e: "
+                                 ))
+                            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,29,24,81")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,29,24,33") ; Subst)
+                            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,36,24,81")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,36,24,56")
+                               ; debug(
+                                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,42,24,55")
+                                   ; !"inline ea: "
+                                 ))
+                            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,59,24,81")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,59,24,59") ; i)
+                            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,62,24,81")
+                            ; debug(
+                                s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "24,68,24,80")
+                                ; !"inline b: "
+                              )
+                            <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,14,25,88")
+                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,14,25,33")
+                                  ; debug(
+                                      s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,20,25,32")
+                                      ; !"inline f: "
+                                    ))
+                               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,37,25,88")
+                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,37,25,57")
+                                  ; debug(
+                                      s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,43,25,56")
+                                      ; !"inline fa: "
+                                    ))
+                               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,60,25,88")
+                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,60,25,65")
+                                  ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,64,25,64") ; i))
+                               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,68,25,88")
+                               ; debug(
+                                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "25,74,25,87")
+                                   ; !"inline fb: "
+                                 ))))
+          |}
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "inlineDEBUG", "20,2,27,2")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "inlineDEBUG", "20,2,27,2")
+      ; fail
 
-  inlineDEBUG = 
-  rec i({| Subst, Inline :
-           debug(!"inline a: "); Declare; debug(!"inline b: "); all(i); debug(!"inline c: ")
-           <+ debug(!"inline d: "); Inline; debug(!"inline da: "); i; debug(!"inline db: ")
-	   <+ debug(!"inline e: "); Subst; debug(!"inline ea: "); i; debug(!"inline b: ")
-           <+ debug(!"inline f: ");  debug(!"inline fa: "); all(i); debug(!"inline fb: ")
-        |}
-  )
- 
-  my-inline = 
-  rec i({| Subst, Inline :
-           Declare; all(i)
-           <+ Inline; i
-	   <+ Subst; i
-           <+ all(i)
-        |}
-  )
- 
-  Declare = 
-    Let(list(DeclareFun + DeclareVar), id)
+  my-inline =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "my-inline", "29,2,36,2")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "30,2,36,2")
+    ; rec i (
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "30,8,35,9")
+        ; {|Subst, Inline:
+             s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "31,11,34,19")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "31,11,31,25")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "31,11,31,17") ; Declare)
+                ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "31,20,31,25")
+                ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "31,24,31,24") ; i)
+                <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "32,14,34,19")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "32,14,32,22")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "32,14,32,19") ; Inline)
+                      ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "32,22,32,22")
+                      ; i
+                      <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "33,7,34,19")
+                         ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "33,7,33,14")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "33,7,33,11") ; Subst)
+                            ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "33,14,33,14")
+                            ; i
+                            <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "34,14,34,19")
+                               ; all(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "34,18,34,18") ; i))))
+          |}
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "my-inline", "29,2,36,2")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "my-inline", "29,2,36,2")
+      ; fail
+
+  Declare =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "Declare", "38,2,39,41")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "39,4,39,41")
+    ; Let(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "39,8,39,36")
+        ; list(
+            s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "39,13,39,35")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "39,13,39,22") ; DeclareFun
+               + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "39,26,39,35") ; DeclareVar)
+          )
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "39,39,39,40") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "Declare", "38,2,39,41")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "Declare", "38,2,39,41")
+      ; fail
 
   DeclareVar =
-    ?Vdec(x,e); 
-    debug(!"DeclareVar: ");
-    rules(
-      Inline : Var(x) -> e
-      Subst  :- Var(x)
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "DeclareVar", "41,2,47,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "42,4,47,4")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "42,4,42,13")
+       ; ?Vdec(x, e))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "43,4,47,4")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "43,4,43,25")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "43,10,43,24")
+           ; !"DeclareVar: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "44,4,47,4")
+    ; rules (
+        Inline :
+          Var(x) -> e
+        Subst :-
+          Var(x)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "DeclareVar", "41,2,47,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "DeclareVar", "41,2,47,4")
+      ; fail
 
   DeclareFun =
-    ?Fdec(f, xs, e); 
-    debug(!"DeclareFun: ");
-    rules(
-      Inline : 
-        Call(f,es) -> e
-        where <zip({?(x,e); rules(Subst : Var(x) -> e)})> (xs, es)
-    )
-    ; where(<table-getlist> "Inline")
-
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "DeclareFun", "49,2,57,36")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "50,4,57,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "50,4,50,18")
+       ; ?Fdec(f, xs, e))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "51,4,57,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "51,4,51,25")
+       ; debug(
+           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "51,10,51,24")
+           ; !"DeclareFun: "
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "52,4,57,36")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "52,4,56,4")
+       ; rules (
+           Inline :
+             Call(f, es) -> e
+             where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "55,14,55,65")
+                   ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "55,15,55,55")
+                       ; zip(
+                           s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "55,19,55,54")
+                           ; {s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "55,20,55,53")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "55,20,55,25")
+                                 ; ?(x, e))
+                              ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "55,28,55,53")
+                              ; rules ( Subst :
+                                          Var(x) -> e )}
+                         ))> (xs, es)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "57,6,57,36")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "57,12,57,35")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "57,13,57,25") ; table-getlist)> "Inline")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "DeclareFun", "49,2,57,36")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test33.str", "DeclareFun", "49,2,57,36")
+      ; fail

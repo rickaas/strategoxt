@@ -1,81 +1,228 @@
-/**
- * Verbosity management.
- */
 module util/config/verbose
-imports util/config/common
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  util/config/common
+
+
 strategies
+  set-verbosity =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "set-verbosity", "15,2,16,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "16,4,16,35")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "16,5,16,14") ; set-config)> ( "--verbose"
+                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "16,32,16,33") ; id>
+                                                                                                               )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "set-verbosity", "15,2,16,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "set-verbosity", "15,2,16,35")
+      ; fail
 
- /**
-  * Sets the verbosity level.
-  *
-  * E.g. <set-verbosity> 4 sets the verbosity level to 4.
-  *
-  * @type Int -> _
-  */
-  set-verbosity = 
-    <set-config> ("--verbose", <id>)
+  verbosity =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "verbosity", "23,2,24,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "24,4,24,33")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "24,4,24,27")
+       ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "24,5,24,14") ; get-config)> "--verbose"
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "24,32,24,33")
+          ; !1)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "verbosity", "23,2,24,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "verbosity", "23,2,24,33")
+      ; fail
 
- /**
-  * Give the current verbosity level. Default is 1.
-  *
-  * @type _ -> Int
-  */
-  verbosity = 
-    <get-config> "--verbose" <+ !1
+  pass-verbose =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "pass-verbose", "34,2,35,48")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "35,4,35,48")
+    ; ![ "--verbose"
+       , <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "35,20,35,43")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "35,20,35,28") ; verbosity)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "35,31,35,43")
+          ; int-to-string> ()
+       ]
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "pass-verbose", "34,2,35,48")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "pass-verbose", "34,2,35,48")
+      ; fail
 
- /**
-  * Builds command-line parameter for verbosity levels for calling XT tools.
-  *
-  * E.g. xtc-transform(!"abox2text", pass-verbose ) passes the verbosity level
-  * to abox2text.
-  *
-  * @type _ -> List(String)
-  */
-  pass-verbose = 
-    !["--verbose", <verbosity; int-to-string> ()]
 
-/**
- * Apply the supplied strategy if the verbosity level is set to a value greater 
- * than or equal to the number given in the strategy name.
- *
- * E.g. if-verbose5(debug) calls the debug strategy if verbosity level is > 5.
- *
- * @param strategy to be applied
- */
 strategies
+  if-verbose(s|t) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose", "47,2,50,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "48,4,50,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "48,7,48,31")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "48,8,48,10") ; geq)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "48,15,48,23") ; verbosity> ()
+                                                                                                             , t
+                                                                                                             ) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "49,6,49,6") ; s
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose", "47,2,50,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose", "47,2,50,6")
+      ; fail
 
-  if-verbose(s|t) = 
-    if <geq> (<verbosity> (), t) then
-      s
-    end
+  if-verbose1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose1", "52,2,52,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "52,19,52,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "52,30,52,30") ; s
+      | 1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose1", "52,2,52,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose1", "52,2,52,33")
+      ; fail
 
-  if-verbose1(s) = if-verbose(s|1)
-  if-verbose2(s) = if-verbose(s|2)
-  if-verbose3(s) = if-verbose(s|3)
-  if-verbose4(s) = if-verbose(s|4) 
-  if-verbose5(s) = if-verbose(s|5) 
-  if-verbose6(s) = if-verbose(s|6) 
-  if-verbose7(s) = if-verbose(s|7)
+  if-verbose2(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose2", "53,2,53,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "53,19,53,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "53,30,53,30") ; s
+      | 2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose2", "53,2,53,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose2", "53,2,53,33")
+      ; fail
 
-/**
- * Apply the supplied strategy if the verbosity level is set to a value lesser 
- * than or equal to the number given in the strategy name.
- *
- * E.g. if-less-verbose3(debug) calls the debug strategy if verbosity level is < 3.
- *
- * @param strategy to be applied
- */
+  if-verbose3(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose3", "54,2,54,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "54,19,54,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "54,30,54,30") ; s
+      | 3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose3", "54,2,54,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose3", "54,2,54,33")
+      ; fail
+
+  if-verbose4(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose4", "55,2,55,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "55,19,55,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "55,30,55,30") ; s
+      | 4
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose4", "55,2,55,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose4", "55,2,55,33")
+      ; fail
+
+  if-verbose5(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose5", "56,2,56,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "56,19,56,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "56,30,56,30") ; s
+      | 5
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose5", "56,2,56,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose5", "56,2,56,33")
+      ; fail
+
+  if-verbose6(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose6", "57,2,57,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "57,19,57,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "57,30,57,30") ; s
+      | 6
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose6", "57,2,57,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose6", "57,2,57,33")
+      ; fail
+
+  if-verbose7(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose7", "58,2,58,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "58,19,58,33")
+    ; if-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "58,30,58,30") ; s
+      | 7
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose7", "58,2,58,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-verbose7", "58,2,58,33")
+      ; fail
+
+
 strategies
+  if-less-verbose(s|t) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose", "70,1,73,6")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "71,4,73,6")
+    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "71,7,71,31")
+         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "71,8,71,10") ; leq)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "71,15,71,23") ; verbosity> ()
+                                                                                                             , t
+                                                                                                             ) then
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "72,6,72,6") ; s
+      end
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose", "70,1,73,6")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose", "70,1,73,6")
+      ; fail
 
- if-less-verbose(s|t) = 
-    if <leq> (<verbosity> (), t) then
-      s
-    end
+  if-less-verbose1(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose1", "75,2,75,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "75,24,75,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "75,40,75,40") ; s
+      | 1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose1", "75,2,75,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose1", "75,2,75,43")
+      ; fail
 
-  if-less-verbose1(s) = if-less-verbose(s|1)
-  if-less-verbose2(s) = if-less-verbose(s|2) 
-  if-less-verbose3(s) = if-less-verbose(s|3) 
-  if-less-verbose4(s) = if-less-verbose(s|4) 
-  if-less-verbose5(s) = if-less-verbose(s|5) 
-  if-less-verbose6(s) = if-less-verbose(s|6)
-  if-less-verbose7(s) = if-less-verbose(s|7)
+  if-less-verbose2(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose2", "76,2,76,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "76,24,76,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "76,40,76,40") ; s
+      | 2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose2", "76,2,76,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose2", "76,2,76,43")
+      ; fail
+
+  if-less-verbose3(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose3", "77,2,77,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "77,24,77,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "77,40,77,40") ; s
+      | 3
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose3", "77,2,77,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose3", "77,2,77,43")
+      ; fail
+
+  if-less-verbose4(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose4", "78,2,78,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "78,24,78,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "78,40,78,40") ; s
+      | 4
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose4", "78,2,78,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose4", "78,2,78,43")
+      ; fail
+
+  if-less-verbose5(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose5", "79,2,79,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "79,24,79,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "79,40,79,40") ; s
+      | 5
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose5", "79,2,79,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose5", "79,2,79,43")
+      ; fail
+
+  if-less-verbose6(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose6", "80,2,80,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "80,24,80,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "80,40,80,40") ; s
+      | 6
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose6", "80,2,80,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose6", "80,2,80,43")
+      ; fail
+
+  if-less-verbose7(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose7", "81,2,81,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "81,24,81,43")
+    ; if-less-verbose(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "81,40,81,40") ; s
+      | 7
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose7", "81,2,81,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/util/config/verbose.str", "if-less-verbose7", "81,2,81,43")
+      ; fail

@@ -1,15 +1,38 @@
 module internal_1
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
+
 
 rules
 
   main-internal_1 =
-    <cify> "foo-bar" => "foo_bar"
-  ; not(<cify> "foosbar" => "foobar")
-  ; <Cify(id)> ['s'] => []
-    
-  internal Cify(s) :
-    ['s' | tail] -> <s> tail
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "main-internal_1", "8,2,11,25")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "9,4,11,25")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "9,4,9,32")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "9,4,9,19")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "9,5,9,8") ; cify)> "foo-bar") => "foo_bar")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "10,4,11,25")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "10,4,10,36")
+       ; not(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "10,8,10,35")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "10,8,10,23")
+                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "10,9,10,12") ; cify)> "foosbar") => "foobar"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "11,4,11,25")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "11,4,11,19")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "11,5,11,12")
+           ; Cify(
+               s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "11,10,11,11") ; id
+             ))> ['s']) => []
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "main-internal_1", "8,2,11,25")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "main-internal_1", "8,2,11,25")
+      ; fail
 
+  internal Cify(s) :
+             ['s'|tail] -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "Cify", "13,11,14,27")> <s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "14,21,14,21") ; s> tail
+             where r-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "Cify", "13,11,14,27")
+                   <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/internal_1.str", "Cify", "13,11,14,27")
+                      ; fail

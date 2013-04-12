@@ -1,162 +1,201 @@
-/**
- * Configuration of SGLR.
- *
- * @author Martin Bravenboer
- */
 module stratego/sglr/config
+
 imports
-   stratego/sglr/filter
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  stratego/sglr/filter
+
 
 strategies
-
   set-default-sglr-config =
-    where(prim("STRSGLR_set_default_config"))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-default-sglr-config", "12,2,13,44")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "13,4,13,44")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "13,10,13,43") ; prim("STRSGLR_set_default_config"))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-default-sglr-config", "12,2,13,44")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-default-sglr-config", "12,2,13,44")
+      ; fail
 
-/**
- * Ambiguities
- */
+
 strategies
-
-  /**
-   * Set if ambiguities are to be treated as errors.
-   *
-   * @param true (success) or false (failure)
-   */
   set-ambiguity-is-error(s) =
-    if s then
-      where(prim("STRSGLR_set_ambiguity_error_on"))
-    else
-      where(prim("STRSGLR_set_ambiguity_error_off"))
-    end
-
-  /**
-   * Succeeds if ambiguities are treated as errors.
-   *
-   * @type  t -> t
-   */
-  get-ambiguity-is-error =
-    where(prim("STRSGLR_get_ambiguity_error"))
-
-/**
- * Recovery
- */
-strategies
-
-  set-recovery(s) =
-    if s then
-      where(if-java-platform(prim("STRSGLR_set_recovery_on")))
-    else
-      where(if-java-platform(prim("STRSGLR_set_recovery_off")))
-    end
-  ; if-c-platform(fail)
-
-/**
- * Filtering
- */
-strategies
-
-  /**
-   * Set if filtering is enabled.
-   *
-   * @param true (success) or false (failure)
-   */
-  set-filtering(s) =
-    if s then
-      where(prim("STRSGLR_set_filtering_on"))
-    else
-      where(prim("STRSGLR_set_filtering_off"))
-    end
-
-/**
- * Error recovery
- */
-strategies
-
-  /**
-   * Set if filtering is enabled.
-   *
-   * @param true (success) or false (failure)
-   */
-  set-recovery(s) =
-    if-java-platform(
-      if s then
-        where(prim("STRSGLR_set_recovery_on"))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-ambiguity-is-error", "25,2,30,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "26,4,30,6")
+    ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "26,7,26,7") ; s then
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "27,6,27,50")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "27,12,27,49") ; prim("STRSGLR_set_ambiguity_error_on"))
       else
-        where(prim("STRSGLR_set_recovery_off"))
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "29,6,29,51")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "29,12,29,50") ; prim("STRSGLR_set_ambiguity_error_off"))
       end
-    )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-ambiguity-is-error", "25,2,30,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-ambiguity-is-error", "25,2,30,6")
+      ; fail
 
-  /**
-   * Succeeds if error recovery is enabled.
-   *
-   * @type  t -> t
-   */
+  get-ambiguity-is-error =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-ambiguity-is-error", "37,2,38,45")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "38,4,38,45")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "38,10,38,44") ; prim("STRSGLR_get_ambiguity_error"))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-ambiguity-is-error", "37,2,38,45")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-ambiguity-is-error", "37,2,38,45")
+      ; fail
+
+
+strategies
+  set-recovery(s) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-recovery", "45,2,51,22")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "46,4,51,22")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "46,4,50,6")
+       ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "46,7,46,7") ; s then
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "47,6,47,61")
+           ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "47,12,47,60")
+                   ; if-java-platform(
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "47,29,47,59") ; prim("STRSGLR_set_recovery_on")
+                     ))
+         else
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "49,6,49,62")
+           ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "49,12,49,61")
+                   ; if-java-platform(
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "49,29,49,60") ; prim("STRSGLR_set_recovery_off")
+                     ))
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "51,4,51,22")
+    ; if-c-platform(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "51,18,51,21") ; fail
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-recovery", "45,2,51,22")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-recovery", "45,2,51,22")
+      ; fail
+
+
+strategies
+  set-filtering(s) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-filtering", "63,2,68,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "64,4,68,6")
+    ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "64,7,64,7") ; s then
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "65,6,65,44")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "65,12,65,43") ; prim("STRSGLR_set_filtering_on"))
+      else
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "67,6,67,45")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "67,12,67,44") ; prim("STRSGLR_set_filtering_off"))
+      end
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-filtering", "63,2,68,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-filtering", "63,2,68,6")
+      ; fail
+
+
+strategies
+  set-recovery(s) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-recovery", "80,2,87,4")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "81,4,87,4")
+    ; if-java-platform(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "82,6,86,8")
+        ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "82,9,82,9") ; s then
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "83,8,83,45")
+            ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "83,14,83,44") ; prim("STRSGLR_set_recovery_on"))
+          else
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "85,8,85,46")
+            ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "85,14,85,45") ; prim("STRSGLR_set_recovery_off"))
+          end
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-recovery", "80,2,87,4")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-recovery", "80,2,87,4")
+      ; fail
+
   get-filter-priority =
-    if-c-platform(
-      fail
-    );
-    if-java-platform(
-      where(prim("STRSGLR_get_recovery"))
-    )
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-filter-priority", "94,2,100,4")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "95,4,100,4")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "95,4,97,4")
+       ; if-c-platform(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "96,6,96,9") ; fail
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "98,4,100,4")
+    ; if-java-platform(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "99,6,99,40")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "99,12,99,39") ; prim("STRSGLR_get_recovery"))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-filter-priority", "94,2,100,4")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-filter-priority", "94,2,100,4")
+      ; fail
 
-/**
- * Logging
- */
+
 strategies
-
   set-sglr-log-stream =
-    ?Stream(stream)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-sglr-log-stream", "107,2,109,43")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "108,4,109,43")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "108,4,108,18")
+       ; ?Stream(stream))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "109,6,109,43")
     ; prim("STRSGLR_set_log_stream", stream)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-sglr-log-stream", "107,2,109,43")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-sglr-log-stream", "107,2,109,43")
+      ; fail
 
-/**
- * Statistics
- */    
+
 strategies
-
-  /**
-   * Set if statistics are to be logged.
-   *
-   * @param true (success) or false (failure)
-   */
   set-sglr-log-statistics(s) =
-    if s then
-      where(prim("STRSGLR_set_log_statistics_on"))
-    else
-      where(prim("STRSGLR_set_log_statistics_off"))
-    end
-    
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-sglr-log-statistics", "121,2,126,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "122,4,126,6")
+    ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "122,7,122,7") ; s then
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "123,6,123,49")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "123,12,123,48") ; prim("STRSGLR_set_log_statistics_on"))
+      else
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "125,6,125,50")
+        ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "125,12,125,49") ; prim("STRSGLR_set_log_statistics_off"))
+      end
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-sglr-log-statistics", "121,2,126,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-sglr-log-statistics", "121,2,126,6")
+      ; fail
+
   get-sglr-log-statistics =
-    where(prim("STRSGLR_get_log_statistics"))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-sglr-log-statistics", "128,2,129,44")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "129,4,129,44")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "129,10,129,43") ; prim("STRSGLR_get_log_statistics"))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-sglr-log-statistics", "128,2,129,44")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "get-sglr-log-statistics", "128,2,129,44")
+      ; fail
 
-/**
- * Parse tree format
- */
+
 strategies
-
-  /**
-   * Sets the parse tree format to the specific format.
-   *
-   * @type ParseTreeFormat -> ParseTreeFormat
-   */
   set-parse-tree-format =
-    ?AsFix2()
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-parse-tree-format", "141,2,143,22")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "142,4,143,22")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "142,4,142,12")
+       ; ?AsFix2())
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "143,6,143,22")
     ; set-asfix2-format
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-parse-tree-format", "141,2,143,22")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-parse-tree-format", "141,2,143,22")
+      ; fail
 
-  set-parse-tree-format =    
-    ?AsFix2ME()  
+  set-parse-tree-format =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-parse-tree-format", "145,2,147,24")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "146,4,147,24")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "146,4,146,14")
+       ; ?AsFix2ME())
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "147,6,147,24")
     ; set-asfix2me-format
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-parse-tree-format", "145,2,147,24")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-parse-tree-format", "145,2,147,24")
+      ; fail
 
-  /**
-   * Sets the parse tree format to AsFix2
-   */
   set-asfix2-format =
-    where(prim("STRSGLR_set_asfix2_format"))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-asfix2-format", "152,2,153,43")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "153,4,153,43")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "153,10,153,42") ; prim("STRSGLR_set_asfix2_format"))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-asfix2-format", "152,2,153,43")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-asfix2-format", "152,2,153,43")
+      ; fail
 
-  /**
-   * Sets the parse tree format to AsFix2ME
-   */
   set-asfix2me-format =
-    where(prim("STRSGLR_set_asfix2me_format"))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-asfix2me-format", "158,2,159,45")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "159,4,159,45")
+    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "159,10,159,44") ; prim("STRSGLR_set_asfix2me_format"))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-asfix2me-format", "158,2,159,45")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/config.str", "set-asfix2me-format", "158,2,159,45")
+      ; fail
+
 
 signature
   constructors

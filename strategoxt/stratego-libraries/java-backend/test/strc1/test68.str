@@ -1,5 +1,19 @@
 module test68
-imports libstratego-lib spec
-strategies
 
-  main-test68 = !Fred("test")
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  spec
+
+
+strategies
+  main-test68 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test68.str", "main-test68", "5,2,5,28")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test68.str", "5,16,5,28")
+    ; !Fred("test")
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test68.str", "main-test68", "5,2,5,28")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test68.str", "main-test68", "5,2,5,28")
+      ; fail

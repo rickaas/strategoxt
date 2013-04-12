@@ -1,80 +1,97 @@
-/**
- * This module contains strategies for operating on real numbers.
- * 
- * In Stratego, real numbers are primitive terms, separate from
- * integers. The precision of the reals match that of the underlying
- * runtime platform, which currently always is the ANSI C library.
- *
- * @author Eelco Visser <visser@acm.org>
- * @author Karl Trygve Kalleberg <karltk@strategoxt.org> - documentation
- */
 module term/real
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
+  is-real =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "is-real", "18,2,18,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "18,12,18,36")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "18,12,18,13") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "18,16,18,36")
+    ; prim("SSL_is_real", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "is-real", "18,2,18,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "is-real", "18,2,18,36")
+      ; fail
 
-  /** Predicate to check if the current term is a real number.
-   *
-   * @type Real -> Real
-   */
-  is-real = ?x; prim("SSL_is_real",x)
+  cos =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "cos", "24,2,24,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "24,10,24,30")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "24,10,24,11") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "24,14,24,30")
+    ; prim("SSL_cos", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "cos", "24,2,24,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "cos", "24,2,24,30")
+      ; fail
 
-  /** Compute cosine of a real number.
-   *
-   * @type Real -> Real
-   */
-  cos   = ?x; prim("SSL_cos",x)
+  sin =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "sin", "30,2,30,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "30,10,30,30")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "30,10,30,11") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "30,14,30,30")
+    ; prim("SSL_sin", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "sin", "30,2,30,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "sin", "30,2,30,30")
+      ; fail
 
-  /** Compute sine of a real number.
-   *
-   * @type Real -> Real
-   */
-  sin   = ?x; prim("SSL_sin",x)
+  sqrt =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "sqrt", "39,2,39,31")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "39,10,39,31")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "39,10,39,11") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "39,14,39,31")
+    ; prim("SSL_sqrt", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "sqrt", "39,2,39,31")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "sqrt", "39,2,39,31")
+      ; fail
 
-  /** Compute square of a real number.
-   *
-   * Note: The number sqrt is applied to must be non-negative, as complex
-   * numbers are not supported.
-   *
-   * @type Real -> Real
-   */
-  sqrt  = ?x; prim("SSL_sqrt",x)
+  atan2 =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "atan2", "48,2,48,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "48,10,48,38")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "48,10,48,15")
+       ; ?(x, y))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "48,18,48,38")
+    ; prim("SSL_atan2", x, y)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "atan2", "48,2,48,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "atan2", "48,2,48,38")
+      ; fail
 
-  /** Compute arc tangent of a par of real numbers. The result, when applied to
-   * the pair (x,y), is the arc tangent of y/x, expressed as radians between
-   * -PI and PI. The signs of the parameters x and y are used to determine the
-   * correct quadrant.
-   *
-   * @type Real -> Real
-   */
-  atan2 = ?(x,y); prim("SSL_atan2",x,y)
+  real-to-string =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real-to-string", "54,2,54,57")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "54,26,54,57")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "54,26,54,27") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "54,30,54,57")
+    ; prim("SSL_real_to_string", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real-to-string", "54,2,54,57")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real-to-string", "54,2,54,57")
+      ; fail
 
-  /** Convert a real to a string with default (maximal) precision.
-   *
-   * @type Real -> String
-   */
-  real-to-string        = ?x; prim("SSL_real_to_string",x)
+  real-to-string(|prec) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real-to-string", "66,2,66,72")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "66,26,66,72")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "66,26,66,27") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "66,30,66,72")
+    ; prim("SSL_real_to_string_precision", x, prec)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real-to-string", "66,2,66,72")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real-to-string", "66,2,66,72")
+      ; fail
 
-  /** Convert a real to a string with given precision.
-   *
-   * The term argument prec specifies the number of digits after the 
-   * period is required. The result is rounded. 
-   *
-   * Example: <real-to-string(2)> 12.124 => "12.12"
-   *
-   * @type prec Int 
-   * @type Real -> String
-   */
-  real-to-string(|prec) = ?x; prim("SSL_real_to_string_precision",x,prec)
+  string-to-real =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "string-to-real", "74,2,74,50")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "74,19,74,50")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "74,19,74,20") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "74,23,74,50")
+    ; prim("SSL_string_to_real", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "string-to-real", "74,2,74,50")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "string-to-real", "74,2,74,50")
+      ; fail
 
-  /** Construct a real from a string.
-   *
-   * Example: <string-to-real> "123.0e+02"
-   *
-   * @type String -> Real
-   */
-  string-to-real = ?x; prim("SSL_string_to_real",x)
-
-  /** Construct a real from an int. 
-   *
-   * @type Int -> Real
-   */
-  real = ?x; prim("SSL_real",x)
+  real =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real", "80,2,80,30")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "80,9,80,30")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "80,9,80,10") ; ?x)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "80,13,80,30")
+    ; prim("SSL_real", x)
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real", "80,2,80,30")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/real.str", "real", "80,2,80,30")
+      ; fail

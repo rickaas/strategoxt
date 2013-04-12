@@ -1,140 +1,333 @@
-/**
- * Indent-padding annotation.
- *
- * @author Lennart Kats
- */
 module stratego/asfix/implode/indent-padding
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/concrete-syntax/markers
 
-signature constructors
 
-  AddPadding     : Term -> AddPadding
-  PaddingContext : Term -> PaddingContext
-  PaddingId      : Term -> PaddingId
-  PaddingStart   : PaddingStart
-  indentpadding  : Attr
-  parse-tree     : Term * Term -> parse-tree
-  Stop           : Term -> Term
+signature
+  constructors
+    AddPadding     : Term -> AddPadding
+    PaddingContext : Term -> PaddingContext
+    PaddingId      : Term -> PaddingId
+    PaddingStart   : PaddingStart
+    indentpadding  : Attr
+    parse-tree     : Term * Term -> parse-tree
+    Stop           : Term -> Term
+
 
 strategies
-    
-  /**
-   * Add an annotation uniquely identifying each {indentpadding} lexical.
-   */
   AddPaddedLexicalAnno :
-    appl(prod(_, _, attrs([term(indentpadding())])), _) -> <id> {PaddingId(<new>)}
-    
+    appl(
+      prod(
+        _
+      , _
+      , attrs([term(indentpadding())])
+      )
+    , _
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddPaddedLexicalAnno", "25,2,26,81")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "26,60,26,61") ; id>{ PaddingId(
+                                                                                                                                                                                                                                                                  <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "26,76,26,78") ; new>
+                                                                                                                                                                                                                                                                )
+                                                                                                                                                                                                                                                              }
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddPaddedLexicalAnno", "25,2,26,81")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddPaddedLexicalAnno", "25,2,26,81")
+             ; fail
+
   ImplodePaddedLexical :
-    appl(prod(_, _, attrs([term(indentpadding())])), _) -> AddPadding(imploded) {PaddingContext(<id>)}
-    with
-      imploded := <asfix-yield-appl>
+    appl(
+      prod(
+        _
+      , _
+      , attrs([term(indentpadding())])
+      )
+    , _
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "ImplodePaddedLexical", "28,2,31,35")> AddPadding(imploded){ PaddingContext(
+                                                                                                                                                                     <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "29,97,29,98") ; id>
+                                                                                                                                                                   )
+                                                                                                                                                                 }
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "ImplodePaddedLexical", "28,2,31,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "ImplodePaddedLexical", "28,2,31,35")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "31,6,31,35")
+         ; imploded := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "31,19,31,34") ; asfix-yield-appl>
+         <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "ImplodePaddedLexical", "28,2,31,35")
+            ; fail
 
-  AddIndentPadding(|asfix) :
-    AddPadding(t) -> t'
-    with
-      if !asfix => appl(_, _) then
-        if !asfix => _{PaddingId(_)} then
-          t' := <id> // keep constructor (add padding later)
-        else
-          where(
-            padding := <collect-tree-chars-before(?_{PaddingId(_)})> asfix
-            //; <debug(!"  padding1: ")> <write-to-string> <implode-string> <asfix-yield-appl-chars> asfix
-            //; <debug(!"  padding2: ")> <write-to-string> <implode-string> padding
-          )
-        ; if not(<one('\n')> padding) then
-            t' := <id> // keep constructor (add padding later)
-          else
-            t' := <add-indent-padding-string(|asfix)> t
-          end
-        end
-      else
-        t' := <id> // keep constructor (add padding later)
-      end
+  AddIndentPadding(|asfix):
+    AddPadding(t) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPadding", "33,2,53,8")> t'
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPadding", "33,2,53,8")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPadding", "33,2,53,8")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "36,6,53,8")
+         ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "36,9,36,28")
+              ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "36,9,36,14") ; !asfix) => appl(_, _) then
+             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "37,8,50,10")
+             ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "37,11,37,35")
+                  ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "37,11,37,16") ; !asfix) => _{PaddingId(_)} then
+                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "38,10,38,19")
+                 ; t' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "38,17,38,18") ; id>
+               else
+                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "40,10,49,12")
+                 ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "40,10,44,10")
+                    ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "41,12,41,73")
+                            ; padding := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "41,24,41,66")
+                                          ; collect-tree-chars-before(
+                                              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "41,50,41,65")
+                                              ; ?_{PaddingId(_)}
+                                            )> asfix))
+                 ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "45,10,49,12")
+                 ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "45,13,45,36")
+                      ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "45,17,45,35")
+                            ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "45,18,45,26")
+                                ; one(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "45,22,45,25") ; '\n'))> padding) then
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "46,12,46,21")
+                     ; t' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "46,19,46,20") ; id>
+                   else
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "48,12,48,54")
+                     ; t' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "48,19,48,51")
+                              ; add-indent-padding-string(|asfix)> t
+                   end
+               end
+           else
+             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "52,8,52,17")
+             ; t' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "52,15,52,16") ; id>
+           end
+         <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPadding", "33,2,53,8")
+            ; fail
 
-  /**
-   * The yield of an AsFixTerm are the characters at the leaves of the tree.
-   */
   asfix-yield-appl-chars =
-    let yield(|chars) =
-            asfix-yield-acc(yield | chars)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "asfix-yield-appl-chars", "58,2,64,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "59,4,64,6")
+    ; let yield(|chars) =
+            s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "yield", "59,8,60,41")
+            ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "60,12,60,41")
+            ; asfix-yield-acc(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "60,28,60,32") ; yield
+              | chars
+              )
+            < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "yield", "59,8,60,41")
+            + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "yield", "59,8,60,41")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "62,8,63,17")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "62,8,62,21")
+           ; ?appl(
+                _
+              , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "62,18,62,19") ; id>
+              ))
+        ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "63,8,63,17")
+        ; yield(|[])
+      end
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "asfix-yield-appl-chars", "58,2,64,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "asfix-yield-appl-chars", "58,2,64,6")
+      ; fail
 
-     in ?appl(_, <id>)
-      ; yield(|[])
-    end
-  
   add-indent-padding-string(|asfix) =
-    topdown(try(AddIndentPaddingString(|asfix)))
-  ; conc-to-cons
-  
-  AddIndentPaddingString(|asfix) :
-    AddPadding(s){a*} -> s'
-    with
-      if !a* => [PaddingContext(context)] then
-        asfix'   := <collect-tree-chars-before(?context)> asfix
-      ; padding  := <chars-before-newlines; reverse; chars-to-whitespace> asfix'
-      ; s'       := <conc; implode-string> (padding, <explode-string> s)
-      else
-        s' := s
-      end
-  
-  /**
-   * Collects a reverse list of all characters in a parse tree,
-   * before a certain subtree is encountered.
-   */
-  collect-tree-chars-before(stop):
-    t -> c*
-    with
-      try(?parse-tree(<id>, _))
-    ; c* := <try(?Stop(<id>))> <collect-tree-chars-before-acc(stop | [])>
-  
-  collect-tree-chars-before-acc(stop|c*):
-    appl(_, ts) -> <collect-tree-chars-before-acc(stop|c*)> ts
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "add-indent-padding-string", "66,2,68,15")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "67,4,68,15")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "67,4,67,47")
+       ; topdown(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "67,12,67,46")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "67,16,67,45")
+               ; AddIndentPaddingString(|asfix)
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "68,4,68,15")
+    ; conc-to-cons
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "add-indent-padding-string", "66,2,68,15")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "add-indent-padding-string", "66,2,68,15")
+      ; fail
+
+  AddIndentPaddingString(|asfix):
+    AddPadding(s){a*} -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPaddingString", "70,2,79,8")> s'
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPaddingString", "70,2,79,8")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPaddingString", "70,2,79,8")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "73,6,79,8")
+         ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "73,9,73,40")
+              ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "73,9,73,11")
+                 ; !a*) => [PaddingContext(context)] then
+             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "74,8,76,71")
+             ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "74,8,74,62")
+                ; asfix' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "74,21,74,55")
+                             ; collect-tree-chars-before(
+                                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "74,47,74,54") ; ?context
+                               )> asfix)
+             ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,8,76,71")
+             ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,8,75,79")
+                ; padding := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,21,75,71")
+                              ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,21,75,41") ; chars-before-newlines)
+                              ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,44,75,71")
+                              ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,44,75,50") ; reverse)
+                              ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "75,53,75,71")
+                              ; chars-to-whitespace> asfix')
+             ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "76,8,76,71")
+             ; s' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "76,21,76,40")
+                      ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "76,21,76,24") ; conc)
+                      ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "76,27,76,40")
+                      ; implode-string> ( padding
+                                        , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "76,54,76,67") ; explode-string> s
+                                        )
+           else
+             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "78,8,78,14")
+             ; s' := s
+           end
+         <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "AddIndentPaddingString", "70,2,79,8")
+            ; fail
+
+  collect-tree-chars-before(stop) :
+    t -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before", "85,2,89,72")> c*
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before", "85,2,89,72")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before", "85,2,89,72")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "88,6,89,72")
+         ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "88,6,88,30")
+            ; try(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "88,10,88,29")
+                ; ?parse-tree(
+                     <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "88,23,88,24") ; id>
+                   , _
+                   )
+              ))
+         ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "89,6,89,72")
+         ; c* := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "89,13,89,28")
+                  ; try(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "89,17,89,27")
+                      ; ?Stop(
+                           <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "89,24,89,25") ; id>
+                         )
+                    )> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "89,32,89,71")
+                        ; collect-tree-chars-before-acc(
+                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "89,62,89,65") ; stop
+                          | []
+                          )>
+         <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before", "85,2,89,72")
+            ; fail
 
   collect-tree-chars-before-acc(stop|c*):
-    [] -> c*
+    appl(_, ts) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "91,2,92,61")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "92,20,92,57")
+                                                                                                                                                                 ; collect-tree-chars-before-acc(
+                                                                                                                                                                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "92,50,92,53") ; stop
+                                                                                                                                                                   | c*
+                                                                                                                                                                   )> ts
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "91,2,92,61")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "91,2,92,61")
+             ; fail
 
   collect-tree-chars-before-acc(stop|c*):
-    [x | xs] -> result
-    with
-      !c* => Stop(_)
-    ; result := c*
-    <+
-      if <is-int> x then
-        c'*    := [x | c*]
-      ; result := <collect-tree-chars-before-acc(stop|c'*)> xs
-      else
-        if <stop> x then
-          result := Stop(c*)
-        else
-          x'     := <collect-tree-chars-before-acc(stop|c*)> x
-        ; result := <collect-tree-chars-before-acc(stop|x')> xs
-        end
-      end
-  
+    [] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "94,2,95,11")> c*
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "94,2,95,11")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "94,2,95,11")
+             ; fail
+
   collect-tree-chars-before-acc(stop|c*):
-    amb([x | _]) -> <collect-tree-chars-before-acc(stop|c*)> x
-  
+    [x|xs] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "97,2,113,8")> result
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "97,2,113,8")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "97,2,113,8")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "100,6,113,8")
+         ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "100,6,101,17")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "100,6,100,19")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "100,6,100,8")
+                  ; !c*) => Stop(_))
+            ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "101,6,101,17")
+            ; result := c*
+            <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "103,6,113,8")
+               ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "103,9,103,18")
+                    ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "103,10,103,15") ; is-int)> x then
+                   s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "104,8,105,61")
+                   ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "104,8,104,25")
+                      ; c'* := [x|c*])
+                   ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "105,8,105,61")
+                   ; result := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "105,19,105,57")
+                                ; collect-tree-chars-before-acc(
+                                    s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "105,49,105,52") ; stop
+                                  | c'*
+                                  )> xs
+                 else
+                   s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "107,8,112,10")
+                   ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "107,11,107,18")
+                        ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "107,12,107,15") ; stop)> x then
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "108,10,108,27")
+                       ; result := Stop(c*)
+                     else
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "110,10,111,62")
+                       ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "110,10,110,61")
+                          ; x' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "110,21,110,58")
+                                   ; collect-tree-chars-before-acc(
+                                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "110,51,110,54") ; stop
+                                     | c*
+                                     )> x)
+                       ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "111,10,111,62")
+                       ; result := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "111,21,111,58")
+                                    ; collect-tree-chars-before-acc(
+                                        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "111,51,111,54") ; stop
+                                      | x'
+                                      )> xs
+                     end
+                 end)
+         <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "97,2,113,8")
+            ; fail
+
+  collect-tree-chars-before-acc(stop|c*):
+    amb([x|_]) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "115,2,116,61")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "116,21,116,58")
+                                                                                                                                                                  ; collect-tree-chars-before-acc(
+                                                                                                                                                                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "116,51,116,54") ; stop
+                                                                                                                                                                    | c*
+                                                                                                                                                                    )> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "115,2,116,61")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "collect-tree-chars-before-acc", "115,2,116,61")
+             ; fail
+
   chars-to-whitespace :
-    [c | c*] -> c'*
-    where
-      if !c => '\t' then
-        c'* := ['\t' | <chars-to-whitespace> c*]
-      else
-        c'* := [' '  | <chars-to-whitespace> c*]
-      end
-    
+    [c|c*] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "118,2,125,8")> c'*
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "118,2,125,8")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "118,2,125,8")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "121,6,125,8")
+          ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "121,9,121,18")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "121,9,121,10") ; !c) => '\t' then
+              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "122,8,122,47")
+              ; c'* := ['\t'|<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "122,24,122,42") ; chars-to-whitespace> c*]
+            else
+              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "124,8,124,47")
+              ; c'* := [' '|<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "124,24,124,42") ; chars-to-whitespace> c*]
+            end
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "118,2,125,8")
+             ; fail
+
   chars-to-whitespace :
-    [] -> []
+    [] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "127,2,128,11")> []
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "127,2,128,11")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-to-whitespace", "127,2,128,11")
+             ; fail
 
   chars-before-newlines :
-    [] -> []
-  
+    [] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "130,2,131,11")> []
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "130,2,131,11")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "130,2,131,11")
+             ; fail
+
   chars-before-newlines :
-    [c | cs] -> c*
-    where
-      if !c => '\n' + !c => '\r' then
-        c* := []
-      else
-        c* := [c | <chars-before-newlines> cs]
-      end
+    [c|cs] -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "133,2,140,8")> c*
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "133,2,140,8")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "133,2,140,8")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "136,6,140,8")
+          ; if s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "136,9,136,31")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "136,9,136,18")
+                  ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "136,9,136,10") ; !c) => '\n'
+                  + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "136,22,136,31")
+                    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "136,22,136,23") ; !c) => '\r') then
+              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "137,8,137,15")
+              ; c* := []
+            else
+              s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "139,8,139,45")
+              ; c* := [c|<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "139,20,139,40") ; chars-before-newlines> cs]
+            end
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/indent-padding.str", "chars-before-newlines", "133,2,140,8")
+             ; fail

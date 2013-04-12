@@ -1,11 +1,8 @@
-/**
- * strj options
- *
- * @see s2j-options
- *
- * @author Lennart Kats
- */
 module strj-options
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
 
 imports
   libstratego-lib
@@ -15,144 +12,414 @@ imports
   strj-version
   strj
 
+
 strategies
-
   strj-preinit-options =
-    <set-config> ("VERSION", <strc-version-number>)
-  ; <set-config> ("--verbose", 1)
-  ; <set-config> ("--statistics", 1)
-  ; <set-config> ("-O", 2)
-  ; <set-config> ("-I", [])
-  ; <set-config> ("--no-concrete-syntax-externals", 1)
-  ; <post-extend-config> ("-la", ["org.strategoxt.stratego_lib"])
- 
-  strj-parse-options =
-    with(
-      strj-preinit-options
-    )
-  ; parse-options(
-      strj-options
-    )
-  ; display-version
-  ; if not(output-dirname); <get-config> "-o" then
-      fatal-err-msg(|"Illegal output directory")
-    end
-  ; if <get-config> "-o"; base-filename; not(<eq> (<id>, <jify>)); not(<get-config> "-F") then
-      <get-config> "-o"
-    ; fatal-err(|"Output file name is not a legal Java name")
-    end
-  ; if IsIncrementalCompilation; not(<file-exists> $[[<output-dirname>]/Main.java]) then
-      log(|Info(), "No existing output files found; performing initial compilation");
-      rules(IsIncrementalCompilation :- _)
-    end
-  ; if IsIncrementalCompilation then
-      olevel2(
-        fatal-err-msg(|"Inlining not supported with incremental compilation: use -O 1 or lower")
-      )
-    end
-  ; if <get-config> "-o"; base-filename => "main.java" then
-      fatal-err(|"Output file name 'main' is not allowed as it causes problems on case-insensitive file systems; use 'Main' instead")
-    end
-  ; if <get-config> "--library"; not(<get-config> "-p" + <get-config> "-F") then
-      fatal-err-msg(|"No package name specified")
-    end
-  
-  strj-options =
-    input-option
-  <+
-    output-option // TODO: add a -d destination dir option that uses the package name
-  <+
-    ArgOption(
-      "--main" + "-m"
-    , <set-config>("-m", <id>); !()
-    , !"--main f | -m f    Main strategy to compile (default: main)"
-    )
-  <+
-    Option(
-      "--clean" + "-clean"
-    , <set-config> ("--clean", <id>)
-    , !"--clean            Remove all existing Java files in the output directory"
-    )
-  <+
-    s2j-general-options
-        
-  <+ ArgOption(fail, fail, !"")
-  <+ ArgOption(fail, fail, !"Library options:")
-  <+ ArgOption(fail, fail, !"")
-  <+
-    s2j-library-options
+    s-enter(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-preinit-options", "20,2,27,64")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "21,4,27,64")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "21,4,21,50")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "21,5,21,14") ; set-config)> ( "VERSION"
+                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "21,30,21,48") ; strc-version-number>
+                                                                                                                     ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "22,4,27,64")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "22,4,22,32")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "22,5,22,14") ; set-config)> ("--verbose", 1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "23,4,27,64")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "23,4,23,35")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "23,5,23,14") ; set-config)> ("--statistics", 1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "24,4,27,64")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "24,4,24,25")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "24,5,24,14") ; set-config)> ("-O", 2))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "25,4,27,64")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "25,4,25,26")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "25,5,25,14") ; set-config)> ("-I", []))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "26,4,27,64")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "26,4,26,53")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "26,5,26,14") ; set-config)> ("--no-concrete-syntax-externals", 1))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "27,4,27,64")
+    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "27,5,27,22") ; post-extend-config)> ("-la", ["org.strategoxt.stratego_lib"])
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-preinit-options", "20,2,27,64")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-preinit-options", "20,2,27,64")
+      ; fail
 
-  <+ ArgOption(fail, fail, !"")
-  <+ ArgOption(fail, fail, !"Configuration of the Stratego compiler:")
-  <+ ArgOption(fail, fail, !"")
-  <+
-    Option("--ast",
-      where(<set-config>("--ast",())); !(),
-      !"--ast              Produce abstract syntax tree of packed program"
-    )
-  <+
-    Option("-F",           
-      where(<set-config>("-F",())); !(),
-      !"-F                 Produce core after front-end"
-    )
-  <+ 
-    Option("--prefer-str",
-    where(<set-config> ("--prefer-str", "")); !(),
-    !"--prefer-str       Prefer .str files over .rtree files")
-  <+
-    ArgOption("--default-syntax", where(<set-config>("--default-syntax", <id>)),
-	!"--default-syntax syn        use syntax syn as default")
-  <+
-    ArgOption("--cache-dir",
-    where(<set-config> ("--cache-dir", <where(file-exists; filemode; isdir <+ mkdir)>)),
-    !"--cache-dir <dir>  Maintain a compilation cache in <dir>")
-  <+
-    Option("--fusion",     
-    where(<toggle-config>("--fusion",())); !(),
-    !"--fusion           Toggle specialize applications of innermost (default: on)" )
-  <+
-    Option("--asfix",
-    where(<set-config>("--asfix",())); !(),
-    !"--asfix            Concrete syntax parts are not imploded")
-  // UNDONE. VladVergu. No fast pretty printing for Java, no C platform anymore. Removed for bootstrapping.
-  // <+
-  //   Option("--Xfast-pp",
-  //     if-java-platform(warn(|"Fast pretty printing not available on Java"));
-  //     if-c-platform(rules(FastPrettyPrinting: _))
-  //   , !"--Xfast-pp         Use the C-based ugly and fast pretty-printer";
-  //     if-java-platform(fail)
-  //   )
-  <+
-    Option("--Xecj33",
-      rules(OldECJCompatibility: _)
-    , !"--Xecj33           Generate code compatible with ECJ 3.3 and lower";
-      if-java-platform(fail)
-    )
-  <+
-    Option("-c",
-      warn-msg(|"Ignored unsupported option -c")
-    , fail
-    )
-  + Option(
-      "-Xsep-comp-tool"
-    , rules(IsIncrementalCompilation: _);
-      <set-config> ("--library", ());
-      (ManuallySetOptimization <+ <set-config> ("-O", <strc-set-opt-level> 1))
-    , !"--Xsep-comp-tool  Compile based on sep-comp-tool (experimental)"
-    )
-  
-  <+ ArgOption(fail, fail, !"")
-  <+ ArgOption(fail, fail, !"General options:")
-  <+ ArgOption(fail, fail, !"")
-  <+
-    general-options
-  <+
-    Option("-h" + "--help",         
-    where(<set-config> ("--help",())); !(),         
-    !"-h | --help        Show help")
-  <+
-    Option("-v" + "--version",     
-    where(<set-config> ("-v",())); !(),         
-    !"-v | --version     Display program's version")
-  <+
-    stratego-warnings-options
+  strj-parse-options =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-parse-options", "29,2,58,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "30,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "30,4,32,4")
+       ; with(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "31,6,31,25") ; strj-preinit-options))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "33,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "33,4,35,4")
+       ; parse-options(
+           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "34,6,34,17") ; strj-options
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "36,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "36,4,36,18") ; display-version)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,4,39,6")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,7,37,44")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,7,37,25")
+               ; not(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,11,37,24") ; output-dirname))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,28,37,44")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "37,29,37,38") ; get-config)> "-o" then
+           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "38,6,38,47")
+           ; fatal-err-msg(|"Illegal output directory")
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,4,43,6")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,7,40,88")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,7,40,23")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,8,40,17") ; get-config)> "-o")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,26,40,88")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,26,40,38") ; base-filename)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,41,40,88")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,41,40,64")
+               ; not(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,45,40,63")
+                     ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,46,40,47") ; eq)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,52,40,53") ; id>
+                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,58,40,61") ; jify>
+                                                                                                                            )))
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,67,40,88")
+            ; not(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,71,40,87")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "40,72,40,81") ; get-config)> "-F") then
+           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "41,6,42,60")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "41,6,41,22")
+              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "41,7,41,16") ; get-config)> "-o")
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "42,6,42,60")
+           ; fatal-err(|"Output file name is not a legal Java name")
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,4,47,6")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,7,44,82")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,7,44,30") ; IsIncrementalCompilation)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,33,44,82")
+            ; not(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,37,44,81")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,38,44,48") ; file-exists)> $[[<s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "44,55,44,68") ; output-dirname>]/Main.java]) then
+           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "45,6,46,41")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "45,6,45,83")
+              ; log(|Info(), "No existing output files found; performing initial compilation"))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "46,6,46,41")
+           ; rules ( IsIncrementalCompilation :-
+                       _ )
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "48,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "48,4,52,6")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "48,7,48,30") ; IsIncrementalCompilation then
+           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "49,6,51,6")
+           ; olevel2(
+               s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "50,8,50,95")
+               ; fatal-err-msg(|"Inlining not supported with incremental compilation: use -O 1 or lower")
+             )
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,4,58,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,4,55,6")
+       ; if s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,7,53,53")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,7,53,23")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,8,53,17") ; get-config)> "-o")
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,26,53,53")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "53,26,53,38") ; base-filename) => "main.java" then
+           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "54,6,54,132")
+           ; fatal-err(|"Output file name 'main' is not allowed as it causes problems on case-insensitive file systems; use 'Main' instead")
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,4,58,6")
+    ; if s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,7,56,74")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,7,56,30")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,8,56,17") ; get-config)> "--library")
+         ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,33,56,74")
+         ; not(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,37,56,73")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,37,56,53")
+                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,38,56,47") ; get-config)> "-p"
+                  + s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,57,56,73")
+                    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "56,58,56,67") ; get-config)> "-F")) then
+        s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "57,6,57,48")
+        ; fatal-err-msg(|"No package name specified")
+      end
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-parse-options", "29,2,58,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-parse-options", "29,2,58,6")
+      ; fail
+
+  strj-options =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-options", "60,2,158,28")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "61,4,158,28")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "61,4,61,15") ; input-option
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "63,4,158,28")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "63,4,63,16") ; output-option
+             <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "65,4,158,28")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "65,4,69,4")
+                   ; ArgOption(
+                       s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "66,6,66,20")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "66,6,66,13") ; "--main"
+                          + s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "66,17,66,20") ; "-m")
+                     , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "67,6,67,34")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "67,6,67,29")
+                          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "67,7,67,16") ; set-config)> ( "-m"
+                                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "67,26,67,27") ; id>
+                                                                                                                                        ))
+                       ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "67,32,67,34")
+                       ; !()
+                     , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "68,6,68,67")
+                       ; !"--main f | -m f    Main strategy to compile (default: main)"
+                     )
+                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "71,4,158,28")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "71,4,75,4")
+                         ; Option(
+                             s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "72,6,72,25")
+                             ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "72,6,72,14") ; "--clean"
+                                + s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "72,18,72,25") ; "-clean")
+                           , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "73,6,73,35")
+                             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "73,7,73,16") ; set-config)> ( "--clean"
+                                                                                                                                           , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "73,32,73,33") ; id>
+                                                                                                                                           )
+                           , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "74,6,74,81")
+                             ; !"--clean            Remove all existing Java files in the output directory"
+                           )
+                         <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "77,4,158,28")
+                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "77,4,77,22") ; s2j-general-options
+                               <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "79,5,158,28")
+                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "79,5,79,30")
+                                     ; ArgOption(
+                                         s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "79,15,79,18") ; fail
+                                       , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "79,21,79,24") ; fail
+                                       , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "79,27,79,29")
+                                         ; !""
+                                       )
+                                     <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "80,5,158,28")
+                                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "80,5,80,46")
+                                           ; ArgOption(
+                                               s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "80,15,80,18") ; fail
+                                             , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "80,21,80,24") ; fail
+                                             , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "80,27,80,45")
+                                               ; !"Library options:"
+                                             )
+                                           <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "81,5,158,28")
+                                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "81,5,81,30")
+                                                 ; ArgOption(
+                                                     s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "81,15,81,18") ; fail
+                                                   , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "81,21,81,24") ; fail
+                                                   , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "81,27,81,29")
+                                                     ; !""
+                                                   )
+                                                 <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "83,4,158,28")
+                                                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "83,4,83,22") ; s2j-library-options
+                                                       <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "85,5,158,28")
+                                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "85,5,85,30")
+                                                             ; ArgOption(
+                                                                 s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "85,15,85,18") ; fail
+                                                               , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "85,21,85,24") ; fail
+                                                               , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "85,27,85,29")
+                                                                 ; !""
+                                                               )
+                                                             <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "86,5,158,28")
+                                                                ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "86,5,86,69")
+                                                                   ; ArgOption(
+                                                                       s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "86,15,86,18") ; fail
+                                                                     , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "86,21,86,24") ; fail
+                                                                     , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "86,27,86,68")
+                                                                       ; !"Configuration of the Stratego compiler:"
+                                                                     )
+                                                                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "87,5,158,28")
+                                                                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "87,5,87,30")
+                                                                         ; ArgOption(
+                                                                             s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "87,15,87,18") ; fail
+                                                                           , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "87,21,87,24") ; fail
+                                                                           , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "87,27,87,29")
+                                                                             ; !""
+                                                                           )
+                                                                         <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "89,4,158,28")
+                                                                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "89,4,92,4")
+                                                                               ; Option(
+                                                                                   s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "89,11,89,17") ; "--ast"
+                                                                                 , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "90,6,90,41")
+                                                                                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "90,6,90,36")
+                                                                                      ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "90,12,90,35")
+                                                                                              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "90,13,90,22") ; set-config)> ("--ast", ())))
+                                                                                   ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "90,39,90,41")
+                                                                                   ; !()
+                                                                                 , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "91,6,91,73")
+                                                                                   ; !"--ast              Produce abstract syntax tree of packed program"
+                                                                                 )
+                                                                               <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "94,4,158,28")
+                                                                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "94,4,97,4")
+                                                                                     ; Option(
+                                                                                         s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "94,11,94,14") ; "-F"
+                                                                                       , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "95,6,95,38")
+                                                                                         ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "95,6,95,33")
+                                                                                            ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "95,12,95,32")
+                                                                                                    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "95,13,95,22") ; set-config)> ("-F", ())))
+                                                                                         ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "95,36,95,38")
+                                                                                         ; !()
+                                                                                       , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "96,6,96,55")
+                                                                                         ; !"-F                 Produce core after front-end"
+                                                                                       )
+                                                                                     <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "99,4,158,28")
+                                                                                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "99,4,101,61")
+                                                                                           ; Option(
+                                                                                               s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "99,11,99,24") ; "--prefer-str"
+                                                                                             , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "100,4,100,48")
+                                                                                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "100,4,100,43")
+                                                                                                  ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "100,10,100,42")
+                                                                                                          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "100,11,100,20") ; set-config)> ("--prefer-str", "")))
+                                                                                               ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "100,46,100,48")
+                                                                                               ; !()
+                                                                                             , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "101,4,101,60")
+                                                                                               ; !"--prefer-str       Prefer .str files over .rtree files"
+                                                                                             )
+                                                                                           <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,4,158,28")
+                                                                                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,4,104,57")
+                                                                                                 ; ArgOption(
+                                                                                                     s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,14,103,31") ; "--default-syntax"
+                                                                                                   , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,34,103,78")
+                                                                                                     ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,40,103,77")
+                                                                                                             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,41,103,50") ; set-config)> ( "--default-syntax"
+                                                                                                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "103,74,103,75") ; id>
+                                                                                                                                                                                                                              ))
+                                                                                                   , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "104,1,104,56")
+                                                                                                     ; !"--default-syntax syn        use syntax syn as default"
+                                                                                                   )
+                                                                                                 <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "106,4,158,28")
+                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "106,4,108,63")
+                                                                                                       ; ArgOption(
+                                                                                                           s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "106,14,106,26") ; "--cache-dir"
+                                                                                                         , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,4,107,86")
+                                                                                                           ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,10,107,85")
+                                                                                                                   ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,11,107,20") ; set-config)> ( "--cache-dir"
+                                                                                                                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,40,107,83")
+                                                                                                                                                                                                                                       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,46,107,82")
+                                                                                                                                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,46,107,73")
+                                                                                                                                                                                                                                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,46,107,56") ; file-exists)
+                                                                                                                                                                                                                                                  ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,59,107,73")
+                                                                                                                                                                                                                                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,59,107,66") ; filemode)
+                                                                                                                                                                                                                                                  ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,69,107,73")
+                                                                                                                                                                                                                                                  ; isdir
+                                                                                                                                                                                                                                                  <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "107,78,107,82") ; mkdir))>
+                                                                                                                                                                                                                                    ))
+                                                                                                         , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "108,4,108,62")
+                                                                                                           ; !"--cache-dir <dir>  Maintain a compilation cache in <dir>"
+                                                                                                         )
+                                                                                                       <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "110,4,158,28")
+                                                                                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "110,4,112,84")
+                                                                                                             ; Option(
+                                                                                                                 s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "110,11,110,20") ; "--fusion"
+                                                                                                               , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "111,4,111,45")
+                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "111,4,111,40")
+                                                                                                                    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "111,10,111,39")
+                                                                                                                            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "111,11,111,23") ; toggle-config)> ("--fusion", ())))
+                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "111,43,111,45")
+                                                                                                                 ; !()
+                                                                                                               , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "112,4,112,82")
+                                                                                                                 ; !"--fusion           Toggle specialize applications of innermost (default: on)"
+                                                                                                               )
+                                                                                                             <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "114,4,158,28")
+                                                                                                                ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "114,4,116,64")
+                                                                                                                   ; Option(
+                                                                                                                       s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "114,11,114,19") ; "--asfix"
+                                                                                                                     , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "115,4,115,41")
+                                                                                                                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "115,4,115,36")
+                                                                                                                          ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "115,10,115,35")
+                                                                                                                                  ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "115,11,115,20") ; set-config)> ("--asfix", ())))
+                                                                                                                       ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "115,39,115,41")
+                                                                                                                       ; !()
+                                                                                                                     , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "116,4,116,63")
+                                                                                                                       ; !"--asfix            Concrete syntax parts are not imploded"
+                                                                                                                     )
+                                                                                                                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "126,4,158,28")
+                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "126,4,130,4")
+                                                                                                                         ; Option(
+                                                                                                                             s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "126,11,126,20") ; "--Xecj33"
+                                                                                                                           , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "127,6,127,34")
+                                                                                                                             ; rules ( OldECJCompatibility :
+                                                                                                                                         _ )
+                                                                                                                           , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "128,6,129,27")
+                                                                                                                             ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "128,6,128,74")
+                                                                                                                                ; !"--Xecj33           Generate code compatible with ECJ 3.3 and lower")
+                                                                                                                             ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "129,6,129,27")
+                                                                                                                             ; if-java-platform(
+                                                                                                                                 s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "129,23,129,26") ; fail
+                                                                                                                               )
+                                                                                                                           )
+                                                                                                                         <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "132,4,158,28")
+                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "132,4,135,4")
+                                                                                                                               ; Option(
+                                                                                                                                   s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "132,11,132,14") ; "-c"
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "133,6,133,47")
+                                                                                                                                   ; warn-msg(|"Ignored unsupported option -c")
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "134,6,134,9") ; fail
+                                                                                                                                 )
+                                                                                                                               + s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "136,4,158,28")
+                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "136,4,142,4")
+                                                                                                                                    ; Option(
+                                                                                                                                        s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "137,6,137,22") ; "-Xsep-comp-tool"
+                                                                                                                                      , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "138,6,140,77")
+                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "138,6,138,39")
+                                                                                                                                           ; rules ( IsIncrementalCompilation :
+                                                                                                                                                       _ ))
+                                                                                                                                        ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "139,6,140,77")
+                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "139,6,139,35")
+                                                                                                                                           ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "139,7,139,16") ; set-config)> ("--library", ()))
+                                                                                                                                        ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "140,7,140,76")
+                                                                                                                                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "140,7,140,29") ; ManuallySetOptimization
+                                                                                                                                           <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "140,34,140,76")
+                                                                                                                                              ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "140,35,140,44") ; set-config)> ( "-O"
+                                                                                                                                                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "140,55,140,72") ; strc-set-opt-level> 1
+                                                                                                                                                                                                                                                               ))
+                                                                                                                                      , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "141,6,141,71")
+                                                                                                                                        ; !"--Xsep-comp-tool  Compile based on sep-comp-tool (experimental)"
+                                                                                                                                      )
+                                                                                                                                    <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "144,5,158,28")
+                                                                                                                                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "144,5,144,30")
+                                                                                                                                          ; ArgOption(
+                                                                                                                                              s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "144,15,144,18") ; fail
+                                                                                                                                            , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "144,21,144,24") ; fail
+                                                                                                                                            , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "144,27,144,29")
+                                                                                                                                              ; !""
+                                                                                                                                            )
+                                                                                                                                          <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "145,5,158,28")
+                                                                                                                                             ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "145,5,145,46")
+                                                                                                                                                ; ArgOption(
+                                                                                                                                                    s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "145,15,145,18") ; fail
+                                                                                                                                                  , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "145,21,145,24") ; fail
+                                                                                                                                                  , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "145,27,145,45")
+                                                                                                                                                    ; !"General options:"
+                                                                                                                                                  )
+                                                                                                                                                <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "146,5,158,28")
+                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "146,5,146,30")
+                                                                                                                                                      ; ArgOption(
+                                                                                                                                                          s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "146,15,146,18") ; fail
+                                                                                                                                                        , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "146,21,146,24") ; fail
+                                                                                                                                                        , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "146,27,146,29")
+                                                                                                                                                          ; !""
+                                                                                                                                                        )
+                                                                                                                                                      <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "148,4,158,28")
+                                                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "148,4,148,18") ; general-options
+                                                                                                                                                            <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "150,4,158,28")
+                                                                                                                                                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "150,4,152,35")
+                                                                                                                                                                  ; Option(
+                                                                                                                                                                      s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "150,11,150,25")
+                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "150,11,150,14") ; "-h"
+                                                                                                                                                                         + s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "150,18,150,25") ; "--help")
+                                                                                                                                                                    , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "151,4,151,41")
+                                                                                                                                                                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "151,4,151,36")
+                                                                                                                                                                         ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "151,10,151,35")
+                                                                                                                                                                                 ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "151,11,151,20") ; set-config)> ("--help", ())))
+                                                                                                                                                                      ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "151,39,151,41")
+                                                                                                                                                                      ; !()
+                                                                                                                                                                    , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "152,4,152,34")
+                                                                                                                                                                      ; !"-h | --help        Show help"
+                                                                                                                                                                    )
+                                                                                                                                                                  <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "154,4,158,28")
+                                                                                                                                                                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "154,4,156,51")
+                                                                                                                                                                        ; Option(
+                                                                                                                                                                            s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "154,11,154,28")
+                                                                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "154,11,154,14") ; "-v"
+                                                                                                                                                                               + s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "154,18,154,28") ; "--version")
+                                                                                                                                                                          , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "155,4,155,37")
+                                                                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "155,4,155,32")
+                                                                                                                                                                               ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "155,10,155,31")
+                                                                                                                                                                                       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "155,11,155,20") ; set-config)> ("-v", ())))
+                                                                                                                                                                            ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "155,35,155,37")
+                                                                                                                                                                            ; !()
+                                                                                                                                                                          , s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "156,4,156,50")
+                                                                                                                                                                            ; !"-v | --version     Display program's version"
+                                                                                                                                                                          )
+                                                                                                                                                                        <+ s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "158,4,158,28") ; stratego-warnings-options))))))))))))))))))))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-options", "60,2,158,28")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-options.str", "strj-options", "60,2,158,28")
+      ; fail

@@ -1,28 +1,74 @@
 module sdf/production/attributes
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
-
-  /**
-   * @type  List(Attribute) ->? _
-   */
   contains-bracket =
-    fetch(?bracket())
+    s-enter(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "contains-bracket", "7,2,8,20")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "8,4,8,20")
+    ; fetch(
+        s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "8,10,8,19")
+        ; ?bracket()
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "contains-bracket", "7,2,8,20")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "contains-bracket", "7,2,8,20")
+      ; fail
 
-  /**
-   * @type  List(Attribute) ->? _
-   */
   contains-reject =
-    fetch(?reject())
+    s-enter(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "contains-reject", "13,2,14,19")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "14,4,14,19")
+    ; fetch(
+        s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "14,10,14,18")
+        ; ?reject()
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "contains-reject", "13,2,14,19")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "contains-reject", "13,2,14,19")
+      ; fail
 
-  /**
-   * @type  List(Attribute) -> String
-   */
   get-cnstr-name =
-    fetch-elem(
-      ?term(appl(unquoted("cons"), [fun(quoted(<un-double-quote>))]))
-    + ?term(cons(<id>))
-    + ?default(term(cons(<id>)))
-    + ?cons(<id>)
-    )
+    s-enter(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "get-cnstr-name", "19,2,25,4")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "20,4,25,4")
+    ; fetch-elem(
+        s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "21,6,24,16")
+        ; (s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "21,6,21,68")
+           ; ?term(
+                appl(
+                  unquoted("cons")
+                , [ fun(
+                      quoted(
+                        <s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "21,48,21,62") ; un-double-quote>
+                      )
+                    )
+                  ]
+                )
+              )
+           + s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "22,6,24,16")
+             ; (s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "22,6,22,22")
+                ; ?term(
+                     cons(
+                       <s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "22,18,22,19") ; id>
+                     )
+                   )
+                + s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "23,6,24,16")
+                  ; (s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "23,6,23,31")
+                     ; ?default(
+                          term(
+                            cons(
+                              <s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "23,26,23,27") ; id>
+                            )
+                          )
+                        )
+                     + s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "24,6,24,16")
+                       ; ?cons(
+                            <s-step(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "24,13,24,14") ; id>
+                          ))))
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "get-cnstr-name", "19,2,25,4")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/production/attributes.str", "get-cnstr-name", "19,2,25,4")
+      ; fail
+
 
 signature
   constructors

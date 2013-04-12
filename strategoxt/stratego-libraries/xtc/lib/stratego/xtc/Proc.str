@@ -1,478 +1,638 @@
-/**
- * This module contains a strategies for workin on the XTC 
- * universe. This includes composing components, passing data
- * between components, and basic file handling.
- *
- * The XTC model is based around Unix pipes and ATerm stored
- * as (temporary) files on disk. Each XT component is a 
- * an executable program, which reads an ATerm as input
- * (either from stdin or from a file), processes it, and then
- * writes the result to another file (or stdout). 
- * 
- * The lowlevel details of creating temporary files, opening
- * pipes, and executing components have been hidden behind the
- * strategies found in this module. You will find many examples
- * of wrapper strategies, which perform bookkeeping of temporary
- * files, opened file descriptors, and similar, to ensure that
- * these are removed and freed upon program termination.
- *
- * @author Eelco Visser <visser@acm.org>
- * @author Karl Trygve Kalleberg <karltk@strategoxt.org>
- */
 module stratego/xtc/Proc
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/xtc/Register
 
+
 signature
   constructors
-    FILE : String -> File
-    DIR  : String -> File
-    TEMP : XtcKey
-
+    FILE      : String -> File
+    DIR       : String -> File
+    TEMP      : XtcKey
     TempFiles : Table
-    TempDirs : Table
+    TempDirs  : Table
+
 
 strategies
-
-  /**
-   * Reads a term from a stdin. The input on stdin is assumed to be
-   * an ATerm. It will be parsed, and returned as a term.
-   *
-   * @type stdin -> t
-   */
   read-from :
-    stdin() -> t
-    where <ReadFromFile> stdin() => t
+    stdin() -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "read-from", "43,2,45,36")> t
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "read-from", "43,2,45,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "read-from", "43,2,45,36")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "45,10,45,36")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "45,10,45,31")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "45,11,45,22") ; ReadFromFile)> stdin()) => t
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "read-from", "43,2,45,36")
+             ; fail
 
-  /**
-   * Write a term to a temporary file, in binary. The name of the file
-   * is generated automatically, the term is written to it in the
-   * binary ATerm format (BAF), and a handle is returned by this 
-   * strategy.
-   *
-   * @type t -> FILE(name)
-   */
   write-to :
-    t -> FILE(name)
-    where xtc-new-file => name
-        ; <WriteToBinaryFile> (name, t)
+    t -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to", "55,2,58,38")> FILE(name)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to", "55,2,58,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to", "55,2,58,38")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "57,10,58,38")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "57,10,57,29")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "57,10,57,21") ; xtc-new-file) => name)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "58,10,58,38")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "58,11,58,27") ; WriteToBinaryFile)> (name, t)
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to", "55,2,58,38")
+             ; fail
 
-  /**
-   * Write a term to a temporary file, as text. The name of the file
-   * is generated automatically, the term is written to it in the
-   * textual ATerm format (TAF), and a handle is returned by this 
-   * strategy.
-   *
-   * @type t -> FILE(name)
-   */
   write-to-text :
-    t -> FILE(name)
-    where xtc-new-file => name
-        ; <WriteToTextFile> (name, t)
+    t -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to-text", "68,2,71,36")> FILE(name)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to-text", "68,2,71,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to-text", "68,2,71,36")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "70,10,71,36")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "70,10,70,29")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "70,10,70,21") ; xtc-new-file) => name)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "71,10,71,36")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "71,11,71,25") ; WriteToTextFile)> (name, t)
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "write-to-text", "68,2,71,36")
+             ; fail
 
-  /**
-   * Writes a (list of) string(s) to a temporary file. A single
-   * string, or a list of strings is written to a text file. The
-   * file name is generated automatically, and returned by this
-   * strategy.
-   *
-   * @type  String or List(String) -> FILE
-   */
   print-to :
-    strings -> FILE(name)
-    where
-      xtc-new-file => name
-      ; <fopen> (name, "w") => stream
-      ; if <is-string> strings then
-          ![strings]
-        else
-          !strings
-        end
-      ; <fprint> (stream, <id>)
-      ; <fclose> stream
+    strings -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "print-to", "81,2,92,22")> FILE(name)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "print-to", "81,2,92,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "print-to", "81,2,92,22")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "84,6,92,22")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "84,6,84,25")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "84,6,84,17") ; xtc-new-file) => name)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "85,8,92,22")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "85,8,85,36")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "85,8,85,26")
+                ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "85,9,85,13") ; fopen)> (name, "w")) => stream)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "86,8,92,22")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "86,8,90,10")
+             ; if s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "86,11,86,29")
+                  ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "86,12,86,20") ; is-string)> strings then
+                 s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "87,10,87,19")
+                 ; ![strings]
+               else
+                 s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "89,10,89,17") ; !strings
+               end)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "91,8,92,22")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "91,8,91,30")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "91,9,91,14") ; fprint)> ( stream
+                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "91,27,91,28") ; id>
+                                                                                                                 ))
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "92,8,92,22")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "92,9,92,14") ; fclose)> stream
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "print-to", "81,2,92,22")
+             ; fail
 
-  /**
-   * Searches for an XT component, by name. The input to this
-   * strategy is the name of the component, as registered in
-   * the XTC registry. If found, a FILE representing its 
-   * location (path) is returned.
-   * 
-   * @type String -> FILE(String)
-   */
-  xtc-find-file = 
-    !FILE(<xtc-find>)
+  xtc-find-file =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-find-file", "102,2,103,20")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "103,4,103,20")
+    ; !FILE(
+         <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "103,11,103,18") ; xtc-find>
+       )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-find-file", "102,2,103,20")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-find-file", "102,2,103,20")
+      ; fail
 
-strategies
-
-  /**
-   * Renames one file to another, on disk. If the new name
-   * is identical to the old, no action is taken. The old
-   * file can also be 'renamed' to stdout, in which case
-   * the content of the old file is written to stdout
-   * before the file is removed.
-   *
-   * @param name _ -> newname
-   * @type FILE(oldname) -> FILE(newname) or stdout
-   */
-  rename-to(name) :
-    FILE(oldname) -> FILE(oldname)
-    where name => oldname
-
-  /**
-   * @inc rename-to
-   */
-  rename-to(name) :
-    FILE(oldname) -> FILE(newname)
-    where name => newname
-	; not(stdout() + ?oldname)
-        ; <rename-file> (oldname, newname)
-
-  /**
-   * @inc rename-to
-   */
-  rename-to(name) :
-    FILE(oldname) -> stdout()
-    where name => stdout()
-	; <copy-file> (oldname, stdout())
-	; <remove-file> oldname
 
 strategies
+  rename-to(name) :
+    FILE(oldname) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "117,2,119,24")> FILE(oldname)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "117,2,119,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "117,2,119,24")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "119,10,119,24")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "119,10,119,13") ; name) => oldname
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "117,2,119,24")
+             ; fail
 
-  /**
-   * Copies one file to another. If the new file has the same name
-   * as the old, no action is taken. In  addition to a real file,
-   * the new file can be stdout (or stderr). In this case, the contents
-   * of the old file will be written to stdout (or stderr) before the
-   * file is removed.
-   *
-   * @param name        _ -> b
-   * @type        FILE(a) -> FILE(b)
-   */
-  copy-to(name) :
-    FILE(oldname) -> FILE(oldname)
-    where name => oldname
+  rename-to(name) :
+    FILE(oldname) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "124,2,128,41")> FILE(newname)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "124,2,128,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "124,2,128,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "126,10,128,41")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "126,10,126,24")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "126,10,126,13") ; name) => newname)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "127,3,128,41")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "127,3,127,26")
+             ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "127,7,127,25")
+                   ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "127,7,127,14") ; stdout
+                      + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "127,18,127,25") ; ?oldname)))
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "128,10,128,41")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "128,11,128,21") ; rename-file)> (oldname, newname)
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "124,2,128,41")
+             ; fail
 
-  /**
-   * @inc copy-to
-   */
-  copy-to(name) :
-    FILE(oldname) -> FILE(oldname)
-    where name => newname
-	; not(stdout + stderr + ?oldname)
-        ; <copy-file>(oldname, newname)
+  rename-to(name) :
+    FILE(oldname) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "133,2,137,23")> stdout()
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "133,2,137,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "133,2,137,23")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "135,10,137,23")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "135,10,135,25")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "135,10,135,13") ; name) => stdout())
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "136,3,137,23")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "136,3,136,33")
+             ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "136,4,136,12") ; copy-file)> (oldname, stdout()))
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "137,3,137,23")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "137,4,137,14") ; remove-file)> oldname
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "rename-to", "133,2,137,23")
+             ; fail
 
-  /**
-   * @inc copy-to
-   */
-  copy-to(name) :
-    FILE(oldname) -> FILE(oldname)
-    where name => file
-        ; (stdout() + stderr())
-	; <copy-file> (oldname, file)
 
 strategies
+  copy-to(name) :
+    FILE(oldname) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "151,2,153,24")> FILE(oldname)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "151,2,153,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "151,2,153,24")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "153,10,153,24")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "153,10,153,13") ; name) => oldname
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "151,2,153,24")
+             ; fail
 
-  /**
-   * Succeeds if the input term is a FILE
-   *
-   * @type FILE -> FILE
-   */
+  copy-to(name) :
+    FILE(oldname) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "158,2,162,38")> FILE(oldname)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "158,2,162,38")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "158,2,162,38")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "160,10,162,38")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "160,10,160,24")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "160,10,160,13") ; name) => newname)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,3,162,38")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,3,161,33")
+             ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,7,161,32")
+                   ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,7,161,12") ; stdout
+                      + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,16,161,32")
+                        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,16,161,21") ; stderr
+                           + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "161,25,161,32") ; ?oldname))))
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "162,10,162,38")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "162,11,162,19") ; copy-file)> (oldname, newname)
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "158,2,162,38")
+             ; fail
+
+  copy-to(name) :
+    FILE(oldname) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "167,2,171,29")> FILE(oldname)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "167,2,171,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "167,2,171,29")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "169,10,171,29")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "169,10,169,21")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "169,10,169,13") ; name) => file)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "170,10,171,29")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "170,11,170,29")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "170,11,170,18") ; stdout
+                + s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "170,22,170,29") ; stderr))
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "171,3,171,29")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "171,4,171,12") ; copy-file)> (oldname, file)
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "copy-to", "167,2,171,29")
+             ; fail
+
+
+strategies
   xtc-ensure-file =
-    ?FILE(_)
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-ensure-file", "180,2,181,11")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "181,4,181,11")
+    ; ?FILE(_)
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-ensure-file", "180,2,181,11")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-ensure-file", "180,2,181,11")
+      ; fail
 
-  /**
-   * Succeeds if the input term is stdin, and it can be successfully
-   * copied to a FILE.
-   *
-   * @type stdin -> FILE
-   */
   xtc-ensure-file =
-      ?stdin()
-    ; where(<xtc-new-file> () => f)
-    ; <copy-file> (stdin(), f)
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-ensure-file", "189,2,193,13")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "190,6,193,13")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "190,6,190,13")
+       ; ?stdin())
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "191,6,193,13")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "191,6,191,34")
+       ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "191,12,191,33")
+               ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "191,12,191,28")
+                  ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "191,13,191,24") ; xtc-new-file)> ()) => f))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "192,6,193,13")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "192,6,192,29")
+       ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "192,7,192,15") ; copy-file)> (stdin(), f))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "193,6,193,13")
     ; !FILE(f)
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-ensure-file", "189,2,193,13")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-ensure-file", "189,2,193,13")
+      ; fail
+
 
 strategies
-
-  /**
-   * Writes a FILE to the output of this component. The output
-   * is file is retrieved from the -o option given to the
-   * program; if -o was not given, stdout is used.
-   *
-   * @type FILE -> FILE
-   */
   xtc-write-output =
-    ?FILE(_); copy-to(<get-config> "-o" <+ !stdout())
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-write-output", "204,2,205,52")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,4,205,52")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,4,205,11")
+       ; ?FILE(_))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,14,205,52")
+    ; copy-to(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,22,205,51")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,22,205,38")
+           ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,23,205,32") ; get-config)> "-o"
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "205,43,205,51")
+              ; !stdout())
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-write-output", "204,2,205,52")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-write-output", "204,2,205,52")
+      ; fail
 
-  /**
-   * @type stdin -> FILE
-   */
   xtc-write-output =
-    ?stdin(); <copy-file> (stdin(), <get-config <+ !stdout()> "-o")
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-write-output", "210,2,211,66")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,4,211,66")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,4,211,11")
+       ; ?stdin())
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,14,211,66")
+    ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,15,211,23") ; copy-file)> ( stdin()
+                                                                                                              , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,37,211,59")
+                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,37,211,46") ; get-config
+                                                                                                                    <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "211,51,211,59")
+                                                                                                                       ; !stdout())> "-o"
+                                                                                                              )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-write-output", "210,2,211,66")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-write-output", "210,2,211,66")
+      ; fail
 
 
-/**
- * XTC-TEMP-FILES : scoped temporary files
- */
 strategies
-
-  // xtc-new-file
-
-  /**
-   * Removes all temporary files created by this program. Each
-   * time the <tt>xtc-*</tt> strategies create a new temporary
-   * file, it will be tracked. Running this strategy will remove
-   * all files created so far.
-   *
-   * @type _ -> _
-   */
   xtc-remove-temporaries =
-    where(
-      <table-get>(XTC(), TEMP()) => fs
-      ; map(try(remove-file))
-    )
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-remove-temporaries", "229,2,233,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "230,4,233,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "231,6,232,28")
+            ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "231,6,231,37")
+               ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "231,6,231,31")
+                  ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "231,7,231,15") ; table-get)> (XTC(), TEMP())) => fs)
+            ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "232,8,232,28")
+            ; map(
+                s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "232,12,232,27")
+                ; try(
+                    s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "232,16,232,26") ; remove-file
+                  )
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-remove-temporaries", "229,2,233,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-remove-temporaries", "229,2,233,4")
+      ; fail
 
-  /**
-   * Wrapper strategy that automatically cleans all temporary files
-   * created by s. This strategy is used to wrap a strategy <tt>s</tt>,
-   * which can create one or multiple temporary files. All temporary
-   * files will be cleaned up automatically, and the result of
-   * <tt>s</tt> will be returned.
-   *
-   * @param s  t -> u
-   * @type     t -> u
-   */
-  xtc-temp-files(s) = 
-    begin-scope(!TempFiles())
-    ; restore-always(s,
-        where((<table-get>(TempFiles(), Scopes()) <+ ![[]]) => [scope | scopes]
-            ; <map(try(remove-file))> scope)
-        ; end-scope(!TempFiles())
+  xtc-temp-files(s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-temp-files", "245,2,251,6")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "246,4,251,6")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "246,4,246,28")
+       ; begin-scope(
+           s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "246,16,246,27")
+           ; !TempFiles()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "247,6,251,6")
+    ; restore-always(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "247,21,247,21") ; s
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,8,250,32")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,8,249,43")
+           ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,14,249,42")
+                   ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,14,248,78")
+                      ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,15,248,57")
+                         ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,15,248,48")
+                            ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,16,248,24") ; table-get)> (TempFiles(), Scopes())
+                            <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "248,53,248,57")
+                               ; ![[]])) => [scope|scopes])
+                   ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "249,14,249,42")
+                   ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "249,15,249,35")
+                       ; map(
+                           s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "249,19,249,34")
+                           ; try(
+                               s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "249,23,249,33") ; remove-file
+                             )
+                         ))> scope))
+        ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "250,10,250,32")
+        ; end-scope(
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "250,20,250,31")
+            ; !TempFiles()
+          )
       )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-temp-files", "245,2,251,6")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-temp-files", "245,2,251,6")
+      ; fail
 
-  /**
-   * Clean up temporary files and exit program. In normal operation,
-   * XT components create temporary files, which should be cleaned
-   * up on program exit. Calling this strategy instead of
-   * <tt>exit</tt> ensures that no files are left behind.
-   *
-   * @type Integer -> _
-   */
   xtc-exit =
-    ?status
-    ; repeat( 
-        where(<table-get>(TempFiles(), Scopes()) => [scope | scopes]
-            ; <map(try(remove-file))> scope)
-        ; end-scope(!TempFiles())
-      )
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-exit", "261,2,268,9")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "262,4,268,9")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "262,4,262,10") ; ?status)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "263,6,268,9")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "263,6,267,6")
+       ; repeat(
+           s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "264,8,266,32")
+           ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "264,8,265,43")
+              ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "264,14,265,42")
+                      ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "264,14,264,67")
+                         ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "264,14,264,47")
+                            ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "264,15,264,23") ; table-get)> (TempFiles(), Scopes())) => [scope|scopes])
+                      ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "265,14,265,42")
+                      ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "265,15,265,35")
+                          ; map(
+                              s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "265,19,265,34")
+                              ; try(
+                                  s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "265,23,265,33") ; remove-file
+                                )
+                            ))> scope))
+           ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "266,10,266,32")
+           ; end-scope(
+               s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "266,20,266,31")
+               ; !TempFiles()
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "268,6,268,9")
     ; exit
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-exit", "261,2,268,9")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-exit", "261,2,268,9")
+      ; fail
 
-
-  // XTC-IO : 'read' input file, transform, and 'write' to output file
-
-  /**
-   * High-level wrapper that reads a term from a file, transforms it
-   * using s, then writes the output back to a file. The input file
-   * is taken from the command line options given to the program
-   * (the -i option), and the output is taken from the -o option.
-   * If -i is not given, stdin is used. If -o is not given, stdout
-   * is used
-   *
-   * @param s       u -> v
-   * @type    FILE(a) -> FILE(a)
-   */
   xtc-io(s) =
-    xtc-temp-files( 
-        (!FILE(<get-config> "-i") <+ !stdin())
-      ; s
-      ; xtc-write-output
-      <+ prim("SSL_stacktrace_get_all_frame_names")
-         ; report-failure(xtc-exit)
-    )
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io", "284,2,291,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "285,4,291,4")
+    ; xtc-temp-files(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "286,8,290,34")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "286,8,288,23")
+           ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "286,9,286,44")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "286,9,286,32")
+                 ; !FILE(
+                      <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "286,16,286,25") ; get-config> "-i"
+                    )
+                 <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "286,37,286,44")
+                    ; !stdin()))
+           ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "287,8,288,23")
+           ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "287,8,287,8") ; s)
+           ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "288,8,288,23")
+           ; xtc-write-output
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "289,9,290,34")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "289,9,289,50") ; prim("SSL_stacktrace_get_all_frame_names"))
+              ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "290,11,290,34")
+              ; report-failure(
+                  s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "290,26,290,33") ; xtc-exit
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io", "284,2,291,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io", "284,2,291,4")
+      ; fail
 
-  // stop in the middle of a transformation pipeline, copying the
-  // current file to the output file.
-
-  /**
-   * Terminate the running program safely by flushing the current
-   * working file to output. The output file is determined from the
-   * -o option on the command line; if not given, stdout will be
-   * used. All temporary files will also be removed.
-   *
-   * @type t -> _
-   */
   xtc-io-exit =
-    xtc-write-output
-    ; <xtc-exit> 0
-
-  // XTC-INPUT : 'read' input file, transform
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-exit", "304,2,306,17")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "305,4,306,17")
+    ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "305,4,305,19") ; xtc-write-output)
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "306,6,306,17")
+    ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "306,7,306,14") ; xtc-exit)> 0
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-exit", "304,2,306,17")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-exit", "304,2,306,17")
+      ; fail
 
   xtc-input(s) =
-    xtc-temp-files(
-        (!FILE(<get-config> "-i") <+ !stdin())
-      ; s
-    )
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input", "310,2,314,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "311,4,314,4")
+    ; xtc-temp-files(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "312,8,313,8")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "312,9,312,44")
+           ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "312,9,312,32")
+              ; !FILE(
+                   <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "312,16,312,25") ; get-config> "-i"
+                 )
+              <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "312,37,312,44")
+                 ; !stdin()))
+        ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "313,8,313,8")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input", "310,2,314,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input", "310,2,314,4")
+      ; fail
 
-  /**
-   * Applies the strategy s to the current term, then writes the result
-   * to output. The output file is taken from the -o option on the command
-   * line, if given, or defaults to stdout, if not.
-   *
-   * @param s    a -> FILE(c)
-   */
   xtc-output(s) =
-    xtc-temp-files(
-        s
-      ; copy-to(<get-config> "-o" <+ !stdout() )
-    )
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output", "323,2,327,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "324,4,327,4")
+    ; xtc-temp-files(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "325,8,326,47")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "325,8,325,8") ; s)
+        ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "326,8,326,47")
+        ; copy-to(
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "326,16,326,45")
+            ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "326,16,326,32")
+               ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "326,17,326,26") ; get-config)> "-o"
+               <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "326,37,326,45")
+                  ; !stdout())
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output", "323,2,327,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output", "323,2,327,4")
+      ; fail
 
-  // io-wrap for xtc tools: 'read' -i option, transform, and 'write' to -o option
+  xtc-io-wrap(s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "331,2,332,23")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "332,4,332,23")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "332,16,332,19") ; fail
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "332,22,332,22") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "331,2,332,23")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "331,2,332,23")
+      ; fail
 
-  xtc-io-wrap(s) = 
-    xtc-io-wrap(fail, s)
+  xtc-io-wrap(extra-opts, s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "334,2,335,51")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "335,4,335,51")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "335,16,335,39")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "335,16,335,25") ; extra-opts
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "335,30,335,39") ; io-options)
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "335,42,335,50")
+        ; xtc-io(
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "335,49,335,49") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "334,2,335,51")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "334,2,335,51")
+      ; fail
 
-  xtc-io-wrap(extra-opts, s) = 
-    option-wrap(extra-opts <+ io-options, xtc-io(s))
+  xtc-io-wrap(extra-opts, deps, s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "337,2,338,63")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "338,4,338,63")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "338,16,338,25") ; extra-opts
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "338,28,338,39") ; system-usage
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "338,42,338,53") ; system-about
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "338,56,338,59") ; deps
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "338,62,338,62") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "337,2,338,63")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "337,2,338,63")
+      ; fail
 
-  xtc-io-wrap(extra-opts, deps, s) = 
-    xtc-io-wrap(extra-opts, system-usage, system-about, deps, s)
+  xtc-io-wrap(extra-opts, usage, about, deps, s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "340,2,344,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,4,344,4")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,16,341,62")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,16,341,25") ; extra-opts
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,30,341,62")
+              ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,30,341,39") ; io-options
+                 <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,44,341,62")
+                    ; check-options(
+                        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,58,341,61") ; deps
+                      )))
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,65,341,69") ; usage
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,72,341,76") ; about
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "341,79,341,80") ; id
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "342,6,343,16")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "342,6,342,27") ; xtc-check-dependencies)
+        ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "343,8,343,16")
+        ; xtc-io(
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "343,15,343,15") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "340,2,344,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-io-wrap", "340,2,344,4")
+      ; fail
 
-  xtc-io-wrap(extra-opts, usage, about, deps, s) = 
-    option-wrap(extra-opts <+ io-options <+ check-options(deps), usage, about, id,
-      xtc-check-dependencies
-      ; xtc-io(s)
-    )
+  xtc-iowrap(s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-iowrap", "346,2,347,17")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "347,4,347,17")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "347,16,347,16") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-iowrap", "346,2,347,17")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-iowrap", "346,2,347,17")
+      ; fail
 
-  xtc-iowrap(s) = 
-    xtc-io-wrap(s)
+  xtc-iowrap(extra-opts, s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-iowrap", "349,2,350,29")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "350,4,350,29")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "350,16,350,25") ; extra-opts
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "350,28,350,28") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-iowrap", "349,2,350,29")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-iowrap", "349,2,350,29")
+      ; fail
 
-  xtc-iowrap(extra-opts, s) = 
-    xtc-io-wrap(extra-opts, s)
-
-  /**
-   * Option parsing wrapper for XTC programs that only read data. This
-   * strategy functions like xtc-io-wrap, except that it only exposes
-   * the -i option, and will not write any output to pipe (or file).
-   *
-   * Typically, s will start with a call to read-from.
-   *
-   * Example: xtc-input-wrap(read-from ; id) 
-   *
-   * @param s      FILE(a) -> b
-   * @type    List(option) -> _
-   */
   xtc-input-wrap(s) =
-    xtc-input-wrap(fail,s)
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input-wrap", "364,2,365,25")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "365,4,365,25")
+    ; xtc-input-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "365,19,365,22") ; fail
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "365,24,365,24") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input-wrap", "364,2,365,25")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input-wrap", "364,2,365,25")
+      ; fail
 
-  /**
-   * Option parsing wrapper for XTC programs that only read data. This
-   * strategy functions like xtc-io-wrap, except that it only exposes
-   * the -i option, and will not write any output to pipe (or file).
-   *
-   * Typically, s will start with a call to read-from.
-   *
-   * Example: xtc-input-wrap(ArgOption(....), read-from ; id)
-   *
-   * @param extra-options _ -> Option or ArgOption
-   * @param s       FILE(a) -> b
-   * @type     List(option) -> _
-   */
-  xtc-input-wrap(extra-options, s) = 
-    option-wrap(extra-options <+ input-options, xtc-input(s))
+  xtc-input-wrap(extra-options, s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input-wrap", "380,2,381,60")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "381,4,381,60")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "381,16,381,45")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "381,16,381,28") ; extra-options
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "381,33,381,45") ; input-options)
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "381,48,381,59")
+        ; xtc-input(
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "381,58,381,58") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input-wrap", "380,2,381,60")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-input-wrap", "380,2,381,60")
+      ; fail
 
-  /**
-   * Option parsing wrapper for XTC programs that only generate data. 
-   * This strategy functions like xtc-io-wrap, except that it only
-   * exposes the -o option, and will read any output from stdin
-   * (or file).
-   *
-   * Typically, s will will end with a call to write-to.
-   *
-   * Example: xtc-output-wrap(!"foo" ; write-to)
-   *
-   * @param s             a -> FILE(b)
-   * @type     List(option) -> _
-   */
   xtc-output-wrap(s) =
-    xtc-output-wrap(fail,s)
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output-wrap", "396,2,397,26")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "397,4,397,26")
+    ; xtc-output-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "397,20,397,23") ; fail
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "397,25,397,25") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output-wrap", "396,2,397,26")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output-wrap", "396,2,397,26")
+      ; fail
 
-  /**
-   * Option parsing wrapper for XTC programs that only generate data. 
-   * This strategy functions like xtc-io-wrap, except that it only
-   * exposes the -o option, and will read any output from stdin
-   * (or file).
-   *
-   * Typically, s will end with a call to write-to.
-   *
-   * Example: xtc-output-wrap(!"foo" ; write-to)
-   *
-   * @param extra-options _ -> Option or ArgOption
-   * @param s             a -> FILE(b)
-   * @type     List(option) -> _
-   */
-  xtc-output-wrap(extra-options, s) = 
-    option-wrap(extra-options <+ output-options, xtc-output(s))
+  xtc-output-wrap(extra-options, s) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output-wrap", "413,2,414,62")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "414,4,414,62")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "414,16,414,46")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "414,16,414,28") ; extra-options
+           <+ s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "414,33,414,46") ; output-options)
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "414,49,414,61")
+        ; xtc-output(
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "414,60,414,60") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output-wrap", "413,2,414,62")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-output-wrap", "413,2,414,62")
+      ; fail
 
+  check-options(deps) =
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "check-options", "433,2,437,4")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "434,4,437,4")
+    ; Option(
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "434,11,434,19") ; "--check"
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "435,6,435,43")
+        ; where(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "435,12,435,42")
+                ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "435,13,435,22") ; set-config)> ( "--check"
+                                                                                                                           , <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "435,37,435,40") ; deps>
+                                                                                                                           ))
+      , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "436,6,436,46")
+        ; !"--check        check tool dependencies"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "check-options", "433,2,437,4")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "check-options", "433,2,437,4")
+      ; fail
 
-  // check tools upon which this tool depends 
-
-  /**
-   * Used to add the --check option to your XT component. This
-   * strategy should be composed with the other command line 
-   * options of your program, as given to io-wrap, xtc-io-wrap
-   * or option-wrap. It will add a --check option to the command
-   * line. It is intended to be used with xtc-check-dependencies.
-   *
-   * The deps parameter should be a list of components (names) 
-   * required by your program. This will be used by 
-   * xtc-check-dependencies.
-   *
-   * @param deps _ -> List(String)
-   * @type _ -> Option
-   */
-  check-options(deps) = 
-    Option("--check"
-    , where(<set-config>("--check", <deps>))
-    , !"--check        check tool dependencies"
-    )
-
-  /**
-   * Succeeds if all necessary components for the running program
-   * are available, and the user has specified --check. The 
-   * check-options strategy must have been added to the command line
-   * options of the running program, see check-options for details. 
-   * Additionally, xtc-check-dependencies will only run if the user
-   * specified --check on the command line when invoking the program.
-   *
-   * @type _ -> _
-   */
   xtc-check-dependencies =
-    if check := <get-config> "--check" then
-      <filter(not(xtc-find-silent))> check
-      ; if not(?[]) then
-          debug(!"No XTC registration found for: ")
-          ; <exit> 1
-        else
-          <echo> "All tools available"
-          ; <exit> 0
-        end
-    end
+    s-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-check-dependencies", "449,2,459,6")
+    ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "450,4,459,6")
+    ; if s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "450,7,450,37")
+         ; check := <s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "450,17,450,26") ; get-config> "--check" then
+        s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "451,6,458,10")
+        ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "451,6,451,41")
+           ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "451,7,451,34")
+               ; filter(
+                   s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "451,14,451,33")
+                   ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "451,18,451,32") ; xtc-find-silent)
+                 ))> check)
+        ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "452,8,458,10")
+        ; if s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "452,11,452,18")
+             ; not(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "452,15,452,17")
+                   ; ?[]) then
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "453,10,454,19")
+            ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "453,10,453,50")
+               ; debug(
+                   s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "453,16,453,49")
+                   ; !"No XTC registration found for: "
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "454,12,454,19")
+            ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "454,13,454,16") ; exit)> 1
+          else
+            s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "456,10,457,19")
+            ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "456,10,456,37")
+               ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "456,11,456,14") ; echo)> "All tools available")
+            ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "457,12,457,19")
+            ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "457,13,457,16") ; exit)> 0
+          end
+      end
+    < s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-check-dependencies", "449,2,459,6")
+    + s-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-check-dependencies", "449,2,459,6")
+      ; fail
+
 
 strategies
-
-  /**
-   * Transform character chunks in text file. This strategy
-   * inherits the semantics of char-io/filter-text-file,
-   * where more is applied to each line (and must always
-   * suceed), while done must fail when the processing
-   * should stop.
-   *
-   * @param 
-   * @type   FILE(a) -> FILE(b)
-   *
-   * seealso char-io/filter-text-file
-   */
   xtc-filter-text-file(more, done) :
-    FILE(f) -> FILE(g)
-    where <xtc-new-file> f => g
-	; <filter-text-file(more, done)> (f, g)
+    FILE(f) -> <r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-filter-text-file", "475,2,478,39")> FILE(g)
+    where r-enter(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-filter-text-file", "475,2,478,39")
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-filter-text-file", "475,2,478,39")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "477,10,478,39")
+          ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "477,10,477,30")
+             ; (s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "477,10,477,25")
+                ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "477,11,477,22") ; xtc-new-file)> f) => g)
+          ; s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "478,3,478,39")
+          ; <(s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "478,4,478,31")
+              ; filter-text-file(
+                  s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "478,21,478,24") ; more
+                , s-step(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "478,27,478,30") ; done
+                ))> (f, g)
+          <+ r-exit(|"strategoxt/stratego-libraries/xtc/lib/stratego/xtc/Proc.str", "xtc-filter-text-file", "475,2,478,39")
+             ; fail

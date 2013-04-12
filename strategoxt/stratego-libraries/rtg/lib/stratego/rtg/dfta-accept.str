@@ -1,130 +1,318 @@
-/**
- * Implementation of accept for Deterministic Finite Tree Automaton (DFTA).
- *
- * @author Martin Bravenboer
- */
 module stratego/rtg/dfta-accept
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/rtg/signature
   libstratego-lib
 
+
 signature
   constructors
-    DFTA : List(State) * Hashtable -> DFTA
+    DFTA    : List(State) * Hashtable -> DFTA
     Failure : Failure
 
-/**
- * Open an DFTA to a simple representation of a tree automaton.
- */
-strategies
 
-  /**
-   * @todo We really need garbage collection for hashtables to avoid the destroy.
-   */
+strategies
   open-dfta =
-    ?RTG(Start(start-states), ProdRules(<id>))
-    ; where(tbl := <new-hashtable>)
-    ; map({a, q:
-        ?ProdRule(q, [a@Appl(_, _)])
-        ; <hashtable-put(|a, q)> tbl
-        <+ debug(!"internal error: cannot create type rule for ")
-           ; fail
-      })
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "open-dfta", "24,2,33,29")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "25,4,33,29")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "25,4,25,45")
+       ; ?RTG(
+            Start(start-states)
+          , ProdRules(
+              <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "25,41,25,42") ; id>
+            )
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "26,6,33,29")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "26,6,26,34")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "26,12,26,33")
+               ; tbl := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "26,20,26,32") ; new-hashtable>))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "27,6,33,29")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "27,6,32,7")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "27,10,32,6")
+           ; {a, q:
+               s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "28,8,31,16")
+               ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "28,8,29,35")
+                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "28,8,28,35")
+                     ; ?ProdRule(
+                          q
+                        , [a@Appl(_, _)]
+                        ))
+                  ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "29,10,29,35")
+                  ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "29,11,29,30")
+                      ; hashtable-put(|a, q))> tbl
+                  <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "30,11,31,16")
+                     ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "30,11,30,64")
+                        ; debug(
+                            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "30,17,30,63")
+                            ; !"internal error: cannot create type rule for "
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "31,13,31,16")
+                     ; fail)
+             }
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "33,6,33,29")
     ; !DFTA(start-states, tbl)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "open-dfta", "24,2,33,29")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "open-dfta", "24,2,33,29")
+      ; fail
 
   dfta-destroy =
-    DFTA(id, hashtable-destroy)
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-destroy", "35,2,36,30")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "36,4,36,30")
+    ; DFTA(
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "36,9,36,10") ; id
+      , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "36,13,36,29") ; hashtable-destroy
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-destroy", "35,2,36,30")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-destroy", "35,2,36,30")
+      ; fail
 
   is-dfta =
-    ?DFTA(_, _)
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "is-dfta", "38,2,39,14")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "39,4,39,14")
+    ; ?DFTA(_, _)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "is-dfta", "38,2,39,14")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "is-dfta", "38,2,39,14")
+      ; fail
+
 
 strategies
-
-  /**
-   * The result of dtfa-accept is a state. The strategy does not check
-   * if this state is one of the start states of the DFTA.
-   */
-  dfta-accept(fail-hook : t * Appl -> a | dfta) =
-    where(!dfta => DFTA(set, tbl))
-    ; let transition(|t) = dfta-accept-transition(fail-hook | tbl, t)
-       in bottomup-reconstruct(transition, dfta-accept-reconstruct)
+  dfta-accept(fail-hook : t * Appl -> a|dfta) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept", "47,2,51,8")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "48,4,51,8")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "48,4,48,33")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "48,10,48,32")
+               ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "48,10,48,14") ; !dfta) => DFTA(set, tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "49,6,51,8")
+    ; let transition(|t) =
+            s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "transition", "49,10,49,68")
+            ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "49,27,49,68")
+            ; dfta-accept-transition(
+                s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "49,50,49,58") ; fail-hook
+              | tbl
+              , t
+              )
+            < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "transition", "49,10,49,68")
+            + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "transition", "49,10,49,68")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "50,10,50,66")
+        ; bottomup-reconstruct(
+            s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "50,31,50,40") ; transition
+          , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "50,43,50,65") ; dfta-accept-reconstruct
+          )
       end
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept", "47,2,51,8")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept", "47,2,51,8")
+      ; fail
 
-  dfta-accept-transition(fail-hook : t * Appl -> a | tbl, t) = id
-    ; ?a
-    ; <hashtable-get(|a)> tbl
-    <+ fail-hook(|t)
-       ; !Failure()
+  dfta-accept-transition(fail-hook : t * Appl -> a|tbl, t) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-transition", "53,2,57,18")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "53,63,57,18")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "53,63,55,28")
+       ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "53,63,53,64") ; id)
+       ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "54,6,55,28")
+       ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "54,6,54,7") ; ?a)
+       ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "55,6,55,28")
+       ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "55,7,55,23")
+           ; hashtable-get(|a))> tbl
+       <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "56,7,57,18")
+          ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "56,7,56,19")
+             ; fail-hook(|t))
+          ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "57,9,57,18")
+          ; !Failure())
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-transition", "53,2,57,18")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-transition", "53,2,57,18")
+      ; fail
 
-/**
- * Explode determines the next transition.
- */
+
 strategies
-
   dfta-accept-reconstruct(|args) =
-       dfta-accept-explode-int(|args)
-    <+ dfta-accept-explode-string(|args)
-    <+ dfta-accept-explode-nil(|args)
-    <+ dfta-accept-explode-cons(|args)
-    <+ dfta-accept-explode-conc(|args)
-    <+ dfta-accept-explode-some(|args)
-    <+ dfta-accept-explode-none(|args)
-    <+ dfta-accept-explode-appl(|args)
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-reconstruct", "64,2,72,37")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "65,7,72,37")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "65,7,65,36")
+       ; dfta-accept-explode-int(|args)
+       <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "66,7,72,37")
+          ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "66,7,66,39")
+             ; dfta-accept-explode-string(|args)
+             <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "67,7,72,37")
+                ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "67,7,67,36")
+                   ; dfta-accept-explode-nil(|args)
+                   <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "68,7,72,37")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "68,7,68,37")
+                         ; dfta-accept-explode-cons(|args)
+                         <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "69,7,72,37")
+                            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "69,7,69,37")
+                               ; dfta-accept-explode-conc(|args)
+                               <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "70,7,72,37")
+                                  ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "70,7,70,37")
+                                     ; dfta-accept-explode-some(|args)
+                                     <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "71,7,72,37")
+                                        ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "71,7,71,37")
+                                           ; dfta-accept-explode-none(|args)
+                                           <+ s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "72,7,72,37")
+                                              ; dfta-accept-explode-appl(|args))))))))
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-reconstruct", "64,2,72,37")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-reconstruct", "64,2,72,37")
+      ; fail
 
   dfta-accept-explode-nil(|args) =
-    ?[]
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-nil", "74,2,76,25")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "75,4,76,25")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "75,4,75,6")
+       ; ?[])
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "76,6,76,25")
     ; !Appl(NilTerm(), [])
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-nil", "74,2,76,25")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-nil", "74,2,76,25")
+      ; fail
 
   dfta-accept-explode-cons(|args) =
-    ?[_ | _]
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-cons", "78,2,80,28")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "79,4,80,28")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "79,4,79,11")
+       ; ?[_|_])
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "80,6,80,28")
     ; !Appl(ConsTerm(), args)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-cons", "78,2,80,28")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-cons", "78,2,80,28")
+      ; fail
 
   dfta-accept-explode-conc(|args) =
-    ?Conc(_, _)
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-conc", "82,2,84,28")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "83,4,84,28")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "83,4,83,14")
+       ; ?Conc(_, _))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "84,6,84,28")
     ; !Appl(ConcTerm(), args)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-conc", "82,2,84,28")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-conc", "82,2,84,28")
+      ; fail
 
   dfta-accept-explode-none(|args) =
-    ?None()
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-none", "86,2,88,26")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "87,4,88,26")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "87,4,87,10")
+       ; ?None())
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "88,6,88,26")
     ; !Appl(NoneTerm(), [])
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-none", "86,2,88,26")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-none", "86,2,88,26")
+      ; fail
 
   dfta-accept-explode-some(|args) =
-    ?Some(_)
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-some", "90,2,92,28")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "91,4,92,28")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "91,4,91,11")
+       ; ?Some(_))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "92,6,92,28")
     ; !Appl(SomeTerm(), args)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-some", "90,2,92,28")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-some", "90,2,92,28")
+      ; fail
 
-  dfta-accept-explode-appl(|args) = id
-    ; where(f := <get-constructor>)
-    ; if f := "" then
-        !Appl(TupleTerm(<length> args), args)
+  dfta-accept-explode-appl(|args) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-appl", "94,2,100,8")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "94,36,100,8")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "94,36,94,37") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "95,6,100,8")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "95,6,95,34")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "95,12,95,33")
+               ; f := <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "95,18,95,32") ; get-constructor>))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "96,6,100,8")
+    ; if s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "96,9,96,15")
+         ; f := "" then
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "97,8,97,44")
+        ; !Appl(
+             TupleTerm(
+               <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "97,25,97,30") ; length> args
+             )
+           , args
+           )
       else
-        !Appl(Term(f), args)
+        s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "99,8,99,27")
+        ; !Appl(Term(f), args)
       end
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-appl", "94,2,100,8")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-appl", "94,2,100,8")
+      ; fail
 
   dfta-accept-explode-int(|args) =
-    is-int
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-int", "102,2,104,25")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "103,4,104,25")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "103,4,103,9") ; is-int)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "104,6,104,25")
     ; !Appl(IntTerm(), [])
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-int", "102,2,104,25")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-int", "102,2,104,25")
+      ; fail
 
   dfta-accept-explode-string(|args) =
-    is-string
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-string", "106,2,108,28")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "107,4,108,28")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "107,4,107,12") ; is-string)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "108,6,108,28")
     ; !Appl(StringTerm(), [])
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-string", "106,2,108,28")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "dfta-accept-explode-string", "106,2,108,28")
+      ; fail
+
 
 strategies
-
-  /**
-   * Bottom traversal where the current term is reconstructed
-   * from the arguments using a custom strategy.
-   */
   bottomup-reconstruct(s, reconstruct : List(b) * a -> c) =
-    ?t
-    ; ( ?[x | xs]
-      < ![<bottomup-reconstruct(s, reconstruct)> x, <bottomup-reconstruct(s, reconstruct)> xs]
-      + ?[]
-      < ![]
-      + is-int
-      < ![]
-      + is-string
-      < ![]
-      + get-appl-arguments(bottomup-reconstruct(s, reconstruct))
-      )
-    ; ?args
-    ; <reconstruct(|args)> t
+    s-enter(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "bottomup-reconstruct", "116,2,130,10")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "117,4,130,10")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "117,4,117,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "118,6,130,10")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "118,8,126,63")
+       ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "118,8,118,16")
+          ; ?[x|xs]
+          < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,8,119,93")
+            ; ![ <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,11,119,46")
+                  ; bottomup-reconstruct(
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,32,119,32") ; s
+                    , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,35,119,45") ; reconstruct
+                    )> x
+               , <s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,53,119,88")
+                  ; bottomup-reconstruct(
+                      s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,74,119,74") ; s
+                    , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "119,77,119,87") ; reconstruct
+                    )> xs
+               ]
+          + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "120,8,126,63")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "120,8,120,10")
+               ; ?[]
+               < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "121,8,121,10")
+                 ; ![]
+               + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "122,8,126,63")
+                 ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "122,8,122,13") ; is-int
+                    < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "123,8,123,10")
+                      ; ![]
+                    + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "124,8,126,63")
+                      ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "124,8,124,16") ; is-string
+                         < s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "125,8,125,10")
+                           ; ![]
+                         + s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "126,8,126,63")
+                           ; get-appl-arguments(
+                               s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "126,27,126,62")
+                               ; bottomup-reconstruct(
+                                   s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "126,48,126,48") ; s
+                                 , s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "126,51,126,61") ; reconstruct
+                                 )
+                             ))))))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "128,6,130,10")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "128,6,128,10") ; ?args)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "129,6,130,10")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "129,6,129,27")
+       ; <(s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "129,7,129,24")
+           ; reconstruct(|args))> t)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "130,6,130,10")
     ; s(|t)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "bottomup-reconstruct", "116,2,130,10")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/lib/stratego/rtg/dfta-accept.str", "bottomup-reconstruct", "116,2,130,10")
+      ; fail

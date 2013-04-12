@@ -1,144 +1,767 @@
 module dfta-accept-tests
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libstratego-rtg
 
-strategies 
 
-  main-dfta-accept-tests = 
-    option-wrap(general-options,
-      test-suite(!"dfta-accept",
-        int-list-tests
-      ; expression-tests(simple-inj)
-      ; expression-tests(quoted-exp)
-      ; string-star-tests
-      ; string-plus-tests
-      ; string-even-tests
-      ; string-opt-tests
-      ; tuple-stuff-tests
-      ; non-deterministic-expression-tests
-      ; nested-tests
+strategies
+  main-dfta-accept-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "main-dfta-accept-tests", "8,2,22,4")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "9,4,22,4")
+    ; option-wrap(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "9,16,9,30") ; general-options
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "10,6,21,6")
+        ; test-suite(
+            s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "10,17,10,30")
+            ; !"dfta-accept"
+          , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "11,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "11,8,11,21") ; int-list-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "12,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "12,8,12,35")
+               ; expression-tests(
+                   s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "12,25,12,34") ; simple-inj
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "13,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "13,8,13,35")
+               ; expression-tests(
+                   s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "13,25,13,34") ; quoted-exp
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "14,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "14,8,14,24") ; string-star-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "15,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "15,8,15,24") ; string-plus-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "16,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "16,8,16,24") ; string-even-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "17,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "17,8,17,23") ; string-opt-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "18,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "18,8,18,24") ; tuple-stuff-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "19,8,20,19")
+            ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "19,8,19,41") ; non-deterministic-expression-tests)
+            ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "20,8,20,19")
+            ; nested-tests
+          )
       )
-    )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "main-dfta-accept-tests", "8,2,22,4")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "main-dfta-accept-tests", "8,2,22,4")
+      ; fail
 
-  int-list-tests = 
-      apply-test(!"test: Simple int list", fc-int-list, ![1, 2, 3])
-    ; apply-test(!"test: Empty list",      fc-int-list, ![])
-    ; apply-test(!"test: Conc list 1",       fc-int-list, !"Conc"#([[], []]))
-    ; apply-test(!"test: Conc list 2",       fc-int-list, !"Conc"#([[1], [2]]))
-    ; apply-and-fail(!"test: Not an int-list a", fc-int-list, !["foo"])
-    ; apply-and-fail(!"test: Not an int-list b", fc-int-list, ![1, 2, "foo"])
-    ; apply-and-fail(!"test: Not an int-list c", fc-int-list, !["foo", 3, 4])
-    ; apply-and-fail(!"test: Not an int-list d", fc-int-list, !1)
-    ; apply-and-fail(!"test: Not an int-list e", fc-int-list, !"foo")
-    ; apply-and-fail(!"test: Not an int-list f", fc-int-list, !"Conc"#(["foo", []]))
-    ; apply-and-fail(!"test: Not an int-list g", fc-int-list, !"Conc"#([[], "foo"]))
+  int-list-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "int-list-tests", "24,2,35,83")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "25,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "25,6,25,66")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "25,17,25,40")
+           ; !"test: Simple int list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "25,43,25,53") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "25,56,25,65")
+           ; ![1, 2, 3]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "26,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "26,6,26,59")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "26,17,26,35")
+           ; !"test: Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "26,43,26,53") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "26,56,26,58")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "27,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "27,6,27,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "27,17,27,36")
+           ; !"test: Conc list 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "27,45,27,55") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "27,58,27,75")
+           ; !"Conc"#([[], []])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "28,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "28,6,28,78")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "28,17,28,36")
+           ; !"test: Conc list 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "28,45,28,55") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "28,58,28,77")
+           ; !"Conc"#([[1], [2]])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "29,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "29,6,29,70")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "29,21,29,46")
+           ; !"test: Not an int-list a"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "29,49,29,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "29,62,29,69")
+           ; !["foo"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "30,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "30,6,30,76")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "30,21,30,46")
+           ; !"test: Not an int-list b"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "30,49,30,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "30,62,30,75")
+           ; ![1, 2, "foo"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "31,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "31,6,31,76")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "31,21,31,46")
+           ; !"test: Not an int-list c"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "31,49,31,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "31,62,31,75")
+           ; !["foo", 3, 4]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "32,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "32,6,32,64")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "32,21,32,46")
+           ; !"test: Not an int-list d"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "32,49,32,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "32,62,32,63")
+           ; !1
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "33,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "33,6,33,68")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "33,21,33,46")
+           ; !"test: Not an int-list e"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "33,49,33,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "33,62,33,67")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "34,6,35,83")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "34,6,34,83")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "34,21,34,46")
+           ; !"test: Not an int-list f"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "34,49,34,59") ; fc-int-list
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "34,62,34,82")
+           ; !"Conc"#(["foo", []])
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "35,6,35,83")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "35,21,35,46")
+        ; !"test: Not an int-list g"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "35,49,35,59") ; fc-int-list
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "35,62,35,82")
+        ; !"Conc"#([[], "foo"])
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "int-list-tests", "24,2,35,83")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "int-list-tests", "24,2,35,83")
+      ; fail
 
-  expression-tests(s) = 
-      apply-test(!"test: Simple injection 1", s, !"Bla")
-    ; apply-test(!"test: Simple injection 2", s, !3)
-    ; apply-test(!"test: Simple production ", s, !IntConst(3))
-    ; apply-test(!"test: Simple plus expression 1", s, !Plus(IntConst(2), IntConst(4)))
-    ; apply-test(!"test: Simple plus expression 2", s, !Plus(IntConst(2), Var("a")))
-
-    ; apply-and-fail(!"test: Incorrect IntConst", s, !IntConst("2"))
-    ; apply-and-fail(!"test: Incorrect Var", s, !Var(2))
-    ; apply-and-fail(!"test: Incorrect plus expression 1", s, !Plus(2, Var("a")))
-    ; apply-and-fail(!"test: Incorrect plus expression 2", s, !Plus(IntConst("2"), Var("a")))
+  expression-tests(s) =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "expression-tests", "37,2,47,92")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "38,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "38,6,38,55")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "38,17,38,43")
+           ; !"test: Simple injection 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "38,46,38,46") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "38,49,38,54")
+           ; !"Bla"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "39,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "39,6,39,51")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "39,17,39,43")
+           ; !"test: Simple injection 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "39,46,39,46") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "39,49,39,50")
+           ; !3
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "40,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "40,6,40,61")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "40,17,40,43")
+           ; !"test: Simple production "
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "40,46,40,46") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "40,49,40,60")
+           ; !IntConst(3)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "41,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "41,6,41,86")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "41,17,41,49")
+           ; !"test: Simple plus expression 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "41,52,41,52") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "41,55,41,85")
+           ; !Plus(
+                IntConst(2)
+              , IntConst(4)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "42,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "42,6,42,83")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "42,17,42,49")
+           ; !"test: Simple plus expression 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "42,52,42,52") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "42,55,42,82")
+           ; !Plus(
+                IntConst(2)
+              , Var("a")
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "44,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "44,6,44,67")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "44,21,44,47")
+           ; !"test: Incorrect IntConst"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "44,50,44,50") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "44,53,44,66")
+           ; !IntConst("2")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "45,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "45,6,45,55")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "45,21,45,42")
+           ; !"test: Incorrect Var"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "45,45,45,45") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "45,48,45,54")
+           ; !Var(2)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "46,6,47,92")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "46,6,46,80")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "46,21,46,56")
+           ; !"test: Incorrect plus expression 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "46,59,46,59") ; s
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "46,62,46,79")
+           ; !Plus(2, Var("a"))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "47,6,47,92")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "47,21,47,56")
+        ; !"test: Incorrect plus expression 2"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "47,59,47,59") ; s
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "47,62,47,91")
+        ; !Plus(
+             IntConst("2")
+           , Var("a")
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "expression-tests", "37,2,47,92")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "expression-tests", "37,2,47,92")
+      ; fail
 
   tuple-stuff-tests =
-      apply-test(!"test: Tuple1, not head or last", tuple-stuff, !Tuple1(1, (2, 3), 4))
-    ; apply-test(!"test: Tuple2, head", tuple-stuff, !Tuple2((1, 2), 3))
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "tuple-stuff-tests", "49,2,61,74")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "50,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "50,6,50,86")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "50,17,50,49")
+           ; !"test: Tuple1, not head or last"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "50,52,50,62") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "50,65,50,85")
+           ; !Tuple1(
+                1
+              , (2, 3)
+              , 4
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "51,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "51,6,51,71")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "51,17,51,37")
+           ; !"test: Tuple2, head"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "51,40,51,50") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "51,53,51,70")
+           ; !Tuple2((1, 2), 3)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "53,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "53,6,53,72")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "53,21,53,40")
+           ; !"Incorrect Tuple1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "53,43,53,53") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "53,56,53,71")
+           ; !Tuple1(1, 2, 4)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "54,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "54,6,54,74")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "54,21,54,39")
+           ; !"Incorrect Tuple1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "54,42,54,52") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "54,55,54,73")
+           ; !Tuple1(1, 2, 3, 4)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "55,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "55,6,55,73")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "55,21,55,39")
+           ; !"Incorrect Tuple2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "55,42,55,52") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "55,55,55,72")
+           ; !Tuple2(1, (2, 3))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "57,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "57,6,57,68")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "57,17,57,31")
+           ; !"Tuple3, last"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "57,34,57,44") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "57,47,57,67")
+           ; !Tuple3(
+                1
+              , 2
+              , (3, 4)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "58,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "58,6,58,71")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "58,17,58,31")
+           ; !"Tuple3, last"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "58,34,58,44") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "58,47,58,70")
+           ; !Tuple3(
+                1
+              , 2
+              , (3, 4, 5)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "60,6,61,74")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "60,6,60,82")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "60,21,60,39")
+           ; !"Incorrect Tuple3"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "60,42,60,52") ; tuple-stuff
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "60,55,60,81")
+           ; !Tuple3(
+                1
+              , 2
+              , (3, 4, 5, 6)
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "61,6,61,74")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "61,21,61,39")
+        ; !"Incorrect Tuple3"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "61,42,61,52") ; tuple-stuff
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "61,55,61,73")
+        ; !Tuple3(1, 2, 3, 5)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "tuple-stuff-tests", "49,2,61,74")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "tuple-stuff-tests", "49,2,61,74")
+      ; fail
 
-    ; apply-and-fail(! "Incorrect Tuple1", tuple-stuff, !Tuple1(1, 2, 4))
-    ; apply-and-fail(!"Incorrect Tuple1", tuple-stuff, !Tuple1(1, 2, 3, 4))
-    ; apply-and-fail(!"Incorrect Tuple2", tuple-stuff, !Tuple2(1, (2, 3)))
+  string-star-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-star-tests", "63,3,67,93")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "64,6,67,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "64,6,64,47")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "64,17,64,29")
+           ; !"Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "64,32,64,41") ; StringStar
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "64,44,64,46")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "65,6,67,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "65,6,65,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "65,17,65,42")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "65,45,65,54") ; StringStar
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "65,57,65,75")
+           ; !["Hello", "World"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "66,6,67,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "66,6,66,75")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "66,21,66,56")
+           ; !"List with element of illegal type"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "66,59,66,68") ; StringStar
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "66,71,66,74")
+           ; ![1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "67,6,67,93")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "67,21,67,56")
+        ; !"List with element of illegal type"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "67,59,67,68") ; StringStar
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "67,71,67,92")
+        ; !["Hello", 1, "World"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-star-tests", "63,3,67,93")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-star-tests", "63,3,67,93")
+      ; fail
 
-    ; apply-test(!"Tuple3, last", tuple-stuff, !Tuple3(1, 2, (3, 4)))
-    ; apply-test(!"Tuple3, last", tuple-stuff, !Tuple3(1, 2, (3, 4, 5)))
+  string-plus-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-plus-tests", "69,3,74,93")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "70,6,74,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "70,6,70,51")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "70,21,70,33")
+           ; !"Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "70,36,70,45") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "70,48,70,50")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "71,6,74,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "71,6,71,67")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "71,17,71,42")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "71,45,71,54") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "71,57,71,66")
+           ; !["Hello"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "72,6,74,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "72,6,72,76")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "72,17,72,42")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "72,45,72,54") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "72,57,72,75")
+           ; !["Hello", "World"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "73,6,74,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "73,6,73,75")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "73,21,73,56")
+           ; !"List with element of illegal type"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "73,59,73,68") ; StringPlus
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "73,71,73,74")
+           ; ![1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "74,6,74,93")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "74,21,74,56")
+        ; !"List with element of illegal type"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "74,59,74,68") ; StringPlus
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "74,71,74,92")
+        ; !["Hello", 1, "World"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-plus-tests", "69,3,74,93")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-plus-tests", "69,3,74,93")
+      ; fail
 
-    ; apply-and-fail(!"Incorrect Tuple3", tuple-stuff, !Tuple3(1, 2, (3, 4, 5, 6)))
-    ; apply-and-fail(!"Incorrect Tuple3", tuple-stuff, !Tuple3(1, 2, 3, 5))
+  string-even-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-even-tests", "76,3,81,93")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "77,10,81,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "77,10,77,51")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "77,21,77,33")
+           ; !"Empty list"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "77,36,77,45") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "77,48,77,50")
+           ; ![]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "78,6,81,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "78,6,78,71")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "78,21,78,46")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "78,49,78,58") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "78,61,78,70")
+           ; !["Hello"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "79,10,81,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "79,10,79,80")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "79,21,79,46")
+           ; !"List with some elements"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "79,49,79,58") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "79,61,79,79")
+           ; !["Hello", "World"]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "80,6,81,93")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "80,6,80,78")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "80,21,80,56")
+           ; !"List with element of illegal type"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "80,59,80,68") ; StringEven
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "80,71,80,77")
+           ; ![1, 1]
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "81,6,81,93")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "81,21,81,56")
+        ; !"List with element of illegal type"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "81,59,81,68") ; StringEven
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "81,71,81,92")
+        ; !["Hello", 1, "World"]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-even-tests", "76,3,81,93")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-even-tests", "76,3,81,93")
+      ; fail
 
-   string-star-tests =
-      apply-test(!"Empty list", StringStar, ![])
-    ; apply-test(!"List with some elements", StringStar, !["Hello", "World"])
-    ; apply-and-fail(!"List with element of illegal type", StringStar, ![1])
-    ; apply-and-fail(!"List with element of illegal type", StringStar, !["Hello", 1, "World"])
+  string-opt-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-opt-tests", "83,3,87,59")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "84,6,87,59")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "84,6,84,59")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "84,17,84,30")
+           ; !"Some String"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "84,33,84,41") ; StringOpt
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "84,44,84,58")
+           ; !Some("String")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "85,6,87,59")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "85,6,85,49")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "85,17,85,28")
+           ; !"No String"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "85,31,85,39") ; StringOpt
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "85,42,85,48")
+           ; !None()
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "86,6,87,59")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "86,6,86,55")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "86,21,86,35")
+           ; !"Plain string"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "86,38,86,46") ; StringOpt
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "86,49,86,54")
+           ; !"foo"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "87,6,87,59")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "87,21,87,37")
+        ; !"Some no-string"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "87,40,87,48") ; StringOpt
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "87,51,87,58")
+        ; !Some(1)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-opt-tests", "83,3,87,59")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "string-opt-tests", "83,3,87,59")
+      ; fail
 
-   string-plus-tests =
-      apply-and-fail(!"Empty list", StringPlus, ![])
-    ; apply-test(!"List with some elements", StringPlus, !["Hello"])
-    ; apply-test(!"List with some elements", StringPlus, !["Hello", "World"])
-    ; apply-and-fail(!"List with element of illegal type", StringPlus, ![1])
-    ; apply-and-fail(!"List with element of illegal type", StringPlus, !["Hello", 1, "World"])
+  non-deterministic-expression-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "non-deterministic-expression-tests", "89,2,95,52")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "89,39,95,52")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "89,39,89,40") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "90,10,95,52")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "90,10,90,54")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "90,21,90,33")
+           ; !"Simple Var"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "90,36,90,42") ; nd-expr
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "90,45,90,53")
+           ; !Var("x")
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "91,10,95,52")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "91,10,91,75")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "91,21,91,36")
+           ; !"Simple Assign"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "91,39,91,45") ; nd-expr
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "91,48,91,74")
+           ; !Assign(
+                Var("x")
+              , Var("y")
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "92,10,95,52")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "92,10,92,71")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "92,21,92,34")
+           ; !"Simple Plus"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "92,37,92,43") ; nd-expr
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "92,46,92,70")
+           ; !Plus(
+                Var("x")
+              , Var("y")
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "93,10,95,52")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "93,10,93,91")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "93,21,93,38")
+           ; !"Simple PlusPlus"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "93,41,93,47") ; nd-expr
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "93,50,93,90")
+           ; !Plus(
+                Var("x")
+              , Plus(
+                  Var("y")
+                , Var("z")
+                )
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "94,10,95,52")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "94,10,94,91")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "94,21,94,38")
+           ; !"Simple PlusPlus"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "94,41,94,47") ; nd-expr
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "94,50,94,90")
+           ; !Plus(
+                Plus(
+                  Var("x")
+                , Var("y")
+                )
+              , Var("z")
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "95,6,95,52")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "95,21,95,36")
+        ; !"Just a string"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "95,39,95,45") ; nd-expr
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "95,48,95,51")
+        ; !"x"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "non-deterministic-expression-tests", "89,2,95,52")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "non-deterministic-expression-tests", "89,2,95,52")
+      ; fail
 
-   string-even-tests =
-          apply-test(!"Empty list", StringEven, ![])
-    ; apply-and-fail(!"List with some elements", StringEven, !["Hello"])
-    ;     apply-test(!"List with some elements", StringEven, !["Hello", "World"])
-    ; apply-and-fail(!"List with element of illegal type", StringEven, ![1, 1])
-    ; apply-and-fail(!"List with element of illegal type", StringEven, !["Hello", 1, "World"])
+  nested-tests =
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nested-tests", "97,2,101,104")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "97,17,101,104")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "97,17,97,18") ; id)
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "98,10,101,104")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "98,10,98,106")
+       ; apply-test(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "98,21,98,41")
+           ; !"correct nested    "
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "98,44,98,55") ; nasty-nested
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "98,58,98,105")
+           ; <(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "98,59,98,74") ; read-from-string)> "a(c(e()), b(foo()), c(d()))"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "99,6,101,104")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "99,6,99,106")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "99,21,99,41")
+           ; !"incorrect nested 1"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "99,44,99,55") ; nasty-nested
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "99,58,99,105")
+           ; <(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "99,59,99,74") ; read-from-string)> "A(c(e()), b(foo()), c(d()))"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "100,6,101,104")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "100,6,100,106")
+       ; apply-and-fail(
+           s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "100,21,100,41")
+           ; !"incorrect nested 2"
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "100,44,100,55") ; nasty-nested
+         , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "100,58,100,105")
+           ; <(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "100,59,100,74") ; read-from-string)> "a(c(e()), c(foo()), c(d()))"
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "101,6,101,104")
+    ; apply-and-fail(
+        s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "101,21,101,41")
+        ; !"incorrect nested 3"
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "101,44,101,55") ; nasty-nested
+      , s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "101,58,101,103")
+        ; <(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "101,59,101,74") ; read-from-string)> "a(c(e()), b(d()), c(d()))"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nested-tests", "97,2,101,104")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nested-tests", "97,2,101,104")
+      ; fail
 
-   string-opt-tests =
-      apply-test(!"Some String", StringOpt, !Some("String"))
-    ; apply-test(!"No String", StringOpt, !None())
-    ; apply-and-fail(!"Plain string", StringOpt, !"foo")
-    ; apply-and-fail(!"Some no-string", StringOpt, !Some(1))
-
-  non-deterministic-expression-tests = id
-    ;     apply-test(!"Simple Var", nd-expr, !Var("x"))
-    ;     apply-test(!"Simple Assign", nd-expr, !Assign(Var("x"), Var("y")))
-    ;     apply-test(!"Simple Plus", nd-expr, !Plus(Var("x"), Var("y")))
-    ;     apply-test(!"Simple PlusPlus", nd-expr, !Plus(Var("x"), Plus(Var("y"), Var("z"))))
-    ;     apply-test(!"Simple PlusPlus", nd-expr, !Plus(Plus(Var("x"), Var("y")), Var("z")))
-    ; apply-and-fail(!"Just a string", nd-expr, !"x")
-
-  nested-tests = id
-    ;     apply-test(!"correct nested    ", nasty-nested, <read-from-string> "a(c(e()), b(foo()), c(d()))")
-    ; apply-and-fail(!"incorrect nested 1", nasty-nested, <read-from-string> "A(c(e()), b(foo()), c(d()))")
-    ; apply-and-fail(!"incorrect nested 2", nasty-nested, <read-from-string> "a(c(e()), c(foo()), c(d()))")
-    ; apply-and-fail(!"incorrect nested 3", nasty-nested, <read-from-string> "a(c(e()), b(d()), c(d()))")
 
 strategies
-
   simple-inj =
-     test-dfta-format-check(|"SimpleInj.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "simple-inj", "105,2,106,44")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "106,5,106,44")
+    ; test-dfta-format-check(|"SimpleInj.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "simple-inj", "105,2,106,44")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "simple-inj", "105,2,106,44")
+      ; fail
 
   tuple-stuff =
-     test-dfta-format-check(|"TupleStuff.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "tuple-stuff", "108,2,109,45")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "109,5,109,45")
+    ; test-dfta-format-check(|"TupleStuff.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "tuple-stuff", "108,2,109,45")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "tuple-stuff", "108,2,109,45")
+      ; fail
 
   quoted-exp =
-     test-dfta-format-check(|"QuotedExp.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "quoted-exp", "111,2,112,44")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "112,5,112,44")
+    ; test-dfta-format-check(|"QuotedExp.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "quoted-exp", "111,2,112,44")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "quoted-exp", "111,2,112,44")
+      ; fail
 
   StringStar =
-     test-dfta-format-check(|"StringStar.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringStar", "114,2,115,45")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "115,5,115,45")
+    ; test-dfta-format-check(|"StringStar.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringStar", "114,2,115,45")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringStar", "114,2,115,45")
+      ; fail
 
   StringPlus =
-     test-dfta-format-check(|"StringPlus.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringPlus", "117,2,118,45")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "118,5,118,45")
+    ; test-dfta-format-check(|"StringPlus.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringPlus", "117,2,118,45")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringPlus", "117,2,118,45")
+      ; fail
 
   StringEven =
-     test-dfta-format-check(|"StringEven.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringEven", "120,2,121,45")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "121,5,121,45")
+    ; test-dfta-format-check(|"StringEven.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringEven", "120,2,121,45")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringEven", "120,2,121,45")
+      ; fail
 
   StringOpt =
-     test-dfta-format-check(|"StringOpt.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringOpt", "123,2,124,44")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "124,5,124,44")
+    ; test-dfta-format-check(|"StringOpt.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringOpt", "123,2,124,44")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "StringOpt", "123,2,124,44")
+      ; fail
 
   fc-int-list =
-     test-dfta-format-check(|"int-list.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "fc-int-list", "126,2,127,43")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "127,5,127,43")
+    ; test-dfta-format-check(|"int-list.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "fc-int-list", "126,2,127,43")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "fc-int-list", "126,2,127,43")
+      ; fail
 
   nd-expr =
-     test-dfta-format-check(|"non-deterministic.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nd-expr", "129,2,130,52")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "130,5,130,52")
+    ; test-dfta-format-check(|"non-deterministic.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nd-expr", "129,2,130,52")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nd-expr", "129,2,130,52")
+      ; fail
 
   nasty-nested =
-     test-dfta-format-check(|"nasty-nested.rtg")
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nasty-nested", "132,2,133,47")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "133,5,133,47")
+    ; test-dfta-format-check(|"nasty-nested.rtg")
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nasty-nested", "132,2,133,47")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "nasty-nested", "132,2,133,47")
+      ; fail
+
 
 strategies
-
   test-dfta-format-check(|rtg) =
-    where(dfta := <parse-rtg-file; rtg2dfta; open-dfta> rtg)
-    ; dfta-format-check(|dfta)
-    ; where(<dfta-destroy> dfta)
- 
+    s-enter(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "test-dfta-format-check", "137,2,140,31")
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,4,140,31")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,4,138,59")
+       ; where(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,10,138,58")
+               ; dfta := <s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,19,138,53")
+                          ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,19,138,32") ; parse-rtg-file)
+                          ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,35,138,53")
+                          ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,35,138,42") ; rtg2dfta)
+                          ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "138,45,138,53")
+                          ; open-dfta> rtg))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "139,6,140,31")
+    ; (s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "139,6,139,29")
+       ; dfta-format-check(|dfta))
+    ; s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "140,6,140,31")
+    ; where(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "140,12,140,30")
+            ; <(s-step(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "140,13,140,24") ; dfta-destroy)> dfta)
+    < s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "test-dfta-format-check", "137,2,140,31")
+    + s-exit(|"strategoxt/stratego-libraries/rtg/tests/dfta-accept-tests.str", "test-dfta-format-check", "137,2,140,31")
+      ; fail
+
+
 signature
   constructors
     Var      : Id -> Var
@@ -146,7 +769,6 @@ signature
     IntConst : IntConst -> Exp
     Plus     : Exp * Exp -> Exp
     Call     : Var * List(Exp) -> Exp
-
     Tuple1   : Int * Tuple * Int -> Tuple
     Tuple1   : Int * Int * Int * Int -> Tuple
     Tuple2   : Tuple * Int -> Tuple

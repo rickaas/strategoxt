@@ -1,79 +1,188 @@
-/**
- * Implosion of AsFix Layout
- */
 module stratego/asfix/implode/layout
-strategies
 
-  /**
-   * Layout can be ignored.
-   */
-  is-ignorable-syntax =
-    is-layout
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  /**
-   * Literals can be ignored.
-   */
-  is-ignorable-syntax =
-    ?appl(prod(_, lit(_), _), _)
-
-  /**
-   * Case insensitive literals can be ignored.
-   *
-   * @todo This is questionable: you cannot preserve the case of a literal in this way.
-   */
-  is-ignorable-syntax =
-    ?appl(prod(_, cilit(_), _), _)
-
-  /**
-   * In AsFix2ME, literals can occur directly as arguments of an
-   * application. For this reason, we include literals in the possible 
-   */
-  is-ignorable-syntax =
-    ?lit(_)
-
-  is-ignorable-syntax =
-    ?cilit(_)
 
 strategies
+  is-ignorable-syntax =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "10,2,11,12")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "11,4,11,12")
+    ; is-layout
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "10,2,11,12")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "10,2,11,12")
+      ; fail
+
+  is-ignorable-syntax =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "16,2,17,31")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "17,4,17,31")
+    ; ?appl(prod(_, lit(_), _), _)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "16,2,17,31")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "16,2,17,31")
+      ; fail
+
+  is-ignorable-syntax =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "24,2,25,33")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "25,4,25,33")
+    ; ?appl(prod(_, cilit(_), _), _)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "24,2,25,33")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "24,2,25,33")
+      ; fail
+
+  is-ignorable-syntax =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "31,2,32,10")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "32,4,32,10")
+    ; ?lit(_)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "31,2,32,10")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "31,2,32,10")
+      ; fail
+
+  is-ignorable-syntax =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "34,2,35,12")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "35,4,35,12")
+    ; ?cilit(_)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "34,2,35,12")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-ignorable-syntax", "34,2,35,12")
+      ; fail
+
+
+strategies
+  is-layout =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout", "39,2,40,42")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "40,4,40,42")
+    ; ?appl(
+         prod(
+           _
+         , cf(opt(layout()))
+         , _
+         )
+       , _
+       )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout", "39,2,40,42")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout", "39,2,40,42")
+      ; fail
 
   is-layout =
-    ?appl(prod(_, cf(opt(layout())), _), _)
-
-  is-layout =
-    cf(opt(layout()))
-
-  /**
-   * @todo Find out why this strategy is used.
-   */
-  is-layout' =
-      appl(prod(id, cf(opt(layout())), id), id)
-    + cf(opt(layout()))
-    + layout(id)
-
-strategies
-
-  rm-layout =
-    rec x(
-      try(
-        appl(id, filter(not(is-layout); x))
-      + amb(map(x))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout", "42,2,43,20")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "43,4,43,20")
+    ; cf(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "43,7,43,19")
+        ; opt(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "43,11,43,18") ; layout
+          )
       )
-    )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout", "42,2,43,20")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout", "42,2,43,20")
+      ; fail
+
+  is-layout' =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout'", "48,2,51,15")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,6,51,15")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,6,49,46")
+       ; appl(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,11,49,41")
+           ; prod(
+               s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,16,49,17") ; id
+             , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,20,49,36")
+               ; cf(
+                   s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,23,49,35")
+                   ; opt(
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,27,49,34") ; layout
+                     )
+                 )
+             , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,39,49,40") ; id
+             )
+         , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "49,44,49,45") ; id
+         )
+       + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "50,6,51,15")
+         ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "50,6,50,22")
+            ; cf(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "50,9,50,21")
+                ; opt(
+                    s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "50,13,50,20") ; layout
+                  )
+              )
+            + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "51,6,51,15")
+              ; layout(
+                  s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "51,13,51,14") ; id
+                )))
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout'", "48,2,51,15")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "is-layout'", "48,2,51,15")
+      ; fail
+
+
+strategies
+  rm-layout =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "rm-layout", "55,2,61,4")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "56,4,61,4")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "57,6,60,6")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,8,59,18")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,8,58,42")
+               ; appl(
+                   s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,13,58,14") ; id
+                 , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,17,58,41")
+                   ; filter(
+                       s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,24,58,40")
+                       ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,24,58,37")
+                          ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,28,58,36") ; is-layout))
+                       ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "58,40,58,40")
+                       ; x
+                     )
+                 )
+               + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "59,8,59,18")
+                 ; amb(
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "59,12,59,17")
+                     ; map(
+                         s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "59,16,59,16") ; x
+                       )
+                   ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "rm-layout", "55,2,61,4")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "rm-layout", "55,2,61,4")
+      ; fail
+
 
 rules
 
   ImplodeLayout :
-    appl(prod(_,cf(layout()),_), x) -> <concat-strings> x
+    appl(
+      prod(_, cf(layout()), _)
+    , x
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "65,2,66,56")> <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "66,40,66,53") ; concat-strings> x
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "65,2,66,56")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "65,2,66,56")
+             ; fail
 
   ImplodeLayout :
-    appl(prod(_,cf(opt(layout())),_),[]) -> layout([])
+    appl(
+      prod(
+        _
+      , cf(opt(layout()))
+      , _
+      )
+    , []
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "68,2,69,53")> layout([])
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "68,2,69,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "68,2,69,53")
+             ; fail
 
   ImplodeLayout :
-    appl(prod(_,cf(opt(layout())),_),[xs]) -> layout([xs])
+    appl(
+      prod(
+        _
+      , cf(opt(layout()))
+      , _
+      )
+    , [xs]
+    ) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "71,2,72,57")> layout([xs])
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "71,2,72,57")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/layout.str", "ImplodeLayout", "71,2,72,57")
+             ; fail
 
-/**
- * @todo Move to a more appropiate place.
- */
+
 signature
   constructors
     layout : List(Foo) -> Layout

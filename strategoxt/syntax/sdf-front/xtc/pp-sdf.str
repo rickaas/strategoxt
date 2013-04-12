@@ -1,11 +1,22 @@
 module pp-sdf
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc sdf-xtc-tools
+  libstratego-xtc
+  sdf-xtc-tools
+
 
 strategies
-  
   io-pp-sdf =
-    xtc-io-wrap(xtc-pp-sdf2)
-    
-    
+    s-enter(|"strategoxt/syntax/sdf-front/xtc/pp-sdf.str", "io-pp-sdf", "8,2,9,27")
+    ; s-step(|"strategoxt/syntax/sdf-front/xtc/pp-sdf.str", "9,4,9,27")
+    ; xtc-io-wrap(
+        s-step(|"strategoxt/syntax/sdf-front/xtc/pp-sdf.str", "9,16,9,26") ; xtc-pp-sdf2
+      )
+    < s-exit(|"strategoxt/syntax/sdf-front/xtc/pp-sdf.str", "io-pp-sdf", "8,2,9,27")
+    + s-exit(|"strategoxt/syntax/sdf-front/xtc/pp-sdf.str", "io-pp-sdf", "8,2,9,27")
+      ; fail

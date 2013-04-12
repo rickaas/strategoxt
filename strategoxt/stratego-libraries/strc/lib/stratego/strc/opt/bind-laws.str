@@ -1,122 +1,161 @@
 module bind-laws
-imports Stratego stratego/strc/match/automaton
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  Stratego
+  stratego/strc/match/automaton
+
+
 strategies
+
+
 rules
 
   LetNoDefs :
-    Let([], s) -> s
+    Let([], s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetNoDefs", "6,2,7,18")> s
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetNoDefs", "6,2,7,18")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetNoDefs", "6,2,7,18")
+             ; fail
 
   LetHoist :
-    Let([SDefT(f, [], [], s)], CallT(SVar(f), [], [])) -> s
-    where <not(oncetd(?CallT(SVar(f),[],[])))> s
+    Let(
+      [SDefT(f, [], [], s)]
+    , CallT(SVar(f), [], [])
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "9,2,11,47")> s
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "9,2,11,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "9,2,11,47")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "11,10,11,47")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "11,11,11,44")
+              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "11,15,11,43")
+                    ; oncetd(
+                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "11,22,11,42")
+                        ; ?CallT(SVar(f), [], [])
+                      )))> s
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "9,2,11,47")
+             ; fail
 
   LetHoist :
-    Let(defs1, Let(defs2, s)) -> Let(<conc>(defs1, defs2), s)
+    Let(defs1, Let(defs2, s)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "13,2,14,60")> Let(
+                                                                                                                                                 <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "14,38,14,41") ; conc> (defs1, defs2)
+                                                                                                                                               , s
+                                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "13,2,14,60")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "LetHoist", "13,2,14,60")
+             ; fail
+
 
 rules
 
-  // inlining with contextual rules
-
-/*
-
-  InlineC1 : 
-    Let([SDef(f, [], s1)], s2[Call(SVar(f), [])]) ->
-    Let([SDef(f, [], s1)], s2[<strename> s1])
-
-  InlineC2 : 
-    Let([SDef(f, xs@[_|_], s1)], s2[Call(SVar(f), ss)]) ->
-    Let([SDef(f, xs, s1)], 
-	s2[<ssubs; strename> (xs, ss, s1)])
-
-  InlineC3 : 
-    Let([SDef(f, xs@[_|_], s1)], s2[Call(SVar(f), ss)]) ->
-    Let([SDef(f, xs, s1)], 
-	s2[<zip(\ (x, s) -> SDef(x, [], s)\ ); 
-            foldr(!s1, \ (def, s) -> Let(def, s)\ ); 
-	    strename> (xs, ss)])
-
-*/
-
-  // inlining with hand-made contextual traversal
-
   Inline1 :
-    Let([SDef(f, [], s)], Call(SVar(f), [])) -> s
-
-//  InlineOld :
-//    Let([SDef(f, [], s1)], s2) -> s2'
-//    where <oncetd-stop(?Call(SVar(f),[]); !s1, 
-//                  Case(id,id,id,id) + Matrix(id,id))> s2 => s2';
-//          <not(is-subterm)> (Call(SVar(f),[]), s2')
+    Let(
+      [SDef(f, [], s)]
+    , Call(SVar(f), [])
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline1", "42,2,43,48")> s
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline1", "42,2,43,48")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline1", "42,2,43,48")
+             ; fail
 
   Inline :
-    Let(defs1, s1) -> Let(defs2, s2)
-    where <at-suffix(\ [SDef(f, [], s)|defs] -> defs
-                       where <oncetd(?Call(SVar(f),[]); !s)> s1 => s2
-			   ; <not(is-subterm)> (Call(SVar(f),[]), s2) \ )
-          > defs1 => defs2        
+    Let(defs1, s1) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline", "51,2,56,25")> Let(defs2, s2)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline", "51,2,56,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline", "51,2,56,25")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "53,10,56,25")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "53,10,56,16")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "53,11,55,51")
+                 ; at-suffix(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "53,21,55,49")
+                     ; \ [SDef(f, [], s)|defs] -> defs
+                         where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,29,55,47")
+                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,29,54,68")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,29,54,62")
+                                     ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,30,54,58")
+                                         ; oncetd(
+                                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,37,54,57")
+                                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,37,54,53")
+                                                ; ?Call(SVar(f), []))
+                                             ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "54,56,54,57")
+                                             ; !s
+                                           ))> s1) => s2)
+                               ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "55,8,55,47")
+                               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "55,9,55,23")
+                                   ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "55,13,55,22") ; is-subterm))> ( Call(SVar(f), [])
+                                                                                                                                                          , s2
+                                                                                                                                                          ) \
+                   ))> defs1) => defs2
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Inline", "51,2,56,25")
+             ; fail
 
-//  InlineDont :
-//    Let([SDef(f, [], s1)], s2) -> 
-//    Let([SDef([DontInline], f, [], s1)], s2)
-
-  // dead code elimination
-
-  Dead : 
-    Let([SDef(f, xs, s1)], s2) -> s2
-    where <not(is-subterm)> (SVar(f), s2)
-
-  // hoisting let bindings
+  Dead :
+    Let(
+      [SDef(f, xs, s1)]
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Dead", "64,2,66,40")> s2
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Dead", "64,2,66,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Dead", "64,2,66,40")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "66,10,66,40")
+          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "66,11,66,25")
+              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "66,15,66,24") ; is-subterm))> (SVar(f), s2)
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "Dead", "64,2,66,40")
+             ; fail
 
   HoistLet :
-    Seq(s1, Let(sdefs, s2)) ->
-    Let(sdefs, Seq(s1, s2))
+    Seq(s1, Let(sdefs, s2)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLet", "70,2,72,26")> Let(sdefs, Seq(s1, s2))
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLet", "70,2,72,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLet", "70,2,72,26")
+             ; fail
 
   HoistLetFromCase :
-    Case(lab, t, alts, def) ->
-    Let(sdefs, Case(lab, t, alts', def))
-    where <map(AltGiveSDefs); concat> alts => sdefs => [_|_];
-          <map(AltDropLet)> alts => alts'
+    Case(lab, t, alts, def) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLetFromCase", "74,2,78,40")> Let(
+                                                                                                                                                       sdefs
+                                                                                                                                                     , Case(lab, t, alts', def)
+                                                                                                                                                     )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLetFromCase", "74,2,78,40")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLetFromCase", "74,2,78,40")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,10,78,40")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,10,77,59")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,10,77,50")
+                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,10,77,41")
+                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,11,77,35")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,11,77,27")
+                          ; map(
+                              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,15,77,26") ; AltGiveSDefs
+                            ))
+                       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "77,30,77,35")
+                       ; concat)> alts) => sdefs) => [_|_])
+          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "78,10,78,40")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "78,10,78,31")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "78,11,78,25")
+                 ; map(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "78,15,78,24") ; AltDropLet
+                   ))> alts) => alts'
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "HoistLetFromCase", "74,2,78,40")
+             ; fail
 
   AltDropLet :
-    Alt(c, args, ann, Let(sdefs, s)) -> Alt(c, args, ann, s)
-  
-  AltGiveSDefs :
-    Alt(c, args, ann, Let(sdefs, s)) -> sdefs
+    Alt(
+      c
+    , args
+    , ann
+    , Let(sdefs, s)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "AltDropLet", "80,2,81,59")> Alt(c, args, ann, s)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "AltDropLet", "80,2,81,59")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "AltDropLet", "80,2,81,59")
+             ; fail
 
-//
-//rules
-//
-//  CopyPropagation :
-//    Seq(Build(t), Scope(xs, Seq(Assign(Var(x)), s))) ->
-//    Seq(Build(t), Scope(ys, <tsubs> ([x], [t], s)))
-//    where (<Var(id)> t ) // + <leq> (<nrofoccs(?Var(x))> s, 1))
-//        ; <is-subterm> (x, xs); <diff> (xs, [x]) => ys          
-//
-//  CopyPropagation :
-//    Seq(Build(t), Scope(xs, Seq(Assign(Var(x)), s))) ->
-//    Seq(Build(t), Scope(ys, <tsubs> ([x], [t], s)))
-//    where <Var(id)> t; <is-subterm> (x, xs); <diff> (xs, [x]) => ys          
-//
-//  CopyPropagation :
-//    Scope(xs, Seq(Assign(Var(x), Var(y)), s)) ->
-//    Scope(ys, <tsubs> ([x], [Var(y)], s))
-//    where <is-subterm> (x, xs); <diff> (xs, [x]) => ys
-//
-//  CopyPropagation :
-//    Scope(xs, Seq(Assign(Var(x)), Seq(Assign(Var(y)), s))) ->
-//    Scope(ys, Seq(Assign(Var(x)), <tsubs> ([y], [Var(x)], s)))
-//    where <is-subterm> (x, xs); <is-subterm> (y, xs); <diff> (xs, [y]) => ys
-//
-//  CopyPropagation :
-//    Scope(xs, Seq(Assign(Var(x)), Seq(Assign(Var(y), Var(x)), s))) ->
-//    Scope(ys, Seq(Assign(Var(x)), <tsubs> ([y], [Var(x)], s)))
-//    where <is-subterm> (x, xs); <is-subterm> (y, xs); <diff> (xs, [y]) => ys
-//
-//  CopyPropagation :
-//    Seq(Assign(Var(x)), Seq(Build(Var(x)), s)) ->
-//    Seq(Assign(Var(x)), s)
-//
-//  CopyPropagationNotValid :
-//    Seq(Assign(x), Seq(Assign(y,x), s)) ->
-//    Seq(Assign(x), Seq(Assign(y), s))
-//
+  AltGiveSDefs :
+    Alt(
+      c
+    , args
+    , ann
+    , Let(sdefs, s)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "AltGiveSDefs", "83,2,84,44")> sdefs
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "AltGiveSDefs", "83,2,84,44")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/bind-laws.str", "AltGiveSDefs", "83,2,84,44")
+             ; fail

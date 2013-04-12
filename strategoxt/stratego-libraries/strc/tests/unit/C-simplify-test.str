@@ -1,24 +1,240 @@
 module C-simplify-test
-imports libstratego-lib libstrc
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  libstrc
+
+
 strategies
+  C-simplify-test-io =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "C-simplify-test-io", "5,2,9,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "6,4,9,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "6,15,6,32")
+        ; !"C-simplify-test"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "7,1,8,5")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "7,1,7,5") ; test1)
+        ; s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "8,1,8,5")
+        ; test2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "C-simplify-test-io", "5,2,9,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "C-simplify-test-io", "5,2,9,4")
+      ; fail
 
-  C-simplify-test-io = 
-    test-suite(!"C-simplify-test",
-	test1;
-	test2
-    )
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "test1", "11,2,17,1")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "12,4,17,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "12,15,12,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "13,3,13,11") ; Csimplify
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "14,3,15,528")
+        ; !Compound(
+             []
+           , [ Compound(
+                 [ FunDef(
+                     TypeSpec(
+                       []
+                     , TypeId("ATerm")
+                     , []
+                     )
+                   , IdDecl(
+                       []
+                     , Id("c_0")
+                     , Some(
+                         ParamList(
+                           [ ParamDecl(
+                               TypeSpec(
+                                 []
+                               , TypeId("ATerm")
+                               , []
+                               )
+                             , IdDecl([], Id("t"), None)
+                             )
+                           ]
+                         )
+                       )
+                     )
+                   , Compound(
+                       []
+                     , [ IfElse(
+                           Equal(
+                             FunCall(Id("PushChoice"), [])
+                           , IntConst("0")
+                           )
+                         , Compound(
+                             []
+                           , [ Stat(
+                                 Assign(
+                                   Id("t")
+                                 , AssignEq
+                                 , FunCall(
+                                     Id("A_0")
+                                   , [Id("t")]
+                                   )
+                                 )
+                               )
+                             , Stat(
+                                 FunCall(Id("PopChoice"), [])
+                               )
+                             ]
+                           )
+                         , Stat(
+                             Assign(
+                               Id("t")
+                             , AssignEq
+                             , FunCall(
+                                 Id("B_0")
+                               , [Id("t")]
+                               )
+                             )
+                           )
+                         )
+                       , Return(Id("t"))
+                       ]
+                     )
+                   )
+                 ]
+               , [ Stat(
+                     Assign(
+                       Id("t")
+                     , AssignEq
+                     , FunCall(
+                         Id("innermost_1")
+                       , [Id("t"), Id("c_0")]
+                       )
+                     )
+                   )
+                 ]
+               )
+             , [Return(Id("t"))]
+             ]
+           )
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "16,3,16,517")
+        ; !Compound(
+             [ FunDef(
+                 TypeSpec(
+                   []
+                 , TypeId("ATerm")
+                 , []
+                 )
+               , IdDecl(
+                   []
+                 , Id("c_0")
+                 , Some(
+                     ParamList(
+                       [ ParamDecl(
+                           TypeSpec(
+                             []
+                           , TypeId("ATerm")
+                           , []
+                           )
+                         , IdDecl([], Id("t"), None)
+                         )
+                       ]
+                     )
+                   )
+                 )
+               , Compound(
+                   []
+                 , [ IfElse(
+                       Equal(
+                         FunCall(Id("PushChoice"), [])
+                       , IntConst("0")
+                       )
+                     , Compound(
+                         []
+                       , [ Stat(
+                             Assign(
+                               Id("t")
+                             , AssignEq
+                             , FunCall(
+                                 Id("A_0")
+                               , [Id("t")]
+                               )
+                             )
+                           )
+                         , Stat(
+                             FunCall(Id("PopChoice"), [])
+                           )
+                         ]
+                       )
+                     , Stat(
+                         Assign(
+                           Id("t")
+                         , AssignEq
+                         , FunCall(
+                             Id("B_0")
+                           , [Id("t")]
+                           )
+                         )
+                       )
+                     )
+                   , Return(Id("t"))
+                   ]
+                 )
+               )
+             ]
+           , [ Stat(
+                 Assign(
+                   Id("t")
+                 , AssignEq
+                 , FunCall(
+                     Id("innermost_1")
+                   , [Id("t"), Id("c_0")]
+                   )
+                 )
+               )
+             , [Return(Id("t"))]
+             ]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "test1", "11,2,17,1")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "test1", "11,2,17,1")
+      ; fail
 
-  test1 = 
-    apply-test(!"test1"
-	, Csimplify
-	, !
-Compound([],[Compound([FunDef(TypeSpec([],TypeId("ATerm"),[]),IdDecl([],Id("c_0"),Some(ParamList([ParamDecl(TypeSpec([],TypeId("ATerm"),[]),IdDecl([],Id("t"),None))]))),Compound([],[IfElse(Equal(FunCall(Id("PushChoice"),[]),IntConst("0")),Compound([],[Stat(Assign(Id("t"),AssignEq,FunCall(Id("A_0"),[Id("t")]))),Stat(FunCall(Id("PopChoice"),[]))]),Stat(Assign(Id("t"),AssignEq,FunCall(Id("B_0"),[Id("t")])))),Return(Id("t"))]))],[Stat(Assign(Id("t"),AssignEq,FunCall(Id("innermost_1"),[Id("t"),Id("c_0")])))]),[Return(Id("t"))]])
-	, !Compound([FunDef(TypeSpec([],TypeId("ATerm"),[]),IdDecl([],Id("c_0"),Some(ParamList([ParamDecl(TypeSpec([],TypeId("ATerm"),[]),IdDecl([],Id("t"),None))]))),Compound([],[IfElse(Equal(FunCall(Id("PushChoice"),[]),IntConst("0")),Compound([],[Stat(Assign(Id("t"),AssignEq,FunCall(Id("A_0"),[Id("t")]))),Stat(FunCall(Id("PopChoice"),[]))]),Stat(Assign(Id("t"),AssignEq,FunCall(Id("B_0"),[Id("t")])))),Return(Id("t"))]))],[Stat(Assign(Id("t"),AssignEq,FunCall(Id("innermost_1"),[Id("t"),Id("c_0")]))),[Return(Id("t"))]])    
-	)
-
-  test2 = 
-    apply-test(!"test2"
-	, Csimplify
-	, !Compound([],[Compound([],[Stat(Assign(Id("t"),AssignEq,Id("t")))]),[Return(Id("t"))]])
-	, !Compound([],[Stat(Assign(Id("t"),AssignEq,Id("t"))),[Return(Id("t"))]])
-	)
+  test2 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "test2", "19,2,24,1")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "20,4,24,1")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "20,15,20,22")
+        ; !"test2"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "21,3,21,11") ; Csimplify
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "22,3,22,89")
+        ; !Compound(
+             []
+           , [ Compound(
+                 []
+               , [ Stat(
+                     Assign(
+                       Id("t")
+                     , AssignEq
+                     , Id("t")
+                     )
+                   )
+                 ]
+               )
+             , [Return(Id("t"))]
+             ]
+           )
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "23,3,23,74")
+        ; !Compound(
+             []
+           , [ Stat(
+                 Assign(
+                   Id("t")
+                 , AssignEq
+                 , Id("t")
+                 )
+               )
+             , [Return(Id("t"))]
+             ]
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "test2", "19,2,24,1")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/unit/C-simplify-test.str", "test2", "19,2,24,1")
+      ; fail

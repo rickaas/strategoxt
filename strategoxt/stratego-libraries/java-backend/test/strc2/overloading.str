@@ -1,29 +1,111 @@
 module overloading
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
-    A   : Term
-    B   : Term
-    C   : Term
-    D   : Term 
-    F   : Term -> Term
-    G   : Term * Term -> Term
+    A : Term
+    B : Term
+    C : Term
+    D : Term
+    F : Term -> Term
+    G : Term * Term -> Term
+
 
 strategies
+  main-overloading =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "main-overloading", "14,2,15,62")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,3,15,62")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,3,15,45")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,4,15,29")
+           ; [ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,5,15,13")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,5,15,9")
+                  ; f(
+                      s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,7,15,8") ; RA
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,12,15,13")
+               ; RD
+             , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,16,15,28")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,16,15,24")
+                  ; f(
+                      s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,18,15,19") ; RA
+                    , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,22,15,23") ; RB
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "15,27,15,28")
+               ; RC
+             ])> [F(A), G(A, B)]) => [F(D), G(D, C)]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "main-overloading", "14,2,15,62")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "main-overloading", "14,2,15,62")
+      ; fail
 
-  main-overloading = 
-   <[f(RA); RD, f(RA, RB); RC]	> [F(A),G(A,B)] => [F(D),G(D,C)]
+  f(s) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "f", "17,2,17,12")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "17,9,17,12")
+    ; F(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "17,11,17,11") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "f", "17,2,17,12")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "f", "17,2,17,12")
+      ; fail
 
-  f(s) = F(s)
+  f(s1, s2) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "f", "19,2,19,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "19,14,19,22")
+    ; G(
+        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "19,16,19,17") ; s1
+      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "19,20,19,21") ; s2
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "f", "19,2,19,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "f", "19,2,19,22")
+      ; fail
 
-  f(s1, s2) = G(s1, s2)
 
 rules
 
-  RA   : A -> B
+  RA :
+    A -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RA", "23,2,23,14")> B
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RA", "23,2,23,14")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RA", "23,2,23,14")
+             ; fail
 
-  RB   : B -> C
+  RB :
+    B -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RB", "25,2,25,14")> C
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RB", "25,2,25,14")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RB", "25,2,25,14")
+             ; fail
 
-  RC   : G(x, y) -> G(x', y) where <oncetd((B -> D))> x => x'
+  RC :
+    G(x, y) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RC", "27,2,27,60")> G(x', y)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RC", "27,2,27,60")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RC", "27,2,27,60")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "27,35,27,60")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "27,35,27,54")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "27,36,27,51")
+                 ; oncetd(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "27,43,27,50")
+                     ; ( B -> D )
+                   ))> x) => x'
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RC", "27,2,27,60")
+             ; fail
 
-  RD   : F(x) -> F(x') where <oncebu((B -> D))> x => x'
+  RD :
+    F(x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RD", "29,2,29,54")> F(x')
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RD", "29,2,29,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RD", "29,2,29,54")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "29,29,29,54")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "29,29,29,48")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "29,30,29,45")
+                 ; oncebu(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "29,37,29,44")
+                     ; ( B -> D )
+                   ))> x) => x'
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/overloading.str", "RD", "29,2,29,54")
+             ; fail

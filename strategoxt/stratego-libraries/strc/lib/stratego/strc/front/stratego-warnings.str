@@ -1,247 +1,534 @@
-/**
- * Tool for generating stratego compilation warnings 
- *
- * @todo The Stratego-warnings strategy is very expensive since it does a collect
- *       for each kind of warning. Better is to do a single traversal, possibly
- *       using a dynamic rule to turn on or off certain warnings. The warning can
- *       be printed immediately, or otherwise collected using a dynamic rule.
- *
- * @todo Passing the spec as a strategy argument is bad style; spec should be the current term. 
- *
- * @author Merijn de Jonge (m.de.jonge@tue.nl)
- */
 module stratego-warnings
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-xtc
   stratego/strc/front/error-reporting
   Stratego-Sugar
 
+
 signature
   constructors
     ObsoleteWarning     : Str -> Warning
-    MissingBuildWarning : Index * Strategy -> Warning 
+    MissingBuildWarning : Index * Strategy -> Warning
     ConstructorWarning  : Str -> Warning
 
-strategies
 
+strategies
   Stratego-warnings =
-   where(
-     ?spec
-     ; (<get-config>"--warning"; uniq <+ ![])
-     ; filter(Warning(!spec))
-     ; concat
-     ; print-warnings
-    )
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "Stratego-warnings", "27,2,34,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "28,3,34,4")
+    ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "29,5,33,20")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "29,5,29,9") ; ?spec)
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,7,33,20")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,8,30,43")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,8,30,36")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,8,30,30")
+                     ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,9,30,18") ; get-config)> "--warning")
+                  ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,33,30,36")
+                  ; uniq
+                  <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "30,41,30,43")
+                     ; ![]))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "31,7,33,20")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "31,7,31,28")
+               ; filter(
+                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "31,14,31,27")
+                   ; Warning(
+                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "31,22,31,26") ; !spec
+                     )
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "32,7,33,20")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "32,7,32,12") ; concat)
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "33,7,33,20")
+            ; print-warnings)
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "Stratego-warnings", "27,2,34,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "Stratego-warnings", "27,2,34,4")
+      ; fail
 
   Warning(spec) =
-       WarningDebugArguments(spec)
-    <+ WarningObsolete(spec)
-    <+ MaybeUnboundVariables(spec)
-    <+ LowerCaseConstructors(spec)
-    <+ log(|Warning(), "incorrect parameter passed to -W switch: ", <id>)
-       ; ![]
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "Warning", "36,2,42,11")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "37,7,42,11")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "37,7,37,33")
+       ; WarningDebugArguments(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "37,29,37,32") ; spec
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "38,7,42,11")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "38,7,38,27")
+             ; WarningObsolete(
+                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "38,23,38,26") ; spec
+               )
+             <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "39,7,42,11")
+                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "39,7,39,33")
+                   ; MaybeUnboundVariables(
+                       s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "39,29,39,32") ; spec
+                     )
+                   <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "40,7,42,11")
+                      ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "40,7,40,33")
+                         ; LowerCaseConstructors(
+                             s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "40,29,40,32") ; spec
+                           )
+                         <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "41,7,42,11")
+                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "41,7,41,72")
+                               ; log(
+                                 | Warning()
+                                 , "incorrect parameter passed to -W switch: "
+                                 , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "41,69,41,70") ; id>
+                                 ))
+                            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "42,9,42,11")
+                            ; ![]))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "Warning", "36,2,42,11")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "Warning", "36,2,42,11")
+      ; fail
+
 
 strategies
-
   LowerCaseConstructors(spec) =
-    ?"lower-case-constructors"
-    ; spec
-    ; collect( ?OpDecl(<id>, _)  )
-    ; uniq
-    ; filter( 
-        \ x -> ConstructorWarning(<double-quote>x) 
-          where
-            lower-case => x
-            ; not("" + "stdin" + "stdout" + "stderr" + "meta-var" + "meta-listvar" + "amb")
-        \
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "LowerCaseConstructors", "46,2,57,6")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "47,4,57,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "47,4,47,29")
+       ; ?"lower-case-constructors")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "48,6,57,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "48,6,48,9") ; spec)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "49,6,57,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "49,6,49,33")
+       ; collect(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "49,15,49,30")
+           ; ?OpDecl(
+                <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "49,24,49,25") ; id>
+              , _
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "50,6,57,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "50,6,50,9") ; uniq)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "51,6,57,6")
+    ; filter(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "52,8,56,8")
+        ; \ x -> ConstructorWarning(
+                   <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "52,35,52,46") ; double-quote> x
+                 )
+            where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "54,12,55,90")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "54,12,54,26")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "54,12,54,21") ; lower-case) => x)
+                  ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,14,55,90")
+                  ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,18,55,89")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,18,55,19") ; ""
+                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,23,55,89")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,23,55,29") ; "stdin"
+                                + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,33,55,89")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,33,55,40") ; "stdout"
+                                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,44,55,89")
+                                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,44,55,51") ; "stderr"
+                                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,55,55,89")
+                                            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,55,55,64") ; "meta-var"
+                                               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,68,55,89")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,68,55,81") ; "meta-listvar"
+                                                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "55,85,55,89") ; "amb"))))))) \
       )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "LowerCaseConstructors", "46,2,57,6")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "LowerCaseConstructors", "46,2,57,6")
+      ; fail
 
-  /**
-   * Handled by use-def component
-   */
   MaybeUnboundVariables(spec) =
-    ?"maybe-unbound-variables"
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "MaybeUnboundVariables", "62,2,64,8")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "63,4,64,8")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "63,4,63,29")
+       ; ?"maybe-unbound-variables")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "64,6,64,8")
     ; ![]
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "MaybeUnboundVariables", "62,2,64,8")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "MaybeUnboundVariables", "62,2,64,8")
+      ; fail
+
 
 strategies
-
-  /**
-   * Debug arguments
-   */
   WarningDebugArguments(spec) =
-    ?"debug-arguments"
-    ; spec
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "WarningDebugArguments", "71,2,74,26")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "72,4,74,26")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "72,4,72,21")
+       ; ?"debug-arguments")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "73,6,74,26")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "73,6,73,9") ; spec)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "74,6,74,26")
     ; missing-build-warning
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "WarningDebugArguments", "71,2,74,26")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "WarningDebugArguments", "71,2,74,26")
+      ; fail
 
-  /**
-   * Strategy to find calls to strategies with incorrect string
-   * congruence arguments
-   */
   missing-build-warning =
-    let debug-call = {ast, arg:
-          \ ast@CallT(SVar("debug"),[arg],[]) -> MissingBuildWarning(0, ast)
-            where
-              <?Match(Anno(Str(_), _))> arg
-          \ }
-         
-        xtc-transform-call = {ast, arg:
-          \ ast@CallT(SVar("xtc-transform"),[arg | _ ], []) -> MissingBuildWarning(0, ast)
-            where
-              <?Match(Anno(Str(_), _))> arg            
-          \ }
-
-
-     in strategy-argument-warning(
-          sdef-with-property(
-            debug-call
-          + xtc-transform-call
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "missing-build-warning", "80,2,100,6")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "81,4,100,6")
+    ; let debug-call =
+            s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "debug-call", "81,8,85,12")
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "81,21,85,12")
+            ; {ast, arg:
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "82,10,85,10")
+                ; \ ast@CallT(
+                          SVar("debug")
+                        , [arg]
+                        , []
+                        ) -> MissingBuildWarning(0, ast)
+                    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "84,14,84,42")
+                          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "84,15,84,37")
+                              ; ?Match(Anno(Str(_), _)))> arg \
+              }
+            < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "debug-call", "81,8,85,12")
+            + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "debug-call", "81,8,85,12")
+              ; fail
+          xtc-transform-call =
+            s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "xtc-transform-call", "87,8,91,12")
+            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "87,29,91,12")
+            ; {ast, arg:
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "88,10,91,10")
+                ; \ ast@CallT(
+                          SVar("xtc-transform")
+                        , [arg|_]
+                        , []
+                        ) -> MissingBuildWarning(0, ast)
+                    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "90,14,90,42")
+                          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "90,15,90,37")
+                              ; ?Match(Anno(Str(_), _)))> arg \
+              }
+            < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "xtc-transform-call", "87,8,91,12")
+            + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "xtc-transform-call", "87,8,91,12")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "94,8,99,8")
+        ; strategy-argument-warning(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "95,10,98,10")
+            ; sdef-with-property(
+                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "96,12,97,29")
+                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "96,12,96,21") ; debug-call
+                   + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "97,12,97,29") ; xtc-transform-call)
+              )
           )
-        )
-    end
+      end
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "missing-build-warning", "80,2,100,6")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "missing-build-warning", "80,2,100,6")
+      ; fail
+
 
 strategies
-
-  /**
-   * Obsolete strategy definitions
-   */
   WarningObsolete(spec) =
-    ?"obsolete-strategy-calls"
-    ; spec
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "WarningObsolete", "107,2,110,17")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "108,4,110,17")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "108,4,108,29")
+       ; ?"obsolete-strategy-calls")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "109,6,110,17")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "109,6,109,9") ; spec)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "110,6,110,17")
     ; obsolete-def
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "WarningObsolete", "107,2,110,17")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "WarningObsolete", "107,2,110,17")
+      ; fail
 
-  /**
-   * Strategy to find calls to the "obsolete" strategy
-   */
-  obsolete-def = 
-    strategy-invokation-warning(
-      sdef-with-property( 
-        \  CallT(SVar("obsolete"),[Build(Anno(Str(msg), _))],[]) -> ObsoleteWarning(msg) \ 
+  obsolete-def =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "obsolete-def", "115,2,120,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "116,4,120,4")
+    ; strategy-invokation-warning(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "117,6,119,6")
+        ; sdef-with-property(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "118,8,118,89")
+            ; \ CallT(
+                  SVar("obsolete")
+                , [ Build(Anno(Str(msg), _))
+                  ]
+                , []
+                ) -> ObsoleteWarning(msg) \
+          )
       )
-    )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "obsolete-def", "115,2,120,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "obsolete-def", "115,2,120,4")
+      ; fail
 
-  /**
-   * Create warning string for obsolete warning
-   */
-  mk-warning:
-    (caller, strat, ObsoleteWarning(warning)) -> msg
-    where
-      <concat-strings>
-      ["obsolete strategy or rule invoked from '", caller, "':  ", 
-       strat, ": \"", warning, "\""] => msg
+  mk-warning :
+    (caller, strat, ObsoleteWarning(warning)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "125,2,130,42")> msg
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "125,2,130,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "125,2,130,42")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "128,6,130,42")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "128,6,130,35")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "128,7,128,20") ; concat-strings)> [ "obsolete strategy or rule invoked from '"
+                                                                                                                                                , caller
+                                                                                                                                                , "':  "
+                                                                                                                                                , strat
+                                                                                                                                                , ": \""
+                                                                                                                                                , warning
+                                                                                                                                                , "\""
+                                                                                                                                                ]) => msg
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "125,2,130,42")
+             ; fail
 
-  /**
-   * Create warning string for debug warning
-   */
-  mk-warning:
-    (strat, MissingBuildWarning(index, ast)) -> msg
-    where
-      let found-txt =
-            <pp-stratego-fragment> ast
-            ; <conc-strings> ("  found (desugared) :\n    ", <id>)
+  mk-warning :
+    (strat, MissingBuildWarning(index, ast)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "135,2,156,15")> msg
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "135,2,156,15")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "135,2,156,15")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "138,6,156,15")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "138,6,156,8")
+             ; let found-txt =
+                     s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "found-txt", "138,10,140,65")
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "139,12,140,65")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "139,12,139,37")
+                        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "139,13,139,32") ; pp-stratego-fragment)> ast)
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "140,14,140,65")
+                     ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "140,15,140,26") ; conc-strings)> ( "  found (desugared) :\n    "
+                                                                                                                                                       , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "140,62,140,63") ; id>
+                                                                                                                                                       )
+                     < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "found-txt", "138,10,140,65")
+                     + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "found-txt", "138,10,140,65")
+                       ; fail
+                   expected-txt =
+                     s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "expected-txt", "142,10,146,17")
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,12,146,17")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,12,145,55")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,12,143,67")
+                           ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,13,143,62")
+                               ; CallT(
+                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,19,143,20") ; id
+                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,23,143,57")
+                                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,24,143,42")
+                                       ; at-index(
+                                           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,33,143,41") ; fix-build
+                                         ))> ( index
+                                             , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,54,143,55") ; id>
+                                             )
+                                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "143,60,143,61") ; id
+                                 ))> ast)
+                        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "144,14,145,55")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "144,14,144,33") ; pp-stratego-fragment)
+                        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "145,14,145,55")
+                        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "145,15,145,26") ; conc-strings)> ( "  expected:\n    "
+                                                                                                                                                          , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "145,52,145,53") ; id>
+                                                                                                                                                          )
+                        <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "146,15,146,17")
+                           ; !"")
+                     < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "expected-txt", "142,10,146,17")
+                     + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "expected-txt", "142,10,146,17")
+                       ; fail
+                   fix-build =
+                     s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "fix-build", "148,10,149,51")
+                     ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "149,12,149,51")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "149,12,149,35")
+                        ; \ Match(t) -> Build(t) \
+                        <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "149,40,149,51")
+                           ; !Build(
+                                <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "149,48,149,49") ; id>
+                              ))
+                     < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "fix-build", "148,10,149,51")
+                     + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "fix-build", "148,10,149,51")
+                       ; fail
+               in
+                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "151,10,155,10")
+                 ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "151,11,151,24") ; concat-strings)> [ "possibly missing build operator in strategy "
+                                                                                                                                                     , strat
+                                                                                                                                                     , "\n"
+                                                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "153,13,153,21") ; found-txt>
+                                                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "154,13,154,24") ; expected-txt>
+                                                                                                                                                     ]
+               end) => msg
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "135,2,156,15")
+             ; fail
 
-          expected-txt = 
-            <CallT(id, <at-index(fix-build)> (index, <id>), id)> ast
-            ; pp-stratego-fragment
-            ; <conc-strings> ("  expected:\n    ", <id>)
-            <+ !""
+  mk-warning :
+    ConstructorWarning(warning) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "161,2,164,76")> msg
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "161,2,164,76")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "161,2,164,76")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "164,6,164,76")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "164,6,164,69")
+             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "164,7,164,20") ; concat-strings)> ["lowercase constructor name found: ", warning]) => msg
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "mk-warning", "161,2,164,76")
+             ; fail
 
-          fix-build =
-            \ Match(t) -> Build(t) \ <+ !Build(<id>)
-
-       in <concat-strings> [
-            "possibly missing build operator in strategy ", strat, "\n"
-          , <found-txt>
-          , <expected-txt>
-          ]
-      end => msg
-   
-  /**
-   * Create warning string for lower-case constructors
-   */
-  mk-warning:
-    ConstructorWarning(warning) -> msg
-    where
-      <concat-strings> ["lowercase constructor name found: ", warning] => msg
-   
-  /**
-   * A strategy-invokation warning is a warning related to a invokation of a
-   * strategy. Typically, this means a call to an obsolete strategy.
-   * The result is a list of triples (caller, strat, warning)
-   * where
-   *   caller  is the caller to strat
-   *   strat   is the strategy causeing the warning (for instance because it is
-   *           obsolete 
-   *   warning is the warning messeage (typically the argument to obsolete)
-   */
   strategy-invokation-warning(s) =
-    split(id, collect(s);concat;not([]));
-    map-apply(get-strategy-callers)
-   <+
-    ![]
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "strategy-invokation-warning", "176,2,180,6")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,4,180,6")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,4,178,34")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,4,177,39")
+          ; split(
+              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,10,177,11") ; id
+            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,14,177,38")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,14,177,23")
+                 ; collect(
+                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,22,177,22") ; s
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,25,177,38")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,25,177,30") ; concat)
+              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,32,177,38")
+              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "177,36,177,37") ; [])
+            ))
+       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "178,4,178,34")
+       ; map-apply(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "178,14,178,33") ; get-strategy-callers
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "180,4,180,6")
+          ; ![])
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "strategy-invokation-warning", "176,2,180,6")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "strategy-invokation-warning", "176,2,180,6")
+      ; fail
 
-  /**
-   * A strategy-argument warning warns about a possible incorrect argument to a
-   *  strategy. A typical example is a string argument to the "debug" strategy:
-   *     debug("debug message")   since it should be   debug(!"debug message")
-   */
   strategy-argument-warning(s) =
-    collect(s)
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "strategy-argument-warning", "187,2,189,11")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "188,4,189,11")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "188,4,188,13")
+       ; collect(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "188,12,188,12") ; s
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "189,6,189,11")
     ; concat
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "strategy-argument-warning", "187,2,189,11")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "strategy-argument-warning", "187,2,189,11")
+      ; fail
 
-  /**
-   * Print a list of warnings to standard error and also print a count of the
-   * number of warnings
-   */
-  print-warnings = 
-    []
-   <+
-    map(mk-warning ; log(|Warning(),<id>));
-    where(length => nr);
-    log(|Warning(),[nr, " warning(s)"])
-  
-  /**
-   * Return a list of callers to strategy "strat-name"
-   */
-  get-strategy-callers:
-    (t, (strat-name, warning-msg) ) -> warning
-    where
-     !t;
-     collect(
-        caller(!strat-name);
-        not(?strat-name);
-        !(<id>, strat-name, warning-msg)
-     ) => warning
+  print-warnings =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "print-warnings", "195,2,200,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "196,4,200,38")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "196,4,196,5") ; []
+       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "198,4,200,38")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "198,4,198,41")
+             ; map(
+                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "198,8,198,40")
+                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "198,8,198,17") ; mk-warning)
+                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "198,21,198,40")
+                 ; log(
+                   | Warning()
+                   , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "198,37,198,38") ; id>
+                   )
+               ))
+          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "199,4,200,38")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "199,4,199,22")
+             ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "199,10,199,21")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "199,10,199,15") ; length) => nr))
+          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "200,4,200,38")
+          ; log(
+            | Warning()
+            , [nr, " warning(s)"]
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "print-warnings", "195,2,200,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "print-warnings", "195,2,200,38")
+      ; fail
 
-  /**
-   * Return a list of strategy names which invoke strategy "To"
-   */
-  caller(To) = 
-    ignore-anno-def(?SDefT(name, _, _,def))
-    ; To => to
-    ; !def
-    ; collect( CallT(SVar(?to), id, id);!to )
-    ; not([])
+  get-strategy-callers :
+    (t, (strat-name, warning-msg)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "get-strategy-callers", "205,2,213,16")> warning
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "get-strategy-callers", "205,2,213,16")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "get-strategy-callers", "205,2,213,16")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "208,5,213,16")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "208,5,208,6") ; !t)
+          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "209,5,213,16")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "209,5,213,5")
+             ; collect(
+                 s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "210,8,212,39")
+                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "210,8,210,26")
+                    ; caller(
+                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "210,15,210,25") ; !strat-name
+                      ))
+                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "211,8,212,39")
+                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "211,8,211,23")
+                    ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "211,12,211,22") ; ?strat-name))
+                 ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "212,8,212,39")
+                 ; !( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "212,11,212,12") ; id>
+                    , strat-name
+                    , warning-msg
+                    )
+               )) => warning
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "get-strategy-callers", "205,2,213,16")
+             ; fail
+
+  caller(To) =
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "caller", "218,2,224,10")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "219,4,224,10")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "219,4,219,42")
+       ; ignore-anno-def(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "219,20,219,41")
+           ; ?SDefT(name, _, _, def)
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "220,6,224,10")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "220,6,220,13")
+       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "220,6,220,7") ; To) => to)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "221,6,224,10")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "221,6,221,9") ; !def)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,6,224,10")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,6,222,44")
+       ; collect(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,15,222,42")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,15,222,38")
+              ; CallT(
+                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,21,222,29")
+                  ; SVar(
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,26,222,28") ; ?to
+                    )
+                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,32,222,33") ; id
+                , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,36,222,37") ; id
+                ))
+           ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "222,40,222,42")
+           ; !to
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "223,6,224,10")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "223,6,223,12")
+       ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "223,10,223,11") ; []))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "224,6,224,10")
     ; !name
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "caller", "218,2,224,10")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "caller", "218,2,224,10")
+      ; fail
 
-  /**
-   * Return a list of tuples (name, match) for strategy definition for which
-   * "prop" holds 
-   */
   sdef-with-property(prop) =
-    ignore-anno-def(?SDefT(name, _, _, <id>))
-    ; collect(prop)
-    ; not([])
-    ; map( \ match -> (name, match) \ )
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "sdef-with-property", "230,2,234,38")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "231,4,234,38")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "231,4,231,44")
+       ; ignore-anno-def(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "231,20,231,43")
+           ; ?SDefT(
+                name
+              , _
+              , _
+              , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "231,40,231,41") ; id>
+              )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "232,6,234,38")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "232,6,232,18")
+       ; collect(
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "232,14,232,17") ; prop
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "233,6,234,38")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "233,6,233,12")
+       ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "233,10,233,11") ; []))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "234,6,234,38")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "234,11,234,36")
+        ; \ match -> (name, match) \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "sdef-with-property", "230,2,234,38")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "sdef-with-property", "230,2,234,38")
+      ; fail
 
-  /**
-   * Transform t by subsequently applying strategy s with argument a1...an from the list l
-   *
-   * @type (t,l) -> t'
-   */
   map-apply(s) =
-    rec x ({a,as,t:
-      (id, []); Fst
-    <+
-      ?(t, [a|as]);
-      <x>(<s>(t,a), as)
-   })
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "map-apply", "241,2,247,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "242,4,247,4")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "242,11,247,3")
+        ; {a, as, t:
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "243,6,246,22")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "243,6,243,18")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "243,6,243,13")
+                  ; ( s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "243,7,243,8") ; id
+                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "243,11,243,12") ; []
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "243,16,243,18")
+               ; Fst
+               <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "245,6,246,22")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "245,6,245,17")
+                     ; ?(t, [a|as]))
+                  ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "246,6,246,22")
+                  ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "246,7,246,7") ; x)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "246,11,246,11") ; s> (t, a)
+                                                                                                                                       , as
+                                                                                                                                       ))
+          }
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "map-apply", "241,2,247,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/front/stratego-warnings.str", "map-apply", "241,2,247,4")
+      ; fail

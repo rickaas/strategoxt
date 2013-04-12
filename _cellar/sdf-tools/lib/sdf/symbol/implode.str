@@ -1,20 +1,83 @@
-/**
- * @todo FIXME: this should not be here, but in libstratego-rtg.
- */
 module sdf/symbol/implode
-strategies
 
-  /**
-   * @type  Symbol -> Symbol
-   */
-  is-empty-sym = ?lit(_)
-  is-empty-sym = ?cilit(_)
-  is-empty-sym = ?ci-lit(_)
-  is-empty-sym = ?layout()
-  is-empty-sym = opt(is-empty-sym)
-  is-empty-sym = cf(is-empty-sym)
-  is-empty-sym = lex(is-empty-sym)
-  is-empty-sym = label(id, is-empty-sym)
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "10,2,10,23")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "10,17,10,23")
+    ; ?lit(_)
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "10,2,10,23")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "10,2,10,23")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "11,2,11,25")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "11,17,11,25")
+    ; ?cilit(_)
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "11,2,11,25")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "11,2,11,25")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "12,2,12,26")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "12,17,12,26")
+    ; ?ci-lit(_)
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "12,2,12,26")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "12,2,12,26")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "13,2,13,25")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "13,17,13,25")
+    ; ?layout()
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "13,2,13,25")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "13,2,13,25")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "14,2,14,33")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "14,17,14,33")
+    ; opt(
+        s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "14,21,14,32") ; is-empty-sym
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "14,2,14,33")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "14,2,14,33")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "15,2,15,32")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "15,17,15,32")
+    ; cf(
+        s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "15,20,15,31") ; is-empty-sym
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "15,2,15,32")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "15,2,15,32")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "16,2,16,33")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "16,17,16,33")
+    ; lex(
+        s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "16,21,16,32") ; is-empty-sym
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "16,2,16,33")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "16,2,16,33")
+      ; fail
+
+  is-empty-sym =
+    s-enter(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "17,2,17,39")
+    ; s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "17,17,17,39")
+    ; label(
+        s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "17,23,17,24") ; id
+      , s-step(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "17,27,17,38") ; is-empty-sym
+      )
+    < s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "17,2,17,39")
+    + s-exit(|"_cellar/sdf-tools/lib/sdf/symbol/implode.str", "is-empty-sym", "17,2,17,39")
+      ; fail
+
 
 signature
   constructors

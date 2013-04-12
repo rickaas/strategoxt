@@ -1,103 +1,230 @@
 module match-to-matrix
-imports Stratego 
-	stratego/strc/match/matrix 
-	stratego/strc/front/desugar 
-	stratego/strc/opt/stratego-laws
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  Stratego
+  stratego/strc/match/matrix
+  stratego/strc/front/desugar
+  stratego/strc/opt/stratego-laws
+
 
 strategies
-
   match-to-matrix_OLD =
-    where(assume-shared-terms := <AssumeSharedTerms>)
-  ; downup(repeat(MatchToMatrix + MatrixMerge + Simplify(|assume-shared-terms)))
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "match-to-matrix_OLD", "9,2,11,79")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "10,4,11,79")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "10,4,10,52")
+       ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "10,10,10,51")
+               ; assume-shared-terms := <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "10,34,10,50") ; AssumeSharedTerms>))
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,4,11,79")
+    ; downup(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,11,11,78")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,18,11,77")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,18,11,30") ; MatchToMatrix
+               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,34,11,77")
+                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,34,11,44") ; MatrixMerge
+                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "11,48,11,77")
+                      ; Simplify(|assume-shared-terms)))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "match-to-matrix_OLD", "9,2,11,79")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "match-to-matrix_OLD", "9,2,11,79")
+      ; fail
 
   match-to-matrix =
-  (
-    if Choice(id, id) + LChoice(id, id) + GuardedLChoice(id, Id(), id) then
-      rec x(
-        LChoice(x, x)
-        <+ GuardedLChoice(x, Id(), x)
-        <+ rec y(
-             Seq(y, match-to-matrix)
-             <+ Scope(id, y)
-             <+ MatchToMatrix
-             <+ ExpandId; y
-             <+ all(match-to-matrix)
-           )
+    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "match-to-matrix", "13,2,31,49")
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "14,2,31,49")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,4,29,5")
+       ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,7,15,69")
+            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,7,15,20")
+               ; Choice(
+                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,14,15,15") ; id
+                 , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,18,15,19") ; id
+                 )
+               + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,24,15,69")
+                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,24,15,38")
+                    ; LChoice(
+                        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,32,15,33") ; id
+                      , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,36,15,37") ; id
+                      )
+                    + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,42,15,69")
+                      ; GuardedLChoice(
+                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,57,15,58") ; id
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,61,15,64") ; Id
+                        , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "15,67,15,68") ; id
+                        ))) then
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "16,6,26,6")
+           ; rec x (
+               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "17,8,25,11")
+               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "17,8,17,20")
+                  ; LChoice(
+                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "17,16,17,16") ; x
+                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "17,19,17,19") ; x
+                    )
+                  <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "18,11,25,11")
+                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "18,11,18,36")
+                        ; GuardedLChoice(
+                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "18,26,18,26") ; x
+                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "18,29,18,32") ; Id
+                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "18,35,18,35") ; x
+                          )
+                        <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "19,11,25,11")
+                           ; rec y (
+                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "20,13,24,35")
+                               ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "20,13,20,35")
+                                  ; Seq(
+                                      s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "20,17,20,17") ; y
+                                    , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "20,20,20,34") ; match-to-matrix
+                                    )
+                                  <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "21,16,24,35")
+                                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "21,16,21,27")
+                                        ; Scope(
+                                            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "21,22,21,23") ; id
+                                          , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "21,26,21,26") ; y
+                                          )
+                                        <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "22,16,24,35")
+                                           ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "22,16,22,28") ; MatchToMatrix
+                                              <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "23,16,24,35")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "23,16,23,26")
+                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "23,16,23,23") ; ExpandId)
+                                                    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "23,26,23,26")
+                                                    ; y
+                                                    <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "24,16,24,35")
+                                                       ; all(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "24,20,24,34") ; match-to-matrix)))))
+                             )))
+             )
+         else
+           s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "28,5,28,24")
+           ; all(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "28,9,28,23") ; match-to-matrix)
+         end)
+    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "31,4,31,49")
+    ; bottomup(
+        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "31,13,31,48")
+        ; repeat(
+            s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "31,20,31,30") ; MatrixMerge
+          )
       )
-   else 
-     all(match-to-matrix)
-   end
-  )
-  ; bottomup(repeat(MatrixMerge /* + Simplify */))
+    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "match-to-matrix", "13,2,31,49")
+    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "match-to-matrix", "13,2,31,49")
+      ; fail
+
 
 rules
 
   ExpandId :
-    Id() -> Scope([x], Seq(Match(Var(x)), Build(Var(x))))
-    where new => x
+    Id() -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "ExpandId", "35,2,37,17")> Scope(
+                                                                                                                                    [x]
+                                                                                                                                  , Seq(
+                                                                                                                                      Match(Var(x))
+                                                                                                                                    , Build(Var(x))
+                                                                                                                                    )
+                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "ExpandId", "35,2,37,17")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "ExpandId", "35,2,37,17")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "37,10,37,17")
+          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "37,10,37,12") ; new) => x
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "ExpandId", "35,2,37,17")
+             ; fail
 
-  MatchToMatrix : 
-    Match(t) -> <term-to-matrix> t
+  MatchToMatrix :
+    Match(t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatchToMatrix", "39,2,40,33")> <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "40,17,40,30") ; term-to-matrix> t
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatchToMatrix", "39,2,40,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatchToMatrix", "39,2,40,33")
+             ; fail
 
-  MatrixMerge : 
-    Seq(Matrix(ps, [Row(ts, s1)]), s2) ->
-    Matrix(ps, [Row(ts, Seq(s1, s2))])
+  MatrixMerge :
+    Seq(
+      Matrix(
+        ps
+      , [Row(ts, s1)]
+      )
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "42,2,44,37")> Matrix(
+                                                                                                                                    ps
+                                                                                                                                  , [Row(ts, Seq(s1, s2))]
+                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "42,2,44,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "42,2,44,37")
+             ; fail
 
-  MatrixMerge : 
-    Scope(xs, Matrix(ps, rows)) ->
-    Matrix(ps, <map(\ Row(ts, s) -> Row(ts, Scope(xs, s)) \ )> rows)
+  MatrixMerge :
+    Scope(xs, Matrix(ps, rows)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "46,2,48,67")> Matrix(
+                                                                                                                                                              ps
+                                                                                                                                                            , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "48,16,48,60")
+                                                                                                                                                               ; map(
+                                                                                                                                                                   s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "48,20,48,58")
+                                                                                                                                                                   ; \ Row(ts, s) -> Row(ts, Scope(xs, s)) \
+                                                                                                                                                                 )> rows
+                                                                                                                                                            )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "46,2,48,67")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "46,2,48,67")
+             ; fail
 
-  MatrixMerge : 
-    GuardedLChoice(Matrix(ps, rows), Id(), s2) ->
-    LChoice(Matrix(ps, rows), s2)
+  MatrixMerge :
+    GuardedLChoice(
+      Matrix(ps, rows)
+    , Id()
+    , s2
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "50,2,52,32")> LChoice(Matrix(ps, rows), s2)
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "50,2,52,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "50,2,52,32")
+             ; fail
 
-//  MatrixMerge : 
-//    GuardedLChoice(Matrix(ps, rows), s1, s2) ->
-//    LChoice(Matrix(ps, <map(\ row -> (row, s1) \ )> rows), s2)
+  MatrixMerge :
+    LChoice(
+      Matrix(ps1, rows1)
+    , LChoice(Matrix(ps2, rows2), s)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "58,2,60,64")> LChoice(
+                                                                                                                                    Matrix(
+                                                                                                                                      <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "60,20,60,24") ; union> (ps1, ps2)
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "60,40,60,43") ; conc> (rows1, rows2)
+                                                                                                                                    )
+                                                                                                                                  , s
+                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "58,2,60,64")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "58,2,60,64")
+             ; fail
 
-  MatrixMerge : 
-    LChoice(Matrix(ps1, rows1), LChoice(Matrix(ps2, rows2), s)) ->
-    LChoice(Matrix(<union> (ps1, ps2), <conc> (rows1, rows2)), s)
+  MatrixMerge :
+    LChoice(
+      Matrix(ps1, rows1)
+    , Matrix(ps2, rows2)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "62,2,64,52")> Matrix(
+                                                                                                                                    <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "64,12,64,16") ; union> (ps1, ps2)
+                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "64,32,64,35") ; conc> (rows1, rows2)
+                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "62,2,64,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "62,2,64,52")
+             ; fail
 
-  MatrixMerge : 
-    LChoice(Matrix(ps1, rows1), Matrix(ps2, rows2)) ->
-    Matrix(<union> (ps1, ps2), <conc> (rows1, rows2))
+  MatrixMerge :
+    LChoice(
+      Matrix(ps1, rows1)
+    , LChoice(Matrix(ps2, rows2), s)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "66,2,68,64")> LChoice(
+                                                                                                                                    Matrix(
+                                                                                                                                      <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "68,20,68,24") ; union> (ps1, ps2)
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "68,40,68,43") ; conc> (rows1, rows2)
+                                                                                                                                    )
+                                                                                                                                  , s
+                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "66,2,68,64")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMerge", "66,2,68,64")
+             ; fail
 
-  MatrixMerge : 
-    LChoice(Matrix(ps1, rows1), LChoice(Matrix(ps2, rows2), s)) ->
-    LChoice(Matrix(<union> (ps1, ps2), <conc> (rows1, rows2)), s)
-
-  // The following rule is invalid because of the inequality
-  //
-  //  (s1 + s2); s3 =/= (s1; s3) + (s2; s3)
-  // 
-  // Also it leads to code explosion
-
-  MatrixMergeNotValid : 
-    Seq(Matrix(ps, rows), s1) ->
-    Matrix(ps, <map(\ Row(ts, s2) -> Row(ts, Seq(s2, s1)) \ )> rows)
-
-
-  // In some cases it might be interesting to consider though, e.g.,
-  // if s1 is small and always succeeds.
-
-/*
-    Pattern match compilation for Stratego
-
-    Copyright (C) 2003 Eelco Visser <visser@acm.org>
-
-    This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2 of the License, or (at your option) any later version.
-
-    This library is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
-
-*/
+  MatrixMergeNotValid :
+    Seq(Matrix(ps, rows), s1) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMergeNotValid", "76,2,78,67")> Matrix(
+                                                                                                                                                                    ps
+                                                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "78,16,78,60")
+                                                                                                                                                                     ; map(
+                                                                                                                                                                         s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "78,20,78,58")
+                                                                                                                                                                         ; \ Row(ts, s2) -> Row(ts, Seq(s2, s1)) \
+                                                                                                                                                                       )> rows
+                                                                                                                                                                  )
+    where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMergeNotValid", "76,2,78,67")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/match-to-matrix.str", "MatrixMergeNotValid", "76,2,78,67")
+             ; fail

@@ -1,16 +1,58 @@
 module test11
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 signature
-  sorts Term
+  sorts
+    Term
+
   constructors
     Var : String -> Term
 
+
 strategies
+  f(g : ( Term -> Term ) * Term -> Term) :
+    x -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "f", "10,2,10,54")> <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "10,47,10,51")
+                                                                                                           ; g(
+                                                                                                               s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "10,49,10,50") ; id
+                                                                                                             )> x
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "f", "10,2,10,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "f", "10,2,10,54")
+             ; fail
 
-  f(g : (Term -> Term) * Term -> Term) : x -> <g(id)> x
-
-  h : y -> z where <Var(id)> y => z
+  h :
+    y -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "h", "12,2,12,34")> z
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "h", "12,2,12,34")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "h", "12,2,12,34")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "12,19,12,34")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "12,19,12,29")
+             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "12,20,12,26")
+                 ; Var(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "12,24,12,25") ; id
+                   ))> y) => z
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "h", "12,2,12,34")
+             ; fail
 
   main-test11 =
-    !Var("a");
-    where(f(Var) + h)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "main-test11", "14,2,16,20")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "15,4,16,20")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "15,4,15,12")
+       ; !Var("a"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "16,4,16,20")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "16,10,16,19")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "16,10,16,15")
+               ; f(
+                   s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "16,12,16,14") ; Var
+                 )
+               + s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "16,19,16,19") ; h))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "main-test11", "14,2,16,20")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test11.str", "main-test11", "14,2,16,20")
+      ; fail

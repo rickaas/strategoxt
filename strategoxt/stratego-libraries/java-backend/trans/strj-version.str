@@ -1,18 +1,36 @@
-/**
- * strj version overrides
- *
- * @author Lennart Kats
- */
 module strj-version
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 strategies
-  
   override strc-version-number =
-    prim("STRJ_VERSION_TERM")
+             s-enter(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "strc-version-number", "10,11,11,28")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "11,4,11,28")
+             ; prim("STRJ_VERSION_TERM")
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "strc-version-number", "10,11,11,28")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "strc-version-number", "10,11,11,28")
+               ; fail
 
   override svn-revision-number =
-    prim("SVN_REVISION_TERM")
-    
-  override strc-version =
-    where(<fprintnl>(stdout(), ["STRJ ", <strc-version-number>, "\n"]))
+             s-enter(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "svn-revision-number", "13,11,14,28")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "14,4,14,28")
+             ; prim("SVN_REVISION_TERM")
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "svn-revision-number", "13,11,14,28")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "svn-revision-number", "13,11,14,28")
+               ; fail
 
+  override strc-version =
+             s-enter(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "strc-version", "16,11,17,70")
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "17,4,17,70")
+             ; where(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "17,10,17,69")
+                     ; <(s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "17,11,17,18") ; fprintnl)> ( stdout()
+                                                                                                                                  , [ "STRJ "
+                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "17,42,17,60") ; strc-version-number>
+                                                                                                                                    , "\n"
+                                                                                                                                    ]
+                                                                                                                                  ))
+             < s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "strc-version", "16,11,17,70")
+             + s-exit(|"strategoxt/stratego-libraries/java-backend/trans/strj-version.str", "strc-version", "16,11,17,70")
+               ; fail

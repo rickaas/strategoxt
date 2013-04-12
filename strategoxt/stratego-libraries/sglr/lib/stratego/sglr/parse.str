@@ -1,295 +1,816 @@
-/**
- * Stratego Bindings for parsing using SGLR.
- *
- * All parse functions fail if there is a parse error. The ATerm
- * representation of the parse error can be retreived separately using
- * get-parse-error.
- *
- * @author Martin Bravenboer
- */
 module stratego/sglr/parse
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
 
-/**
- * Parse a string to an AST.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  String -> AST 
- * @todo  Set the pt type to asfix2?
- */
-strategies
 
+strategies
   parse-string(|tbl) =
-    parse-string(id|tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "26,2,27,23")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "27,4,27,23")
+    ; parse-string(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "27,17,27,18") ; id
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "26,2,27,23")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "26,2,27,23")
+      ; fail
 
   parse-string(|tbl, start-symbol) =
-    parse-string(id | tbl, start-symbol)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "29,2,30,39")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "30,4,30,39")
+    ; parse-string(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "30,17,30,18") ; id
+      | tbl
+      , start-symbol
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "29,2,30,39")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "29,2,30,39")
+      ; fail
 
   parse-string(|tbl, start-symbol, path) =
-    parse-string(id | tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "32,2,33,45")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "33,4,33,45")
+    ; parse-string(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "33,17,33,18") ; id
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "32,2,33,45")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "32,2,33,45")
+      ; fail
 
-  parse-string(on-parse-error | tbl) =
-    parse-string(on-parse-error | tbl, None(), "string")
+  parse-string(on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "35,2,36,55")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "36,4,36,55")
+    ; parse-string(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "36,17,36,30") ; on-parse-error
+      | tbl
+      , None()
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "35,2,36,55")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "35,2,36,55")
+      ; fail
 
-  parse-string(on-parse-error | tbl, start-symbol) =
-    parse-string(on-parse-error | tbl, start-symbol, "string")
+  parse-string(on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "38,2,39,61")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "39,4,39,61")
+    ; parse-string(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "39,17,39,30") ; on-parse-error
+      | tbl
+      , start-symbol
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "38,2,39,61")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "38,2,39,61")
+      ; fail
 
-  parse-string(on-parse-error | tbl, start-symbol, path) =
-    parse-string-pt(on-parse-error | tbl, start-symbol, path)
+  parse-string(on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "41,2,43,18")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "42,4,43,18")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "42,4,42,60")
+       ; parse-string-pt(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "42,20,42,33") ; on-parse-error
+         | tbl
+         , start-symbol
+         , path
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "43,6,43,18")
     ; implode-asfix
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "41,2,43,18")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string", "41,2,43,18")
+      ; fail
 
-/**
- * Parse a string to a parse tree.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  String -> ParseTree 
- */
+
 strategies
-
   parse-string-pt(|tbl) =
-    parse-string-pt(id | tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "55,2,56,28")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "56,4,56,28")
+    ; parse-string-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "56,20,56,21") ; id
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "55,2,56,28")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "55,2,56,28")
+      ; fail
 
   parse-string-pt(|tbl, start-symbol) =
-    parse-string-pt(id | tbl, start-symbol)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "58,2,59,42")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "59,4,59,42")
+    ; parse-string-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "59,20,59,21") ; id
+      | tbl
+      , start-symbol
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "58,2,59,42")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "58,2,59,42")
+      ; fail
 
   parse-string-pt(|tbl, start-symbol, path) =
-    parse-string-pt(id | tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "61,2,62,48")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "62,4,62,48")
+    ; parse-string-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "62,20,62,21") ; id
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "61,2,62,48")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "61,2,62,48")
+      ; fail
 
-  parse-string-pt(on-parse-error | tbl) =
-    parse-string-pt(on-parse-error | tbl, None(), "string")
+  parse-string-pt(on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "64,2,65,58")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "65,4,65,58")
+    ; parse-string-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "65,20,65,33") ; on-parse-error
+      | tbl
+      , None()
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "64,2,65,58")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "64,2,65,58")
+      ; fail
 
-  parse-string-pt(on-parse-error | tbl, start-symbol) =
-    parse-string-pt(on-parse-error | tbl, start-symbol, "string")
+  parse-string-pt(on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "67,2,68,64")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "68,4,68,64")
+    ; parse-string-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "68,20,68,33") ; on-parse-error
+      | tbl
+      , start-symbol
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "67,2,68,64")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "67,2,68,64")
+      ; fail
 
-  parse-string-pt(on-parse-error |tbl, start-symbol, path) =
-    where(<try(memo-open-parse-table)> tbl => ParseTable(internal-tbl))
-    ; ?string
-    ; prim("STRSGLR_parse_string_pt", on-parse-error | string, internal-tbl, start-symbol, path)
+  parse-string-pt(on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "70,2,73,95")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "71,4,73,95")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "71,4,71,70")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "71,10,71,69")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "71,10,71,41")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "71,11,71,36")
+                      ; try(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "71,15,71,35") ; memo-open-parse-table
+                        ))> tbl) => ParseTable(internal-tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "72,6,73,95")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "72,6,72,12") ; ?string)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "73,6,73,95")
+    ; prim(
+        "STRSGLR_parse_string_pt"
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "73,38,73,51") ; on-parse-error
+      | string
+      , internal-tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "70,2,73,95")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-string-pt", "70,2,73,95")
+      ; fail
 
-/**
- * Parse a stream to an AST.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  Stream -> AST 
- * @todo  Set the pt type to asfix2?
- */
+
 strategies
-
   parse-stream(|tbl) =
-    parse-stream(fail | tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "86,2,87,27")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "87,4,87,27")
+    ; parse-stream(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "87,17,87,20") ; fail
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "86,2,87,27")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "86,2,87,27")
+      ; fail
 
   parse-stream(|tbl, start-symbol) =
-    parse-stream(fail | tbl, start-symbol)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "89,2,90,41")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "90,4,90,41")
+    ; parse-stream(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "90,17,90,20") ; fail
+      | tbl
+      , start-symbol
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "89,2,90,41")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "89,2,90,41")
+      ; fail
 
   parse-stream(|tbl, start-symbol, path) =
-    parse-stream(fail | tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "92,2,93,47")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "93,4,93,47")
+    ; parse-stream(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "93,17,93,20") ; fail
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "92,2,93,47")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "92,2,93,47")
+      ; fail
 
-  parse-stream(on-parse-error |tbl) =
-    parse-stream(on-parse-error | tbl, None(), "string")
+  parse-stream(on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "95,2,96,55")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "96,4,96,55")
+    ; parse-stream(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "96,17,96,30") ; on-parse-error
+      | tbl
+      , None()
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "95,2,96,55")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "95,2,96,55")
+      ; fail
 
-  parse-stream(on-parse-error | tbl, start-symbol) =
-    parse-stream(on-parse-error | tbl, start-symbol, "string")
-    
-  parse-stream(on-parse-error | tbl, start-symbol, path) =
-    parse-stream-pt(on-parse-error | tbl, start-symbol, path)
+  parse-stream(on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "98,2,99,61")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "99,4,99,61")
+    ; parse-stream(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "99,17,99,30") ; on-parse-error
+      | tbl
+      , start-symbol
+      , "string"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "98,2,99,61")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "98,2,99,61")
+      ; fail
+
+  parse-stream(on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "101,2,103,18")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "102,4,103,18")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "102,4,102,60")
+       ; parse-stream-pt(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "102,20,102,33") ; on-parse-error
+         | tbl
+         , start-symbol
+         , path
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "103,6,103,18")
     ; implode-asfix
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "101,2,103,18")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream", "101,2,103,18")
+      ; fail
 
-/**
- * Parse a stream to a parse tree.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  Stream -> ParseTree 
- */
+
 strategies
+  parse-stream-pt(|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "115,2,116,28")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "116,4,116,28")
+    ; parse-stream-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "116,20,116,21") ; id
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "115,2,116,28")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "115,2,116,28")
+      ; fail
 
-  parse-stream-pt(| tbl) =
-    parse-stream-pt(id | tbl)
+  parse-stream-pt(|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "118,2,119,42")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "119,4,119,42")
+    ; parse-stream-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "119,20,119,21") ; id
+      | tbl
+      , start-symbol
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "118,2,119,42")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "118,2,119,42")
+      ; fail
 
-  parse-stream-pt(| tbl, start-symbol) =
-    parse-stream-pt(id | tbl, start-symbol)
+  parse-stream-pt(|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "121,2,122,48")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "122,4,122,48")
+    ; parse-stream-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "122,20,122,21") ; id
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "121,2,122,48")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "121,2,122,48")
+      ; fail
 
-  parse-stream-pt(| tbl, start-symbol, path) =
-    parse-stream-pt(id | tbl, start-symbol, path)
+  parse-stream-pt(on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "124,2,125,58")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "125,4,125,58")
+    ; parse-stream-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "125,20,125,33") ; on-parse-error
+      | tbl
+      , None()
+      , "stream"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "124,2,125,58")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "124,2,125,58")
+      ; fail
 
-  parse-stream-pt(on-parse-error | tbl) =
-    parse-stream-pt(on-parse-error | tbl, None(), "stream")
+  parse-stream-pt(on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "127,2,128,64")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "128,4,128,64")
+    ; parse-stream-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "128,20,128,33") ; on-parse-error
+      | tbl
+      , start-symbol
+      , "stream"
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "127,2,128,64")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "127,2,128,64")
+      ; fail
 
-  parse-stream-pt(on-parse-error | tbl, start-symbol) =
-    parse-stream-pt(on-parse-error | tbl, start-symbol, "stream")
-    
-  parse-stream-pt(on-parse-error | tbl, start-symbol, path) =
-    where(<try(memo-open-parse-table)> tbl => ParseTable(internal-tbl))
-    ; ?Stream(stream)
-    ; prim("STRSGLR_parse_stream_pt", on-parse-error | stream, internal-tbl, start-symbol, path)
+  parse-stream-pt(on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "130,2,133,95")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "131,4,133,95")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "131,4,131,70")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "131,10,131,69")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "131,10,131,41")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "131,11,131,36")
+                      ; try(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "131,15,131,35") ; memo-open-parse-table
+                        ))> tbl) => ParseTable(internal-tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "132,6,133,95")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "132,6,132,20")
+       ; ?Stream(stream))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "133,6,133,95")
+    ; prim(
+        "STRSGLR_parse_stream_pt"
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "133,38,133,51") ; on-parse-error
+      | stream
+      , internal-tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "130,2,133,95")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-stream-pt", "130,2,133,95")
+      ; fail
 
-/**
- * Parse a file to an AST.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  String -> AST
- * @todo Set the pt type to asfix2?
- */
+
 strategies
-
   parse-file(|tbl) =
-    parse-file(fail, fail | tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "146,2,147,31")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "147,4,147,31")
+    ; parse-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "147,15,147,18") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "147,21,147,24") ; fail
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "146,2,147,31")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "146,2,147,31")
+      ; fail
 
   parse-file(|tbl, start-symbol) =
-    parse-file(fail, fail | tbl, start-symbol)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "149,2,150,45")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "150,4,150,45")
+    ; parse-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "150,15,150,18") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "150,21,150,24") ; fail
+      | tbl
+      , start-symbol
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "149,2,150,45")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "149,2,150,45")
+      ; fail
 
   parse-file(|tbl, start-symbol, path) =
-    parse-file(fail, fail | tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "152,2,153,51")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "153,4,153,51")
+    ; parse-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "153,15,153,18") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "153,21,153,24") ; fail
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "152,2,153,51")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "152,2,153,51")
+      ; fail
 
-  parse-file(on-open-error, on-parse-error | tbl) =
-    ?path; parse-file(on-open-error, on-parse-error | tbl, None(), path)
+  parse-file(on-open-error, on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "155,2,156,71")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "156,4,156,71")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "156,4,156,8") ; ?path)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "156,11,156,71")
+    ; parse-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "156,22,156,34") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "156,37,156,50") ; on-parse-error
+      | tbl
+      , None()
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "155,2,156,71")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "155,2,156,71")
+      ; fail
 
-  parse-file(on-open-error, on-parse-error | tbl, start-symbol) =
-    ?path; parse-file(on-open-error, on-parse-error | tbl, start-symbol, path)
+  parse-file(on-open-error, on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "158,2,159,77")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "159,4,159,77")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "159,4,159,8") ; ?path)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "159,11,159,77")
+    ; parse-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "159,22,159,34") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "159,37,159,50") ; on-parse-error
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "158,2,159,77")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "158,2,159,77")
+      ; fail
 
-  parse-file(on-open-error, on-parse-error | tbl, start-symbol, path) =
-    parse-file-pt(on-open-error, on-parse-error | tbl, start-symbol, path)
+  parse-file(on-open-error, on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "161,2,163,18")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "162,4,163,18")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "162,4,162,73")
+       ; parse-file-pt(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "162,18,162,30") ; on-open-error
+         , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "162,33,162,46") ; on-parse-error
+         | tbl
+         , start-symbol
+         , path
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "163,6,163,18")
     ; implode-asfix
-/**
- * Parse a file to a parse tree.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  String -> ParseTree 
- */
-strategies
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "161,2,163,18")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file", "161,2,163,18")
+      ; fail
 
+
+strategies
   parse-file-pt(|tbl) =
-    parse-file-pt(fail, fail | tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "174,2,175,34")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "175,4,175,34")
+    ; parse-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "175,18,175,21") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "175,24,175,27") ; fail
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "174,2,175,34")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "174,2,175,34")
+      ; fail
 
   parse-file-pt(|tbl, start-symbol) =
-    parse-file-pt(fail, fail | tbl, start-symbol)
-    
-  parse-file-pt(|tbl, start-symbol, path) =
-    parse-file-pt(fail, fail | tbl, start-symbol, path)
-
-  parse-file-pt(on-open-error, on-parse-error | tbl) =
-    ?path; parse-file-pt(on-open-error, on-parse-error | tbl, None(), path)
-
-  parse-file-pt(on-open-error, on-parse-error | tbl, start-symbol) =
-    ?path; parse-file-pt(on-open-error, on-parse-error | tbl, start-symbol, path)
-
-  parse-file-pt(on-open-error, on-parse-error | tbl, start-symbol, path) =
-    where(<try(memo-open-parse-table)> tbl => ParseTable(internal-tbl))
-    ; (<fopen> (<id>, "r") => stream <+ on-open-error; fail)
-    ; finally(
-        parse-stream-pt(on-parse-error | tbl, start-symbol, path)
-      , <fclose> stream
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "177,2,178,48")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "178,4,178,48")
+    ; parse-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "178,18,178,21") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "178,24,178,27") ; fail
+      | tbl
+      , start-symbol
       )
-      
-/**
- * Parse an XTC file to an AST.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  FILE -> AST
- * @todo Set the pt type to asfix2?
- */
-strategies
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "177,2,178,48")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "177,2,178,48")
+      ; fail
 
-  /**
-   * @type  FILE -> AST
-   */
+  parse-file-pt(|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "180,2,181,54")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "181,4,181,54")
+    ; parse-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "181,18,181,21") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "181,24,181,27") ; fail
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "180,2,181,54")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "180,2,181,54")
+      ; fail
+
+  parse-file-pt(on-open-error, on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "183,2,184,74")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "184,4,184,74")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "184,4,184,8") ; ?path)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "184,11,184,74")
+    ; parse-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "184,25,184,37") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "184,40,184,53") ; on-parse-error
+      | tbl
+      , None()
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "183,2,184,74")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "183,2,184,74")
+      ; fail
+
+  parse-file-pt(on-open-error, on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "186,2,187,80")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "187,4,187,80")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "187,4,187,8") ; ?path)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "187,11,187,80")
+    ; parse-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "187,25,187,37") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "187,40,187,53") ; on-parse-error
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "186,2,187,80")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "186,2,187,80")
+      ; fail
+
+  parse-file-pt(on-open-error, on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "189,2,195,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "190,4,195,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "190,4,190,70")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "190,10,190,69")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "190,10,190,41")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "190,11,190,36")
+                      ; try(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "190,15,190,35") ; memo-open-parse-table
+                        ))> tbl) => ParseTable(internal-tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,6,195,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,7,191,58")
+       ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,7,191,35")
+          ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,7,191,25")
+             ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,8,191,12") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,17,191,18") ; id>
+                                                                                                                     , "r"
+                                                                                                                     )) => stream
+          <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,40,191,58")
+             ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,40,191,52") ; on-open-error)
+             ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "191,55,191,58")
+             ; fail))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "192,6,195,6")
+    ; finally(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "193,8,193,64")
+        ; parse-stream-pt(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "193,24,193,37") ; on-parse-error
+          | tbl
+          , start-symbol
+          , path
+          )
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "194,8,194,22")
+        ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "194,9,194,14") ; fclose)> stream
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "189,2,195,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-file-pt", "189,2,195,6")
+      ; fail
+
+
+strategies
   parse-xtc-file(|tbl) =
-    parse-xtc-file(fail, fail | tbl)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "211,2,212,35")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "212,4,212,35")
+    ; parse-xtc-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "212,19,212,22") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "212,25,212,28") ; fail
+      | tbl
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "211,2,212,35")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "211,2,212,35")
+      ; fail
 
   parse-xtc-file(|tbl, start-symbol) =
-    parse-xtc-file(fail, fail | tbl, start-symbol)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "214,2,215,49")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "215,4,215,49")
+    ; parse-xtc-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "215,19,215,22") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "215,25,215,28") ; fail
+      | tbl
+      , start-symbol
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "214,2,215,49")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "214,2,215,49")
+      ; fail
 
   parse-xtc-file(|tbl, start-symbol, path) =
-    parse-xtc-file(fail, fail | tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "217,2,218,55")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "218,4,218,55")
+    ; parse-xtc-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "218,19,218,22") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "218,25,218,28") ; fail
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "217,2,218,55")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "217,2,218,55")
+      ; fail
 
-  parse-xtc-file(on-open-error, on-parse-error | tbl) =
-    ?file; parse-xtc-file(on-open-error, on-parse-error | tbl, None(), <path-of-xtc-file> file)
+  parse-xtc-file(on-open-error, on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "220,2,221,94")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "221,4,221,94")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "221,4,221,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "221,11,221,94")
+    ; parse-xtc-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "221,26,221,38") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "221,41,221,54") ; on-parse-error
+      | tbl
+      , None()
+      , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "221,72,221,87") ; path-of-xtc-file> file
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "220,2,221,94")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "220,2,221,94")
+      ; fail
 
-  parse-xtc-file(on-open-error, on-parse-error | tbl, start-symbol) =
-    ?file; parse-xtc-file(on-open-error, on-parse-error | tbl, start-symbol, <path-of-xtc-file> file)
+  parse-xtc-file(on-open-error, on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "223,2,224,100")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "224,4,224,100")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "224,4,224,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "224,11,224,100")
+    ; parse-xtc-file(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "224,26,224,38") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "224,41,224,54") ; on-parse-error
+      | tbl
+      , start-symbol
+      , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "224,78,224,93") ; path-of-xtc-file> file
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "223,2,224,100")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "223,2,224,100")
+      ; fail
 
-  parse-xtc-file(on-open-error, on-parse-error | tbl, start-symbol, path) =
-    parse-xtc-file-pt(on-open-error, on-parse-error | tbl, start-symbol, path)
+  parse-xtc-file(on-open-error, on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "226,2,228,18")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "227,4,228,18")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "227,4,227,77")
+       ; parse-xtc-file-pt(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "227,22,227,34") ; on-open-error
+         , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "227,37,227,50") ; on-parse-error
+         | tbl
+         , start-symbol
+         , path
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "228,6,228,18")
     ; implode-asfix
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "226,2,228,18")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file", "226,2,228,18")
+      ; fail
 
-/**
- * Parse an XTC file to a parse tree.
- *
- * @param ParseTable
- * @param String or None
- * @param String
- * @type  FILE -> ParseTree 
- */
+
 strategies
-
   parse-xtc-file-pt(|tbl) =
-    ?file; parse-xtc-file-pt(fail, fail | tbl, None(), <path-of-xtc-file> file)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "240,2,241,78")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "241,4,241,78")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "241,4,241,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "241,11,241,78")
+    ; parse-xtc-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "241,29,241,32") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "241,35,241,38") ; fail
+      | tbl
+      , None()
+      , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "241,56,241,71") ; path-of-xtc-file> file
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "240,2,241,78")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "240,2,241,78")
+      ; fail
 
   parse-xtc-file-pt(|tbl, start-symbol) =
-    ?file; parse-xtc-file-pt(fail, fail | tbl, start-symbol, <path-of-xtc-file> file)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "243,2,244,84")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "244,4,244,84")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "244,4,244,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "244,11,244,84")
+    ; parse-xtc-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "244,29,244,32") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "244,35,244,38") ; fail
+      | tbl
+      , start-symbol
+      , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "244,62,244,77") ; path-of-xtc-file> file
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "243,2,244,84")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "243,2,244,84")
+      ; fail
 
   parse-xtc-file-pt(|tbl, start-symbol, path) =
-    parse-xtc-file-pt(fail, fail |tbl, start-symbol, path)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "246,2,247,57")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "247,4,247,57")
+    ; parse-xtc-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "247,22,247,25") ; fail
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "247,28,247,31") ; fail
+      | tbl
+      , start-symbol
+      , path
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "246,2,247,57")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "246,2,247,57")
+      ; fail
 
-  parse-xtc-file-pt(on-open-error, on-parse-error | tbl) =
-    ?file; parse-xtc-file-pt(on-open-error, on-parse-error |tbl, None(), <path-of-xtc-file> file)
+  parse-xtc-file-pt(on-open-error, on-parse-error|tbl) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "249,2,250,96")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "250,4,250,96")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "250,4,250,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "250,11,250,96")
+    ; parse-xtc-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "250,29,250,41") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "250,44,250,57") ; on-parse-error
+      | tbl
+      , None()
+      , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "250,74,250,89") ; path-of-xtc-file> file
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "249,2,250,96")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "249,2,250,96")
+      ; fail
 
-  parse-xtc-file-pt(on-open-error, on-parse-error |tbl, start-symbol) =
-    ?file; parse-xtc-file-pt(on-open-error, on-parse-error |tbl, start-symbol, <path-of-xtc-file> file)
+  parse-xtc-file-pt(on-open-error, on-parse-error|tbl, start-symbol) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "252,2,253,102")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "253,4,253,102")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "253,4,253,8") ; ?file)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "253,11,253,102")
+    ; parse-xtc-file-pt(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "253,29,253,41") ; on-open-error
+      , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "253,44,253,57") ; on-parse-error
+      | tbl
+      , start-symbol
+      , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "253,80,253,95") ; path-of-xtc-file> file
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "252,2,253,102")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "252,2,253,102")
+      ; fail
 
-  parse-xtc-file-pt(on-open-error, on-parse-error |tbl, start-symbol, path) =
-    where(<try(memo-open-parse-table)> tbl => ParseTable(internal-tbl))
-    
+  parse-xtc-file-pt(on-open-error, on-parse-error|tbl, start-symbol, path) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "255,2,267,8")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "256,4,267,8")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "256,4,256,70")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "256,10,256,69")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "256,10,256,41")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "256,11,256,36")
+                      ; try(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "256,15,256,35") ; memo-open-parse-table
+                        ))> tbl) => ParseTable(internal-tbl)))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "258,6,267,8")
     ; let open-stream =
-            ?FILE(<id>); (<fopen> (<id>, "r") <+ on-open-error)
-            <+ ?stdin(); stdin-stream
-            
-       in open-stream => stream
-          ; finally(
-              parse-stream-pt(on-parse-error |tbl, start-symbol, path)
-            , <fclose> stream
-            )
+            s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "open-stream", "258,10,260,36")
+            ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,12,260,36")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,12,259,62")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,12,259,22")
+                  ; ?FILE(
+                       <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,19,259,20") ; id>
+                     ))
+               ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,26,259,61")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,26,259,44")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,27,259,31") ; fopen)> ( <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,36,259,37") ; id>
+                                                                                                                           , "r"
+                                                                                                                           )
+                  <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "259,49,259,61") ; on-open-error)
+               <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "260,15,260,36")
+                  ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "260,15,260,22")
+                     ; ?stdin())
+                  ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "260,25,260,36")
+                  ; stdin-stream)
+            < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "open-stream", "258,10,260,36")
+            + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "open-stream", "258,10,260,36")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "262,10,266,12")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "262,10,262,30")
+           ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "262,10,262,20") ; open-stream) => stream)
+        ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "263,12,266,12")
+        ; finally(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "264,14,264,69")
+            ; parse-stream-pt(
+                s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "264,30,264,43") ; on-parse-error
+              | tbl
+              , start-symbol
+              , path
+              )
+          , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "265,14,265,28")
+            ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "265,15,265,20") ; fclose)> stream
+          )
       end
-      
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "255,2,267,8")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "parse-xtc-file-pt", "255,2,267,8")
+      ; fail
+
   path-of-xtc-file =
-    ?FILE(<is-string>) + ?stdin(); !"stdin"
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "path-of-xtc-file", "269,2,270,42")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "270,4,270,42")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "270,4,270,21")
+       ; ?FILE(
+            <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "270,11,270,19") ; is-string>
+          )
+       + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "270,25,270,42")
+         ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "270,25,270,32")
+            ; ?stdin())
+         ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "270,35,270,42")
+         ; !"stdin")
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "path-of-xtc-file", "269,2,270,42")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "path-of-xtc-file", "269,2,270,42")
+      ; fail
+
 
 strategies
-
-  /**
-   * Returns the parser error from the last parse.
-   *
-   * Fails if the last parse did not fail.
-   */
   get-parse-error =
-    prim("STRSGLR_get_parse_error")
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "get-parse-error", "279,2,280,34")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "280,4,280,34")
+    ; prim("STRSGLR_get_parse_error")
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "get-parse-error", "279,2,280,34")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "get-parse-error", "279,2,280,34")
+      ; fail
 
-  /**
-   * Clears the current parse error.
-   *
-   * The current parse error is cleared when parsing a new input, so
-   * there is usually no reason to invoke this strategy.
-   */
   clear-parse-error =
-    prim("STRSGLR_clear_parse_error")
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "clear-parse-error", "288,2,289,36")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "289,4,289,36")
+    ; prim("STRSGLR_clear_parse_error")
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "clear-parse-error", "288,2,289,36")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "clear-parse-error", "288,2,289,36")
+      ; fail
 
-  /**
-   * Succeeds if the current term is a parse tree.
-   */
   is-parse-tree =
-    ?t; prim("STRSGLR_is_parse_tree", t)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "is-parse-tree", "294,2,295,39")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "295,4,295,39")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "295,4,295,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "295,8,295,39")
+    ; prim("STRSGLR_is_parse_tree", t)
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "is-parse-tree", "294,2,295,39")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/sglr/parse.str", "is-parse-tree", "294,2,295,39")
+      ; fail

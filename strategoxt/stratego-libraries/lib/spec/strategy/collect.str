@@ -1,218 +1,452 @@
-/**
- * Collecting subterms.
- *
- * There are two main variants of collect strategies: collect-all 
- * and collect-om.
- *
- * The collect-all strategies continue collecting terms in the 
- * subterms of a term that has already been collected.
- *
- * The collect-om strategies do not collect subterms of collected 
- * terms. They collect only the outermost subterms that satisfy 
- * some condition.
- *
- * For example: if terms matching the term pattern A(_,_) should be 
- * collected, then in the term
- *
- *   A(1, A(1, 2)) 
- *
- * collect-all variant will return 
- *
- *   A(1, A(1, 2)) and A(1, 2).
- *
- * collect-om will only return the outermost result, that is,
- *
- *   A(1, A(1, 2)).
- */
 module strategy/collect
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   collection/list/common
   term/common
 
-/**
- * Collect all subterms
- */
-strategies
 
-  /**
-   * collect all subterms for which s succeeds
-   * 
-   * This strategy returns a *set* of subterms. The result
-   * will therefore not contain duplicates.
-   */
+strategies
   collect-all(s) =
-    collect-all(s, union)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "43,2,44,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "44,4,44,24")
+    ; collect-all(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "44,16,44,16") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "44,19,44,23") ; union
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "43,2,44,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "43,2,44,24")
+      ; fail
 
-  /**
-   * collect all subterms with user-defined union operator.
-   *
-   * The un argument must take two lists and produce a single one.
-   */
-  collect-all(s,un) =
-    rec x(
-      ![<s> | <crush(![],un,x)>]
-      <+ crush(![],un,x)
-    )
+  collect-all(s, un) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "51,2,55,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "52,4,55,4")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,6,54,23")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,6,53,31")
+           ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,9,53,9") ; s>|<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,15,53,29")
+                                                                                                          ; crush(
+                                                                                                              s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,21,53,23")
+                                                                                                              ; ![]
+                                                                                                            , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,25,53,26") ; un
+                                                                                                            , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "53,28,53,28") ; x
+                                                                                                            )>]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "54,9,54,23")
+              ; crush(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "54,15,54,17")
+                  ; ![]
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "54,19,54,20") ; un
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "54,22,54,22") ; x
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "51,2,55,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "51,2,55,4")
+      ; fail
 
-  /**
-   * collect all subterms with user-defined union operator and
-   * a skip argument.
-   *
-   * The un argument must take two lists and produce a single one.
-   * If duplicates must be removed, then this argument should be union, 
-   * otherwise it usually conc.
-   *
-   * The reduce argument can be used to reduce the current term before
-   * collecting subterms of it. Producing the empty list will result
-   * in a complete skip of all subterms.
-   *
-   * example:
-   *   collect-all(?Var(_), conc, \ Assign(_, e) -> e \)
-   *
-   * applied to:
-   *   Assign(Var("x"), Plus(Var("y"), Var("z")))
-   *
-   * results in:
-   *   [Var("y"), Var("z")]
-   *
-   * The collect-all is applied to the term after the reduce, i.e the
-   * example collect-all applied to
-   *
-   *   Assign(Var("x"), Var("y"))
-   * 
-   * results in:
-   *   [Var("y")]
-   *
-   * @since  0.9.6
-   */
   collect-all(s, un, reduce) =
-    rec x(
-       ![<s> | <crush(![],un,x)>]
-    <+ reduce; x
-    <+ crush(![],un,x)
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "88,2,93,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "89,4,93,4")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,7,92,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,7,90,32")
+           ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,10,90,10") ; s>|<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,16,90,30")
+                                                                                                            ; crush(
+                                                                                                                s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,22,90,24")
+                                                                                                                ; ![]
+                                                                                                              , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,26,90,27") ; un
+                                                                                                              , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "90,29,90,29") ; x
+                                                                                                              )>]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "91,7,92,21")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "91,7,91,15")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "91,7,91,12") ; reduce)
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "91,15,91,15")
+                 ; x
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "92,7,92,21")
+                    ; crush(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "92,13,92,15")
+                        ; ![]
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "92,17,92,18") ; un
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "92,20,92,20") ; x
+                      )))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "88,2,93,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-all", "88,2,93,4")
+      ; fail
 
-/**
- * Collect outermost subterms
- */
+
 strategies
-
-  /**
-   * collect outermost subterms for which s succeeds
-   * 
-   * This strategy returns a *set* of subterms. The result
-   * will therefore not contain duplicates.
-   */
   collect-om(s) =
-    collect-om(s, union)
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "106,2,107,23")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "107,4,107,23")
+    ; collect-om(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "107,15,107,15") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "107,18,107,22") ; union
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "106,2,107,23")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "106,2,107,23")
+      ; fail
 
-  /**
-   * Synonym of collect-om.
-   */
-  collect(s) = 
-    collect-om(s)
+  collect(s) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect", "112,2,113,16")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "113,4,113,16")
+    ; collect-om(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "113,15,113,15") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect", "112,2,113,16")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect", "112,2,113,16")
+      ; fail
 
-  /**
-   * collect outermost subterms with user-defined union operator.
-   *
-   * The un argument must take two lists and produce a single one.
-   */
   collect-om(s, op) =
-    ![<s>] 
-    <+ crush(![], op, collect-om(s, op))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "120,2,122,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "121,4,122,39")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "121,4,121,9")
+       ; ![ <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "121,7,121,7") ; s>
+          ]
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "122,7,122,39")
+          ; crush(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "122,13,122,15")
+              ; ![]
+            , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "122,18,122,19") ; op
+            , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "122,22,122,38")
+              ; collect-om(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "122,33,122,33") ; s
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "122,36,122,37") ; op
+                )
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "120,2,122,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "120,2,122,39")
+      ; fail
 
-  /**
-   * collect outermost subterms with user-defined union operator and
-   * a skip argument.
-   *
-   * See collect-all(s, un, skip) for a description of the arguments.
-   *
-   * @since  0.9.6
-   */
   collect-om(s, un, skip) =
-    rec x(
-       ![<s>]
-    <+ skip; crush(![],un,x)
-    <+ crush(![],un,x)
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "132,2,137,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "133,4,137,4")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "134,7,136,21")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "134,7,134,12")
+           ; ![ <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "134,10,134,10") ; s>
+              ]
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,7,136,21")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,7,135,27")
+                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,7,135,10") ; skip)
+                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,13,135,27")
+                 ; crush(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,19,135,21")
+                     ; ![]
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,23,135,24") ; un
+                   , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "135,26,135,26") ; x
+                   )
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "136,7,136,21")
+                    ; crush(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "136,13,136,15")
+                        ; ![]
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "136,17,136,18") ; un
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "136,20,136,20") ; x
+                      )))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "132,2,137,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-om", "132,2,137,4")
+      ; fail
+
 
 strategies
+  collect-split(f, g) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split", "147,2,148,50")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,4,148,50")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,10,148,49")
+        ; CollectSplit(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,23,148,23") ; x
+          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,26,148,48")
+            ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,29,148,34")
+                  ; try(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,33,148,33") ; f
+                    )>
+               , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,39,148,46")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,39,148,39") ; g
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "148,44,148,46")
+                        ; ![])>
+               )
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split", "147,2,148,50")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split", "147,2,148,50")
+      ; fail
 
- /**
-  * Produces pair of a reduced term and a list of extracted subterms.
-  *
-  * Reduces terms with f and extracts information with g resulting in a
-  * pair (t, xs) of a reduced term and the list of extracted subterms.
-  */
-  collect-split(f, g) = 
-    rec x(CollectSplit(x, !(<try(f)>, <g <+ ![]>)))
+  collect-split(splitter) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split", "150,2,151,49")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,4,151,49")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,10,151,48")
+        ; CollectSplit(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,23,151,23") ; x
+          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,26,151,47")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,26,151,33") ; splitter
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,38,151,47")
+                  ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "151,41,151,42") ; id>
+                     , []
+                     ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split", "150,2,151,49")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split", "150,2,151,49")
+      ; fail
 
-  collect-split(splitter) = 
-    rec x(CollectSplit(x, splitter <+ !(<id>,[])))
-
-  /**
-   * Helper of collect-split. Don't use.
-   */
   CollectSplit(s, splitter) :
-    c#(as){annos*} -> (t, <union> (ys, <unions> xs))
-      where <unzip(s)> as => (bs, xs);
-      <splitter> c#(bs){annos*} => (t, ys)
+    c#(as){annos*} -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "156,2,159,41")> ( t
+                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "157,27,157,31") ; union> ( ys
+                                                                                                                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "157,40,157,45") ; unions> xs
+                                                                                                                                                                                                                                   )
+                                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "156,2,159,41")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "156,2,159,41")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "158,12,159,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "158,12,158,36")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "158,12,158,24")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "158,13,158,20")
+                    ; unzip(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "158,19,158,19") ; s
+                      ))> as) => (bs, xs))
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "159,6,159,41")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "159,6,159,30")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "159,7,159,14") ; splitter)> c#(bs){annos*}) => (t, ys)
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "156,2,159,41")
+             ; fail
 
-  /**
-   * Helper of collect-split. Don't use.
-   */
-  CollectSplit(s, f, g) = 
-    CollectSplit(s, !(<try(f)>, <g <+ ![]>))
+  CollectSplit(s, f, g) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "164,2,165,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,4,165,43")
+    ; CollectSplit(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,17,165,17") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,20,165,42")
+        ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,23,165,28")
+              ; try(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,27,165,27") ; f
+                )>
+           , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,33,165,40")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,33,165,33") ; g
+                 <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "165,38,165,40")
+                    ; ![])>
+           )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "164,2,165,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "CollectSplit", "164,2,165,43")
+      ; fail
 
+  collect-split'(splitter) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split'", "168,2,170,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,4,170,38")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,10,170,37")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,10,169,39")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,11,169,28")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,11,169,19") ; is-string
+                 + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,23,169,28") ; is-int))
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "169,32,169,39")
+           ; splitter
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "170,13,170,37")
+              ; CollectSplit(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "170,26,170,26") ; x
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "170,29,170,36") ; splitter
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split'", "168,2,170,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-split'", "168,2,170,38")
+      ; fail
 
-  collect-split'(splitter) = 
-    rec x((is-string + is-int); splitter
-          <+ CollectSplit(x, splitter))
 
 strategies
-
   postorder-collect(s) =
-    postorder-collect(s, ![])
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "postorder-collect", "174,2,175,28")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "175,4,175,28")
+    ; postorder-collect(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "175,22,175,22") ; s
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "175,25,175,27")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "postorder-collect", "174,2,175,28")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "postorder-collect", "174,2,175,28")
+      ; fail
 
   postorder-collect(s, acc) =
-    where((![<s> | <acc>] <+ acc) => ys);
-    crush(!ys, \ (x, xs) -> <postorder-collect(s, !xs)> x \ )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "postorder-collect", "177,2,179,60")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,4,179,60")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,4,178,39")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,10,178,38")
+               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,11,178,31")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,11,178,24")
+                     ; ![<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,14,178,14") ; s>|<s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,20,178,22") ; acc>]
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "178,29,178,31") ; acc)) => ys))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "179,4,179,60")
+    ; crush(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "179,10,179,12") ; !ys
+      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "179,15,179,58")
+        ; \ (x, xs) -> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "179,29,179,53")
+                        ; postorder-collect(
+                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "179,47,179,47") ; s
+                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "179,50,179,52") ; !xs
+                          )> x \
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "postorder-collect", "177,2,179,60")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "postorder-collect", "177,2,179,60")
+      ; fail
+
 
 strategies
+  collect(s, skip : ( a -> a ) * ( a -> a ) * a -> a) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect", "183,2,186,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "184,4,186,38")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "184,4,184,9")
+       ; ![ <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "184,7,184,7") ; s>
+          ]
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,7,186,38")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,7,185,53")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,7,185,32")
+                ; skip(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,12,185,26")
+                    ; collect(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,20,185,20") ; s
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,22,185,25") ; skip
+                      )
+                  , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,29,185,31")
+                    ; ![]
+                  ))
+             ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,35,185,53")
+             ; crush(
+                 s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,41,185,43")
+                 ; ![]
+               , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,45,185,49") ; union
+               , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "185,51,185,52") ; id
+               )
+             <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "186,7,186,38")
+                ; crush(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "186,13,186,15")
+                    ; ![]
+                  , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "186,17,186,21") ; union
+                  , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "186,23,186,37")
+                    ; collect(
+                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "186,31,186,31") ; s
+                      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "186,33,186,36") ; skip
+                      )
+                  )))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect", "183,2,186,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect", "183,2,186,38")
+      ; fail
 
-  collect(s, skip: (a -> a) * (a -> a) * a -> a) =
-    ![<s>]
-    <+ skip(collect(s,skip), ![]); crush(![],union,id)
-    <+ crush(![],union,collect(s,skip))
-
-  collect-exc(base, special : (a -> b) * a -> b) = 
-    rec coll(
-      (base 
-      <+ special(coll))
-      <+ crush(![], union, coll)
-    )
+  collect-exc(base, special : ( a -> b ) * a -> b) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-exc", "188,2,193,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "189,4,193,4")
+    ; rec coll (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "190,6,192,31")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "190,7,191,21")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "190,7,190,10") ; base
+              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "191,9,191,21")
+                 ; special(
+                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "191,17,191,20") ; coll
+                   ))
+           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "192,9,192,31")
+              ; crush(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "192,15,192,17")
+                  ; ![]
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "192,20,192,24") ; union
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "192,27,192,30") ; coll
+                ))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-exc", "188,2,193,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-exc", "188,2,193,4")
+      ; fail
 
   bu-collect(s) =
-    rec x(some(x); crush(![],union,[s|id] <+ ![])
-          <+ ![<s>] )
-    <+ ![]
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "bu-collect", "195,2,198,9")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,4,198,9")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,4,197,20")
+       ; rec x (
+           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,10,197,18")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,10,196,48")
+              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,10,196,16")
+                 ; some(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,15,196,15") ; x))
+              ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,19,196,48")
+              ; crush(
+                  s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,25,196,27")
+                  ; ![]
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,29,196,33") ; union
+                , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,35,196,47")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,35,196,40")
+                     ; [s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,36,196,36") ; s|s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,38,196,39") ; id]
+                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "196,45,196,47")
+                        ; ![])
+                )
+              <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "197,13,197,18")
+                 ; ![ <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "197,16,197,16") ; s>
+                    ])
+         )
+       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "198,7,198,9")
+          ; ![])
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "bu-collect", "195,2,198,9")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "bu-collect", "195,2,198,9")
+      ; fail
+
 
 strategies
-
-  /**
-   * collect a single, outermost value from a tree.
-   */
   collect-one(s) =
-    oncetd(s; ?t); !t
-   
-strategies // TODO: where should we put this?
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-one", "205,2,206,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "206,4,206,20")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "206,4,206,16")
+       ; oncetd(
+           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "206,11,206,15")
+           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "206,11,206,11") ; s)
+           ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "206,14,206,15")
+           ; ?t
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "206,19,206,20")
+    ; !t
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-one", "205,2,206,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "collect-one", "205,2,206,20")
+      ; fail
 
+
+strategies
   twicetd(s) =
-    oncetd(
-      explode-term
-    ; (id, at-suffix(Cons(oncetd(s), oncetd(s))))
-    ; mkterm
-    )
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "twicetd", "210,2,215,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "211,4,215,4")
+    ; oncetd(
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "212,6,214,11")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "212,6,212,17") ; explode-term)
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,6,214,11")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,6,213,48")
+           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,7,213,8") ; id
+             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,11,213,47")
+               ; at-suffix(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,21,213,46")
+                   ; Cons(
+                       s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,26,213,34")
+                       ; oncetd(
+                           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,33,213,33") ; s
+                         )
+                     , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,37,213,45")
+                       ; oncetd(
+                           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "213,44,213,44") ; s
+                         )
+                     )
+                 )
+             ))
+        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "214,6,214,11")
+        ; mkterm
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "twicetd", "210,2,215,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "twicetd", "210,2,215,4")
+      ; fail
 
   atmostonce(s) =
-    not(twicetd(s))
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "atmostonce", "217,2,218,18")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "218,4,218,18")
+    ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "218,8,218,17")
+          ; twicetd(
+              s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "218,16,218,16") ; s
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "atmostonce", "217,2,218,18")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/collect.str", "atmostonce", "217,2,218,18")
+      ; fail

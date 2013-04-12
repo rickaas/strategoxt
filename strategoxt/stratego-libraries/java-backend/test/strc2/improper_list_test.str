@@ -1,12 +1,31 @@
 module improper-list-test
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 signature
   constructors
     Bla : List(a) -> List(a)
 
-strategies 
 
-  main-improper_list_test = 
-    (!["a" | ["b" | Bla(["c" | ["d" | []]])]] <+ !"a");
-    ?"a"
+strategies
+  main-improper_list_test =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "main-improper_list_test", "10,2,12,7")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "11,4,12,7")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "11,5,11,52")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "11,5,11,44")
+          ; !["a"|["b"|Bla(
+                         ["c"|["d"|[]]]
+                       )]]
+          <+ s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "11,49,11,52")
+             ; !"a"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "12,4,12,7")
+    ; ?"a"
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "main-improper_list_test", "10,2,12,7")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/improper_list_test.str", "main-improper_list_test", "10,2,12,7")
+      ; fail

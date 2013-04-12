@@ -1,238 +1,546 @@
-/**
- * @author  Merijn de Jonge <mdjonge@cwi.nl>
- */
 module sdf-2-pp-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   pp-table
   Bracket-Symbol
   sdf/production/utils
   sdf/production/attributes
 
-strategies
 
-  /**
-   * Obtain the constructor name of the production, number all non-terminal
-   * symbols of the production and generate pretty-print entries for the
-   * symbols
-   */
+strategies
   generate-pp-entries =
-    ?prod(syms, sym, attrs)
-  ; ( <?attrs(<id>); get-cnstr-name> attrs => cons-name
-    < <symbols2pp-entries(!cons-name)> syms
-    + pp-lib-ignore-prod
-      < ![]
-      + if-verbose1(missing-constructor-warning)
-        ; ![]
-    )
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "generate-pp-entries", "18,2,26,4")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "19,4,26,4")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "19,4,19,26")
+       ; ?prod(syms, sym, attrs))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,6,25,12")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,6,20,54")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,6,20,41")
+          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,7,20,34")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,7,20,18")
+                 ; ?attrs(
+                      <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,15,20,16") ; id>
+                    ))
+              ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "20,21,20,34")
+              ; get-cnstr-name)> attrs) => cons-name
+       < s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "21,6,21,42")
+         ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "21,7,21,36")
+             ; symbols2pp-entries(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "21,26,21,35") ; !cons-name
+               ))> syms
+       + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "22,6,25,12")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "22,6,22,23") ; pp-lib-ignore-prod
+            < s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "23,8,23,10")
+              ; ![]
+            + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "24,8,25,12")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "24,8,24,47")
+                 ; if-verbose1(
+                     s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "24,20,24,46") ; missing-constructor-warning
+                   ))
+              ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "25,10,25,12")
+              ; ![]))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "generate-pp-entries", "18,2,26,4")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "generate-pp-entries", "18,2,26,4")
+      ; fail
 
   missing-constructor-warning =
-    xtc-pp-sdf2
-  ; ?FILE(<read-text-file; trim-chars('\n' + '\r' + ' ' + '\t')>)
-  ; log(|Warning(), "No constructor defined for production")
-  ; log(|Warning(), <concat-strings>["  ", <id>])
-
-strategies
-
-  pp-lib-ignore-prod =
-      is-inject-prod
-    + is-bracket-prod
-    + is-reject-prod
-
-  /**
-   * Ignore a bracket production that injects A into A.
-   */
-  pp-lib-ignore-prod =
-    ?prod(syms, cf(sort(x)), attrs(attrs))
-    ; where(
-        <contains-bracket> attrs
-      ; <not(get-cnstr-name)> attrs
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "missing-constructor-warning", "28,2,32,48")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "29,4,32,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "29,4,29,14") ; xtc-pp-sdf2)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,4,32,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,4,30,64")
+       ; ?FILE(
+            <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,11,30,62")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,11,30,24") ; read-text-file)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,27,30,62")
+             ; trim-chars(
+                 s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,38,30,61")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,38,30,41") ; '\n'
+                    + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,45,30,61")
+                      ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,45,30,48") ; '\r'
+                         + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,52,30,61")
+                           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,52,30,54") ; ' '
+                              + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "30,58,30,61") ; '\t')))
+               )>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "31,4,32,48")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "31,4,31,59")
+       ; log(|Warning(), "No constructor defined for production"))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "32,4,32,48")
+    ; log(
+      | Warning()
+      , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "32,21,32,34") ; concat-strings> [ "  "
+                                                                                                                                                     , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "32,44,32,45") ; id>
+                                                                                                                                                     ]
       )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "missing-constructor-warning", "28,2,32,48")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "missing-constructor-warning", "28,2,32,48")
+      ; fail
+
 
 strategies
+  pp-lib-ignore-prod =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pp-lib-ignore-prod", "36,2,39,19")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "37,6,39,19")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "37,6,37,19") ; is-inject-prod
+       + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "38,6,39,19")
+         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "38,6,38,20") ; is-bracket-prod
+            + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "39,6,39,19") ; is-reject-prod))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pp-lib-ignore-prod", "36,2,39,19")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pp-lib-ignore-prod", "36,2,39,19")
+      ; fail
 
+  pp-lib-ignore-prod =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pp-lib-ignore-prod", "44,2,49,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "45,4,49,6")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "45,4,45,41")
+       ; ?prod(
+            syms
+          , cf(sort(x))
+          , attrs(attrs)
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "46,6,49,6")
+    ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "47,8,48,34")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "47,8,47,31")
+               ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "47,9,47,24") ; contains-bracket)> attrs)
+            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "48,8,48,34")
+            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "48,9,48,27")
+                ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "48,13,48,26") ; get-cnstr-name))> attrs)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pp-lib-ignore-prod", "44,2,49,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pp-lib-ignore-prod", "44,2,49,6")
+      ; fail
+
+
+strategies
   number-nonterminals =
-      no-labels
-    ; number-node(NonTerminal)
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "number-nonterminals", "53,2,55,29")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "54,6,55,29")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "54,6,54,14") ; no-labels)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "55,6,55,29")
+    ; number-node(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "55,18,55,28") ; NonTerminal
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "number-nonterminals", "53,2,55,29")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "number-nonterminals", "53,2,55,29")
+      ; fail
 
-  NonTerminal = not(lit(id))
+  NonTerminal =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "NonTerminal", "57,2,57,27")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "57,16,57,27")
+    ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "57,20,57,26")
+          ; lit(
+              s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "57,24,57,25") ; id
+            ))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "NonTerminal", "57,2,57,27")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "NonTerminal", "57,2,57,27")
+      ; fail
 
-  no-labels = map(try( \ label(a,b) -> b \ ))
+  no-labels =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "no-labels", "59,2,59,44")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "59,14,59,44")
+    ; map(
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "59,18,59,43")
+        ; try(
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "59,23,59,41")
+            ; \ label(a, b) -> b \
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "no-labels", "59,2,59,44")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "no-labels", "59,2,59,44")
+      ; fail
 
-symbols2pp-entries( constr-name ) =
-   number-nonterminals;
-   // Make template for a sequence of symbols
-   where( make => aboxes );
-   // recursively construct tempates for nested symbols
-   where( map( symbol2abox( !(<constr-name>(),[]) ) ); concat => pp-entries );
+  symbols2pp-entries(constr-name) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "symbols2pp-entries", "61,0,69,60")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "62,3,69,60")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "62,3,62,21") ; number-nonterminals)
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "64,3,69,60")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "64,3,64,25")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "64,10,64,23")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "64,10,64,13") ; make) => aboxes))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,3,69,60")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,3,66,76")
+       ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,10,66,74")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,10,66,52")
+                  ; map(
+                      s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,15,66,50")
+                      ; symbol2abox(
+                          s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,28,66,48")
+                          ; !( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,31,66,41") ; constr-name> ()
+                             , []
+                             )
+                        )
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,55,66,74")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "66,55,66,60") ; concat) => pp-entries))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "69,3,69,60")
+    ; ![PP-Entry(
+          Path1(
+            <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "69,22,69,32") ; constr-name> ()
+          )
+        , aboxes
+        )|pp-entries]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "symbols2pp-entries", "61,0,69,60")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "symbols2pp-entries", "61,0,69,60")
+      ; fail
 
-   // Yield a list of pretty-print entries as result.
-   ![PP-Entry( Path1(<constr-name>()), aboxes ) | pp-entries]
-
-symbol2abox(path) = 
-   // tuple ( (constr, selectors), symbol) is used here
-   // constr denotes the constructor name of the production,
-   // selectors a list of selectors pointing to the symbol
-   split( <path>() ,id);
-   rec x ( 
-      // No special box templates are required for literals, so we return an
-      // empty list.
-      ?(_, lit(_)); ![]
-   <+ 
-      // For sort non-terminals we don't generate a specific formatting
-      // rule, so we just retrurn an empty list.
-      ?(_,(_,sort(_))); ![]
-   <+
-      // Idem for character classes
-      ?(_,(_,char-class(_))); ![]
-
-   <+
-      // Nested alternatives are first flattened: alt(a,(alt(b,c) )
-      // becomes alt(a,b,c)
-      {a, b, c,arguments, f: 
-      ?((constr, selectors), (n, alt(a,alt(b, c))));
-      <flat-alt>alt(a, alt(b, c)) => arguments;
-      <mkterm>("alt", arguments) => f;
-      <x>((constr, selectors),(n,f));
-
-      // The pp entry for an SDF alternative consists of a list of literals
-      // or equally numberd place holder symbols. For instance:
-      //    S.1.alt -- "aap" _1 _1 _1
-      // Therefore, we replace the place holder symbols (which are numberd
-      // increasingly by default) by Arg(1)
-      [topdown(try( Arg(id);!Arg(1)))|id]
-      }
-   <+
-      {constr, selectors, n, s:
-      
-      ?((constr, selectors), (n, bracket-symbol(s)));
-      <x>((constr, selectors), (n, s ))
-      }
-   <+
-      // For all other SDF symbols (opt, seq, etc), we recursively generate
-      // BOX templates for their argument symbols, and a template for the
-      // symbol itself.
-      { constr, selectors, selectors', abox-list, 
-        aboxes, n, symbol, arguments:
-   
-      ?((constr, selectors), (n, symbol#(arguments)));
-      <conc>(selectors, [selector(n, symbol)]) => selectors';
-
-      // First construct a list of argument symbols of which all
-      // non-terminal symbols are numbered.
-      <argument-list; number-nonterminals>arguments;
-
-      // Then create a BOX template for the argument symbols.
-      where( make  => abox-list );
-      
-      // Recursively generate BOX templates for each argument symbol.
-      map( {s, abox: \ s -> abox
-         where
-            !((constr, selectors'), s);x => abox
-             \ } );concat => aboxes;
-      
-      // Return a list consisting of the recursively generated BOX
-      // templates, and the BOX template for the symbol itself.
-      ![PP-Entry( Path( constr, selectors'), abox-list ) | aboxes ]
-      }
-   )   
-
+  symbol2abox(path) =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "symbol2abox", "71,0,137,3")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "75,3,137,3")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "75,3,75,22")
+       ; split(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "75,10,75,17")
+           ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "75,11,75,14") ; path)> ()
+         , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "75,20,75,21") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "76,3,137,3")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "79,6,136,6")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "79,6,79,22")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "79,6,79,17")
+              ; ?(_, lit(_)))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "79,20,79,22")
+           ; ![]
+           <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "83,6,136,6")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "83,6,83,26")
+                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "83,6,83,21")
+                    ; ?(_, (_, sort(_))))
+                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "83,24,83,26")
+                 ; ![]
+                 <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "86,6,136,6")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "86,6,86,32")
+                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "86,6,86,27")
+                          ; ?(_, (_, char-class(_))))
+                       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "86,30,86,32")
+                       ; ![]
+                       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "91,6,136,6")
+                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "91,6,103,6")
+                             ; {a, b, c, arguments, f:
+                                 s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "92,6,102,40")
+                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "92,6,92,50")
+                                    ; ?( (constr, selectors)
+                                       , ( n
+                                         , alt(a, alt(b, c))
+                                         )
+                                       ))
+                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "93,6,102,40")
+                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "93,6,93,45")
+                                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "93,6,93,32")
+                                       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "93,7,93,14") ; flat-alt)> alt(a, alt(b, c))) => arguments)
+                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "94,6,102,40")
+                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "94,6,94,36")
+                                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "94,6,94,31")
+                                       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "94,7,94,12") ; mkterm)> ("alt", arguments)) => f)
+                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "95,6,102,40")
+                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "95,6,95,35")
+                                    ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "95,7,95,7") ; x)> ((constr, selectors), (n, f)))
+                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,6,102,40")
+                                 ; [s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,7,102,36")
+                                    ; topdown(
+                                        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,15,102,35")
+                                        ; try(
+                                            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,20,102,34")
+                                            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,20,102,26")
+                                               ; Arg(
+                                                   s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,24,102,25") ; id
+                                                 ))
+                                            ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,28,102,34")
+                                            ; !Arg(1)
+                                          )
+                                      )|s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "102,38,102,39") ; id]
+                               }
+                             <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "105,6,136,6")
+                                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "105,6,109,6")
+                                   ; {constr, selectors, n, s:
+                                       s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "107,6,108,38")
+                                       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "107,6,107,51")
+                                          ; ?( (constr, selectors)
+                                             , (n, bracket-symbol(s))
+                                             ))
+                                       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "108,6,108,38")
+                                       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "108,7,108,7") ; x)> ((constr, selectors), (n, s))
+                                     }
+                                   <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "114,6,136,6")
+                                      ; {constr, selectors, selectors', abox-list, aboxes, n, symbol, arguments:
+                                          s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "117,6,135,66")
+                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "117,6,117,52")
+                                             ; ?( (constr, selectors)
+                                                , (n, symbol#(arguments))
+                                                ))
+                                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "118,6,135,66")
+                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "118,6,118,59")
+                                             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "118,6,118,45")
+                                                ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "118,7,118,10") ; conc)> (selectors, [selector(n, symbol)])) => selectors')
+                                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "122,6,135,66")
+                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "122,6,122,50")
+                                             ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "122,7,122,40")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "122,7,122,19") ; argument-list)
+                                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "122,22,122,40")
+                                                 ; number-nonterminals)> arguments)
+                                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "125,6,135,66")
+                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "125,6,125,32")
+                                             ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "125,13,125,30")
+                                                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "125,13,125,16") ; make) => abox-list))
+                                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "128,6,135,66")
+                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "128,6,131,17")
+                                             ; map(
+                                                 s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "128,11,131,15")
+                                                 ; {s, abox:
+                                                     s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "128,21,131,13")
+                                                     ; \ s -> abox
+                                                         where s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "130,12,130,47")
+                                                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "130,12,130,37")
+                                                                  ; !((constr, selectors'), s))
+                                                               ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "130,39,130,47")
+                                                               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "130,39,130,39") ; x) => abox \
+                                                   }
+                                               ))
+                                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "131,19,135,66")
+                                          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "131,19,131,34")
+                                             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "131,19,131,24") ; concat) => aboxes)
+                                          ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "135,6,135,66")
+                                          ; ![PP-Entry(Path(constr, selectors'), abox-list)|aboxes]
+                                        })))))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "symbol2abox", "71,0,137,3")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "symbol2abox", "71,0,137,3")
+      ; fail
 
   flat-alt =
-    rec x ({a,b,s:
-      ?alt( a, alt(b, s ) );
-       ![a|<x>alt(b,s)]
-      <+
-      ?alt( a, b );
-       ![a,b]
-     })
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "flat-alt", "140,2,147,6")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "141,4,147,6")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "141,11,147,5")
+        ; {a, b, s:
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "142,6,146,12")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "142,6,143,22")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "142,6,142,26")
+                  ; ?alt(a, alt(b, s)))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "143,7,143,22")
+               ; ![a|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "143,12,143,12") ; x> alt(b, s)]
+               <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "145,6,146,12")
+                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "145,6,145,17")
+                     ; ?alt(a, b))
+                  ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "146,7,146,12")
+                  ; ![a, b])
+          }
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "flat-alt", "140,2,147,6")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "flat-alt", "140,2,147,6")
+      ; fail
 
-   /**
-    * Build a list of arguments. The strategy is used to 'flatten' the
-    * arguments of Sdf's sequence symbol, which is defined as a binary function
-    *   seq( Symbol, [Symbol+] )
-    * The strategy argument-list is a generic strategy which flattens these
-    * arguments and returns the list [Symbol | Symbol+].
-    */
-  argument-list = 
-      map( try( \ e -> [e]
-         where
-            not(is-list) \ ) ); 
-      concat
+  argument-list =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "argument-list", "156,2,160,11")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "157,6,160,11")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "157,6,159,29")
+       ; map(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "157,11,159,27")
+           ; try(
+               s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "157,16,159,25")
+               ; \ e -> [e]
+                   where s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "159,12,159,23")
+                         ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "159,16,159,22") ; is-list) \
+             )
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "160,6,160,11")
+    ; concat
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "argument-list", "156,2,160,11")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "argument-list", "156,2,160,11")
+      ; fail
 
-  /**
-   * Replace each element e in a list by the tuple (n, e) when e satisfies s. 
-   * The number n denotes that e is the nth matching element in the list. The
-   * strategy is used in the generation of BOX templates to enable the
-   * replacement of non-terminal symbols in productions by numbered place
-   * holders.
-   */
   number-node(s) =
-   split( !1, id );
-   rec x ( {n, e, e',es, es':
-         (id, []); ![]
-      <+
-         ?(n, [e|es] );
-         <s>e;
-         ![(n,e)|<x>(<add>(n,1),es)]
-      <+
-         ?(n, [e|es] );
-         ![e|<x>(n,es)]
-         
-   } )
-         
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "number-node", "169,2,181,5")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "170,3,181,5")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "170,3,170,17")
+       ; split(
+           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "170,10,170,11")
+           ; !1
+         , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "170,14,170,15") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "171,3,181,5")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "171,11,181,3")
+        ; {n, e, e', es, es':
+            s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "172,9,179,22")
+            ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "172,9,172,21")
+               ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "172,9,172,16")
+                  ; ( s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "172,10,172,11") ; id
+                    , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "172,14,172,15") ; []
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "172,19,172,21")
+               ; ![]
+               <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "174,9,179,22")
+                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "174,9,176,35")
+                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "174,9,174,21")
+                        ; ?(n, [e|es]))
+                     ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "175,9,176,35")
+                     ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "175,9,175,12")
+                        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "175,10,175,10") ; s)> e)
+                     ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "176,9,176,35")
+                     ; ![(n, e)|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "176,18,176,18") ; x> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "176,22,176,24") ; add> (n, 1)
+                                                                                                                                                                  , es
+                                                                                                                                                                  )]
+                     <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "178,9,179,22")
+                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "178,9,178,21")
+                           ; ?(n, [e|es]))
+                        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "179,9,179,22")
+                        ; ![e|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "179,14,179,14") ; x> (n, es)]))
+          }
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "number-node", "169,2,181,5")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "number-node", "169,2,181,5")
+      ; fail
 
-/*         
-   Construct a box template for a list of symbols. All symbols but literals
-   are considered to be numbered tuples: (n,s) where n denotes the number
-   and s the symbol.  A numbered symbol (n,s) is replaced by the numbered
-   place holder Arg(n). A literal lit(s) is replaced by the box string S(s).
-
-   The following patterns in the productions are recognized and translated
-   specially. L stands for literal, I for iter or iter-sep.
-
-   1)
-      L+ I+ ==> V[H[L+] I+]
-      L+ I* ==> V[H[L+] I*]
-   
-   2)
-      (L I+ )+ L ==> V[ V is=2[L I+] ... L]
-      (L I* )+ L ==> V[ V is=2[L I*] ... L]
-   
-*/
   make =
-   (
-      // Recognize pattern 1
-      reverse;[(id,iter(id)+
-                   iter-star(id) + 
-                   iter-sep(id,id)+
-                   iter-star-sep(id,id));Make|map( lit(id);Make )];
-      ?[iter|lits];
-      not([id]);
-      !V( [], [H([], <reverse>lits), iter])
-   <+
-      // Recognize pattern 2
-      reverse;[Make=>lit|not([]);reverse=>xs];
-      !xs;pair;
-      map(  {a,b: (lit(id);Make=>a,
-                   (id,iter(id)+iter-star(id));Make=>b);
-                   !V([SOpt(VS(),"2")],[a,b])
-            }) => v;
-      !V([],[v, lit])
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "make", "202,2,225,3")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,6,224,16")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,6,211,42")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,6,205,12") ; reverse)
+       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,14,211,42")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,14,208,65")
+          ; [s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,15,208,44")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,15,208,39")
+                ; ( s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,16,205,17") ; id
+                  , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,19,208,38")
+                    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,19,205,26")
+                       ; iter(
+                           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "205,24,205,25") ; id
+                         )
+                       + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "206,19,208,38")
+                         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "206,19,206,31")
+                            ; iter-star(
+                                s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "206,29,206,30") ; id
+                              )
+                            + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "207,19,208,38")
+                              ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "207,19,207,33")
+                                 ; iter-sep(
+                                     s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "207,28,207,29") ; id
+                                   , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "207,31,207,32") ; id
+                                   )
+                                 + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,19,208,38")
+                                   ; iter-star-sep(
+                                       s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,33,208,34") ; id
+                                     , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,36,208,37") ; id
+                                     ))))
+                  ))
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,41,208,44")
+             ; Make|s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,46,208,64")
+                    ; map(
+                        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,51,208,62")
+                        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,51,208,57")
+                           ; lit(
+                               s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,55,208,56") ; id
+                             ))
+                        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "208,59,208,62")
+                        ; Make
+                      )])
+       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "209,6,211,42")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "209,6,209,17")
+          ; ?[iter|lits])
+       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "210,6,211,42")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "210,6,210,14")
+          ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "210,10,210,13")
+                ; [s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "210,11,210,12") ; id]))
+       ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "211,6,211,42")
+       ; !V(
+            []
+          , [ H(
+                []
+              , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "211,22,211,28") ; reverse> lits
+              )
+            , iter
+            ]
+          )
+       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,6,224,16")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,6,220,20")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,6,214,12") ; reverse)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,14,220,20")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,14,214,44")
+                ; [s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,15,214,23")
+                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,15,214,18") ; Make) => lit|s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,25,214,43")
+                                                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,25,214,31")
+                                                                                                                                                                    ; not(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,29,214,30") ; []))
+                                                                                                                                                                 ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,33,214,43")
+                                                                                                                                                                 ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "214,33,214,39") ; reverse) => xs])
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "215,6,220,20")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "215,6,215,8") ; !xs)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "215,10,220,20")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "215,10,215,13") ; pair)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,6,220,20")
+             ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,6,219,18")
+                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,6,219,13")
+                   ; map(
+                       s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,12,219,12")
+                       ; {a, b:
+                           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,18,218,44")
+                           ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,18,217,54")
+                              ; ( s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,19,216,33")
+                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,19,216,25")
+                                     ; lit(
+                                         s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,23,216,24") ; id
+                                       ))
+                                  ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,27,216,33")
+                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "216,27,216,30") ; Make) => a
+                                , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,19,217,53")
+                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,19,217,45")
+                                     ; ( s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,20,217,21") ; id
+                                       , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,23,217,44")
+                                         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,23,217,30")
+                                            ; iter(
+                                                s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,28,217,29") ; id
+                                              )
+                                            + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,32,217,44")
+                                              ; iter-star(
+                                                  s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,42,217,43") ; id
+                                                ))
+                                       ))
+                                  ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,47,217,53")
+                                  ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "217,47,217,50") ; Make) => b
+                                ))
+                           ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "218,19,218,44")
+                           ; !V(
+                                [SOpt(VS(), "2")]
+                              , [a, b]
+                              )
+                         }
+                     )) => v)
+             ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "220,6,220,20")
+             ; !V([], [v, lit])
+             <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "224,6,224,16")
+                ; map(
+                    s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "224,11,224,14") ; Make
+                  )))
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "make", "202,2,225,3")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "make", "202,2,225,3")
+      ; fail
 
-   <+
-      // Rule for all unrecognized patters
-      map( Make )
-   )
+  pair =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pair", "228,2,231,3")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "229,4,231,3")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "230,6,230,47")
+        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "230,6,230,7") ; []
+           <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "230,12,230,47")
+              ; \ [a, b|xs] -> [(a, b)|<s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "230,40,230,40") ; x> xs] \)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pair", "228,2,231,3")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "pair", "228,2,231,3")
+      ; fail
 
-  // Builds a list of pairs from a list
-  pair = 
-    rec x (
-      [] <+ \ [a, b | xs ] -> [(a,b) | <x> xs] \
-   )
 
 rules
 
-  Make : (i, _ ) -> Arg( i )
+  Make :
+    (i, _) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "Make", "235,2,235,27")> Arg(i)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "Make", "235,2,235,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "Make", "235,2,235,27")
+             ; fail
 
-  // Literals are pretty-printed as keywords
-  Make : lit(s)  -> FBOX(KW(), S(s))
+  Make :
+    lit(s) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "Make", "238,2,238,35")> FBOX(KW(), S(s))
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "Make", "238,2,238,35")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/sdf-2-pp-lib.str", "Make", "238,2,238,35")
+             ; fail

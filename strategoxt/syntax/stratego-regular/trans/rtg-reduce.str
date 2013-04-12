@@ -1,14 +1,21 @@
-/**
- * Removes non-terminals that are not productive or reachable.
- *
- * @author  Martin Bravenboer <martin.bravenboer@gmail.com>
- */
 module rtg-reduce
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-rtg
 
-strategies
 
+strategies
   main-rtg-reduce =
-    io-wrap(rtg-reduce)
+    s-enter(|"strategoxt/syntax/stratego-regular/trans/rtg-reduce.str", "main-rtg-reduce", "13,2,14,22")
+    ; s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-reduce.str", "14,4,14,22")
+    ; io-wrap(
+        s-step(|"strategoxt/syntax/stratego-regular/trans/rtg-reduce.str", "14,12,14,21") ; rtg-reduce
+      )
+    < s-exit(|"strategoxt/syntax/stratego-regular/trans/rtg-reduce.str", "main-rtg-reduce", "13,2,14,22")
+    + s-exit(|"strategoxt/syntax/stratego-regular/trans/rtg-reduce.str", "main-rtg-reduce", "13,2,14,22")
+      ; fail

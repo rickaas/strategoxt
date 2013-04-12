@@ -1,46 +1,101 @@
 module xml-front-options
-strategies
 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+strategies
   dispatch-explicit-mode(implicit, explicit, very-explicit) =
-      if use-explicit-mode then
-        explicit
+    s-enter(|"_cellar/xml-front/lib/xml-front-options.str", "dispatch-explicit-mode", "4,2,13,8")
+    ; s-step(|"_cellar/xml-front/lib/xml-front-options.str", "5,6,13,8")
+    ; if s-step(|"_cellar/xml-front/lib/xml-front-options.str", "5,9,5,25") ; use-explicit-mode then
+        s-step(|"_cellar/xml-front/lib/xml-front-options.str", "6,8,6,15") ; explicit
       else
-        if use-very-explicit-mode then
-          very-explicit
-        else
-          implicit
-        end
+        s-step(|"_cellar/xml-front/lib/xml-front-options.str", "8,8,12,10")
+        ; if s-step(|"_cellar/xml-front/lib/xml-front-options.str", "8,11,8,32") ; use-very-explicit-mode then
+            s-step(|"_cellar/xml-front/lib/xml-front-options.str", "9,10,9,22") ; very-explicit
+          else
+            s-step(|"_cellar/xml-front/lib/xml-front-options.str", "11,10,11,17") ; implicit
+          end
       end
+    < s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "dispatch-explicit-mode", "4,2,13,8")
+    + s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "dispatch-explicit-mode", "4,2,13,8")
+      ; fail
 
   use-explicit-mode =
-    if <get-config> "--explicit-mode" then
-      <get-config> "--explicit-mode" => "--explicit"
-    end
+    s-enter(|"_cellar/xml-front/lib/xml-front-options.str", "use-explicit-mode", "15,2,18,6")
+    ; s-step(|"_cellar/xml-front/lib/xml-front-options.str", "16,4,18,6")
+    ; if s-step(|"_cellar/xml-front/lib/xml-front-options.str", "16,7,16,36")
+         ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "16,8,16,17") ; get-config)> "--explicit-mode" then
+        s-step(|"_cellar/xml-front/lib/xml-front-options.str", "17,6,17,51")
+        ; (s-step(|"_cellar/xml-front/lib/xml-front-options.str", "17,6,17,35")
+           ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "17,7,17,16") ; get-config)> "--explicit-mode") => "--explicit"
+      end
+    < s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "use-explicit-mode", "15,2,18,6")
+    + s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "use-explicit-mode", "15,2,18,6")
+      ; fail
 
   use-implicit-mode =
-    <get-config> "--explicit-mode" => "--implicit"
+    s-enter(|"_cellar/xml-front/lib/xml-front-options.str", "use-implicit-mode", "20,2,21,49")
+    ; s-step(|"_cellar/xml-front/lib/xml-front-options.str", "21,4,21,49")
+    ; (s-step(|"_cellar/xml-front/lib/xml-front-options.str", "21,4,21,33")
+       ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "21,5,21,14") ; get-config)> "--explicit-mode") => "--implicit"
+    < s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "use-implicit-mode", "20,2,21,49")
+    + s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "use-implicit-mode", "20,2,21,49")
+      ; fail
 
   use-very-explicit-mode =
-    <get-config> "--explicit-mode" => "--very-explicit"
+    s-enter(|"_cellar/xml-front/lib/xml-front-options.str", "use-very-explicit-mode", "23,2,24,54")
+    ; s-step(|"_cellar/xml-front/lib/xml-front-options.str", "24,4,24,54")
+    ; (s-step(|"_cellar/xml-front/lib/xml-front-options.str", "24,4,24,33")
+       ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "24,5,24,14") ; get-config)> "--explicit-mode") => "--very-explicit"
+    < s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "use-very-explicit-mode", "23,2,24,54")
+    + s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "use-very-explicit-mode", "23,2,24,54")
+      ; fail
 
 
 strategies
-
   explicit-mode-option =
-    Option("--explicit"
-    , <set-config> ("--explicit-mode", "--explicit")
-    , !"--explicit       Use explicit XML elements for strings, lists, integers, and tuples (default)"
-    )
-  <+ Option("--very-explicit"
-    , <set-config> ("--explicit-mode", "--very-explicit")
-    , !"--very-explicit  Use explicit XML elements for applications, strings, lists, integers, and tuples"
-    )
-  <+ Option("--implicit"
-    , <set-config> ("--explicit-mode", "--implicit")
-    , !"--implicit       Don't use any explicit XML elements. This results in the most attractive XML, but it lacks structure."
-    )
+    s-enter(|"_cellar/xml-front/lib/xml-front-options.str", "explicit-mode-option", "29,2,41,4")
+    ; s-step(|"_cellar/xml-front/lib/xml-front-options.str", "30,4,41,4")
+    ; (s-step(|"_cellar/xml-front/lib/xml-front-options.str", "30,4,33,4")
+       ; Option(
+           s-step(|"_cellar/xml-front/lib/xml-front-options.str", "30,11,30,22") ; "--explicit"
+         , s-step(|"_cellar/xml-front/lib/xml-front-options.str", "31,6,31,51")
+           ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "31,7,31,16") ; set-config)> ("--explicit-mode", "--explicit")
+         , s-step(|"_cellar/xml-front/lib/xml-front-options.str", "32,6,32,101")
+           ; !"--explicit       Use explicit XML elements for strings, lists, integers, and tuples (default)"
+         )
+       <+ s-step(|"_cellar/xml-front/lib/xml-front-options.str", "34,5,41,4")
+          ; (s-step(|"_cellar/xml-front/lib/xml-front-options.str", "34,5,37,4")
+             ; Option(
+                 s-step(|"_cellar/xml-front/lib/xml-front-options.str", "34,12,34,28") ; "--very-explicit"
+               , s-step(|"_cellar/xml-front/lib/xml-front-options.str", "35,6,35,56")
+                 ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "35,7,35,16") ; set-config)> ("--explicit-mode", "--very-explicit")
+               , s-step(|"_cellar/xml-front/lib/xml-front-options.str", "36,6,36,105")
+                 ; !"--very-explicit  Use explicit XML elements for applications, strings, lists, integers, and tuples"
+               )
+             <+ s-step(|"_cellar/xml-front/lib/xml-front-options.str", "38,5,41,4")
+                ; Option(
+                    s-step(|"_cellar/xml-front/lib/xml-front-options.str", "38,12,38,23") ; "--implicit"
+                  , s-step(|"_cellar/xml-front/lib/xml-front-options.str", "39,6,39,51")
+                    ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "39,7,39,16") ; set-config)> ("--explicit-mode", "--implicit")
+                  , s-step(|"_cellar/xml-front/lib/xml-front-options.str", "40,6,40,126")
+                    ; !"--implicit       Don't use any explicit XML elements. This results in the most attractive XML, but it lacks structure."
+                  )))
+    < s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "explicit-mode-option", "29,2,41,4")
+    + s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "explicit-mode-option", "29,2,41,4")
+      ; fail
+
 
 strategies
-
   pass-explicit-mode =
-    <get-config> "--explicit-mode" <+ !"--explicit"
+    s-enter(|"_cellar/xml-front/lib/xml-front-options.str", "pass-explicit-mode", "45,2,46,50")
+    ; s-step(|"_cellar/xml-front/lib/xml-front-options.str", "46,4,46,50")
+    ; (s-step(|"_cellar/xml-front/lib/xml-front-options.str", "46,4,46,33")
+       ; <(s-step(|"_cellar/xml-front/lib/xml-front-options.str", "46,5,46,14") ; get-config)> "--explicit-mode"
+       <+ s-step(|"_cellar/xml-front/lib/xml-front-options.str", "46,38,46,50")
+          ; !"--explicit")
+    < s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "pass-explicit-mode", "45,2,46,50")
+    + s-exit(|"_cellar/xml-front/lib/xml-front-options.str", "pass-explicit-mode", "45,2,46,50")
+      ; fail

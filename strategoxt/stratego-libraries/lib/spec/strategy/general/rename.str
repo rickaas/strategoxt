@@ -1,114 +1,211 @@
-/**
- * Renaming of bound variables is determined by the shape of
- * variables and binding constructs. Three generic strategies
- * are defined that cater for different complexities of binding
- * constructs.
- * 
- * Variable binding constructs protect variables from clashing
- * with variables in other parts of a program when their names
- * are the same. To prevent the introduction of name clashes
- * during program transformation it can be useful to give 
- * all variable bindings a unique name. This module defines three
- * generic strategies for bound variable renaming all based on
- * the same idea, but dealing with increasingly complex variable
- * binding models.
- * 
- * Renaming depends \emph{only} on the shape of variable bindings
- * and variable occurences. Other language constructs are irrelevant.
- * 
- * In the generic strategies the following assumptions about
- * binding constructs are made: (1)
- * There is a subtree that covers the scope in which the
- * variables are bound. (2) variables are atomic, i.e., do not
- * contain subterms that are
- * variables or binding constructs.
- * 
- * Approach: indicate shape of variable occurences and variable
- * binders
- */
 module strategy/general/rename
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   strategy/traversal/simple
-  collection/tuple/common 
+  collection/tuple/common
   collection/list/-
   strategy/traversal/environment
+
+
 rules
 
-  RnVar(isvar : (name -> env) * name -> term) :
-    (t, env) -> <isvar(split(id, !env); lookup)> t
+  RnVar(isvar : ( name -> env ) * name -> term) :
+    (t, env) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnVar", "37,2,38,49")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "38,17,38,46")
+                                                                                                                        ; isvar(
+                                                                                                                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "38,23,38,45")
+                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "38,23,38,37")
+                                                                                                                               ; split(
+                                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "38,29,38,30") ; id
+                                                                                                                                 , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "38,33,38,36") ; !env
+                                                                                                                                 ))
+                                                                                                                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "38,40,38,45")
+                                                                                                                            ; lookup
+                                                                                                                          )> t
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnVar", "37,2,38,49")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnVar", "37,2,38,49")
+             ; fail
 
   RnBinding(bndvrs) :
-    (t, env1) -> (t, env1, env2)
-    where <bndvrs> t => xs; map(new) => ys; 
-          <conc>(<zip(id)>(xs,ys), env1) => env2
+    (t, env1) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "40,2,43,47")> (t, env1, env2)
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "40,2,43,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "40,2,43,47")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,10,43,47")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,10,42,25")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,10,42,19")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,11,42,16") ; bndvrs)> t) => xs)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,28,43,47")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,28,42,41")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,28,42,35")
+                ; map(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "42,32,42,34") ; new
+                  )) => ys)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "43,10,43,47")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "43,10,43,39")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "43,11,43,14") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "43,18,43,24")
+                                                                                                                          ; zip(
+                                                                                                                              s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "43,22,43,23") ; id
+                                                                                                                            )> (xs, ys)
+                                                                                                                       , env1
+                                                                                                                       )) => env2
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "40,2,43,47")
+             ; fail
 
   DistBinding(s) :
-    (t, env1, env2) -> <all( \x -> <s>(x, env2)\ )> t
+    (t, env1, env2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "DistBinding", "45,2,46,52")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "46,24,46,49")
+                                                                                                                                     ; all(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "46,29,46,47")
+                                                                                                                                           ; \ x -> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "46,36,46,36") ; s> (x, env2) \)> t
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "DistBinding", "45,2,46,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "DistBinding", "45,2,46,52")
+             ; fail
+
 
 strategies
+  rename(isvar : ( name -> env ) * name -> term, bndvars) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "56,2,61,38")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "58,4,61,38")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "58,4,58,19")
+       ; \ t -> (t, []) \)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "59,4,61,38")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "59,10,61,37")
+        ; env-alltd(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "59,20,61,36")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "59,20,59,31")
+               ; RnVar(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "59,26,59,30") ; isvar
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "60,23,61,36")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "60,23,60,40")
+                     ; RnBinding(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "60,33,60,39") ; bndvars
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "61,23,61,36")
+                  ; DistBinding(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "61,35,61,35") ; x
+                    ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "56,2,61,38")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "56,2,61,38")
+      ; fail
 
- /**
-  * renaming bound variables assuming that variables are bound
-  * in all subterms of a binding construct
-  * variable declarations in binding constructs are assumed to
-  * have the same shape as variable uses 
-  */
-  rename(isvar : (name -> env) * name -> term
-        , bndvars) = 
-    \ t -> (t, []) \ ;
-    rec x(env-alltd(RnVar(isvar)
-                    <+ RnBinding(bndvars);
-                       DistBinding(x)))
 
 rules
 
-  DistBinding(s, boundin : (term -> term) * (term -> term) * (term -> term) * term -> term):
-    (t, env1, env2) -> <boundin(\x -> <s>(x, env2)\
-                               ,\x -> <s>(x, env1)\
-                               ,id)> t
+  DistBinding(s, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term) :
+    (t, env1, env2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "DistBinding", "65,2,68,37")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "66,24,68,34")
+                                                                                                                                     ; boundin(
+                                                                                                                                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "66,32,66,50")
+                                                                                                                                         ; \ x -> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "66,39,66,39") ; s> (x, env2) \
+                                                                                                                                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "67,32,67,50")
+                                                                                                                                         ; \ x -> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "67,39,67,39") ; s> (x, env1) \
+                                                                                                                                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "68,32,68,33") ; id
+                                                                                                                                       )> t
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "DistBinding", "65,2,68,37")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "DistBinding", "65,2,68,37")
+             ; fail
+
 
 strategies
+  rename(isvar : ( name -> env ) * name -> term, bndvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "87,2,93,47")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "90,4,93,47")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "90,4,90,19")
+       ; \ t -> (t, []) \)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "91,4,93,47")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "91,10,93,46")
+        ; env-alltd(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "91,20,93,45")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "91,20,91,31")
+               ; RnVar(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "91,26,91,30") ; isvar
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "92,23,93,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "92,23,92,40")
+                     ; RnBinding(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "92,33,92,39") ; bndvars
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "93,23,93,45")
+                  ; DistBinding(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "93,35,93,35") ; x
+                    , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "93,38,93,44") ; boundin
+                    ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "87,2,93,47")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "87,2,93,47")
+      ; fail
 
- /**
-  * The strategy \verb|rename(isvar, mkvar, bnd)| renames all
-  * bound variables in a term to fresh variables;
-  * 
-  * Parameters:
-  * 
-  * isvar: Succeeds if applied to a variable
-  * newvar: Takes a string and builds a variable
-  * bnd: Maps a binding construct to the list of bound variables
-  * 
-  * renaming while making a distinction between subterms
-  * in which the variables are bound or not
-  * variables at binding sites are assumed to have
-  * the same shape as other variable occurences
-  */
-  rename(isvar : (name -> env) * name -> term
-        , bndvars
-        , boundin : (term -> term) * (term -> term) * (term -> term) * term -> term) = 
-    \ t -> (t, []) \ ;
-    rec x(env-alltd(RnVar(isvar)
-                    <+ RnBinding(bndvars);
-                       DistBinding(x, boundin)))
 
 rules
 
-  RnBinding(bndvrs, paste : (term -> vars) * term -> term) :
-    (t, env1) -> (<paste(!ys)> t, env1, env2)
-    where <bndvrs> t => xs; map(new) => ys; 
-          <conc>(<zip(id)>(xs,ys), env1) => env2
+  RnBinding(bndvrs, paste : ( term -> vars ) * term -> term) :
+    (t, env1) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "97,2,100,47")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "98,19,98,28")
+                                                                                                                                ; paste(
+                                                                                                                                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "98,25,98,27") ; !ys
+                                                                                                                                  )> t
+                                                                                                                             , env1
+                                                                                                                             , env2
+                                                                                                                             )
+    where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "97,2,100,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "97,2,100,47")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,10,100,47")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,10,99,25")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,10,99,19")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,11,99,16") ; bndvrs)> t) => xs)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,28,100,47")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,28,99,41")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,28,99,35")
+                ; map(
+                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "99,32,99,34") ; new
+                  )) => ys)
+          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "100,10,100,47")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "100,10,100,39")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "100,11,100,14") ; conc)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "100,18,100,24")
+                                                                                                                            ; zip(
+                                                                                                                                s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "100,22,100,23") ; id
+                                                                                                                              )> (xs, ys)
+                                                                                                                         , env1
+                                                                                                                         )) => env2
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "RnBinding", "97,2,100,47")
+             ; fail
 
 
 strategies
-
-  rename(isvar : (name -> env) * name -> term
-        , bndvars
-        , boundin : (term -> term) * (term -> term) * (term -> term) * term -> term
-        , paste : (term -> vars) * term -> term
-        )
-  = \ t -> (t, []) \ ;
-    rec x(env-alltd(RnVar(isvar)
-                    <+ RnBinding(bndvars, paste);
-                       DistBinding(x, boundin)))
-
+  rename(isvar : ( name -> env ) * name -> term, bndvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term, paste : ( term -> vars ) * term -> term) =
+    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "105,2,113,47")
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "110,4,113,47")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "110,4,110,19")
+       ; \ t -> (t, []) \)
+    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "111,4,113,47")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "111,10,113,46")
+        ; env-alltd(
+            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "111,20,113,45")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "111,20,111,31")
+               ; RnVar(
+                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "111,26,111,30") ; isvar
+                 )
+               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "112,23,113,45")
+                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "112,23,112,47")
+                     ; RnBinding(
+                         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "112,33,112,39") ; bndvars
+                       , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "112,42,112,46") ; paste
+                       ))
+                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "113,23,113,45")
+                  ; DistBinding(
+                      s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "113,35,113,35") ; x
+                    , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "113,38,113,44") ; boundin
+                    ))
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "105,2,113,47")
+    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/rename.str", "rename", "105,2,113,47")
+      ; fail

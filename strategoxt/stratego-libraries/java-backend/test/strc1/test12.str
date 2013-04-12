@@ -1,19 +1,39 @@
 module test12
-imports collection/list/cons collection/tuple/cons
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  collection/list/cons
+  collection/tuple/cons
+
+
 signature
-  sorts Term
+  sorts
+    Term
+
   constructors
     I : Term
     F : Term * Term -> Term
     G : Term -> Term
 
+
 rules
 
-  R : F(x, x) -> G(x)
+  R :
+    F(x, x) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "R", "12,2,12,20")> G(x)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "R", "12,2,12,20")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "R", "12,2,12,20")
+             ; fail
+
 
 strategies
-
   main-test12 =
-    <R> F(I, I) => G(I)
-
-  
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "main-test12", "16,2,17,22")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "17,4,17,22")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "17,4,17,14")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "17,5,17,5") ; R)> F(I, I)) => G(I)
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "main-test12", "16,2,17,22")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test12.str", "main-test12", "16,2,17,22")
+      ; fail

@@ -1,14 +1,39 @@
 module xml2aterm
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
   xml-front-options
 
-strategies
 
+strategies
   main-xml2aterm =
-    xtc-io-wrap(explicit-mode-option,
-      xtc-transform(!"parse-xml-info", pass-verbose)
-    ; xtc-transform(!"xml-info2data", ![<pass-explicit-mode> | <pass-verbose>])
-    <+ <xtc-exit> 1
-    )
+    s-enter(|"_cellar/xml-front/xtc/xml2aterm.str", "main-xml2aterm", "9,2,14,4")
+    ; s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "10,4,14,4")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "10,16,10,35") ; explicit-mode-option
+      , s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "11,6,13,18")
+        ; (s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "11,6,12,78")
+           ; (s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "11,6,11,51")
+              ; xtc-transform(
+                  s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "11,20,11,36")
+                  ; !"parse-xml-info"
+                , s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "11,39,11,50") ; pass-verbose
+                ))
+           ; s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "12,6,12,78")
+           ; xtc-transform(
+               s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "12,20,12,35")
+               ; !"xml-info2data"
+             , s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "12,38,12,77")
+               ; ![<s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "12,41,12,58") ; pass-explicit-mode>|<s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "12,64,12,75") ; pass-verbose>]
+             )
+           <+ s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "13,7,13,18")
+              ; <(s-step(|"_cellar/xml-front/xtc/xml2aterm.str", "13,8,13,15") ; xtc-exit)> 1)
+      )
+    < s-exit(|"_cellar/xml-front/xtc/xml2aterm.str", "main-xml2aterm", "9,2,14,4")
+    + s-exit(|"_cellar/xml-front/xtc/xml2aterm.str", "main-xml2aterm", "9,2,14,4")
+      ; fail

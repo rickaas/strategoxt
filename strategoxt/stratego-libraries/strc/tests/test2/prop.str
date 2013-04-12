@@ -1,37 +1,143 @@
 module prop
-imports libstratego-lib
-strategies
 
-  main = 
-    test-suite(!"prop",
-        test1
-    )
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  test1 = 
-    apply-test(!"test1"
-              ,disj-nf
 
-              ,!And(And(Or(Or(Atom("d_0"),Atom("a")),Or(Or(Atom("c_0"),Atom("a")),False)),Atom("b")),And(And(Or(Or(Atom("b_0"),Atom("a")),Or(Or(Atom("a_0"),Atom("a")),False)),Atom("b")),True))
+imports
+  libstratego-lib
 
-              ,open(!"prop.res") 
-              )
 
 strategies
+  main =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "main", "5,2,8,4")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "6,4,8,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "6,15,6,21")
+        ; !"prop"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "7,8,7,12") ; test1
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "main", "5,2,8,4")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "main", "5,2,8,4")
+      ; fail
 
+  test1 =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "test1", "10,2,17,14")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "11,4,17,14")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "11,15,11,22")
+        ; !"test1"
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "12,15,12,21") ; disj-nf
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "14,15,14,191")
+        ; !And(
+             And(
+               Or(
+                 Or(
+                   Atom("d_0")
+                 , Atom("a")
+                 )
+               , Or(
+                   Or(
+                     Atom("c_0")
+                   , Atom("a")
+                   )
+                 , False
+                 )
+               )
+             , Atom("b")
+             )
+           , And(
+               And(
+                 Or(
+                   Or(
+                     Atom("b_0")
+                   , Atom("a")
+                   )
+                 , Or(
+                     Or(
+                       Atom("a_0")
+                     , Atom("a")
+                     )
+                   , False
+                   )
+                 )
+               , Atom("b")
+               )
+             , True
+             )
+           )
+      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "16,15,16,31")
+        ; open(
+            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "16,20,16,30")
+            ; !"prop.res"
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "test1", "10,2,17,14")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "test1", "10,2,17,14")
+      ; fail
+
+
+strategies
   my-bottomup(s) =
-    rec x(all(x); s)
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "my-bottomup", "21,2,22,19")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "22,4,22,19")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "22,10,22,18")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "22,10,22,15")
+           ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "22,14,22,14") ; x))
+        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "22,18,22,18")
+        ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "my-bottomup", "21,2,22,19")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "my-bottomup", "21,2,22,19")
+      ; fail
 
-  my-innermost(s) = 
-    my-bottomup(red(s))
+  my-innermost(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "my-innermost", "24,2,25,22")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "25,4,25,22")
+    ; my-bottomup(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "25,16,25,21")
+        ; red(
+            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "25,20,25,20") ; s
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "my-innermost", "24,2,25,22")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "my-innermost", "24,2,25,22")
+      ; fail
 
-  red(s) = 
-    rec x(s; my-bottomup(x) <+ id)
+  red(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "red", "27,2,28,33")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,4,28,33")
+    ; rec x (
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,10,28,32")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,10,28,26")
+           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,10,28,10") ; s)
+           ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,13,28,26")
+           ; my-bottomup(
+               s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,25,28,25") ; x
+             )
+           <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "28,31,28,32") ; id)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "red", "27,2,28,33")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "red", "27,2,28,33")
+      ; fail
 
-  nf(s) = 
-    my-bottomup(not(s))
+  nf(s) =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "nf", "30,2,31,22")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "31,4,31,22")
+    ; my-bottomup(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "31,16,31,21")
+        ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "31,20,31,20") ; s)
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "nf", "30,2,31,22")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "nf", "30,2,31,22")
+      ; fail
+
 
 signature
-  sorts Prop
+  sorts
+    Prop
+
   constructors
     False : Prop
     True  : Prop
@@ -42,65 +148,386 @@ signature
     Impl  : Prop * Prop -> Prop
     Eq    : Prop * Prop -> Prop
 
+
 strategies
+  disj-nf =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "disj-nf", "47,1,48,48")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,3,48,48")
+    ; my-innermost(
+        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,16,48,47")
+        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,16,48,19") ; DAOL
+           + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,23,48,47")
+             ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,23,48,26") ; DAOR
+                + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,30,48,47")
+                  ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,30,48,31") ; DN
+                     + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,35,48,47")
+                       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,35,48,37") ; DMA
+                          + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,41,48,47")
+                            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,41,48,43") ; DMO
+                               + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "48,47,48,47") ; T)))))
+      )
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "disj-nf", "47,1,48,48")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "disj-nf", "47,1,48,48")
+      ; fail
 
- disj-nf = 
-   my-innermost(DAOL + DAOR + DN + DMA + DMO + T)
+  T =
+    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T", "50,1,51,55")
+    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,5,51,55")
+    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,5,50,6") ; T1
+       + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,10,51,55")
+         ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,10,50,11") ; T2
+            + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,15,51,55")
+              ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,15,50,16") ; T3
+                 + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,20,51,55")
+                   ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,20,50,21") ; T4
+                      + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,25,51,55")
+                        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,25,50,26") ; T5
+                           + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,30,51,55")
+                             ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,30,50,31") ; T6
+                                + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,35,51,55")
+                                  ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,35,50,36") ; T7
+                                     + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,40,51,55")
+                                       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,40,50,41") ; T8
+                                          + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,45,51,55")
+                                            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,45,50,46") ; T9
+                                               + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,50,51,55")
+                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "50,50,50,52") ; T10
+                                                    + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,5,51,55")
+                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,5,51,7") ; T11
+                                                         + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,11,51,55")
+                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,11,51,13") ; T12
+                                                              + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,17,51,55")
+                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,17,51,19") ; T13
+                                                                   + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,23,51,55")
+                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,23,51,25") ; T14
+                                                                        + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,29,51,55")
+                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,29,51,31") ; T15
+                                                                             + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,35,51,55")
+                                                                               ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,35,51,37") ; T16
+                                                                                  + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,41,51,55")
+                                                                                    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,41,51,43") ; T17
+                                                                                       + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,47,51,55")
+                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,47,51,49") ; T18
+                                                                                            + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "51,53,51,55") ; T19))))))))))))))))))
+    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T", "50,1,51,55")
+    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T", "50,1,51,55")
+      ; fail
 
- T = T1 + T2 + T3 + T4 + T5 + T6 + T7 + T8 + T9 + T10 +
-     T11 + T12 + T13 + T14 + T15 + T16 + T17 + T18 + T19
+
 rules
 
-  T1  : Not(True) -> False       T2  : Not(False) -> True
+  T1 :
+    Not(True) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T1", "54,2,54,25")> False
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T1", "54,2,54,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T1", "54,2,54,25")
+             ; fail
 
-  T3  : And(True, x) -> x        T5  : And(False, x) -> False  
-  T4  : And(x, True) -> x        T6  : And(x, False) -> False  
-  
-  T7  : Or(True, x) -> True      T9  : Or(False, x) -> x
-  T8  : Or(x, True) -> True      T10 : Or(x, False) -> x
+  T2 :
+    Not(False) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T2", "54,33,54,56")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T2", "54,33,54,56")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T2", "54,33,54,56")
+             ; fail
 
-  T11 : Impl(True, x) -> x       T14 : Impl(False, False) -> True
-  T12 : Impl(x, True) -> True    T15 : Impl(True, False) -> False
-  T13 : Impl(False, x) -> True
+  T3 :
+    And(True, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T3", "56,2,56,24")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T3", "56,2,56,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T3", "56,2,56,24")
+             ; fail
 
-  T16 : Eq(False, x) -> Not(x)   T18 : Eq(True, x) -> x
-  T17 : Eq(x, False) -> Not(x)   T19 : Eq(x, True) -> x
+  T5 :
+    And(False, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T5", "56,33,56,60")> False
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T5", "56,33,56,60")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T5", "56,33,56,60")
+             ; fail
+
+  T4 :
+    And(x, True) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T4", "57,2,57,24")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T4", "57,2,57,24")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T4", "57,2,57,24")
+             ; fail
+
+  T6 :
+    And(x, False) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T6", "57,33,57,60")> False
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T6", "57,33,57,60")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T6", "57,33,57,60")
+             ; fail
+
+  T7 :
+    Or(True, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T7", "59,2,59,26")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T7", "59,2,59,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T7", "59,2,59,26")
+             ; fail
+
+  T9 :
+    Or(False, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T9", "59,33,59,55")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T9", "59,33,59,55")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T9", "59,33,59,55")
+             ; fail
+
+  T8 :
+    Or(x, True) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T8", "60,2,60,26")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T8", "60,2,60,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T8", "60,2,60,26")
+             ; fail
+
+  T10 :
+    Or(x, False) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T10", "60,33,60,55")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T10", "60,33,60,55")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T10", "60,33,60,55")
+             ; fail
+
+  T11 :
+    Impl(True, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T11", "62,2,62,25")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T11", "62,2,62,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T11", "62,2,62,25")
+             ; fail
+
+  T14 :
+    Impl(False, False) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T14", "62,33,62,64")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T14", "62,33,62,64")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T14", "62,33,62,64")
+             ; fail
+
+  T12 :
+    Impl(x, True) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T12", "63,2,63,28")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T12", "63,2,63,28")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T12", "63,2,63,28")
+             ; fail
+
+  T15 :
+    Impl(True, False) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T15", "63,33,63,64")> False
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T15", "63,33,63,64")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T15", "63,33,63,64")
+             ; fail
+
+  T13 :
+    Impl(False, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T13", "64,2,64,29")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T13", "64,2,64,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T13", "64,2,64,29")
+             ; fail
+
+  T16 :
+    Eq(False, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T16", "66,2,66,29")> Not(x)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T16", "66,2,66,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T16", "66,2,66,29")
+             ; fail
+
+  T18 :
+    Eq(True, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T18", "66,33,66,54")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T18", "66,33,66,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T18", "66,33,66,54")
+             ; fail
+
+  T17 :
+    Eq(x, False) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T17", "67,2,67,29")> Not(x)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T17", "67,2,67,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T17", "67,2,67,29")
+             ; fail
+
+  T19 :
+    Eq(x, True) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T19", "67,33,67,54")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T19", "67,33,67,54")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "T19", "67,33,67,54")
+             ; fail
+
 
 rules
 
-  AA    : And(And(x, y), z) -> And(x, And(y, z))
-  AO    : Or(Or(x, y), z) -> Or(x, Or(y, z))
-  AI    : Impl(Impl(x, y), z) -> Impl(x, Impl(y, z))
-  AE    : Eq(Eq(x, y), z) -> Eq(x, Eq(y, z))
-  
-  CA    : And(x, y) -> And(y, x) 
-  CO    : Or(x, y) -> Or(y, x)
-  CE    : Eq(x, y) -> Eq(y, x)
+  AA :
+    And(And(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AA", "71,2,71,47")> And(x, And(y, z))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AA", "71,2,71,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AA", "71,2,71,47")
+             ; fail
 
-  IDA   : And(x, x) -> x
-  IDO   : Or(x, x) -> x
-  IDI   : Impl(x, x) -> True
-  IDE   : Eq(x, x) -> True
+  AO :
+    Or(Or(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AO", "72,2,72,43")> Or(x, Or(y, z))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AO", "72,2,72,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AO", "72,2,72,43")
+             ; fail
 
-  DAOL  : And(Or(x, y), z) -> Or(And(x, z), And(y, z))
-  DAOR  : And(z, Or(x, y)) -> Or(And(z, x), And(z, y))
-  DOAL  : Or(And(x, y), z) -> And(Or(x, z), Or(y, z))
-  DOAR  : Or(z, And(x, y)) -> And(Or(z, x), Or(z, y))
+  AI :
+    Impl(Impl(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AI", "73,2,73,51")> Impl(x, Impl(y, z))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AI", "73,2,73,51")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AI", "73,2,73,51")
+             ; fail
 
-  DN    : Not(Not(x)) -> x
+  AE :
+    Eq(Eq(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AE", "74,2,74,43")> Eq(x, Eq(y, z))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AE", "74,2,74,43")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "AE", "74,2,74,43")
+             ; fail
 
-  DMA   : Not(And(x, y)) -> Or(Not(x), Not(y))
-  DMO   : Not(Or(x, y))  -> And(Not(x), Not(y))
-  DMI   : Not(Impl(x, y)) -> And(x, Not(y))
-  DME   : Not(Eq(x, y)) -> Or(And(Not(x), y), And(x, Not(y)))
+  CA :
+    And(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CA", "76,2,76,31")> And(y, x)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CA", "76,2,76,31")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CA", "76,2,76,31")
+             ; fail
 
-  DefN  : Not(x) -> Impl(x, False)
-  DefI  : Impl(x, y) -> Or(Not(x), y)
-  DefE  : Eq(x, y) -> And(Impl(x, y), Impl(y, x))
-  DefO1 : Or(x, y) -> Impl(Not(x), y)
-  DefO2 : Or(x, y) -> Not(And(Not(x), Not(y)))
-  DefA1 : And(x, y) -> Not(Or(Not(x), Not(y)))
-  DefA2 : And(x, y) -> Not(Impl(x, Not(y)))
+  CO :
+    Or(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CO", "77,2,77,29")> Or(y, x)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CO", "77,2,77,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CO", "77,2,77,29")
+             ; fail
 
-  IDefI : Or(Not(x), y) -> Impl(x, y)
-  IDefE : And(Impl(x, y), Impl(y, x)) -> Eq(x, y)
+  CE :
+    Eq(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CE", "78,2,78,29")> Eq(y, x)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CE", "78,2,78,29")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "CE", "78,2,78,29")
+             ; fail
+
+  IDA :
+    And(x, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDA", "80,2,80,23")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDA", "80,2,80,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDA", "80,2,80,23")
+             ; fail
+
+  IDO :
+    Or(x, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDO", "81,2,81,22")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDO", "81,2,81,22")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDO", "81,2,81,22")
+             ; fail
+
+  IDI :
+    Impl(x, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDI", "82,2,82,27")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDI", "82,2,82,27")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDI", "82,2,82,27")
+             ; fail
+
+  IDE :
+    Eq(x, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDE", "83,2,83,25")> True
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDE", "83,2,83,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDE", "83,2,83,25")
+             ; fail
+
+  DAOL :
+    And(Or(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DAOL", "85,2,85,53")> Or(
+                                                                                                                     And(x, z)
+                                                                                                                   , And(y, z)
+                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DAOL", "85,2,85,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DAOL", "85,2,85,53")
+             ; fail
+
+  DAOR :
+    And(z, Or(x, y)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DAOR", "86,2,86,53")> Or(
+                                                                                                                     And(z, x)
+                                                                                                                   , And(z, y)
+                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DAOR", "86,2,86,53")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DAOR", "86,2,86,53")
+             ; fail
+
+  DOAL :
+    Or(And(x, y), z) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DOAL", "87,2,87,52")> And(
+                                                                                                                     Or(x, z)
+                                                                                                                   , Or(y, z)
+                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DOAL", "87,2,87,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DOAL", "87,2,87,52")
+             ; fail
+
+  DOAR :
+    Or(z, And(x, y)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DOAR", "88,2,88,52")> And(
+                                                                                                                     Or(z, x)
+                                                                                                                   , Or(z, y)
+                                                                                                                   )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DOAR", "88,2,88,52")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DOAR", "88,2,88,52")
+             ; fail
+
+  DN :
+    Not(Not(x)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DN", "90,2,90,25")> x
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DN", "90,2,90,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DN", "90,2,90,25")
+             ; fail
+
+  DMA :
+    Not(And(x, y)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMA", "92,2,92,45")> Or(Not(x), Not(y))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMA", "92,2,92,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMA", "92,2,92,45")
+             ; fail
+
+  DMO :
+    Not(Or(x, y)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMO", "93,2,93,46")> And(Not(x), Not(y))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMO", "93,2,93,46")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMO", "93,2,93,46")
+             ; fail
+
+  DMI :
+    Not(Impl(x, y)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMI", "94,2,94,42")> And(x, Not(y))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMI", "94,2,94,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DMI", "94,2,94,42")
+             ; fail
+
+  DME :
+    Not(Eq(x, y)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DME", "95,2,95,60")> Or(
+                                                                                                                 And(Not(x), y)
+                                                                                                               , And(x, Not(y))
+                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DME", "95,2,95,60")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DME", "95,2,95,60")
+             ; fail
+
+  DefN :
+    Not(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefN", "97,2,97,33")> Impl(x, False)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefN", "97,2,97,33")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefN", "97,2,97,33")
+             ; fail
+
+  DefI :
+    Impl(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefI", "98,2,98,36")> Or(Not(x), y)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefI", "98,2,98,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefI", "98,2,98,36")
+             ; fail
+
+  DefE :
+    Eq(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefE", "99,2,99,48")> And(
+                                                                                                             Impl(x, y)
+                                                                                                           , Impl(y, x)
+                                                                                                           )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefE", "99,2,99,48")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefE", "99,2,99,48")
+             ; fail
+
+  DefO1 :
+    Or(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefO1", "100,2,100,36")> Impl(Not(x), y)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefO1", "100,2,100,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefO1", "100,2,100,36")
+             ; fail
+
+  DefO2 :
+    Or(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefO2", "101,2,101,45")> Not(
+                                                                                                                And(Not(x), Not(y))
+                                                                                                              )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefO2", "101,2,101,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefO2", "101,2,101,45")
+             ; fail
+
+  DefA1 :
+    And(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefA1", "102,2,102,45")> Not(
+                                                                                                                 Or(Not(x), Not(y))
+                                                                                                               )
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefA1", "102,2,102,45")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefA1", "102,2,102,45")
+             ; fail
+
+  DefA2 :
+    And(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefA2", "103,2,103,42")> Not(Impl(x, Not(y)))
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefA2", "103,2,103,42")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "DefA2", "103,2,103,42")
+             ; fail
+
+  IDefI :
+    Or(Not(x), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDefI", "105,2,105,36")> Impl(x, y)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDefI", "105,2,105,36")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDefI", "105,2,105,36")
+             ; fail
+
+  IDefE :
+    And(
+      Impl(x, y)
+    , Impl(y, x)
+    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDefE", "106,2,106,48")> Eq(x, y)
+    where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDefE", "106,2,106,48")
+          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/prop.str", "IDefE", "106,2,106,48")
+             ; fail

@@ -1,9 +1,22 @@
 module parse-xml-doc
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-  libstratego-xtc xml-xtc-tools
+  libstratego-xtc
+  xml-xtc-tools
+
 
 strategies
-  
   main-parse-xml-doc =
-    xtc-io-wrap(xtc-parse-xml-doc)
+    s-enter(|"_cellar/xml-front/xtc/parse-xml-doc.str", "main-parse-xml-doc", "8,2,9,33")
+    ; s-step(|"_cellar/xml-front/xtc/parse-xml-doc.str", "9,4,9,33")
+    ; xtc-io-wrap(
+        s-step(|"_cellar/xml-front/xtc/parse-xml-doc.str", "9,16,9,32") ; xtc-parse-xml-doc
+      )
+    < s-exit(|"_cellar/xml-front/xtc/parse-xml-doc.str", "main-parse-xml-doc", "8,2,9,33")
+    + s-exit(|"_cellar/xml-front/xtc/parse-xml-doc.str", "main-parse-xml-doc", "8,2,9,33")
+      ; fail

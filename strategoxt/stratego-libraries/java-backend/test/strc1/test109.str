@@ -1,11 +1,53 @@
 module test109
 
-imports libstratego-lib
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
 
 strategies
+  main-test109 =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "main-test109", "7,2,7,41")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "7,17,7,41")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "7,17,7,36")
+       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "7,17,7,27")
+          ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "7,17,7,18")
+             ; !1) => <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "7,24,7,26") ; foo>) => <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "7,33,7,35") ; bar>) => 3
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "main-test109", "7,2,7,41")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "main-test109", "7,2,7,41")
+      ; fail
 
-  main-test109 = !1 => <foo> => <bar> => 3
-  
-  foo: 1 -> b where 1 with b := 2
-  
-  bar: 2 -> c with 2 where 2 with 2 where c := 3
+  foo :
+    1 -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "foo", "9,2,9,32")> b
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "foo", "9,2,9,32")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "foo", "9,2,9,32")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "9,20,9,20") ; 1
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "foo", "9,2,9,32")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "9,27,9,32")
+         ; b := 2
+         <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "foo", "9,2,9,32")
+            ; fail
+
+  bar :
+    2 -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")> c
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "11,19,11,19") ; 2
+         <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")
+            ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "11,27,11,27") ; 2
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")
+             ; fail
+    with s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "11,34,11,34") ; 2
+         <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")
+            ; fail
+    where s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "11,42,11,47")
+          ; c := 3
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test109.str", "bar", "11,2,11,47")
+             ; fail

@@ -1,67 +1,219 @@
-/**
- * Implosion of concrete syntax.
- */
 module stratego/asfix/implode/concrete-syntax
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/concrete-syntax/markers
 
+
 strategies
-    
   skip-concrete(impl) =
-    ?appl(prod, args)
-    ; <get-cons> prod => c
-    ; <strsglr-is-quote-cons> c
-    ; where(<remove-all(is-ignorable-syntax)> args => [ap])
-    ; !c#([ap])
-    ; rec skip(
-        alltd(
-           appl(prod(one(varsym(id)), id, id), id)
-           ; impl
-
-        <+ appl(where(get-cons; strsglr-is-antiquote-cons), id)
-           ; impl
-
-        <+ annotation(impl, skip)
-        )
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "skip-concrete", "10,2,26,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "11,4,26,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "11,4,11,20")
+       ; ?appl(prod, args))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "12,6,26,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "12,6,12,25")
+       ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "12,6,12,20")
+          ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "12,7,12,14") ; get-cons)> prod) => c)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "13,6,26,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "13,6,13,30")
+       ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "13,7,13,27") ; strsglr-is-quote-cons)> c)
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "14,6,26,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "14,6,14,58")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "14,12,14,57")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "14,12,14,49")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "14,13,14,43")
+                      ; remove-all(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "14,24,14,42") ; is-ignorable-syntax
+                        ))> args) => [ap]))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "15,6,26,6")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "15,6,15,14")
+       ; !c#([ap]))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "16,6,26,6")
+    ; rec skip (
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "17,8,25,8")
+        ; alltd(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,11,24,32")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,11,19,16")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,11,18,49")
+                  ; appl(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,16,18,44")
+                      ; prod(
+                          s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,21,18,35")
+                          ; one(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,25,18,34")
+                                ; varsym(
+                                    s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,32,18,33") ; id
+                                  ))
+                        , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,38,18,39") ; id
+                        , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,42,18,43") ; id
+                        )
+                    , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "18,47,18,48") ; id
+                    ))
+               ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "19,13,19,16")
+               ; impl
+               <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,11,24,32")
+                  ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,11,22,16")
+                     ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,11,21,62")
+                        ; appl(
+                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,16,21,57")
+                            ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,22,21,56")
+                                    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,22,21,29") ; get-cons)
+                                    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,32,21,56")
+                                    ; strsglr-is-antiquote-cons)
+                          , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "21,60,21,61") ; id
+                          ))
+                     ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "22,13,22,16")
+                     ; impl
+                     <+ s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "24,11,24,32")
+                        ; annotation(
+                            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "24,22,24,25") ; impl
+                          , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "24,28,24,31") ; skip
+                          )))
+          )
       )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "skip-concrete", "10,2,26,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "skip-concrete", "10,2,26,6")
+      ; fail
 
-  /**
-   * @todo Reuse existing strategies to get the constructor.
-   */
   annotation(impl, skip) =
-    ?appl(prod, <id>)
-    ; where(<get-cons> prod => "WithAnno")
-    ; filter(not(is-ignorable-syntax); not(appl(prod(id, oncetd(lex(id)), id), id)))
-    ; ?[x|xs] 
-    ; !"WithAnno"#([<skip> x| <impl> xs])
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "annotation", "31,2,36,40")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "32,4,36,40")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "32,4,32,20")
+       ; ?appl(
+            prod
+          , <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "32,17,32,18") ; id>
+          ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "33,6,36,40")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "33,6,33,41")
+       ; where(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "33,12,33,40")
+               ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "33,12,33,26")
+                  ; <(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "33,13,33,20") ; get-cons)> prod) => "WithAnno"))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,6,36,40")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,6,34,83")
+       ; filter(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,13,34,82")
+           ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,13,34,36")
+              ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,17,34,35") ; is-ignorable-syntax))
+           ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,39,34,82")
+           ; not(s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,43,34,81")
+                 ; appl(
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,48,34,76")
+                     ; prod(
+                         s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,53,34,54") ; id
+                       , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,57,34,71")
+                         ; oncetd(
+                             s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,64,34,70")
+                             ; lex(
+                                 s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,68,34,69") ; id
+                               )
+                           )
+                       , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,74,34,75") ; id
+                       )
+                   , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "34,79,34,80") ; id
+                   ))
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "35,6,36,40")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "35,6,35,12")
+       ; ?[x|xs])
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "36,6,36,40")
+    ; !"WithAnno"#([<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "36,21,36,24") ; skip> x|<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "36,31,36,34") ; impl> xs])
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "annotation", "31,2,36,40")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "annotation", "31,2,36,40")
+      ; fail
 
-/**
- * Yielding of quotes. Should be applied after implosion.
- */
+
 strategies
-
   yield-asfix-quotes =
-    alltd(strsglr-quote-cong(asfix-yield-quote))
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "yield-asfix-quotes", "43,2,44,47")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "44,4,44,47")
+    ; alltd(
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "44,10,44,46")
+        ; strsglr-quote-cong(
+            s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "44,29,44,45") ; asfix-yield-quote
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "yield-asfix-quotes", "43,2,44,47")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "yield-asfix-quotes", "43,2,44,47")
+      ; fail
 
   asfix-yield-quote =
-    let yield(|chars) =
-            asfix-yield-acc(yield | chars)
-          + asfix-yield-quote-acc(yield | chars)
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote", "46,2,54,6")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "47,4,54,6")
+    ; let yield(|chars) =
+            s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "yield", "47,8,49,47")
+            ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "48,12,49,47")
+            ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "48,12,48,41")
+               ; asfix-yield-acc(
+                   s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "48,28,48,32") ; yield
+                 | chars
+                 )
+               + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "49,12,49,47")
+                 ; asfix-yield-quote-acc(
+                     s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "49,34,49,38") ; yield
+                   | chars
+                   ))
+            < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "yield", "47,8,49,47")
+            + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "yield", "47,8,49,47")
+              ; fail
+      in
+        s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "51,8,53,49")
+        ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "51,8,51,55")
+           ; appl(
+               s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "51,13,51,42")
+               ; !prod([], "yield", no-attrs())
+             , s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "51,45,51,54")
+               ; yield(|[])
+             )
+           + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "52,8,53,49")
+             ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "52,8,52,31")
+                ; strsglr-metavar-cong(
+                    s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "52,29,52,30") ; id
+                  )
+                + s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "53,8,53,49")
+                  ; strsglr-antiquote-cong(
+                      s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "53,31,53,48") ; yield-asfix-quotes
+                    )))
+      end
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote", "46,2,54,6")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote", "46,2,54,6")
+      ; fail
 
-     in appl(!prod([], "yield", no-attrs()), yield(|[]))
-      + strsglr-metavar-cong(id)
-      + strsglr-antiquote-cong(yield-asfix-quotes)
-    end
-    
-  asfix-yield-quote-acc(rec : b * c -> d | acc) :
-    amb([x | _]) -> acc'
-    where
-      acc' := <rec(|acc)> x
+  asfix-yield-quote-acc(rec : b * c -> d|acc):
+    amb([x|_]) -> <r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "56,2,59,26")> acc'
+    where r-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "56,2,59,26")
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "56,2,59,26")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "59,6,59,26")
+          ; acc' := <s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "59,15,59,23")
+                     ; rec(|acc)> x
+          <+ r-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "56,2,59,26")
+             ; fail
 
-  asfix-yield-quote-acc(rec : b * c -> d | acc) =
-    strsglr-metavar-cong(id)
-    ; ![<id> | acc]
+  asfix-yield-quote-acc(rec : b * c -> d|acc) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "61,2,63,18")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "62,4,63,18")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "62,4,62,27")
+       ; strsglr-metavar-cong(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "62,25,62,26") ; id
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "63,6,63,18")
+    ; ![<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "63,9,63,10") ; id>|acc]
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "61,2,63,18")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "61,2,63,18")
+      ; fail
 
-  asfix-yield-quote-acc(rec : b * c -> d | acc) =
-    strsglr-antiquote-cong(yield-asfix-quotes)
-    ; ![<id> | acc]
+  asfix-yield-quote-acc(rec : b * c -> d|acc) =
+    s-enter(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "65,2,67,18")
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "66,4,67,18")
+    ; (s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "66,4,66,45")
+       ; strsglr-antiquote-cong(
+           s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "66,27,66,44") ; yield-asfix-quotes
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "67,6,67,18")
+    ; ![<s-step(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "67,9,67,10") ; id>|acc]
+    < s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "65,2,67,18")
+    + s-exit(|"strategoxt/stratego-libraries/sglr/lib/stratego/asfix/implode/concrete-syntax.str", "asfix-yield-quote-acc", "65,2,67,18")
+      ; fail

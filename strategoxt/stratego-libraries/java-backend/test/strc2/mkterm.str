@@ -1,5 +1,13 @@
 module mkterm
-imports libstratego-lib
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+
+
 signature
   constructors
     F : Term * Term * Term -> Term
@@ -7,17 +15,51 @@ signature
     Y : Term
     Z : Term
 
+
 rules
 
-  A : f#( xs ) -> f#(xs)
+  A :
+    f#(xs) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "A", "12,2,12,23")> f#(xs)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "A", "12,2,12,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "A", "12,2,12,23")
+             ; fail
 
-  B : f#(xs) -> "b"#(xs)
+  B :
+    f#(xs) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "B", "14,2,14,23")> "b"#(xs)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "B", "14,2,14,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "B", "14,2,14,23")
+             ; fail
 
-  C : "b"#(xs) -> "c"#(xs)
+  C :
+    "b"#(xs) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "C", "16,2,16,25")> "c"#(xs)
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "C", "16,2,16,25")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "C", "16,2,16,25")
+             ; fail
 
-  D : f#(xs) -> [f | xs]
+  D :
+    f#(xs) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "D", "18,2,18,23")> [f|xs]
+    where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "D", "18,2,18,23")
+          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "D", "18,2,18,23")
+             ; fail
+
 
 strategies
-
-  main-mkterm = 
-    <A; B; C; id#([id|id]); D> F(X,Y,Z) => ["c",X,Y,Z] 
+  main-mkterm =
+    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "main-mkterm", "22,2,23,53")
+    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,4,23,53")
+    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,4,23,38")
+       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,5,23,28")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,5,23,5") ; A)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,8,23,28")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,8,23,8") ; B)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,11,23,28")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,11,23,11") ; C)
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,14,23,28")
+           ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,14,23,25")
+              ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,14,23,15") ; id)#((s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,18,23,24")
+                                                                                                                    ; [s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,19,23,20") ; id|s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,22,23,23") ; id])))
+           ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "23,28,23,28")
+           ; D)> F(X, Y, Z)) => ["c", X, Y, Z]
+    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "main-mkterm", "22,2,23,53")
+    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/mkterm.str", "main-mkterm", "22,2,23,53")
+      ; fail

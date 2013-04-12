@@ -1,20 +1,76 @@
 module char-test
-imports libstratego-lib
 
-strategies 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-  main-char-test = 
-    test-suite(!"char-test",
-	is-num-test;
-	is-alphanum-test;
-	is-not-num-test
-    )
+
+imports
+  libstratego-lib
+
+
+strategies
+  main-char-test =
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "main-char-test", "6,2,11,4")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "7,4,11,4")
+    ; test-suite(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "7,15,7,26")
+        ; !"char-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "8,1,10,15")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "8,1,8,11") ; is-num-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "9,1,10,15")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "9,1,9,16") ; is-alphanum-test)
+        ; s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "10,1,10,15")
+        ; is-not-num-test
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "main-char-test", "6,2,11,4")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "main-char-test", "6,2,11,4")
+      ; fail
 
   is-num-test =
-    apply-test(!"is-num-test",is-num,!50,!50)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-num-test", "13,2,14,44")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "14,4,14,44")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "14,15,14,28")
+        ; !"is-num-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "14,30,14,35") ; is-num
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "14,37,14,39")
+        ; !50
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "14,41,14,43")
+        ; !50
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-num-test", "13,2,14,44")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-num-test", "13,2,14,44")
+      ; fail
 
   is-alphanum-test =
-    apply-test(!"is-alphanum-test",is-alphanum,!50,!50)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-alphanum-test", "16,2,17,54")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "17,4,17,54")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "17,15,17,33")
+        ; !"is-alphanum-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "17,35,17,45") ; is-alphanum
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "17,47,17,49")
+        ; !50
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "17,51,17,53")
+        ; !50
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-alphanum-test", "16,2,17,54")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-alphanum-test", "16,2,17,54")
+      ; fail
 
   is-not-num-test =
-    apply-test(!"is-not-num-test",not(is-num),!130,!130)
+    s-enter(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-not-num-test", "19,2,20,55")
+    ; s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "20,4,20,55")
+    ; apply-test(
+        s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "20,15,20,32")
+        ; !"is-not-num-test"
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "20,34,20,44")
+        ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "20,38,20,43") ; is-num)
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "20,46,20,49")
+        ; !130
+      , s-step(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "20,51,20,54")
+        ; !130
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-not-num-test", "19,2,20,55")
+    + s-exit(|"strategoxt/stratego-libraries/lib/tests/char-test.str", "is-not-num-test", "19,2,20,55")
+      ; fail

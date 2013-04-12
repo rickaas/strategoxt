@@ -1,223 +1,307 @@
-/*
-
-  The annotation properties of Stratego provide a standard way to annote a 
-  term with a set of properties to a term. A property is a key-value pair,
-  which can be compared to the attributes of XML. Properties are however
-  superior to XML's attributes because they can be structured like any ATerm.
-  Annotation properties of a term always contain just one property for a certain key.
-  Thus the key uniquely specifies a property
-
-
-*/
 module annotation-props
-imports list annotations tuple conditional
-/*
 
-  This module offers various strategies on properties. Most strategies
-  operate on the term where the properties are attached to. Property keys
-  are therefor passed as an argument to the strategy.
- 
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
 
-  The \verb|valid-props-term| strategy determines whether the annotation of the current term
-  is valid as a properties annotation. The annotation must thus be a list of tuples.
-  \verb|valid-props-term| will fail and print a debug statement when the annotation of the current term
-  is not a valid properties annotation. Otherwise it will leave the current term untouched.
+imports
+  list
+  annotations
+  tuple
+  conditional
 
-*/
+
 strategies
-
   valid-props-term =
-      id{ valid-props }
-
-/*
-
-  The \verb|valid-props| strategy determines whether the \emph{current term}
-  is valid as a properties annotation. The term must be a list of tuples.
-  \verb|valid-props| will fail and print a debug statement when the current 
-  term is not a valid properties annotation. Otherwise it will leave the
-  current term untouched.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "valid-props-term", "30,2,31,22")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "31,6,31,22")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "31,6,31,7") ; id) { s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "31,10,31,20") ; valid-props }
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "valid-props-term", "30,2,31,22")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "valid-props-term", "30,2,31,22")
+      ; fail
 
   valid-props =
-    risky(!"Not a valid properties annotation: ", 
-        is-list; map(?(_, _)))
-
-/*
-
-  The \verb|get-props| strategy results with the annotation of
-  the current term. If the current term hasn't got an annotation
-  it will result in the empty list. This strategy doesn't guarantee
-  that the result is a valid properties annotation.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "valid-props", "43,2,45,29")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "44,4,45,29")
+    ; risky(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "44,10,44,47")
+        ; !"Not a valid properties annotation: "
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "45,8,45,28")
+        ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "45,8,45,14") ; is-list)
+        ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "45,17,45,28")
+        ; map(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "45,21,45,27")
+            ; ?(_, _)
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "valid-props", "43,2,45,29")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "valid-props", "43,2,45,29")
+      ; fail
 
   get-props =
-    if-annotation( get-annotations, ![])
-
-/*
-
-  The \verb|preserve-props(s)| strategy preserves the properties of
-  the current term over the application of a specified strategy \verb|s|.
-  The properties which are added during the applicaiton of \verb|s| will
-  be lost. This strategy is useful if you want rules or strategies to
-  be annotation preserving. The annotations will be lost on application 
-  of a transformation in Stratego that doesn't take account for annotations.
-
-  The \verb|merge-props(s)| strategy is a variant of \verb|preserve-props|.
-  It merges the properties that are attached to the current term after
-  the application of a strategy \verb|s|, with the properties that were attacted
-  to the current term \emph{before} the application of \verb|s|. The properties
-  of the new current term will be preferred over the properties of the old
-  current term if there are any duplicates.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "get-props", "56,2,57,39")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "57,4,57,39")
+    ; if-annotation(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "57,19,57,33") ; get-annotations
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "57,36,57,38")
+        ; ![]
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "get-props", "56,2,57,39")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "get-props", "56,2,57,39")
+      ; fail
 
   preserve-props(s) =
-    preserve-annotation(s)
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "preserve-props", "77,2,78,25")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "78,4,78,25")
+    ; preserve-annotation(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "78,24,78,24") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "preserve-props", "77,2,78,25")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "preserve-props", "77,2,78,25")
+      ; fail
 
   merge-props(s) =
-    if-annotation( Merge-Props(s), s)
-  // TODO: ensure unique
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "merge-props", "80,2,81,36")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "81,4,81,36")
+    ; if-annotation(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "81,19,81,32")
+        ; Merge-Props(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "81,31,81,31") ; s
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "81,35,81,35") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "merge-props", "80,2,81,36")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "merge-props", "80,2,81,36")
+      ; fail
 
-/*
-
-  The \verb|has-prop(p)| strategy checks whether the current term has a property
-  with the specified key \verb|p|. The strategy will fail if the current term hasn't got
-  the specified property. Otherwise the current term will be left untouched.
-
-  \paragraph{Examples}
-
-  \begin{verbatim}
-  <has-prop(!"type")> BinOp(Int(4), Int(5)){[("type", Int)]} 
-    => BinOp(Int(4), Int(5))
-  <has-prop(!"type")> BinOp(Int(4), Int(5)) => fails
-  \end{verbatim}
-
-*/
-
-  has-prop(p)    =
-    where(get-prop(p))
-
-/*
-
-  The \verb|has-prop(p, c)| strategy checks whether the current term has a property
-  with the specified key \verb|p| and whether the value of this property satisfies 
-  a condition \verb|c|. 
-  The strategy will fail if the current term hasn't got
-  the specified property or the application of the condition on the value fails.
-  Otherwise the current term will be left untouched.
-
-*/
+  has-prop(p) =
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "has-prop", "100,2,101,21")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "101,4,101,21")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "101,10,101,20")
+            ; get-prop(
+                s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "101,19,101,19") ; p
+              ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "has-prop", "100,2,101,21")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "has-prop", "100,2,101,21")
+      ; fail
 
   has-prop(p, c) =
-    where(get-prop(p); c)
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "has-prop", "114,2,115,24")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "115,4,115,24")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "115,10,115,23")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "115,10,115,20")
+               ; get-prop(
+                   s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "115,19,115,19") ; p
+                 ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "115,23,115,23")
+            ; c)
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "has-prop", "114,2,115,24")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "has-prop", "114,2,115,24")
+      ; fail
 
-/*
-
-  The \verb|get-prop(p)| strategy results in the value of the property of the current term
-  with the specified key \verb|p|. The strategy will fail if the current term hasn't got
-  the specified property.
-
-  \paragraph{Examples}
-
-  \begin{verbatim}
-  <get-prop(!"type")> BinOp(Int(4), Int(5)){[("type", Int)]}
-    => Int
-  <get-prop(!"type")> BinOp(Int(4), Int(5)) => fails
-  \end{verbatim}
-
-*/
   get-prop(p) =
-    get-annotations; <lookup> (<p> (), <id>)
-
-/*
-
-  The \verb|apply-prop(p, s)| strategy applies the specified strategy \verb|s| 
-  to the value of the property of the current term with the specified key \verb|p|.
-  The strategy will \emph{not} fail if the current term hasn't got the specified property.
-  The current term (despite from its annotation) will be left untouched.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "get-prop", "132,2,133,43")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "133,4,133,43")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "133,4,133,18") ; get-annotations)
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "133,21,133,43")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "133,22,133,27") ; lookup)> ( <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "133,32,133,32") ; p> ()
+                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "133,40,133,41") ; id>
+                                                                                                                 )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "get-prop", "132,2,133,43")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "get-prop", "132,2,133,43")
+      ; fail
 
   apply-prop(p, s) =
-    if-annotation(apply-prop-existing(p, s), id)
-
-/*
-
-  The \verb|replace-prop(p, v)| strategy replaces the value of the property of the current term with the 
-  specified key \verb|p| with a new value \verb|v|. 
-  If the current term hasn't got the specified property this strategy will not fail 
-  or add the new property to the properties.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-prop", "144,2,145,47")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "145,4,145,47")
+    ; if-annotation(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "145,18,145,42")
+        ; apply-prop-existing(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "145,38,145,38") ; p
+          , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "145,41,145,41") ; s
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "145,45,145,46") ; id
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-prop", "144,2,145,47")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-prop", "144,2,145,47")
+      ; fail
 
   replace-prop(p, v) =
-    apply-prop(p, v)
-
-/*
-
-  The \verb|add-prop(p, v)| strategy adds a new property to the properties of the current term with the 
-  specified key \verb|p| and the value \verb|v|. This strategy will not check whether the current
-  term already has a property with the specified key \verb|p|.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "replace-prop", "156,2,157,19")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "157,4,157,19")
+    ; apply-prop(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "157,15,157,15") ; p
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "157,18,157,18") ; v
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "replace-prop", "156,2,157,19")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "replace-prop", "156,2,157,19")
+      ; fail
 
   add-prop(p, v) =
-    if-annotation(add-prop-existing(p, v), add-prop-empty(p, v))
-
-/*
-
-  The \verb|set-prop(p, v)| strategy adds a new property to the properties of the current term with the 
-  specified key \verb|p| and the value \verb|v| if the current term has no property with the specified
-  key \verb|p|. \verb|set-prop(p, v)| will replace the value of the property \verb|p| with \verb|v| 
-  if the current term already has a property \verb|p|.
-
-  Note that this strategy should therefor be preferred over \verb|replace-prop| or \verb|add-prop|.
-
-*/
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop", "167,2,168,63")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,4,168,63")
+    ; if-annotation(
+        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,18,168,40")
+        ; add-prop-existing(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,36,168,36") ; p
+          , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,39,168,39") ; v
+          )
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,43,168,62")
+        ; add-prop-empty(
+            s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,58,168,58") ; p
+          , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "168,61,168,61") ; v
+          )
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop", "167,2,168,63")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop", "167,2,168,63")
+      ; fail
 
   set-prop(p, v) =
-    has-prop(p) < replace-prop(p, v) + add-prop(p, v)
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "set-prop", "181,2,182,52")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,4,182,52")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,4,182,14")
+       ; has-prop(
+           s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,13,182,13") ; p
+         )
+       < s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,18,182,35")
+         ; replace-prop(
+             s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,31,182,31") ; p
+           , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,34,182,34") ; v
+           )
+       + s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,39,182,52")
+         ; add-prop(
+             s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,48,182,48") ; p
+           , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "182,51,182,51") ; v
+           ))
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "set-prop", "181,2,182,52")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "set-prop", "181,2,182,52")
+      ; fail
 
-/*
-  \paragraph{Private strategies}
 
-  The following strategies are private. They are used from the public strategies in this module.
-  They are not documented and shouldn't be used because they don't have a clear interface
-  and are subject to undocumented changes or removal.
-
-*/
-
-strategies //private
+strategies
   is-same-prop =
-    ?((p, _), (p, _))
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "is-same-prop", "194,2,195,20")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "195,4,195,20")
+    ; ?((p, _), (p, _))
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "is-same-prop", "194,2,195,20")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "is-same-prop", "194,2,195,20")
+      ; fail
 
   is-prop(p) =
-    where( !(<id; Fst>, <p> ()); eq)
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "is-prop", "197,2,198,35")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,4,198,35")
+    ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,11,198,34")
+            ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,11,198,30")
+               ; !( <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,14,198,20")
+                     ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,14,198,15") ; id)
+                     ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,18,198,20")
+                     ; Fst>
+                  , <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,25,198,25") ; p> ()
+                  ))
+            ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "198,33,198,34")
+            ; eq)
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "is-prop", "197,2,198,35")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "is-prop", "197,2,198,35")
+      ; fail
 
   apply-prop-existing(p, s) =
-    id{map( apply-2-prop( is-prop(p), s))}
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-prop-existing", "200,2,201,41")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,4,201,41")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,4,201,5") ; id) { s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,7,201,40")
+                                                                                                           ; map(
+                                                                                                               s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,12,201,39")
+                                                                                                               ; apply-2-prop(
+                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,26,201,35")
+                                                                                                                   ; is-prop(
+                                                                                                                       s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,34,201,34") ; p
+                                                                                                                     )
+                                                                                                                 , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "201,38,201,38") ; s
+                                                                                                                 )
+                                                                                                             ) }
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-prop-existing", "200,2,201,41")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-prop-existing", "200,2,201,41")
+      ; fail
 
   apply-2-prop(c, s) =
-    where(c) < (id, s) + id
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-2-prop", "203,2,204,26")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,4,204,26")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,4,204,11")
+       ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,10,204,10") ; c)
+       < s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,15,204,21")
+         ; ( s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,16,204,17") ; id
+           , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,20,204,20") ; s
+           )
+       + s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "204,25,204,26") ; id)
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-2-prop", "203,2,204,26")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-2-prop", "203,2,204,26")
+      ; fail
 
   apply-2-prop(s) =
-    (id, s)
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-2-prop", "206,2,207,10")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "207,4,207,10")
+    ; ( s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "207,5,207,6") ; id
+      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "207,9,207,9") ; s
+      )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-2-prop", "206,2,207,10")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "apply-2-prop", "206,2,207,10")
+      ; fail
 
   add-prop-existing(p, v) =
-    id{![(<p> (), <v> ()) | <id>]}
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop-existing", "209,2,210,33")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "210,4,210,33")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "210,4,210,5") ; id) { s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "210,7,210,32")
+                                                                                                           ; ![( <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "210,11,210,11") ; p> ()
+                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "210,19,210,19") ; v> ()
+                                                                                                               )|<s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "210,29,210,30") ; id>] }
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop-existing", "209,2,210,33")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop-existing", "209,2,210,33")
+      ; fail
 
-  add-prop-empty(p, v)    =
-    ?t; !t{(<p> (), <v> ())}
+  add-prop-empty(p, v) =
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop-empty", "212,2,213,27")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "213,4,213,27")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "213,4,213,5") ; ?t)
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "213,8,213,27")
+    ; !t{ ( <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "213,13,213,13") ; p> ()
+          , <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "213,21,213,21") ; v> ()
+          )
+        }
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop-empty", "212,2,213,27")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "add-prop-empty", "212,2,213,27")
+      ; fail
 
   props-union =
-    ?(ps1, ps2); <union> (ps1, <diff(is-same-prop)> (ps2, ps1))
+    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "props-union", "215,2,216,62")
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "216,4,216,62")
+    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "216,4,216,14")
+       ; ?(ps1, ps2))
+    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "216,17,216,62")
+    ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "216,18,216,22") ; union)> ( ps1
+                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "216,32,216,49")
+                                                                                                                   ; diff(
+                                                                                                                       s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "216,37,216,48") ; is-same-prop
+                                                                                                                     )> (ps2, ps1)
+                                                                                                                )
+    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "props-union", "215,2,216,62")
+    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "props-union", "215,2,216,62")
+      ; fail
 
-rules // private
 
-  Merge-Props(s):
-    t{p1*} -> r{p2*}
-      where <s> t => r
-          ; <props-union> (<get-props> r, [p1*]) => [p2*]
+rules
+
+  Merge-Props(s) :
+    t{p1*} -> <r-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "Merge-Props", "220,2,223,56")> r{p2*}
+    where r-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "Merge-Props", "220,2,223,56")
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "Merge-Props", "220,2,223,56")
+             ; fail
+    where s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "222,12,223,56")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "222,12,222,21")
+             ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "222,12,222,16")
+                ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "222,13,222,13") ; s)> t) => r)
+          ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "223,12,223,56")
+          ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "223,12,223,47")
+             ; <(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "223,13,223,23") ; props-union)> ( <s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "223,28,223,36") ; get-props> r
+                                                                                                                               , [p1*]
+                                                                                                                               )) => [p2*]
+          <+ r-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/annotation-props.str", "Merge-Props", "220,2,223,56")
+             ; fail

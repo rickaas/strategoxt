@@ -1,90 +1,268 @@
 module asfix-abstractions-test
-imports libstratego-lib asfix-abstractions
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
+  asfix-abstractions
+
 
 strategies
-
-  main = 
-    test-suite(!"asfix-abstractions-test",
-      test1;
-      test1a;
-      test2a;
-      test2b;
-      test2c;
-      test2d;
-      test2e;
-      test3a;
-      test3b;
-      test4
-    )
+  main =
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "main", "6,2,18,4")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "7,4,18,4")
+    ; test-suite(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "7,15,7,40")
+        ; !"asfix-abstractions-test"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "8,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "8,6,8,10") ; test1)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "9,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "9,6,9,11") ; test1a)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "10,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "10,6,10,11") ; test2a)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "11,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "11,6,11,11") ; test2b)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "12,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "12,6,12,11") ; test2c)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "13,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "13,6,13,11") ; test2d)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "14,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "14,6,14,11") ; test2e)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "15,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "15,6,15,11") ; test3a)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "16,6,17,10")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "16,6,16,11") ; test3b)
+        ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "17,6,17,10")
+        ; test4
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "main", "6,2,18,4")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "main", "6,2,18,4")
+      ; fail
 
   test1 =
-    apply-test(!"test1"
-              ,conc-layout1 + conc-layout2 + conc-layout3
-              ,!((),NoCfLayout)
-              ,!()
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test1", "20,2,25,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "21,4,25,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "21,15,21,22")
+        ; !"test1"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "22,15,22,56")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "22,15,22,26") ; conc-layout1
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "22,30,22,56")
+             ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "22,30,22,41") ; conc-layout2
+                + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "22,45,22,56") ; conc-layout3))
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "23,15,23,30")
+        ; !((), NoCfLayout)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "24,15,24,17")
+        ; !()
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test1", "20,2,25,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test1", "20,2,25,14")
+      ; fail
 
   test1a =
-    apply-test(!"test1a"
-              ,conc-layout1 + conc-layout2 + conc-layout3
-              ,!(NoCfLayout,NoCfLayout)
-              ,!NoCfLayout
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test1a", "27,2,32,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "28,4,32,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "28,15,28,23")
+        ; !"test1a"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "29,15,29,56")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "29,15,29,26") ; conc-layout1
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "29,30,29,56")
+             ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "29,30,29,41") ; conc-layout2
+                + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "29,45,29,56") ; conc-layout3))
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "30,15,30,38")
+        ; !(NoCfLayout, NoCfLayout)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "31,15,31,25") ; !NoCfLayout
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test1a", "27,2,32,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test1a", "27,2,32,14")
+      ; fail
 
   test2a =
-    apply-test(!"test2a"
-              ,conc-layout1 + conc-layout2 + conc-layout3
-              ,!(NewLine, NoCfLayout)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2a", "34,2,39,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "35,4,39,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "35,15,35,23")
+        ; !"test2a"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "36,15,36,56")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "36,15,36,26") ; conc-layout1
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "36,30,36,56")
+             ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "36,30,36,41") ; conc-layout2
+                + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "36,45,36,56") ; conc-layout3))
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "37,15,37,36")
+        ; !(NewLine, NoCfLayout)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "38,15,38,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2a", "34,2,39,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2a", "34,2,39,14")
+      ; fail
 
   test2b =
-    apply-test(!"test2b"
-              ,conc-layout1 + conc-layout2 + conc-layout3
-              ,!(NoCfLayout, NewLine)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2b", "41,2,46,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "42,4,46,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "42,15,42,23")
+        ; !"test2b"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "43,15,43,56")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "43,15,43,26") ; conc-layout1
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "43,30,43,56")
+             ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "43,30,43,41") ; conc-layout2
+                + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "43,45,43,56") ; conc-layout3))
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "44,15,44,36")
+        ; !(NoCfLayout, NewLine)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "45,15,45,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2b", "41,2,46,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2b", "41,2,46,14")
+      ; fail
 
   test2c =
-    apply-test(!"test2c"
-              ,conc-layout2 + conc-layout3
-              ,!(NewLine, NoCfLayout)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2c", "48,2,53,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "49,4,53,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "49,15,49,23")
+        ; !"test2c"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "50,15,50,41")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "50,15,50,26") ; conc-layout2
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "50,30,50,41") ; conc-layout3)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "51,15,51,36")
+        ; !(NewLine, NoCfLayout)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "52,15,52,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2c", "48,2,53,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2c", "48,2,53,14")
+      ; fail
 
   test2d =
-    apply-test(!"test2d"
-              ,conc-layout2 + conc-layout3
-              ,!(NoCfLayout, NewLine)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2d", "55,2,60,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "56,4,60,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "56,15,56,23")
+        ; !"test2d"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "57,15,57,41")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "57,15,57,26") ; conc-layout2
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "57,30,57,41") ; conc-layout3)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "58,15,58,36")
+        ; !(NoCfLayout, NewLine)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "59,15,59,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2d", "55,2,60,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2d", "55,2,60,14")
+      ; fail
 
   test2e =
-    apply-test(!"test2e"
-              ,conc-layout1 <+ conc-layout2 <+ conc-layout3
-              ,!(NewLine, NoCfLayout)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2e", "62,2,67,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "63,4,67,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "63,15,63,23")
+        ; !"test2e"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "64,15,64,58")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "64,15,64,26") ; conc-layout1
+           <+ s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "64,31,64,58")
+              ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "64,31,64,42") ; conc-layout2
+                 <+ s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "64,47,64,58") ; conc-layout3))
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "65,15,65,36")
+        ; !(NewLine, NoCfLayout)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "66,15,66,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2e", "62,2,67,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test2e", "62,2,67,14")
+      ; fail
 
   test3a =
-    apply-test(!"test3a"
-              ,conc-layout3
-              ,!(NewLine, NoCfLayout)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test3a", "69,2,74,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "70,4,74,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "70,15,70,23")
+        ; !"test3a"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "71,15,71,26") ; conc-layout3
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "72,15,72,36")
+        ; !(NewLine, NoCfLayout)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "73,15,73,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test3a", "69,2,74,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test3a", "69,2,74,14")
+      ; fail
 
   test3b =
-    apply-test(!"test3b"
-              ,conc-layout2
-              ,!(NoCfLayout, NewLine)
-              ,!NewLine
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test3b", "76,2,81,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "77,4,81,14")
+    ; apply-test(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "77,15,77,23")
+        ; !"test3b"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "78,15,78,26") ; conc-layout2
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "79,15,79,36")
+        ; !(NoCfLayout, NewLine)
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "80,15,80,22") ; !NewLine
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test3b", "76,2,81,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test3b", "76,2,81,14")
+      ; fail
 
   test4 =
-    apply-and-show(!"test4"
-              ,conc-layout1 + conc-layout2 + conc-layout3
-
-              ,!(appl(prod([cf(layout)],cf(opt(layout)),no-attrs),[appl(prod([lex(layout)],cf(layout),no-attrs),[appl(prod([char-class([10])],lex(layout),no-attrs),[10])])]),appl(prod([cf(layout)],cf(opt(layout)),no-attrs),[appl(prod([lex(layout)],cf(layout),no-attrs),[appl(prod([char-class([10])],lex(layout),no-attrs),[10])])]))
-              //,!()
-
-              )
+    s-enter(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test4", "83,2,90,14")
+    ; s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "84,4,90,14")
+    ; apply-and-show(
+        s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "84,19,84,26")
+        ; !"test4"
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "85,15,85,56")
+        ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "85,15,85,26") ; conc-layout1
+           + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "85,30,85,56")
+             ; (s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "85,30,85,41") ; conc-layout2
+                + s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "85,45,85,56") ; conc-layout3))
+      , s-step(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "87,15,87,330")
+        ; !( appl(
+               prod(
+                 [cf(layout)]
+               , cf(opt(layout))
+               , no-attrs
+               )
+             , [ appl(
+                   prod(
+                     [lex(layout)]
+                   , cf(layout)
+                   , no-attrs
+                   )
+                 , [ appl(
+                       prod(
+                         [char-class([10])]
+                       , lex(layout)
+                       , no-attrs
+                       )
+                     , [10]
+                     )
+                   ]
+                 )
+               ]
+             )
+           , appl(
+               prod(
+                 [cf(layout)]
+               , cf(opt(layout))
+               , no-attrs
+               )
+             , [ appl(
+                   prod(
+                     [lex(layout)]
+                   , cf(layout)
+                   , no-attrs
+                   )
+                 , [ appl(
+                       prod(
+                         [char-class([10])]
+                       , lex(layout)
+                       , no-attrs
+                       )
+                     , [10]
+                     )
+                   ]
+                 )
+               ]
+             )
+           )
+      )
+    < s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test4", "83,2,90,14")
+    + s-exit(|"_cellar/asfix-tools/test/asfix-abstractions-test.str", "test4", "83,2,90,14")
+      ; fail

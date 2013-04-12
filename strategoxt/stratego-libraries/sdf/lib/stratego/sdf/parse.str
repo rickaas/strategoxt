@@ -1,37 +1,101 @@
 module stratego/sdf/parse
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   stratego/sdf/desugar
   libstratego-sglr
 
-strategies
 
+strategies
   parse-sdf-definition-file =
-    parse-sdf-file(|"SDF")
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-definition-file", "8,2,9,25")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "9,4,9,25")
+    ; parse-sdf-file(|"SDF")
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-definition-file", "8,2,9,25")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-definition-file", "8,2,9,25")
+      ; fail
 
   parse-sdf-definition-stream =
-    parse-sdf-stream(|"SDF")
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-definition-stream", "11,2,12,27")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "12,4,12,27")
+    ; parse-sdf-stream(|"SDF")
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-definition-stream", "11,2,12,27")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-definition-stream", "11,2,12,27")
+      ; fail
 
   parse-sdf-module-file =
-    parse-sdf-file(|"Module")
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-module-file", "14,2,15,28")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "15,4,15,28")
+    ; parse-sdf-file(|"Module")
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-module-file", "14,2,15,28")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-module-file", "14,2,15,28")
+      ; fail
 
   parse-sdf-module-stream =
-    parse-sdf-stream(|"Module")
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-module-stream", "17,2,18,30")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "18,4,18,30")
+    ; parse-sdf-stream(|"Module")
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-module-stream", "17,2,18,30")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-module-stream", "17,2,18,30")
+      ; fail
+
 
 strategies
-
   parse-sdf-file(|sort) =
-    where(tbl := <get-sdf-parse-table>)
-    ; parse-file(strsglr-perror, strsglr-report-parse-error | <get-sdf-parse-table>, sort)
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-file", "22,2,25,17")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "23,4,25,17")
+    ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "23,4,23,38")
+       ; where(s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "23,10,23,37")
+               ; tbl := <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "23,18,23,36") ; get-sdf-parse-table>))
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "24,6,25,17")
+    ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "24,6,24,89")
+       ; parse-file(
+           s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "24,17,24,30") ; strsglr-perror
+         , s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "24,33,24,58") ; strsglr-report-parse-error
+         | <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "24,63,24,81") ; get-sdf-parse-table>
+         , sort
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "25,6,25,17")
     ; sdf-parsefix
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-file", "22,2,25,17")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-file", "22,2,25,17")
+      ; fail
 
   parse-sdf-stream(|sort) =
-    where(tbl := <get-sdf-parse-table>)
-    ; parse-stream(strsglr-report-parse-error | <get-sdf-parse-table>, sort)
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-stream", "27,2,30,17")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "28,4,30,17")
+    ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "28,4,28,38")
+       ; where(s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "28,10,28,37")
+               ; tbl := <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "28,18,28,36") ; get-sdf-parse-table>))
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "29,6,30,17")
+    ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "29,6,29,75")
+       ; parse-stream(
+           s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "29,19,29,44") ; strsglr-report-parse-error
+         | <s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "29,49,29,67") ; get-sdf-parse-table>
+         , sort
+         ))
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "30,6,30,17")
     ; sdf-parsefix
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-stream", "27,2,30,17")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "parse-sdf-stream", "27,2,30,17")
+      ; fail
 
   get-sdf-parse-table =
-    MemoSDFParseTable
-    <+ import-term(Sdf2.tbl)
-       ; open-parse-table
-       ; ?tbl
-       ; rules(MemoSDFParseTable: _ -> tbl)
+    s-enter(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "get-sdf-parse-table", "32,2,37,42")
+    ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "33,4,37,42")
+    ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "33,4,33,20") ; MemoSDFParseTable
+       <+ s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "34,7,37,42")
+          ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "34,7,34,27") ; import-term(Sdf2.tbl))
+          ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "35,9,37,42")
+          ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "35,9,35,24") ; open-parse-table)
+          ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "36,9,37,42")
+          ; (s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "36,9,36,12") ; ?tbl)
+          ; s-step(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "37,9,37,42")
+          ; rules ( MemoSDFParseTable :
+                      _ -> tbl ))
+    < s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "get-sdf-parse-table", "32,2,37,42")
+    + s-exit(|"strategoxt/stratego-libraries/sdf/lib/stratego/sdf/parse.str", "get-sdf-parse-table", "32,2,37,42")
+      ; fail
