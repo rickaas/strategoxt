@@ -10,33 +10,162 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "main", "5,2,6,11")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "6,4,6,11")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+    , "main"
+    , "5"
+    , "2"
+    , "6"
+    , "11"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+      , "6"
+      , "4"
+      , "6"
+      , "11"
+      )
     ; toplevel
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "main", "5,2,6,11")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "main", "5,2,6,11")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+      , "main"
+      , "5"
+      , "2"
+      , "6"
+      , "11"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+      , "main"
+      , "5"
+      , "2"
+      , "6"
+      , "11"
+      )
       ; fail
 
   toplevel =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "toplevel", "8,2,16,6")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "9,4,16,6")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+    , "toplevel"
+    , "8"
+    , "2"
+    , "16"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+      , "9"
+      , "4"
+      , "16"
+      , "6"
+      )
     ; let local1 =
-            s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "local1", "9,8,10,20")
-            ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "10,10,10,20")
-            ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "10,14,10,19") ; local2)
-            < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "local1", "9,8,10,20")
-            + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "local1", "9,8,10,20")
+            s-enter(
+            | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+            , "local1"
+            , "9"
+            , "8"
+            , "10"
+            , "20"
+            )
+            ; s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+              , "10"
+              , "10"
+              , "10"
+              , "20"
+              )
+            ; all(s-step(
+                  | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+                  , "10"
+                  , "14"
+                  , "10"
+                  , "19"
+                  )
+                  ; local2)
+            < s-exit(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+              , "local1"
+              , "9"
+              , "8"
+              , "10"
+              , "20"
+              )
+            + s-exit(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+              , "local1"
+              , "9"
+              , "8"
+              , "10"
+              , "20"
+              )
               ; fail
           local2 =
-            s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "local2", "12,8,13,20")
-            ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "13,10,13,20")
-            ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "13,14,13,19") ; local2)
-            < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "local2", "12,8,13,20")
-            + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "local2", "12,8,13,20")
+            s-enter(
+            | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+            , "local2"
+            , "12"
+            , "8"
+            , "13"
+            , "20"
+            )
+            ; s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+              , "13"
+              , "10"
+              , "13"
+              , "20"
+              )
+            ; all(s-step(
+                  | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+                  , "13"
+                  , "14"
+                  , "13"
+                  , "19"
+                  )
+                  ; local2)
+            < s-exit(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+              , "local2"
+              , "12"
+              , "8"
+              , "13"
+              , "20"
+              )
+            + s-exit(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+              , "local2"
+              , "12"
+              , "8"
+              , "13"
+              , "20"
+              )
               ; fail
       in
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "15,8,15,13") ; local1
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+        , "15"
+        , "8"
+        , "15"
+        , "13"
+        )
+        ; local1
       end
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "toplevel", "8,2,16,6")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test101.str", "toplevel", "8,2,16,6")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+      , "toplevel"
+      , "8"
+      , "2"
+      , "16"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test101.str"
+      , "toplevel"
+      , "8"
+      , "2"
+      , "16"
+      , "6"
+      )
       ; fail

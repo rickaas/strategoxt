@@ -10,151 +10,764 @@ imports
 
 strategies
   io-til-cse =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "io-til-cse", "5,2,6,15")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "6,4,6,15")
-    ; io-wrap(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "6,12,6,14") ; cse
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "io-til-cse"
+    , "5"
+    , "2"
+    , "6"
+    , "15"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "6"
+      , "4"
+      , "6"
+      , "15"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "io-til-cse", "5,2,6,15")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "io-til-cse", "5,2,6,15")
+    ; io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+        , "6"
+        , "12"
+        , "6"
+        , "14"
+        )
+        ; cse
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "io-til-cse"
+      , "5"
+      , "2"
+      , "6"
+      , "15"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "io-til-cse"
+      , "5"
+      , "2"
+      , "6"
+      , "15"
+      )
       ; fail
 
   cse =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse", "8,2,15,14")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "9,4,15,14")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "9,4,9,6") ; CSE
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "10,7,15,14")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "10,7,10,21") ; cse-declaration
-             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "11,7,15,14")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "11,7,11,16") ; cse-assign
-                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "12,7,15,14")
-                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "12,7,12,12") ; cse-if
-                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "13,7,15,14")
-                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "13,7,13,15") ; cse-block
-                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "14,7,15,14")
-                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "14,7,14,15") ; cse-while
-                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "15,7,15,14")
-                                        ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "15,11,15,13") ; cse)))))))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse", "8,2,15,14")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse", "8,2,15,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "cse"
+    , "8"
+    , "2"
+    , "15"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "9"
+      , "4"
+      , "15"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "9"
+       , "4"
+       , "9"
+       , "6"
+       )
+       ; CSE
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+          , "10"
+          , "7"
+          , "15"
+          , "14"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+             , "10"
+             , "7"
+             , "10"
+             , "21"
+             )
+             ; cse-declaration
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                , "11"
+                , "7"
+                , "15"
+                , "14"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                   , "11"
+                   , "7"
+                   , "11"
+                   , "16"
+                   )
+                   ; cse-assign
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                      , "12"
+                      , "7"
+                      , "15"
+                      , "14"
+                      )
+                      ; (s-step(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                         , "12"
+                         , "7"
+                         , "12"
+                         , "12"
+                         )
+                         ; cse-if
+                         <+ s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                            , "13"
+                            , "7"
+                            , "15"
+                            , "14"
+                            )
+                            ; (s-step(
+                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                               , "13"
+                               , "7"
+                               , "13"
+                               , "15"
+                               )
+                               ; cse-block
+                               <+ s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                                  , "14"
+                                  , "7"
+                                  , "15"
+                                  , "14"
+                                  )
+                                  ; (s-step(
+                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                                     , "14"
+                                     , "7"
+                                     , "14"
+                                     , "15"
+                                     )
+                                     ; cse-while
+                                     <+ s-step(
+                                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                                        , "15"
+                                        , "7"
+                                        , "15"
+                                        , "14"
+                                        )
+                                        ; all(s-step(
+                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                                              , "15"
+                                              , "11"
+                                              , "15"
+                                              , "13"
+                                              )
+                                              ; cse)))))))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse"
+      , "8"
+      , "2"
+      , "15"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse"
+      , "8"
+      , "2"
+      , "15"
+      , "14"
+      )
       ; fail
 
   cse-block =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-block", "17,2,18,30")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "18,4,18,30")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "cse-block"
+    , "17"
+    , "2"
+    , "18"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "18"
+      , "4"
+      , "18"
+      , "30"
+      )
     ; Block(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "18,10,18,29")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+        , "18"
+        , "10"
+        , "18"
+        , "29"
+        )
         ; {|CSE:
-             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "18,19,18,26")
+             s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+             , "18"
+             , "19"
+             , "18"
+             , "26"
+             )
              ; map(
-                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "18,23,18,25") ; cse
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                 , "18"
+                 , "23"
+                 , "18"
+                 , "25"
+                 )
+                 ; cse
                )
           |}
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-block", "17,2,18,30")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-block", "17,2,18,30")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-block"
+      , "17"
+      , "2"
+      , "18"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-block"
+      , "17"
+      , "2"
+      , "18"
+      , "30"
+      )
       ; fail
 
   cse-declaration =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-declaration", "20,2,22,19")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "21,4,22,19")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "21,5,21,46")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "21,5,21,19")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "cse-declaration"
+    , "20"
+    , "2"
+    , "22"
+    , "19"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "21"
+      , "4"
+      , "22"
+      , "19"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "21"
+       , "5"
+       , "21"
+       , "46"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+          , "21"
+          , "5"
+          , "21"
+          , "19"
+          )
           ; ?Declaration(x)
-          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "21,24,21,46")
+          <+ s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+             , "21"
+             , "24"
+             , "21"
+             , "46"
+             )
              ; ?DeclarationTyped(x, t)))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "22,6,22,19")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "22"
+      , "6"
+      , "22"
+      , "19"
+      )
     ; new-CSE(|x, x)
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-declaration", "20,2,22,19")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-declaration", "20,2,22,19")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-declaration"
+      , "20"
+      , "2"
+      , "22"
+      , "19"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-declaration"
+      , "20"
+      , "2"
+      , "22"
+      , "19"
+      )
       ; fail
 
   cse-assign =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-assign", "24,2,31,8")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "25,4,31,8")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "25,4,25,23")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "cse-assign"
+    , "24"
+    , "2"
+    , "31"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "25"
+      , "4"
+      , "31"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "25"
+       , "4"
+       , "25"
+       , "23"
+       )
        ; Assign(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "25,11,25,12") ; ?x
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "25,15,25,22")
-           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "25,15,25,17") ; cse) => e
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "25"
+           , "11"
+           , "25"
+           , "12"
+           )
+           ; ?x
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "25"
+           , "15"
+           , "25"
+           , "22"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+              , "25"
+              , "15"
+              , "25"
+              , "17"
+              )
+              ; cse) => e
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "26,6,31,8")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "26,6,26,21")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "26"
+      , "6"
+      , "31"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "26"
+       , "6"
+       , "26"
+       , "21"
+       )
        ; undefine-CSE(|x))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "27,6,31,8")
-    ; if s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "27,9,27,34")
-         ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "27,10,27,31")
-             ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "27,14,27,30")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "27"
+      , "6"
+      , "31"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+         , "27"
+         , "9"
+         , "27"
+         , "34"
+         )
+         ; <(s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+             , "27"
+             , "10"
+             , "27"
+             , "31"
+             )
+             ; not(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                   , "27"
+                   , "14"
+                   , "27"
+                   , "30"
+                   )
                    ; contains(|Var(x))))> e then
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "28,8,30,53")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "28,8,28,40")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "28,15,28,38")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "28,15,28,33") ; innermost-scope-CSE) => z))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "29,10,30,53")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "29,10,29,46")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "29,17,29,44")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "29,17,29,36") ; get-var-dependencies) => deps))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "30,10,30,53")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+        , "28"
+        , "8"
+        , "30"
+        , "53"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "28"
+           , "8"
+           , "28"
+           , "40"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                   , "28"
+                   , "15"
+                   , "28"
+                   , "38"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                      , "28"
+                      , "15"
+                      , "28"
+                      , "33"
+                      )
+                      ; innermost-scope-CSE) => z))
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+          , "29"
+          , "10"
+          , "30"
+          , "53"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "29"
+           , "10"
+           , "29"
+           , "46"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                   , "29"
+                   , "17"
+                   , "29"
+                   , "44"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                      , "29"
+                      , "17"
+                      , "29"
+                      , "36"
+                      )
+                      ; get-var-dependencies) => deps))
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+          , "30"
+          , "10"
+          , "30"
+          , "53"
+          )
         ; rules (
             CSE.z :
               e -> Var(x)
               depends on deps
           )
       end
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-assign", "24,2,31,8")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-assign", "24,2,31,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-assign"
+      , "24"
+      , "2"
+      , "31"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-assign"
+      , "24"
+      , "2"
+      , "31"
+      , "8"
+      )
       ; fail
 
   cse-if =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-if", "33,2,35,50")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "34,4,35,50")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "34,4,34,22")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "cse-if"
+    , "33"
+    , "2"
+    , "35"
+    , "50"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "34"
+      , "4"
+      , "35"
+      , "50"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "34"
+       , "4"
+       , "34"
+       , "22"
+       )
        ; IfElse(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "34,11,34,13") ; cse
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "34,16,34,17") ; id
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "34,20,34,21") ; id
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "34"
+           , "11"
+           , "34"
+           , "13"
+           )
+           ; cse
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "34"
+           , "16"
+           , "34"
+           , "17"
+           )
+           ; id
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "34"
+           , "20"
+           , "34"
+           , "21"
+           )
+           ; id
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,7,35,49")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,7,35,25")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "35"
+      , "7"
+      , "35"
+      , "49"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "35"
+       , "7"
+       , "35"
+       , "25"
+       )
        ; IfElse(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,14,35,15") ; id
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,18,35,20") ; cse
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,23,35,24") ; id
-         )) /CSE\ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,33,35,49")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "35"
+           , "14"
+           , "35"
+           , "15"
+           )
+           ; id
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "35"
+           , "18"
+           , "35"
+           , "20"
+           )
+           ; cse
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+           , "35"
+           , "23"
+           , "35"
+           , "24"
+           )
+           ; id
+         )) /CSE\ (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                   , "35"
+                   , "33"
+                   , "35"
+                   , "49"
+                   )
                    ; IfElse(
-                       s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,40,35,41") ; id
-                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,43,35,44") ; id
-                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "35,46,35,48") ; cse
+                       s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                       , "35"
+                       , "40"
+                       , "35"
+                       , "41"
+                       )
+                       ; id
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                       , "35"
+                       , "43"
+                       , "35"
+                       , "44"
+                       )
+                       ; id
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                       , "35"
+                       , "46"
+                       , "35"
+                       , "48"
+                       )
+                       ; cse
                      ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-if", "33,2,35,50")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-if", "33,2,35,50")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-if"
+      , "33"
+      , "2"
+      , "35"
+      , "50"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-if"
+      , "33"
+      , "2"
+      , "35"
+      , "50"
+      )
       ; fail
 
   cse-while =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-while", "37,2,39,29")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "38,4,39,29")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "38,4,38,15")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "cse-while"
+    , "37"
+    , "2"
+    , "39"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "38"
+      , "4"
+      , "39"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "38"
+       , "4"
+       , "38"
+       , "15"
+       )
        ; ?While(_, _))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "39,7,39,28")
-    ; /CSE\* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "39,14,39,28")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "39"
+      , "7"
+      , "39"
+      , "28"
+      )
+    ; /CSE\* (s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+              , "39"
+              , "14"
+              , "39"
+              , "28"
+              )
               ; While(
-                  s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "39,20,39,22") ; cse
-                , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "39,25,39,27") ; cse
+                  s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                  , "39"
+                  , "20"
+                  , "39"
+                  , "22"
+                  )
+                  ; cse
+                , s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+                  , "39"
+                  , "25"
+                  , "39"
+                  , "27"
+                  )
+                  ; cse
                 ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-while", "37,2,39,29")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "cse-while", "37,2,39,29")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-while"
+      , "37"
+      , "2"
+      , "39"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "cse-while"
+      , "37"
+      , "2"
+      , "39"
+      , "29"
+      )
       ; fail
 
   innermost-scope-CSE =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "innermost-scope-CSE", "41,2,43,40")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "42,4,43,40")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "42,4,42,24")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "42,4,42,16") ; get-var-names) => vars)
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "43,6,43,40")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+    , "innermost-scope-CSE"
+    , "41"
+    , "2"
+    , "43"
+    , "40"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "42"
+      , "4"
+      , "43"
+      , "40"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+       , "42"
+       , "4"
+       , "42"
+       , "24"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+          , "42"
+          , "4"
+          , "42"
+          , "16"
+          )
+          ; get-var-names) => vars)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "43"
+      , "6"
+      , "43"
+      , "40"
+      )
     ; innermost-scope-CSE(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "43,26,43,39")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+        , "43"
+        , "26"
+        , "43"
+        , "39"
+        )
         ; elem-of(|vars)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "innermost-scope-CSE", "41,2,43,40")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str", "innermost-scope-CSE", "41,2,43,40")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "innermost-scope-CSE"
+      , "41"
+      , "2"
+      , "43"
+      , "40"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-cse.str"
+      , "innermost-scope-CSE"
+      , "41"
+      , "2"
+      , "43"
+      , "40"
+      )
       ; fail

@@ -11,387 +11,2260 @@ imports
 
 strategies
   close-pipe =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-pipe", "11,2,16,2")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "12,2,16,2")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "13,4,15,16")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "13,4,13,18")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "close-pipe"
+    , "11"
+    , "2"
+    , "16"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "12"
+      , "2"
+      , "16"
+      , "2"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "13"
+            , "4"
+            , "15"
+            , "16"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "13"
+               , "4"
+               , "13"
+               , "18"
+               )
                ; ?Pipe(fd1, fd2))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "14,6,15,16")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "14,6,14,16")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "14,7,14,11") ; close)> fd1)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "15,6,15,16")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "15,7,15,11") ; close)> fd2)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-pipe", "11,2,16,2")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-pipe", "11,2,16,2")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "14"
+              , "6"
+              , "15"
+              , "16"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "14"
+               , "6"
+               , "14"
+               , "16"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "14"
+                   , "7"
+                   , "14"
+                   , "11"
+                   )
+                   ; close)> fd1)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "15"
+              , "6"
+              , "15"
+              , "16"
+              )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "15"
+                , "7"
+                , "15"
+                , "11"
+                )
+                ; close)> fd2)
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "close-pipe"
+      , "11"
+      , "2"
+      , "16"
+      , "2"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "close-pipe"
+      , "11"
+      , "2"
+      , "16"
+      , "2"
+      )
       ; fail
 
   stdin-from-pipe =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "stdin-from-pipe", "19,2,24,2")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "20,2,24,2")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "21,4,23,16")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "21,4,21,18")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "stdin-from-pipe"
+    , "19"
+    , "2"
+    , "24"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "20"
+      , "2"
+      , "24"
+      , "2"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "21"
+            , "4"
+            , "23"
+            , "16"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "21"
+               , "4"
+               , "21"
+               , "18"
+               )
                ; ?Pipe(fd1, fd2))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "22,6,23,16")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "22,6,22,33")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "22,7,22,10") ; dup2)> ( fd1
-                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "22,20,22,31") ; STDIN_FILENO>
-                                                                                                                               ))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "23,6,23,16")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "23,7,23,11") ; close)> fd2)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "stdin-from-pipe", "19,2,24,2")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "stdin-from-pipe", "19,2,24,2")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "22"
+              , "6"
+              , "23"
+              , "16"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "22"
+               , "6"
+               , "22"
+               , "33"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "22"
+                   , "7"
+                   , "22"
+                   , "10"
+                   )
+                   ; dup2)> ( fd1
+                            , <s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                               , "22"
+                               , "20"
+                               , "22"
+                               , "31"
+                               )
+                               ; STDIN_FILENO>
+                            ))
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "23"
+              , "6"
+              , "23"
+              , "16"
+              )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "23"
+                , "7"
+                , "23"
+                , "11"
+                )
+                ; close)> fd2)
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "stdin-from-pipe"
+      , "19"
+      , "2"
+      , "24"
+      , "2"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "stdin-from-pipe"
+      , "19"
+      , "2"
+      , "24"
+      , "2"
+      )
       ; fail
 
   file-from-pipe :
-    Pipe(fd1, fd2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-from-pipe", "27,2,30,20")> file
+    Pipe(fd1, fd2) -> <r-exit(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "file-from-pipe"
+                       , "27"
+                       , "2"
+                       , "30"
+                       , "20"
+                       )> file
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-from-pipe", "27,2,30,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-from-pipe", "27,2,30,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "file-from-pipe"
+             , "27"
+             , "2"
+             , "30"
+             , "20"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "29,10,30,20")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "29,10,29,36")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "29,10,29,28")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "29,11,29,16") ; fdopen)> (fd1, "r")) => file)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "30,10,30,20")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "30,11,30,15") ; close)> fd2
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-from-pipe", "27,2,30,20")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "29"
+          , "10"
+          , "30"
+          , "20"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "29"
+             , "10"
+             , "29"
+             , "36"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "29"
+                , "10"
+                , "29"
+                , "28"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "29"
+                    , "11"
+                    , "29"
+                    , "16"
+                    )
+                    ; fdopen)> (fd1, "r")) => file)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "30"
+            , "10"
+            , "30"
+            , "20"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "30"
+              , "11"
+              , "30"
+              , "15"
+              )
+              ; close)> fd2
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "file-from-pipe"
+             , "27"
+             , "2"
+             , "30"
+             , "20"
+             )
              ; fail
 
   stdout-to-pipe =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "stdout-to-pipe", "33,2,38,2")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "34,2,38,2")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "35,4,37,16")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "35,4,35,18")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "stdout-to-pipe"
+    , "33"
+    , "2"
+    , "38"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "34"
+      , "2"
+      , "38"
+      , "2"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "35"
+            , "4"
+            , "37"
+            , "16"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "35"
+               , "4"
+               , "35"
+               , "18"
+               )
                ; ?Pipe(fd1, fd2))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "36,6,37,16")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "36,6,36,34")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "36,7,36,10") ; dup2)> ( fd2
-                                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "36,20,36,32") ; STDOUT_FILENO>
-                                                                                                                               ))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "37,6,37,16")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "37,7,37,11") ; close)> fd1)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "stdout-to-pipe", "33,2,38,2")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "stdout-to-pipe", "33,2,38,2")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "36"
+              , "6"
+              , "37"
+              , "16"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "36"
+               , "6"
+               , "36"
+               , "34"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "36"
+                   , "7"
+                   , "36"
+                   , "10"
+                   )
+                   ; dup2)> ( fd2
+                            , <s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                               , "36"
+                               , "20"
+                               , "36"
+                               , "32"
+                               )
+                               ; STDOUT_FILENO>
+                            ))
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "37"
+              , "6"
+              , "37"
+              , "16"
+              )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "37"
+                , "7"
+                , "37"
+                , "11"
+                )
+                ; close)> fd1)
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "stdout-to-pipe"
+      , "33"
+      , "2"
+      , "38"
+      , "2"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "stdout-to-pipe"
+      , "33"
+      , "2"
+      , "38"
+      , "2"
+      )
       ; fail
 
   file-to-pipe :
-    Pipe(fd1, fd2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-to-pipe", "41,2,44,20")> file
+    Pipe(fd1, fd2) -> <r-exit(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "file-to-pipe"
+                       , "41"
+                       , "2"
+                       , "44"
+                       , "20"
+                       )> file
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-to-pipe", "41,2,44,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-to-pipe", "41,2,44,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "file-to-pipe"
+             , "41"
+             , "2"
+             , "44"
+             , "20"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "43,10,44,20")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "43,10,43,36")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "43,10,43,28")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "43,11,43,16") ; fdopen)> (fd2, "w")) => file)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "44,10,44,20")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "44,11,44,15") ; close)> fd1
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "file-to-pipe", "41,2,44,20")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "43"
+          , "10"
+          , "44"
+          , "20"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "43"
+             , "10"
+             , "43"
+             , "36"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "43"
+                , "10"
+                , "43"
+                , "28"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "43"
+                    , "11"
+                    , "43"
+                    , "16"
+                    )
+                    ; fdopen)> (fd2, "w")) => file)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "44"
+            , "10"
+            , "44"
+            , "20"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "44"
+              , "11"
+              , "44"
+              , "15"
+              )
+              ; close)> fd1
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "file-to-pipe"
+             , "41"
+             , "2"
+             , "44"
+             , "20"
+             )
              ; fail
 
   write-term-to-text-pipe =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-term-to-text-pipe", "46,2,52,2")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "47,2,52,2")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "48,4,51,21")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "48,4,48,10")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "write-term-to-text-pipe"
+    , "46"
+    , "2"
+    , "52"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "47"
+      , "2"
+      , "52"
+      , "2"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "48"
+            , "4"
+            , "51"
+            , "21"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "48"
+               , "4"
+               , "48"
+               , "10"
+               )
                ; ?(p, t))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "49,6,51,21")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "49,6,49,32")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "49,6,49,21")
-                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "49,7,49,18") ; file-to-pipe)> p) => outfile)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "50,6,51,21")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "50,6,50,28")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "50,7,50,12") ; fprint)> (outfile, [t]))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "51,6,51,21")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "51,7,51,12") ; fclose)> outfile)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-term-to-text-pipe", "46,2,52,2")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-term-to-text-pipe", "46,2,52,2")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "49"
+              , "6"
+              , "51"
+              , "21"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "49"
+               , "6"
+               , "49"
+               , "32"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "49"
+                  , "6"
+                  , "49"
+                  , "21"
+                  )
+                  ; <(s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                      , "49"
+                      , "7"
+                      , "49"
+                      , "18"
+                      )
+                      ; file-to-pipe)> p) => outfile)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "50"
+              , "6"
+              , "51"
+              , "21"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "50"
+               , "6"
+               , "50"
+               , "28"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "50"
+                   , "7"
+                   , "50"
+                   , "12"
+                   )
+                   ; fprint)> (outfile, [t]))
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "51"
+              , "6"
+              , "51"
+              , "21"
+              )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "51"
+                , "7"
+                , "51"
+                , "12"
+                )
+                ; fclose)> outfile)
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "write-term-to-text-pipe"
+      , "46"
+      , "2"
+      , "52"
+      , "2"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "write-term-to-text-pipe"
+      , "46"
+      , "2"
+      , "52"
+      , "2"
+      )
       ; fail
 
   read-term-from-pipe :
-    p -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-term-from-pipe", "54,2,58,22")> t
+    p -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "read-term-from-pipe"
+          , "54"
+          , "2"
+          , "58"
+          , "22"
+          )> t
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-term-from-pipe", "54,2,58,22")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-term-from-pipe", "54,2,58,22")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "read-term-from-pipe"
+             , "54"
+             , "2"
+             , "58"
+             , "22"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "56,10,58,22")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "56,10,56,35")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "56,10,56,27")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "56,11,56,24") ; file-from-pipe)> p) => file)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "57,10,58,22")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "57,10,57,33")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "57,10,57,28")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "57,11,57,22") ; ReadFromFile)> file) => t)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "58,10,58,22")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "58,11,58,16") ; fclose)> file
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-term-from-pipe", "54,2,58,22")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "56"
+          , "10"
+          , "58"
+          , "22"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "56"
+             , "10"
+             , "56"
+             , "35"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "56"
+                , "10"
+                , "56"
+                , "27"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "56"
+                    , "11"
+                    , "56"
+                    , "24"
+                    )
+                    ; file-from-pipe)> p) => file)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "57"
+            , "10"
+            , "58"
+            , "22"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "57"
+             , "10"
+             , "57"
+             , "33"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "57"
+                , "10"
+                , "57"
+                , "28"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "57"
+                    , "11"
+                    , "57"
+                    , "22"
+                    )
+                    ; ReadFromFile)> file) => t)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "58"
+            , "10"
+            , "58"
+            , "22"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "58"
+              , "11"
+              , "58"
+              , "16"
+              )
+              ; fclose)> file
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "read-term-from-pipe"
+             , "54"
+             , "2"
+             , "58"
+             , "22"
+             )
              ; fail
 
 
 strategies
   write-to-prog(prog, args) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-to-prog", "65,2,74,2")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "66,2,74,2")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "67,4,73,34")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "67,4,67,19")
-               ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "67,10,67,18")
-                       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "67,10,67,13") ; pipe) => p))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "68,6,73,34")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "68,6,69,38")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "write-to-prog"
+    , "65"
+    , "2"
+    , "74"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "66"
+      , "2"
+      , "74"
+      , "2"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "67"
+            , "4"
+            , "73"
+            , "34"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "67"
+               , "4"
+               , "67"
+               , "19"
+               )
+               ; where(s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "67"
+                       , "10"
+                       , "67"
+                       , "18"
+                       )
+                       ; (s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                          , "67"
+                          , "10"
+                          , "67"
+                          , "13"
+                          )
+                          ; pipe) => p))
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "68"
+              , "6"
+              , "73"
+              , "34"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "68"
+               , "6"
+               , "69"
+               , "38"
+               )
                ; fork(
-                   s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "68,11,69,37")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "68,11,68,29")
-                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "68,12,68,26") ; stdin-from-pipe)> p)
-                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "69,13,69,37")
-                   ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "69,14,69,19") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "69,24,69,27") ; prog>
-                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "69,32,69,35") ; args>
-                                                                                                                                      )
+                   s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "68"
+                   , "11"
+                   , "69"
+                   , "37"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                      , "68"
+                      , "11"
+                      , "68"
+                      , "29"
+                      )
+                      ; <(s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                          , "68"
+                          , "12"
+                          , "68"
+                          , "26"
+                          )
+                          ; stdin-from-pipe)> p)
+                   ; s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "69"
+                     , "13"
+                     , "69"
+                     , "37"
+                     )
+                   ; <(s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "69"
+                       , "14"
+                       , "69"
+                       , "19"
+                       )
+                       ; execvp)> ( <s-step(
+                                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                     , "69"
+                                     , "24"
+                                     , "69"
+                                     , "27"
+                                     )
+                                     ; prog>
+                                  , <s-step(
+                                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                     , "69"
+                                     , "32"
+                                     , "69"
+                                     , "35"
+                                     )
+                                     ; args>
+                                  )
                  ))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "70,6,73,34")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "70,6,70,14")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "70"
+              , "6"
+              , "73"
+              , "34"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "70"
+               , "6"
+               , "70"
+               , "14"
+               )
                ; ?(pid, t))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "71,6,73,34")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "71,6,71,37")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "71,7,71,29") ; write-term-to-text-pipe)> (p, t))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "72,6,73,34")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "72,6,72,18")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "72,7,72,13") ; waitpid)> pid)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "73,7,73,33")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "73,7,73,12") ; exited
-               + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "73,16,73,33")
-                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "73,16,73,23") ; signaled
-                    + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "73,27,73,33") ; stopped)))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-to-prog", "65,2,74,2")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-to-prog", "65,2,74,2")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "71"
+              , "6"
+              , "73"
+              , "34"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "71"
+               , "6"
+               , "71"
+               , "37"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "71"
+                   , "7"
+                   , "71"
+                   , "29"
+                   )
+                   ; write-term-to-text-pipe)> (p, t))
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "72"
+              , "6"
+              , "73"
+              , "34"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "72"
+               , "6"
+               , "72"
+               , "18"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "72"
+                   , "7"
+                   , "72"
+                   , "13"
+                   )
+                   ; waitpid)> pid)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "73"
+              , "7"
+              , "73"
+              , "33"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "73"
+               , "7"
+               , "73"
+               , "12"
+               )
+               ; exited
+               + s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "73"
+                 , "16"
+                 , "73"
+                 , "33"
+                 )
+                 ; (s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "73"
+                    , "16"
+                    , "73"
+                    , "23"
+                    )
+                    ; signaled
+                    + s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                      , "73"
+                      , "27"
+                      , "73"
+                      , "33"
+                      )
+                      ; stopped)))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "write-to-prog"
+      , "65"
+      , "2"
+      , "74"
+      , "2"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "write-to-prog"
+      , "65"
+      , "2"
+      , "74"
+      , "2"
+      )
       ; fail
 
   write-to-prog'(prog, args) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-to-prog'", "76,2,88,5")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "77,2,88,5")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "78,4,87,41")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "78,4,78,5") ; ?t)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "79,6,87,41")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "79,6,79,14")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "79,6,79,9") ; pipe) => p)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "80,6,87,41")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "80,6,80,9") ; fork)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "81,7,87,40")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "81,7,83,36")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "81,7,81,8")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "write-to-prog'"
+    , "76"
+    , "2"
+    , "88"
+    , "5"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "77"
+      , "2"
+      , "88"
+      , "5"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "78"
+            , "4"
+            , "87"
+            , "41"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "78"
+               , "4"
+               , "78"
+               , "5"
+               )
+               ; ?t)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "79"
+              , "6"
+              , "87"
+              , "41"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "79"
+               , "6"
+               , "79"
+               , "14"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "79"
+                  , "6"
+                  , "79"
+                  , "9"
+                  )
+                  ; pipe) => p)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "80"
+              , "6"
+              , "87"
+              , "41"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "80"
+               , "6"
+               , "80"
+               , "9"
+               )
+               ; fork)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "81"
+              , "7"
+              , "87"
+              , "40"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "81"
+               , "7"
+               , "83"
+               , "36"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "81"
+                  , "7"
+                  , "81"
+                  , "8"
+                  )
                   ; ?0)
-               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "82,12,83,36")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "82,12,82,30")
-                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "82,13,82,27") ; stdin-from-pipe)> p)
-               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "83,12,83,36")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "83,13,83,18") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "83,23,83,26") ; prog>
-                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "83,31,83,34") ; args>
-                                                                                                                                  )
-               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "84,10,87,40")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "84,10,84,13") ; ?pid)
-                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "85,12,87,40")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "85,12,85,43")
-                     ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "85,13,85,35") ; write-term-to-text-pipe)> (p, t))
-                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "86,12,87,40")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "86,12,86,24")
-                     ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "86,13,86,19") ; waitpid)> pid)
-                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "87,13,87,39")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "87,13,87,18") ; exited
-                     + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "87,22,87,39")
-                       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "87,22,87,29") ; signaled
-                          + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "87,33,87,39") ; stopped))))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-to-prog'", "76,2,88,5")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "write-to-prog'", "76,2,88,5")
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "82"
+                 , "12"
+                 , "83"
+                 , "36"
+                 )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "82"
+                  , "12"
+                  , "82"
+                  , "30"
+                  )
+                  ; <(s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                      , "82"
+                      , "13"
+                      , "82"
+                      , "27"
+                      )
+                      ; stdin-from-pipe)> p)
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "83"
+                 , "12"
+                 , "83"
+                 , "36"
+                 )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "83"
+                   , "13"
+                   , "83"
+                   , "18"
+                   )
+                   ; execvp)> ( <s-step(
+                                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                 , "83"
+                                 , "23"
+                                 , "83"
+                                 , "26"
+                                 )
+                                 ; prog>
+                              , <s-step(
+                                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                 , "83"
+                                 , "31"
+                                 , "83"
+                                 , "34"
+                                 )
+                                 ; args>
+                              )
+               <+ s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "84"
+                  , "10"
+                  , "87"
+                  , "40"
+                  )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "84"
+                     , "10"
+                     , "84"
+                     , "13"
+                     )
+                     ; ?pid)
+                  ; s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "85"
+                    , "12"
+                    , "87"
+                    , "40"
+                    )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "85"
+                     , "12"
+                     , "85"
+                     , "43"
+                     )
+                     ; <(s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                         , "85"
+                         , "13"
+                         , "85"
+                         , "35"
+                         )
+                         ; write-term-to-text-pipe)> (p, t))
+                  ; s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "86"
+                    , "12"
+                    , "87"
+                    , "40"
+                    )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "86"
+                     , "12"
+                     , "86"
+                     , "24"
+                     )
+                     ; <(s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                         , "86"
+                         , "13"
+                         , "86"
+                         , "19"
+                         )
+                         ; waitpid)> pid)
+                  ; s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "87"
+                    , "13"
+                    , "87"
+                    , "39"
+                    )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "87"
+                     , "13"
+                     , "87"
+                     , "18"
+                     )
+                     ; exited
+                     + s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "87"
+                       , "22"
+                       , "87"
+                       , "39"
+                       )
+                       ; (s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                          , "87"
+                          , "22"
+                          , "87"
+                          , "29"
+                          )
+                          ; signaled
+                          + s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                            , "87"
+                            , "33"
+                            , "87"
+                            , "39"
+                            )
+                            ; stopped))))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "write-to-prog'"
+      , "76"
+      , "2"
+      , "88"
+      , "5"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "write-to-prog'"
+      , "76"
+      , "2"
+      , "88"
+      , "5"
+      )
       ; fail
 
   read-from-prog(prog, args) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-from-prog", "91,2,97,43")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "92,4,97,43")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "92,4,92,19")
-       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "92,10,92,18")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "92,10,92,13") ; pipe) => p))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,6,97,43")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,6,93,56")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "read-from-prog"
+    , "91"
+    , "2"
+    , "97"
+    , "43"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "92"
+      , "4"
+      , "97"
+      , "43"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+       , "92"
+       , "4"
+       , "92"
+       , "19"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "92"
+               , "10"
+               , "92"
+               , "18"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "92"
+                  , "10"
+                  , "92"
+                  , "13"
+                  )
+                  ; pipe) => p))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "93"
+      , "6"
+      , "97"
+      , "43"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+       , "93"
+       , "6"
+       , "93"
+       , "56"
+       )
        ; fork(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,11,93,55")
-           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,11,93,28")
-              ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,12,93,25") ; stdout-to-pipe)> p)
-           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,31,93,55")
-           ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,32,93,37") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,42,93,45") ; prog>
-                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "93,50,93,53") ; args>
-                                                                                                                              )
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+           , "93"
+           , "11"
+           , "93"
+           , "55"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "93"
+              , "11"
+              , "93"
+              , "28"
+              )
+              ; <(s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "93"
+                  , "12"
+                  , "93"
+                  , "25"
+                  )
+                  ; stdout-to-pipe)> p)
+           ; s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "93"
+             , "31"
+             , "93"
+             , "55"
+             )
+           ; <(s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "93"
+               , "32"
+               , "93"
+               , "37"
+               )
+               ; execvp)> ( <s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                             , "93"
+                             , "42"
+                             , "93"
+                             , "45"
+                             )
+                             ; prog>
+                          , <s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                             , "93"
+                             , "50"
+                             , "93"
+                             , "53"
+                             )
+                             ; args>
+                          )
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "94,6,97,43")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "94,6,94,14")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "94"
+      , "6"
+      , "97"
+      , "43"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+       , "94"
+       , "6"
+       , "94"
+       , "14"
+       )
        ; ?(pid, _))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "95,6,97,43")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "95,6,95,33")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "95,6,95,28")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "95,7,95,25") ; read-term-from-pipe)> p) => t)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "96,6,97,43")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "96,12,97,42")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "96,12,96,24")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "96,13,96,19") ; waitpid)> pid)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "97,15,97,41")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "97,15,97,20") ; exited
-               + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "97,24,97,41")
-                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "97,24,97,31") ; signaled
-                    + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "97,35,97,41") ; stopped)))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-from-prog", "91,2,97,43")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-from-prog", "91,2,97,43")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "95"
+      , "6"
+      , "97"
+      , "43"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+       , "95"
+       , "6"
+       , "95"
+       , "33"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "95"
+          , "6"
+          , "95"
+          , "28"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "95"
+              , "7"
+              , "95"
+              , "25"
+              )
+              ; read-term-from-pipe)> p) => t)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "96"
+      , "6"
+      , "97"
+      , "43"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "96"
+            , "12"
+            , "97"
+            , "42"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "96"
+               , "12"
+               , "96"
+               , "24"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "96"
+                   , "13"
+                   , "96"
+                   , "19"
+                   )
+                   ; waitpid)> pid)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "97"
+              , "15"
+              , "97"
+              , "41"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "97"
+               , "15"
+               , "97"
+               , "20"
+               )
+               ; exited
+               + s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "97"
+                 , "24"
+                 , "97"
+                 , "41"
+                 )
+                 ; (s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "97"
+                    , "24"
+                    , "97"
+                    , "31"
+                    )
+                    ; signaled
+                    + s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                      , "97"
+                      , "35"
+                      , "97"
+                      , "41"
+                      )
+                      ; stopped)))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "read-from-prog"
+      , "91"
+      , "2"
+      , "97"
+      , "43"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "read-from-prog"
+      , "91"
+      , "2"
+      , "97"
+      , "43"
+      )
       ; fail
 
   read-from-prog'(prog, args) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-from-prog'", "99,2,110,3")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "100,2,110,3")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "101,4,109,48")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "101,4,101,12")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "101,4,101,7") ; pipe) => p)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "102,6,109,48")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "102,6,102,9") ; fork)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "103,7,109,47")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "103,7,105,36")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "103,7,103,8")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "read-from-prog'"
+    , "99"
+    , "2"
+    , "110"
+    , "3"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "100"
+      , "2"
+      , "110"
+      , "3"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "101"
+            , "4"
+            , "109"
+            , "48"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "101"
+               , "4"
+               , "101"
+               , "12"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "101"
+                  , "4"
+                  , "101"
+                  , "7"
+                  )
+                  ; pipe) => p)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "102"
+              , "6"
+              , "109"
+              , "48"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "102"
+               , "6"
+               , "102"
+               , "9"
+               )
+               ; fork)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "103"
+              , "7"
+              , "109"
+              , "47"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "103"
+               , "7"
+               , "105"
+               , "36"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "103"
+                  , "7"
+                  , "103"
+                  , "8"
+                  )
                   ; ?0)
-               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "104,12,105,36")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "104,12,104,29")
-                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "104,13,104,26") ; stdout-to-pipe)> p)
-               ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "105,12,105,36")
-               ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "105,13,105,18") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "105,23,105,26") ; prog>
-                                                                                                                                    , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "105,31,105,34") ; args>
-                                                                                                                                    )
-               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "106,10,109,47")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "106,10,106,13") ; ?pid)
-                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "107,12,109,47")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "107,12,107,34")
-                     ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "107,13,107,31") ; read-term-from-pipe)> p)
-                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "108,12,109,47")
-                  ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "108,19,109,46")
-                          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "108,19,108,31")
-                             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "108,20,108,26") ; waitpid)> pid)
-                          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "109,19,109,45")
-                          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "109,19,109,24") ; exited
-                             + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "109,28,109,45")
-                               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "109,28,109,35") ; signaled
-                                  + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "109,39,109,45") ; stopped)))))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-from-prog'", "99,2,110,3")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "read-from-prog'", "99,2,110,3")
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "104"
+                 , "12"
+                 , "105"
+                 , "36"
+                 )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "104"
+                  , "12"
+                  , "104"
+                  , "29"
+                  )
+                  ; <(s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                      , "104"
+                      , "13"
+                      , "104"
+                      , "26"
+                      )
+                      ; stdout-to-pipe)> p)
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "105"
+                 , "12"
+                 , "105"
+                 , "36"
+                 )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "105"
+                   , "13"
+                   , "105"
+                   , "18"
+                   )
+                   ; execvp)> ( <s-step(
+                                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                 , "105"
+                                 , "23"
+                                 , "105"
+                                 , "26"
+                                 )
+                                 ; prog>
+                              , <s-step(
+                                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                 , "105"
+                                 , "31"
+                                 , "105"
+                                 , "34"
+                                 )
+                                 ; args>
+                              )
+               <+ s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "106"
+                  , "10"
+                  , "109"
+                  , "47"
+                  )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "106"
+                     , "10"
+                     , "106"
+                     , "13"
+                     )
+                     ; ?pid)
+                  ; s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "107"
+                    , "12"
+                    , "109"
+                    , "47"
+                    )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "107"
+                     , "12"
+                     , "107"
+                     , "34"
+                     )
+                     ; <(s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                         , "107"
+                         , "13"
+                         , "107"
+                         , "31"
+                         )
+                         ; read-term-from-pipe)> p)
+                  ; s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "108"
+                    , "12"
+                    , "109"
+                    , "47"
+                    )
+                  ; where(s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                          , "108"
+                          , "19"
+                          , "109"
+                          , "46"
+                          )
+                          ; (s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                             , "108"
+                             , "19"
+                             , "108"
+                             , "31"
+                             )
+                             ; <(s-step(
+                                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                 , "108"
+                                 , "20"
+                                 , "108"
+                                 , "26"
+                                 )
+                                 ; waitpid)> pid)
+                          ; s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                            , "109"
+                            , "19"
+                            , "109"
+                            , "45"
+                            )
+                          ; (s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                             , "109"
+                             , "19"
+                             , "109"
+                             , "24"
+                             )
+                             ; exited
+                             + s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                               , "109"
+                               , "28"
+                               , "109"
+                               , "45"
+                               )
+                               ; (s-step(
+                                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                  , "109"
+                                  , "28"
+                                  , "109"
+                                  , "35"
+                                  )
+                                  ; signaled
+                                  + s-step(
+                                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                    , "109"
+                                    , "39"
+                                    , "109"
+                                    , "45"
+                                    )
+                                    ; stopped)))))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "read-from-prog'"
+      , "99"
+      , "2"
+      , "110"
+      , "3"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "read-from-prog'"
+      , "99"
+      , "2"
+      , "110"
+      , "3"
+      )
       ; fail
 
 
 strategies
   setup-filter-pipe =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "setup-filter-pipe", "116,2,117,25")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "117,4,117,25")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "117,4,117,12")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "117,4,117,7") ; pipe) => p)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "117,15,117,25")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+    , "setup-filter-pipe"
+    , "116"
+    , "2"
+    , "117"
+    , "25"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "117"
+      , "4"
+      , "117"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+       , "117"
+       , "4"
+       , "117"
+       , "12"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "117"
+          , "4"
+          , "117"
+          , "7"
+          )
+          ; pipe) => p)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "117"
+      , "15"
+      , "117"
+      , "25"
+      )
     ; !(p, [], p)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "setup-filter-pipe", "116,2,117,25")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "setup-filter-pipe", "116,2,117,25")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "setup-filter-pipe"
+      , "116"
+      , "2"
+      , "117"
+      , "25"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+      , "setup-filter-pipe"
+      , "116"
+      , "2"
+      , "117"
+      , "25"
+      )
       ; fail
 
   pipe-source(prog, args) :
-    (p, pids) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-source", "120,2,124,18")> pids
+    (p, pids) -> <r-exit(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "pipe-source"
+                  , "120"
+                  , "2"
+                  , "124"
+                  , "18"
+                  )> pids
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-source", "120,2,124,18")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-source", "120,2,124,18")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "pipe-source"
+             , "120"
+             , "2"
+             , "124"
+             , "18"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "122,10,124,18")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "122,10,122,13") ; fork)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,11,124,17")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,11,123,59")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,11,123,12")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "122"
+          , "10"
+          , "124"
+          , "18"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "122"
+             , "10"
+             , "122"
+             , "13"
+             )
+             ; fork)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "123"
+            , "11"
+            , "124"
+            , "17"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "123"
+             , "11"
+             , "123"
+             , "59"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "123"
+                , "11"
+                , "123"
+                , "12"
+                )
                 ; ?0)
-             ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,15,123,59")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,15,123,32")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,16,123,29") ; stdout-to-pipe)> p)
-             ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,35,123,59")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,36,123,41") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,46,123,49") ; prog>
-                                                                                                                                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "123,54,123,57") ; args>
-                                                                                                                                  )
-             <+ s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "124,14,124,17") ; ?pid)
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-source", "120,2,124,18")
+             ; s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "123"
+               , "15"
+               , "123"
+               , "59"
+               )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "123"
+                , "15"
+                , "123"
+                , "32"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "123"
+                    , "16"
+                    , "123"
+                    , "29"
+                    )
+                    ; stdout-to-pipe)> p)
+             ; s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+               , "123"
+               , "35"
+               , "123"
+               , "59"
+               )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "123"
+                 , "36"
+                 , "123"
+                 , "41"
+                 )
+                 ; execvp)> ( <s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                               , "123"
+                               , "46"
+                               , "123"
+                               , "49"
+                               )
+                               ; prog>
+                            , <s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                               , "123"
+                               , "54"
+                               , "123"
+                               , "57"
+                               )
+                               ; args>
+                            )
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "124"
+                , "14"
+                , "124"
+                , "17"
+                )
+                ; ?pid)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "pipe-source"
+             , "120"
+             , "2"
+             , "124"
+             , "18"
+             )
              ; fail
 
   pipe-sink(prog, args) :
-    (p0, pids, p1) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-sink", "127,2,129,74")> (p0, [pid|pids])
+    (p0, pids, p1) -> <r-exit(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "pipe-sink"
+                       , "127"
+                       , "2"
+                       , "129"
+                       , "74"
+                       )> (p0, [pid|pids])
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-sink", "127,2,129,74")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-sink", "127,2,129,74")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "pipe-sink"
+             , "127"
+             , "2"
+             , "129"
+             , "74"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,10,129,74")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,10,129,62")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "129"
+          , "10"
+          , "129"
+          , "74"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "129"
+             , "10"
+             , "129"
+             , "62"
+             )
              ; fork(
-                 s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,15,129,61")
-                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,15,129,34")
-                    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,16,129,30") ; stdin-from-pipe)> p1)
-                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,37,129,61")
-                 ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,38,129,43") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,48,129,51") ; prog>
-                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "129,56,129,59") ; args>
-                                                                                                                                      )
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "129"
+                 , "15"
+                 , "129"
+                 , "61"
+                 )
+                 ; (s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "129"
+                    , "15"
+                    , "129"
+                    , "34"
+                    )
+                    ; <(s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                        , "129"
+                        , "16"
+                        , "129"
+                        , "30"
+                        )
+                        ; stdin-from-pipe)> p1)
+                 ; s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "129"
+                   , "37"
+                   , "129"
+                   , "61"
+                   )
+                 ; <(s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "129"
+                     , "38"
+                     , "129"
+                     , "43"
+                     )
+                     ; execvp)> ( <s-step(
+                                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                   , "129"
+                                   , "48"
+                                   , "129"
+                                   , "51"
+                                   )
+                                   ; prog>
+                                , <s-step(
+                                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                   , "129"
+                                   , "56"
+                                   , "129"
+                                   , "59"
+                                   )
+                                   ; args>
+                                )
                )) => (pid, _)
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "pipe-sink", "127,2,129,74")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "pipe-sink"
+             , "127"
+             , "2"
+             , "129"
+             , "74"
+             )
              ; fail
 
   close-filter-pipe(s) :
-    (p-in, pids, p-out) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-filter-pipe", "131,2,133,25")> (p-in, [pid|pids])
+    (p-in, pids, p-out) -> <r-exit(
+                            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                            , "close-filter-pipe"
+                            , "131"
+                            , "2"
+                            , "133"
+                            , "25"
+                            )> (p-in, [pid|pids])
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-filter-pipe", "131,2,133,25")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-filter-pipe", "131,2,133,25")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "close-filter-pipe"
+             , "131"
+             , "2"
+             , "133"
+             , "25"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "133,10,133,25")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "133,10,133,18")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "133,11,133,11") ; s)> p-out) => pid
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "close-filter-pipe", "131,2,133,25")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "133"
+          , "10"
+          , "133"
+          , "25"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "133"
+             , "10"
+             , "133"
+             , "18"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "133"
+                 , "11"
+                 , "133"
+                 , "11"
+                 )
+                 ; s)> p-out) => pid
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "close-filter-pipe"
+             , "131"
+             , "2"
+             , "133"
+             , "25"
+             )
              ; fail
 
   exec-filter-pipe(s) :
-    (p-in, pids) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "exec-filter-pipe", "135,2,138,67")> ()
+    (p-in, pids) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "exec-filter-pipe"
+                     , "135"
+                     , "2"
+                     , "138"
+                     , "67"
+                     )> ()
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "exec-filter-pipe", "135,2,138,67")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "exec-filter-pipe", "135,2,138,67")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "exec-filter-pipe"
+             , "135"
+             , "2"
+             , "138"
+             , "67"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "137,10,138,67")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "137,10,137,24")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "137,10,137,17")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "137,11,137,11") ; s)> p-in) => pid)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,10,138,67")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,11,138,53")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "137"
+          , "10"
+          , "138"
+          , "67"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "137"
+             , "10"
+             , "137"
+             , "24"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "137"
+                , "10"
+                , "137"
+                , "17"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "137"
+                    , "11"
+                    , "137"
+                    , "11"
+                    )
+                    ; s)> p-in) => pid)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "138"
+            , "10"
+            , "138"
+            , "67"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+              , "138"
+              , "11"
+              , "138"
+              , "53"
+              )
               ; map(
-                  s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,15,138,52")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,15,138,21") ; waitpid)
-                  ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,25,138,51")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,25,138,30") ; exited
-                     + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,34,138,51")
-                       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,34,138,41") ; signaled
-                          + s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "138,45,138,51") ; stopped))
+                  s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                  , "138"
+                  , "15"
+                  , "138"
+                  , "52"
+                  )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "138"
+                     , "15"
+                     , "138"
+                     , "21"
+                     )
+                     ; waitpid)
+                  ; s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "138"
+                    , "25"
+                    , "138"
+                    , "51"
+                    )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "138"
+                     , "25"
+                     , "138"
+                     , "30"
+                     )
+                     ; exited
+                     + s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                       , "138"
+                       , "34"
+                       , "138"
+                       , "51"
+                       )
+                       ; (s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                          , "138"
+                          , "34"
+                          , "138"
+                          , "41"
+                          )
+                          ; signaled
+                          + s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                            , "138"
+                            , "45"
+                            , "138"
+                            , "51"
+                            )
+                            ; stopped))
                 ))> [pid|pids]
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "exec-filter-pipe", "135,2,138,67")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "exec-filter-pipe"
+             , "135"
+             , "2"
+             , "138"
+             , "67"
+             )
              ; fail
 
   spawn-filter-with-prog(prog, args) :
-    (p0, pids, p-in) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "spawn-filter-with-prog", "140,2,146,54")> (p0, [pid|pids], p-out)
+    (p0, pids, p-in) -> <r-exit(
+                         | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                         , "spawn-filter-with-prog"
+                         , "140"
+                         , "2"
+                         , "146"
+                         , "54"
+                         )> (p0, [pid|pids], p-out)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "spawn-filter-with-prog", "140,2,146,54")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "spawn-filter-with-prog", "140,2,146,54")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "spawn-filter-with-prog"
+             , "140"
+             , "2"
+             , "146"
+             , "54"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "142,10,146,54")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "142,10,142,69")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+          , "142"
+          , "10"
+          , "146"
+          , "54"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "142"
+             , "10"
+             , "142"
+             , "69"
+             )
              ; debug(
-                 s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "142,16,142,68")
-                 ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "142,17,142,30") ; concat-strings)> [ "spawn-filter-with "
-                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "142,57,142,60") ; prog>
-                                                                                                                                              , ": "
-                                                                                                                                              ]
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "142"
+                 , "16"
+                 , "142"
+                 , "68"
+                 )
+                 ; <(s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "142"
+                     , "17"
+                     , "142"
+                     , "30"
+                     )
+                     ; concat-strings)> [ "spawn-filter-with "
+                                        , <s-step(
+                                           | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                           , "142"
+                                           , "57"
+                                           , "142"
+                                           , "60"
+                                           )
+                                           ; prog>
+                                        , ": "
+                                        ]
                ))
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "143,10,146,54")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "143,10,143,22")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "143,10,143,13") ; pipe) => p-out)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "144,10,146,54")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "144,10,146,42")
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "143"
+            , "10"
+            , "146"
+            , "54"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "143"
+             , "10"
+             , "143"
+             , "22"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                , "143"
+                , "10"
+                , "143"
+                , "13"
+                )
+                ; pipe) => p-out)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+            , "144"
+            , "10"
+            , "146"
+            , "54"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "144"
+             , "10"
+             , "146"
+             , "42"
+             )
              ; fork(
-                 s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "144,15,146,41")
-                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "144,15,144,36")
-                    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "144,16,144,30") ; stdin-from-pipe)> p-in)
-                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "145,17,146,41")
-                 ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "145,17,145,38")
-                    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "145,18,145,31") ; stdout-to-pipe)> p-out)
-                 ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "146,17,146,41")
-                 ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "146,18,146,23") ; execvp)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "146,28,146,31") ; prog>
-                                                                                                                                      , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "146,36,146,39") ; args>
-                                                                                                                                      )
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                 , "144"
+                 , "15"
+                 , "146"
+                 , "41"
+                 )
+                 ; (s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "144"
+                    , "15"
+                    , "144"
+                    , "36"
+                    )
+                    ; <(s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                        , "144"
+                        , "16"
+                        , "144"
+                        , "30"
+                        )
+                        ; stdin-from-pipe)> p-in)
+                 ; s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "145"
+                   , "17"
+                   , "146"
+                   , "41"
+                   )
+                 ; (s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                    , "145"
+                    , "17"
+                    , "145"
+                    , "38"
+                    )
+                    ; <(s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                        , "145"
+                        , "18"
+                        , "145"
+                        , "31"
+                        )
+                        ; stdout-to-pipe)> p-out)
+                 ; s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                   , "146"
+                   , "17"
+                   , "146"
+                   , "41"
+                   )
+                 ; <(s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                     , "146"
+                     , "18"
+                     , "146"
+                     , "23"
+                     )
+                     ; execvp)> ( <s-step(
+                                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                   , "146"
+                                   , "28"
+                                   , "146"
+                                   , "31"
+                                   )
+                                   ; prog>
+                                , <s-step(
+                                   | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+                                   , "146"
+                                   , "36"
+                                   , "146"
+                                   , "39"
+                                   )
+                                   ; args>
+                                )
                )) => (pid, _)
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str", "spawn-filter-with-prog", "140,2,146,54")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/pipe-abstractions.str"
+             , "spawn-filter-with-prog"
+             , "140"
+             , "2"
+             , "146"
+             , "54"
+             )
              ; fail

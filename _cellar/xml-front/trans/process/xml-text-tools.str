@@ -10,327 +10,1499 @@ imports
 
 strategies
   string2xml-attr-value =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "string2xml-attr-value", "8,2,9,36")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "9,4,9,36")
-    ; string-as-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "9,20,9,35") ; xml-escape-chars
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "string2xml-attr-value"
+    , "8"
+    , "2"
+    , "9"
+    , "36"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "9"
+      , "4"
+      , "9"
+      , "36"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "string2xml-attr-value", "8,2,9,36")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "string2xml-attr-value", "8,2,9,36")
+    ; string-as-chars(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "9"
+        , "20"
+        , "9"
+        , "35"
+        )
+        ; xml-escape-chars
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "string2xml-attr-value"
+      , "8"
+      , "2"
+      , "9"
+      , "36"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "string2xml-attr-value"
+      , "8"
+      , "2"
+      , "9"
+      , "36"
+      )
       ; fail
 
 
 strategies
   xml-escape =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-escape", "16,2,17,36")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "17,4,17,36")
-    ; string-as-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "17,20,17,35") ; xml-escape-chars
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-escape"
+    , "16"
+    , "2"
+    , "17"
+    , "36"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "17"
+      , "4"
+      , "17"
+      , "36"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-escape", "16,2,17,36")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-escape", "16,2,17,36")
+    ; string-as-chars(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "17"
+        , "20"
+        , "17"
+        , "35"
+        )
+        ; xml-escape-chars
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-escape"
+      , "16"
+      , "2"
+      , "17"
+      , "36"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-escape"
+      , "16"
+      , "2"
+      , "17"
+      , "36"
+      )
       ; fail
 
   xml-escape-chars =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-escape-chars", "22,2,32,6")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "23,6,32,6")
-    ; rec x (
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "24,10,31,25")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "24,10,30,10")
-           ; try(
-               s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "25,12,29,22")
-               ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "25,12,25,21") ; escape-amp
-                  + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "26,12,29,22")
-                    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "26,12,26,20") ; escape-lt
-                       + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "27,12,29,22")
-                         ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "27,12,27,20") ; escape-gt
-                            + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "28,12,29,22")
-                              ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "28,12,28,22") ; escape-apos
-                                 + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "29,12,29,22") ; escape-quot))))
-             ))
-        ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "31,11,31,24")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "31,11,31,18")
-           ; [s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "31,12,31,13") ; id|s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "31,17,31,17") ; x]
-           <+ s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "31,23,31,24") ; [])
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-escape-chars"
+    , "22"
+    , "2"
+    , "32"
+    , "6"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "23"
+      , "6"
+      , "32"
+      , "6"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-escape-chars", "22,2,32,6")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-escape-chars", "22,2,32,6")
+    ; rec x (
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "24"
+        , "10"
+        , "31"
+        , "25"
+        )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "24"
+           , "10"
+           , "30"
+           , "10"
+           )
+           ; try(
+               s-step(
+               | "_cellar/xml-front/trans/process/xml-text-tools.str"
+               , "25"
+               , "12"
+               , "29"
+               , "22"
+               )
+               ; (s-step(
+                  | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                  , "25"
+                  , "12"
+                  , "25"
+                  , "21"
+                  )
+                  ; escape-amp
+                  + s-step(
+                    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                    , "26"
+                    , "12"
+                    , "29"
+                    , "22"
+                    )
+                    ; (s-step(
+                       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                       , "26"
+                       , "12"
+                       , "26"
+                       , "20"
+                       )
+                       ; escape-lt
+                       + s-step(
+                         | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                         , "27"
+                         , "12"
+                         , "29"
+                         , "22"
+                         )
+                         ; (s-step(
+                            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                            , "27"
+                            , "12"
+                            , "27"
+                            , "20"
+                            )
+                            ; escape-gt
+                            + s-step(
+                              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                              , "28"
+                              , "12"
+                              , "29"
+                              , "22"
+                              )
+                              ; (s-step(
+                                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                 , "28"
+                                 , "12"
+                                 , "28"
+                                 , "22"
+                                 )
+                                 ; escape-apos
+                                 + s-step(
+                                   | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                   , "29"
+                                   , "12"
+                                   , "29"
+                                   , "22"
+                                   )
+                                   ; escape-quot))))
+             ))
+        ; s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "31"
+          , "11"
+          , "31"
+          , "24"
+          )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "31"
+           , "11"
+           , "31"
+           , "18"
+           )
+           ; [s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "31"
+              , "12"
+              , "31"
+              , "13"
+              )
+              ; id|s-step(
+                   | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                   , "31"
+                   , "17"
+                   , "31"
+                   , "17"
+                   )
+                   ; x]
+           <+ s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "31"
+              , "23"
+              , "31"
+              , "24"
+              )
+              ; [])
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-escape-chars"
+      , "22"
+      , "2"
+      , "32"
+      , "6"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-escape-chars"
+      , "22"
+      , "2"
+      , "32"
+      , "6"
+      )
       ; fail
 
   escape-amp :
-    ['&'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-amp", "37,2,37,65")> ['&', 'a', 'm', 'p', ';'|cs]
+    ['&'|cs] -> <r-exit(
+                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                 , "escape-amp"
+                 , "37"
+                 , "2"
+                 , "37"
+                 , "65"
+                 )> ['&', 'a', 'm', 'p', ';'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-amp", "37,2,37,65")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-amp", "37,2,37,65")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "escape-amp"
+             , "37"
+             , "2"
+             , "37"
+             , "65"
+             )
              ; fail
 
   escape-lt :
-    ['<'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-lt", "38,2,38,65")> ['&', 'l', 't', ';'|cs]
+    ['<'|cs] -> <r-exit(
+                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                 , "escape-lt"
+                 , "38"
+                 , "2"
+                 , "38"
+                 , "65"
+                 )> ['&', 'l', 't', ';'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-lt", "38,2,38,65")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-lt", "38,2,38,65")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "escape-lt"
+             , "38"
+             , "2"
+             , "38"
+             , "65"
+             )
              ; fail
 
   escape-gt :
-    ['>'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-gt", "39,2,39,65")> ['&', 'g', 't', ';'|cs]
+    ['>'|cs] -> <r-exit(
+                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                 , "escape-gt"
+                 , "39"
+                 , "2"
+                 , "39"
+                 , "65"
+                 )> ['&', 'g', 't', ';'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-gt", "39,2,39,65")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-gt", "39,2,39,65")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "escape-gt"
+             , "39"
+             , "2"
+             , "39"
+             , "65"
+             )
              ; fail
 
   escape-apos :
-    ['\''|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-apos", "40,2,40,65")> ['&', 'a', 'p', 'o', 's', ';'|cs]
+    ['\''|cs] -> <r-exit(
+                  | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                  , "escape-apos"
+                  , "40"
+                  , "2"
+                  , "40"
+                  , "65"
+                  )> ['&', 'a', 'p', 'o', 's', ';'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-apos", "40,2,40,65")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-apos", "40,2,40,65")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "escape-apos"
+             , "40"
+             , "2"
+             , "40"
+             , "65"
+             )
              ; fail
 
   escape-quot :
-    ['"'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-quot", "41,2,41,65")> ['&', 'q', 'u', 'o', 't', ';'|cs]
+    ['"'|cs] -> <r-exit(
+                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                 , "escape-quot"
+                 , "41"
+                 , "2"
+                 , "41"
+                 , "65"
+                 )> ['&', 'q', 'u', 'o', 't', ';'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-quot", "41,2,41,65")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "escape-quot", "41,2,41,65")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "escape-quot"
+             , "41"
+             , "2"
+             , "41"
+             , "65"
+             )
              ; fail
 
 
 strategies
   xml-unescape =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape", "48,2,49,38")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "49,4,49,38")
-    ; string-as-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "49,20,49,37") ; xml-unescape-chars
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-unescape"
+    , "48"
+    , "2"
+    , "49"
+    , "38"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "49"
+      , "4"
+      , "49"
+      , "38"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape", "48,2,49,38")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape", "48,2,49,38")
+    ; string-as-chars(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "49"
+        , "20"
+        , "49"
+        , "37"
+        )
+        ; xml-unescape-chars
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unescape"
+      , "48"
+      , "2"
+      , "49"
+      , "38"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unescape"
+      , "48"
+      , "2"
+      , "49"
+      , "38"
+      )
       ; fail
 
   xml-unescape-chars =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape-chars", "54,2,66,6")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "55,6,66,6")
-    ; rec x (
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "56,10,65,25")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "56,10,64,10")
-           ; try(
-               s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "57,12,63,31")
-               ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "57,12,57,23") ; unescape-amp
-                  + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "58,12,63,31")
-                    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "58,12,58,22") ; unescape-lt
-                       + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "59,12,63,31")
-                         ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "59,12,59,22") ; unescape-gt
-                            + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "60,12,63,31")
-                              ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "60,12,60,24") ; unescape-apos
-                                 + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "61,12,63,31")
-                                   ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "61,12,61,24") ; unescape-quot
-                                      + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "62,12,63,31")
-                                        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "62,12,62,31") ; unescape-dec-charref
-                                           + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "63,12,63,31") ; unescape-hex-charref))))))
-             ))
-        ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "65,11,65,24")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "65,11,65,18")
-           ; [s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "65,12,65,13") ; id|s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "65,17,65,17") ; x]
-           <+ s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "65,23,65,24") ; [])
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-unescape-chars"
+    , "54"
+    , "2"
+    , "66"
+    , "6"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "55"
+      , "6"
+      , "66"
+      , "6"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape-chars", "54,2,66,6")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape-chars", "54,2,66,6")
+    ; rec x (
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "56"
+        , "10"
+        , "65"
+        , "25"
+        )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "56"
+           , "10"
+           , "64"
+           , "10"
+           )
+           ; try(
+               s-step(
+               | "_cellar/xml-front/trans/process/xml-text-tools.str"
+               , "57"
+               , "12"
+               , "63"
+               , "31"
+               )
+               ; (s-step(
+                  | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                  , "57"
+                  , "12"
+                  , "57"
+                  , "23"
+                  )
+                  ; unescape-amp
+                  + s-step(
+                    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                    , "58"
+                    , "12"
+                    , "63"
+                    , "31"
+                    )
+                    ; (s-step(
+                       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                       , "58"
+                       , "12"
+                       , "58"
+                       , "22"
+                       )
+                       ; unescape-lt
+                       + s-step(
+                         | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                         , "59"
+                         , "12"
+                         , "63"
+                         , "31"
+                         )
+                         ; (s-step(
+                            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                            , "59"
+                            , "12"
+                            , "59"
+                            , "22"
+                            )
+                            ; unescape-gt
+                            + s-step(
+                              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                              , "60"
+                              , "12"
+                              , "63"
+                              , "31"
+                              )
+                              ; (s-step(
+                                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                 , "60"
+                                 , "12"
+                                 , "60"
+                                 , "24"
+                                 )
+                                 ; unescape-apos
+                                 + s-step(
+                                   | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                   , "61"
+                                   , "12"
+                                   , "63"
+                                   , "31"
+                                   )
+                                   ; (s-step(
+                                      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                      , "61"
+                                      , "12"
+                                      , "61"
+                                      , "24"
+                                      )
+                                      ; unescape-quot
+                                      + s-step(
+                                        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                        , "62"
+                                        , "12"
+                                        , "63"
+                                        , "31"
+                                        )
+                                        ; (s-step(
+                                           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                           , "62"
+                                           , "12"
+                                           , "62"
+                                           , "31"
+                                           )
+                                           ; unescape-dec-charref
+                                           + s-step(
+                                             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                             , "63"
+                                             , "12"
+                                             , "63"
+                                             , "31"
+                                             )
+                                             ; unescape-hex-charref))))))
+             ))
+        ; s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "65"
+          , "11"
+          , "65"
+          , "24"
+          )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "65"
+           , "11"
+           , "65"
+           , "18"
+           )
+           ; [s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "65"
+              , "12"
+              , "65"
+              , "13"
+              )
+              ; id|s-step(
+                   | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                   , "65"
+                   , "17"
+                   , "65"
+                   , "17"
+                   )
+                   ; x]
+           <+ s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "65"
+              , "23"
+              , "65"
+              , "24"
+              )
+              ; [])
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unescape-chars"
+      , "54"
+      , "2"
+      , "66"
+      , "6"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unescape-chars"
+      , "54"
+      , "2"
+      , "66"
+      , "6"
+      )
       ; fail
 
   unescape-amp :
-    ['&', 'a', 'm', 'p', ';'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-amp", "71,2,71,67")> ['&'|cs]
+    ['&', 'a', 'm', 'p', ';'|cs] -> <r-exit(
+                                     | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                     , "unescape-amp"
+                                     , "71"
+                                     , "2"
+                                     , "71"
+                                     , "67"
+                                     )> ['&'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-amp", "71,2,71,67")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-amp", "71,2,71,67")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-amp"
+             , "71"
+             , "2"
+             , "71"
+             , "67"
+             )
              ; fail
 
   unescape-lt :
-    ['&', 'l', 't', ';'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-lt", "72,2,72,67")> ['<'|cs]
+    ['&', 'l', 't', ';'|cs] -> <r-exit(
+                                | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                , "unescape-lt"
+                                , "72"
+                                , "2"
+                                , "72"
+                                , "67"
+                                )> ['<'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-lt", "72,2,72,67")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-lt", "72,2,72,67")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-lt"
+             , "72"
+             , "2"
+             , "72"
+             , "67"
+             )
              ; fail
 
   unescape-gt :
-    ['&', 'g', 't', ';'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-gt", "73,2,73,67")> ['>'|cs]
+    ['&', 'g', 't', ';'|cs] -> <r-exit(
+                                | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                , "unescape-gt"
+                                , "73"
+                                , "2"
+                                , "73"
+                                , "67"
+                                )> ['>'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-gt", "73,2,73,67")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-gt", "73,2,73,67")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-gt"
+             , "73"
+             , "2"
+             , "73"
+             , "67"
+             )
              ; fail
 
   unescape-apos :
-    ['&', 'a', 'p', 'o', 's', ';'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-apos", "74,2,74,67")> ['\''|cs]
+    ['&', 'a', 'p', 'o', 's', ';'|cs] -> <r-exit(
+                                          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                          , "unescape-apos"
+                                          , "74"
+                                          , "2"
+                                          , "74"
+                                          , "67"
+                                          )> ['\''|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-apos", "74,2,74,67")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-apos", "74,2,74,67")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-apos"
+             , "74"
+             , "2"
+             , "74"
+             , "67"
+             )
              ; fail
 
   unescape-quot :
-    ['&', 'q', 'u', 'o', 't', ';'|cs] -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-quot", "75,2,75,67")> ['"'|cs]
+    ['&', 'q', 'u', 'o', 't', ';'|cs] -> <r-exit(
+                                          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                          , "unescape-quot"
+                                          , "75"
+                                          , "2"
+                                          , "75"
+                                          , "67"
+                                          )> ['"'|cs]
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-quot", "75,2,75,67")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-quot", "75,2,75,67")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-quot"
+             , "75"
+             , "2"
+             , "75"
+             , "67"
+             )
              ; fail
 
   xml-unescape =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape", "81,2,93,4")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "82,4,93,4")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-unescape"
+    , "81"
+    , "2"
+    , "93"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "82"
+      , "4"
+      , "93"
+      , "4"
+      )
     ; Text(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "83,6,92,6")
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "83"
+        , "6"
+        , "92"
+        , "6"
+        )
         ; map(
-            s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "84,8,91,27")
-            ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "84,8,84,18")
+            s-step(
+            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+            , "84"
+            , "8"
+            , "91"
+            , "27"
+            )
+            ; (s-step(
+               | "_cellar/xml-front/trans/process/xml-text-tools.str"
+               , "84"
+               , "8"
+               , "84"
+               , "18"
+               )
                ; ?Literal(_)
-               <+ s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "85,8,91,27")
-                  ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "85,8,85,19") ; unescape-amp
-                     + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "86,8,91,27")
-                       ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "86,8,86,18") ; unescape-lt
-                          + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "87,8,91,27")
-                            ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "87,8,87,18") ; unescape-gt
-                               + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "88,8,91,27")
-                                 ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "88,8,88,20") ; unescape-apos
-                                    + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "89,8,91,27")
-                                      ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "89,8,89,20") ; unescape-quot
-                                         + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "90,8,91,27")
-                                           ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "90,8,90,27") ; unescape-dec-charref
-                                              + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "91,8,91,27") ; unescape-hex-charref)))))))
+               <+ s-step(
+                  | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                  , "85"
+                  , "8"
+                  , "91"
+                  , "27"
+                  )
+                  ; (s-step(
+                     | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                     , "85"
+                     , "8"
+                     , "85"
+                     , "19"
+                     )
+                     ; unescape-amp
+                     + s-step(
+                       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                       , "86"
+                       , "8"
+                       , "91"
+                       , "27"
+                       )
+                       ; (s-step(
+                          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                          , "86"
+                          , "8"
+                          , "86"
+                          , "18"
+                          )
+                          ; unescape-lt
+                          + s-step(
+                            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                            , "87"
+                            , "8"
+                            , "91"
+                            , "27"
+                            )
+                            ; (s-step(
+                               | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                               , "87"
+                               , "8"
+                               , "87"
+                               , "18"
+                               )
+                               ; unescape-gt
+                               + s-step(
+                                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                 , "88"
+                                 , "8"
+                                 , "91"
+                                 , "27"
+                                 )
+                                 ; (s-step(
+                                    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                    , "88"
+                                    , "8"
+                                    , "88"
+                                    , "20"
+                                    )
+                                    ; unescape-apos
+                                    + s-step(
+                                      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                      , "89"
+                                      , "8"
+                                      , "91"
+                                      , "27"
+                                      )
+                                      ; (s-step(
+                                         | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                         , "89"
+                                         , "8"
+                                         , "89"
+                                         , "20"
+                                         )
+                                         ; unescape-quot
+                                         + s-step(
+                                           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                           , "90"
+                                           , "8"
+                                           , "91"
+                                           , "27"
+                                           )
+                                           ; (s-step(
+                                              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                              , "90"
+                                              , "8"
+                                              , "90"
+                                              , "27"
+                                              )
+                                              ; unescape-dec-charref
+                                              + s-step(
+                                                | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                                                , "91"
+                                                , "8"
+                                                , "91"
+                                                , "27"
+                                                )
+                                                ; unescape-hex-charref)))))))
           )
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape", "81,2,93,4")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unescape", "81,2,93,4")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unescape"
+      , "81"
+      , "2"
+      , "93"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unescape"
+      , "81"
+      , "2"
+      , "93"
+      , "4"
+      )
       ; fail
 
   unescape-amp :
-    EntityRef("amp") -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-amp", "98,2,98,50")> Literal("&")
+    EntityRef("amp") -> <r-exit(
+                         | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                         , "unescape-amp"
+                         , "98"
+                         , "2"
+                         , "98"
+                         , "50"
+                         )> Literal("&")
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-amp", "98,2,98,50")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-amp", "98,2,98,50")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-amp"
+             , "98"
+             , "2"
+             , "98"
+             , "50"
+             )
              ; fail
 
   unescape-lt :
-    EntityRef("lt") -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-lt", "99,2,99,50")> Literal("<")
+    EntityRef("lt") -> <r-exit(
+                        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                        , "unescape-lt"
+                        , "99"
+                        , "2"
+                        , "99"
+                        , "50"
+                        )> Literal("<")
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-lt", "99,2,99,50")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-lt", "99,2,99,50")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-lt"
+             , "99"
+             , "2"
+             , "99"
+             , "50"
+             )
              ; fail
 
   unescape-gt :
-    EntityRef("gt") -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-gt", "100,2,100,50")> Literal(">")
+    EntityRef("gt") -> <r-exit(
+                        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                        , "unescape-gt"
+                        , "100"
+                        , "2"
+                        , "100"
+                        , "50"
+                        )> Literal(">")
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-gt", "100,2,100,50")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-gt", "100,2,100,50")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-gt"
+             , "100"
+             , "2"
+             , "100"
+             , "50"
+             )
              ; fail
 
   unescape-apos :
-    EntityRef("apos") -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-apos", "101,2,101,50")> Literal("'")
+    EntityRef("apos") -> <r-exit(
+                          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                          , "unescape-apos"
+                          , "101"
+                          , "2"
+                          , "101"
+                          , "50"
+                          )> Literal("'")
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-apos", "101,2,101,50")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-apos", "101,2,101,50")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-apos"
+             , "101"
+             , "2"
+             , "101"
+             , "50"
+             )
              ; fail
 
   unescape-quot :
-    EntityRef("quot") -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-quot", "102,2,102,51")> Literal("\"")
+    EntityRef("quot") -> <r-exit(
+                          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                          , "unescape-quot"
+                          , "102"
+                          , "2"
+                          , "102"
+                          , "51"
+                          )> Literal("\"")
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-quot", "102,2,102,51")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-quot", "102,2,102,51")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-quot"
+             , "102"
+             , "2"
+             , "102"
+             , "51"
+             )
              ; fail
 
   unescape-dec-charref :
-    DecCharRef(s) -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-dec-charref", "104,2,105,51")> Literal(
-                                                                                                                               <s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "105,30,105,47") ; dec-char-to-string> s
-                                                                                                                             )
+    DecCharRef(s) -> <r-exit(
+                      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                      , "unescape-dec-charref"
+                      , "104"
+                      , "2"
+                      , "105"
+                      , "51"
+                      )> Literal(
+                           <s-step(
+                            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                            , "105"
+                            , "30"
+                            , "105"
+                            , "47"
+                            )
+                            ; dec-char-to-string> s
+                         )
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-dec-charref", "104,2,105,51")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-dec-charref", "104,2,105,51")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-dec-charref"
+             , "104"
+             , "2"
+             , "105"
+             , "51"
+             )
              ; fail
 
   unescape-hex-charref :
-    HexCharRef(s) -> <r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-hex-charref", "107,2,108,51")> Literal(
-                                                                                                                               <s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "108,30,108,47") ; hex-char-to-string> s
-                                                                                                                             )
+    HexCharRef(s) -> <r-exit(
+                      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                      , "unescape-hex-charref"
+                      , "107"
+                      , "2"
+                      , "108"
+                      , "51"
+                      )> Literal(
+                           <s-step(
+                            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                            , "108"
+                            , "30"
+                            , "108"
+                            , "47"
+                            )
+                            ; hex-char-to-string> s
+                         )
     where r-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-hex-charref", "107,2,108,51")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "unescape-hex-charref", "107,2,108,51")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "unescape-hex-charref"
+             , "107"
+             , "2"
+             , "108"
+             , "51"
+             )
              ; fail
 
   dec-char-to-string =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "dec-char-to-string", "127,2,132,4")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "128,4,132,4")
-    ; string-as-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "129,6,131,12")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "129,6,129,16")
-           ; all(s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "129,10,129,15") ; is-num))
-        ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "130,6,131,12")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "130,6,130,21") ; dec-chars-to-int)
-        ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "131,6,131,12")
-        ; ![<s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "131,9,131,10") ; id>]
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "dec-char-to-string"
+    , "127"
+    , "2"
+    , "132"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "128"
+      , "4"
+      , "132"
+      , "4"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "dec-char-to-string", "127,2,132,4")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "dec-char-to-string", "127,2,132,4")
+    ; string-as-chars(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "129"
+        , "6"
+        , "131"
+        , "12"
+        )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "129"
+           , "6"
+           , "129"
+           , "16"
+           )
+           ; all(s-step(
+                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                 , "129"
+                 , "10"
+                 , "129"
+                 , "15"
+                 )
+                 ; is-num))
+        ; s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "130"
+          , "6"
+          , "131"
+          , "12"
+          )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "130"
+           , "6"
+           , "130"
+           , "21"
+           )
+           ; dec-chars-to-int)
+        ; s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "131"
+          , "6"
+          , "131"
+          , "12"
+          )
+        ; ![ <s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "131"
+              , "9"
+              , "131"
+              , "10"
+              )
+              ; id>
+           ]
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "dec-char-to-string"
+      , "127"
+      , "2"
+      , "132"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "dec-char-to-string"
+      , "127"
+      , "2"
+      , "132"
+      , "4"
+      )
       ; fail
 
   hex-char-to-string =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "hex-char-to-string", "134,2,139,4")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "135,4,139,4")
-    ; string-as-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "136,6,138,12")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "136,6,136,19")
-           ; all(s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "136,10,136,18") ; is-hexnum))
-        ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "137,6,138,12")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "137,6,137,21") ; hex-chars-to-int)
-        ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "138,6,138,12")
-        ; ![<s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "138,9,138,10") ; id>]
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "hex-char-to-string"
+    , "134"
+    , "2"
+    , "139"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "135"
+      , "4"
+      , "139"
+      , "4"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "hex-char-to-string", "134,2,139,4")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "hex-char-to-string", "134,2,139,4")
+    ; string-as-chars(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "136"
+        , "6"
+        , "138"
+        , "12"
+        )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "136"
+           , "6"
+           , "136"
+           , "19"
+           )
+           ; all(s-step(
+                 | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                 , "136"
+                 , "10"
+                 , "136"
+                 , "18"
+                 )
+                 ; is-hexnum))
+        ; s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "137"
+          , "6"
+          , "138"
+          , "12"
+          )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "137"
+           , "6"
+           , "137"
+           , "21"
+           )
+           ; hex-chars-to-int)
+        ; s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "138"
+          , "6"
+          , "138"
+          , "12"
+          )
+        ; ![ <s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "138"
+              , "9"
+              , "138"
+              , "10"
+              )
+              ; id>
+           ]
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "hex-char-to-string"
+      , "134"
+      , "2"
+      , "139"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "hex-char-to-string"
+      , "134"
+      , "2"
+      , "139"
+      , "4"
+      )
       ; fail
 
 
 strategies
   xml-unquote-attr =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unquote-attr", "146,2,146,59")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "146,21,146,59")
-    ; string-as-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "146,37,146,58") ; xml-unquote-chars-attr
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-unquote-attr"
+    , "146"
+    , "2"
+    , "146"
+    , "59"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "146"
+      , "21"
+      , "146"
+      , "59"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unquote-attr", "146,2,146,59")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unquote-attr", "146,2,146,59")
+    ; string-as-chars(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "146"
+        , "37"
+        , "146"
+        , "58"
+        )
+        ; xml-unquote-chars-attr
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unquote-attr"
+      , "146"
+      , "2"
+      , "146"
+      , "59"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unquote-attr"
+      , "146"
+      , "2"
+      , "146"
+      , "59"
+      )
       ; fail
 
   xml-unquote-chars-attr =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unquote-chars-attr", "151,2,152,30")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "152,4,152,30")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-unquote-chars-attr"
+    , "151"
+    , "2"
+    , "152"
+    , "30"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "152"
+      , "4"
+      , "152"
+      , "30"
+      )
     ; unquote-chars(
-        s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "152,18,152,29")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "152,18,152,21")
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-text-tools.str"
+        , "152"
+        , "18"
+        , "152"
+        , "29"
+        )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "152"
+           , "18"
+           , "152"
+           , "21"
+           )
            ; ?'"'
-           + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "152,25,152,29")
+           + s-step(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "152"
+             , "25"
+             , "152"
+             , "29"
+             )
              ; ?'\'')
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unquote-chars-attr", "151,2,152,30")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-unquote-chars-attr", "151,2,152,30")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unquote-chars-attr"
+      , "151"
+      , "2"
+      , "152"
+      , "30"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-unquote-chars-attr"
+      , "151"
+      , "2"
+      , "152"
+      , "30"
+      )
       ; fail
 
   xml-attr-value2string =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-attr-value2string", "157,2,160,20")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "158,4,160,20")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "158,6,159,43")
-       ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "158,6,158,43")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "xml-attr-value2string"
+    , "157"
+    , "2"
+    , "160"
+    , "20"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "158"
+      , "4"
+      , "160"
+      , "20"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+       , "158"
+       , "6"
+       , "159"
+       , "43"
+       )
+       ; (s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "158"
+          , "6"
+          , "158"
+          , "43"
+          )
           ; \ DoubleQuoted(parts) -> Text(parts) \
-          + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "159,6,159,43")
+          + s-step(
+            | "_cellar/xml-front/trans/process/xml-text-tools.str"
+            , "159"
+            , "6"
+            , "159"
+            , "43"
+            )
             ; \ SingleQuoted(parts) -> Text(parts) \))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "160,6,160,20")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "160"
+      , "6"
+      , "160"
+      , "20"
+      )
     ; chardata2string
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-attr-value2string", "157,2,160,20")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "xml-attr-value2string", "157,2,160,20")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-attr-value2string"
+      , "157"
+      , "2"
+      , "160"
+      , "20"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "xml-attr-value2string"
+      , "157"
+      , "2"
+      , "160"
+      , "20"
+      )
       ; fail
 
   chardata2string =
-    s-enter(|"_cellar/xml-front/trans/process/xml-text-tools.str", "chardata2string", "162,2,166,32")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "163,6,166,32")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "163,6,163,17") ; xml-unescape)
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "164,6,166,32")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "164,6,164,16")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+    , "chardata2string"
+    , "162"
+    , "2"
+    , "166"
+    , "32"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "163"
+      , "6"
+      , "166"
+      , "32"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+       , "163"
+       , "6"
+       , "163"
+       , "17"
+       )
+       ; xml-unescape)
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "164"
+      , "6"
+      , "166"
+      , "32"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+       , "164"
+       , "6"
+       , "164"
+       , "16"
+       )
        ; ?Text(
-            <s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "164,13,164,14") ; id>
+            <s-step(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "164"
+             , "13"
+             , "164"
+             , "14"
+             )
+             ; id>
           ))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,6,166,32")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,6,165,46")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "165"
+      , "6"
+      , "166"
+      , "32"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+       , "165"
+       , "6"
+       , "165"
+       , "46"
+       )
        ; map(
-           s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,10,165,45")
-           ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,10,165,23")
+           s-step(
+           | "_cellar/xml-front/trans/process/xml-text-tools.str"
+           , "165"
+           , "10"
+           , "165"
+           , "45"
+           )
+           ; (s-step(
+              | "_cellar/xml-front/trans/process/xml-text-tools.str"
+              , "165"
+              , "10"
+              , "165"
+              , "23"
+              )
               ; ?Literal(
-                   <s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,20,165,21") ; id>
+                   <s-step(
+                    | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                    , "165"
+                    , "20"
+                    , "165"
+                    , "21"
+                    )
+                    ; id>
                  )
-              + s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,27,165,45")
+              + s-step(
+                | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                , "165"
+                , "27"
+                , "165"
+                , "45"
+                )
                 ; ?CDATASection(
-                     <s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "165,42,165,43") ; id>
+                     <s-step(
+                      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+                      , "165"
+                      , "42"
+                      , "165"
+                      , "43"
+                      )
+                      ; id>
                    ))
          ))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "166,7,166,31")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "166,7,166,13")
-       ; ?[<s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "166,10,166,11") ; id>]
-       <+ s-step(|"_cellar/xml-front/trans/process/xml-text-tools.str", "166,18,166,31") ; concat-strings)
-    < s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "chardata2string", "162,2,166,32")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-text-tools.str", "chardata2string", "162,2,166,32")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "166"
+      , "7"
+      , "166"
+      , "31"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-text-tools.str"
+       , "166"
+       , "7"
+       , "166"
+       , "13"
+       )
+       ; ?[ <s-step(
+             | "_cellar/xml-front/trans/process/xml-text-tools.str"
+             , "166"
+             , "10"
+             , "166"
+             , "11"
+             )
+             ; id>
+          ]
+       <+ s-step(
+          | "_cellar/xml-front/trans/process/xml-text-tools.str"
+          , "166"
+          , "18"
+          , "166"
+          , "31"
+          )
+          ; concat-strings)
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "chardata2string"
+      , "162"
+      , "2"
+      , "166"
+      , "32"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-text-tools.str"
+      , "chardata2string"
+      , "162"
+      , "2"
+      , "166"
+      , "32"
+      )
       ; fail

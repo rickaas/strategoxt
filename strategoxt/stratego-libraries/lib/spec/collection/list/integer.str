@@ -11,253 +11,1207 @@ imports
 
 strategies
   sum =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "sum", "17,2,17,21")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "17,8,17,21")
-    ; foldr(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "17,14,17,15")
-        ; !0
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "17,18,17,20") ; add
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "sum"
+    , "17"
+    , "2"
+    , "17"
+    , "21"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "17"
+      , "8"
+      , "17"
+      , "21"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "sum", "17,2,17,21")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "sum", "17,2,17,21")
+    ; foldr(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "17"
+        , "14"
+        , "17"
+        , "15"
+        )
+        ; !0
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "17"
+        , "18"
+        , "17"
+        , "20"
+        )
+        ; add
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "sum"
+      , "17"
+      , "2"
+      , "17"
+      , "21"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "sum"
+      , "17"
+      , "2"
+      , "17"
+      , "21"
+      )
       ; fail
 
   average =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "average", "26,2,26,34")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "26,12,26,34")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "26,12,26,29")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "average"
+    , "26"
+    , "2"
+    , "26"
+    , "34"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "26"
+      , "12"
+      , "26"
+      , "34"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "26"
+       , "12"
+       , "26"
+       , "29"
+       )
        ; split(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "26,18,26,20") ; sum
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "26,23,26,28") ; length
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "26"
+           , "18"
+           , "26"
+           , "20"
+           )
+           ; sum
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "26"
+           , "23"
+           , "26"
+           , "28"
+           )
+           ; length
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "26,32,26,34")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "26"
+      , "32"
+      , "26"
+      , "34"
+      )
     ; div
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "average", "26,2,26,34")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "average", "26,2,26,34")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "average"
+      , "26"
+      , "2"
+      , "26"
+      , "34"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "average"
+      , "26"
+      , "2"
+      , "26"
+      , "34"
+      )
       ; fail
 
   list-min =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-min", "33,2,33,27")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "33,13,33,27")
-    ; list-accum(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "33,24,33,26") ; min
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "list-min"
+    , "33"
+    , "2"
+    , "33"
+    , "27"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "33"
+      , "13"
+      , "33"
+      , "27"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-min", "33,2,33,27")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-min", "33,2,33,27")
+    ; list-accum(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "33"
+        , "24"
+        , "33"
+        , "26"
+        )
+        ; min
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "list-min"
+      , "33"
+      , "2"
+      , "33"
+      , "27"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "list-min"
+      , "33"
+      , "2"
+      , "33"
+      , "27"
+      )
       ; fail
 
   list-max =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-max", "40,2,40,27")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "40,13,40,27")
-    ; list-accum(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "40,24,40,26") ; max
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "list-max"
+    , "40"
+    , "2"
+    , "40"
+    , "27"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "40"
+      , "13"
+      , "40"
+      , "27"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-max", "40,2,40,27")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-max", "40,2,40,27")
+    ; list-accum(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "40"
+        , "24"
+        , "40"
+        , "26"
+        )
+        ; max
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "list-max"
+      , "40"
+      , "2"
+      , "40"
+      , "27"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "list-max"
+      , "40"
+      , "2"
+      , "40"
+      , "27"
+      )
       ; fail
 
   list-accum(s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-accum", "52,2,52,40")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "52,18,52,40")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "52,18,52,30")
-       ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "52,21,52,22") ; Tl>
-          , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "52,27,52,28") ; Hd>
-          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "52,33,52,40")
-    ; foldl(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "52,39,52,39") ; s
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "list-accum"
+    , "52"
+    , "2"
+    , "52"
+    , "40"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "52"
+      , "18"
+      , "52"
+      , "40"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-accum", "52,2,52,40")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "list-accum", "52,2,52,40")
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "52"
+       , "18"
+       , "52"
+       , "30"
+       )
+       ; !( <s-step(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "52"
+             , "21"
+             , "52"
+             , "22"
+             )
+             ; Tl>
+          , <s-step(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "52"
+             , "27"
+             , "52"
+             , "28"
+             )
+             ; Hd>
+          ))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "52"
+      , "33"
+      , "52"
+      , "40"
+      )
+    ; foldl(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "52"
+        , "39"
+        , "52"
+        , "39"
+        )
+        ; s
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "list-accum"
+      , "52"
+      , "2"
+      , "52"
+      , "40"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "list-accum"
+      , "52"
+      , "2"
+      , "52"
+      , "40"
+      )
       ; fail
 
   add-lists =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "add-lists", "64,2,64,40")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "64,14,64,40")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "add-lists"
+    , "64"
+    , "2"
+    , "64"
+    , "40"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "64"
+      , "14"
+      , "64"
+      , "40"
+      )
     ; list-accum(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "64,25,64,39")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "64"
+        , "25"
+        , "64"
+        , "39"
+        )
         ; zip(
-            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "64,29,64,38")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "64,29,64,31") ; add
-               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "64,36,64,38")
+            s-step(
+            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+            , "64"
+            , "29"
+            , "64"
+            , "38"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+               , "64"
+               , "29"
+               , "64"
+               , "31"
+               )
+               ; add
+               <+ s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                  , "64"
+                  , "36"
+                  , "64"
+                  , "38"
+                  )
                   ; !"")
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "add-lists", "64,2,64,40")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "add-lists", "64,2,64,40")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "add-lists"
+      , "64"
+      , "2"
+      , "64"
+      , "40"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "add-lists"
+      , "64"
+      , "2"
+      , "64"
+      , "40"
+      )
       ; fail
 
   int-sort =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "int-sort", "73,2,73,32")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "73,13,73,32")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "int-sort"
+    , "73"
+    , "2"
+    , "73"
+    , "32"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "73"
+      , "13"
+      , "73"
+      , "32"
+      )
     ; sort-list(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "73,23,73,31")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "73"
+        , "23"
+        , "73"
+        , "31"
+        )
         ; SortL(
-            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "73,29,73,30") ; gt
+            s-step(
+            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+            , "73"
+            , "29"
+            , "73"
+            , "30"
+            )
+            ; gt
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "int-sort", "73,2,73,32")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "int-sort", "73,2,73,32")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "int-sort"
+      , "73"
+      , "2"
+      , "73"
+      , "32"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "int-sort"
+      , "73"
+      , "2"
+      , "73"
+      , "32"
+      )
       ; fail
 
   is-interval-from =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "is-interval-from", "86,2,92,2")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "87,2,92,2")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "is-interval-from"
+    , "86"
+    , "2"
+    , "92"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "87"
+      , "2"
+      , "92"
+      , "2"
+      )
     ; rec r (
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "88,4,91,28")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "88,4,88,22")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "88"
+        , "4"
+        , "91"
+        , "28"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "88"
+           , "4"
+           , "88"
+           , "22"
+           )
            ; \ (low, []) -> low \
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "89,7,91,28")
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+              , "89"
+              , "7"
+              , "91"
+              , "28"
+              )
               ; {l:
-                  s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "89,11,91,26")
-                  ; \ (low, [x|xs]) -> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "89,30,89,30") ; r> (x, xs)
-                      where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "90,17,91,25")
-                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "90,17,90,33")
-                               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "90,17,90,28")
-                                  ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "90,18,90,20") ; add)> (low, 1)) => l)
-                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "91,17,91,25")
-                            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "91,18,91,19") ; eq)> (x, l) \
+                  s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                  , "89"
+                  , "11"
+                  , "91"
+                  , "26"
+                  )
+                  ; \ (low, [x|xs]) -> <s-step(
+                                        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                                        , "89"
+                                        , "30"
+                                        , "89"
+                                        , "30"
+                                        )
+                                        ; r> (x, xs)
+                      where s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                            , "90"
+                            , "17"
+                            , "91"
+                            , "25"
+                            )
+                            ; (s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                               , "90"
+                               , "17"
+                               , "90"
+                               , "33"
+                               )
+                               ; (s-step(
+                                  | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                                  , "90"
+                                  , "17"
+                                  , "90"
+                                  , "28"
+                                  )
+                                  ; <(s-step(
+                                      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                                      , "90"
+                                      , "18"
+                                      , "90"
+                                      , "20"
+                                      )
+                                      ; add)> (low, 1)) => l)
+                            ; s-step(
+                              | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                              , "91"
+                              , "17"
+                              , "91"
+                              , "25"
+                              )
+                            ; <(s-step(
+                                | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                                , "91"
+                                , "18"
+                                , "91"
+                                , "19"
+                                )
+                                ; eq)> (x, l) \
                 })
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "is-interval-from", "86,2,92,2")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "is-interval-from", "86,2,92,2")
-      ; fail
-
-
-strategies
-  range =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "109,2,109,34")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "109,10,109,34")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "109,10,109,15") ; is-int)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "109,18,109,34")
-    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "109,19,109,23") ; range)> ( 0
-                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "109,31,109,32") ; id>
-                                                                                                                 )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "109,2,109,34")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "109,2,109,34")
-      ; fail
-
-  range =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "122,2,122,36")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "122,10,122,36")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "122,10,122,25")
-       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "122,11,122,16") ; is-int
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "122,19,122,24") ; is-int
-         ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "122,28,122,36")
-    ; range(|1)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "122,2,122,36")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "122,2,122,36")
-      ; fail
-
-
-strategies
-  range(|step) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "141,2,141,48")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "141,17,141,48")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "141,17,141,22") ; is-int)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "141,25,141,48")
-    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "141,26,141,37")
-        ; range(|step))> ( 0
-                         , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "141,45,141,46") ; id>
-                         )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "141,2,141,48")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "141,2,141,48")
-      ; fail
-
-  range(|step) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "157,2,157,59")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,17,157,59")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,17,157,32")
-       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,18,157,23") ; is-int
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,26,157,31") ; is-int
-         ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,35,157,59")
-    ; range(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,41,157,58")
-        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,42,157,44") ; add)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "157,49,157,50") ; id>
-                                                                                                                   , step
-                                                                                                                   )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "is-interval-from"
+      , "86"
+      , "2"
+      , "92"
+      , "2"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "157,2,157,59")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "157,2,157,59")
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "is-interval-from"
+      , "86"
+      , "2"
+      , "92"
+      , "2"
+      )
+      ; fail
+
+
+strategies
+  range =
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "range"
+    , "109"
+    , "2"
+    , "109"
+    , "34"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "109"
+      , "10"
+      , "109"
+      , "34"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "109"
+       , "10"
+       , "109"
+       , "15"
+       )
+       ; is-int)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "109"
+      , "18"
+      , "109"
+      , "34"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "109"
+        , "19"
+        , "109"
+        , "23"
+        )
+        ; range)> ( 0
+                  , <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                     , "109"
+                     , "31"
+                     , "109"
+                     , "32"
+                     )
+                     ; id>
+                  )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "109"
+      , "2"
+      , "109"
+      , "34"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "109"
+      , "2"
+      , "109"
+      , "34"
+      )
+      ; fail
+
+  range =
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "range"
+    , "122"
+    , "2"
+    , "122"
+    , "36"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "122"
+      , "10"
+      , "122"
+      , "36"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "122"
+       , "10"
+       , "122"
+       , "25"
+       )
+       ; ( s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "122"
+           , "11"
+           , "122"
+           , "16"
+           )
+           ; is-int
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "122"
+           , "19"
+           , "122"
+           , "24"
+           )
+           ; is-int
+         ))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "122"
+      , "28"
+      , "122"
+      , "36"
+      )
+    ; range(|1)
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "122"
+      , "2"
+      , "122"
+      , "36"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "122"
+      , "2"
+      , "122"
+      , "36"
+      )
+      ; fail
+
+
+strategies
+  range(|step) =
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "range"
+    , "141"
+    , "2"
+    , "141"
+    , "48"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "141"
+      , "17"
+      , "141"
+      , "48"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "141"
+       , "17"
+       , "141"
+       , "22"
+       )
+       ; is-int)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "141"
+      , "25"
+      , "141"
+      , "48"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "141"
+        , "26"
+        , "141"
+        , "37"
+        )
+        ; range(|step))> ( 0
+                         , <s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                            , "141"
+                            , "45"
+                            , "141"
+                            , "46"
+                            )
+                            ; id>
+                         )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "141"
+      , "2"
+      , "141"
+      , "48"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "141"
+      , "2"
+      , "141"
+      , "48"
+      )
+      ; fail
+
+  range(|step) =
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "range"
+    , "157"
+    , "2"
+    , "157"
+    , "59"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "157"
+      , "17"
+      , "157"
+      , "59"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "157"
+       , "17"
+       , "157"
+       , "32"
+       )
+       ; ( s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "157"
+           , "18"
+           , "157"
+           , "23"
+           )
+           ; is-int
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "157"
+           , "26"
+           , "157"
+           , "31"
+           )
+           ; is-int
+         ))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "157"
+      , "35"
+      , "157"
+      , "59"
+      )
+    ; range(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "157"
+        , "41"
+        , "157"
+        , "58"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+            , "157"
+            , "42"
+            , "157"
+            , "44"
+            )
+            ; add)> ( <s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                       , "157"
+                       , "49"
+                       , "157"
+                       , "50"
+                       )
+                       ; id>
+                    , step
+                    )
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "157"
+      , "2"
+      , "157"
+      , "59"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "157"
+      , "2"
+      , "157"
+      , "59"
+      )
       ; fail
 
 
 strategies
   range(next) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "172,2,172,46")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "172,16,172,46")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "172,16,172,21") ; is-int)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "172,24,172,46")
-    ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "172,25,172,35")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "range"
+    , "172"
+    , "2"
+    , "172"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "172"
+      , "16"
+      , "172"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "172"
+       , "16"
+       , "172"
+       , "21"
+       )
+       ; is-int)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "172"
+      , "24"
+      , "172"
+      , "46"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+        , "172"
+        , "25"
+        , "172"
+        , "35"
+        )
         ; range(
-            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "172,31,172,34") ; next
+            s-step(
+            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+            , "172"
+            , "31"
+            , "172"
+            , "34"
+            )
+            ; next
           ))> ( 0
-              , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "172,43,172,44") ; id>
+              , <s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                 , "172"
+                 , "43"
+                 , "172"
+                 , "44"
+                 )
+                 ; id>
               )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "172,2,172,46")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "172,2,172,46")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "172"
+      , "2"
+      , "172"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "172"
+      , "2"
+      , "172"
+      , "46"
+      )
       ; fail
 
   range(next) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "186,2,186,56")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,16,186,56")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,16,186,49")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,16,186,31")
-          ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,17,186,22") ; is-int
-            , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,25,186,30") ; is-int
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+    , "range"
+    , "186"
+    , "2"
+    , "186"
+    , "56"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "186"
+      , "16"
+      , "186"
+      , "56"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+       , "186"
+       , "16"
+       , "186"
+       , "49"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+          , "186"
+          , "16"
+          , "186"
+          , "31"
+          )
+          ; ( s-step(
+              | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+              , "186"
+              , "17"
+              , "186"
+              , "22"
+              )
+              ; is-int
+            , s-step(
+              | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+              , "186"
+              , "25"
+              , "186"
+              , "30"
+              )
+              ; is-int
             ))
-       ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,34,186,49")
-       ; range-next(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,45,186,48") ; next
+       ; s-step(
+         | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+         , "186"
+         , "34"
+         , "186"
+         , "49"
          )
-       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "186,54,186,56")
+       ; range-next(
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+           , "186"
+           , "45"
+           , "186"
+           , "48"
+           )
+           ; next
+         )
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+          , "186"
+          , "54"
+          , "186"
+          , "56"
+          )
           ; ![])
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "186,2,186,56")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range", "186,2,186,56")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "186"
+      , "2"
+      , "186"
+      , "56"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+      , "range"
+      , "186"
+      , "2"
+      , "186"
+      , "56"
+      )
       ; fail
 
   range-next(inc) :
-    (start, end) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range-next", "189,2,196,22")> [start|tail]
+    (start, end) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                     , "range-next"
+                     , "189"
+                     , "2"
+                     , "196"
+                     , "22"
+                     )> [start|tail]
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range-next", "189,2,196,22")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range-next", "189,2,196,22")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "range-next"
+             , "189"
+             , "2"
+             , "196"
+             , "22"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "191,14,196,22")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "191,14,191,32")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "191,14,191,24")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "191,15,191,17") ; inc)> start) => next)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,14,196,22")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,16,195,18")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,16,193,39")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,17,192,73")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,17,192,43")
-                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,18,192,22") ; lt-lt)> (start, next, end)
-                      + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,47,192,73")
-                        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "192,48,192,52") ; lt-lt)> (end, next, start)))
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "193,16,193,39")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "193,17,193,26")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+          , "191"
+          , "14"
+          , "196"
+          , "22"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "191"
+             , "14"
+             , "191"
+             , "32"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                , "191"
+                , "14"
+                , "191"
+                , "24"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                    , "191"
+                    , "15"
+                    , "191"
+                    , "17"
+                    )
+                    ; inc)> start) => next)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+            , "192"
+            , "14"
+            , "196"
+            , "22"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "192"
+             , "16"
+             , "195"
+             , "18"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                , "192"
+                , "16"
+                , "193"
+                , "39"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                   , "192"
+                   , "17"
+                   , "192"
+                   , "73"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                      , "192"
+                      , "17"
+                      , "192"
+                      , "43"
+                      )
+                      ; <(s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                          , "192"
+                          , "18"
+                          , "192"
+                          , "22"
+                          )
+                          ; lt-lt)> (start, next, end)
+                      + s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                        , "192"
+                        , "47"
+                        , "192"
+                        , "73"
+                        )
+                        ; <(s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                            , "192"
+                            , "48"
+                            , "192"
+                            , "52"
+                            )
+                            ; lt-lt)> (end, next, start)))
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                  , "193"
+                  , "16"
+                  , "193"
+                  , "39"
+                  )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                    , "193"
+                    , "17"
+                    , "193"
+                    , "26"
+                    )
                     ; range(
-                        s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "193,23,193,25") ; inc
+                        s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                        , "193"
+                        , "23"
+                        , "193"
+                        , "25"
+                        )
+                        ; inc
                       ))> (next, end)
-                <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "194,16,195,18")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "194,17,194,73")
-                      ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "194,17,194,43")
-                         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "194,18,194,23") ; lt-leq)> (start, end, next)
-                         + s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "194,47,194,73")
-                           ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "194,48,194,53") ; leq-lt)> (next, end, start)))
-                   ; s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "195,16,195,18")
+                <+ s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                   , "194"
+                   , "16"
+                   , "195"
+                   , "18"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                      , "194"
+                      , "17"
+                      , "194"
+                      , "73"
+                      )
+                      ; (s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                         , "194"
+                         , "17"
+                         , "194"
+                         , "43"
+                         )
+                         ; <(s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                             , "194"
+                             , "18"
+                             , "194"
+                             , "23"
+                             )
+                             ; lt-leq)> (start, end, next)
+                         + s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                           , "194"
+                           , "47"
+                           , "194"
+                           , "73"
+                           )
+                           ; <(s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                               , "194"
+                               , "48"
+                               , "194"
+                               , "53"
+                               )
+                               ; leq-lt)> (next, end, start)))
+                   ; s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                     , "195"
+                     , "16"
+                     , "195"
+                     , "18"
+                     )
                    ; ![])) => tail
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "range-next", "189,2,196,22")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "range-next"
+             , "189"
+             , "2"
+             , "196"
+             , "22"
+             )
              ; fail
 
 
 rules
 
   is-interval :
-    [x|xs] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "is-interval", "209,2,210,41")> ( x
-                                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "210,18,210,33") ; is-interval-from> (x, xs)
-                                                                                                                             )
+    [x|xs] -> <r-exit(
+               | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+               , "is-interval"
+               , "209"
+               , "2"
+               , "210"
+               , "41"
+               )> ( x
+                  , <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+                     , "210"
+                     , "18"
+                     , "210"
+                     , "33"
+                     )
+                     ; is-interval-from> (x, xs)
+                  )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "is-interval", "209,2,210,41")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/integer.str", "is-interval", "209,2,210,41")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/integer.str"
+             , "is-interval"
+             , "209"
+             , "2"
+             , "210"
+             , "41"
+             )
              ; fail

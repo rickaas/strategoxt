@@ -22,192 +22,790 @@ signature
 rules
 
   Eval1 :
-    If(True, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval1", "16,2,16,26")> x
+    If(True, x) -> <r-exit(
+                    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                    , "Eval1"
+                    , "16"
+                    , "2"
+                    , "16"
+                    , "26"
+                    )> x
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval1", "16,2,16,26")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval1", "16,2,16,26")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+             , "Eval1"
+             , "16"
+             , "2"
+             , "16"
+             , "26"
+             )
              ; fail
 
   Eval2 :
-    If(False, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval2", "17,2,17,29")> Skip
+    If(False, x) -> <r-exit(
+                     | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                     , "Eval2"
+                     , "17"
+                     , "2"
+                     , "17"
+                     , "29"
+                     )> Skip
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval2", "17,2,17,29")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval2", "17,2,17,29")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+             , "Eval2"
+             , "17"
+             , "2"
+             , "17"
+             , "29"
+             )
              ; fail
 
   Eval3 :
-    If(True, x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval3", "19,2,19,29")> x
+    If(True, x, y) -> <r-exit(
+                       | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                       , "Eval3"
+                       , "19"
+                       , "2"
+                       , "19"
+                       , "29"
+                       )> x
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval3", "19,2,19,29")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval3", "19,2,19,29")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+             , "Eval3"
+             , "19"
+             , "2"
+             , "19"
+             , "29"
+             )
              ; fail
 
   Eval4 :
-    If(False, x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval4", "20,2,20,29")> y
+    If(False, x, y) -> <r-exit(
+                        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                        , "Eval4"
+                        , "20"
+                        , "2"
+                        , "20"
+                        , "29"
+                        )> y
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval4", "20,2,20,29")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval4", "20,2,20,29")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+             , "Eval4"
+             , "20"
+             , "2"
+             , "20"
+             , "29"
+             )
              ; fail
 
 
 strategies
   Eval =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval", "24,2,24,37")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,9,24,37")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,9,24,13") ; Eval1
-       + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,17,24,37")
-         ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,17,24,21") ; Eval2
-            + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,25,24,37")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,25,24,29") ; Eval3
-                 + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "24,33,24,37") ; Eval4)))
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval", "24,2,24,37")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "Eval", "24,2,24,37")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "Eval"
+    , "24"
+    , "2"
+    , "24"
+    , "37"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "24"
+      , "9"
+      , "24"
+      , "37"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+       , "24"
+       , "9"
+       , "24"
+       , "13"
+       )
+       ; Eval1
+       + s-step(
+         | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+         , "24"
+         , "17"
+         , "24"
+         , "37"
+         )
+         ; (s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+            , "24"
+            , "17"
+            , "24"
+            , "21"
+            )
+            ; Eval2
+            + s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+              , "24"
+              , "25"
+              , "24"
+              , "37"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                 , "24"
+                 , "25"
+                 , "24"
+                 , "29"
+                 )
+                 ; Eval3
+                 + s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                   , "24"
+                   , "33"
+                   , "24"
+                   , "37"
+                   )
+                   ; Eval4)))
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "Eval"
+      , "24"
+      , "2"
+      , "24"
+      , "37"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "Eval"
+      , "24"
+      , "2"
+      , "24"
+      , "37"
+      )
       ; fail
 
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "main", "28,2,36,4")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "29,4,36,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "main"
+    , "28"
+    , "2"
+    , "36"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "29"
+      , "4"
+      , "36"
+      , "4"
+      )
     ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "29,15,29,46")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "29"
+        , "15"
+        , "29"
+        , "46"
+        )
         ; !"overloading-constructors-test"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "30,6,35,15")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "30,6,30,15") ; eval-test1)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "31,6,35,15")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "31,6,31,15") ; eval-test2)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "32,6,35,15")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "32,6,32,15") ; eval-test3)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "33,6,35,15")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "33,6,33,15") ; eval-test4)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "34,6,35,15")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "34,6,34,15") ; eval-test5)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "35,6,35,15")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "30"
+        , "6"
+        , "35"
+        , "15"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+           , "30"
+           , "6"
+           , "30"
+           , "15"
+           )
+           ; eval-test1)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+          , "31"
+          , "6"
+          , "35"
+          , "15"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+           , "31"
+           , "6"
+           , "31"
+           , "15"
+           )
+           ; eval-test2)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+          , "32"
+          , "6"
+          , "35"
+          , "15"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+           , "32"
+           , "6"
+           , "32"
+           , "15"
+           )
+           ; eval-test3)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+          , "33"
+          , "6"
+          , "35"
+          , "15"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+           , "33"
+           , "6"
+           , "33"
+           , "15"
+           )
+           ; eval-test4)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+          , "34"
+          , "6"
+          , "35"
+          , "15"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+           , "34"
+           , "6"
+           , "34"
+           , "15"
+           )
+           ; eval-test5)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+          , "35"
+          , "6"
+          , "35"
+          , "15"
+          )
         ; eval-test6
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "main", "28,2,36,4")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "main", "28,2,36,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "main"
+      , "28"
+      , "2"
+      , "36"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "main"
+      , "28"
+      , "2"
+      , "36"
+      , "4"
+      )
       ; fail
 
   eval-test1 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test1", "38,2,43,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "39,4,43,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "eval-test1"
+    , "38"
+    , "2"
+    , "43"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "39"
+      , "4"
+      , "43"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "39,15,39,27")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "39"
+        , "15"
+        , "39"
+        , "27"
+        )
         ; !"eval-test1"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "40,8,40,11") ; Eval
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "41,8,41,39")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "40"
+        , "8"
+        , "40"
+        , "11"
+        )
+        ; Eval
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "41"
+        , "8"
+        , "41"
+        , "39"
+        )
         ; !If(
              True
            , Assign("x", Var("y"))
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "42,8,42,28")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "42"
+        , "8"
+        , "42"
+        , "28"
+        )
         ; !Assign("x", Var("y"))
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test1", "38,2,43,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test1", "38,2,43,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test1"
+      , "38"
+      , "2"
+      , "43"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test1"
+      , "38"
+      , "2"
+      , "43"
+      , "7"
+      )
       ; fail
 
   eval-test2 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test2", "45,2,50,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "46,4,50,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "eval-test2"
+    , "45"
+    , "2"
+    , "50"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "46"
+      , "4"
+      , "50"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "46,15,46,27")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "46"
+        , "15"
+        , "46"
+        , "27"
+        )
         ; !"eval-test1"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "47,8,47,11") ; Eval
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "48,8,48,40")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "47"
+        , "8"
+        , "47"
+        , "11"
+        )
+        ; Eval
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "48"
+        , "8"
+        , "48"
+        , "40"
+        )
         ; !If(
              False
            , Assign("x", Var("y"))
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "49,8,49,12") ; !Skip
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "49"
+        , "8"
+        , "49"
+        , "12"
+        )
+        ; !Skip
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test2", "45,2,50,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test2", "45,2,50,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test2"
+      , "45"
+      , "2"
+      , "50"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test2"
+      , "45"
+      , "2"
+      , "50"
+      , "7"
+      )
       ; fail
 
   eval-test3 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test3", "52,2,57,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "53,4,57,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "eval-test3"
+    , "52"
+    , "2"
+    , "57"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "53"
+      , "4"
+      , "57"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "53,15,53,27")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "53"
+        , "15"
+        , "53"
+        , "27"
+        )
         ; !"eval-test3"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "54,8,54,11") ; Eval
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "55,8,55,62")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "54"
+        , "8"
+        , "54"
+        , "11"
+        )
+        ; Eval
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "55"
+        , "8"
+        , "55"
+        , "62"
+        )
         ; !If(
              True
            , Assign("x", Var("y"))
            , Assign("a", Var("b"))
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "56,8,56,28")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "56"
+        , "8"
+        , "56"
+        , "28"
+        )
         ; !Assign("x", Var("y"))
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test3", "52,2,57,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test3", "52,2,57,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test3"
+      , "52"
+      , "2"
+      , "57"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test3"
+      , "52"
+      , "2"
+      , "57"
+      , "7"
+      )
       ; fail
 
   eval-test4 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test4", "59,2,64,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "60,4,64,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "eval-test4"
+    , "59"
+    , "2"
+    , "64"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "60"
+      , "4"
+      , "64"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "60,15,60,27")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "60"
+        , "15"
+        , "60"
+        , "27"
+        )
         ; !"eval-test4"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "61,8,61,11") ; Eval
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "62,8,62,63")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "61"
+        , "8"
+        , "61"
+        , "11"
+        )
+        ; Eval
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "62"
+        , "8"
+        , "62"
+        , "63"
+        )
         ; !If(
              False
            , Assign("x", Var("y"))
            , Assign("a", Var("b"))
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "63,8,63,29")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "63"
+        , "8"
+        , "63"
+        , "29"
+        )
         ; !Assign("a", Var("b"))
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test4", "59,2,64,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test4", "59,2,64,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test4"
+      , "59"
+      , "2"
+      , "64"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test4"
+      , "59"
+      , "2"
+      , "64"
+      , "7"
+      )
       ; fail
 
   eval-test5 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test5", "66,2,71,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "67,4,71,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "eval-test5"
+    , "66"
+    , "2"
+    , "71"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "67"
+      , "4"
+      , "71"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "67,15,67,27")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "67"
+        , "15"
+        , "67"
+        , "27"
+        )
         ; !"eval-test5"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,8,68,36")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,8,68,12") ; Eval3
-           + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,16,68,36")
-             ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,16,68,20") ; Eval4
-                + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,24,68,36")
-                  ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,24,68,28") ; Eval1
-                     + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "68,32,68,36") ; Eval2)))
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "69,8,69,39")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "68"
+        , "8"
+        , "68"
+        , "36"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+           , "68"
+           , "8"
+           , "68"
+           , "12"
+           )
+           ; Eval3
+           + s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+             , "68"
+             , "16"
+             , "68"
+             , "36"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                , "68"
+                , "16"
+                , "68"
+                , "20"
+                )
+                ; Eval4
+                + s-step(
+                  | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                  , "68"
+                  , "24"
+                  , "68"
+                  , "36"
+                  )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                     , "68"
+                     , "24"
+                     , "68"
+                     , "28"
+                     )
+                     ; Eval1
+                     + s-step(
+                       | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                       , "68"
+                       , "32"
+                       , "68"
+                       , "36"
+                       )
+                       ; Eval2)))
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "69"
+        , "8"
+        , "69"
+        , "39"
+        )
         ; !If(
              True
            , Assign("x", Var("y"))
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "70,8,70,28")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "70"
+        , "8"
+        , "70"
+        , "28"
+        )
         ; !Assign("x", Var("y"))
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test5", "66,2,71,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test5", "66,2,71,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test5"
+      , "66"
+      , "2"
+      , "71"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test5"
+      , "66"
+      , "2"
+      , "71"
+      , "7"
+      )
       ; fail
 
   eval-test6 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test6", "73,2,78,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "74,4,78,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+    , "eval-test6"
+    , "73"
+    , "2"
+    , "78"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "74"
+      , "4"
+      , "78"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "74,15,74,27")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "74"
+        , "15"
+        , "74"
+        , "27"
+        )
         ; !"eval-test6"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "75,8,75,25")
-        ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "75,12,75,24")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "75,12,75,16") ; Eval3
-                 + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "75,20,75,24") ; Eval4))
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "76,8,76,40")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "75"
+        , "8"
+        , "75"
+        , "25"
+        )
+        ; not(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+              , "75"
+              , "12"
+              , "75"
+              , "24"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                 , "75"
+                 , "12"
+                 , "75"
+                 , "16"
+                 )
+                 ; Eval3
+                 + s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+                   , "75"
+                   , "20"
+                   , "75"
+                   , "24"
+                   )
+                   ; Eval4))
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "76"
+        , "8"
+        , "76"
+        , "40"
+        )
         ; !If(
              False
            , Assign("x", Var("y"))
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "77,8,77,40")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+        , "77"
+        , "8"
+        , "77"
+        , "40"
+        )
         ; !If(
              False
            , Assign("x", Var("y"))
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test6", "73,2,78,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str", "eval-test6", "73,2,78,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test6"
+      , "73"
+      , "2"
+      , "78"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overloading-constructors-test.str"
+      , "eval-test6"
+      , "73"
+      , "2"
+      , "78"
+      , "7"
+      )
       ; fail

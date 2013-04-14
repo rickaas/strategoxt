@@ -6,221 +6,1070 @@ imports
 
 strategies
   times =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "times", "7,2,8,20")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "8,4,8,20")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "times"
+    , "7"
+    , "2"
+    , "8"
+    , "20"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "8"
+      , "4"
+      , "8"
+      , "20"
+      )
     ; prim("SSL_times")
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "times", "7,2,8,20")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "times", "7,2,8,20")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "times"
+      , "7"
+      , "2"
+      , "8"
+      , "20"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "times"
+      , "7"
+      , "2"
+      , "8"
+      , "20"
+      )
       ; fail
 
   ticks-to-seconds =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "ticks-to-seconds", "10,2,11,36")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "11,4,11,36")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "11,4,11,5") ; ?t)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "11,8,11,36")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "ticks-to-seconds"
+    , "10"
+    , "2"
+    , "11"
+    , "36"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "11"
+      , "4"
+      , "11"
+      , "36"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "11"
+       , "4"
+       , "11"
+       , "5"
+       )
+       ; ?t)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "11"
+      , "8"
+      , "11"
+      , "36"
+      )
     ; prim("SSL_TicksToSeconds", t)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "ticks-to-seconds", "10,2,11,36")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "ticks-to-seconds", "10,2,11,36")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "ticks-to-seconds"
+      , "10"
+      , "2"
+      , "11"
+      , "36"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "ticks-to-seconds"
+      , "10"
+      , "2"
+      , "11"
+      , "36"
+      )
       ; fail
 
   diff-times :
     ( (a1, b1, c1, d1)
     , (a2, b2, c2, d2)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "diff-times", "13,2,15,67")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "15,6,15,9") ; subt> (a1, a2)
-                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "15,22,15,25") ; subt> (b1, b2)
-                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "15,38,15,41") ; subt> (c1, c2)
-                                                                                                               , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "15,54,15,57") ; subt> (d1, d2)
-                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+          , "diff-times"
+          , "13"
+          , "2"
+          , "15"
+          , "67"
+          )> ( <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "15"
+                , "6"
+                , "15"
+                , "9"
+                )
+                ; subt> (a1, a2)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "15"
+                , "22"
+                , "15"
+                , "25"
+                )
+                ; subt> (b1, b2)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "15"
+                , "38"
+                , "15"
+                , "41"
+                )
+                ; subt> (c1, c2)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "15"
+                , "54"
+                , "15"
+                , "57"
+                )
+                ; subt> (d1, d2)
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "diff-times", "13,2,15,67")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "diff-times", "13,2,15,67")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "diff-times"
+             , "13"
+             , "2"
+             , "15"
+             , "67"
+             )
              ; fail
 
   add-times :
     ( (a1, b1, c1, d1)
     , (a2, b2, c2, d2)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "add-times", "17,2,19,63")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "19,6,19,8") ; add> (a1, a2)
-                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "19,21,19,23") ; add> (b1, b2)
-                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "19,36,19,38") ; add> (c1, c2)
-                                                                                                              , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "19,51,19,53") ; add> (d1, d2)
-                                                                                                              )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+          , "add-times"
+          , "17"
+          , "2"
+          , "19"
+          , "63"
+          )> ( <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "19"
+                , "6"
+                , "19"
+                , "8"
+                )
+                ; add> (a1, a2)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "19"
+                , "21"
+                , "19"
+                , "23"
+                )
+                ; add> (b1, b2)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "19"
+                , "36"
+                , "19"
+                , "38"
+                )
+                ; add> (c1, c2)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "19"
+                , "51"
+                , "19"
+                , "53"
+                )
+                ; add> (d1, d2)
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "add-times", "17,2,19,63")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "add-times", "17,2,19,63")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "add-times"
+             , "17"
+             , "2"
+             , "19"
+             , "63"
+             )
              ; fail
 
   times-to-seconds :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "times-to-seconds", "21,2,23,91")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "23,6,23,21") ; ticks-to-seconds> a
-                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "23,28,23,43") ; ticks-to-seconds> b
-                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "23,50,23,65") ; ticks-to-seconds> c
-                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "23,72,23,87") ; ticks-to-seconds> d
-                                                                                                                                )
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "times-to-seconds"
+                     , "21"
+                     , "2"
+                     , "23"
+                     , "91"
+                     )> ( <s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                           , "23"
+                           , "6"
+                           , "23"
+                           , "21"
+                           )
+                           ; ticks-to-seconds> a
+                        , <s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                           , "23"
+                           , "28"
+                           , "23"
+                           , "43"
+                           )
+                           ; ticks-to-seconds> b
+                        , <s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                           , "23"
+                           , "50"
+                           , "23"
+                           , "65"
+                           )
+                           ; ticks-to-seconds> c
+                        , <s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                           , "23"
+                           , "72"
+                           , "23"
+                           , "87"
+                           )
+                           ; ticks-to-seconds> d
+                        )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "times-to-seconds", "21,2,23,91")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "times-to-seconds", "21,2,23,91")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "times-to-seconds"
+             , "21"
+             , "2"
+             , "23"
+             , "91"
+             )
              ; fail
 
   user-time :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "user-time", "25,2,26,20")> a
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "user-time"
+                     , "25"
+                     , "2"
+                     , "26"
+                     , "20"
+                     )> a
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "user-time", "25,2,26,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "user-time", "25,2,26,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "user-time"
+             , "25"
+             , "2"
+             , "26"
+             , "20"
+             )
              ; fail
 
   system-time :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "system-time", "28,2,29,20")> b
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "system-time"
+                     , "28"
+                     , "2"
+                     , "29"
+                     , "20"
+                     )> b
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "system-time", "28,2,29,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "system-time", "28,2,29,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "system-time"
+             , "28"
+             , "2"
+             , "29"
+             , "20"
+             )
              ; fail
 
   cuser-time :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "cuser-time", "31,2,32,20")> c
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "cuser-time"
+                     , "31"
+                     , "2"
+                     , "32"
+                     , "20"
+                     )> c
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "cuser-time", "31,2,32,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "cuser-time", "31,2,32,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "cuser-time"
+             , "31"
+             , "2"
+             , "32"
+             , "20"
+             )
              ; fail
 
   csystem-time :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "csystem-time", "34,2,35,20")> d
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "csystem-time"
+                     , "34"
+                     , "2"
+                     , "35"
+                     , "20"
+                     )> d
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "csystem-time", "34,2,35,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "csystem-time", "34,2,35,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "csystem-time"
+             , "34"
+             , "2"
+             , "35"
+             , "20"
+             )
              ; fail
 
   self-children-user-time :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "self-children-user-time", "37,2,38,30")> <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "38,21,38,23") ; add> (a, c)
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "self-children-user-time"
+                     , "37"
+                     , "2"
+                     , "38"
+                     , "30"
+                     )> <s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                         , "38"
+                         , "21"
+                         , "38"
+                         , "23"
+                         )
+                         ; add> (a, c)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "self-children-user-time", "37,2,38,30")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "self-children-user-time", "37,2,38,30")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "self-children-user-time"
+             , "37"
+             , "2"
+             , "38"
+             , "30"
+             )
              ; fail
 
   self-children-sys-time :
-    (a, b, c, d) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "self-children-sys-time", "40,2,41,30")> <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "41,21,41,23") ; add> (b, d)
+    (a, b, c, d) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "self-children-sys-time"
+                     , "40"
+                     , "2"
+                     , "41"
+                     , "30"
+                     )> <s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                         , "41"
+                         , "21"
+                         , "41"
+                         , "23"
+                         )
+                         ; add> (b, d)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "self-children-sys-time", "40,2,41,30")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "self-children-sys-time", "40,2,41,30")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "self-children-sys-time"
+             , "40"
+             , "2"
+             , "41"
+             , "30"
+             )
              ; fail
 
   run-time =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "run-time", "46,2,47,42")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,4,47,42")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,4,47,8") ; times)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,11,47,42")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,11,47,24")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "run-time"
+    , "46"
+    , "2"
+    , "47"
+    , "42"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "47"
+      , "4"
+      , "47"
+      , "42"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "47"
+       , "4"
+       , "47"
+       , "8"
+       )
+       ; times)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "47"
+      , "11"
+      , "47"
+      , "42"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "47"
+       , "11"
+       , "47"
+       , "24"
+       )
        ; crush(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,17,47,18")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+           , "47"
+           , "17"
+           , "47"
+           , "18"
+           )
            ; !0
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,21,47,23") ; add
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+           , "47"
+           , "21"
+           , "47"
+           , "23"
+           )
+           ; add
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "47,27,47,42")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "47"
+      , "27"
+      , "47"
+      , "42"
+      )
     ; ticks-to-seconds
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "run-time", "46,2,47,42")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "run-time", "46,2,47,42")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "run-time"
+      , "46"
+      , "2"
+      , "47"
+      , "42"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "run-time"
+      , "46"
+      , "2"
+      , "47"
+      , "42"
+      )
       ; fail
 
   report-run-time =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "report-run-time", "53,2,56,6")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "54,4,56,6")
-    ; if s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "54,7,54,43")
-         ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "54,8,54,10") ; geq)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "54,14,54,23") ; get-config> "--statistics"
-                                                                                                           , 1
-                                                                                                           ) then
-        s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "55,6,55,69")
-        ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "55,7,55,14") ; fprintnl)> ( stderr()
-                                                                                                               , [ <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "55,30,55,35") ; whoami> ()
-                                                                                                                 , " ("
-                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "55,49,55,56") ; run-time>
-                                                                                                                 , " secs)"
-                                                                                                                 ]
-                                                                                                               )
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "report-run-time"
+    , "53"
+    , "2"
+    , "56"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "54"
+      , "4"
+      , "56"
+      , "6"
+      )
+    ; if s-step(
+         | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+         , "54"
+         , "7"
+         , "54"
+         , "43"
+         )
+         ; <(s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "54"
+             , "8"
+             , "54"
+             , "10"
+             )
+             ; geq)> ( <s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                        , "54"
+                        , "14"
+                        , "54"
+                        , "23"
+                        )
+                        ; get-config> "--statistics"
+                     , 1
+                     ) then
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+        , "55"
+        , "6"
+        , "55"
+        , "69"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+            , "55"
+            , "7"
+            , "55"
+            , "14"
+            )
+            ; fprintnl)> ( stderr()
+                         , [ <s-step(
+                              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                              , "55"
+                              , "30"
+                              , "55"
+                              , "35"
+                              )
+                              ; whoami> ()
+                           , " ("
+                           , <s-step(
+                              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                              , "55"
+                              , "49"
+                              , "55"
+                              , "56"
+                              )
+                              ; run-time>
+                           , " secs)"
+                           ]
+                         )
       end
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "report-run-time", "53,2,56,6")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "report-run-time", "53,2,56,6")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "report-run-time"
+      , "53"
+      , "2"
+      , "56"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "report-run-time"
+      , "53"
+      , "2"
+      , "56"
+      , "6"
+      )
       ; fail
 
   profile(s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile", "58,2,61,61")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "59,4,61,61")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "59,4,59,24")
-       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "59,10,59,23")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "59,10,59,14") ; times) => start))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "60,6,61,61")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "60,6,60,6") ; s)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,6,61,61")
-    ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,9,61,10") ; id>
-       , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,15,61,59")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,15,61,43")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,16,61,25") ; diff-times)> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,30,61,34") ; times>
-                                                                                                                       , start
-                                                                                                                       ))
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,46,61,59")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "profile"
+    , "58"
+    , "2"
+    , "61"
+    , "61"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "59"
+      , "4"
+      , "61"
+      , "61"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "59"
+       , "4"
+       , "59"
+       , "24"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+               , "59"
+               , "10"
+               , "59"
+               , "23"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                  , "59"
+                  , "10"
+                  , "59"
+                  , "14"
+                  )
+                  ; times) => start))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "60"
+      , "6"
+      , "61"
+      , "61"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "60"
+       , "6"
+       , "60"
+       , "6"
+       )
+       ; s)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "61"
+      , "6"
+      , "61"
+      , "61"
+      )
+    ; !( <s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+          , "61"
+          , "9"
+          , "61"
+          , "10"
+          )
+          ; id>
+       , <s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+          , "61"
+          , "15"
+          , "61"
+          , "59"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+             , "61"
+             , "15"
+             , "61"
+             , "43"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                 , "61"
+                 , "16"
+                 , "61"
+                 , "25"
+                 )
+                 ; diff-times)> ( <s-step(
+                                   | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                   , "61"
+                                   , "30"
+                                   , "61"
+                                   , "34"
+                                   )
+                                   ; times>
+                                , start
+                                ))
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+            , "61"
+            , "46"
+            , "61"
+            , "59"
+            )
           ; crush(
-              s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,52,61,53")
+              s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+              , "61"
+              , "52"
+              , "61"
+              , "53"
+              )
               ; !0
-            , s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "61,56,61,58") ; add
+            , s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+              , "61"
+              , "56"
+              , "61"
+              , "58"
+              )
+              ; add
             )>
        )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile", "58,2,61,61")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile", "58,2,61,61")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "profile"
+      , "58"
+      , "2"
+      , "61"
+      , "61"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "profile"
+      , "58"
+      , "2"
+      , "61"
+      , "61"
+      )
       ; fail
 
   profile(msg, s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile", "63,2,72,6")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "64,4,72,6")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "64,4,64,24")
-       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "64,10,64,23")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "64,10,64,14") ; times) => start))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "65,6,72,6")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "65,6,65,6") ; s)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "66,6,72,6")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "67,8,71,33")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "67,9,71,15")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "67,9,67,18") ; diff-times)
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "68,11,71,15")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "68,12,68,17") ; fprint)> ( stderr()
-                                                                                                                      , [ <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "68,33,68,35") ; msg>
-                                                                                                                        , " user "
-                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "69,42,69,82")
-                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "69,42,69,64") ; self-children-user-time)
-                                                                                                                           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "69,67,69,82")
-                                                                                                                           ; ticks-to-seconds>
-                                                                                                                        , " system "
-                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "70,44,70,83")
-                                                                                                                           ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "70,44,70,65") ; self-children-sys-time)
-                                                                                                                           ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "70,68,70,83")
-                                                                                                                           ; ticks-to-seconds>
-                                                                                                                        , "\n"
-                                                                                                                        ]
-                                                                                                                      ))> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "71,20,71,24") ; times>
-                                                                                                                          , start
-                                                                                                                          ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile", "63,2,72,6")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile", "63,2,72,6")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "profile"
+    , "63"
+    , "2"
+    , "72"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "64"
+      , "4"
+      , "72"
+      , "6"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "64"
+       , "4"
+       , "64"
+       , "24"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+               , "64"
+               , "10"
+               , "64"
+               , "23"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                  , "64"
+                  , "10"
+                  , "64"
+                  , "14"
+                  )
+                  ; times) => start))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "65"
+      , "6"
+      , "72"
+      , "6"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "65"
+       , "6"
+       , "65"
+       , "6"
+       )
+       ; s)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "66"
+      , "6"
+      , "72"
+      , "6"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+            , "67"
+            , "8"
+            , "71"
+            , "33"
+            )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                , "67"
+                , "9"
+                , "71"
+                , "15"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                   , "67"
+                   , "9"
+                   , "67"
+                   , "18"
+                   )
+                   ; diff-times)
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                  , "68"
+                  , "11"
+                  , "71"
+                  , "15"
+                  )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                    , "68"
+                    , "12"
+                    , "68"
+                    , "17"
+                    )
+                    ; fprint)> ( stderr()
+                               , [ <s-step(
+                                    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                    , "68"
+                                    , "33"
+                                    , "68"
+                                    , "35"
+                                    )
+                                    ; msg>
+                                 , " user "
+                                 , <s-step(
+                                    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                    , "69"
+                                    , "42"
+                                    , "69"
+                                    , "82"
+                                    )
+                                    ; (s-step(
+                                       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                       , "69"
+                                       , "42"
+                                       , "69"
+                                       , "64"
+                                       )
+                                       ; self-children-user-time)
+                                    ; s-step(
+                                      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                      , "69"
+                                      , "67"
+                                      , "69"
+                                      , "82"
+                                      )
+                                    ; ticks-to-seconds>
+                                 , " system "
+                                 , <s-step(
+                                    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                    , "70"
+                                    , "44"
+                                    , "70"
+                                    , "83"
+                                    )
+                                    ; (s-step(
+                                       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                       , "70"
+                                       , "44"
+                                       , "70"
+                                       , "65"
+                                       )
+                                       ; self-children-sys-time)
+                                    ; s-step(
+                                      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                      , "70"
+                                      , "68"
+                                      , "70"
+                                      , "83"
+                                      )
+                                    ; ticks-to-seconds>
+                                 , "\n"
+                                 ]
+                               ))> ( <s-step(
+                                      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                                      , "71"
+                                      , "20"
+                                      , "71"
+                                      , "24"
+                                      )
+                                      ; times>
+                                   , start
+                                   ))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "profile"
+      , "63"
+      , "2"
+      , "72"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "profile"
+      , "63"
+      , "2"
+      , "72"
+      , "6"
+      )
       ; fail
 
   profile'(msg, s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile'", "74,2,83,6")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "75,4,83,6")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "75,4,75,24")
-       ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "75,10,75,23")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "75,10,75,14") ; times) => start))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "76,6,83,6")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "76,6,76,6") ; s)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "77,6,83,6")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "78,1,82,12")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "78,1,78,17")
-               ; !( <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "78,4,78,8") ; times>
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+    , "profile'"
+    , "74"
+    , "2"
+    , "83"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "75"
+      , "4"
+      , "83"
+      , "6"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "75"
+       , "4"
+       , "75"
+       , "24"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+               , "75"
+               , "10"
+               , "75"
+               , "23"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                  , "75"
+                  , "10"
+                  , "75"
+                  , "14"
+                  )
+                  ; times) => start))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "76"
+      , "6"
+      , "83"
+      , "6"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+       , "76"
+       , "6"
+       , "76"
+       , "6"
+       )
+       ; s)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "77"
+      , "6"
+      , "83"
+      , "6"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+            , "78"
+            , "1"
+            , "82"
+            , "12"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+               , "78"
+               , "1"
+               , "78"
+               , "17"
+               )
+               ; !( <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "78"
+                     , "4"
+                     , "78"
+                     , "8"
+                     )
+                     ; times>
                   , start
                   ))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "79,10,82,12")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "79,10,79,19") ; diff-times)
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "80,10,82,12")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "80,10,81,68")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+              , "79"
+              , "10"
+              , "82"
+              , "12"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+               , "79"
+               , "10"
+               , "79"
+               , "19"
+               )
+               ; diff-times)
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+              , "80"
+              , "10"
+              , "82"
+              , "12"
+              )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+               , "80"
+               , "10"
+               , "81"
+               , "68"
+               )
                ; ![ " user "
-                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "80,26,80,66")
-                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "80,26,80,48") ; self-children-user-time)
-                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "80,51,80,66")
+                  , <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "80"
+                     , "26"
+                     , "80"
+                     , "66"
+                     )
+                     ; (s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                        , "80"
+                        , "26"
+                        , "80"
+                        , "48"
+                        )
+                        ; self-children-user-time)
+                     ; s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                       , "80"
+                       , "51"
+                       , "80"
+                       , "66"
+                       )
                      ; ticks-to-seconds>
                   , " system "
-                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "81,26,81,66")
-                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "81,26,81,47") ; self-children-sys-time)
-                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "81,51,81,66")
+                  , <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                     , "81"
+                     , "26"
+                     , "81"
+                     , "66"
+                     )
+                     ; (s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                        , "81"
+                        , "26"
+                        , "81"
+                        , "47"
+                        )
+                        ; self-children-sys-time)
+                     ; s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+                       , "81"
+                       , "51"
+                       , "81"
+                       , "66"
+                       )
                      ; ticks-to-seconds>
                   ])
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "82,10,82,12")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+              , "82"
+              , "10"
+              , "82"
+              , "12"
+              )
             ; msg)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile'", "74,2,83,6")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/time.str", "profile'", "74,2,83,6")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "profile'"
+      , "74"
+      , "2"
+      , "83"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/time.str"
+      , "profile'"
+      , "74"
+      , "2"
+      , "83"
+      , "6"
+      )
       ; fail

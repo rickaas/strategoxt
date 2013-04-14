@@ -10,11 +10,45 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "main", "6,2,6,28")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "6,9,6,28")
-    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "6,10,6,13") ; rewr)> f(100, empty)
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "main", "6,2,6,28")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "main", "6,2,6,28")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+    , "main"
+    , "6"
+    , "2"
+    , "6"
+    , "28"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+      , "6"
+      , "9"
+      , "6"
+      , "28"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+        , "6"
+        , "10"
+        , "6"
+        , "13"
+        )
+        ; rewr)> f(100, empty)
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+      , "main"
+      , "6"
+      , "2"
+      , "6"
+      , "28"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+      , "main"
+      , "6"
+      , "2"
+      , "6"
+      , "28"
+      )
       ; fail
 
 
@@ -38,9 +72,23 @@ signature
 rules
 
   I :
-    insert(D, R, empty) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "24,2,24,50")> join(rel(D, R), empty)
+    insert(D, R, empty) -> <r-exit(
+                            | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                            , "I"
+                            , "24"
+                            , "2"
+                            , "24"
+                            , "50"
+                            )> join(rel(D, R), empty)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "24,2,24,50")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "24,2,24,50")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "24"
+             , "2"
+             , "24"
+             , "50"
+             )
              ; fail
 
   I :
@@ -48,110 +96,401 @@ rules
       D
     , R
     , join(rel(D', R'), rest)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "26,2,28,28")> join(
-                                                                                                     rel(D', R')
-                                                                                                   , insert(D, R, rest)
-                                                                                                   )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "I"
+          , "26"
+          , "2"
+          , "28"
+          , "28"
+          )> join(
+               rel(D', R')
+             , insert(D, R, rest)
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "26,2,28,28")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "26,2,28,28")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "26"
+             , "2"
+             , "28"
+             , "28"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "28,12,28,28")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "28,13,28,19")
-              ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "28,17,28,18") ; eq))> (D, D')
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "26,2,28,28")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "28"
+          , "12"
+          , "28"
+          , "28"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+              , "28"
+              , "13"
+              , "28"
+              , "19"
+              )
+              ; not(s-step(
+                    | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                    , "28"
+                    , "17"
+                    , "28"
+                    , "18"
+                    )
+                    ; eq))> (D, D')
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "26"
+             , "2"
+             , "28"
+             , "28"
+             )
              ; fail
 
   I :
     lookup(
       join(rel(D, R), rest)
     , D'
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "30,2,31,23")> R
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "I"
+          , "30"
+          , "2"
+          , "31"
+          , "23"
+          )> R
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "30,2,31,23")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "30,2,31,23")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "30"
+             , "2"
+             , "31"
+             , "23"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "31,12,31,23")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "31,13,31,14") ; eq)> (D, D')
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "30,2,31,23")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "31"
+          , "12"
+          , "31"
+          , "23"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+              , "31"
+              , "13"
+              , "31"
+              , "14"
+              )
+              ; eq)> (D, D')
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "30"
+             , "2"
+             , "31"
+             , "23"
+             )
              ; fail
 
   I :
     lookup(
       join(rel(D, R), rest)
     , D'
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "33,2,34,28")> lookup(rest, D')
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "I"
+          , "33"
+          , "2"
+          , "34"
+          , "28"
+          )> lookup(rest, D')
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "33,2,34,28")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "33,2,34,28")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "33"
+             , "2"
+             , "34"
+             , "28"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "34,12,34,28")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "34,13,34,19")
-              ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "34,17,34,18") ; eq))> (D, D')
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "33,2,34,28")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "34"
+          , "12"
+          , "34"
+          , "28"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+              , "34"
+              , "13"
+              , "34"
+              , "19"
+              )
+              ; not(s-step(
+                    | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                    , "34"
+                    , "17"
+                    , "34"
+                    , "18"
+                    )
+                    ; eq))> (D, D')
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "33"
+             , "2"
+             , "34"
+             , "28"
+             )
              ; fail
 
   I :
-    lookup(empty, D) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "36,2,36,34")> undefined
+    lookup(empty, D) -> <r-exit(
+                         | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                         , "I"
+                         , "36"
+                         , "2"
+                         , "36"
+                         , "34"
+                         )> undefined
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "36,2,36,34")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "36,2,36,34")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "36"
+             , "2"
+             , "36"
+             , "34"
+             )
              ; fail
 
   I :
-    myadd(X, Y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "38,2,38,30")> <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "38,22,38,24") ; add> (X, Y)
+    myadd(X, Y) -> <r-exit(
+                    | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                    , "I"
+                    , "38"
+                    , "2"
+                    , "38"
+                    , "30"
+                    )> <s-step(
+                        | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                        , "38"
+                        , "22"
+                        , "38"
+                        , "24"
+                        )
+                        ; add> (X, Y)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "38,2,38,30")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "38,2,38,30")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "38"
+             , "2"
+             , "38"
+             , "30"
+             )
              ; fail
 
   I :
-    mydiv(X, Y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "40,2,40,30")> <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "40,22,40,24") ; div> (X, Y)
+    mydiv(X, Y) -> <r-exit(
+                    | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                    , "I"
+                    , "40"
+                    , "2"
+                    , "40"
+                    , "30"
+                    )> <s-step(
+                        | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                        , "40"
+                        , "22"
+                        , "40"
+                        , "24"
+                        )
+                        ; div> (X, Y)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "40,2,40,30")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "40,2,40,30")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "40"
+             , "2"
+             , "40"
+             , "30"
+             )
              ; fail
 
   I :
-    f(0, M) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "42,2,42,31")> insert(0, 1, M)
+    f(0, M) -> <r-exit(
+                | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                , "I"
+                , "42"
+                , "2"
+                , "42"
+                , "31"
+                )> insert(0, 1, M)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "42,2,42,31")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "42,2,42,31")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "42"
+             , "2"
+             , "42"
+             , "31"
+             )
              ; fail
 
   I :
-    f(N', M) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "44,2,45,41")> foo(
-                                                                                                            f(N, M)
-                                                                                                          , N'
-                                                                                                          , N
-                                                                                                          , M
-                                                                                                          )
+    f(N', M) -> <r-exit(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                 , "I"
+                 , "44"
+                 , "2"
+                 , "45"
+                 , "41"
+                 )> foo(
+                      f(N, M)
+                    , N'
+                    , N
+                    , M
+                    )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "44,2,45,41")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "44,2,45,41")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "44"
+             , "2"
+             , "45"
+             , "41"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "45,12,45,41")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "45,12,45,21")
-             ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "45,13,45,14") ; gt)> (N', 0))
-          ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "45,24,45,41")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "45,24,45,36")
-             ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "45,25,45,29") ; subti)> (N', 1)) => N
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "44,2,45,41")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+          , "45"
+          , "12"
+          , "45"
+          , "41"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "45"
+             , "12"
+             , "45"
+             , "21"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                 , "45"
+                 , "13"
+                 , "45"
+                 , "14"
+                 )
+                 ; gt)> (N', 0))
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+            , "45"
+            , "24"
+            , "45"
+            , "41"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "45"
+             , "24"
+             , "45"
+             , "36"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                 , "45"
+                 , "25"
+                 , "45"
+                 , "29"
+                 )
+                 ; subti)> (N', 1)) => N
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "44"
+             , "2"
+             , "45"
+             , "41"
+             )
              ; fail
 
   I :
-    foo(I, N', N, M) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "47,2,49,48")> insert(
-                                                                                                                    N'
-                                                                                                                  , myadd(
-                                                                                                                      lookup(I, mydiv(N, 2))
-                                                                                                                    , lookup(I, mydiv(N, 4))
-                                                                                                                    )
-                                                                                                                  , I
-                                                                                                                  )
+    foo(I, N', N, M) -> <r-exit(
+                         | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+                         , "I"
+                         , "47"
+                         , "2"
+                         , "49"
+                         , "48"
+                         )> insert(
+                              N'
+                            , myadd(
+                                lookup(I, mydiv(N, 2))
+                              , lookup(I, mydiv(N, 4))
+                              )
+                            , I
+                            )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "47,2,49,48")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "I", "47,2,49,48")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+             , "I"
+             , "47"
+             , "2"
+             , "49"
+             , "48"
+             )
              ; fail
 
 
 strategies
   rewr =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "rewr", "53,2,53,20")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "53,9,53,20")
-    ; innermost(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "53,19,53,19") ; I
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+    , "rewr"
+    , "53"
+    , "2"
+    , "53"
+    , "20"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+      , "53"
+      , "9"
+      , "53"
+      , "20"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "rewr", "53,2,53,20")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test91.str", "rewr", "53,2,53,20")
+    ; innermost(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+        , "53"
+        , "19"
+        , "53"
+        , "19"
+        )
+        ; I
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+      , "rewr"
+      , "53"
+      , "2"
+      , "53"
+      , "20"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test91.str"
+      , "rewr"
+      , "53"
+      , "2"
+      , "53"
+      , "20"
+      )
       ; fail

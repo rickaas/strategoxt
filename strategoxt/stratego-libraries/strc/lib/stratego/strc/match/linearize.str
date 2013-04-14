@@ -10,13 +10,47 @@ imports
 
 strategies
   make-linear =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "make-linear", "8,2,9,24")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "9,4,9,24")
-    ; choicemap(
-        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "9,14,9,23") ; MakeLinear
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+    , "make-linear"
+    , "8"
+    , "2"
+    , "9"
+    , "24"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+      , "9"
+      , "4"
+      , "9"
+      , "24"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "make-linear", "8,2,9,24")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "make-linear", "8,2,9,24")
+    ; choicemap(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+        , "9"
+        , "14"
+        , "9"
+        , "23"
+        )
+        ; MakeLinear
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+      , "make-linear"
+      , "8"
+      , "2"
+      , "9"
+      , "24"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+      , "make-linear"
+      , "8"
+      , "2"
+      , "9"
+      , "24"
+      )
       ; fail
 
 
@@ -26,93 +60,332 @@ rules
     Scope(
       xs
     , Seq(Match(t), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear'", "13,2,16,38")> Scope(
-                                                                                                                              <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "15,11,15,14") ; conc> (xs, ys)
-                                                                                                                            , Seq(
-                                                                                                                                Match(t')
-                                                                                                                              , Seq(Where(ts), s)
-                                                                                                                              )
-                                                                                                                            )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "MakeLinear'"
+          , "13"
+          , "2"
+          , "16"
+          , "38"
+          )> Scope(
+               <s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                , "15"
+                , "11"
+                , "15"
+                , "14"
+                )
+                ; conc> (xs, ys)
+             , Seq(
+                 Match(t')
+               , Seq(Where(ts), s)
+               )
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear'", "13,2,16,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear'", "13,2,16,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "MakeLinear'"
+             , "13"
+             , "2"
+             , "16"
+             , "38"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "16,10,16,38")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "16,10,16,22")
-             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "16,11,16,19") ; linearize)> t) => (t', ys, ts)
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear'", "13,2,16,38")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "16"
+          , "10"
+          , "16"
+          , "38"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "16"
+             , "10"
+             , "16"
+             , "22"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                 , "16"
+                 , "11"
+                 , "16"
+                 , "19"
+                 )
+                 ; linearize)> t) => (t', ys, ts)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "MakeLinear'"
+             , "13"
+             , "2"
+             , "16"
+             , "38"
+             )
              ; fail
 
   MakeLinear :
-    Match(t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear", "18,2,21,38")> Scope(
-                                                                                                                                    ys
-                                                                                                                                  , Seq(Match(t'), Where(ts))
-                                                                                                                                  )
+    Match(t) -> <r-exit(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                 , "MakeLinear"
+                 , "18"
+                 , "2"
+                 , "21"
+                 , "38"
+                 )> Scope(
+                      ys
+                    , Seq(Match(t'), Where(ts))
+                    )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear", "18,2,21,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear", "18,2,21,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "MakeLinear"
+             , "18"
+             , "2"
+             , "21"
+             , "38"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "21,10,21,38")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "21,10,21,22")
-             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "21,11,21,19") ; linearize)> t) => (t', ys, ts)
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "MakeLinear", "18,2,21,38")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "21"
+          , "10"
+          , "21"
+          , "38"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "21"
+             , "10"
+             , "21"
+             , "22"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                 , "21"
+                 , "11"
+                 , "21"
+                 , "19"
+                 )
+                 ; linearize)> t) => (t', ys, ts)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "MakeLinear"
+             , "18"
+             , "2"
+             , "21"
+             , "38"
+             )
              ; fail
 
   linearize :
-    t -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "linearize", "23,2,26,60")> (t', ys, ts)
+    t -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "linearize"
+          , "23"
+          , "2"
+          , "26"
+          , "60"
+          )> (t', ys, ts)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "linearize", "23,2,26,60")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "linearize", "23,2,26,60")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "linearize"
+             , "23"
+             , "2"
+             , "26"
+             , "60"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "25,10,26,60")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "25,10,26,34")
-             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "25,11,25,39")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "25"
+          , "10"
+          , "26"
+          , "60"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "25"
+             , "10"
+             , "26"
+             , "34"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                 , "25"
+                 , "11"
+                 , "25"
+                 , "39"
+                 )
                  ; thread-alltd(
-                     s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "25,24,25,38")
-                     ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "25,24,25,29") ; NewVar
-                        + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "25,33,25,38") ; OldVar)
+                     s-step(
+                     | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                     , "25"
+                     , "24"
+                     , "25"
+                     , "38"
+                     )
+                     ; (s-step(
+                        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                        , "25"
+                        , "24"
+                        , "25"
+                        , "29"
+                        )
+                        ; NewVar
+                        + s-step(
+                          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                          , "25"
+                          , "33"
+                          , "25"
+                          , "38"
+                          )
+                          ; OldVar)
                    ))> Pair(
                          t
                        , ([], [], Id())
                        )) => Pair(t', (xs, ys, ts))
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "linearize", "23,2,26,60")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "linearize"
+             , "23"
+             , "2"
+             , "26"
+             , "60"
+             )
              ; fail
 
   NewVar :
     Pair(
       Var(x)
     , (xs, ys, ts)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "NewVar", "28,2,30,34")> Pair(
-                                                                                                                         Var(x)
-                                                                                                                       , ([x|xs], ys, ts)
-                                                                                                                       )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "NewVar"
+          , "28"
+          , "2"
+          , "30"
+          , "34"
+          )> Pair(
+               Var(x)
+             , ([x|xs], ys, ts)
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "NewVar", "28,2,30,34")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "NewVar", "28,2,30,34")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "NewVar"
+             , "28"
+             , "2"
+             , "30"
+             , "34"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "30,10,30,34")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "30,11,30,25")
-              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "30,15,30,24") ; is-subterm))> (x, xs)
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "NewVar", "28,2,30,34")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "30"
+          , "10"
+          , "30"
+          , "34"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+              , "30"
+              , "11"
+              , "30"
+              , "25"
+              )
+              ; not(s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                    , "30"
+                    , "15"
+                    , "30"
+                    , "24"
+                    )
+                    ; is-subterm))> (x, xs)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "NewVar"
+             , "28"
+             , "2"
+             , "30"
+             , "34"
+             )
              ; fail
 
   OldVar :
     Pair(
       Var(x)
     , (xs, ys, ts)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "OldVar", "32,2,35,39")> Pair(
-                                                                                                                         Var(x)
-                                                                                                                       , ( xs
-                                                                                                                         , [y|ys]
-                                                                                                                         , Seq(
-                                                                                                                             Assign(Var(x), Var(y))
-                                                                                                                           , ts
-                                                                                                                           )
-                                                                                                                         )
-                                                                                                                       )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "OldVar"
+          , "32"
+          , "2"
+          , "35"
+          , "39"
+          )> Pair(
+               Var(x)
+             , ( xs
+               , [y|ys]
+               , Seq(
+                   Assign(Var(x), Var(y))
+                 , ts
+                 )
+               )
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "OldVar", "32,2,35,39")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "OldVar", "32,2,35,39")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "OldVar"
+             , "32"
+             , "2"
+             , "35"
+             , "39"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "35,10,35,39")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "35,10,35,29")
-             ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "35,11,35,20") ; is-subterm)> (x, xs))
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "35,32,35,39")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "35,32,35,34") ; new) => y
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str", "OldVar", "32,2,35,39")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+          , "35"
+          , "10"
+          , "35"
+          , "39"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "35"
+             , "10"
+             , "35"
+             , "29"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+                 , "35"
+                 , "11"
+                 , "35"
+                 , "20"
+                 )
+                 ; is-subterm)> (x, xs))
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+            , "35"
+            , "32"
+            , "35"
+            , "39"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "35"
+             , "32"
+             , "35"
+             , "34"
+             )
+             ; new) => y
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/match/linearize.str"
+             , "OldVar"
+             , "32"
+             , "2"
+             , "35"
+             , "39"
+             )
              ; fail

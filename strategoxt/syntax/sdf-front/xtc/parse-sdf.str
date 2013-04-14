@@ -12,73 +12,344 @@ imports
 
 strategies
   io-parse-sdf =
-    s-enter(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "io-parse-sdf", "8,2,20,4")
-    ; s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "9,4,20,4")
+    s-enter(
+    | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+    , "io-parse-sdf"
+    , "8"
+    , "2"
+    , "20"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "9"
+      , "4"
+      , "20"
+      , "4"
+      )
     ; xtc-io-wrap(
-        s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "9,16,9,28") ; symbol-option
-      , s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "10,6,19,48")
-        ; (s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "10,6,18,8")
-           ; if s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "10,9,10,36")
-                ; (s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "10,9,10,24") ; get-start-symbol) => "Module" then
-               s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "11,8,11,28") ; xtc-parse-sdf2-module
+        s-step(
+        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+        , "9"
+        , "16"
+        , "9"
+        , "28"
+        )
+        ; symbol-option
+      , s-step(
+        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+        , "10"
+        , "6"
+        , "19"
+        , "48"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+           , "10"
+           , "6"
+           , "18"
+           , "8"
+           )
+           ; if s-step(
+                | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                , "10"
+                , "9"
+                , "10"
+                , "36"
+                )
+                ; (s-step(
+                   | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                   , "10"
+                   , "9"
+                   , "10"
+                   , "24"
+                   )
+                   ; get-start-symbol) => "Module" then
+               s-step(
+               | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+               , "11"
+               , "8"
+               , "11"
+               , "28"
+               )
+               ; xtc-parse-sdf2-module
              else
-               s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "13,8,17,10")
-               ; if s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "13,11,13,42")
-                    ; (s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "13,11,13,26") ; get-start-symbol) => "Definition" then
-                   s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "14,10,14,34") ; xtc-parse-sdf2-definition
+               s-step(
+               | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+               , "13"
+               , "8"
+               , "17"
+               , "10"
+               )
+               ; if s-step(
+                    | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                    , "13"
+                    , "11"
+                    , "13"
+                    , "42"
+                    )
+                    ; (s-step(
+                       | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                       , "13"
+                       , "11"
+                       , "13"
+                       , "26"
+                       )
+                       ; get-start-symbol) => "Definition" then
+                   s-step(
+                   | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                   , "14"
+                   , "10"
+                   , "14"
+                   , "34"
+                   )
+                   ; xtc-parse-sdf2-definition
                  else
-                   s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "16,10,16,67")
+                   s-step(
+                   | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                   , "16"
+                   , "10"
+                   , "16"
+                   , "67"
+                   )
                    ; xtc-sglri(
                      | "Sdf2MoreStartSymbols.tbl"
-                     , <s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "16,50,16,65") ; get-start-symbol>
+                     , <s-step(
+                        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                        , "16"
+                        , "50"
+                        , "16"
+                        , "65"
+                        )
+                        ; get-start-symbol>
                      )
                  end
              end)
-        ; s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "19,6,19,48")
+        ; s-step(
+          | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+          , "19"
+          , "6"
+          , "19"
+          , "48"
+          )
         ; xtc-transform(
-            s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "19,20,19,33")
+            s-step(
+            | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+            , "19"
+            , "20"
+            , "19"
+            , "33"
+            )
             ; !"sdf-desugar"
-          , s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "19,36,19,47") ; pass-verbose
+          , s-step(
+            | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+            , "19"
+            , "36"
+            , "19"
+            , "47"
+            )
+            ; pass-verbose
           )
       )
-    < s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "io-parse-sdf", "8,2,20,4")
-    + s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "io-parse-sdf", "8,2,20,4")
+    < s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "io-parse-sdf"
+      , "8"
+      , "2"
+      , "20"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "io-parse-sdf"
+      , "8"
+      , "2"
+      , "20"
+      , "4"
+      )
       ; fail
 
 
 strategies
   symbol-option =
-    s-enter(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "symbol-option", "24,2,28,4")
-    ; s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "25,4,28,4")
+    s-enter(
+    | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+    , "symbol-option"
+    , "24"
+    , "2"
+    , "28"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "25"
+      , "4"
+      , "28"
+      , "4"
+      )
     ; ArgOption(
-        s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "25,14,25,36")
-        ; (s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "25,14,25,17") ; "-s"
-           + s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "25,21,25,36") ; "--start-symbol")
-      , s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "26,6,26,21") ; set-start-symbol
-      , s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "27,6,27,68")
+        s-step(
+        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+        , "25"
+        , "14"
+        , "25"
+        , "36"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+           , "25"
+           , "14"
+           , "25"
+           , "17"
+           )
+           ; "-s"
+           + s-step(
+             | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+             , "25"
+             , "21"
+             , "25"
+             , "36"
+             )
+             ; "--start-symbol")
+      , s-step(
+        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+        , "26"
+        , "6"
+        , "26"
+        , "21"
+        )
+        ; set-start-symbol
+      , s-step(
+        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+        , "27"
+        , "6"
+        , "27"
+        , "68"
+        )
         ; !"-s|--start-symbol s     Start parsing with symbol s [Module]"
       )
-    < s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "symbol-option", "24,2,28,4")
-    + s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "symbol-option", "24,2,28,4")
+    < s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "symbol-option"
+      , "24"
+      , "2"
+      , "28"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "symbol-option"
+      , "24"
+      , "2"
+      , "28"
+      , "4"
+      )
       ; fail
 
   set-start-symbol =
-    s-enter(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "set-start-symbol", "30,2,31,38")
-    ; s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "31,4,31,38")
-    ; <(s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "31,5,31,14") ; set-config)> ( "start-symbol"
-                                                                                              , <s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "31,35,31,36") ; id>
-                                                                                              )
-    < s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "set-start-symbol", "30,2,31,38")
-    + s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "set-start-symbol", "30,2,31,38")
+    s-enter(
+    | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+    , "set-start-symbol"
+    , "30"
+    , "2"
+    , "31"
+    , "38"
+    )
+    ; s-step(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "31"
+      , "4"
+      , "31"
+      , "38"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+        , "31"
+        , "5"
+        , "31"
+        , "14"
+        )
+        ; set-config)> ( "start-symbol"
+                       , <s-step(
+                          | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+                          , "31"
+                          , "35"
+                          , "31"
+                          , "36"
+                          )
+                          ; id>
+                       )
+    < s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "set-start-symbol"
+      , "30"
+      , "2"
+      , "31"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "set-start-symbol"
+      , "30"
+      , "2"
+      , "31"
+      , "38"
+      )
       ; fail
 
   get-start-symbol =
-    s-enter(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "get-start-symbol", "33,2,34,43")
-    ; s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "34,4,34,43")
-    ; (s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "34,4,34,30")
-       ; <(s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "34,5,34,14") ; get-config)> "start-symbol"
-       <+ s-step(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "34,35,34,43")
+    s-enter(
+    | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+    , "get-start-symbol"
+    , "33"
+    , "2"
+    , "34"
+    , "43"
+    )
+    ; s-step(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "34"
+      , "4"
+      , "34"
+      , "43"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+       , "34"
+       , "4"
+       , "34"
+       , "30"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+           , "34"
+           , "5"
+           , "34"
+           , "14"
+           )
+           ; get-config)> "start-symbol"
+       <+ s-step(
+          | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+          , "34"
+          , "35"
+          , "34"
+          , "43"
+          )
           ; !"Module")
-    < s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "get-start-symbol", "33,2,34,43")
-    + s-exit(|"strategoxt/syntax/sdf-front/xtc/parse-sdf.str", "get-start-symbol", "33,2,34,43")
+    < s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "get-start-symbol"
+      , "33"
+      , "2"
+      , "34"
+      , "43"
+      )
+    + s-exit(
+      | "strategoxt/syntax/sdf-front/xtc/parse-sdf.str"
+      , "get-start-symbol"
+      , "33"
+      , "2"
+      , "34"
+      , "43"
+      )
       ; fail

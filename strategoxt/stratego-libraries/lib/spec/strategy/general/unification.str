@@ -13,260 +13,1188 @@ imports
 
 strategies
   equal =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "13,2,16,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "14,4,16,4")
-    ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "14,8,14,9") ; id
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "14,12,14,13") ; []
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "14,16,14,36")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "14,16,14,21") ; UfIdem
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "14,26,14,36") ; UfDecompose)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+    , "equal"
+    , "13"
+    , "2"
+    , "16"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "14"
+      , "4"
+      , "16"
+      , "4"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "13,2,16,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "13,2,16,4")
+    ; for(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "14"
+        , "8"
+        , "14"
+        , "9"
+        )
+        ; id
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "14"
+        , "12"
+        , "14"
+        , "13"
+        )
+        ; []
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "14"
+        , "16"
+        , "14"
+        , "36"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+           , "14"
+           , "16"
+           , "14"
+           , "21"
+           )
+           ; UfIdem
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "14"
+              , "26"
+              , "14"
+              , "36"
+              )
+              ; UfDecompose)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "equal"
+      , "13"
+      , "2"
+      , "16"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "equal"
+      , "13"
+      , "2"
+      , "16"
+      , "4"
+      )
       ; fail
 
 
 rules
 
   UfIdem :
-    [(x, x)|ps] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfIdem", "20,2,21,21")> ps
+    [(x, x)|ps] -> <r-exit(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                    , "UfIdem"
+                    , "20"
+                    , "2"
+                    , "21"
+                    , "21"
+                    )> ps
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfIdem", "20,2,21,21")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfIdem", "20,2,21,21")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfIdem"
+             , "20"
+             , "2"
+             , "21"
+             , "21"
+             )
              ; fail
 
   UfDecompose :
-    [(f#(xs), f#(ys))|ps] -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfDecompose", "23,2,24,59")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "24,32,24,35") ; conc> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "24,39,24,45")
-                                                                                                                                                                                                                                                             ; zip(
-                                                                                                                                                                                                                                                                 s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "24,43,24,44") ; id
-                                                                                                                                                                                                                                                               )> (xs, ys)
-                                                                                                                                                                                                                                                          , ps
-                                                                                                                                                                                                                                                          )
+    [(f#(xs), f#(ys))|ps] -> <r-exit(
+                              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                              , "UfDecompose"
+                              , "23"
+                              , "2"
+                              , "24"
+                              , "59"
+                              )> <s-step(
+                                  | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                                  , "24"
+                                  , "32"
+                                  , "24"
+                                  , "35"
+                                  )
+                                  ; conc> ( <s-step(
+                                             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                                             , "24"
+                                             , "39"
+                                             , "24"
+                                             , "45"
+                                             )
+                                             ; zip(
+                                                 s-step(
+                                                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                                                 , "24"
+                                                 , "43"
+                                                 , "24"
+                                                 , "44"
+                                                 )
+                                                 ; id
+                                               )> (xs, ys)
+                                          , ps
+                                          )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfDecompose", "23,2,24,59")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfDecompose", "23,2,24,59")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfDecompose"
+             , "23"
+             , "2"
+             , "24"
+             , "59"
+             )
              ; fail
 
 
 strategies
   diff =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "diff", "28,2,29,75")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,4,29,75")
-    ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,8,29,24")
-        ; \ ps -> ([], ps) \
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,28,29,34")
-        ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,29,29,30") ; id
-          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,32,29,33") ; []
-          )
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,37,29,74")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,37,29,63")
-           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,38,29,39") ; id
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,42,29,62")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,42,29,47") ; UfIdem
-                  <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,52,29,62") ; UfDecompose)
-             )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "29,68,29,74") ; UfShift)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+    , "diff"
+    , "28"
+    , "2"
+    , "29"
+    , "75"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "29"
+      , "4"
+      , "29"
+      , "75"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "diff", "28,2,29,75")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "diff", "28,2,29,75")
+    ; for(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "29"
+        , "8"
+        , "29"
+        , "24"
+        )
+        ; \ ps -> ([], ps) \
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "29"
+        , "28"
+        , "29"
+        , "34"
+        )
+        ; ( s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+            , "29"
+            , "29"
+            , "29"
+            , "30"
+            )
+            ; id
+          , s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+            , "29"
+            , "32"
+            , "29"
+            , "33"
+            )
+            ; []
+          )
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "29"
+        , "37"
+        , "29"
+        , "74"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+           , "29"
+           , "37"
+           , "29"
+           , "63"
+           )
+           ; ( s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+               , "29"
+               , "38"
+               , "29"
+               , "39"
+               )
+               ; id
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+               , "29"
+               , "42"
+               , "29"
+               , "62"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                  , "29"
+                  , "42"
+                  , "29"
+                  , "47"
+                  )
+                  ; UfIdem
+                  <+ s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                     , "29"
+                     , "52"
+                     , "29"
+                     , "62"
+                     )
+                     ; UfDecompose)
+             )
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "29"
+              , "68"
+              , "29"
+              , "74"
+              )
+              ; UfShift)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "diff"
+      , "28"
+      , "2"
+      , "29"
+      , "75"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "diff"
+      , "28"
+      , "2"
+      , "29"
+      , "75"
+      )
       ; fail
 
 
 rules
 
   UfShift :
-    (ps1, [p|ps2]) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfShift", "33,2,34,39")> ([p|ps1], ps2)
+    (ps1, [p|ps2]) -> <r-exit(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                       , "UfShift"
+                       , "33"
+                       , "2"
+                       , "34"
+                       , "39"
+                       )> ([p|ps1], ps2)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfShift", "33,2,34,39")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfShift", "33,2,34,39")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfShift"
+             , "33"
+             , "2"
+             , "34"
+             , "39"
+             )
              ; fail
 
 
 strategies
   pattern-match(isvar) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "pattern-match", "38,2,41,59")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "39,4,41,59")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+    , "pattern-match"
+    , "38"
+    , "2"
+    , "41"
+    , "59"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "39"
+      , "4"
+      , "41"
+      , "59"
+      )
     ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "39,8,39,31")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "39"
+        , "8"
+        , "39"
+        , "31"
+        )
         ; \ pairs -> (pairs, []) \
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "40,8,40,27")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "40"
+        , "8"
+        , "40"
+        , "27"
+        )
         ; \ ([], sbs) -> sbs \
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,8,41,58")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,8,41,19")
-           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,9,41,14") ; UfIdem
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,17,41,18") ; id
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "41"
+        , "8"
+        , "41"
+        , "58"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+           , "41"
+           , "8"
+           , "41"
+           , "19"
+           )
+           ; ( s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+               , "41"
+               , "9"
+               , "41"
+               , "14"
+               )
+               ; UfIdem
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+               , "41"
+               , "17"
+               , "41"
+               , "18"
+               )
+               ; id
              )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,24,41,58")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,24,41,38")
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "41"
+              , "24"
+              , "41"
+              , "58"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "41"
+                 , "24"
+                 , "41"
+                 , "38"
+                 )
                  ; MatchVar(
-                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,33,41,37") ; isvar
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                     , "41"
+                     , "33"
+                     , "41"
+                     , "37"
+                     )
+                     ; isvar
                    )
-                 + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,42,41,58")
-                   ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,43,41,53") ; UfDecompose
-                     , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "41,56,41,57") ; id
+                 + s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                   , "41"
+                   , "42"
+                   , "41"
+                   , "58"
+                   )
+                   ; ( s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                       , "41"
+                       , "43"
+                       , "41"
+                       , "53"
+                       )
+                       ; UfDecompose
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                       , "41"
+                       , "56"
+                       , "41"
+                       , "57"
+                       )
+                       ; id
                      )))
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "pattern-match", "38,2,41,59")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "pattern-match", "38,2,41,59")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "pattern-match"
+      , "38"
+      , "2"
+      , "41"
+      , "59"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "pattern-match"
+      , "38"
+      , "2"
+      , "41"
+      , "59"
+      )
       ; fail
 
 
 rules
 
   MatchVar(isvar) :
-    ([(x, y)|ps], sbs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "MatchVar", "45,2,47,67")> (ps, [(x, y)|sbs])
+    ([(x, y)|ps], sbs) -> <r-exit(
+                           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                           , "MatchVar"
+                           , "45"
+                           , "2"
+                           , "47"
+                           , "67"
+                           )> (ps, [(x, y)|sbs])
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "MatchVar", "45,2,47,67")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "MatchVar", "45,2,47,67")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "MatchVar"
+             , "45"
+             , "2"
+             , "47"
+             , "67"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,10,47,67")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,10,47,18")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,11,47,15") ; isvar)> x)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,21,47,67")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,22,47,62")
-              ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,26,47,61")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+          , "47"
+          , "10"
+          , "47"
+          , "67"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "47"
+             , "10"
+             , "47"
+             , "18"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "47"
+                 , "11"
+                 , "47"
+                 , "15"
+                 )
+                 ; isvar)> x)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+            , "47"
+            , "21"
+            , "47"
+            , "67"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "47"
+              , "22"
+              , "47"
+              , "62"
+              )
+              ; not(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                    , "47"
+                    , "26"
+                    , "47"
+                    , "61"
+                    )
                     ; fetch(
-                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,32,47,60")
+                        s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                        , "47"
+                        , "32"
+                        , "47"
+                        , "60"
+                        )
                         ; {z:
-                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,36,47,59")
-                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,36,47,41")
+                            s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                            , "47"
+                            , "36"
+                            , "47"
+                            , "59"
+                            )
+                            ; (s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                               , "47"
+                               , "36"
+                               , "47"
+                               , "41"
+                               )
                                ; ?(x, z))
-                            ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,44,47,59")
-                            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,45,47,51")
-                                ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "47,49,47,50") ; eq))> (y, z)
+                            ; s-step(
+                              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                              , "47"
+                              , "44"
+                              , "47"
+                              , "59"
+                              )
+                            ; <(s-step(
+                                | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                                , "47"
+                                , "45"
+                                , "47"
+                                , "51"
+                                )
+                                ; not(s-step(
+                                      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                                      , "47"
+                                      , "49"
+                                      , "47"
+                                      , "50"
+                                      )
+                                      ; eq))> (y, z)
                           }
                       )))> sbs
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "MatchVar", "45,2,47,67")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "MatchVar"
+             , "45"
+             , "2"
+             , "47"
+             , "67"
+             )
              ; fail
 
 
 strategies
   unify(isvar) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "unify", "62,2,65,73")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "63,4,65,73")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+    , "unify"
+    , "62"
+    , "2"
+    , "65"
+    , "73"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "63"
+      , "4"
+      , "65"
+      , "73"
+      )
     ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "63,8,63,31")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "63"
+        , "8"
+        , "63"
+        , "31"
+        )
         ; \ pairs -> (pairs, []) \
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "64,8,64,27")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "64"
+        , "8"
+        , "64"
+        , "27"
+        )
         ; \ ([], sbs) -> sbs \
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,8,65,72")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,8,65,19")
-           ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,9,65,14") ; UfIdem
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,17,65,18") ; id
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "65"
+        , "8"
+        , "65"
+        , "72"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+           , "65"
+           , "8"
+           , "65"
+           , "19"
+           )
+           ; ( s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+               , "65"
+               , "9"
+               , "65"
+               , "14"
+               )
+               ; UfIdem
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+               , "65"
+               , "17"
+               , "65"
+               , "18"
+               )
+               ; id
              )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,24,65,72")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,24,65,35")
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "65"
+              , "24"
+              , "65"
+              , "72"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "65"
+                 , "24"
+                 , "65"
+                 , "35"
+                 )
                  ; UfVar(
-                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,30,65,34") ; isvar
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                     , "65"
+                     , "30"
+                     , "65"
+                     , "34"
+                     )
+                     ; isvar
                    )
-                 + s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,39,65,72")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,39,65,51")
+                 + s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                   , "65"
+                   , "39"
+                   , "65"
+                   , "72"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                      , "65"
+                      , "39"
+                      , "65"
+                      , "51"
+                      )
                       ; UfSwap(
-                          s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,46,65,50") ; isvar
+                          s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                          , "65"
+                          , "46"
+                          , "65"
+                          , "50"
+                          )
+                          ; isvar
                         )
-                      <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,56,65,72")
-                         ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,57,65,67") ; UfDecompose
-                           , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "65,70,65,71") ; id
+                      <+ s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                         , "65"
+                         , "56"
+                         , "65"
+                         , "72"
+                         )
+                         ; ( s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                             , "65"
+                             , "57"
+                             , "65"
+                             , "67"
+                             )
+                             ; UfDecompose
+                           , s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                             , "65"
+                             , "70"
+                             , "65"
+                             , "71"
+                             )
+                             ; id
                            ))))
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "unify", "62,2,65,73")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "unify", "62,2,65,73")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "unify"
+      , "62"
+      , "2"
+      , "65"
+      , "73"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "unify"
+      , "62"
+      , "2"
+      , "65"
+      , "73"
+      )
       ; fail
 
 
 rules
 
   UfVar(isvar) :
-    ([(x, y)|ps], sbs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfVar", "69,2,72,69")> (ps', [(x, y)|sbs''])
+    ([(x, y)|ps], sbs) -> <r-exit(
+                           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                           , "UfVar"
+                           , "69"
+                           , "2"
+                           , "72"
+                           , "69"
+                           )> (ps', [(x, y)|sbs''])
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfVar", "69,2,72,69")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfVar", "69,2,72,69")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfVar"
+             , "69"
+             , "2"
+             , "72"
+             , "69"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,7,72,69")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,7,71,15")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,8,71,12") ; isvar)> x)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,18,72,69")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,18,71,39")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,19,71,33")
-                 ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "71,23,71,32") ; is-subterm))> (x, y))
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "72,14,72,69")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "72,14,72,53")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "72,15,72,31")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+          , "71"
+          , "7"
+          , "72"
+          , "69"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "71"
+             , "7"
+             , "71"
+             , "15"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "71"
+                 , "8"
+                 , "71"
+                 , "12"
+                 )
+                 ; isvar)> x)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+            , "71"
+            , "18"
+            , "72"
+            , "69"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "71"
+             , "18"
+             , "71"
+             , "39"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "71"
+                 , "19"
+                 , "71"
+                 , "33"
+                 )
+                 ; not(s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                       , "71"
+                       , "23"
+                       , "71"
+                       , "32"
+                       )
+                       ; is-subterm))> (x, y))
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+            , "72"
+            , "14"
+            , "72"
+            , "69"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "72"
+             , "14"
+             , "72"
+             , "53"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "72"
+                 , "15"
+                 , "72"
+                 , "31"
+                 )
                  ; substitute(
-                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "72,26,72,30") ; isvar
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                     , "72"
+                     , "26"
+                     , "72"
+                     , "30"
+                     )
+                     ; isvar
                    ))> ( [(x, y)]
                        , (sbs, ps)
                        )) => (sbs'', ps')
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfVar", "69,2,72,69")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfVar"
+             , "69"
+             , "2"
+             , "72"
+             , "69"
+             )
              ; fail
 
   UfSwap(isvar) :
-    ([(x, y)|ps], sbs) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfSwap", "74,2,76,31")> ([(y, x)|ps], sbs)
+    ([(x, y)|ps], sbs) -> <r-exit(
+                           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                           , "UfSwap"
+                           , "74"
+                           , "2"
+                           , "76"
+                           , "31"
+                           )> ([(y, x)|ps], sbs)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfSwap", "74,2,76,31")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfSwap", "74,2,76,31")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfSwap"
+             , "74"
+             , "2"
+             , "76"
+             , "31"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "76,7,76,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "76,7,76,20")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "76,8,76,17")
-                 ; not(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "76,12,76,16") ; isvar))> x)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "76,23,76,31")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "76,24,76,28") ; isvar)> y
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "UfSwap", "74,2,76,31")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+          , "76"
+          , "7"
+          , "76"
+          , "31"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "76"
+             , "7"
+             , "76"
+             , "20"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "76"
+                 , "8"
+                 , "76"
+                 , "17"
+                 )
+                 ; not(s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                       , "76"
+                       , "12"
+                       , "76"
+                       , "16"
+                       )
+                       ; isvar))> x)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+            , "76"
+            , "23"
+            , "76"
+            , "31"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "76"
+              , "24"
+              , "76"
+              , "28"
+              )
+              ; isvar)> y
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+             , "UfSwap"
+             , "74"
+             , "2"
+             , "76"
+             , "31"
+             )
              ; fail
 
 
 strategies
   equal(fltr) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "80,2,84,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "81,4,84,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+    , "equal"
+    , "80"
+    , "2"
+    , "84"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "81"
+      , "4"
+      , "84"
+      , "4"
+      )
     ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "81,8,81,9") ; id
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "81,12,81,13") ; []
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "81,16,82,52")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "81,16,81,21") ; UfIdem
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,19,82,52")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,19,82,39")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "81"
+        , "8"
+        , "81"
+        , "9"
+        )
+        ; id
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "81"
+        , "12"
+        , "81"
+        , "13"
+        )
+        ; []
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "81"
+        , "16"
+        , "82"
+        , "52"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+           , "81"
+           , "16"
+           , "81"
+           , "21"
+           )
+           ; UfIdem
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "82"
+              , "19"
+              , "82"
+              , "52"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "82"
+                 , "19"
+                 , "82"
+                 , "39"
+                 )
                  ; try(
-                     s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,23,82,38")
-                     ; [s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,24,82,34")
-                        ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,25,82,28") ; fltr
-                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,30,82,33") ; fltr
-                          )|s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,36,82,37") ; id]
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                     , "82"
+                     , "23"
+                     , "82"
+                     , "38"
+                     )
+                     ; [s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                        , "82"
+                        , "24"
+                        , "82"
+                        , "34"
+                        )
+                        ; ( s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                            , "82"
+                            , "25"
+                            , "82"
+                            , "28"
+                            )
+                            ; fltr
+                          , s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                            , "82"
+                            , "30"
+                            , "82"
+                            , "33"
+                            )
+                            ; fltr
+                          )|s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                            , "82"
+                            , "36"
+                            , "82"
+                            , "37"
+                            )
+                            ; id]
                    ))
-              ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "82,42,82,52")
+              ; s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                , "82"
+                , "42"
+                , "82"
+                , "52"
+                )
               ; UfDecompose)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "80,2,84,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "80,2,84,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "equal"
+      , "80"
+      , "2"
+      , "84"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "equal"
+      , "80"
+      , "2"
+      , "84"
+      , "4"
+      )
       ; fail
 
 
 strategies
   equal(fltr1, fltr2) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "94,2,98,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "95,4,98,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+    , "equal"
+    , "94"
+    , "2"
+    , "98"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "95"
+      , "4"
+      , "98"
+      , "4"
+      )
     ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "95,8,95,9") ; id
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "95,12,95,13") ; []
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "95,16,96,71")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "95,16,95,21") ; UfIdem
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,19,96,71")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,19,96,58")
-                 ; [s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,20,96,54")
-                    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,20,96,42")
-                       ; ( s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,21,96,30")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "95"
+        , "8"
+        , "95"
+        , "9"
+        )
+        ; id
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "95"
+        , "12"
+        , "95"
+        , "13"
+        )
+        ; []
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+        , "95"
+        , "16"
+        , "96"
+        , "71"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+           , "95"
+           , "16"
+           , "95"
+           , "21"
+           )
+           ; UfIdem
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+              , "96"
+              , "19"
+              , "96"
+              , "71"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                 , "96"
+                 , "19"
+                 , "96"
+                 , "58"
+                 )
+                 ; [s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                    , "96"
+                    , "20"
+                    , "96"
+                    , "54"
+                    )
+                    ; (s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                       , "96"
+                       , "20"
+                       , "96"
+                       , "42"
+                       )
+                       ; ( s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                           , "96"
+                           , "21"
+                           , "96"
+                           , "30"
+                           )
                            ; try(
-                               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,25,96,29") ; fltr1
+                               s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                               , "96"
+                               , "25"
+                               , "96"
+                               , "29"
+                               )
+                               ; fltr1
                              )
-                         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,32,96,41")
+                         , s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                           , "96"
+                           , "32"
+                           , "96"
+                           , "41"
+                           )
                            ; try(
-                               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,36,96,40") ; fltr1
+                               s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                               , "96"
+                               , "36"
+                               , "96"
+                               , "40"
+                               )
+                               ; fltr1
                              )
                          ))
-                    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,45,96,54")
+                    ; s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                      , "96"
+                      , "45"
+                      , "96"
+                      , "54"
+                      )
                     ; try(
-                        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,49,96,53") ; fltr2
-                      )|s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,56,96,57") ; id])
-              ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "96,61,96,71")
+                        s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                        , "96"
+                        , "49"
+                        , "96"
+                        , "53"
+                        )
+                        ; fltr2
+                      )|s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                        , "96"
+                        , "56"
+                        , "96"
+                        , "57"
+                        )
+                        ; id])
+              ; s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+                , "96"
+                , "61"
+                , "96"
+                , "71"
+                )
               ; UfDecompose)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "94,2,98,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str", "equal", "94,2,98,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "equal"
+      , "94"
+      , "2"
+      , "98"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/unification.str"
+      , "equal"
+      , "94"
+      , "2"
+      , "98"
+      , "4"
+      )
       ; fail

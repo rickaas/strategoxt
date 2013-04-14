@@ -17,26 +17,106 @@ signature
 rules
 
   split(f, g) :
-    x -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "split", "11,2,11,34")> ( <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "11,23,11,23") ; f> x
-                                                                                                              , <s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "11,30,11,30") ; g> x
-                                                                                                              )
+    x -> <r-exit(
+          | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+          , "split"
+          , "11"
+          , "2"
+          , "11"
+          , "34"
+          )> ( <s-step(
+                | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+                , "11"
+                , "23"
+                , "11"
+                , "23"
+                )
+                ; f> x
+             , <s-step(
+                | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+                , "11"
+                , "30"
+                , "11"
+                , "30"
+                )
+                ; g> x
+             )
     where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "split", "11,2,11,34")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "split", "11,2,11,34")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+             , "split"
+             , "11"
+             , "2"
+             , "11"
+             , "34"
+             )
              ; fail
 
 
 strategies
   main-test03 =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "main-test03", "15,2,17,31")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "16,4,17,31")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "16,4,16,17")
-       ; ?[prog|args])
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "17,4,17,31")
-    ; split(
-        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "17,10,17,26")
-        ; !Call(prog, args)
-      , s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "17,29,17,30") ; id
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+    , "main-test03"
+    , "15"
+    , "2"
+    , "17"
+    , "31"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+      , "16"
+      , "4"
+      , "17"
+      , "31"
       )
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "main-test03", "15,2,17,31")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test03.str", "main-test03", "15,2,17,31")
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+       , "16"
+       , "4"
+       , "16"
+       , "17"
+       )
+       ; ?[prog|args])
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+      , "17"
+      , "4"
+      , "17"
+      , "31"
+      )
+    ; split(
+        s-step(
+        | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+        , "17"
+        , "10"
+        , "17"
+        , "26"
+        )
+        ; !Call(prog, args)
+      , s-step(
+        | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+        , "17"
+        , "29"
+        , "17"
+        , "30"
+        )
+        ; id
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+      , "main-test03"
+      , "15"
+      , "2"
+      , "17"
+      , "31"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test03.str"
+      , "main-test03"
+      , "15"
+      , "2"
+      , "17"
+      , "31"
+      )
       ; fail

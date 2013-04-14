@@ -13,47 +13,234 @@ imports
 
 strategies
   io-ast2text =
-    s-enter(|"strategoxt/syntax/gpp/tools/ast2text.str", "io-ast2text", "10,2,16,4")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "11,4,16,4")
-    ; io-stream-wrap(
-        s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "12,6,12,21") ; ast2text-options
-      , s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "13,6,13,17") ; system-usage
-      , s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "14,6,14,17") ; system-about
-      , s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "15,6,15,13") ; ast2text
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ast2text.str"
+    , "io-ast2text"
+    , "10"
+    , "2"
+    , "16"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "11"
+      , "4"
+      , "16"
+      , "4"
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/ast2text.str", "io-ast2text", "10,2,16,4")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ast2text.str", "io-ast2text", "10,2,16,4")
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/gpp/tools/ast2text.str"
+        , "12"
+        , "6"
+        , "12"
+        , "21"
+        )
+        ; ast2text-options
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/ast2text.str"
+        , "13"
+        , "6"
+        , "13"
+        , "17"
+        )
+        ; system-usage
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/ast2text.str"
+        , "14"
+        , "6"
+        , "14"
+        , "17"
+        )
+        ; system-about
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/ast2text.str"
+        , "15"
+        , "6"
+        , "15"
+        , "13"
+        )
+        ; ast2text
+      )
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "io-ast2text"
+      , "10"
+      , "2"
+      , "16"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "io-ast2text"
+      , "10"
+      , "2"
+      , "16"
+      , "4"
+      )
       ; fail
 
   ast2text =
-    s-enter(|"strategoxt/syntax/gpp/tools/ast2text.str", "ast2text", "18,2,22,25")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "19,4,22,25")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "19,4,19,30")
-       ; ?( <s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "19,7,19,22") ; read-from-stream>
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ast2text.str"
+    , "ast2text"
+    , "18"
+    , "2"
+    , "22"
+    , "25"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "19"
+      , "4"
+      , "22"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ast2text.str"
+       , "19"
+       , "4"
+       , "19"
+       , "30"
+       )
+       ; ?( <s-step(
+             | "strategoxt/syntax/gpp/tools/ast2text.str"
+             , "19"
+             , "7"
+             , "19"
+             , "22"
+             )
+             ; read-from-stream>
           , fout
           ))
-    ; s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "20,6,22,25")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "20,6,20,37")
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "20"
+      , "6"
+      , "22"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ast2text.str"
+       , "20"
+       , "6"
+       , "20"
+       , "37"
+       )
        ; ast2box(
-         | <s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "20,16,20,35") ; read-pptables-config>
+         | <s-step(
+            | "strategoxt/syntax/gpp/tools/ast2text.str"
+            , "20"
+            , "16"
+            , "20"
+            , "35"
+            )
+            ; read-pptables-config>
          ))
-    ; s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "21,6,22,25")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "21,6,21,40")
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "21"
+      , "6"
+      , "22"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ast2text.str"
+       , "21"
+       , "6"
+       , "21"
+       , "40"
+       )
        ; box2text-stream(
-         | <s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "21,24,21,32") ; get-width>
+         | <s-step(
+            | "strategoxt/syntax/gpp/tools/ast2text.str"
+            , "21"
+            , "24"
+            , "21"
+            , "32"
+            )
+            ; get-width>
          , fout
          ))
-    ; s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "22,6,22,25")
-    ; <(s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "22,7,22,11") ; fputs)> ("\n", fout)
-    < s-exit(|"strategoxt/syntax/gpp/tools/ast2text.str", "ast2text", "18,2,22,25")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ast2text.str", "ast2text", "18,2,22,25")
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "22"
+      , "6"
+      , "22"
+      , "25"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/gpp/tools/ast2text.str"
+        , "22"
+        , "7"
+        , "22"
+        , "11"
+        )
+        ; fputs)> ("\n", fout)
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "ast2text"
+      , "18"
+      , "2"
+      , "22"
+      , "25"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "ast2text"
+      , "18"
+      , "2"
+      , "22"
+      , "25"
+      )
       ; fail
 
   ast2text-options =
-    s-enter(|"strategoxt/syntax/gpp/tools/ast2text.str", "ast2text-options", "24,2,26,21")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "25,6,26,21")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "25,6,25,22") ; abox2text-options
-       + s-step(|"strategoxt/syntax/gpp/tools/ast2text.str", "26,6,26,21") ; ast2abox-options)
-    < s-exit(|"strategoxt/syntax/gpp/tools/ast2text.str", "ast2text-options", "24,2,26,21")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ast2text.str", "ast2text-options", "24,2,26,21")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ast2text.str"
+    , "ast2text-options"
+    , "24"
+    , "2"
+    , "26"
+    , "21"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "25"
+      , "6"
+      , "26"
+      , "21"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ast2text.str"
+       , "25"
+       , "6"
+       , "25"
+       , "22"
+       )
+       ; abox2text-options
+       + s-step(
+         | "strategoxt/syntax/gpp/tools/ast2text.str"
+         , "26"
+         , "6"
+         , "26"
+         , "21"
+         )
+         ; ast2abox-options)
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "ast2text-options"
+      , "24"
+      , "2"
+      , "26"
+      , "21"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ast2text.str"
+      , "ast2text-options"
+      , "24"
+      , "2"
+      , "26"
+      , "21"
+      )
       ; fail

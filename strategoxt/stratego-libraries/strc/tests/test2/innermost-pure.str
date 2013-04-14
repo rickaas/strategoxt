@@ -21,133 +21,540 @@ signature
 rules
 
   A :
-    Plus(Zero, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "A", "11,2,11,23")> x
+    Plus(Zero, x) -> <r-exit(
+                      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                      , "A"
+                      , "11"
+                      , "2"
+                      , "11"
+                      , "23"
+                      )> x
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "A", "11,2,11,23")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "A", "11,2,11,23")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+             , "A"
+             , "11"
+             , "2"
+             , "11"
+             , "23"
+             )
              ; fail
 
   B :
-    Plus(Succ(x), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "B", "13,2,13,41")> Succ(Plus(x, y))
+    Plus(Succ(x), y) -> <r-exit(
+                         | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                         , "B"
+                         , "13"
+                         , "2"
+                         , "13"
+                         , "41"
+                         )> Succ(Plus(x, y))
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "B", "13,2,13,41")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "B", "13,2,13,41")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+             , "B"
+             , "13"
+             , "2"
+             , "13"
+             , "41"
+             )
              ; fail
 
 
 strategies
   my-bottomup(s) =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "my-bottomup", "17,2,18,19")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "18,4,18,19")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "my-bottomup"
+    , "17"
+    , "2"
+    , "18"
+    , "19"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "18"
+      , "4"
+      , "18"
+      , "19"
+      )
     ; rec x (
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "18,10,18,18")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "18,10,18,15")
-           ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "18,14,18,14") ; x))
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "18,18,18,18")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "18"
+        , "10"
+        , "18"
+        , "18"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+           , "18"
+           , "10"
+           , "18"
+           , "15"
+           )
+           ; all(s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                 , "18"
+                 , "14"
+                 , "18"
+                 , "14"
+                 )
+                 ; x))
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+          , "18"
+          , "18"
+          , "18"
+          , "18"
+          )
         ; s
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "my-bottomup", "17,2,18,19")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "my-bottomup", "17,2,18,19")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "my-bottomup"
+      , "17"
+      , "2"
+      , "18"
+      , "19"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "my-bottomup"
+      , "17"
+      , "2"
+      , "18"
+      , "19"
+      )
       ; fail
 
   my-innermost(s) =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "my-innermost", "20,2,21,22")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "21,4,21,22")
-    ; my-bottomup(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "21,16,21,21")
-        ; red(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "21,20,21,20") ; s
-          )
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "my-innermost"
+    , "20"
+    , "2"
+    , "21"
+    , "22"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "21"
+      , "4"
+      , "21"
+      , "22"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "my-innermost", "20,2,21,22")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "my-innermost", "20,2,21,22")
-      ; fail
-
-  innermost-with-assertion(s) =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "innermost-with-assertion", "23,2,24,40")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,4,24,40")
     ; my-bottomup(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,16,24,39")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "21"
+        , "16"
+        , "21"
+        , "21"
+        )
         ; red(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,20,24,38")
-            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,20,24,35")
-               ; test(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,25,24,34")
-                      ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,29,24,33")
-                            ; nf(
-                                s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,32,24,32") ; s
-                              ))))
-            ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "24,38,24,38")
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+            , "21"
+            , "20"
+            , "21"
+            , "20"
+            )
             ; s
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "innermost-with-assertion", "23,2,24,40")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "innermost-with-assertion", "23,2,24,40")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "my-innermost"
+      , "20"
+      , "2"
+      , "21"
+      , "22"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "my-innermost"
+      , "20"
+      , "2"
+      , "21"
+      , "22"
+      )
+      ; fail
+
+  innermost-with-assertion(s) =
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "innermost-with-assertion"
+    , "23"
+    , "2"
+    , "24"
+    , "40"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "24"
+      , "4"
+      , "24"
+      , "40"
+      )
+    ; my-bottomup(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "24"
+        , "16"
+        , "24"
+        , "39"
+        )
+        ; red(
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+            , "24"
+            , "20"
+            , "24"
+            , "38"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+               , "24"
+               , "20"
+               , "24"
+               , "35"
+               )
+               ; test(s-step(
+                      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                      , "24"
+                      , "25"
+                      , "24"
+                      , "34"
+                      )
+                      ; all(s-step(
+                            | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                            , "24"
+                            , "29"
+                            , "24"
+                            , "33"
+                            )
+                            ; nf(
+                                s-step(
+                                | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                                , "24"
+                                , "32"
+                                , "24"
+                                , "32"
+                                )
+                                ; s
+                              ))))
+            ; s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+              , "24"
+              , "38"
+              , "24"
+              , "38"
+              )
+            ; s
+          )
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "innermost-with-assertion"
+      , "23"
+      , "2"
+      , "24"
+      , "40"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "innermost-with-assertion"
+      , "23"
+      , "2"
+      , "24"
+      , "40"
+      )
       ; fail
 
   red(s) =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "red", "26,2,27,33")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,4,27,33")
-    ; rec x (
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,10,27,32")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,10,27,26")
-           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,10,27,10") ; s)
-           ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,13,27,26")
-           ; my-bottomup(
-               s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,25,27,25") ; x
-             )
-           <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "27,31,27,32") ; id)
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "red"
+    , "26"
+    , "2"
+    , "27"
+    , "33"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "27"
+      , "4"
+      , "27"
+      , "33"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "red", "26,2,27,33")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "red", "26,2,27,33")
+    ; rec x (
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "27"
+        , "10"
+        , "27"
+        , "32"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+           , "27"
+           , "10"
+           , "27"
+           , "26"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+              , "27"
+              , "10"
+              , "27"
+              , "10"
+              )
+              ; s)
+           ; s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+             , "27"
+             , "13"
+             , "27"
+             , "26"
+             )
+           ; my-bottomup(
+               s-step(
+               | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+               , "27"
+               , "25"
+               , "27"
+               , "25"
+               )
+               ; x
+             )
+           <+ s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+              , "27"
+              , "31"
+              , "27"
+              , "32"
+              )
+              ; id)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "red"
+      , "26"
+      , "2"
+      , "27"
+      , "33"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "red"
+      , "26"
+      , "2"
+      , "27"
+      , "33"
+      )
       ; fail
 
   nf(s) =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "nf", "29,2,30,22")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "30,4,30,22")
-    ; my-bottomup(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "30,16,30,21")
-        ; not(s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "30,20,30,20") ; s)
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "nf"
+    , "29"
+    , "2"
+    , "30"
+    , "22"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "30"
+      , "4"
+      , "30"
+      , "22"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "nf", "29,2,30,22")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "nf", "29,2,30,22")
+    ; my-bottomup(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "30"
+        , "16"
+        , "30"
+        , "21"
+        )
+        ; not(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+              , "30"
+              , "20"
+              , "30"
+              , "20"
+              )
+              ; s)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "nf"
+      , "29"
+      , "2"
+      , "30"
+      , "22"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "nf"
+      , "29"
+      , "2"
+      , "30"
+      , "22"
+      )
       ; fail
 
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "main", "34,2,37,4")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "35,4,37,4")
-    ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "35,15,35,31")
-        ; !"innermost-pure"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "36,8,36,12") ; test1
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "main"
+    , "34"
+    , "2"
+    , "37"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "35"
+      , "4"
+      , "37"
+      , "4"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "main", "34,2,37,4")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "main", "34,2,37,4")
+    ; test-suite(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "35"
+        , "15"
+        , "35"
+        , "31"
+        )
+        ; !"innermost-pure"
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "36"
+        , "8"
+        , "36"
+        , "12"
+        )
+        ; test1
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "main"
+      , "34"
+      , "2"
+      , "37"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "main"
+      , "34"
+      , "2"
+      , "37"
+      , "4"
+      )
       ; fail
 
   test1 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "test1", "39,2,44,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "40,4,44,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+    , "test1"
+    , "39"
+    , "2"
+    , "44"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "40"
+      , "4"
+      , "44"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "40,15,40,22")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "40"
+        , "15"
+        , "40"
+        , "22"
+        )
         ; !"test1"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "41,16,41,34")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "41"
+        , "16"
+        , "41"
+        , "34"
+        )
         ; my-innermost(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "41,29,41,33")
-            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "41,29,41,29") ; A
-               + s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "41,33,41,33") ; B)
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+            , "41"
+            , "29"
+            , "41"
+            , "33"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+               , "41"
+               , "29"
+               , "41"
+               , "29"
+               )
+               ; A
+               + s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+                 , "41"
+                 , "33"
+                 , "41"
+                 , "33"
+                 )
+                 ; B)
           )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "42,15,42,66")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "42"
+        , "15"
+        , "42"
+        , "66"
+        )
         ; !Plus(
              Succ(
                Plus(Succ(Zero), Succ(Zero))
              )
            , Succ(Zero)
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "43,15,43,43")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+        , "43"
+        , "15"
+        , "43"
+        , "43"
+        )
         ; !Succ(
              Succ(Succ(Succ(Zero)))
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "test1", "39,2,44,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str", "test1", "39,2,44,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "test1"
+      , "39"
+      , "2"
+      , "44"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/innermost-pure.str"
+      , "test1"
+      , "39"
+      , "2"
+      , "44"
+      , "14"
+      )
       ; fail

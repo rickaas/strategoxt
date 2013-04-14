@@ -10,15 +10,74 @@ imports
 
 strategies
   copy-pipe-to-file :
-    (Pipe(fd1, fd2), name) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "copy-pipe-to-file", "7,2,10,30")> name
+    (Pipe(fd1, fd2), name) -> <r-exit(
+                               | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+                               , "copy-pipe-to-file"
+                               , "7"
+                               , "2"
+                               , "10"
+                               , "30"
+                               )> name
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "copy-pipe-to-file", "7,2,10,30")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "copy-pipe-to-file", "7,2,10,30")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+             , "copy-pipe-to-file"
+             , "7"
+             , "2"
+             , "10"
+             , "30"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "9,10,10,30")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "9,10,9,35")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "9,10,9,26")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "9,11,9,14") ; open)> (name, "w")) => fdout)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "10,10,10,30")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "10,11,10,16") ; fdcopy)> (fd1, fdout)
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str", "copy-pipe-to-file", "7,2,10,30")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+          , "9"
+          , "10"
+          , "10"
+          , "30"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+             , "9"
+             , "10"
+             , "9"
+             , "35"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+                , "9"
+                , "10"
+                , "9"
+                , "26"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+                    , "9"
+                    , "11"
+                    , "9"
+                    , "14"
+                    )
+                    ; open)> (name, "w")) => fdout)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+            , "10"
+            , "10"
+            , "10"
+            , "30"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+              , "10"
+              , "11"
+              , "10"
+              , "16"
+              )
+              ; fdcopy)> (fd1, fdout)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/system/posix-xsi/pipe-abstractions.str"
+             , "copy-pipe-to-file"
+             , "7"
+             , "2"
+             , "10"
+             , "30"
+             )
              ; fail

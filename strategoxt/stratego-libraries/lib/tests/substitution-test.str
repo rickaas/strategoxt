@@ -10,15 +10,55 @@ imports
 
 strategies
   main-substitution-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "main-substitution-test", "5,2,8,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "6,4,8,4")
-    ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "6,15,6,34")
-        ; !"substitution-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "7,1,7,5") ; test1
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+    , "main-substitution-test"
+    , "5"
+    , "2"
+    , "8"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+      , "6"
+      , "4"
+      , "8"
+      , "4"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "main-substitution-test", "5,2,8,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "main-substitution-test", "5,2,8,4")
+    ; test-suite(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+        , "6"
+        , "15"
+        , "6"
+        , "34"
+        )
+        ; !"substitution-test"
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+        , "7"
+        , "1"
+        , "7"
+        , "5"
+        )
+        ; test1
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+      , "main-substitution-test"
+      , "5"
+      , "2"
+      , "8"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+      , "main-substitution-test"
+      , "5"
+      , "2"
+      , "8"
+      , "4"
+      )
       ; fail
 
 
@@ -32,19 +72,63 @@ signature
 
 strategies
   test1 =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "test1", "19,2,24,1")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "20,4,24,1")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+    , "test1"
+    , "19"
+    , "2"
+    , "24"
+    , "1"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+      , "20"
+      , "4"
+      , "24"
+      , "1"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "20,15,20,22")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+        , "20"
+        , "15"
+        , "20"
+        , "22"
+        )
         ; !"test1"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "21,2,21,21")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+        , "21"
+        , "2"
+        , "21"
+        , "21"
+        )
         ; substitute(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "21,13,21,20")
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+            , "21"
+            , "13"
+            , "21"
+            , "20"
+            )
             ; TVar(
-                s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "21,18,21,19") ; id
+                s-step(
+                | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+                , "21"
+                , "18"
+                , "21"
+                , "19"
+                )
+                ; id
               )
           )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "22,2,22,67")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+        , "22"
+        , "2"
+        , "22"
+        , "67"
+        )
         ; !( [TVar("b")]
            , [TVar("e")]
            , Typed(
@@ -52,12 +136,32 @@ strategies
              , Forall("b", TVar("b"))
              )
            )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "23,2,23,39")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+        , "23"
+        , "2"
+        , "23"
+        , "39"
+        )
         ; !Typed(
              Var("a")
            , Forall("b", TVar("e"))
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "test1", "19,2,24,1")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/substitution-test.str", "test1", "19,2,24,1")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+      , "test1"
+      , "19"
+      , "2"
+      , "24"
+      , "1"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/substitution-test.str"
+      , "test1"
+      , "19"
+      , "2"
+      , "24"
+      , "1"
+      )
       ; fail

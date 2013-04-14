@@ -10,249 +10,1237 @@ imports
 
 strategies
   io-til-varunion =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "io-til-varunion", "6,2,7,20")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "7,4,7,20")
-    ; io-wrap(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "7,12,7,19") ; varunion
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "io-til-varunion"
+    , "6"
+    , "2"
+    , "7"
+    , "20"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "7"
+      , "4"
+      , "7"
+      , "20"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "io-til-varunion", "6,2,7,20")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "io-til-varunion", "6,2,7,20")
+    ; io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "7"
+        , "12"
+        , "7"
+        , "19"
+        )
+        ; varunion
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "io-til-varunion"
+      , "6"
+      , "2"
+      , "7"
+      , "20"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "io-til-varunion"
+      , "6"
+      , "2"
+      , "7"
+      , "20"
+      )
       ; fail
 
   varunion =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion", "9,2,27,33")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "10,4,27,33")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "10,4,10,17") ; apply-VarUnion
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "11,7,27,33")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "11,7,11,26") ; varunion-declaration
-             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "12,7,27,33")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "12,7,12,21") ; varunion-assign
-                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "13,7,27,33")
-                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "13,7,13,20") ; varunion-block
-                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "14,7,27,33")
-                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "14,7,14,22") ; varunion-if-then
-                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "15,7,27,33")
-                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "15,7,15,27") ; varunion-if-then-else
-                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "16,7,27,33")
-                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "16,7,16,20") ; varunion-while
-                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "17,7,27,33")
-                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "17,7,17,28") ; varunion-labeled-while
-                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "18,7,27,33")
-                                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "18,7,18,18") ; varunion-for
-                                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "19,7,27,33")
-                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "19,7,19,26") ; varunion-labeled-stm
-                                                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "20,7,27,33")
-                                                                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "20,7,20,20") ; varunion-break
-                                                                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "21,7,27,33")
-                                                                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "21,7,21,26") ; varunion-break-label
-                                                                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "22,7,27,33")
-                                                                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "22,7,22,23") ; varunion-continue
-                                                                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "23,7,27,33")
-                                                                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "23,7,23,29") ; varunion-continue-label
-                                                                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "24,7,27,33")
-                                                                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "24,7,24,20") ; varunion-throw
-                                                                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "25,7,27,33")
-                                                                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "25,7,25,24") ; varunion-try-catch
-                                                                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "26,7,27,33")
-                                                                                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "26,7,26,32") ; varunion-try-catch-finally
-                                                                                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "27,7,27,33")
-                                                                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "27,7,27,19")
-                                                                                                             ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "27,11,27,18") ; varunion))
-                                                                                                          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "27,22,27,33")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion"
+    , "9"
+    , "2"
+    , "27"
+    , "33"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "10"
+      , "4"
+      , "27"
+      , "33"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "10"
+       , "4"
+       , "10"
+       , "17"
+       )
+       ; apply-VarUnion
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "11"
+          , "7"
+          , "27"
+          , "33"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "11"
+             , "7"
+             , "11"
+             , "26"
+             )
+             ; varunion-declaration
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                , "12"
+                , "7"
+                , "27"
+                , "33"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                   , "12"
+                   , "7"
+                   , "12"
+                   , "21"
+                   )
+                   ; varunion-assign
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                      , "13"
+                      , "7"
+                      , "27"
+                      , "33"
+                      )
+                      ; (s-step(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                         , "13"
+                         , "7"
+                         , "13"
+                         , "20"
+                         )
+                         ; varunion-block
+                         <+ s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                            , "14"
+                            , "7"
+                            , "27"
+                            , "33"
+                            )
+                            ; (s-step(
+                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                               , "14"
+                               , "7"
+                               , "14"
+                               , "22"
+                               )
+                               ; varunion-if-then
+                               <+ s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                  , "15"
+                                  , "7"
+                                  , "27"
+                                  , "33"
+                                  )
+                                  ; (s-step(
+                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                     , "15"
+                                     , "7"
+                                     , "15"
+                                     , "27"
+                                     )
+                                     ; varunion-if-then-else
+                                     <+ s-step(
+                                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                        , "16"
+                                        , "7"
+                                        , "27"
+                                        , "33"
+                                        )
+                                        ; (s-step(
+                                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                           , "16"
+                                           , "7"
+                                           , "16"
+                                           , "20"
+                                           )
+                                           ; varunion-while
+                                           <+ s-step(
+                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                              , "17"
+                                              , "7"
+                                              , "27"
+                                              , "33"
+                                              )
+                                              ; (s-step(
+                                                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                 , "17"
+                                                 , "7"
+                                                 , "17"
+                                                 , "28"
+                                                 )
+                                                 ; varunion-labeled-while
+                                                 <+ s-step(
+                                                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                    , "18"
+                                                    , "7"
+                                                    , "27"
+                                                    , "33"
+                                                    )
+                                                    ; (s-step(
+                                                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                       , "18"
+                                                       , "7"
+                                                       , "18"
+                                                       , "18"
+                                                       )
+                                                       ; varunion-for
+                                                       <+ s-step(
+                                                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                          , "19"
+                                                          , "7"
+                                                          , "27"
+                                                          , "33"
+                                                          )
+                                                          ; (s-step(
+                                                             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                             , "19"
+                                                             , "7"
+                                                             , "19"
+                                                             , "26"
+                                                             )
+                                                             ; varunion-labeled-stm
+                                                             <+ s-step(
+                                                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                , "20"
+                                                                , "7"
+                                                                , "27"
+                                                                , "33"
+                                                                )
+                                                                ; (s-step(
+                                                                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                   , "20"
+                                                                   , "7"
+                                                                   , "20"
+                                                                   , "20"
+                                                                   )
+                                                                   ; varunion-break
+                                                                   <+ s-step(
+                                                                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                      , "21"
+                                                                      , "7"
+                                                                      , "27"
+                                                                      , "33"
+                                                                      )
+                                                                      ; (s-step(
+                                                                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                         , "21"
+                                                                         , "7"
+                                                                         , "21"
+                                                                         , "26"
+                                                                         )
+                                                                         ; varunion-break-label
+                                                                         <+ s-step(
+                                                                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                            , "22"
+                                                                            , "7"
+                                                                            , "27"
+                                                                            , "33"
+                                                                            )
+                                                                            ; (s-step(
+                                                                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                               , "22"
+                                                                               , "7"
+                                                                               , "22"
+                                                                               , "23"
+                                                                               )
+                                                                               ; varunion-continue
+                                                                               <+ s-step(
+                                                                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                  , "23"
+                                                                                  , "7"
+                                                                                  , "27"
+                                                                                  , "33"
+                                                                                  )
+                                                                                  ; (s-step(
+                                                                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                     , "23"
+                                                                                     , "7"
+                                                                                     , "23"
+                                                                                     , "29"
+                                                                                     )
+                                                                                     ; varunion-continue-label
+                                                                                     <+ s-step(
+                                                                                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                        , "24"
+                                                                                        , "7"
+                                                                                        , "27"
+                                                                                        , "33"
+                                                                                        )
+                                                                                        ; (s-step(
+                                                                                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                           , "24"
+                                                                                           , "7"
+                                                                                           , "24"
+                                                                                           , "20"
+                                                                                           )
+                                                                                           ; varunion-throw
+                                                                                           <+ s-step(
+                                                                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                              , "25"
+                                                                                              , "7"
+                                                                                              , "27"
+                                                                                              , "33"
+                                                                                              )
+                                                                                              ; (s-step(
+                                                                                                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                 , "25"
+                                                                                                 , "7"
+                                                                                                 , "25"
+                                                                                                 , "24"
+                                                                                                 )
+                                                                                                 ; varunion-try-catch
+                                                                                                 <+ s-step(
+                                                                                                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                    , "26"
+                                                                                                    , "7"
+                                                                                                    , "27"
+                                                                                                    , "33"
+                                                                                                    )
+                                                                                                    ; (s-step(
+                                                                                                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                       , "26"
+                                                                                                       , "7"
+                                                                                                       , "26"
+                                                                                                       , "32"
+                                                                                                       )
+                                                                                                       ; varunion-try-catch-finally
+                                                                                                       <+ s-step(
+                                                                                                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                          , "27"
+                                                                                                          , "7"
+                                                                                                          , "27"
+                                                                                                          , "33"
+                                                                                                          )
+                                                                                                          ; (s-step(
+                                                                                                             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                             , "27"
+                                                                                                             , "7"
+                                                                                                             , "27"
+                                                                                                             , "19"
+                                                                                                             )
+                                                                                                             ; all(s-step(
+                                                                                                                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                                   , "27"
+                                                                                                                   , "11"
+                                                                                                                   , "27"
+                                                                                                                   , "18"
+                                                                                                                   )
+                                                                                                                   ; varunion))
+                                                                                                          ; s-step(
+                                                                                                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                            , "27"
+                                                                                                            , "22"
+                                                                                                            , "27"
+                                                                                                            , "33"
+                                                                                                            )
                                                                                                           ; try(
-                                                                                                              s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "27,26,27,32") ; EvalExp
+                                                                                                              s-step(
+                                                                                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                                                                                              , "27"
+                                                                                                              , "26"
+                                                                                                              , "27"
+                                                                                                              , "32"
+                                                                                                              )
+                                                                                                              ; EvalExp
                                                                                                             ))))))))))))))))))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion", "9,2,27,33")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion", "9,2,27,33")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion"
+      , "9"
+      , "2"
+      , "27"
+      , "33"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion"
+      , "9"
+      , "2"
+      , "27"
+      , "33"
+      )
       ; fail
 
   apply-VarUnion :
-    Var(x) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "apply-VarUnion", "29,2,34,64")> x'
+    Var(x) -> <r-exit(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+               , "apply-VarUnion"
+               , "29"
+               , "2"
+               , "34"
+               , "64"
+               )> x'
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "apply-VarUnion", "29,2,34,64")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "apply-VarUnion", "29,2,34,64")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "apply-VarUnion"
+             , "29"
+             , "2"
+             , "34"
+             , "64"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "31,10,34,64")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "31,10,31,41")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "31,10,31,31")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "31,11,31,24") ; bagof-VarUnion)> Var(x)) => [v|vs])
-          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "32,10,34,64")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "32,11,34,57")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "32,11,32,17")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "32,12,32,14")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "31"
+          , "10"
+          , "34"
+          , "64"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "31"
+             , "10"
+             , "31"
+             , "41"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                , "31"
+                , "10"
+                , "31"
+                , "31"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                    , "31"
+                    , "11"
+                    , "31"
+                    , "24"
+                    )
+                    ; bagof-VarUnion)> Var(x)) => [v|vs])
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+            , "32"
+            , "10"
+            , "34"
+            , "64"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "32"
+             , "11"
+             , "34"
+             , "57"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                , "32"
+                , "11"
+                , "32"
+                , "17"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                    , "32"
+                    , "12"
+                    , "32"
+                    , "14"
+                    )
                     ; ?[])> vs
-                < s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "33,13,33,14") ; !v
-                + s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "34,13,34,57")
+                < s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                  , "33"
+                  , "13"
+                  , "33"
+                  , "14"
+                  )
+                  ; !v
+                + s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                  , "34"
+                  , "13"
+                  , "34"
+                  , "57"
+                  )
                   ; !FunCall(
-                       <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "34,23,34,34") ; conc-strings> ("select", x)
+                       <s-step(
+                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                        , "34"
+                        , "23"
+                        , "34"
+                        , "34"
+                        )
+                        ; conc-strings> ("select", x)
                      , [v|vs]
                      ))) => x'
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "apply-VarUnion", "29,2,34,64")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "apply-VarUnion"
+             , "29"
+             , "2"
+             , "34"
+             , "64"
+             )
              ; fail
 
   varunion-block =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-block", "36,2,37,40")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "37,4,37,40")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-block"
+    , "36"
+    , "2"
+    , "37"
+    , "40"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "37"
+      , "4"
+      , "37"
+      , "40"
+      )
     ; Block(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "37,10,37,39")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "37"
+        , "10"
+        , "37"
+        , "39"
+        )
         ; {|VarUnion:
-             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "37,24,37,36")
+             s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "37"
+             , "24"
+             , "37"
+             , "36"
+             )
              ; map(
-                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "37,28,37,35") ; varunion
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                 , "37"
+                 , "28"
+                 , "37"
+                 , "35"
+                 )
+                 ; varunion
                )
           |}
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-block", "36,2,37,40")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-block", "36,2,37,40")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-block"
+      , "36"
+      , "2"
+      , "37"
+      , "40"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-block"
+      , "36"
+      , "2"
+      , "37"
+      , "40"
+      )
       ; fail
 
   varunion-declaration =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-declaration", "39,2,41,34")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "40,4,41,34")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "40,5,40,46")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "40,5,40,19")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-declaration"
+    , "39"
+    , "2"
+    , "41"
+    , "34"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "40"
+      , "4"
+      , "41"
+      , "34"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "40"
+       , "5"
+       , "40"
+       , "46"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "40"
+          , "5"
+          , "40"
+          , "19"
+          )
           ; ?Declaration(x)
-          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "40,24,40,46")
+          <+ s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "40"
+             , "24"
+             , "40"
+             , "46"
+             )
              ; ?DeclarationTyped(x, t)))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "41,6,41,34")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "41"
+      , "6"
+      , "41"
+      , "34"
+      )
     ; rules ( VarUnion+x :-
                 Var(x) )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-declaration", "39,2,41,34")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-declaration", "39,2,41,34")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-declaration"
+      , "39"
+      , "2"
+      , "41"
+      , "34"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-declaration"
+      , "39"
+      , "2"
+      , "41"
+      , "34"
+      )
       ; fail
 
   varunion-assign =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-assign", "43,2,49,8")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "44,4,49,8")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "44,4,44,28")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-assign"
+    , "43"
+    , "2"
+    , "49"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "44"
+      , "4"
+      , "49"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "44"
+       , "4"
+       , "44"
+       , "28"
+       )
        ; Assign(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "44,11,44,12") ; ?x
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "44,15,44,27")
-           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "44,15,44,22") ; varunion) => e
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "44"
+           , "11"
+           , "44"
+           , "12"
+           )
+           ; ?x
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "44"
+           , "15"
+           , "44"
+           , "27"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "44"
+              , "15"
+              , "44"
+              , "22"
+              )
+              ; varunion) => e
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "45,6,49,8")
-    ; if s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "45,9,45,20")
-         ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "45,10,45,17") ; is-value)> e then
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "46,8,46,40")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "45"
+      , "6"
+      , "49"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+         , "45"
+         , "9"
+         , "45"
+         , "20"
+         )
+         ; <(s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "45"
+             , "10"
+             , "45"
+             , "17"
+             )
+             ; is-value)> e then
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "46"
+        , "8"
+        , "46"
+        , "40"
+        )
         ; rules (
             VarUnion.x :
               Var(x) -> e
           )
       else
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "48,8,48,36")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "48"
+        , "8"
+        , "48"
+        , "36"
+        )
         ; rules ( VarUnion.x :-
                     Var(x) )
       end
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-assign", "43,2,49,8")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-assign", "43,2,49,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-assign"
+      , "43"
+      , "2"
+      , "49"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-assign"
+      , "43"
+      , "2"
+      , "49"
+      , "8"
+      )
       ; fail
 
   varunion-if-then =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-if-then", "51,2,54,65")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "52,4,54,65")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "52,4,52,23")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-if-then"
+    , "51"
+    , "2"
+    , "54"
+    , "65"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "52"
+      , "4"
+      , "54"
+      , "65"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "52"
+       , "4"
+       , "52"
+       , "23"
+       )
        ; IfThen(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "52,11,52,18") ; varunion
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "52,21,52,22") ; id
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "52"
+           , "11"
+           , "52"
+           , "18"
+           )
+           ; varunion
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "52"
+           , "21"
+           , "52"
+           , "22"
+           )
+           ; id
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "53,7,54,64")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "53,7,53,22")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "53,7,53,12") ; EvalIf)
-       ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "53,15,53,22")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "53"
+      , "7"
+      , "54"
+      , "64"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "53"
+       , "7"
+       , "53"
+       , "22"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "53"
+          , "7"
+          , "53"
+          , "12"
+          )
+          ; EvalIf)
+       ; s-step(
+         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+         , "53"
+         , "15"
+         , "53"
+         , "22"
+         )
        ; varunion
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,10,54,64")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,10,54,50")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "54"
+          , "10"
+          , "54"
+          , "64"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "54"
+             , "10"
+             , "54"
+             , "50"
+             )
              ; IfThen(
-                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,17,54,18") ; id
-               , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,21,54,49")
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                 , "54"
+                 , "17"
+                 , "54"
+                 , "18"
+                 )
+                 ; id
+               , s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                 , "54"
+                 , "21"
+                 , "54"
+                 , "49"
+                 )
                  ; {|VarUnion:
-                      s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,34,54,46")
+                      s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                      , "54"
+                      , "34"
+                      , "54"
+                      , "46"
+                      )
                       ; map(
-                          s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,38,54,45") ; varunion
+                          s-step(
+                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                          , "54"
+                          , "38"
+                          , "54"
+                          , "45"
+                          )
+                          ; varunion
                         )
                    |}
-               )) \VarUnion/ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "54,63,54,64") ; id))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-if-then", "51,2,54,65")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-if-then", "51,2,54,65")
+               )) \VarUnion/ (s-step(
+                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                              , "54"
+                              , "63"
+                              , "54"
+                              , "64"
+                              )
+                              ; id))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-if-then"
+      , "51"
+      , "2"
+      , "54"
+      , "65"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-if-then"
+      , "51"
+      , "2"
+      , "54"
+      , "65"
+      )
       ; fail
 
   varunion-if-then-else =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-if-then-else", "56,2,60,55")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "57,4,60,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "57,4,57,27")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-if-then-else"
+    , "56"
+    , "2"
+    , "60"
+    , "55"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "57"
+      , "4"
+      , "60"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "57"
+       , "4"
+       , "57"
+       , "27"
+       )
        ; IfElse(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "57,11,57,18") ; varunion
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "57,21,57,22") ; id
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "57,25,57,26") ; id
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "57"
+           , "11"
+           , "57"
+           , "18"
+           )
+           ; varunion
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "57"
+           , "21"
+           , "57"
+           , "22"
+           )
+           ; id
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "57"
+           , "25"
+           , "57"
+           , "26"
+           )
+           ; id
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "58,7,60,54")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "58,7,58,22")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "58,7,58,12") ; EvalIf)
-       ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "58,15,58,22")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "58"
+      , "7"
+      , "60"
+      , "54"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "58"
+       , "7"
+       , "58"
+       , "22"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "58"
+          , "7"
+          , "58"
+          , "12"
+          )
+          ; EvalIf)
+       ; s-step(
+         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+         , "58"
+         , "15"
+         , "58"
+         , "22"
+         )
        ; varunion
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,10,60,54")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,10,59,54")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "59"
+          , "10"
+          , "60"
+          , "54"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+             , "59"
+             , "10"
+             , "59"
+             , "54"
+             )
              ; IfElse(
-                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,17,59,18") ; id
-               , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,21,59,49")
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                 , "59"
+                 , "17"
+                 , "59"
+                 , "18"
+                 )
+                 ; id
+               , s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                 , "59"
+                 , "21"
+                 , "59"
+                 , "49"
+                 )
                  ; {|VarUnion:
-                      s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,34,59,46")
+                      s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                      , "59"
+                      , "34"
+                      , "59"
+                      , "46"
+                      )
                       ; map(
-                          s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,38,59,45") ; varunion
+                          s-step(
+                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                          , "59"
+                          , "38"
+                          , "59"
+                          , "45"
+                          )
+                          ; varunion
                         )
                    |}
-               , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "59,52,59,53") ; id
-               )) \VarUnion/ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "60,10,60,54")
+               , s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                 , "59"
+                 , "52"
+                 , "59"
+                 , "53"
+                 )
+                 ; id
+               )) \VarUnion/ (s-step(
+                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                              , "60"
+                              , "10"
+                              , "60"
+                              , "54"
+                              )
                               ; IfElse(
-                                  s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "60,17,60,18") ; id
-                                , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "60,21,60,22") ; id
-                                , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "60,25,60,53")
+                                  s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                  , "60"
+                                  , "17"
+                                  , "60"
+                                  , "18"
+                                  )
+                                  ; id
+                                , s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                  , "60"
+                                  , "21"
+                                  , "60"
+                                  , "22"
+                                  )
+                                  ; id
+                                , s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                  , "60"
+                                  , "25"
+                                  , "60"
+                                  , "53"
+                                  )
                                   ; {|VarUnion:
-                                       s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "60,38,60,50")
+                                       s-step(
+                                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                       , "60"
+                                       , "38"
+                                       , "60"
+                                       , "50"
+                                       )
                                        ; map(
-                                           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "60,42,60,49") ; varunion
+                                           s-step(
+                                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                           , "60"
+                                           , "42"
+                                           , "60"
+                                           , "49"
+                                           )
+                                           ; varunion
                                          )
                                     |}
                                 )))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-if-then-else", "56,2,60,55")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-if-then-else", "56,2,60,55")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-if-then-else"
+      , "56"
+      , "2"
+      , "60"
+      , "55"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-if-then-else"
+      , "56"
+      , "2"
+      , "60"
+      , "55"
+      )
       ; fail
 
   varunion-while =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-while", "62,2,64,65")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "63,4,64,65")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "63,4,63,15")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-while"
+    , "62"
+    , "2"
+    , "64"
+    , "65"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "63"
+      , "4"
+      , "64"
+      , "65"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "63"
+       , "4"
+       , "63"
+       , "15"
+       )
        ; ?While(_, _))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "64,7,64,64")
-    ; \VarUnion/* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "64,19,64,64")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "64"
+      , "7"
+      , "64"
+      , "64"
+      )
+    ; \VarUnion/* (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                   , "64"
+                   , "19"
+                   , "64"
+                   , "64"
+                   )
                    ; While(
-                       s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "64,25,64,32") ; varunion
-                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "64,35,64,63")
+                       s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                       , "64"
+                       , "25"
+                       , "64"
+                       , "32"
+                       )
+                       ; varunion
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                       , "64"
+                       , "35"
+                       , "64"
+                       , "63"
+                       )
                        ; {|VarUnion:
-                            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "64,48,64,60")
+                            s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                            , "64"
+                            , "48"
+                            , "64"
+                            , "60"
+                            )
                             ; map(
-                                s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "64,52,64,59") ; varunion
+                                s-step(
+                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                , "64"
+                                , "52"
+                                , "64"
+                                , "59"
+                                )
+                                ; varunion
                               )
                          |}
                      ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-while", "62,2,64,65")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-while", "62,2,64,65")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-while"
+      , "62"
+      , "2"
+      , "64"
+      , "65"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-while"
+      , "62"
+      , "2"
+      , "64"
+      , "65"
+      )
       ; fail
 
   varunion-labeled-while =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-labeled-while", "66,2,69,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "67,4,69,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-labeled-while"
+    , "66"
+    , "2"
+    , "69"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "67"
+      , "4"
+      , "69"
+      , "4"
+      )
     ; Labeled(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "67,12,67,17") ; ?label
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "68,6,68,91")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "67"
+        , "12"
+        , "67"
+        , "17"
+        )
+        ; ?label
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "68"
+        , "6"
+        , "68"
+        , "91"
+        )
         ; dr-fix-and-union(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "68,23,68,68")
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+            , "68"
+            , "23"
+            , "68"
+            , "68"
+            )
             ; While(
-                s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "68,29,68,36") ; varunion
-              , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "68,39,68,67")
+                s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                , "68"
+                , "29"
+                , "68"
+                , "36"
+                )
+                ; varunion
+              , s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                , "68"
+                , "39"
+                , "68"
+                , "67"
+                )
                 ; {|VarUnion:
-                     s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "68,52,68,64")
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                     , "68"
+                     , "52"
+                     , "68"
+                     , "64"
+                     )
                      ; map(
-                         s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "68,56,68,63") ; varunion
+                         s-step(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                         , "68"
+                         , "56"
+                         , "68"
+                         , "63"
+                         )
+                         ; varunion
                        )
                   |}
               )
@@ -260,207 +1248,944 @@ strategies
           , label
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-labeled-while", "66,2,69,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-labeled-while", "66,2,69,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-labeled-while"
+      , "66"
+      , "2"
+      , "69"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-labeled-while"
+      , "66"
+      , "2"
+      , "69"
+      , "4"
+      )
       ; fail
 
   varunion-for =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-for", "71,2,74,65")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "72,4,74,65")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "72,4,72,34")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-for"
+    , "71"
+    , "2"
+    , "74"
+    , "65"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "72"
+      , "4"
+      , "74"
+      , "65"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "72"
+       , "4"
+       , "72"
+       , "34"
+       )
        ; For(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "72,8,72,9") ; ?x
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "72,12,72,19") ; varunion
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "72,22,72,29") ; varunion
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "72,32,72,33") ; id
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "72"
+           , "8"
+           , "72"
+           , "9"
+           )
+           ; ?x
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "72"
+           , "12"
+           , "72"
+           , "19"
+           )
+           ; varunion
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "72"
+           , "22"
+           , "72"
+           , "29"
+           )
+           ; varunion
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "72"
+           , "32"
+           , "72"
+           , "33"
+           )
+           ; id
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "73,6,74,65")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "73,6,73,34")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "73"
+      , "6"
+      , "74"
+      , "65"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "73"
+       , "6"
+       , "73"
+       , "34"
+       )
        ; rules ( VarUnion.x :-
                    Var(x) ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,7,74,64")
-    ; \VarUnion/* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,19,74,64")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "74"
+      , "7"
+      , "74"
+      , "64"
+      )
+    ; \VarUnion/* (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                   , "74"
+                   , "19"
+                   , "74"
+                   , "64"
+                   )
                    ; For(
-                       s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,23,74,24") ; id
-                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,27,74,28") ; id
-                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,31,74,32") ; id
-                     , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,35,74,63")
+                       s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                       , "74"
+                       , "23"
+                       , "74"
+                       , "24"
+                       )
+                       ; id
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                       , "74"
+                       , "27"
+                       , "74"
+                       , "28"
+                       )
+                       ; id
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                       , "74"
+                       , "31"
+                       , "74"
+                       , "32"
+                       )
+                       ; id
+                     , s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                       , "74"
+                       , "35"
+                       , "74"
+                       , "63"
+                       )
                        ; {|VarUnion:
-                            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,48,74,60")
+                            s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                            , "74"
+                            , "48"
+                            , "74"
+                            , "60"
+                            )
                             ; map(
-                                s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "74,52,74,59") ; varunion
+                                s-step(
+                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                                , "74"
+                                , "52"
+                                , "74"
+                                , "59"
+                                )
+                                ; varunion
                               )
                          |}
                      ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-for", "71,2,74,65")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-for", "71,2,74,65")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-for"
+      , "71"
+      , "2"
+      , "74"
+      , "65"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-for"
+      , "71"
+      , "2"
+      , "74"
+      , "65"
+      )
       ; fail
 
   varunion-labeled-stm =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-labeled-stm", "76,2,79,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "77,4,79,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-labeled-stm"
+    , "76"
+    , "2"
+    , "79"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "77"
+      , "4"
+      , "79"
+      , "4"
+      )
     ; Labeled(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "77,12,77,17") ; ?label
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "78,6,78,51")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "77"
+        , "12"
+        , "77"
+        , "17"
+        )
+        ; ?label
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "78"
+        , "6"
+        , "78"
+        , "51"
+        )
         ; dr-label-union(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "78,21,78,28") ; varunion
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+            , "78"
+            , "21"
+            , "78"
+            , "28"
+            )
+            ; varunion
           | ["VarUnion"]
           , label
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-labeled-stm", "76,2,79,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-labeled-stm", "76,2,79,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-labeled-stm"
+      , "76"
+      , "2"
+      , "79"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-labeled-stm"
+      , "76"
+      , "2"
+      , "79"
+      , "4"
+      )
       ; fail
 
   varunion-break =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-break", "81,2,83,19")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "82,4,83,19")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "82,4,82,15")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-break"
+    , "81"
+    , "2"
+    , "83"
+    , "19"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "82"
+      , "4"
+      , "83"
+      , "19"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "82"
+       , "4"
+       , "82"
+       , "15"
+       )
        ; ?Break(None))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "83,6,83,19")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "83"
+      , "6"
+      , "83"
+      , "19"
+      )
     ; break-VarUnion
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-break", "81,2,83,19")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-break", "81,2,83,19")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-break"
+      , "81"
+      , "2"
+      , "83"
+      , "19"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-break"
+      , "81"
+      , "2"
+      , "83"
+      , "19"
+      )
       ; fail
 
   varunion-break-label =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-break-label", "85,2,87,36")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "86,4,87,36")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "86,4,86,22")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-break-label"
+    , "85"
+    , "2"
+    , "87"
+    , "36"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "86"
+      , "4"
+      , "87"
+      , "36"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "86"
+       , "4"
+       , "86"
+       , "22"
+       )
        ; ?Break(Some(label)))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "87,6,87,36")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "87"
+      , "6"
+      , "87"
+      , "36"
+      )
     ; break-to-label-VarUnion(|label)
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-break-label", "85,2,87,36")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-break-label", "85,2,87,36")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-break-label"
+      , "85"
+      , "2"
+      , "87"
+      , "36"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-break-label"
+      , "85"
+      , "2"
+      , "87"
+      , "36"
+      )
       ; fail
 
   varunion-continue =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-continue", "89,2,91,22")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "90,4,91,22")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "90,4,90,18")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-continue"
+    , "89"
+    , "2"
+    , "91"
+    , "22"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "90"
+      , "4"
+      , "91"
+      , "22"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "90"
+       , "4"
+       , "90"
+       , "18"
+       )
        ; ?Continue(None))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "91,6,91,22")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "91"
+      , "6"
+      , "91"
+      , "22"
+      )
     ; continue-VarUnion
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-continue", "89,2,91,22")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-continue", "89,2,91,22")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-continue"
+      , "89"
+      , "2"
+      , "91"
+      , "22"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-continue"
+      , "89"
+      , "2"
+      , "91"
+      , "22"
+      )
       ; fail
 
   varunion-continue-label =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-continue-label", "93,2,95,39")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "94,4,95,39")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "94,4,94,25")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-continue-label"
+    , "93"
+    , "2"
+    , "95"
+    , "39"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "94"
+      , "4"
+      , "95"
+      , "39"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "94"
+       , "4"
+       , "94"
+       , "25"
+       )
        ; ?Continue(Some(label)))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "95,6,95,39")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "95"
+      , "6"
+      , "95"
+      , "39"
+      )
     ; continue-to-label-VarUnion(|label)
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-continue-label", "93,2,95,39")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-continue-label", "93,2,95,39")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-continue-label"
+      , "93"
+      , "2"
+      , "95"
+      , "39"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-continue-label"
+      , "93"
+      , "2"
+      , "95"
+      , "39"
+      )
       ; fail
 
   varunion-try-catch =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-try-catch", "97,2,103,29")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "98,4,103,29")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "98,4,98,25")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-try-catch"
+    , "97"
+    , "2"
+    , "103"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "98"
+      , "4"
+      , "103"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "98"
+       , "4"
+       , "98"
+       , "25"
+       )
        ; ?Try(tblock, cclauses))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "99,6,103,29")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "99,6,99,75")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "99"
+      , "6"
+      , "103"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "99"
+       , "6"
+       , "99"
+       , "75"
+       )
        ; dr-init-exception-block(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "99,30,99,33") ; fail
-         | <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "99,38,99,51") ; get-catch-tags> cclauses
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "99"
+           , "30"
+           , "99"
+           , "33"
+           )
+           ; fail
+         | <s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+            , "99"
+            , "38"
+            , "99"
+            , "51"
+            )
+            ; get-catch-tags> cclauses
          , ["VarUnion"]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "100,6,103,29")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "100,6,100,32")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "100,6,100,21")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "100,7,100,14") ; varunion)> tblock) => tblock')
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "101,6,103,29")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "101,6,101,81")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "101,6,101,68")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "101,7,101,59")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "100"
+      , "6"
+      , "103"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "100"
+       , "6"
+       , "100"
+       , "32"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "100"
+          , "6"
+          , "100"
+          , "21"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "100"
+              , "7"
+              , "100"
+              , "14"
+              )
+              ; varunion)> tblock) => tblock')
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "101"
+      , "6"
+      , "103"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "101"
+       , "6"
+       , "101"
+       , "81"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "101"
+          , "6"
+          , "101"
+          , "68"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "101"
+              , "7"
+              , "101"
+              , "59"
+              )
               ; map(
-                  s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "101,11,101,58")
+                  s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                  , "101"
+                  , "11"
+                  , "101"
+                  , "58"
+                  )
                   ; dr-complete-catch-union(
-                      s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "101,35,101,42") ; varunion
+                      s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                      , "101"
+                      , "35"
+                      , "101"
+                      , "42"
+                      )
+                      ; varunion
                     | ["VarUnion"]
                     )
                 ))> cclauses) => cclauses')
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "102,6,103,29")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "102,6,102,53")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "102"
+      , "6"
+      , "103"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "102"
+       , "6"
+       , "102"
+       , "53"
+       )
        ; dr-complete-exception-block-union(|["VarUnion"]))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "103,6,103,29")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "103"
+      , "6"
+      , "103"
+      , "29"
+      )
     ; !Try(tblock', cclauses')
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-try-catch", "97,2,103,29")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-try-catch", "97,2,103,29")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-try-catch"
+      , "97"
+      , "2"
+      , "103"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-try-catch"
+      , "97"
+      , "2"
+      , "103"
+      , "29"
+      )
       ; fail
 
   varunion-try-catch-finally =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-try-catch-finally", "105,2,112,38")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "106,4,112,38")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "106,4,106,33")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-try-catch-finally"
+    , "105"
+    , "2"
+    , "112"
+    , "38"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "106"
+      , "4"
+      , "112"
+      , "38"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "106"
+       , "4"
+       , "106"
+       , "33"
+       )
        ; ?Try(tblock, cclauses, fblock))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "107,6,112,38")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "107,6,107,73")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "107"
+      , "6"
+      , "112"
+      , "38"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "107"
+       , "6"
+       , "107"
+       , "73"
+       )
        ; dr-init-exception-block(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "107,30,107,31") ; id
-         | <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "107,36,107,49") ; get-catch-tags> cclauses
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+           , "107"
+           , "30"
+           , "107"
+           , "31"
+           )
+           ; id
+         | <s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+            , "107"
+            , "36"
+            , "107"
+            , "49"
+            )
+            ; get-catch-tags> cclauses
          , ["VarUnion"]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "108,6,112,38")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "108,6,108,32")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "108,6,108,21")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "108,7,108,14") ; varunion)> tblock) => tblock')
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "109,6,112,38")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "109,6,109,81")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "109,6,109,68")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "109,7,109,59")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "108"
+      , "6"
+      , "112"
+      , "38"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "108"
+       , "6"
+       , "108"
+       , "32"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "108"
+          , "6"
+          , "108"
+          , "21"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "108"
+              , "7"
+              , "108"
+              , "14"
+              )
+              ; varunion)> tblock) => tblock')
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "109"
+      , "6"
+      , "112"
+      , "38"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "109"
+       , "6"
+       , "109"
+       , "81"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "109"
+          , "6"
+          , "109"
+          , "68"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "109"
+              , "7"
+              , "109"
+              , "59"
+              )
               ; map(
-                  s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "109,11,109,58")
+                  s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                  , "109"
+                  , "11"
+                  , "109"
+                  , "58"
+                  )
                   ; dr-complete-catch-union(
-                      s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "109,35,109,42") ; varunion
+                      s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                      , "109"
+                      , "35"
+                      , "109"
+                      , "42"
+                      )
+                      ; varunion
                     | ["VarUnion"]
                     )
                 ))> cclauses) => cclauses')
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "110,6,112,38")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "110,6,110,74")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "110,6,110,63")
-          ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "110,7,110,56")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "110"
+      , "6"
+      , "112"
+      , "38"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "110"
+       , "6"
+       , "110"
+       , "74"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+          , "110"
+          , "6"
+          , "110"
+          , "63"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "110"
+              , "7"
+              , "110"
+              , "56"
+              )
               ; dr-complete-finally-union(
-                  s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "110,33,110,40") ; varunion
+                  s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+                  , "110"
+                  , "33"
+                  , "110"
+                  , "40"
+                  )
+                  ; varunion
                 | ["VarUnion"]
                 ))> fblock) => fblock')
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "111,6,112,38")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "111,6,111,53")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "111"
+      , "6"
+      , "112"
+      , "38"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "111"
+       , "6"
+       , "111"
+       , "53"
+       )
        ; dr-complete-exception-block-union(|["VarUnion"]))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "112,6,112,38")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "112"
+      , "6"
+      , "112"
+      , "38"
+      )
     ; !Try(tblock', cclauses', fblock')
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-try-catch-finally", "105,2,112,38")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-try-catch-finally", "105,2,112,38")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-try-catch-finally"
+      , "105"
+      , "2"
+      , "112"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-try-catch-finally"
+      , "105"
+      , "2"
+      , "112"
+      , "38"
+      )
       ; fail
 
   get-catch-tags =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "get-catch-tags", "114,2,115,26")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "115,4,115,26")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "get-catch-tags"
+    , "114"
+    , "2"
+    , "115"
+    , "26"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "115"
+      , "4"
+      , "115"
+      , "26"
+      )
     ; map(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "115,8,115,25")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "115"
+        , "8"
+        , "115"
+        , "25"
+        )
         ; ?Catch(
              _
-           , <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "115,19,115,20") ; id>
+           , <s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+              , "115"
+              , "19"
+              , "115"
+              , "20"
+              )
+              ; id>
            , _
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "get-catch-tags", "114,2,115,26")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "get-catch-tags", "114,2,115,26")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "get-catch-tags"
+      , "114"
+      , "2"
+      , "115"
+      , "26"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "get-catch-tags"
+      , "114"
+      , "2"
+      , "115"
+      , "26"
+      )
       ; fail
 
   varunion-throw =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-throw", "117,2,119,27")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "118,4,119,27")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "118,4,118,22")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+    , "varunion-throw"
+    , "117"
+    , "2"
+    , "119"
+    , "27"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "118"
+      , "4"
+      , "119"
+      , "27"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+       , "118"
+       , "4"
+       , "118"
+       , "22"
+       )
        ; ?Throw(TypeName(t)))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "119,6,119,27")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "119"
+      , "6"
+      , "119"
+      , "27"
+      )
     ; throw-VarUnion(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "119,21,119,22") ; eq
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+        , "119"
+        , "21"
+        , "119"
+        , "22"
+        )
+        ; eq
       | t
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-throw", "117,2,119,27")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str", "varunion-throw", "117,2,119,27")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-throw"
+      , "117"
+      , "2"
+      , "119"
+      , "27"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-varunion.str"
+      , "varunion-throw"
+      , "117"
+      , "2"
+      , "119"
+      , "27"
+      )
       ; fail

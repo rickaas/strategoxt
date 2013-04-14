@@ -76,69 +76,258 @@ overlays
 rules
 
   Dist :
-    Mul(x, Add(y, z)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "Dist", "37,2,37,54")> Add(
-                                                                                                                              Mul(x, y)
-                                                                                                                            , Mul(x, z)
-                                                                                                                            )
+    Mul(x, Add(y, z)) -> <r-exit(
+                          | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+                          , "Dist"
+                          , "37"
+                          , "2"
+                          , "37"
+                          , "54"
+                          )> Add(
+                               Mul(x, y)
+                             , Mul(x, z)
+                             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "Dist", "37,2,37,54")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "Dist", "37,2,37,54")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+             , "Dist"
+             , "37"
+             , "2"
+             , "37"
+             , "54"
+             )
              ; fail
 
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "main", "41,2,47,4")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "42,4,47,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+    , "main"
+    , "41"
+    , "2"
+    , "47"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "42"
+      , "4"
+      , "47"
+      , "4"
+      )
     ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "42,15,42,29")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "42"
+        , "15"
+        , "42"
+        , "29"
+        )
         ; !"overlay-test"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "43,1,46,13")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "43,1,43,13") ; overlay-test1)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "44,1,46,13")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "44,1,44,13") ; overlay-test2)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "45,1,46,13")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "45,1,45,13") ; overlay-test3)
-        ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "46,1,46,13")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "43"
+        , "1"
+        , "46"
+        , "13"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+           , "43"
+           , "1"
+           , "43"
+           , "13"
+           )
+           ; overlay-test1)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+          , "44"
+          , "1"
+          , "46"
+          , "13"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+           , "44"
+           , "1"
+           , "44"
+           , "13"
+           )
+           ; overlay-test2)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+          , "45"
+          , "1"
+          , "46"
+          , "13"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+           , "45"
+           , "1"
+           , "45"
+           , "13"
+           )
+           ; overlay-test3)
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+          , "46"
+          , "1"
+          , "46"
+          , "13"
+          )
         ; overlay-test4
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "main", "41,2,47,4")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "main", "41,2,47,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "main"
+      , "41"
+      , "2"
+      , "47"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "main"
+      , "41"
+      , "2"
+      , "47"
+      , "4"
+      )
       ; fail
 
   overlay-test1 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test1", "49,2,54,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "50,4,54,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+    , "overlay-test1"
+    , "49"
+    , "2"
+    , "54"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "50"
+      , "4"
+      , "54"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "50,15,50,30")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "50"
+        , "15"
+        , "50"
+        , "30"
+        )
         ; !"overlay-test1"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "51,8,51,18")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "51"
+        , "8"
+        , "51"
+        , "18"
+        )
         ; Add(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "51,12,51,13") ; id
-          , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "51,16,51,17") ; id
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "51"
+            , "12"
+            , "51"
+            , "13"
+            )
+            ; id
+          , s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "51"
+            , "16"
+            , "51"
+            , "17"
+            )
+            ; id
           )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "52,15,52,38")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "52"
+        , "15"
+        , "52"
+        , "38"
+        )
         ; !Add(
              Var("y")
            , Var("z")
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "53,15,53,38")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "53"
+        , "15"
+        , "53"
+        , "38"
+        )
         ; !Add(
              Var("y")
            , Var("z")
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test1", "49,2,54,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test1", "49,2,54,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test1"
+      , "49"
+      , "2"
+      , "54"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test1"
+      , "49"
+      , "2"
+      , "54"
+      , "14"
+      )
       ; fail
 
   overlay-test2 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test2", "56,2,61,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "57,4,61,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+    , "overlay-test2"
+    , "56"
+    , "2"
+    , "61"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "57"
+      , "4"
+      , "61"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "57,15,57,30")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "57"
+        , "15"
+        , "57"
+        , "30"
+        )
         ; !"overlay-test2"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "58,8,58,11") ; Dist
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "59,15,59,53")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "58"
+        , "8"
+        , "58"
+        , "11"
+        )
+        ; Dist
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "59"
+        , "15"
+        , "59"
+        , "53"
+        )
         ; !Mul(
              Var("x")
            , Add(
@@ -146,7 +335,13 @@ strategies
              , Var("z")
              )
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "60,15,60,68")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "60"
+        , "15"
+        , "60"
+        , "68"
+        )
         ; !Add(
              Mul(
                Var("x")
@@ -158,24 +353,97 @@ strategies
              )
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test2", "56,2,61,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test2", "56,2,61,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test2"
+      , "56"
+      , "2"
+      , "61"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test2"
+      , "56"
+      , "2"
+      , "61"
+      , "14"
+      )
       ; fail
 
   overlay-test3 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test3", "63,2,68,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "64,4,68,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+    , "overlay-test3"
+    , "63"
+    , "2"
+    , "68"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "64"
+      , "4"
+      , "68"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "64,15,64,30")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "64"
+        , "15"
+        , "64"
+        , "30"
+        )
         ; !"overlay-test3"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "65,8,65,28")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "65"
+        , "8"
+        , "65"
+        , "28"
+        )
         ; Add(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "65,12,65,15") ; Dist
-          , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "65,18,65,19") ; id
-          , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "65,22,65,23") ; id
-          , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "65,26,65,27") ; id
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "65"
+            , "12"
+            , "65"
+            , "15"
+            )
+            ; Dist
+          , s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "65"
+            , "18"
+            , "65"
+            , "19"
+            )
+            ; id
+          , s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "65"
+            , "22"
+            , "65"
+            , "23"
+            )
+            ; id
+          , s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "65"
+            , "26"
+            , "65"
+            , "27"
+            )
+            ; id
           )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "66,15,66,78")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "66"
+        , "15"
+        , "66"
+        , "78"
+        )
         ; !Add(
              Mul(
                Var("x")
@@ -188,7 +456,13 @@ strategies
            , " "
            , Var("a")
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "67,15,67,93")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "67"
+        , "15"
+        , "67"
+        , "93"
+        )
         ; !Add(
              Add(
                Mul(
@@ -205,22 +479,81 @@ strategies
            , Var("a")
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test3", "63,2,68,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test3", "63,2,68,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test3"
+      , "63"
+      , "2"
+      , "68"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test3"
+      , "63"
+      , "2"
+      , "68"
+      , "14"
+      )
       ; fail
 
   overlay-test4 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test4", "70,2,75,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "71,4,75,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+    , "overlay-test4"
+    , "70"
+    , "2"
+    , "75"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "71"
+      , "4"
+      , "75"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "71,15,71,30")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "71"
+        , "15"
+        , "71"
+        , "30"
+        )
         ; !"overlay-test4"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "72,8,72,20")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "72"
+        , "8"
+        , "72"
+        , "20"
+        )
         ; Add(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "72,12,72,15") ; Dist
-          , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "72,18,72,19") ; id
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "72"
+            , "12"
+            , "72"
+            , "15"
+            )
+            ; Dist
+          , s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+            , "72"
+            , "18"
+            , "72"
+            , "19"
+            )
+            ; id
           )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "73,15,73,78")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "73"
+        , "15"
+        , "73"
+        , "78"
+        )
         ; !Add(
              Mul(
                Var("x")
@@ -233,7 +566,13 @@ strategies
            , ""
            , Var("a")
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "74,15,74,93")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+        , "74"
+        , "15"
+        , "74"
+        , "93"
+        )
         ; !Add(
              Add(
                Mul(
@@ -250,6 +589,20 @@ strategies
            , Var("a")
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test4", "70,2,75,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str", "overlay-test4", "70,2,75,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test4"
+      , "70"
+      , "2"
+      , "75"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/overlay-test.str"
+      , "overlay-test4"
+      , "70"
+      , "2"
+      , "75"
+      , "14"
+      )
       ; fail

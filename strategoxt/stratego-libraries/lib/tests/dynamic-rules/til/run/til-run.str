@@ -11,24 +11,111 @@ imports
 
 strategies
   io-til-run =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "io-til-run", "5,2,6,24")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "6,4,6,24")
-    ; io-wrap(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "6,12,6,23") ; eval-program
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+    , "io-til-run"
+    , "5"
+    , "2"
+    , "6"
+    , "24"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "6"
+      , "4"
+      , "6"
+      , "24"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "io-til-run", "5,2,6,24")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "io-til-run", "5,2,6,24")
+    ; io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+        , "6"
+        , "12"
+        , "6"
+        , "23"
+        )
+        ; eval-program
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "io-til-run"
+      , "5"
+      , "2"
+      , "6"
+      , "24"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "io-til-run"
+      , "5"
+      , "2"
+      , "6"
+      , "24"
+      )
       ; fail
 
   eval-program =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "eval-program", "8,2,10,13")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "9,4,10,13")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "9,4,9,25")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+    , "eval-program"
+    , "8"
+    , "2"
+    , "10"
+    , "13"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "9"
+      , "4"
+      , "10"
+      , "13"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+       , "9"
+       , "4"
+       , "9"
+       , "25"
+       )
        ; ?Program(
-            <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "9,14,9,23") ; eval-stats>
+            <s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+             , "9"
+             , "14"
+             , "9"
+             , "23"
+             )
+             ; eval-stats>
           ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "10,6,10,13")
-    ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "10,7,10,10") ; exit)> 0
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "eval-program", "8,2,10,13")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str", "eval-program", "8,2,10,13")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "10"
+      , "6"
+      , "10"
+      , "13"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+        , "10"
+        , "7"
+        , "10"
+        , "10"
+        )
+        ; exit)> 0
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "eval-program"
+      , "8"
+      , "2"
+      , "10"
+      , "13"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/run/til-run.str"
+      , "eval-program"
+      , "8"
+      , "2"
+      , "10"
+      , "13"
+      )
       ; fail

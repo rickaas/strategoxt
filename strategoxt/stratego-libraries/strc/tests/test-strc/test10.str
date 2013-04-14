@@ -10,22 +10,89 @@ imports
 
 strategies
   foo =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "foo", "6,2,6,37")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "6,8,6,37")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "6,8,6,9") ; ?x)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "6,12,6,37")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+    , "foo"
+    , "6"
+    , "2"
+    , "6"
+    , "37"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "6"
+      , "8"
+      , "6"
+      , "37"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+       , "6"
+       , "8"
+       , "6"
+       , "9"
+       )
+       ; ?x)
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "6"
+      , "12"
+      , "6"
+      , "37"
+      )
     ; rules (
         Foo :
           x -> (x, x)
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "foo", "6,2,6,37")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "foo", "6,2,6,37")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "foo"
+      , "6"
+      , "2"
+      , "6"
+      , "37"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "foo"
+      , "6"
+      , "2"
+      , "6"
+      , "37"
+      )
       ; fail
 
   bar =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "bar", "8,2,8,27")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "8,8,8,27")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+    , "bar"
+    , "8"
+    , "2"
+    , "8"
+    , "27"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "8"
+      , "8"
+      , "8"
+      , "27"
+      )
     ; undefine-Foo(|"baz")
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "bar", "8,2,8,27")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test-strc/test10.str", "bar", "8,2,8,27")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "bar"
+      , "8"
+      , "2"
+      , "8"
+      , "27"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test-strc/test10.str"
+      , "bar"
+      , "8"
+      , "2"
+      , "8"
+      , "27"
+      )
       ; fail

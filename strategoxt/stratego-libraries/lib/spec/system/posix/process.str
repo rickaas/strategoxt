@@ -15,87 +15,404 @@ imports
 
 strategies
   setenv =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "setenv", "22,2,24,54")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "23,4,24,54")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "23,4,23,28")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "setenv"
+    , "22"
+    , "2"
+    , "24"
+    , "54"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "23"
+      , "4"
+      , "24"
+      , "54"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+       , "23"
+       , "4"
+       , "23"
+       , "28"
+       )
        ; ?(name, value, overwrite))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "24,6,24,54")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "24,12,24,53")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "24"
+      , "6"
+      , "24"
+      , "54"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+            , "24"
+            , "12"
+            , "24"
+            , "53"
+            )
             ; prim("SSL_setenv", name, value, overwrite))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "setenv", "22,2,24,54")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "setenv", "22,2,24,54")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "setenv"
+      , "22"
+      , "2"
+      , "24"
+      , "54"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "setenv"
+      , "22"
+      , "2"
+      , "24"
+      , "54"
+      )
       ; fail
 
 
 strategies
   get-pid =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "get-pid", "33,2,34,22")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "34,4,34,22")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "get-pid"
+    , "33"
+    , "2"
+    , "34"
+    , "22"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "34"
+      , "4"
+      , "34"
+      , "22"
+      )
     ; prim("SSL_get_pid")
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "get-pid", "33,2,34,22")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "get-pid", "33,2,34,22")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "get-pid"
+      , "33"
+      , "2"
+      , "34"
+      , "22"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "get-pid"
+      , "33"
+      , "2"
+      , "34"
+      , "22"
+      )
       ; fail
 
 
 strategies
   fork =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "fork", "56,2,57,19")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "57,4,57,19")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "fork"
+    , "56"
+    , "2"
+    , "57"
+    , "19"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "57"
+      , "4"
+      , "57"
+      , "19"
+      )
     ; prim("SSL_fork")
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "fork", "56,2,57,19")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "fork", "56,2,57,19")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "fork"
+      , "56"
+      , "2"
+      , "57"
+      , "19"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "fork"
+      , "56"
+      , "2"
+      , "57"
+      , "19"
+      )
       ; fail
 
   execvp =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execvp", "65,2,68,83")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "66,4,68,83")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "66,4,66,16")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "execvp"
+    , "65"
+    , "2"
+    , "68"
+    , "83"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "66"
+      , "4"
+      , "68"
+      , "83"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+       , "66"
+       , "4"
+       , "66"
+       , "16"
+       )
        ; ?(file, argv))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "67,6,68,83")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "67,6,67,35")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "67"
+      , "6"
+      , "68"
+      , "83"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+       , "67"
+       , "6"
+       , "67"
+       , "35"
+       )
        ; prim("SSL_execvp", file, argv))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,6,68,83")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,12,68,82")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,13,68,38")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,13,68,24") ; conc-strings)
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,27,68,38")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,27,68,32") ; perror)
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "68,35,68,38")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "68"
+      , "6"
+      , "68"
+      , "83"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+            , "68"
+            , "12"
+            , "68"
+            , "82"
+            )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                , "68"
+                , "13"
+                , "68"
+                , "38"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                   , "68"
+                   , "13"
+                   , "68"
+                   , "24"
+                   )
+                   ; conc-strings)
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                  , "68"
+                  , "27"
+                  , "68"
+                  , "38"
+                  )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                   , "68"
+                   , "27"
+                   , "68"
+                   , "32"
+                   )
+                   ; perror)
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                  , "68"
+                  , "35"
+                  , "68"
+                  , "38"
+                  )
                 ; fail)> ("SSL/execvp: Cannot execute file ", file))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execvp", "65,2,68,83")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execvp", "65,2,68,83")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "execvp"
+      , "65"
+      , "2"
+      , "68"
+      , "83"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "execvp"
+      , "65"
+      , "2"
+      , "68"
+      , "83"
+      )
       ; fail
 
   execv =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execv", "77,2,80,82")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "78,4,80,82")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "78,4,78,16")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "execv"
+    , "77"
+    , "2"
+    , "80"
+    , "82"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "78"
+      , "4"
+      , "80"
+      , "82"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+       , "78"
+       , "4"
+       , "78"
+       , "16"
+       )
        ; ?(file, argv))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "79,6,80,82")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "79,6,79,34")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "79"
+      , "6"
+      , "80"
+      , "82"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+       , "79"
+       , "6"
+       , "79"
+       , "34"
+       )
        ; prim("SSL_execv", file, argv))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,6,80,82")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,12,80,81")
-            ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,13,80,38")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,13,80,24") ; conc-strings)
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,27,80,38")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,27,80,32") ; perror)
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "80,35,80,38")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "80"
+      , "6"
+      , "80"
+      , "82"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+            , "80"
+            , "12"
+            , "80"
+            , "81"
+            )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                , "80"
+                , "13"
+                , "80"
+                , "38"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                   , "80"
+                   , "13"
+                   , "80"
+                   , "24"
+                   )
+                   ; conc-strings)
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                  , "80"
+                  , "27"
+                  , "80"
+                  , "38"
+                  )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                   , "80"
+                   , "27"
+                   , "80"
+                   , "32"
+                   )
+                   ; perror)
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                  , "80"
+                  , "35"
+                  , "80"
+                  , "38"
+                  )
                 ; fail)> ("SSL/execv: Cannot execute file ", file))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execv", "77,2,80,82")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "execv", "77,2,80,82")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "execv"
+      , "77"
+      , "2"
+      , "80"
+      , "82"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "execv"
+      , "77"
+      , "2"
+      , "80"
+      , "82"
+      )
       ; fail
 
 
 strategies
   waitpid =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "waitpid", "90,2,91,33")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "91,4,91,33")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "91,4,91,7") ; ?pid)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "91,10,91,33")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "waitpid"
+    , "90"
+    , "2"
+    , "91"
+    , "33"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "91"
+      , "4"
+      , "91"
+      , "33"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+       , "91"
+       , "4"
+       , "91"
+       , "7"
+       )
+       ; ?pid)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "91"
+      , "10"
+      , "91"
+      , "33"
+      )
     ; prim("SSL_waitpid", pid)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "waitpid", "90,2,91,33")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "waitpid", "90,2,91,33")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "waitpid"
+      , "90"
+      , "2"
+      , "91"
+      , "33"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "waitpid"
+      , "90"
+      , "2"
+      , "91"
+      , "33"
+      )
       ; fail
 
 
@@ -106,18 +423,82 @@ signature
 
 strategies
   kill =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "kill", "115,2,119,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "116,4,119,4")
-    ; where(s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,6,118,31")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,6,117,39")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+    , "kill"
+    , "115"
+    , "2"
+    , "119"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "116"
+      , "4"
+      , "119"
+      , "4"
+      )
+    ; where(s-step(
+            | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+            , "117"
+            , "6"
+            , "118"
+            , "31"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+               , "117"
+               , "6"
+               , "117"
+               , "39"
+               )
                ; ?( pid
-                  , <s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,14,117,37")
-                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,14,117,31") ; number-from-signal)
-                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "117,34,117,37")
+                  , <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                     , "117"
+                     , "14"
+                     , "117"
+                     , "37"
+                     )
+                     ; (s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                        , "117"
+                        , "14"
+                        , "117"
+                        , "31"
+                        )
+                        ; number-from-signal)
+                     ; s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+                       , "117"
+                       , "34"
+                       , "117"
+                       , "37"
+                       )
                      ; ?sig>
                   ))
-            ; s-step(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "118,6,118,31")
+            ; s-step(
+              | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+              , "118"
+              , "6"
+              , "118"
+              , "31"
+              )
             ; prim("SSL_kill", pid, sig))
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "kill", "115,2,119,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/system/posix/process.str", "kill", "115,2,119,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "kill"
+      , "115"
+      , "2"
+      , "119"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/system/posix/process.str"
+      , "kill"
+      , "115"
+      , "2"
+      , "119"
+      , "4"
+      )
       ; fail

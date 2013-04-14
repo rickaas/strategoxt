@@ -10,12 +10,52 @@ imports
 
 strategies
   main-test21 =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc1/test21.str", "main-test21", "5,3,5,53")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test21.str", "5,17,5,53")
-    ; try(
-        s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test21.str", "5,21,5,52")
-        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc1/test21.str", "5,22,5,33") ; ReadFromFile)> "NonExistentFile"
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/test/strc1/test21.str"
+    , "main-test21"
+    , "5"
+    , "3"
+    , "5"
+    , "53"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test21.str"
+      , "5"
+      , "17"
+      , "5"
+      , "53"
       )
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test21.str", "main-test21", "5,3,5,53")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc1/test21.str", "main-test21", "5,3,5,53")
+    ; try(
+        s-step(
+        | "strategoxt/stratego-libraries/java-backend/test/strc1/test21.str"
+        , "5"
+        , "21"
+        , "5"
+        , "52"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/java-backend/test/strc1/test21.str"
+            , "5"
+            , "22"
+            , "5"
+            , "33"
+            )
+            ; ReadFromFile)> "NonExistentFile"
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test21.str"
+      , "main-test21"
+      , "5"
+      , "3"
+      , "5"
+      , "53"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/strc1/test21.str"
+      , "main-test21"
+      , "5"
+      , "3"
+      , "5"
+      , "53"
+      )
       ; fail

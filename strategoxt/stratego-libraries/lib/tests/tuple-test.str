@@ -10,66 +10,234 @@ imports
 
 strategies
   main-tuple-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "main-tuple-test", "5,2,9,5")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "6,4,9,5")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+    , "main-tuple-test"
+    , "5"
+    , "2"
+    , "9"
+    , "5"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "6"
+      , "4"
+      , "9"
+      , "5"
+      )
     ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "6,15,6,27")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "6"
+        , "15"
+        , "6"
+        , "27"
+        )
         ; !"tuple-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "7,1,8,23")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "7,1,7,14") ; tuple-zip-test)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "8,8,8,23")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "7"
+        , "1"
+        , "8"
+        , "23"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+           , "7"
+           , "1"
+           , "7"
+           , "14"
+           )
+           ; tuple-zip-test)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+          , "8"
+          , "8"
+          , "8"
+          , "23"
+          )
         ; tuple-unzip-test
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "main-tuple-test", "5,2,9,5")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "main-tuple-test", "5,2,9,5")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "main-tuple-test"
+      , "5"
+      , "2"
+      , "9"
+      , "5"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "main-tuple-test"
+      , "5"
+      , "2"
+      , "9"
+      , "5"
+      )
       ; fail
 
   tuple-zip-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "tuple-zip-test", "11,2,16,14")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "12,4,16,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+    , "tuple-zip-test"
+    , "11"
+    , "2"
+    , "16"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "12"
+      , "4"
+      , "16"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "12,15,12,31")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "12"
+        , "15"
+        , "12"
+        , "31"
+        )
         ; !"tuple-zip-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "13,15,13,27")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "13"
+        , "15"
+        , "13"
+        , "27"
+        )
         ; tuple-zip(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "13,25,13,26") ; id
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+            , "13"
+            , "25"
+            , "13"
+            , "26"
+            )
+            ; id
           )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "14,15,14,42")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "14"
+        , "15"
+        , "14"
+        , "42"
+        )
         ; !( [1, 2, 3]
            , [4, 5, 6]
            , [7, 8, 9]
            )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "15,15,15,42")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "15"
+        , "15"
+        , "15"
+        , "42"
+        )
         ; ![ (1, 4, 7)
            , (2, 5, 8)
            , (3, 6, 9)
            ]
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "tuple-zip-test", "11,2,16,14")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "tuple-zip-test", "11,2,16,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "tuple-zip-test"
+      , "11"
+      , "2"
+      , "16"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "tuple-zip-test"
+      , "11"
+      , "2"
+      , "16"
+      , "14"
+      )
       ; fail
 
   tuple-unzip-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "tuple-unzip-test", "18,2,23,14")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "19,4,23,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+    , "tuple-unzip-test"
+    , "18"
+    , "2"
+    , "23"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "19"
+      , "4"
+      , "23"
+      , "14"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "19,15,19,33")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "19"
+        , "15"
+        , "19"
+        , "33"
+        )
         ; !"tuple-unzip-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "20,15,20,29")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "20"
+        , "15"
+        , "20"
+        , "29"
+        )
         ; tuple-unzip(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "20,27,20,28") ; id
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+            , "20"
+            , "27"
+            , "20"
+            , "28"
+            )
+            ; id
           )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "21,15,21,42")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "21"
+        , "15"
+        , "21"
+        , "42"
+        )
         ; ![ (1, 4, 7)
            , (2, 5, 8)
            , (3, 6, 9)
            ]
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "22,15,22,42")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+        , "22"
+        , "15"
+        , "22"
+        , "42"
+        )
         ; !( [1, 2, 3]
            , [4, 5, 6]
            , [7, 8, 9]
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "tuple-unzip-test", "18,2,23,14")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/tuple-test.str", "tuple-unzip-test", "18,2,23,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "tuple-unzip-test"
+      , "18"
+      , "2"
+      , "23"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/tuple-test.str"
+      , "tuple-unzip-test"
+      , "18"
+      , "2"
+      , "23"
+      , "14"
+      )
       ; fail

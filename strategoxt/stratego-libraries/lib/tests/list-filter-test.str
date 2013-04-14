@@ -10,63 +10,230 @@ imports
 
 strategies
   main-list-filter-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "main-list-filter-test", "5,2,9,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "6,4,9,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+    , "main-list-filter-test"
+    , "5"
+    , "2"
+    , "9"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "6"
+      , "4"
+      , "9"
+      , "4"
+      )
     ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "6,15,6,33")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "6"
+        , "15"
+        , "6"
+        , "33"
+        )
         ; !"list-filter-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "7,6,8,10")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "7,6,7,10") ; test1)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "8,6,8,10")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "7"
+        , "6"
+        , "8"
+        , "10"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+           , "7"
+           , "6"
+           , "7"
+           , "10"
+           )
+           ; test1)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+          , "8"
+          , "6"
+          , "8"
+          , "10"
+          )
         ; test2
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "main-list-filter-test", "5,2,9,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "main-list-filter-test", "5,2,9,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "main-list-filter-test"
+      , "5"
+      , "2"
+      , "9"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "main-list-filter-test"
+      , "5"
+      , "2"
+      , "9"
+      , "4"
+      )
       ; fail
 
   test1 =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "test1", "11,2,16,1")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "12,4,16,1")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+    , "test1"
+    , "11"
+    , "2"
+    , "16"
+    , "1"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "12"
+      , "4"
+      , "16"
+      , "1"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "12,15,12,22")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "12"
+        , "15"
+        , "12"
+        , "22"
+        )
         ; !"test1"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "13,3,13,18")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "13"
+        , "3"
+        , "13"
+        , "18"
+        )
         ; filter(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "13,10,13,17")
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+            , "13"
+            , "10"
+            , "13"
+            , "17"
+            )
             ; ?("a", _)
           )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "14,3,14,40")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "14"
+        , "3"
+        , "14"
+        , "40"
+        )
         ; ![ ("b", 0)
            , ("a", "b")
            , ("b", "c")
            , ("a", 1)
            ]
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "15,3,15,22")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "15"
+        , "3"
+        , "15"
+        , "22"
+        )
         ; ![ ("a", "b")
            , ("a", 1)
            ]
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "test1", "11,2,16,1")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "test1", "11,2,16,1")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "test1"
+      , "11"
+      , "2"
+      , "16"
+      , "1"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "test1"
+      , "11"
+      , "2"
+      , "16"
+      , "1"
+      )
       ; fail
 
   test2 =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "test2", "18,2,23,1")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "19,4,23,1")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+    , "test2"
+    , "18"
+    , "2"
+    , "23"
+    , "1"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "19"
+      , "4"
+      , "23"
+      , "1"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "19,15,19,22")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "19"
+        , "15"
+        , "19"
+        , "22"
+        )
         ; !"test2"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "20,3,20,22")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "20"
+        , "3"
+        , "20"
+        , "22"
+        )
         ; partition(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "20,13,20,21") ; is-string
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+            , "20"
+            , "13"
+            , "20"
+            , "21"
+            )
+            ; is-string
           )
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "21,3,21,16")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "21"
+        , "3"
+        , "21"
+        , "16"
+        )
         ; ![0, "a", "b", 1]
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "22,3,22,20")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+        , "22"
+        , "3"
+        , "22"
+        , "20"
+        )
         ; !( ["a", "b"]
            , [0, 1]
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "test2", "18,2,23,1")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/list-filter-test.str", "test2", "18,2,23,1")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "test2"
+      , "18"
+      , "2"
+      , "23"
+      , "1"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/list-filter-test.str"
+      , "test2"
+      , "18"
+      , "2"
+      , "23"
+      , "1"
+      )
       ; fail

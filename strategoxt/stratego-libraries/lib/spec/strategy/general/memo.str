@@ -10,30 +10,141 @@ imports
 
 strategies
   memo-scope(s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo-scope", "13,2,13,30")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "13,18,13,30")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+    , "memo-scope"
+    , "13"
+    , "2"
+    , "13"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+      , "13"
+      , "18"
+      , "13"
+      , "30"
+      )
     ; {|Memo:
-         s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "13,27,13,27") ; s
+         s-step(
+         | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+         , "13"
+         , "27"
+         , "13"
+         , "27"
+         )
+         ; s
       |}
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo-scope", "13,2,13,30")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo-scope", "13,2,13,30")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+      , "memo-scope"
+      , "13"
+      , "2"
+      , "13"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+      , "memo-scope"
+      , "13"
+      , "2"
+      , "13"
+      , "30"
+      )
       ; fail
 
   memo(s) :
-    t -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")> t'
+    t -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+          , "memo"
+          , "20"
+          , "2"
+          , "23"
+          , "46"
+          )> t'
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+             , "memo"
+             , "20"
+             , "2"
+             , "23"
+             , "46"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,10,23,46")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,12,22,25")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,12,22,19")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "22,13,22,16") ; Memo)> t) => t'
-             <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,12,23,44")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,12,23,22")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,12,23,16")
-                      ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,13,23,13") ; s)> t) => t')
-                ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "23,25,23,44")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+          , "22"
+          , "10"
+          , "23"
+          , "46"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+             , "22"
+             , "12"
+             , "22"
+             , "25"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                , "22"
+                , "12"
+                , "22"
+                , "19"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                    , "22"
+                    , "13"
+                    , "22"
+                    , "16"
+                    )
+                    ; Memo)> t) => t'
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                , "23"
+                , "12"
+                , "23"
+                , "44"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                   , "23"
+                   , "12"
+                   , "23"
+                   , "22"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                      , "23"
+                      , "12"
+                      , "23"
+                      , "16"
+                      )
+                      ; <(s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                          , "23"
+                          , "13"
+                          , "23"
+                          , "13"
+                          )
+                          ; s)> t) => t')
+                ; s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+                  , "23"
+                  , "25"
+                  , "23"
+                  , "44"
+                  )
                 ; rules ( Memo :
                             t -> t' ))
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str", "memo", "20,2,23,46")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/memo.str"
+             , "memo"
+             , "20"
+             , "2"
+             , "23"
+             , "46"
+             )
              ; fail

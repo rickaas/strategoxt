@@ -13,76 +13,356 @@ imports
 
 strategies
   io-pptable-diff =
-    s-enter(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "io-pptable-diff", "10,2,17,4")
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "11,4,17,4")
-    ; xtc-io-wrap(
-        s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "12,6,12,26") ; pp-table-diff-options
-      , s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "13,6,13,24") ; pp-table-diff-usage
-      , s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "14,6,14,17") ; system-about
-      , s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "15,6,15,8")
-        ; ![]
-      , s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "16,6,16,17") ; pptable-diff
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+    , "io-pptable-diff"
+    , "10"
+    , "2"
+    , "17"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "11"
+      , "4"
+      , "17"
+      , "4"
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "io-pptable-diff", "10,2,17,4")
-    + s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "io-pptable-diff", "10,2,17,4")
+    ; xtc-io-wrap(
+        s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "12"
+        , "6"
+        , "12"
+        , "26"
+        )
+        ; pp-table-diff-options
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "13"
+        , "6"
+        , "13"
+        , "24"
+        )
+        ; pp-table-diff-usage
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "14"
+        , "6"
+        , "14"
+        , "17"
+        )
+        ; system-about
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "15"
+        , "6"
+        , "15"
+        , "8"
+        )
+        ; ![]
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "16"
+        , "6"
+        , "16"
+        , "17"
+        )
+        ; pptable-diff
+      )
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "io-pptable-diff"
+      , "10"
+      , "2"
+      , "17"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "io-pptable-diff"
+      , "10"
+      , "2"
+      , "17"
+      , "4"
+      )
       ; fail
 
   pptable-diff =
-    s-enter(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "pptable-diff", "19,2,25,8")
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "20,4,25,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "20,4,20,22") ; maybe-parse-pptable)
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "21,6,25,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "21,6,21,62")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+    , "pptable-diff"
+    , "19"
+    , "2"
+    , "25"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "20"
+      , "4"
+      , "25"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+       , "20"
+       , "4"
+       , "20"
+       , "22"
+       )
+       ; maybe-parse-pptable)
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "21"
+      , "6"
+      , "25"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+       , "21"
+       , "6"
+       , "21"
+       , "62"
+       )
        ; core-pptable-diff(
-         | <s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "21,26,21,60")
-            ; (s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "21,26,21,41") ; get-old-pp-table)
-            ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "21,44,21,60")
+         | <s-step(
+            | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+            , "21"
+            , "26"
+            , "21"
+            , "60"
+            )
+            ; (s-step(
+               | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+               , "21"
+               , "26"
+               , "21"
+               , "41"
+               )
+               ; get-old-pp-table)
+            ; s-step(
+              | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+              , "21"
+              , "44"
+              , "21"
+              , "60"
+              )
             ; read-pptable-file>
          ))
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "22,6,25,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "22,6,22,13") ; write-to)
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "23,6,25,8")
-    ; if s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "23,9,23,43")
-         ; (s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "23,9,23,24") ; is-patch-enabled
-            + s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "23,28,23,43") ; is-prune-enabled) then
-        s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "24,8,24,50")
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "22"
+      , "6"
+      , "25"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+       , "22"
+       , "6"
+       , "22"
+       , "13"
+       )
+       ; write-to)
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "23"
+      , "6"
+      , "25"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+         , "23"
+         , "9"
+         , "23"
+         , "43"
+         )
+         ; (s-step(
+            | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+            , "23"
+            , "9"
+            , "23"
+            , "24"
+            )
+            ; is-patch-enabled
+            + s-step(
+              | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+              , "23"
+              , "28"
+              , "23"
+              , "43"
+              )
+              ; is-prune-enabled) then
+        s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "24"
+        , "8"
+        , "24"
+        , "50"
+        )
         ; xtc-transform(
-            s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "24,22,24,35")
+            s-step(
+            | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+            , "24"
+            , "22"
+            , "24"
+            , "35"
+            )
             ; !"pp-pp-table"
-          , s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "24,38,24,49") ; pass-verbose
+          , s-step(
+            | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+            , "24"
+            , "38"
+            , "24"
+            , "49"
+            )
+            ; pass-verbose
           )
       end
-    < s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "pptable-diff", "19,2,25,8")
-    + s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "pptable-diff", "19,2,25,8")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "pptable-diff"
+      , "19"
+      , "2"
+      , "25"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "pptable-diff"
+      , "19"
+      , "2"
+      , "25"
+      , "8"
+      )
       ; fail
 
   maybe-parse-pptable =
-    s-enter(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "maybe-parse-pptable", "27,2,32,6")
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "28,4,32,6")
-    ; if s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "28,7,28,46")
-         ; (s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "28,7,28,17")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+    , "maybe-parse-pptable"
+    , "27"
+    , "2"
+    , "32"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "28"
+      , "4"
+      , "32"
+      , "6"
+      )
+    ; if s-step(
+         | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+         , "28"
+         , "7"
+         , "28"
+         , "46"
+         )
+         ; (s-step(
+            | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+            , "28"
+            , "7"
+            , "28"
+            , "17"
+            )
             ; ?FILE(file))
-         ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "28,20,28,46")
-         ; <(s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "28,21,28,40")
+         ; s-step(
+           | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+           , "28"
+           , "20"
+           , "28"
+           , "46"
+           )
+         ; <(s-step(
+             | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+             , "28"
+             , "21"
+             , "28"
+             , "40"
+             )
              ; has-extension(|"pp"))> file then
-        s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "29,6,29,30")
-        ; <(s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "29,7,29,24") ; parse-pptable-file)> file
+        s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "29"
+        , "6"
+        , "29"
+        , "30"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+            , "29"
+            , "7"
+            , "29"
+            , "24"
+            )
+            ; parse-pptable-file)> file
       else
-        s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "31,6,31,14") ; read-from
+        s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "31"
+        , "6"
+        , "31"
+        , "14"
+        )
+        ; read-from
       end
-    < s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "maybe-parse-pptable", "27,2,32,6")
-    + s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "maybe-parse-pptable", "27,2,32,6")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "maybe-parse-pptable"
+      , "27"
+      , "2"
+      , "32"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "maybe-parse-pptable"
+      , "27"
+      , "2"
+      , "32"
+      , "6"
+      )
       ; fail
 
 
 strategies
   pp-table-diff-usage =
-    s-enter(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "pp-table-diff-usage", "36,2,56,2")
-    ; s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "37,4,56,2")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+    , "pp-table-diff-usage"
+    , "36"
+    , "2"
+    , "56"
+    , "2"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "37"
+      , "4"
+      , "56"
+      , "2"
+      )
     ; default-system-usage(
-        s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "38,6,38,39")
+        s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "38"
+        , "6"
+        , "38"
+        , "39"
+        )
         ; !["Usage: pptable-diff [options]"]
-      , s-step(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "39,6,56,1")
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+        , "39"
+        , "6"
+        , "56"
+        , "1"
+        )
         ; !["   This program writes to standard error a list of
    pretty-print rules that are contained in
    pretty-print table 'old' but not in the input
@@ -101,6 +381,20 @@ strategies
    passing them to pptable-diff.
 "]
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "pp-table-diff-usage", "36,2,56,2")
-    + s-exit(|"strategoxt/syntax/gpp/tools/pptable-diff.str", "pp-table-diff-usage", "36,2,56,2")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "pp-table-diff-usage"
+      , "36"
+      , "2"
+      , "56"
+      , "2"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/pptable-diff.str"
+      , "pp-table-diff-usage"
+      , "36"
+      , "2"
+      , "56"
+      , "2"
+      )
       ; fail

@@ -12,34 +12,154 @@ imports
 
 strategies
   main-asfix-anno-comments =
-    s-enter(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "main-asfix-anno-comments", "9,1,12,4")
-    ; s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "10,4,12,4")
+    s-enter(
+    | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+    , "main-asfix-anno-comments"
+    , "9"
+    , "1"
+    , "12"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+      , "10"
+      , "4"
+      , "12"
+      , "4"
+      )
     ; io-wrap(
-        s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "10,12,10,30") ; comment-sort-option
-      , s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "11,6,11,70")
+        s-step(
+        | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+        , "10"
+        , "12"
+        , "10"
+        , "30"
+        )
+        ; comment-sort-option
+      , s-step(
+        | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+        , "11"
+        , "6"
+        , "11"
+        , "70"
+        )
         ; asfix-anno-comments(
-          | <s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "11,28,11,52")
-             ; (s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "11,28,11,37") ; get-config
-                <+ s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "11,41,11,52")
+          | <s-step(
+             | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+             , "11"
+             , "28"
+             , "11"
+             , "52"
+             )
+             ; (s-step(
+                | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+                , "11"
+                , "28"
+                , "11"
+                , "37"
+                )
+                ; get-config
+                <+ s-step(
+                   | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+                   , "11"
+                   , "41"
+                   , "11"
+                   , "52"
+                   )
                    ; !["Comment"])> "comment-sorts"
           )
       )
-    < s-exit(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "main-asfix-anno-comments", "9,1,12,4")
-    + s-exit(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "main-asfix-anno-comments", "9,1,12,4")
+    < s-exit(
+      | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+      , "main-asfix-anno-comments"
+      , "9"
+      , "1"
+      , "12"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+      , "main-asfix-anno-comments"
+      , "9"
+      , "1"
+      , "12"
+      , "4"
+      )
       ; fail
 
   comment-sort-option =
-    s-enter(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "comment-sort-option", "14,2,18,4")
-    ; s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "15,4,18,4")
+    s-enter(
+    | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+    , "comment-sort-option"
+    , "14"
+    , "2"
+    , "18"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+      , "15"
+      , "4"
+      , "18"
+      , "4"
+      )
     ; ArgOption(
-        s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "15,14,15,21") ; "--sort"
-      , s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "16,6,16,46")
-        ; <(s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "16,7,16,19") ; extend-config)> ( "comment-sorts"
-                                                                                                       , [<s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "16,42,16,43") ; id>]
-                                                                                                       )
-      , s-step(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "17,6,17,94")
+        s-step(
+        | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+        , "15"
+        , "14"
+        , "15"
+        , "21"
+        )
+        ; "--sort"
+      , s-step(
+        | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+        , "16"
+        , "6"
+        , "16"
+        , "46"
+        )
+        ; <(s-step(
+            | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+            , "16"
+            , "7"
+            , "16"
+            , "19"
+            )
+            ; extend-config)> ( "comment-sorts"
+                              , [ <s-step(
+                                   | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+                                   , "16"
+                                   , "42"
+                                   , "16"
+                                   , "43"
+                                   )
+                                   ; id>
+                                ]
+                              )
+      , s-step(
+        | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+        , "17"
+        , "6"
+        , "17"
+        , "94"
+        )
         ; !"--sort name      Specify a comment sort. Multiple --sort options are allowed [Comment]"
       )
-    < s-exit(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "comment-sort-option", "14,2,18,4")
-    + s-exit(|"_cellar/asfix-tools/xtc/asfix-anno-comments.str", "comment-sort-option", "14,2,18,4")
+    < s-exit(
+      | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+      , "comment-sort-option"
+      , "14"
+      , "2"
+      , "18"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/asfix-tools/xtc/asfix-anno-comments.str"
+      , "comment-sort-option"
+      , "14"
+      , "2"
+      , "18"
+      , "4"
+      )
       ; fail

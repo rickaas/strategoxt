@@ -11,95 +11,443 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "main", "7,2,9,8")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "8,4,9,8")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "8,4,8,8") ; test1)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "9,4,9,8")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+    , "main"
+    , "7"
+    , "2"
+    , "9"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "8"
+      , "4"
+      , "9"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "8"
+       , "4"
+       , "8"
+       , "8"
+       )
+       ; test1)
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "9"
+      , "4"
+      , "9"
+      , "8"
+      )
     ; test2
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "main", "7,2,9,8")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "main", "7,2,9,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "main"
+      , "7"
+      , "2"
+      , "9"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "main"
+      , "7"
+      , "2"
+      , "9"
+      , "8"
+      )
       ; fail
 
   Swap :
-    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Swap", "11,2,11,24")> (y, x)
+    (x, y) -> <r-exit(
+               | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+               , "Swap"
+               , "11"
+               , "2"
+               , "11"
+               , "24"
+               )> (y, x)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Swap", "11,2,11,24")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Swap", "11,2,11,24")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+             , "Swap"
+             , "11"
+             , "2"
+             , "11"
+             , "24"
+             )
              ; fail
 
   Fst :
-    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Fst", "13,2,13,18")> x
+    (x, y) -> <r-exit(
+               | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+               , "Fst"
+               , "13"
+               , "2"
+               , "13"
+               , "18"
+               )> x
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Fst", "13,2,13,18")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Fst", "13,2,13,18")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+             , "Fst"
+             , "13"
+             , "2"
+             , "13"
+             , "18"
+             )
              ; fail
 
   Snd :
-    (x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Snd", "15,2,15,18")> y
+    (x, y) -> <r-exit(
+               | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+               , "Snd"
+               , "15"
+               , "2"
+               , "15"
+               , "18"
+               )> y
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Snd", "15,2,15,18")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Snd", "15,2,15,18")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+             , "Snd"
+             , "15"
+             , "2"
+             , "15"
+             , "18"
+             )
              ; fail
 
   Split(f, g) =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Split", "17,2,17,26")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "17,16,17,26")
-    ; !( <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "17,19,17,19") ; f>
-       , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "17,24,17,24") ; g>
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+    , "Split"
+    , "17"
+    , "2"
+    , "17"
+    , "26"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "17"
+      , "16"
+      , "17"
+      , "26"
+      )
+    ; !( <s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+          , "17"
+          , "19"
+          , "17"
+          , "19"
+          )
+          ; f>
+       , <s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+          , "17"
+          , "24"
+          , "17"
+          , "24"
+          )
+          ; g>
        )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Split", "17,2,17,26")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Split", "17,2,17,26")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "Split"
+      , "17"
+      , "2"
+      , "17"
+      , "26"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "Split"
+      , "17"
+      , "2"
+      , "17"
+      , "26"
+      )
       ; fail
 
   Swap2 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Swap2", "19,2,19,23")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "19,10,19,23")
-    ; Split(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "19,16,19,18") ; Snd
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "19,20,19,22") ; Fst
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+    , "Swap2"
+    , "19"
+    , "2"
+    , "19"
+    , "23"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "19"
+      , "10"
+      , "19"
+      , "23"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Swap2", "19,2,19,23")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "Swap2", "19,2,19,23")
+    ; Split(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+        , "19"
+        , "16"
+        , "19"
+        , "18"
+        )
+        ; Snd
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+        , "19"
+        , "20"
+        , "19"
+        , "22"
+        )
+        ; Fst
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "Swap2"
+      , "19"
+      , "2"
+      , "19"
+      , "23"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "Swap2"
+      , "19"
+      , "2"
+      , "19"
+      , "23"
+      )
       ; fail
 
   is-pair =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "is-pair", "21,2,21,18")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "21,12,21,18")
-    ; ( s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "21,13,21,14") ; id
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "21,16,21,17") ; id
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+    , "is-pair"
+    , "21"
+    , "2"
+    , "21"
+    , "18"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "21"
+      , "12"
+      , "21"
+      , "18"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "is-pair", "21,2,21,18")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "is-pair", "21,2,21,18")
+    ; ( s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+        , "21"
+        , "13"
+        , "21"
+        , "14"
+        )
+        ; id
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+        , "21"
+        , "16"
+        , "21"
+        , "17"
+        )
+        ; id
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "is-pair"
+      , "21"
+      , "2"
+      , "21"
+      , "18"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "is-pair"
+      , "21"
+      , "2"
+      , "21"
+      , "18"
+      )
       ; fail
 
   test1 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "test1", "23,2,28,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "24,4,28,14")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "24,4,24,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+    , "test1"
+    , "23"
+    , "2"
+    , "28"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "24"
+      , "4"
+      , "28"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "24"
+       , "4"
+       , "24"
+       , "14"
+       )
        ; !("a", "b"))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "25,4,28,14")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "25,4,25,7") ; Swap)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "26,4,28,14")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "26,4,26,10") ; is-pair)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "27,4,28,14")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "27,4,27,8") ; Swap2)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "28,4,28,14")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "25"
+      , "4"
+      , "28"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "25"
+       , "4"
+       , "25"
+       , "7"
+       )
+       ; Swap)
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "26"
+      , "4"
+      , "28"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "26"
+       , "4"
+       , "26"
+       , "10"
+       )
+       ; is-pair)
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "27"
+      , "4"
+      , "28"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "27"
+       , "4"
+       , "27"
+       , "8"
+       )
+       ; Swap2)
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "28"
+      , "4"
+      , "28"
+      , "14"
+      )
     ; ?("a", "b")
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "test1", "23,2,28,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "test1", "23,2,28,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "test1"
+      , "23"
+      , "2"
+      , "28"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "test1"
+      , "23"
+      , "2"
+      , "28"
+      , "14"
+      )
       ; fail
 
   test2 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "test2", "30,2,33,14")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "31,4,33,14")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "31,4,31,21")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+    , "test2"
+    , "30"
+    , "2"
+    , "33"
+    , "14"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "31"
+      , "4"
+      , "33"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "31"
+       , "4"
+       , "31"
+       , "21"
+       )
        ; !(("b", "c"), "a"))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "32,4,33,14")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "32,4,32,27")
-       ; ?( <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "32,7,32,9") ; Snd> ( "$"
-                                                                                                      , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "32,18,32,21") ; Swap>
-                                                                                                      )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "32"
+      , "4"
+      , "33"
+      , "14"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+       , "32"
+       , "4"
+       , "32"
+       , "27"
+       )
+       ; ?( <s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+             , "32"
+             , "7"
+             , "32"
+             , "9"
+             )
+             ; Snd> ( "$"
+                    , <s-step(
+                       | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+                       , "32"
+                       , "18"
+                       , "32"
+                       , "21"
+                       )
+                       ; Swap>
+                    )
           , _
           ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "33,4,33,14")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "33"
+      , "4"
+      , "33"
+      , "14"
+      )
     ; ?("c", "b")
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "test2", "30,2,33,14")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test23.str", "test2", "30,2,33,14")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "test2"
+      , "30"
+      , "2"
+      , "33"
+      , "14"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test23.str"
+      , "test2"
+      , "30"
+      , "2"
+      , "33"
+      , "14"
+      )
       ; fail

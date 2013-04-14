@@ -6,59 +6,286 @@ imports
 
 strategies
   box2text-string(|width) =
-    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "box2text-string", "13,2,15,49")
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "14,4,15,49")
-    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "14,4,14,20")
+    s-enter(
+    | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+    , "box2text-string"
+    , "13"
+    , "2"
+    , "15"
+    , "49"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "14"
+      , "4"
+      , "15"
+      , "49"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+       , "14"
+       , "4"
+       , "14"
+       , "20"
+       )
        ; abox2text(|width))
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "15,7,15,48")
-    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "15,7,15,15") ; is-string
-       <+ s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "15,21,15,48")
-          ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "15,21,15,32") ; flatten-list)
-          ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "15,35,15,48")
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "15"
+      , "7"
+      , "15"
+      , "48"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+       , "15"
+       , "7"
+       , "15"
+       , "15"
+       )
+       ; is-string
+       <+ s-step(
+          | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+          , "15"
+          , "21"
+          , "15"
+          , "48"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+             , "15"
+             , "21"
+             , "15"
+             , "32"
+             )
+             ; flatten-list)
+          ; s-step(
+            | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+            , "15"
+            , "35"
+            , "15"
+            , "48"
+            )
           ; concat-strings)
-    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "box2text-string", "13,2,15,49")
-    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "box2text-string", "13,2,15,49")
+    < s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "box2text-string"
+      , "13"
+      , "2"
+      , "15"
+      , "49"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "box2text-string"
+      , "13"
+      , "2"
+      , "15"
+      , "49"
+      )
       ; fail
 
   box2text-stream(|width, stream) =
-    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "box2text-stream", "22,2,25,12")
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "23,4,25,12")
-    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "23,4,23,20")
+    s-enter(
+    | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+    , "box2text-stream"
+    , "22"
+    , "2"
+    , "25"
+    , "12"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "23"
+      , "4"
+      , "25"
+      , "12"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+       , "23"
+       , "4"
+       , "23"
+       , "20"
+       )
        ; abox2text(|width))
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "24,6,25,12")
-    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "24,6,24,31")
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "24"
+      , "6"
+      , "25"
+      , "12"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+       , "24"
+       , "6"
+       , "24"
+       , "31"
+       )
        ; gpp-topdown-fputs(|stream))
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "25,6,25,12")
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "25"
+      , "6"
+      , "25"
+      , "12"
+      )
     ; !stream
-    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "box2text-stream", "22,2,25,12")
-    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "box2text-stream", "22,2,25,12")
+    < s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "box2text-stream"
+      , "22"
+      , "2"
+      , "25"
+      , "12"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "box2text-stream"
+      , "22"
+      , "2"
+      , "25"
+      , "12"
+      )
       ; fail
 
 
 strategies
   ast2box(|pptables) =
-    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "ast2box", "35,2,36,22")
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "36,4,36,22")
+    s-enter(
+    | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+    , "ast2box"
+    , "35"
+    , "2"
+    , "36"
+    , "22"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "36"
+      , "4"
+      , "36"
+      , "22"
+      )
     ; ast2abox(|pptables)
-    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "ast2box", "35,2,36,22")
-    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "ast2box", "35,2,36,22")
+    < s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "ast2box"
+      , "35"
+      , "2"
+      , "36"
+      , "22"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "ast2box"
+      , "35"
+      , "2"
+      , "36"
+      , "22"
+      )
       ; fail
 
   parse-pptable-file =
-    s-enter(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "parse-pptable-file", "43,2,48,55")
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "44,4,48,55")
-    ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "44,4,47,4")
-       ; where(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "45,6,46,32")
-               ; (s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "45,6,45,30") ; import-term(pp-table.tbl))
-               ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "46,8,46,32")
-               ; tbl := <s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "46,16,46,31") ; open-parse-table>))
-    ; s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "48,6,48,55")
-    ; finally(
-        s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "48,14,48,29")
-        ; parse-file(|tbl)
-      , s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "48,32,48,54")
-        ; <(s-step(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "48,33,48,49") ; close-parse-table)> tbl
+    s-enter(
+    | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+    , "parse-pptable-file"
+    , "43"
+    , "2"
+    , "48"
+    , "55"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "44"
+      , "4"
+      , "48"
+      , "55"
       )
-    < s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "parse-pptable-file", "43,2,48,55")
-    + s-exit(|"strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str", "parse-pptable-file", "43,2,48,55")
+    ; (s-step(
+       | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+       , "44"
+       , "4"
+       , "47"
+       , "4"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+               , "45"
+               , "6"
+               , "46"
+               , "32"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+                  , "45"
+                  , "6"
+                  , "45"
+                  , "30"
+                  )
+                  ; import-term(pp-table.tbl))
+               ; s-step(
+                 | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+                 , "46"
+                 , "8"
+                 , "46"
+                 , "32"
+                 )
+               ; tbl := <s-step(
+                         | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+                         , "46"
+                         , "16"
+                         , "46"
+                         , "31"
+                         )
+                         ; open-parse-table>))
+    ; s-step(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "48"
+      , "6"
+      , "48"
+      , "55"
+      )
+    ; finally(
+        s-step(
+        | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+        , "48"
+        , "14"
+        , "48"
+        , "29"
+        )
+        ; parse-file(|tbl)
+      , s-step(
+        | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+        , "48"
+        , "32"
+        , "48"
+        , "54"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+            , "48"
+            , "33"
+            , "48"
+            , "49"
+            )
+            ; close-parse-table)> tbl
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "parse-pptable-file"
+      , "43"
+      , "2"
+      , "48"
+      , "55"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/gpp/lib/stratego/gpp/Main.str"
+      , "parse-pptable-file"
+      , "43"
+      , "2"
+      , "48"
+      , "55"
+      )
       ; fail

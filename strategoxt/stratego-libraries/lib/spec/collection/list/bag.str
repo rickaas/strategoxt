@@ -11,56 +11,240 @@ imports
 rules
 
   bag-insert :
-    ((x, j), l) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-insert", "24,2,26,73")> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,5,26,70")
-                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,5,26,56")
-                                                                                                                               ; fetch(
-                                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,11,26,54")
-                                                                                                                                   ; \ (y, i) -> ( y
-                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,27,26,29") ; add> (i, j)
-                                                                                                                                                 )
-                                                                                                                                       where s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,44,26,52")
-                                                                                                                                             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,45,26,46") ; eq)> (y, x) \
-                                                                                                                                 )
-                                                                                                                               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "26,61,26,70")
-                                                                                                                                  ; ![(x, j)|l])> l
+    ((x, j), l) -> <r-exit(
+                    | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                    , "bag-insert"
+                    , "24"
+                    , "2"
+                    , "26"
+                    , "73"
+                    )> <s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                        , "26"
+                        , "5"
+                        , "26"
+                        , "70"
+                        )
+                        ; (s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                           , "26"
+                           , "5"
+                           , "26"
+                           , "56"
+                           )
+                           ; fetch(
+                               s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                               , "26"
+                               , "11"
+                               , "26"
+                               , "54"
+                               )
+                               ; \ (y, i) -> ( y
+                                             , <s-step(
+                                                | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                                                , "26"
+                                                , "27"
+                                                , "26"
+                                                , "29"
+                                                )
+                                                ; add> (i, j)
+                                             )
+                                   where s-step(
+                                         | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                                         , "26"
+                                         , "44"
+                                         , "26"
+                                         , "52"
+                                         )
+                                         ; <(s-step(
+                                             | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                                             , "26"
+                                             , "45"
+                                             , "26"
+                                             , "46"
+                                             )
+                                             ; eq)> (y, x) \
+                             )
+                           <+ s-step(
+                              | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                              , "26"
+                              , "61"
+                              , "26"
+                              , "70"
+                              )
+                              ; ![(x, j)|l])> l
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-insert", "24,2,26,73")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-insert", "24,2,26,73")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+             , "bag-insert"
+             , "24"
+             , "2"
+             , "26"
+             , "73"
+             )
              ; fail
 
   bag-union :
-    (l1, l2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-union", "35,2,36,42")> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "36,17,36,38")
-                                                                                                                        ; foldr(
-                                                                                                                            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "36,23,36,25") ; !l2
-                                                                                                                          , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "36,28,36,37") ; bag-insert
-                                                                                                                          )> l1
+    (l1, l2) -> <r-exit(
+                 | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                 , "bag-union"
+                 , "35"
+                 , "2"
+                 , "36"
+                 , "42"
+                 )> <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                     , "36"
+                     , "17"
+                     , "36"
+                     , "38"
+                     )
+                     ; foldr(
+                         s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                         , "36"
+                         , "23"
+                         , "36"
+                         , "25"
+                         )
+                         ; !l2
+                       , s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                         , "36"
+                         , "28"
+                         , "36"
+                         , "37"
+                         )
+                         ; bag-insert
+                       )> l1
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-union", "35,2,36,42")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-union", "35,2,36,42")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+             , "bag-union"
+             , "35"
+             , "2"
+             , "36"
+             , "42"
+             )
              ; fail
 
   bag-insert(equ) :
-    ((x, j), l) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-insert", "48,2,50,66")> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "50,5,50,63")
-                                                                                                                            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "50,5,50,49")
-                                                                                                                               ; fetch(
-                                                                                                                                   s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "50,11,50,47")
-                                                                                                                                   ; \ (y, i) -> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "50,24,50,26") ; equ> (x, y)
-                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "50,36,50,38") ; add> (i, j)
-                                                                                                                                                 ) \
-                                                                                                                                 )
-                                                                                                                               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "50,54,50,63")
-                                                                                                                                  ; ![(x, j)|l])> l
+    ((x, j), l) -> <r-exit(
+                    | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                    , "bag-insert"
+                    , "48"
+                    , "2"
+                    , "50"
+                    , "66"
+                    )> <s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                        , "50"
+                        , "5"
+                        , "50"
+                        , "63"
+                        )
+                        ; (s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                           , "50"
+                           , "5"
+                           , "50"
+                           , "49"
+                           )
+                           ; fetch(
+                               s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                               , "50"
+                               , "11"
+                               , "50"
+                               , "47"
+                               )
+                               ; \ (y, i) -> ( <s-step(
+                                                | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                                                , "50"
+                                                , "24"
+                                                , "50"
+                                                , "26"
+                                                )
+                                                ; equ> (x, y)
+                                             , <s-step(
+                                                | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                                                , "50"
+                                                , "36"
+                                                , "50"
+                                                , "38"
+                                                )
+                                                ; add> (i, j)
+                                             ) \
+                             )
+                           <+ s-step(
+                              | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                              , "50"
+                              , "54"
+                              , "50"
+                              , "63"
+                              )
+                              ; ![(x, j)|l])> l
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-insert", "48,2,50,66")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-insert", "48,2,50,66")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+             , "bag-insert"
+             , "48"
+             , "2"
+             , "50"
+             , "66"
+             )
              ; fail
 
   bag-union(equ) :
-    (l1, l2) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-union", "59,2,60,47")> <s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "60,17,60,43")
-                                                                                                                        ; foldr(
-                                                                                                                            s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "60,23,60,25") ; !l2
-                                                                                                                          , s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "60,28,60,42")
-                                                                                                                            ; bag-insert(
-                                                                                                                                s-step(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "60,39,60,41") ; equ
-                                                                                                                              )
-                                                                                                                          )> l1
+    (l1, l2) -> <r-exit(
+                 | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                 , "bag-union"
+                 , "59"
+                 , "2"
+                 , "60"
+                 , "47"
+                 )> <s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                     , "60"
+                     , "17"
+                     , "60"
+                     , "43"
+                     )
+                     ; foldr(
+                         s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                         , "60"
+                         , "23"
+                         , "60"
+                         , "25"
+                         )
+                         ; !l2
+                       , s-step(
+                         | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                         , "60"
+                         , "28"
+                         , "60"
+                         , "42"
+                         )
+                         ; bag-insert(
+                             s-step(
+                             | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+                             , "60"
+                             , "39"
+                             , "60"
+                             , "41"
+                             )
+                             ; equ
+                           )
+                       )> l1
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-union", "59,2,60,47")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/collection/list/bag.str", "bag-union", "59,2,60,47")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/collection/list/bag.str"
+             , "bag-union"
+             , "59"
+             , "2"
+             , "60"
+             , "47"
+             )
              ; fail

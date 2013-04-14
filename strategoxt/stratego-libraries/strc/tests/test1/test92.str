@@ -11,9 +11,28 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "main", "15,2,19,58")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "16,4,19,58")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "16,4,16,56")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+    , "main"
+    , "15"
+    , "2"
+    , "19"
+    , "58"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "16"
+      , "4"
+      , "19"
+      , "58"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+       , "16"
+       , "4"
+       , "16"
+       , "56"
+       )
        ; !Match(
             AnnoList(
               Wld
@@ -22,15 +41,52 @@ strategies
               ]
             )
           ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "17,6,19,58")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "17,6,17,26") ; parenthesize-Stratego)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "18,6,19,58")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "18,6,18,23")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "17"
+      , "6"
+      , "19"
+      , "58"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+       , "17"
+       , "6"
+       , "17"
+       , "26"
+       )
+       ; parenthesize-Stratego)
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "18"
+      , "6"
+      , "19"
+      , "58"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+       , "18"
+       , "6"
+       , "18"
+       , "23"
+       )
        ; debug(
-           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "18,12,18,22")
+           s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+           , "18"
+           , "12"
+           , "18"
+           , "22"
+           )
            ; !"result: "
          ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "19,6,19,58")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "19"
+      , "6"
+      , "19"
+      , "58"
+      )
     ; ?Match(
          AnnoList(
            Wld
@@ -39,96 +95,426 @@ strategies
            ]
          )
        )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "main", "15,2,19,58")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "main", "15,2,19,58")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "main"
+      , "15"
+      , "2"
+      , "19"
+      , "58"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "main"
+      , "15"
+      , "2"
+      , "19"
+      , "58"
+      )
       ; fail
 
   parenthesize-Stratego =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "parenthesize-Stratego", "21,2,22,34")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "22,4,22,34")
-    ; innermost(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "22,14,22,33") ; StrategoParenthesize
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+    , "parenthesize-Stratego"
+    , "21"
+    , "2"
+    , "22"
+    , "34"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "22"
+      , "4"
+      , "22"
+      , "34"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "parenthesize-Stratego", "21,2,22,34")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "parenthesize-Stratego", "21,2,22,34")
+    ; innermost(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+        , "22"
+        , "14"
+        , "22"
+        , "33"
+        )
+        ; StrategoParenthesize
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "parenthesize-Stratego"
+      , "21"
+      , "2"
+      , "22"
+      , "34"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+      , "parenthesize-Stratego"
+      , "21"
+      , "2"
+      , "22"
+      , "34"
+      )
       ; fail
 
 
 rules
 
   StrategoParenthesize :
-    Match(t_0) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "26,2,41,23")> Match(Parenthetical(t_0))
+    Match(t_0) -> <r-exit(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                   , "StrategoParenthesize"
+                   , "26"
+                   , "2"
+                   , "41"
+                   , "23"
+                   )> Match(Parenthetical(t_0))
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "26,2,41,23")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "26,2,41,23")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+             , "StrategoParenthesize"
+             , "26"
+             , "2"
+             , "41"
+             , "23"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "28,10,41,23")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "28,12,41,17")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "28,12,28,20")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+          , "28"
+          , "10"
+          , "41"
+          , "23"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+              , "28"
+              , "12"
+              , "41"
+              , "17"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                 , "28"
+                 , "12"
+                 , "28"
+                 , "20"
+                 )
                  ; ?BA(_, _)
-                 + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "29,14,41,17")
-                   ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "29,14,29,27")
+                 + s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                   , "29"
+                   , "14"
+                   , "41"
+                   , "17"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                      , "29"
+                      , "14"
+                      , "29"
+                      , "27"
+                      )
                       ; ?LChoice(_, _)
-                      + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "30,14,41,17")
-                        ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "30,14,30,27")
+                      + s-step(
+                        | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                        , "30"
+                        , "14"
+                        , "41"
+                        , "17"
+                        )
+                        ; (s-step(
+                           | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                           , "30"
+                           , "14"
+                           , "30"
+                           , "27"
+                           )
                            ; ?RChoice(_, _)
-                           + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "31,14,41,17")
-                             ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "31,14,31,37")
+                           + s-step(
+                             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                             , "31"
+                             , "14"
+                             , "41"
+                             , "17"
+                             )
+                             ; (s-step(
+                                | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                , "31"
+                                , "14"
+                                , "31"
+                                , "37"
+                                )
                                 ; ?GuardedLChoice(_, _, _)
-                                + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "32,14,41,17")
-                                  ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "32,14,32,26")
+                                + s-step(
+                                  | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                  , "32"
+                                  , "14"
+                                  , "41"
+                                  , "17"
+                                  )
+                                  ; (s-step(
+                                     | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                     , "32"
+                                     , "14"
+                                     , "32"
+                                     , "26"
+                                     )
                                      ; ?Choice(_, _)
-                                     + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "33,14,41,17")
-                                       ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "33,14,33,35")
+                                     + s-step(
+                                       | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                       , "33"
+                                       , "14"
+                                       , "41"
+                                       , "17"
+                                       )
+                                       ; (s-step(
+                                          | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                          , "33"
+                                          , "14"
+                                          , "33"
+                                          , "35"
+                                          )
                                           ; ?DynRuleUnionFix(_, _)
-                                          + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "34,14,41,17")
-                                            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "34,14,34,47")
+                                          + s-step(
+                                            | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                            , "34"
+                                            , "14"
+                                            , "41"
+                                            , "17"
+                                            )
+                                            ; (s-step(
+                                               | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                               , "34"
+                                               , "14"
+                                               , "34"
+                                               , "47"
+                                               )
                                                ; ?DynRuleIntersectUnionFix(_, _, _)
-                                               + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "35,14,41,17")
-                                                 ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "35,14,35,39")
+                                               + s-step(
+                                                 | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                 , "35"
+                                                 , "14"
+                                                 , "41"
+                                                 , "17"
+                                                 )
+                                                 ; (s-step(
+                                                    | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                    , "35"
+                                                    , "14"
+                                                    , "35"
+                                                    , "39"
+                                                    )
                                                     ; ?DynRuleIntersectFix(_, _)
-                                                    + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "36,14,41,17")
-                                                      ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "36,14,36,22")
+                                                    + s-step(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                      , "36"
+                                                      , "14"
+                                                      , "41"
+                                                      , "17"
+                                                      )
+                                                      ; (s-step(
+                                                         | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                         , "36"
+                                                         , "14"
+                                                         , "36"
+                                                         , "22"
+                                                         )
                                                          ; ?AM(_, _)
-                                                         + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "37,14,41,17")
-                                                           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "37,14,37,39")
+                                                         + s-step(
+                                                           | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                           , "37"
+                                                           , "14"
+                                                           , "41"
+                                                           , "17"
+                                                           )
+                                                           ; (s-step(
+                                                              | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                              , "37"
+                                                              , "14"
+                                                              , "37"
+                                                              , "39"
+                                                              )
                                                               ; ?DynRuleIntersect(_, _, _)
-                                                              + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "38,14,41,17")
-                                                                ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "38,14,38,35")
+                                                              + s-step(
+                                                                | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                , "38"
+                                                                , "14"
+                                                                , "41"
+                                                                , "17"
+                                                                )
+                                                                ; (s-step(
+                                                                   | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                   , "38"
+                                                                   , "14"
+                                                                   , "38"
+                                                                   , "35"
+                                                                   )
                                                                    ; ?DynRuleUnion(_, _, _)
-                                                                   + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "39,14,41,17")
-                                                                     ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "39,14,39,47")
+                                                                   + s-step(
+                                                                     | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                     , "39"
+                                                                     , "14"
+                                                                     , "41"
+                                                                     , "17"
+                                                                     )
+                                                                     ; (s-step(
+                                                                        | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                        , "39"
+                                                                        , "14"
+                                                                        , "39"
+                                                                        , "47"
+                                                                        )
                                                                         ; ?DynRuleIntersectUnion(_, _, _, _)
-                                                                        + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "40,14,41,17")
-                                                                          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "40,14,40,23")
+                                                                        + s-step(
+                                                                          | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                          , "40"
+                                                                          , "14"
+                                                                          , "41"
+                                                                          , "17"
+                                                                          )
+                                                                          ; (s-step(
+                                                                             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                             , "40"
+                                                                             , "14"
+                                                                             , "40"
+                                                                             , "23"
+                                                                             )
                                                                              ; ?Seq(_, _)
-                                                                             + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "41,14,41,17") ; fail))))))))))))))> t_0
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "26,2,41,23")
+                                                                             + s-step(
+                                                                               | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                                                                               , "41"
+                                                                               , "14"
+                                                                               , "41"
+                                                                               , "17"
+                                                                               )
+                                                                               ; fail))))))))))))))> t_0
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+             , "StrategoParenthesize"
+             , "26"
+             , "2"
+             , "41"
+             , "23"
+             )
              ; fail
 
   StrategoParenthesize :
-    AnnoList(t_0, t_1) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "43,2,45,33")> AnnoList(Parenthetical(t_0), t_1)
+    AnnoList(t_0, t_1) -> <r-exit(
+                           | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                           , "StrategoParenthesize"
+                           , "43"
+                           , "2"
+                           , "45"
+                           , "33"
+                           )> AnnoList(Parenthetical(t_0), t_1)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "43,2,45,33")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "43,2,45,33")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+             , "StrategoParenthesize"
+             , "43"
+             , "2"
+             , "45"
+             , "33"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "45,10,45,33")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "45,12,45,27")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "45,12,45,20")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+          , "45"
+          , "10"
+          , "45"
+          , "33"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+              , "45"
+              , "12"
+              , "45"
+              , "27"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                 , "45"
+                 , "12"
+                 , "45"
+                 , "20"
+                 )
                  ; ?As(_, _)
-                 + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "45,24,45,27") ; fail))> t_0
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "43,2,45,33")
+                 + s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                   , "45"
+                   , "24"
+                   , "45"
+                   , "27"
+                   )
+                   ; fail))> t_0
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+             , "StrategoParenthesize"
+             , "43"
+             , "2"
+             , "45"
+             , "33"
+             )
              ; fail
 
   StrategoParenthesize :
-    AnnoList(t_0, t_1) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "47,2,49,33")> AnnoList(t_0, Parenthetical(t_1))
+    AnnoList(t_0, t_1) -> <r-exit(
+                           | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                           , "StrategoParenthesize"
+                           , "47"
+                           , "2"
+                           , "49"
+                           , "33"
+                           )> AnnoList(t_0, Parenthetical(t_1))
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "47,2,49,33")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "47,2,49,33")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+             , "StrategoParenthesize"
+             , "47"
+             , "2"
+             , "49"
+             , "33"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "49,10,49,33")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "49,12,49,27")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "49,12,49,20")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+          , "49"
+          , "10"
+          , "49"
+          , "33"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+              , "49"
+              , "12"
+              , "49"
+              , "27"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                 , "49"
+                 , "12"
+                 , "49"
+                 , "20"
+                 )
                  ; ?As(_, _)
-                 + s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "49,24,49,27") ; fail))> t_1
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test92.str", "StrategoParenthesize", "47,2,49,33")
+                 + s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+                   , "49"
+                   , "24"
+                   , "49"
+                   , "27"
+                   )
+                   ; fail))> t_1
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test92.str"
+             , "StrategoParenthesize"
+             , "47"
+             , "2"
+             , "49"
+             , "33"
+             )
              ; fail
 
 

@@ -12,125 +12,582 @@ imports
 
 strategies
   io-pp-aterm =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "io-pp-aterm", "9,2,15,4")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "10,4,15,4")
-    ; io-stream-wrap(
-        s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "11,6,11,44")
-        ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "11,6,11,25") ; max-term-size-option
-           + s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "11,29,11,44") ; max-depth-option)
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "12,6,12,17") ; system-usage
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "13,6,13,17") ; system-about
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "14,6,14,13") ; pp-aterm
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "io-pp-aterm"
+    , "9"
+    , "2"
+    , "15"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "10"
+      , "4"
+      , "15"
+      , "4"
       )
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "io-pp-aterm", "9,2,15,4")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "io-pp-aterm", "9,2,15,4")
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "11"
+        , "6"
+        , "11"
+        , "44"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+           , "11"
+           , "6"
+           , "11"
+           , "25"
+           )
+           ; max-term-size-option
+           + s-step(
+             | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+             , "11"
+             , "29"
+             , "11"
+             , "44"
+             )
+             ; max-depth-option)
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "12"
+        , "6"
+        , "12"
+        , "17"
+        )
+        ; system-usage
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "13"
+        , "6"
+        , "13"
+        , "17"
+        )
+        ; system-about
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "14"
+        , "6"
+        , "14"
+        , "13"
+        )
+        ; pp-aterm
+      )
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "io-pp-aterm"
+      , "9"
+      , "2"
+      , "15"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "io-pp-aterm"
+      , "9"
+      , "2"
+      , "15"
+      , "4"
+      )
       ; fail
 
   pp-aterm =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "pp-aterm", "17,2,22,55")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "18,4,22,55")
-    ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "18,4,18,30")
-       ; ?( <s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "18,7,18,22") ; read-from-stream>
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "pp-aterm"
+    , "17"
+    , "2"
+    , "22"
+    , "55"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "18"
+      , "4"
+      , "22"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+       , "18"
+       , "4"
+       , "18"
+       , "30"
+       )
+       ; ?( <s-step(
+             | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+             , "18"
+             , "7"
+             , "18"
+             , "22"
+             )
+             ; read-from-stream>
           , fout
           ))
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "19,6,22,55")
-    ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "19,6,21,8")
-       ; if s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "19,9,19,37")
-            ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "19,9,19,28") ; get-max-depth-config) => depth then
-           s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "20,8,20,31")
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "19"
+      , "6"
+      , "22"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+       , "19"
+       , "6"
+       , "21"
+       , "8"
+       )
+       ; if s-step(
+            | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+            , "19"
+            , "9"
+            , "19"
+            , "37"
+            )
+            ; (s-step(
+               | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+               , "19"
+               , "9"
+               , "19"
+               , "28"
+               )
+               ; get-max-depth-config) => depth then
+           s-step(
+           | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+           , "20"
+           , "8"
+           , "20"
+           , "31"
+           )
            ; at-depth(
-               s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "20,17,20,22") ; !depth
-             , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "20,25,20,30")
+               s-step(
+               | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+               , "20"
+               , "17"
+               , "20"
+               , "22"
+               )
+               ; !depth
+             , s-step(
+               | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+               , "20"
+               , "25"
+               , "20"
+               , "30"
+               )
                ; !"..."
              )
          end)
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "22,6,22,55")
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "22"
+      , "6"
+      , "22"
+      , "55"
+      )
     ; pp-aterm-stream(
-      | <s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "22,24,22,47") ; get-max-term-size-config>
+      | <s-step(
+         | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+         , "22"
+         , "24"
+         , "22"
+         , "47"
+         )
+         ; get-max-term-size-config>
       , fout
       )
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "pp-aterm", "17,2,22,55")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "pp-aterm", "17,2,22,55")
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "pp-aterm"
+      , "17"
+      , "2"
+      , "22"
+      , "55"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "pp-aterm"
+      , "17"
+      , "2"
+      , "22"
+      , "55"
+      )
       ; fail
 
 
 strategies
   max-depth-option =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "max-depth-option", "26,2,31,4")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "27,5,31,4")
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "max-depth-option"
+    , "26"
+    , "2"
+    , "31"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "27"
+      , "5"
+      , "31"
+      , "4"
+      )
     ; ArgOption(
-        s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "27,15,27,27") ; "--max-depth"
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "28,6,28,47")
-        ; where(s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "28,12,28,46")
-                ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "28,12,28,24") ; string-to-int)
-                ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "28,27,28,46")
+        s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "27"
+        , "15"
+        , "27"
+        , "27"
+        )
+        ; "--max-depth"
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "28"
+        , "6"
+        , "28"
+        , "47"
+        )
+        ; where(s-step(
+                | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                , "28"
+                , "12"
+                , "28"
+                , "46"
+                )
+                ; (s-step(
+                   | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                   , "28"
+                   , "12"
+                   , "28"
+                   , "24"
+                   )
+                   ; string-to-int)
+                ; s-step(
+                  | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                  , "28"
+                  , "27"
+                  , "28"
+                  , "46"
+                  )
                 ; set-max-depth-config)
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "28,50,30,50")
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "28"
+        , "50"
+        , "30"
+        , "50"
+        )
         ; !"--max-depth int
                     Set the maximum depth of ATerm"
       )
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "max-depth-option", "26,2,31,4")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "max-depth-option", "26,2,31,4")
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "max-depth-option"
+      , "26"
+      , "2"
+      , "31"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "max-depth-option"
+      , "26"
+      , "2"
+      , "31"
+      , "4"
+      )
       ; fail
 
   max-term-size-option =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "max-term-size-option", "33,2,39,4")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "34,4,39,4")
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "max-term-size-option"
+    , "33"
+    , "2"
+    , "39"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "34"
+      , "4"
+      , "39"
+      , "4"
+      )
     ; ArgOption(
-        s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "34,14,34,30") ; "--max-term-size"
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "35,6,35,51")
-        ; where(s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "35,12,35,50")
-                ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "35,12,35,24") ; string-to-int)
-                ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "35,27,35,50")
+        s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "34"
+        , "14"
+        , "34"
+        , "30"
+        )
+        ; "--max-term-size"
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "35"
+        , "6"
+        , "35"
+        , "51"
+        )
+        ; where(s-step(
+                | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                , "35"
+                , "12"
+                , "35"
+                , "50"
+                )
+                ; (s-step(
+                   | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                   , "35"
+                   , "12"
+                   , "35"
+                   , "24"
+                   )
+                   ; string-to-int)
+                ; s-step(
+                  | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                  , "35"
+                  , "27"
+                  , "35"
+                  , "50"
+                  )
                 ; set-max-term-size-config)
-      , s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "35,54,38,52")
+      , s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "35"
+        , "54"
+        , "38"
+        , "52"
+        )
         ; !"--max-term-size int
                     Set the term size from which the verbose 
                     pretty printing must be used [8]"
       )
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "max-term-size-option", "33,2,39,4")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "max-term-size-option", "33,2,39,4")
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "max-term-size-option"
+      , "33"
+      , "2"
+      , "39"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "max-term-size-option"
+      , "33"
+      , "2"
+      , "39"
+      , "4"
+      )
       ; fail
 
 
 strategies
   get-max-term-size-config =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "get-max-term-size-config", "46,2,47,39")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "47,4,47,39")
-    ; (s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "47,4,47,33")
-       ; <(s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "47,5,47,14") ; get-config)> "--max-term-size"
-       <+ s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "47,38,47,39")
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "get-max-term-size-config"
+    , "46"
+    , "2"
+    , "47"
+    , "39"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "47"
+      , "4"
+      , "47"
+      , "39"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+       , "47"
+       , "4"
+       , "47"
+       , "33"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+           , "47"
+           , "5"
+           , "47"
+           , "14"
+           )
+           ; get-config)> "--max-term-size"
+       <+ s-step(
+          | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+          , "47"
+          , "38"
+          , "47"
+          , "39"
+          )
           ; !8)
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "get-max-term-size-config", "46,2,47,39")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "get-max-term-size-config", "46,2,47,39")
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "get-max-term-size-config"
+      , "46"
+      , "2"
+      , "47"
+      , "39"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "get-max-term-size-config"
+      , "46"
+      , "2"
+      , "47"
+      , "39"
+      )
       ; fail
 
   set-max-term-size-config =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "set-max-term-size-config", "49,2,50,41")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "50,4,50,41")
-    ; <(s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "50,5,50,14") ; set-config)> ( "--max-term-size"
-                                                                                                 , <s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "50,38,50,39") ; id>
-                                                                                                 )
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "set-max-term-size-config", "49,2,50,41")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "set-max-term-size-config", "49,2,50,41")
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "set-max-term-size-config"
+    , "49"
+    , "2"
+    , "50"
+    , "41"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "50"
+      , "4"
+      , "50"
+      , "41"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "50"
+        , "5"
+        , "50"
+        , "14"
+        )
+        ; set-config)> ( "--max-term-size"
+                       , <s-step(
+                          | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                          , "50"
+                          , "38"
+                          , "50"
+                          , "39"
+                          )
+                          ; id>
+                       )
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "set-max-term-size-config"
+      , "49"
+      , "2"
+      , "50"
+      , "41"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "set-max-term-size-config"
+      , "49"
+      , "2"
+      , "50"
+      , "41"
+      )
       ; fail
 
 
 strategies
   get-max-depth-config =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "get-max-depth-config", "57,2,58,29")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "58,4,58,29")
-    ; <(s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "58,5,58,14") ; get-config)> "--max-depth"
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "get-max-depth-config", "57,2,58,29")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "get-max-depth-config", "57,2,58,29")
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "get-max-depth-config"
+    , "57"
+    , "2"
+    , "58"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "58"
+      , "4"
+      , "58"
+      , "29"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "58"
+        , "5"
+        , "58"
+        , "14"
+        )
+        ; get-config)> "--max-depth"
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "get-max-depth-config"
+      , "57"
+      , "2"
+      , "58"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "get-max-depth-config"
+      , "57"
+      , "2"
+      , "58"
+      , "29"
+      )
       ; fail
 
   set-max-depth-config =
-    s-enter(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "set-max-depth-config", "60,2,61,37")
-    ; s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "61,4,61,37")
-    ; <(s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "61,5,61,14") ; set-config)> ( "--max-depth"
-                                                                                                 , <s-step(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "61,34,61,35") ; id>
-                                                                                                 )
-    < s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "set-max-depth-config", "60,2,61,37")
-    + s-exit(|"strategoxt/syntax/aterm-front/tools/pp-aterm.str", "set-max-depth-config", "60,2,61,37")
+    s-enter(
+    | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+    , "set-max-depth-config"
+    , "60"
+    , "2"
+    , "61"
+    , "37"
+    )
+    ; s-step(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "61"
+      , "4"
+      , "61"
+      , "37"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+        , "61"
+        , "5"
+        , "61"
+        , "14"
+        )
+        ; set-config)> ( "--max-depth"
+                       , <s-step(
+                          | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+                          , "61"
+                          , "34"
+                          , "61"
+                          , "35"
+                          )
+                          ; id>
+                       )
+    < s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "set-max-depth-config"
+      , "60"
+      , "2"
+      , "61"
+      , "37"
+      )
+    + s-exit(
+      | "strategoxt/syntax/aterm-front/tools/pp-aterm.str"
+      , "set-max-depth-config"
+      , "60"
+      , "2"
+      , "61"
+      , "37"
+      )
       ; fail

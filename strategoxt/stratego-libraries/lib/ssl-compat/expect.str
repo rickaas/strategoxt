@@ -15,52 +15,243 @@ signature
 
 strategies
   expect(s, err) =
-    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "expect", "14,2,14,37")
-    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "14,18,14,37")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "14,18,14,18") ; s
-       <+ s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "14,23,14,37")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "14,23,14,32")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+    , "expect"
+    , "14"
+    , "2"
+    , "14"
+    , "37"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "14"
+      , "18"
+      , "14"
+      , "37"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+       , "14"
+       , "18"
+       , "14"
+       , "18"
+       )
+       ; s
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+          , "14"
+          , "23"
+          , "14"
+          , "37"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+             , "14"
+             , "23"
+             , "14"
+             , "32"
+             )
              ; error(
-                 s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "14,29,14,31") ; err
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+                 , "14"
+                 , "29"
+                 , "14"
+                 , "31"
+                 )
+                 ; err
                ))
-          ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "14,34,14,37")
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+            , "14"
+            , "34"
+            , "14"
+            , "37"
+            )
           ; fail)
-    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "expect", "14,2,14,37")
-    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "expect", "14,2,14,37")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "expect"
+      , "14"
+      , "2"
+      , "14"
+      , "37"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "expect"
+      , "14"
+      , "2"
+      , "14"
+      , "37"
+      )
       ; fail
 
   expect(s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "expect", "15,2,15,31")
-    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "15,14,15,31")
-    ; expect(
-        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "15,21,15,21") ; s
-      , s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "15,23,15,30") ; !General
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+    , "expect"
+    , "15"
+    , "2"
+    , "15"
+    , "31"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "15"
+      , "14"
+      , "15"
+      , "31"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "expect", "15,2,15,31")
-    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "expect", "15,2,15,31")
+    ; expect(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+        , "15"
+        , "21"
+        , "15"
+        , "21"
+        )
+        ; s
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+        , "15"
+        , "23"
+        , "15"
+        , "30"
+        )
+        ; !General
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "expect"
+      , "15"
+      , "2"
+      , "15"
+      , "31"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "expect"
+      , "15"
+      , "2"
+      , "15"
+      , "31"
+      )
       ; fail
 
   error(code) =
-    s-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "error", "17,2,19,47")
-    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,10,19,47")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,10,18,33")
-       ; where(s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,16,18,32")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,16,18,19") ; code)
-               ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,21,18,32")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,21,18,26") ; errmsg)
-               ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "18,28,18,32")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+    , "error"
+    , "17"
+    , "2"
+    , "19"
+    , "47"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "18"
+      , "10"
+      , "19"
+      , "47"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+       , "18"
+       , "10"
+       , "18"
+       , "33"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+               , "18"
+               , "16"
+               , "18"
+               , "32"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+                  , "18"
+                  , "16"
+                  , "18"
+                  , "19"
+                  )
+                  ; code)
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+                 , "18"
+                 , "21"
+                 , "18"
+                 , "32"
+                 )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+                  , "18"
+                  , "21"
+                  , "18"
+                  , "26"
+                  )
+                  ; errmsg)
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+                 , "18"
+                 , "28"
+                 , "18"
+                 , "32"
+                 )
                ; debug))
-    ; s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "19,10,19,47")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "19"
+      , "10"
+      , "19"
+      , "47"
+      )
     ; debug(
-        s-step(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "19,16,19,46")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+        , "19"
+        , "16"
+        , "19"
+        , "46"
+        )
         ; !" error: expected success on "
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "error", "17,2,19,47")
-    + s-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "error", "17,2,19,47")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "error"
+      , "17"
+      , "2"
+      , "19"
+      , "47"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+      , "error"
+      , "17"
+      , "2"
+      , "19"
+      , "47"
+      )
       ; fail
 
   errmsg :
-    General -> <r-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "errmsg", "21,2,21,29")> "general"
+    General -> <r-exit(
+                | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+                , "errmsg"
+                , "21"
+                , "2"
+                , "21"
+                , "29"
+                )> "general"
     where r-enter(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "errmsg", "21,2,21,29")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/ssl-compat/expect.str", "errmsg", "21,2,21,29")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/ssl-compat/expect.str"
+             , "errmsg"
+             , "21"
+             , "2"
+             , "21"
+             , "29"
+             )
              ; fail

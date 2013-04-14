@@ -10,12 +10,52 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test21.str", "main", "5,3,5,46")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test21.str", "5,10,5,46")
-    ; try(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test21.str", "5,14,5,45")
-        ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test21.str", "5,15,5,26") ; ReadFromFile)> "NonExistentFile"
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test21.str"
+    , "main"
+    , "5"
+    , "3"
+    , "5"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test21.str"
+      , "5"
+      , "10"
+      , "5"
+      , "46"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test21.str", "main", "5,3,5,46")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test21.str", "main", "5,3,5,46")
+    ; try(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test21.str"
+        , "5"
+        , "14"
+        , "5"
+        , "45"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test1/test21.str"
+            , "5"
+            , "15"
+            , "5"
+            , "26"
+            )
+            ; ReadFromFile)> "NonExistentFile"
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test21.str"
+      , "main"
+      , "5"
+      , "3"
+      , "5"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test21.str"
+      , "main"
+      , "5"
+      , "3"
+      , "5"
+      , "46"
+      )
       ; fail

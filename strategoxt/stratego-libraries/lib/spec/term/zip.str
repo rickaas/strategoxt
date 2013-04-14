@@ -10,76 +10,315 @@ imports
 
 strategies
   pair-term-zip-bu(leaf, node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "pair-term-zip-bu", "30,2,31,34")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,4,31,34")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+    , "pair-term-zip-bu"
+    , "30"
+    , "2"
+    , "31"
+    , "34"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "31"
+      , "4"
+      , "31"
+      , "34"
+      )
     ; rec x (
-        s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,10,31,33")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,10,31,13") ; leaf
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,18,31,33")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,18,31,27")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+        , "31"
+        , "10"
+        , "31"
+        , "33"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+           , "31"
+           , "10"
+           , "31"
+           , "13"
+           )
+           ; leaf
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+              , "31"
+              , "18"
+              , "31"
+              , "33"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                 , "31"
+                 , "18"
+                 , "31"
+                 , "27"
+                 )
                  ; TermZip(
-                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,26,31,26") ; x
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                     , "31"
+                     , "26"
+                     , "31"
+                     , "26"
+                     )
+                     ; x
                    ))
-              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "31,30,31,33")
+              ; s-step(
+                | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                , "31"
+                , "30"
+                , "31"
+                , "33"
+                )
               ; node)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "pair-term-zip-bu", "30,2,31,34")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "pair-term-zip-bu", "30,2,31,34")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "pair-term-zip-bu"
+      , "30"
+      , "2"
+      , "31"
+      , "34"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "pair-term-zip-bu"
+      , "30"
+      , "2"
+      , "31"
+      , "34"
+      )
       ; fail
 
 
 rules
 
   TermZip(s) :
-    (f#(xs), f#(ys)) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermZip", "45,2,46,43")> f#(<s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "46,28,46,33")
-                                                                                                                      ; zip(
-                                                                                                                          s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "46,32,46,32") ; s
-                                                                                                                        )> (xs, ys))
+    (f#(xs), f#(ys)) -> <r-exit(
+                         | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                         , "TermZip"
+                         , "45"
+                         , "2"
+                         , "46"
+                         , "43"
+                         )> f#(<s-step(
+                                | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                                , "46"
+                                , "28"
+                                , "46"
+                                , "33"
+                                )
+                                ; zip(
+                                    s-step(
+                                    | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                                    , "46"
+                                    , "32"
+                                    , "46"
+                                    , "32"
+                                    )
+                                    ; s
+                                  )> (xs, ys))
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermZip", "45,2,46,43")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermZip", "45,2,46,43")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+             , "TermZip"
+             , "45"
+             , "2"
+             , "46"
+             , "43"
+             )
              ; fail
 
 
 strategies
   term-zip(leaf, node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "term-zip", "59,2,60,39")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,4,60,39")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+    , "term-zip"
+    , "59"
+    , "2"
+    , "60"
+    , "39"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "60"
+      , "4"
+      , "60"
+      , "39"
+      )
     ; rec x (
-        s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,10,60,38")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,10,60,13") ; leaf
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,18,60,38")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,18,60,32")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+        , "60"
+        , "10"
+        , "60"
+        , "38"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+           , "60"
+           , "10"
+           , "60"
+           , "13"
+           )
+           ; leaf
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+              , "60"
+              , "18"
+              , "60"
+              , "38"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                 , "60"
+                 , "18"
+                 , "60"
+                 , "32"
+                 )
                  ; TermTupleZip(
-                     s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,31,60,31") ; x
+                     s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                     , "60"
+                     , "31"
+                     , "60"
+                     , "31"
+                     )
+                     ; x
                    ))
-              ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "60,35,60,38")
+              ; s-step(
+                | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                , "60"
+                , "35"
+                , "60"
+                , "38"
+                )
               ; node)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "term-zip", "59,2,60,39")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "term-zip", "59,2,60,39")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "term-zip"
+      , "59"
+      , "2"
+      , "60"
+      , "39"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "term-zip"
+      , "59"
+      , "2"
+      , "60"
+      , "39"
+      )
       ; fail
 
   TermTupleZip(s) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermTupleZip", "73,2,76,19")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,4,76,19")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,4,74,27")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+    , "TermTupleZip"
+    , "73"
+    , "2"
+    , "76"
+    , "19"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "74"
+      , "4"
+      , "76"
+      , "19"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+       , "74"
+       , "4"
+       , "74"
+       , "27"
+       )
        ; tmap(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,9,74,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+           , "74"
+           , "9"
+           , "74"
+           , "26"
+           )
            ; {xs:
-               s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,14,74,25")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,14,74,20")
+               s-step(
+               | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+               , "74"
+               , "14"
+               , "74"
+               , "25"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                  , "74"
+                  , "14"
+                  , "74"
+                  , "20"
+                  )
                   ; ?f#(xs))
-               ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "74,23,74,25")
+               ; s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+                 , "74"
+                 , "23"
+                 , "74"
+                 , "25"
+                 )
                ; !xs
              }
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "75,4,76,19")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "75,4,75,15")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "75"
+      , "4"
+      , "76"
+      , "19"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+       , "75"
+       , "4"
+       , "75"
+       , "15"
+       )
        ; tuple-zip(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "75,14,75,14") ; s
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+           , "75"
+           , "14"
+           , "75"
+           , "14"
+           )
+           ; s
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "76,4,76,19")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "76"
+      , "4"
+      , "76"
+      , "19"
+      )
     ; \ xs -> f#(xs) \
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermTupleZip", "73,2,76,19")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/term/zip.str", "TermTupleZip", "73,2,76,19")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "TermTupleZip"
+      , "73"
+      , "2"
+      , "76"
+      , "19"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/term/zip.str"
+      , "TermTupleZip"
+      , "73"
+      , "2"
+      , "76"
+      , "19"
+      )
       ; fail

@@ -18,56 +18,207 @@ signature
 rules
 
   Eval1 :
-    Plus(Zero, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval1", "11,2,11,35")> <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "11,28,11,32") ; Eval2> x
+    Plus(Zero, x) -> <r-exit(
+                      | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                      , "Eval1"
+                      , "11"
+                      , "2"
+                      , "11"
+                      , "35"
+                      )> <s-step(
+                          | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                          , "11"
+                          , "28"
+                          , "11"
+                          , "32"
+                          )
+                          ; Eval2> x
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval1", "11,2,11,35")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval1", "11,2,11,35")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+             , "Eval1"
+             , "11"
+             , "2"
+             , "11"
+             , "35"
+             )
              ; fail
 
   Eval1 :
-    Plus(Succ(x), y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval1", "12,2,12,53")> Succ(
-                                                                                                                        <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "12,36,12,40") ; Eval2> Plus(x, y)
-                                                                                                                      )
+    Plus(Succ(x), y) -> <r-exit(
+                         | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                         , "Eval1"
+                         , "12"
+                         , "2"
+                         , "12"
+                         , "53"
+                         )> Succ(
+                              <s-step(
+                               | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                               , "12"
+                               , "36"
+                               , "12"
+                               , "40"
+                               )
+                               ; Eval2> Plus(x, y)
+                            )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval1", "12,2,12,53")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval1", "12,2,12,53")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+             , "Eval1"
+             , "12"
+             , "2"
+             , "12"
+             , "53"
+             )
              ; fail
 
   Eval2 :
-    Zero -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "14,2,14,21")> Zero
+    Zero -> <r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+             , "Eval2"
+             , "14"
+             , "2"
+             , "14"
+             , "21"
+             )> Zero
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "14,2,14,21")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "14,2,14,21")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+             , "Eval2"
+             , "14"
+             , "2"
+             , "14"
+             , "21"
+             )
              ; fail
 
   Eval2 :
-    Succ(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "15,2,15,34")> Succ(
-                                                                                                               <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "15,27,15,31") ; Eval2> x
-                                                                                                             )
+    Succ(x) -> <r-exit(
+                | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                , "Eval2"
+                , "15"
+                , "2"
+                , "15"
+                , "34"
+                )> Succ(
+                     <s-step(
+                      | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                      , "15"
+                      , "27"
+                      , "15"
+                      , "31"
+                      )
+                      ; Eval2> x
+                   )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "15,2,15,34")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "15,2,15,34")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+             , "Eval2"
+             , "15"
+             , "2"
+             , "15"
+             , "34"
+             )
              ; fail
 
   Eval2 :
-    Plus(x, y) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "16,2,16,52")> <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "16,24,16,28") ; Eval1> Plus(
-                                                                                                                                                                                                                <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "16,36,16,40") ; Eval2> x
-                                                                                                                                                                                                              , <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "16,45,16,49") ; Eval2> y
-                                                                                                                                                                                                              )
+    Plus(x, y) -> <r-exit(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                   , "Eval2"
+                   , "16"
+                   , "2"
+                   , "16"
+                   , "52"
+                   )> <s-step(
+                       | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                       , "16"
+                       , "24"
+                       , "16"
+                       , "28"
+                       )
+                       ; Eval1> Plus(
+                                  <s-step(
+                                   | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                                   , "16"
+                                   , "36"
+                                   , "16"
+                                   , "40"
+                                   )
+                                   ; Eval2> x
+                                , <s-step(
+                                   | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+                                   , "16"
+                                   , "45"
+                                   , "16"
+                                   , "49"
+                                   )
+                                   ; Eval2> y
+                                )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "16,2,16,52")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "Eval2", "16,2,16,52")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+             , "Eval2"
+             , "16"
+             , "2"
+             , "16"
+             , "52"
+             )
              ; fail
 
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "main", "20,2,22,8")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "21,4,22,8")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "21,4,21,56")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+    , "main"
+    , "20"
+    , "2"
+    , "22"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+      , "21"
+      , "4"
+      , "22"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+       , "21"
+       , "4"
+       , "21"
+       , "56"
+       )
        ; !Plus(
             Succ(
               Plus(Succ(Zero), Succ(Zero))
             )
           , Succ(Zero)
           ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "22,4,22,8")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+      , "22"
+      , "4"
+      , "22"
+      , "8"
+      )
     ; Eval2
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "main", "20,2,22,8")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test10.str", "main", "20,2,22,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+      , "main"
+      , "20"
+      , "2"
+      , "22"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test10.str"
+      , "main"
+      , "20"
+      , "2"
+      , "22"
+      , "8"
+      )
       ; fail

@@ -12,36 +12,189 @@ imports
 rules
 
   BuildMatch =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatch", "6,2,7,35")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "7,4,7,35")
-    ; BuildMatch(
-      | <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "7,17,7,33") ; AssumeSharedTerms>
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+    , "BuildMatch"
+    , "6"
+    , "2"
+    , "7"
+    , "35"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "7"
+      , "4"
+      , "7"
+      , "35"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatch", "6,2,7,35")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatch", "6,2,7,35")
+    ; BuildMatch(
+      | <s-step(
+         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+         , "7"
+         , "17"
+         , "7"
+         , "33"
+         )
+         ; AssumeSharedTerms>
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "BuildMatch"
+      , "6"
+      , "2"
+      , "7"
+      , "35"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "BuildMatch"
+      , "6"
+      , "2"
+      , "7"
+      , "35"
+      )
       ; fail
 
   BuildMatch(|assume-shared-terms) =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatch", "9,2,22,24")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "10,4,22,24")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "10,4,10,11") ; MisMatch
-       + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "10,15,22,24")
-         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "10,15,10,30") ; BuildMatchFusion
-            + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "11,6,22,24")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "11,6,11,14") ; MatchIdem
-                 + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "12,6,22,24")
-                   ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "12,6,12,19") ; BuildMatchIdem
-                      + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "15,6,22,24")
-                        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "15,6,19,8")
-                           ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "15,9,15,33")
-                                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "15,9,15,28") ; !assume-shared-terms) => 1 then
-                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "16,8,16,24") ; MatchBuildIdemVar
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+    , "BuildMatch"
+    , "9"
+    , "2"
+    , "22"
+    , "24"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "10"
+      , "4"
+      , "22"
+      , "24"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+       , "10"
+       , "4"
+       , "10"
+       , "11"
+       )
+       ; MisMatch
+       + s-step(
+         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+         , "10"
+         , "15"
+         , "22"
+         , "24"
+         )
+         ; (s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+            , "10"
+            , "15"
+            , "10"
+            , "30"
+            )
+            ; BuildMatchFusion
+            + s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+              , "11"
+              , "6"
+              , "22"
+              , "24"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                 , "11"
+                 , "6"
+                 , "11"
+                 , "14"
+                 )
+                 ; MatchIdem
+                 + s-step(
+                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                   , "12"
+                   , "6"
+                   , "22"
+                   , "24"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                      , "12"
+                      , "6"
+                      , "12"
+                      , "19"
+                      )
+                      ; BuildMatchIdem
+                      + s-step(
+                        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                        , "15"
+                        , "6"
+                        , "22"
+                        , "24"
+                        )
+                        ; (s-step(
+                           | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                           , "15"
+                           , "6"
+                           , "19"
+                           , "8"
+                           )
+                           ; if s-step(
+                                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                                , "15"
+                                , "9"
+                                , "15"
+                                , "33"
+                                )
+                                ; (s-step(
+                                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                                   , "15"
+                                   , "9"
+                                   , "15"
+                                   , "28"
+                                   )
+                                   ; !assume-shared-terms) => 1 then
+                               s-step(
+                               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                               , "16"
+                               , "8"
+                               , "16"
+                               , "24"
+                               )
+                               ; MatchBuildIdemVar
                              else
-                               s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "18,8,18,31") ; MatchBuildIdemVarUnbound
+                               s-step(
+                               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                               , "18"
+                               , "8"
+                               , "18"
+                               , "31"
+                               )
+                               ; MatchBuildIdemVarUnbound
                              end
-                           + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "22,6,22,24") ; BuildAlwaysSucceeds)))))
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatch", "9,2,22,24")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatch", "9,2,22,24")
+                           + s-step(
+                             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                             , "22"
+                             , "6"
+                             , "22"
+                             , "24"
+                             )
+                             ; BuildAlwaysSucceeds)))))
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "BuildMatch"
+      , "9"
+      , "2"
+      , "22"
+      , "24"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "BuildMatch"
+      , "9"
+      , "2"
+      , "22"
+      , "24"
+      )
       ; fail
 
   MisMatch :
@@ -52,14 +205,54 @@ rules
     , Match(
         Anno(Op(g, ts2), pt2)
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "25,2,27,25")> Fail()
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MisMatch"
+          , "25"
+          , "2"
+          , "27"
+          , "25"
+          )> Fail()
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "25,2,27,25")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "25,2,27,25")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MisMatch"
+             , "25"
+             , "2"
+             , "27"
+             , "25"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "27,10,27,25")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "27,11,27,17")
-              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "27,15,27,16") ; eq))> (f, g)
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "25,2,27,25")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "27"
+          , "10"
+          , "27"
+          , "25"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+              , "27"
+              , "11"
+              , "27"
+              , "17"
+              )
+              ; not(s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                    , "27"
+                    , "15"
+                    , "27"
+                    , "16"
+                    )
+                    ; eq))> (f, g)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MisMatch"
+             , "25"
+             , "2"
+             , "27"
+             , "25"
+             )
              ; fail
 
   MisMatch :
@@ -73,14 +266,54 @@ rules
         )
       , _
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "29,2,31,25")> Fail()
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MisMatch"
+          , "29"
+          , "2"
+          , "31"
+          , "25"
+          )> Fail()
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "29,2,31,25")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "29,2,31,25")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MisMatch"
+             , "29"
+             , "2"
+             , "31"
+             , "25"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "31,10,31,25")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "31,11,31,17")
-              ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "31,15,31,16") ; eq))> (f, g)
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MisMatch", "29,2,31,25")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "31"
+          , "10"
+          , "31"
+          , "25"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+              , "31"
+              , "11"
+              , "31"
+              , "17"
+              )
+              ; not(s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                    , "31"
+                    , "15"
+                    , "31"
+                    , "16"
+                    )
+                    ; eq))> (f, g)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MisMatch"
+             , "29"
+             , "2"
+             , "31"
+             , "25"
+             )
              ; fail
 
   BuildMatchFusion :
@@ -91,29 +324,67 @@ rules
     , Match(
         Anno(Op(f, ts2), pt2)
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchFusion", "33,2,40,38")> Seq(
-                                                                                                                                        <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "37,9,37,60")
-                                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "37,9,37,54")
-                                                                                                                                            ; zip(
-                                                                                                                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "37,13,37,52")
-                                                                                                                                                ; \ (t1, t2) -> Seq(Build(t1), Match(t2)) \
-                                                                                                                                              ))
-                                                                                                                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "37,57,37,60")
-                                                                                                                                         ; seqs> (ts1, ts2)
-                                                                                                                                      , Seq(
-                                                                                                                                          Build(
-                                                                                                                                            Anno(pt1, Op("Nil", []))
-                                                                                                                                          )
-                                                                                                                                        , Seq(
-                                                                                                                                            Match(Anno(pt2, Wld()))
-                                                                                                                                          , Build(
-                                                                                                                                              Anno(Op(f, ts1), pt1)
-                                                                                                                                            )
-                                                                                                                                          )
-                                                                                                                                        )
-                                                                                                                                      )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "BuildMatchFusion"
+          , "33"
+          , "2"
+          , "40"
+          , "38"
+          )> Seq(
+               <s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                , "37"
+                , "9"
+                , "37"
+                , "60"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                   , "37"
+                   , "9"
+                   , "37"
+                   , "54"
+                   )
+                   ; zip(
+                       s-step(
+                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                       , "37"
+                       , "13"
+                       , "37"
+                       , "52"
+                       )
+                       ; \ (t1, t2) -> Seq(Build(t1), Match(t2)) \
+                     ))
+                ; s-step(
+                  | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                  , "37"
+                  , "57"
+                  , "37"
+                  , "60"
+                  )
+                ; seqs> (ts1, ts2)
+             , Seq(
+                 Build(
+                   Anno(pt1, Op("Nil", []))
+                 )
+               , Seq(
+                   Match(Anno(pt2, Wld()))
+                 , Build(
+                     Anno(Op(f, ts1), pt1)
+                   )
+                 )
+               )
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchFusion", "33,2,40,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchFusion", "33,2,40,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildMatchFusion"
+             , "33"
+             , "2"
+             , "40"
+             , "38"
+             )
              ; fail
 
   BuildMatchFusion :
@@ -127,95 +398,245 @@ rules
         )
       , s
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchFusion", "42,2,50,12")> Seq(
-                                                                                                                                        <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "46,9,46,60")
-                                                                                                                                         ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "46,9,46,54")
-                                                                                                                                            ; zip(
-                                                                                                                                                s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "46,13,46,52")
-                                                                                                                                                ; \ (t1, t2) -> Seq(Build(t1), Match(t2)) \
-                                                                                                                                              ))
-                                                                                                                                         ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "46,57,46,60")
-                                                                                                                                         ; seqs> (ts1, ts2)
-                                                                                                                                      , Seq(
-                                                                                                                                          Build(
-                                                                                                                                            Anno(pt1, Op("Nil", []))
-                                                                                                                                          )
-                                                                                                                                        , Seq(
-                                                                                                                                            Match(Anno(pt2, Wld()))
-                                                                                                                                          , Seq(
-                                                                                                                                              Build(
-                                                                                                                                                Anno(Op(f, ts1), pt1)
-                                                                                                                                              )
-                                                                                                                                            , s
-                                                                                                                                            )
-                                                                                                                                          )
-                                                                                                                                        )
-                                                                                                                                      )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "BuildMatchFusion"
+          , "42"
+          , "2"
+          , "50"
+          , "12"
+          )> Seq(
+               <s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                , "46"
+                , "9"
+                , "46"
+                , "60"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                   , "46"
+                   , "9"
+                   , "46"
+                   , "54"
+                   )
+                   ; zip(
+                       s-step(
+                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                       , "46"
+                       , "13"
+                       , "46"
+                       , "52"
+                       )
+                       ; \ (t1, t2) -> Seq(Build(t1), Match(t2)) \
+                     ))
+                ; s-step(
+                  | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                  , "46"
+                  , "57"
+                  , "46"
+                  , "60"
+                  )
+                ; seqs> (ts1, ts2)
+             , Seq(
+                 Build(
+                   Anno(pt1, Op("Nil", []))
+                 )
+               , Seq(
+                   Match(Anno(pt2, Wld()))
+                 , Seq(
+                     Build(
+                       Anno(Op(f, ts1), pt1)
+                     )
+                   , s
+                   )
+                 )
+               )
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchFusion", "42,2,50,12")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchFusion", "42,2,50,12")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildMatchFusion"
+             , "42"
+             , "2"
+             , "50"
+             , "12"
+             )
              ; fail
 
   BuildBuild :
-    Seq(Build(t1), Build(t2)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildBuild", "54,2,55,41")> Build(t2)
+    Seq(Build(t1), Build(t2)) -> <r-exit(
+                                  | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                                  , "BuildBuild"
+                                  , "54"
+                                  , "2"
+                                  , "55"
+                                  , "41"
+                                  )> Build(t2)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildBuild", "54,2,55,41")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildBuild", "54,2,55,41")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildBuild"
+             , "54"
+             , "2"
+             , "55"
+             , "41"
+             )
              ; fail
 
   BuildBuild :
     Seq(
       Build(t1)
     , Seq(Build(t2), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildBuild", "57,2,58,57")> Seq(Build(t2), s)
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "BuildBuild"
+          , "57"
+          , "2"
+          , "58"
+          , "57"
+          )> Seq(Build(t2), s)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildBuild", "57,2,58,57")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildBuild", "57,2,58,57")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildBuild"
+             , "57"
+             , "2"
+             , "58"
+             , "57"
+             )
              ; fail
 
   BuildPrim :
     Seq(
       Build(t1)
     , PrimT(f, ss, ts)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildPrim", "63,2,64,55")> PrimT(f, ss, ts)
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "BuildPrim"
+          , "63"
+          , "2"
+          , "64"
+          , "55"
+          )> PrimT(f, ss, ts)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildPrim", "63,2,64,55")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildPrim", "63,2,64,55")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildPrim"
+             , "63"
+             , "2"
+             , "64"
+             , "55"
+             )
              ; fail
 
   BuildPrim :
     Seq(
       Build(t1)
     , Seq(PrimT(f, ss, ts), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildPrim", "66,2,67,71")> Seq(PrimT(f, ss, ts), s)
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "BuildPrim"
+          , "66"
+          , "2"
+          , "67"
+          , "71"
+          )> Seq(PrimT(f, ss, ts), s)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildPrim", "66,2,67,71")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildPrim", "66,2,67,71")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildPrim"
+             , "66"
+             , "2"
+             , "67"
+             , "71"
+             )
              ; fail
 
   MatchIdem :
-    Seq(Match(t), Match(t)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchIdem", "70,2,71,38")> Match(t)
+    Seq(Match(t), Match(t)) -> <r-exit(
+                                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                                , "MatchIdem"
+                                , "70"
+                                , "2"
+                                , "71"
+                                , "38"
+                                )> Match(t)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchIdem", "70,2,71,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchIdem", "70,2,71,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchIdem"
+             , "70"
+             , "2"
+             , "71"
+             , "38"
+             )
              ; fail
 
   MatchIdem :
     Seq(
       Match(t)
     , Seq(Match(t), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchIdem", "73,2,74,54")> Seq(Match(t), s)
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchIdem"
+          , "73"
+          , "2"
+          , "74"
+          , "54"
+          )> Seq(Match(t), s)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchIdem", "73,2,74,54")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchIdem", "73,2,74,54")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchIdem"
+             , "73"
+             , "2"
+             , "74"
+             , "54"
+             )
              ; fail
 
   BuildMatchIdem :
-    Seq(Build(t), Match(t)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchIdem", "76,2,77,38")> Build(t)
+    Seq(Build(t), Match(t)) -> <r-exit(
+                                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                                , "BuildMatchIdem"
+                                , "76"
+                                , "2"
+                                , "77"
+                                , "38"
+                                )> Build(t)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchIdem", "76,2,77,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchIdem", "76,2,77,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildMatchIdem"
+             , "76"
+             , "2"
+             , "77"
+             , "38"
+             )
              ; fail
 
   BuildMatchIdem :
     Seq(
       Build(t)
     , Seq(Match(t), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchIdem", "79,2,80,54")> Seq(Build(t), s)
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "BuildMatchIdem"
+          , "79"
+          , "2"
+          , "80"
+          , "54"
+          )> Seq(Build(t), s)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchIdem", "79,2,80,54")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildMatchIdem", "79,2,80,54")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildMatchIdem"
+             , "79"
+             , "2"
+             , "80"
+             , "54"
+             )
              ; fail
 
   MatchBuildIdemVar :
@@ -225,12 +646,26 @@ rules
         Match(t)
       , Seq(Build(Var(x)), s)
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "86,2,88,58")> Seq(
-                                                                                                                                         Match(Var(x))
-                                                                                                                                       , Seq(Match(t), s)
-                                                                                                                                       )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVar"
+          , "86"
+          , "2"
+          , "88"
+          , "58"
+          )> Seq(
+               Match(Var(x))
+             , Seq(Match(t), s)
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "86,2,88,58")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "86,2,88,58")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVar"
+             , "86"
+             , "2"
+             , "88"
+             , "58"
+             )
              ; fail
 
   MatchBuildIdemVar :
@@ -240,30 +675,72 @@ rules
         Match(t)
       , Build(Var(x))
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "90,2,92,35")> Seq(
-                                                                                                                                         Match(Var(x))
-                                                                                                                                       , Match(t)
-                                                                                                                                       )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVar"
+          , "90"
+          , "2"
+          , "92"
+          , "35"
+          )> Seq(
+               Match(Var(x))
+             , Match(t)
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "90,2,92,35")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "90,2,92,35")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVar"
+             , "90"
+             , "2"
+             , "92"
+             , "35"
+             )
              ; fail
 
   MatchBuildIdemVar :
     Seq(
       Match(Var(x))
     , Build(Var(x))
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "94,2,95,53")> Match(Var(x))
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVar"
+          , "94"
+          , "2"
+          , "95"
+          , "53"
+          )> Match(Var(x))
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "94,2,95,53")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "94,2,95,53")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVar"
+             , "94"
+             , "2"
+             , "95"
+             , "53"
+             )
              ; fail
 
   MatchBuildIdemVar :
     Seq(
       Match(Var(x))
     , Seq(Build(Var(x)), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "97,2,98,69")> Seq(Match(Var(x)), s)
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVar"
+          , "97"
+          , "2"
+          , "98"
+          , "69"
+          )> Seq(Match(Var(x)), s)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "97,2,98,69")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVar", "97,2,98,69")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVar"
+             , "97"
+             , "2"
+             , "98"
+             , "69"
+             )
              ; fail
 
   MatchBuildIdemVarUnbound :
@@ -273,12 +750,26 @@ rules
         Match(t)
       , Seq(Build(Var(x)), s)
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "100,2,102,69")> Seq(
-                                                                                                                                                  Match(Var(x){"unbound"})
-                                                                                                                                                , Seq(Match(t), s)
-                                                                                                                                                )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVarUnbound"
+          , "100"
+          , "2"
+          , "102"
+          , "69"
+          )> Seq(
+               Match(Var(x){"unbound"})
+             , Seq(Match(t), s)
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "100,2,102,69")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "100,2,102,69")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVarUnbound"
+             , "100"
+             , "2"
+             , "102"
+             , "69"
+             )
              ; fail
 
   MatchBuildIdemVarUnbound :
@@ -288,111 +779,353 @@ rules
         Match(t)
       , Build(Var(x))
       )
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "104,2,106,46")> Seq(
-                                                                                                                                                  Match(Var(x){"unbound"})
-                                                                                                                                                , Match(t)
-                                                                                                                                                )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVarUnbound"
+          , "104"
+          , "2"
+          , "106"
+          , "46"
+          )> Seq(
+               Match(Var(x){"unbound"})
+             , Match(t)
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "104,2,106,46")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "104,2,106,46")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVarUnbound"
+             , "104"
+             , "2"
+             , "106"
+             , "46"
+             )
              ; fail
 
   MatchBuildIdemVarUnbound :
     Seq(
       Match(Var(x){"unbound"})
     , Build(Var(x))
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "108,2,109,75")> Match(Var(x){"unbound"})
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVarUnbound"
+          , "108"
+          , "2"
+          , "109"
+          , "75"
+          )> Match(Var(x){"unbound"})
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "108,2,109,75")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "108,2,109,75")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVarUnbound"
+             , "108"
+             , "2"
+             , "109"
+             , "75"
+             )
              ; fail
 
   MatchBuildIdemVarUnbound :
     Seq(
       Match(Var(x){"unbound"})
     , Seq(Build(Var(x)), s)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "111,2,112,91")> Seq(
-                                                                                                                                                  Match(Var(x){"unbound"})
-                                                                                                                                                , s
-                                                                                                                                                )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "MatchBuildIdemVarUnbound"
+          , "111"
+          , "2"
+          , "112"
+          , "91"
+          )> Seq(
+               Match(Var(x){"unbound"})
+             , s
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "111,2,112,91")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchBuildIdemVarUnbound", "111,2,112,91")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchBuildIdemVarUnbound"
+             , "111"
+             , "2"
+             , "112"
+             , "91"
+             )
              ; fail
 
 
 rules
 
   MatchSimplify =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchSimplify", "117,2,118,15")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "118,4,118,15")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+    , "MatchSimplify"
+    , "117"
+    , "2"
+    , "118"
+    , "15"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "118"
+      , "4"
+      , "118"
+      , "15"
+      )
     ; AsMatchWld
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchSimplify", "117,2,118,15")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchSimplify", "117,2,118,15")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "MatchSimplify"
+      , "117"
+      , "2"
+      , "118"
+      , "15"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+      , "MatchSimplify"
+      , "117"
+      , "2"
+      , "118"
+      , "15"
+      )
       ; fail
 
   MatchAs :
-    Match(As(p1, p2)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchAs", "120,2,121,49")> Seq(Match(p2), Match(p1))
+    Match(As(p1, p2)) -> <r-exit(
+                          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                          , "MatchAs"
+                          , "120"
+                          , "2"
+                          , "121"
+                          , "49"
+                          )> Seq(Match(p2), Match(p1))
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchAs", "120,2,121,49")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "MatchAs", "120,2,121,49")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "MatchAs"
+             , "120"
+             , "2"
+             , "121"
+             , "49"
+             )
              ; fail
 
   AsMatchWld() :
-    As(Wld(), t) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "AsMatchWld", "123,2,124,20")> t
+    As(Wld(), t) -> <r-exit(
+                     | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                     , "AsMatchWld"
+                     , "123"
+                     , "2"
+                     , "124"
+                     , "20"
+                     )> t
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "AsMatchWld", "123,2,124,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "AsMatchWld", "123,2,124,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "AsMatchWld"
+             , "123"
+             , "2"
+             , "124"
+             , "20"
+             )
              ; fail
 
   WhereSavesCurrentTerm :
-    Where(s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "WhereSavesCurrentTerm", "126,2,128,17")> Scope(
-                                                                                                                                                      [x]
-                                                                                                                                                    , Seq(
-                                                                                                                                                        Match(Var(x))
-                                                                                                                                                      , Seq(s, Build(Var(x)))
-                                                                                                                                                      )
-                                                                                                                                                    )
+    Where(s) -> <r-exit(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                 , "WhereSavesCurrentTerm"
+                 , "126"
+                 , "2"
+                 , "128"
+                 , "17"
+                 )> Scope(
+                      [x]
+                    , Seq(
+                        Match(Var(x))
+                      , Seq(s, Build(Var(x)))
+                      )
+                    )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "WhereSavesCurrentTerm", "126,2,128,17")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "WhereSavesCurrentTerm", "126,2,128,17")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "WhereSavesCurrentTerm"
+             , "126"
+             , "2"
+             , "128"
+             , "17"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "128,10,128,17")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "128,10,128,12") ; new) => x
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "WhereSavesCurrentTerm", "126,2,128,17")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "128"
+          , "10"
+          , "128"
+          , "17"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "128"
+             , "10"
+             , "128"
+             , "12"
+             )
+             ; new) => x
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "WhereSavesCurrentTerm"
+             , "126"
+             , "2"
+             , "128"
+             , "17"
+             )
              ; fail
 
   TestSavesCurrentTerm :
-    Test(s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "TestSavesCurrentTerm", "130,2,132,17")> Scope(
-                                                                                                                                                    [x]
-                                                                                                                                                  , Seq(
-                                                                                                                                                      Match(Var(x))
-                                                                                                                                                    , Seq(s, Build(Var(x)))
-                                                                                                                                                    )
-                                                                                                                                                  )
+    Test(s) -> <r-exit(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                , "TestSavesCurrentTerm"
+                , "130"
+                , "2"
+                , "132"
+                , "17"
+                )> Scope(
+                     [x]
+                   , Seq(
+                       Match(Var(x))
+                     , Seq(s, Build(Var(x)))
+                     )
+                   )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "TestSavesCurrentTerm", "130,2,132,17")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "TestSavesCurrentTerm", "130,2,132,17")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "TestSavesCurrentTerm"
+             , "130"
+             , "2"
+             , "132"
+             , "17"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "132,10,132,17")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "132,10,132,12") ; new) => x
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "TestSavesCurrentTerm", "130,2,132,17")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "132"
+          , "10"
+          , "132"
+          , "17"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "132"
+             , "10"
+             , "132"
+             , "12"
+             )
+             ; new) => x
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "TestSavesCurrentTerm"
+             , "130"
+             , "2"
+             , "132"
+             , "17"
+             )
              ; fail
 
 
 rules
 
   BuildAlwaysSucceeds :
-    LChoice(Build(t), s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildAlwaysSucceeds", "136,2,140,26")> Build(t)
+    LChoice(Build(t), s) -> <r-exit(
+                             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                             , "BuildAlwaysSucceeds"
+                             , "136"
+                             , "2"
+                             , "140"
+                             , "26"
+                             )> Build(t)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildAlwaysSucceeds", "136,2,140,26")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildAlwaysSucceeds", "136,2,140,26")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildAlwaysSucceeds"
+             , "136"
+             , "2"
+             , "140"
+             , "26"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "138,10,140,26")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "138,11,140,23")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+          , "138"
+          , "10"
+          , "140"
+          , "26"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+              , "138"
+              , "11"
+              , "140"
+              , "23"
+              )
               ; topdown(
-                  s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "138,19,140,22")
-                  ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "138,19,138,25")
+                  s-step(
+                  | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                  , "138"
+                  , "19"
+                  , "140"
+                  , "22"
+                  )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                     , "138"
+                     , "19"
+                     , "138"
+                     , "25"
+                     )
                      ; ?Var(_)
-                     < s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "138,29,138,44")
+                     < s-step(
+                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                       , "138"
+                       , "29"
+                       , "138"
+                       , "44"
+                       )
                        ; ?Var(_){"bound"}
-                     + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "139,21,140,22")
-                       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "139,21,139,34")
+                     + s-step(
+                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                       , "139"
+                       , "21"
+                       , "140"
+                       , "22"
+                       )
+                       ; (s-step(
+                          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                          , "139"
+                          , "21"
+                          , "139"
+                          , "34"
+                          )
                           ; ?Op("Cons", _)
-                          < s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "139,38,139,41") ; fail
-                          + s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "140,21,140,22") ; id))
+                          < s-step(
+                            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                            , "139"
+                            , "38"
+                            , "139"
+                            , "41"
+                            )
+                            ; fail
+                          + s-step(
+                            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+                            , "140"
+                            , "21"
+                            , "140"
+                            , "22"
+                            )
+                            ; id))
                 ))> t
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str", "BuildAlwaysSucceeds", "136,2,140,26")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/build-match-laws.str"
+             , "BuildAlwaysSucceeds"
+             , "136"
+             , "2"
+             , "140"
+             , "26"
+             )
              ; fail

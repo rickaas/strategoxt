@@ -11,28 +11,121 @@ imports
 rules
 
   bla :
-    1 -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "bla", "5,2,5,13")> 2
+    1 -> <r-exit(
+          | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+          , "bla"
+          , "5"
+          , "2"
+          , "5"
+          , "13"
+          )> 2
     where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "bla", "5,2,5,13")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "bla", "5,2,5,13")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+             , "bla"
+             , "5"
+             , "2"
+             , "5"
+             , "13"
+             )
              ; fail
 
   blabla :
-    0.2 -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "blabla", "7,2,7,20")> 0.1
+    0.2 -> <r-exit(
+            | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+            , "blabla"
+            , "7"
+            , "2"
+            , "7"
+            , "20"
+            )> 0.1
     where r-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "blabla", "7,2,7,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "blabla", "7,2,7,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+             , "blabla"
+             , "7"
+             , "2"
+             , "7"
+             , "20"
+             )
              ; fail
 
 
 strategies
   main-number_syntax_test =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "main-number_syntax_test", "11,2,13,21")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "12,3,13,21")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "12,3,12,14")
-       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "12,3,12,9")
-          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "12,4,12,6") ; bla)> 1) => 2)
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "13,3,13,21")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "13,3,13,14")
-       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "13,4,13,9") ; blabla)> 0.2) => 0.1
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "main-number_syntax_test", "11,2,13,21")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str", "main-number_syntax_test", "11,2,13,21")
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+    , "main-number_syntax_test"
+    , "11"
+    , "2"
+    , "13"
+    , "21"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+      , "12"
+      , "3"
+      , "13"
+      , "21"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+       , "12"
+       , "3"
+       , "12"
+       , "14"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+          , "12"
+          , "3"
+          , "12"
+          , "9"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+              , "12"
+              , "4"
+              , "12"
+              , "6"
+              )
+              ; bla)> 1) => 2)
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+      , "13"
+      , "3"
+      , "13"
+      , "21"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+       , "13"
+       , "3"
+       , "13"
+       , "14"
+       )
+       ; <(s-step(
+           | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+           , "13"
+           , "4"
+           , "13"
+           , "9"
+           )
+           ; blabla)> 0.2) => 0.1
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+      , "main-number_syntax_test"
+      , "11"
+      , "2"
+      , "13"
+      , "21"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/strc2/number_syntax_test.str"
+      , "main-number_syntax_test"
+      , "11"
+      , "2"
+      , "13"
+      , "21"
+      )
       ; fail

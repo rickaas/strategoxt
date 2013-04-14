@@ -21,106 +21,539 @@ signature
 
 strategies
   main-ppgen =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "main-ppgen", "17,2,18,36")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "18,4,18,36")
-    ; xtc-io-wrap(
-        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "18,16,18,28") ; ppgen-options
-      , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "18,31,18,35") ; ppgen
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+    , "main-ppgen"
+    , "17"
+    , "2"
+    , "18"
+    , "36"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "18"
+      , "4"
+      , "18"
+      , "36"
       )
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "main-ppgen", "17,2,18,36")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "main-ppgen", "17,2,18,36")
+    ; xtc-io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+        , "18"
+        , "16"
+        , "18"
+        , "28"
+        )
+        ; ppgen-options
+      , s-step(
+        | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+        , "18"
+        , "31"
+        , "18"
+        , "35"
+        )
+        ; ppgen
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "main-ppgen"
+      , "17"
+      , "2"
+      , "18"
+      , "36"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "main-ppgen"
+      , "17"
+      , "2"
+      , "18"
+      , "36"
+      )
       ; fail
 
   ppgen =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "ppgen", "20,2,27,8")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "21,4,27,8")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "21,4,21,45")
-       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "21,5,21,19") ; pre-process-sdf)> ( <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "21,24,21,37") ; get-input-type>
-                                                                                                                                                 , <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "21,42,21,43") ; id>
-                                                                                                                                                 ))
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "22,6,27,8")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "22,6,22,15") ; ppgenerate)
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "23,6,27,8")
-    ; if s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "23,9,23,45")
-         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "23,9,23,36")
-            ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "23,10,23,19") ; get-config)> "--output-type") => AST() then
-        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "24,8,24,15") ; write-to
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+    , "ppgen"
+    , "20"
+    , "2"
+    , "27"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "21"
+      , "4"
+      , "27"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+       , "21"
+       , "4"
+       , "21"
+       , "45"
+       )
+       ; <(s-step(
+           | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+           , "21"
+           , "5"
+           , "21"
+           , "19"
+           )
+           ; pre-process-sdf)> ( <s-step(
+                                  | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                                  , "21"
+                                  , "24"
+                                  , "21"
+                                  , "37"
+                                  )
+                                  ; get-input-type>
+                               , <s-step(
+                                  | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                                  , "21"
+                                  , "42"
+                                  , "21"
+                                  , "43"
+                                  )
+                                  ; id>
+                               ))
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "22"
+      , "6"
+      , "27"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+       , "22"
+       , "6"
+       , "22"
+       , "15"
+       )
+       ; ppgenerate)
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "23"
+      , "6"
+      , "27"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+         , "23"
+         , "9"
+         , "23"
+         , "45"
+         )
+         ; (s-step(
+            | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+            , "23"
+            , "9"
+            , "23"
+            , "36"
+            )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                , "23"
+                , "10"
+                , "23"
+                , "19"
+                )
+                ; get-config)> "--output-type") => AST() then
+        s-step(
+        | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+        , "24"
+        , "8"
+        , "24"
+        , "15"
+        )
+        ; write-to
       else
-        s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "26,8,26,28")
-        ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "26,8,26,18") ; pp-pp-table)
-        ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "26,21,26,28")
+        s-step(
+        | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+        , "26"
+        , "8"
+        , "26"
+        , "28"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+           , "26"
+           , "8"
+           , "26"
+           , "18"
+           )
+           ; pp-pp-table)
+        ; s-step(
+          | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+          , "26"
+          , "21"
+          , "26"
+          , "28"
+          )
         ; print-to
       end
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "ppgen", "20,2,27,8")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "ppgen", "20,2,27,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "ppgen"
+      , "20"
+      , "2"
+      , "27"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "ppgen"
+      , "20"
+      , "2"
+      , "27"
+      , "8"
+      )
       ; fail
 
   pre-process-sdf :
-    (PlainText(), f) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "29,2,29,99")> <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "29,41,29,96")
-                                                                                                                                                                ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "29,41,29,69")
-                                                                                                                                                                   ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "29,41,29,55") ; xtc-ensure-file) => FILE(
-                                                                                                                                                                                                                                                                                                                 <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "29,66,29,67") ; id>
-                                                                                                                                                                                                                                                                                                               ))
-                                                                                                                                                                ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "29,72,29,96")
-                                                                                                                                                                ; parse-sdf-definition-file> f
+    (PlainText(), f) -> <r-exit(
+                         | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                         , "pre-process-sdf"
+                         , "29"
+                         , "2"
+                         , "29"
+                         , "99"
+                         )> <s-step(
+                             | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                             , "29"
+                             , "41"
+                             , "29"
+                             , "96"
+                             )
+                             ; (s-step(
+                                | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                                , "29"
+                                , "41"
+                                , "29"
+                                , "69"
+                                )
+                                ; (s-step(
+                                   | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                                   , "29"
+                                   , "41"
+                                   , "29"
+                                   , "55"
+                                   )
+                                   ; xtc-ensure-file) => FILE(
+                                                           <s-step(
+                                                            | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                                                            , "29"
+                                                            , "66"
+                                                            , "29"
+                                                            , "67"
+                                                            )
+                                                            ; id>
+                                                         ))
+                             ; s-step(
+                               | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                               , "29"
+                               , "72"
+                               , "29"
+                               , "96"
+                               )
+                             ; parse-sdf-definition-file> f
     where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "29,2,29,99")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "29,2,29,99")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+             , "pre-process-sdf"
+             , "29"
+             , "2"
+             , "29"
+             , "99"
+             )
              ; fail
 
   pre-process-sdf :
-    (ParseTree(), f) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "30,2,30,56")> <s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "30,41,30,53") ; implode-asfix> f
+    (ParseTree(), f) -> <r-exit(
+                         | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                         , "pre-process-sdf"
+                         , "30"
+                         , "2"
+                         , "30"
+                         , "56"
+                         )> <s-step(
+                             | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                             , "30"
+                             , "41"
+                             , "30"
+                             , "53"
+                             )
+                             ; implode-asfix> f
     where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "30,2,30,56")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "30,2,30,56")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+             , "pre-process-sdf"
+             , "30"
+             , "2"
+             , "30"
+             , "56"
+             )
              ; fail
 
   pre-process-sdf :
-    (AST(), f) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "31,2,31,40")> f
+    (AST(), f) -> <r-exit(
+                   | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                   , "pre-process-sdf"
+                   , "31"
+                   , "2"
+                   , "31"
+                   , "40"
+                   )> f
     where r-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "31,2,31,40")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "pre-process-sdf", "31,2,31,40")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+             , "pre-process-sdf"
+             , "31"
+             , "2"
+             , "31"
+             , "40"
+             )
              ; fail
 
   get-input-type =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "get-input-type", "33,2,34,47")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "34,4,34,47")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "34,4,34,30")
-       ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "34,5,34,14") ; get-config)> "--input-type"
-       <+ s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "34,36,34,47")
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+    , "get-input-type"
+    , "33"
+    , "2"
+    , "34"
+    , "47"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "34"
+      , "4"
+      , "34"
+      , "47"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+       , "34"
+       , "4"
+       , "34"
+       , "30"
+       )
+       ; <(s-step(
+           | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+           , "34"
+           , "5"
+           , "34"
+           , "14"
+           )
+           ; get-config)> "--input-type"
+       <+ s-step(
+          | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+          , "34"
+          , "36"
+          , "34"
+          , "47"
+          )
           ; !PlainText())
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "get-input-type", "33,2,34,47")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "get-input-type", "33,2,34,47")
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "get-input-type"
+      , "33"
+      , "2"
+      , "34"
+      , "47"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "get-input-type"
+      , "33"
+      , "2"
+      , "34"
+      , "47"
+      )
       ; fail
 
   ppgen-options =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "ppgen-options", "36,2,48,6")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "37,6,48,6")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "37,6,40,6")
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+    , "ppgen-options"
+    , "36"
+    , "2"
+    , "48"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "37"
+      , "6"
+      , "48"
+      , "6"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+       , "37"
+       , "6"
+       , "40"
+       , "6"
+       )
        ; Option(
-           s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "37,13,37,16") ; "-A"
-         , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "38,8,38,56")
-           ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "38,14,38,55")
-                   ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "38,15,38,24") ; set-config)> ("--input-type", ParseTree()))
-         , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "39,8,39,42")
+           s-step(
+           | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+           , "37"
+           , "13"
+           , "37"
+           , "16"
+           )
+           ; "-A"
+         , s-step(
+           | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+           , "38"
+           , "8"
+           , "38"
+           , "56"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                   , "38"
+                   , "14"
+                   , "38"
+                   , "55"
+                   )
+                   ; <(s-step(
+                       | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                       , "38"
+                       , "15"
+                       , "38"
+                       , "24"
+                       )
+                       ; set-config)> ("--input-type", ParseTree()))
+         , s-step(
+           | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+           , "39"
+           , "8"
+           , "39"
+           , "42"
+           )
            ; !"-A          Input is parse tree."
          )
-       + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "41,6,48,6")
-         ; (s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "41,6,44,6")
+       + s-step(
+         | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+         , "41"
+         , "6"
+         , "48"
+         , "6"
+         )
+         ; (s-step(
+            | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+            , "41"
+            , "6"
+            , "44"
+            , "6"
+            )
             ; Option(
-                s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "41,13,41,16") ; "-a"
-              , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "42,8,42,50")
-                ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "42,14,42,49")
-                        ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "42,15,42,24") ; set-config)> ("--input-type", AST()))
-              , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "43,8,43,52")
+                s-step(
+                | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                , "41"
+                , "13"
+                , "41"
+                , "16"
+                )
+                ; "-a"
+              , s-step(
+                | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                , "42"
+                , "8"
+                , "42"
+                , "50"
+                )
+                ; where(s-step(
+                        | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                        , "42"
+                        , "14"
+                        , "42"
+                        , "49"
+                        )
+                        ; <(s-step(
+                            | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                            , "42"
+                            , "15"
+                            , "42"
+                            , "24"
+                            )
+                            ; set-config)> ("--input-type", AST()))
+              , s-step(
+                | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                , "43"
+                , "8"
+                , "43"
+                , "52"
+                )
                 ; !"-a          Input is abstract syntax tree."
               )
-            + s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "45,6,48,6")
+            + s-step(
+              | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+              , "45"
+              , "6"
+              , "48"
+              , "6"
+              )
               ; Option(
-                  s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "45,13,45,16") ; "-t"
-                , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "46,8,46,51")
-                  ; where(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "46,14,46,50")
-                          ; <(s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "46,15,46,24") ; set-config)> ("--output-type", AST()))
-                , s-step(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "47,8,47,53")
+                  s-step(
+                  | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                  , "45"
+                  , "13"
+                  , "45"
+                  , "16"
+                  )
+                  ; "-t"
+                , s-step(
+                  | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                  , "46"
+                  , "8"
+                  , "46"
+                  , "51"
+                  )
+                  ; where(s-step(
+                          | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                          , "46"
+                          , "14"
+                          , "46"
+                          , "50"
+                          )
+                          ; <(s-step(
+                              | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                              , "46"
+                              , "15"
+                              , "46"
+                              , "24"
+                              )
+                              ; set-config)> ("--output-type", AST()))
+                , s-step(
+                  | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+                  , "47"
+                  , "8"
+                  , "47"
+                  , "53"
+                  )
                   ; !"-t          Output is abstract syntax tree."
                 )))
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "ppgen-options", "36,2,48,6")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str", "ppgen-options", "36,2,48,6")
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "ppgen-options"
+      , "36"
+      , "2"
+      , "48"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/java/tools/org/strategoxt/tools/lib/ppgen.str"
+      , "ppgen-options"
+      , "36"
+      , "2"
+      , "48"
+      , "6"
+      )
       ; fail

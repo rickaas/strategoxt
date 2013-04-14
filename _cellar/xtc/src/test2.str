@@ -11,24 +11,115 @@ imports
 
 strategies
   test2 =
-    s-enter(|"_cellar/xtc/src/test2.str", "test2", "5,2,11,4")
-    ; s-step(|"_cellar/xtc/src/test2.str", "6,4,11,4")
+    s-enter(
+    | "_cellar/xtc/src/test2.str"
+    , "test2"
+    , "5"
+    , "2"
+    , "11"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xtc/src/test2.str"
+      , "6"
+      , "4"
+      , "11"
+      , "4"
+      )
     ; xtc-io-wrap(
-        s-step(|"_cellar/xtc/src/test2.str", "7,6,10,30")
-        ; (s-step(|"_cellar/xtc/src/test2.str", "7,6,7,14") ; read-from)
-        ; s-step(|"_cellar/xtc/src/test2.str", "8,8,10,30")
-        ; (s-step(|"_cellar/xtc/src/test2.str", "8,8,8,19")
-           ; !( <s-step(|"_cellar/xtc/src/test2.str", "8,11,8,12") ; id>
-              , <s-step(|"_cellar/xtc/src/test2.str", "8,16,8,17") ; id>
+        s-step(
+        | "_cellar/xtc/src/test2.str"
+        , "7"
+        , "6"
+        , "10"
+        , "30"
+        )
+        ; (s-step(
+           | "_cellar/xtc/src/test2.str"
+           , "7"
+           , "6"
+           , "7"
+           , "14"
+           )
+           ; read-from)
+        ; s-step(
+          | "_cellar/xtc/src/test2.str"
+          , "8"
+          , "8"
+          , "10"
+          , "30"
+          )
+        ; (s-step(
+           | "_cellar/xtc/src/test2.str"
+           , "8"
+           , "8"
+           , "8"
+           , "19"
+           )
+           ; !( <s-step(
+                 | "_cellar/xtc/src/test2.str"
+                 , "8"
+                 , "11"
+                 , "8"
+                 , "12"
+                 )
+                 ; id>
+              , <s-step(
+                 | "_cellar/xtc/src/test2.str"
+                 , "8"
+                 , "16"
+                 , "8"
+                 , "17"
+                 )
+                 ; id>
               ))
-        ; s-step(|"_cellar/xtc/src/test2.str", "9,8,10,30")
-        ; (s-step(|"_cellar/xtc/src/test2.str", "9,8,9,15") ; write-to)
-        ; s-step(|"_cellar/xtc/src/test2.str", "10,8,10,30")
+        ; s-step(
+          | "_cellar/xtc/src/test2.str"
+          , "9"
+          , "8"
+          , "10"
+          , "30"
+          )
+        ; (s-step(
+           | "_cellar/xtc/src/test2.str"
+           , "9"
+           , "8"
+           , "9"
+           , "15"
+           )
+           ; write-to)
+        ; s-step(
+          | "_cellar/xtc/src/test2.str"
+          , "10"
+          , "8"
+          , "10"
+          , "30"
+          )
         ; xtc-transform(
-            s-step(|"_cellar/xtc/src/test2.str", "10,22,10,29")
+            s-step(
+            | "_cellar/xtc/src/test2.str"
+            , "10"
+            , "22"
+            , "10"
+            , "29"
+            )
             ; !"test3"
           )
       )
-    < s-exit(|"_cellar/xtc/src/test2.str", "test2", "5,2,11,4")
-    + s-exit(|"_cellar/xtc/src/test2.str", "test2", "5,2,11,4")
+    < s-exit(
+      | "_cellar/xtc/src/test2.str"
+      , "test2"
+      , "5"
+      , "2"
+      , "11"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xtc/src/test2.str"
+      , "test2"
+      , "5"
+      , "2"
+      , "11"
+      , "4"
+      )
       ; fail

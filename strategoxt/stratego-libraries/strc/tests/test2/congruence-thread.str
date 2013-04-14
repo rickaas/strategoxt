@@ -10,15 +10,55 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "main", "6,2,11,4")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "7,4,11,4")
-    ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "7,15,7,36")
-        ; !"congruence-env-test"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "10,1,10,23") ; congruence-thread-test2
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+    , "main"
+    , "6"
+    , "2"
+    , "11"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+      , "7"
+      , "4"
+      , "11"
+      , "4"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "main", "6,2,11,4")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "main", "6,2,11,4")
+    ; test-suite(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+        , "7"
+        , "15"
+        , "7"
+        , "36"
+        )
+        ; !"congruence-env-test"
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+        , "10"
+        , "1"
+        , "10"
+        , "23"
+        )
+        ; congruence-thread-test2
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+      , "main"
+      , "6"
+      , "2"
+      , "11"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+      , "main"
+      , "6"
+      , "2"
+      , "11"
+      , "4"
+      )
       ; fail
 
 
@@ -35,9 +75,23 @@ signature
 rules
 
   add-one :
-    (Id, x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "add-one", "24,2,24,33")> (Id, Succ(x))
+    (Id, x) -> <r-exit(
+                | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+                , "add-one"
+                , "24"
+                , "2"
+                , "24"
+                , "33"
+                )> (Id, Succ(x))
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "add-one", "24,2,24,33")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "add-one", "24,2,24,33")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+             , "add-one"
+             , "24"
+             , "2"
+             , "24"
+             , "33"
+             )
              ; fail
 
 
@@ -50,21 +104,85 @@ signature
 
 strategies
   congruence-thread-test2 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "congruence-thread-test2", "52,2,57,7")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "53,4,57,7")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+    , "congruence-thread-test2"
+    , "52"
+    , "2"
+    , "57"
+    , "7"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+      , "53"
+      , "4"
+      , "57"
+      , "7"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "53,15,53,40")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+        , "53"
+        , "15"
+        , "53"
+        , "40"
+        )
         ; !"congruence-thread-test2"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "54,9,54,46")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+        , "54"
+        , "9"
+        , "54"
+        , "46"
+        )
         ; thread-map(
-            s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "54,20,54,45")
-            ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "54,20,54,30") ; number-sort
-               <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "54,35,54,45")
-                  ; ( s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "54,36,54,41") ; pp-lit
-                    , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "54,43,54,44") ; id
+            s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+            , "54"
+            , "20"
+            , "54"
+            , "45"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+               , "54"
+               , "20"
+               , "54"
+               , "30"
+               )
+               ; number-sort
+               <+ s-step(
+                  | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+                  , "54"
+                  , "35"
+                  , "54"
+                  , "45"
+                  )
+                  ; ( s-step(
+                      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+                      , "54"
+                      , "36"
+                      , "54"
+                      , "41"
+                      )
+                      ; pp-lit
+                    , s-step(
+                      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+                      , "54"
+                      , "43"
+                      , "54"
+                      , "44"
+                      )
+                      ; id
                     ))
           )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "55,8,55,55")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+        , "55"
+        , "8"
+        , "55"
+        , "55"
+        )
         ; !( [ sort("Do")
              , lit("1")
              , sort("Plus")
@@ -72,7 +190,13 @@ strategies
              ]
            , 1
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "56,8,56,37")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+        , "56"
+        , "8"
+        , "56"
+        , "37"
+        )
         ; !( [ 1
              , KW("1")
              , 2
@@ -81,23 +205,72 @@ strategies
            , 3
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "congruence-thread-test2", "52,2,57,7")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "congruence-thread-test2", "52,2,57,7")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+      , "congruence-thread-test2"
+      , "52"
+      , "2"
+      , "57"
+      , "7"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+      , "congruence-thread-test2"
+      , "52"
+      , "2"
+      , "57"
+      , "7"
+      )
       ; fail
 
 
 rules
 
   number-sort :
-    (sort(x), i) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "number-sort", "61,2,62,34")> ( i
-                                                                                                                                   , <s-step(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "62,25,62,27") ; add> (i, 1)
-                                                                                                                                   )
+    (sort(x), i) -> <r-exit(
+                     | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+                     , "number-sort"
+                     , "61"
+                     , "2"
+                     , "62"
+                     , "34"
+                     )> ( i
+                        , <s-step(
+                           | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+                           , "62"
+                           , "25"
+                           , "62"
+                           , "27"
+                           )
+                           ; add> (i, 1)
+                        )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "number-sort", "61,2,62,34")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "number-sort", "61,2,62,34")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+             , "number-sort"
+             , "61"
+             , "2"
+             , "62"
+             , "34"
+             )
              ; fail
 
   pp-lit :
-    lit(x) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "pp-lit", "64,2,65,18")> KW(x)
+    lit(x) -> <r-exit(
+               | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+               , "pp-lit"
+               , "64"
+               , "2"
+               , "65"
+               , "18"
+               )> KW(x)
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "pp-lit", "64,2,65,18")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str", "pp-lit", "64,2,65,18")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/congruence-thread.str"
+             , "pp-lit"
+             , "64"
+             , "2"
+             , "65"
+             , "18"
+             )
              ; fail

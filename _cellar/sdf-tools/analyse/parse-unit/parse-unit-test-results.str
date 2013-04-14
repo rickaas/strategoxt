@@ -24,53 +24,203 @@ signature
 
 strategies
   create-test-result =
-    s-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result", "25,2,28,16")
-    ; s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "26,7,28,16")
-    ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "26,7,26,31") ; create-test-result-simple
-       <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "27,7,28,16")
-          ; (s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "27,7,27,25") ; create-test-compare
-             <+ s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "28,7,28,16")
+    s-enter(
+    | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+    , "create-test-result"
+    , "25"
+    , "2"
+    , "28"
+    , "16"
+    )
+    ; s-step(
+      | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+      , "26"
+      , "7"
+      , "28"
+      , "16"
+      )
+    ; (s-step(
+       | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+       , "26"
+       , "7"
+       , "26"
+       , "31"
+       )
+       ; create-test-result-simple
+       <+ s-step(
+          | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+          , "27"
+          , "7"
+          , "28"
+          , "16"
+          )
+          ; (s-step(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "27"
+             , "7"
+             , "27"
+             , "25"
+             )
+             ; create-test-compare
+             <+ s-step(
+                | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+                , "28"
+                , "7"
+                , "28"
+                , "16"
+                )
                 ; !Failure()))
-    < s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result", "25,2,28,16")
-    + s-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result", "25,2,28,16")
+    < s-exit(
+      | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+      , "create-test-result"
+      , "25"
+      , "2"
+      , "28"
+      , "16"
+      )
+    + s-exit(
+      | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+      , "create-test-result"
+      , "25"
+      , "2"
+      , "28"
+      , "16"
+      )
       ; fail
 
   create-test-result-simple :
-    (ParseResult(_, Failure(_)), success()) -> <r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "33,2,34,55")> Failure()
+    (ParseResult(_, Failure(_)), success()) -> <r-exit(
+                                                | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+                                                , "create-test-result-simple"
+                                                , "33"
+                                                , "2"
+                                                , "34"
+                                                , "55"
+                                                )> Failure()
     where r-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "33,2,34,55")
-          <+ r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "33,2,34,55")
+          <+ r-exit(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "create-test-result-simple"
+             , "33"
+             , "2"
+             , "34"
+             , "55"
+             )
              ; fail
 
   create-test-result-simple :
     ( ParseResult(_, Failure(_))
     , pattern(_)
-    ) -> <r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "39,2,40,56")> Failure()
+    ) -> <r-exit(
+          | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+          , "create-test-result-simple"
+          , "39"
+          , "2"
+          , "40"
+          , "56"
+          )> Failure()
     where r-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "39,2,40,56")
-          <+ r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "39,2,40,56")
+          <+ r-exit(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "create-test-result-simple"
+             , "39"
+             , "2"
+             , "40"
+             , "56"
+             )
              ; fail
 
   create-test-result-simple :
-    (ParseResult(_, Success(_)), success()) -> <r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "45,2,46,55")> Success()
+    (ParseResult(_, Success(_)), success()) -> <r-exit(
+                                                | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+                                                , "create-test-result-simple"
+                                                , "45"
+                                                , "2"
+                                                , "46"
+                                                , "55"
+                                                )> Success()
     where r-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "45,2,46,55")
-          <+ r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "45,2,46,55")
+          <+ r-exit(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "create-test-result-simple"
+             , "45"
+             , "2"
+             , "46"
+             , "55"
+             )
              ; fail
 
   create-test-result-simple :
-    (ParseResult(_, Failure(_)), failure()) -> <r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "51,2,52,55")> Success()
+    (ParseResult(_, Failure(_)), failure()) -> <r-exit(
+                                                | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+                                                , "create-test-result-simple"
+                                                , "51"
+                                                , "2"
+                                                , "52"
+                                                , "55"
+                                                )> Success()
     where r-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "51,2,52,55")
-          <+ r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-result-simple", "51,2,52,55")
+          <+ r-exit(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "create-test-result-simple"
+             , "51"
+             , "2"
+             , "52"
+             , "55"
+             )
              ; fail
 
   create-test-compare :
     ( ParseResult(_, Success(ast))
     , pattern(p)
-    ) -> <r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-compare", "57,2,60,40")> Success()
+    ) -> <r-exit(
+          | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+          , "create-test-compare"
+          , "57"
+          , "2"
+          , "60"
+          , "40"
+          )> Success()
     where r-enter(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-compare", "57,2,60,40")
-          <+ r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-compare", "57,2,60,40")
+          <+ r-exit(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "create-test-compare"
+             , "57"
+             , "2"
+             , "60"
+             , "40"
+             )
              ; fail
-    where s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "60,6,60,40")
-          ; <(s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "60,7,60,14") ; aterm-eq)> ( <s-step(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "60,19,60,31") ; explode-aterm> ast
-                                                                                                                     , p
-                                                                                                                     )
-          <+ r-exit(|"_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str", "create-test-compare", "57,2,60,40")
+    where s-step(
+          | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+          , "60"
+          , "6"
+          , "60"
+          , "40"
+          )
+          ; <(s-step(
+              | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+              , "60"
+              , "7"
+              , "60"
+              , "14"
+              )
+              ; aterm-eq)> ( <s-step(
+                              | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+                              , "60"
+                              , "19"
+                              , "60"
+                              , "31"
+                              )
+                              ; explode-aterm> ast
+                           , p
+                           )
+          <+ r-exit(
+             | "_cellar/sdf-tools/analyse/parse-unit/parse-unit-test-results.str"
+             , "create-test-compare"
+             , "57"
+             , "2"
+             , "60"
+             , "40"
+             )
              ; fail

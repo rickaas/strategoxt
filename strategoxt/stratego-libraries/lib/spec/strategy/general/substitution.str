@@ -13,129 +13,628 @@ imports
 
 strategies
   subs-args =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "subs-args", "73,2,74,58")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "74,4,74,58")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "74,4,74,12")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+    , "subs-args"
+    , "73"
+    , "2"
+    , "74"
+    , "58"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "74"
+      , "4"
+      , "74"
+      , "58"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+       , "74"
+       , "4"
+       , "74"
+       , "12"
+       )
        ; ?(sbs, t)
-       <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "74,17,74,58")
-          ; \ (xs, ys, t) -> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "74,36,74,42")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+          , "74"
+          , "17"
+          , "74"
+          , "58"
+          )
+          ; \ (xs, ys, t) -> ( <s-step(
+                                | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                                , "74"
+                                , "36"
+                                , "74"
+                                , "42"
+                                )
                                 ; zip(
-                                    s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "74,40,74,41") ; id
+                                    s-step(
+                                    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                                    , "74"
+                                    , "40"
+                                    , "74"
+                                    , "41"
+                                    )
+                                    ; id
                                   )> (xs, ys)
                              , t
                              ) \)
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "subs-args", "73,2,74,58")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "subs-args", "73,2,74,58")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "subs-args"
+      , "73"
+      , "2"
+      , "74"
+      , "58"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "subs-args"
+      , "73"
+      , "2"
+      , "74"
+      , "58"
+      )
       ; fail
 
 
 rules
 
   SubsVar(isvar, mksbs) :
-    t -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "SubsVar", "80,2,82,37")> <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "81,10,81,15") ; lookup> (x, sbs)
+    t -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+          , "SubsVar"
+          , "80"
+          , "2"
+          , "82"
+          , "37"
+          )> <s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+              , "81"
+              , "10"
+              , "81"
+              , "15"
+              )
+              ; lookup> (x, sbs)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "SubsVar", "80,2,82,37")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "SubsVar", "80,2,82,37")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+             , "SubsVar"
+             , "80"
+             , "2"
+             , "82"
+             , "37"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "82,10,82,37")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "82,10,82,23")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "82,10,82,18")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "82,11,82,15") ; isvar)> t) => x)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "82,26,82,37")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "82,26,82,30") ; mksbs) => sbs
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "SubsVar", "80,2,82,37")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+          , "82"
+          , "10"
+          , "82"
+          , "37"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+             , "82"
+             , "10"
+             , "82"
+             , "23"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                , "82"
+                , "10"
+                , "82"
+                , "18"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                    , "82"
+                    , "11"
+                    , "82"
+                    , "15"
+                    )
+                    ; isvar)> t) => x)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+            , "82"
+            , "26"
+            , "82"
+            , "37"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+             , "82"
+             , "26"
+             , "82"
+             , "30"
+             )
+             ; mksbs) => sbs
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+             , "SubsVar"
+             , "80"
+             , "2"
+             , "82"
+             , "37"
+             )
              ; fail
 
 
 strategies
   substitute(isvar, ren) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "89,2,91,35")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "90,4,91,35")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "90,4,90,23")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "90,4,90,12") ; subs-args) => (sbs, t))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "90,26,91,35")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "90,26,90,27") ; !t)
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "91,4,91,35")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+    , "substitute"
+    , "89"
+    , "2"
+    , "91"
+    , "35"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "90"
+      , "4"
+      , "91"
+      , "35"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+       , "90"
+       , "4"
+       , "90"
+       , "23"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+          , "90"
+          , "4"
+          , "90"
+          , "12"
+          )
+          ; subs-args) => (sbs, t))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "90"
+      , "26"
+      , "91"
+      , "35"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+       , "90"
+       , "26"
+       , "90"
+       , "27"
+       )
+       ; !t)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "91"
+      , "4"
+      , "91"
+      , "35"
+      )
     ; alltd(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "91,10,91,34")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "91,10,91,29")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "91"
+        , "10"
+        , "91"
+        , "34"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+           , "91"
+           , "10"
+           , "91"
+           , "29"
+           )
            ; SubsVar(
-               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "91,18,91,22") ; isvar
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "91,25,91,28") ; !sbs
+               s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+               , "91"
+               , "18"
+               , "91"
+               , "22"
+               )
+               ; isvar
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+               , "91"
+               , "25"
+               , "91"
+               , "28"
+               )
+               ; !sbs
              ))
-        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "91,32,91,34")
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+          , "91"
+          , "32"
+          , "91"
+          , "34"
+          )
         ; ren
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "89,2,91,35")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "89,2,91,35")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "89"
+      , "2"
+      , "91"
+      , "35"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "89"
+      , "2"
+      , "91"
+      , "35"
+      )
       ; fail
 
   substitute(isvar) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "95,2,96,24")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "96,4,96,24")
-    ; substitute(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "96,15,96,19") ; isvar
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "96,22,96,23") ; id
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+    , "substitute"
+    , "95"
+    , "2"
+    , "96"
+    , "24"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "96"
+      , "4"
+      , "96"
+      , "24"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "95,2,96,24")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "95,2,96,24")
+    ; substitute(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "96"
+        , "15"
+        , "96"
+        , "19"
+        )
+        ; isvar
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "96"
+        , "22"
+        , "96"
+        , "23"
+        )
+        ; id
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "95"
+      , "2"
+      , "96"
+      , "24"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "95"
+      , "2"
+      , "96"
+      , "24"
+      )
       ; fail
 
   substitute(isvar, varshape : ( name -> env ) * name -> term, bndvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term, paste : ( term -> vars ) * term -> term, ren) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "102,2,112,46")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "108,4,112,46")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "108,4,108,23")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "108,4,108,12") ; subs-args) => (sbs, t))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "108,26,112,46")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "108,26,108,33")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+    , "substitute"
+    , "102"
+    , "2"
+    , "112"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "108"
+      , "4"
+      , "112"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+       , "108"
+       , "4"
+       , "108"
+       , "23"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+          , "108"
+          , "4"
+          , "108"
+          , "12"
+          )
+          ; subs-args) => (sbs, t))
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "108"
+      , "26"
+      , "112"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+       , "108"
+       , "26"
+       , "108"
+       , "33"
+       )
        ; !(t, []))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "109,4,112,46")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "109"
+      , "4"
+      , "112"
+      , "46"
+      )
     ; rec x (
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "109,10,112,45")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "109"
+        , "10"
+        , "112"
+        , "45"
+        )
         ; env-alltd(
-            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "109,20,112,44")
-            ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "109,20,109,34")
+            s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+            , "109"
+            , "20"
+            , "112"
+            , "44"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+               , "109"
+               , "20"
+               , "109"
+               , "34"
+               )
                ; RnVar(
-                   s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "109,26,109,33") ; varshape
+                   s-step(
+                   | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                   , "109"
+                   , "26"
+                   , "109"
+                   , "33"
+                   )
+                   ; varshape
                  )
-               <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,23,112,44")
-                  ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,23,110,52")
-                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,23,110,25") ; Fst)
-                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,28,110,52")
-                     ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,28,110,47")
+               <+ s-step(
+                  | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                  , "110"
+                  , "23"
+                  , "112"
+                  , "44"
+                  )
+                  ; (s-step(
+                     | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                     , "110"
+                     , "23"
+                     , "110"
+                     , "52"
+                     )
+                     ; (s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                        , "110"
+                        , "23"
+                        , "110"
+                        , "25"
+                        )
+                        ; Fst)
+                     ; s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                       , "110"
+                       , "28"
+                       , "110"
+                       , "52"
+                       )
+                     ; (s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                        , "110"
+                        , "28"
+                        , "110"
+                        , "47"
+                        )
                         ; SubsVar(
-                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,36,110,40") ; isvar
-                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,43,110,46") ; !sbs
+                            s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                            , "110"
+                            , "36"
+                            , "110"
+                            , "40"
+                            )
+                            ; isvar
+                          , s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                            , "110"
+                            , "43"
+                            , "110"
+                            , "46"
+                            )
+                            ; !sbs
                           ))
-                     ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "110,50,110,52")
+                     ; s-step(
+                       | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                       , "110"
+                       , "50"
+                       , "110"
+                       , "52"
+                       )
                      ; ren
-                     <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "111,23,112,44")
-                        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "111,23,111,47")
+                     <+ s-step(
+                        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                        , "111"
+                        , "23"
+                        , "112"
+                        , "44"
+                        )
+                        ; (s-step(
+                           | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                           , "111"
+                           , "23"
+                           , "111"
+                           , "47"
+                           )
                            ; RnBinding(
-                               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "111,33,111,39") ; bndvars
-                             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "111,42,111,46") ; paste
+                               s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                               , "111"
+                               , "33"
+                               , "111"
+                               , "39"
+                               )
+                               ; bndvars
+                             , s-step(
+                               | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                               , "111"
+                               , "42"
+                               , "111"
+                               , "46"
+                               )
+                               ; paste
                              ))
-                        ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "112,23,112,44")
+                        ; s-step(
+                          | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                          , "112"
+                          , "23"
+                          , "112"
+                          , "44"
+                          )
                         ; DistBinding(
-                            s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "112,35,112,35") ; x
-                          , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "112,37,112,43") ; boundin
+                            s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                            , "112"
+                            , "35"
+                            , "112"
+                            , "35"
+                            )
+                            ; x
+                          , s-step(
+                            | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+                            , "112"
+                            , "37"
+                            , "112"
+                            , "43"
+                            )
+                            ; boundin
                           )))
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "102,2,112,46")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "102,2,112,46")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "102"
+      , "2"
+      , "112"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "102"
+      , "2"
+      , "112"
+      , "46"
+      )
       ; fail
 
   substitute(isvar, varshape : ( name -> env ) * name -> term, bndvars, boundin : ( term -> term ) * ( term -> term ) * ( term -> term ) * term -> term, paste : ( term -> vars ) * term -> term) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "118,2,123,59")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,4,123,59")
-    ; substitute(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,15,123,19") ; isvar
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,22,123,29") ; varshape
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,32,123,38") ; bndvars
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,41,123,47") ; boundin
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,50,123,54") ; paste
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "123,57,123,58") ; id
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+    , "substitute"
+    , "118"
+    , "2"
+    , "123"
+    , "59"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "123"
+      , "4"
+      , "123"
+      , "59"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "118,2,123,59")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str", "substitute", "118,2,123,59")
+    ; substitute(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "123"
+        , "15"
+        , "123"
+        , "19"
+        )
+        ; isvar
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "123"
+        , "22"
+        , "123"
+        , "29"
+        )
+        ; varshape
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "123"
+        , "32"
+        , "123"
+        , "38"
+        )
+        ; bndvars
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "123"
+        , "41"
+        , "123"
+        , "47"
+        )
+        ; boundin
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "123"
+        , "50"
+        , "123"
+        , "54"
+        )
+        ; paste
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+        , "123"
+        , "57"
+        , "123"
+        , "58"
+        )
+        ; id
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "118"
+      , "2"
+      , "123"
+      , "59"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/general/substitution.str"
+      , "substitute"
+      , "118"
+      , "2"
+      , "123"
+      , "59"
+      )
       ; fail

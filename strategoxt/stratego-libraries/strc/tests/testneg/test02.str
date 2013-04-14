@@ -11,31 +11,120 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "main", "5,3,5,26")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "5,10,5,26")
-    ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "5,11,5,13") ; Foo)> ("ah", "a")
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "main", "5,3,5,26")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "main", "5,3,5,26")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+    , "main"
+    , "5"
+    , "3"
+    , "5"
+    , "26"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+      , "5"
+      , "10"
+      , "5"
+      , "26"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+        , "5"
+        , "11"
+        , "5"
+        , "13"
+        )
+        ; Foo)> ("ah", "a")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+      , "main"
+      , "5"
+      , "3"
+      , "5"
+      , "26"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+      , "main"
+      , "5"
+      , "3"
+      , "5"
+      , "26"
+      )
       ; fail
 
 
 rules
 
   Foo1 :
-    (s1, s2) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Foo1", "9,3,9,34")> <s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "9,23,9,25") ; Bar> [s1, s]
+    (s1, s2) -> <r-exit(
+                 | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+                 , "Foo1"
+                 , "9"
+                 , "3"
+                 , "9"
+                 , "34"
+                 )> <s-step(
+                     | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+                     , "9"
+                     , "23"
+                     , "9"
+                     , "25"
+                     )
+                     ; Bar> [s1, s]
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Foo1", "9,3,9,34")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Foo1", "9,3,9,34")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+             , "Foo1"
+             , "9"
+             , "3"
+             , "9"
+             , "34"
+             )
              ; fail
 
   Foo2 :
-    (s1, s2) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Foo2", "11,3,11,39")> <s-step(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "11,23,11,30")
-                                                                                                                ; Bar(|s3)> [s1, s]
+    (s1, s2) -> <r-exit(
+                 | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+                 , "Foo2"
+                 , "11"
+                 , "3"
+                 , "11"
+                 , "39"
+                 )> <s-step(
+                     | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+                     , "11"
+                     , "23"
+                     , "11"
+                     , "30"
+                     )
+                     ; Bar(|s3)> [s1, s]
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Foo2", "11,3,11,39")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Foo2", "11,3,11,39")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+             , "Foo2"
+             , "11"
+             , "3"
+             , "11"
+             , "39"
+             )
              ; fail
 
   Bar :
-    [x, y] -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Bar", "13,3,13,24")> [y, x]
+    [x, y] -> <r-exit(
+               | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+               , "Bar"
+               , "13"
+               , "3"
+               , "13"
+               , "24"
+               )> [y, x]
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Bar", "13,3,13,24")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/testneg/test02.str", "Bar", "13,3,13,24")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/testneg/test02.str"
+             , "Bar"
+             , "13"
+             , "3"
+             , "13"
+             , "24"
+             )
              ; fail

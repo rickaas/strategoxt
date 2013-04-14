@@ -10,258 +10,930 @@ imports
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "main", "12,2,13,30")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "13,4,13,30")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+    , "main"
+    , "12"
+    , "2"
+    , "13"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "13"
+      , "4"
+      , "13"
+      , "30"
+      )
     ; dead-code-elimination-tests
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "main", "12,2,13,30")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "main", "12,2,13,30")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "main"
+      , "12"
+      , "2"
+      , "13"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "main"
+      , "12"
+      , "2"
+      , "13"
+      , "30"
+      )
       ; fail
 
   dead-code-elimination-tests =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dead-code-elimination-tests", "15,2,35,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "16,4,35,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+    , "dead-code-elimination-tests"
+    , "15"
+    , "2"
+    , "35"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "16"
+      , "4"
+      , "35"
+      , "4"
+      )
     ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "16,15,16,63")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+        , "16"
+        , "15"
+        , "16"
+        , "63"
+        )
         ; !"Dynamic Rules Library -- Dead Code Elimination"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "17,6,34,20")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "17,6,17,96")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "17,12,17,95")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+        , "17"
+        , "6"
+        , "34"
+        , "20"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "17"
+           , "6"
+           , "17"
+           , "96"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+                   , "17"
+                   , "12"
+                   , "17"
+                   , "95"
+                   )
                    ; separation-message(|"Dynamic Rules Library -- Dead Code Elimination -- Union Tests")))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "27,6,34,20")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "27,6,27,20") ; dce-union-tests)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "28,6,34,20")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "28,6,28,104")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "28,12,28,103")
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+          , "27"
+          , "6"
+          , "34"
+          , "20"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "27"
+           , "6"
+           , "27"
+           , "20"
+           )
+           ; dce-union-tests)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+          , "28"
+          , "6"
+          , "34"
+          , "20"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "28"
+           , "6"
+           , "28"
+           , "104"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+                   , "28"
+                   , "12"
+                   , "28"
+                   , "103"
+                   )
                    ; separation-message(|"Dynamic Rules Library -- Dead Code Elimination -- Fix and Union Tests")))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "32,6,34,20")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "32,6,32,28") ; dce-fix-and-union-tests)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "33,6,34,20")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "33,6,33,96")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "33,12,33,95")
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+          , "32"
+          , "6"
+          , "34"
+          , "20"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "32"
+           , "6"
+           , "32"
+           , "28"
+           )
+           ; dce-fix-and-union-tests)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+          , "33"
+          , "6"
+          , "34"
+          , "20"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "33"
+           , "6"
+           , "33"
+           , "96"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+                   , "33"
+                   , "12"
+                   , "33"
+                   , "95"
+                   )
                    ; separation-message(|"Dynamic Rules Library -- Dead Code Elimination -- Break Tests")))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "34,6,34,20")
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+          , "34"
+          , "6"
+          , "34"
+          , "20"
+          )
         ; dce-break-tests
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dead-code-elimination-tests", "15,2,35,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dead-code-elimination-tests", "15,2,35,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dead-code-elimination-tests"
+      , "15"
+      , "2"
+      , "35"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dead-code-elimination-tests"
+      , "15"
+      , "2"
+      , "35"
+      , "4"
+      )
       ; fail
 
 
 strategies
   dce-union-tests =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-union-tests", "39,2,129,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "39,20,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "39,20,39,21") ; id)
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "41,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "41,4,44,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+    , "dce-union-tests"
+    , "39"
+    , "2"
+    , "129"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "39"
+      , "20"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "39"
+       , "20"
+       , "39"
+       , "21"
+       )
+       ; id)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "41"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "41"
+       , "4"
+       , "44"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "41,19,41,65")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "41"
+           , "19"
+           , "41"
+           , "65"
+           )
            ; !"Check rule set for VarNeeded after x < x + x"
          | "var x; x := 0; if c() then f(x); else f(x); end f(x);"
          , "var x; x := 0; if c() then f(x); else f(x); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "46,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "46,4,49,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "46"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "46"
+       , "4"
+       , "49"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "46,19,46,68")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "46"
+           , "19"
+           , "46"
+           , "68"
+           )
            ; !"Check rule set for VarNeeded after x < x + none"
          | "var x; x := 0; if c() then f(x); else dummy(); end f(x);"
          , "var x; x := 0; if c() then f(x); else dummy(); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "51,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "51,4,54,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "51"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "51"
+       , "4"
+       , "54"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "51,19,51,68")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "51"
+           , "19"
+           , "51"
+           , "68"
+           )
            ; !"Check rule set for VarNeeded after x < none + x"
          | "var x; x := 0; if c() then dummy(); else f(x); end f(x);"
          , "var x; x := 0; if c() then dummy(); else f(x); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "56,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "56,4,59,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "56"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "56"
+       , "4"
+       , "59"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "56,19,56,71")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "56"
+           , "19"
+           , "56"
+           , "71"
+           )
            ; !"Check rule set for VarNeeded after x < none + none"
          | "var x; x := 0; if c() then dummy(); else dummy(); end f(x);"
          , "var x; x := 0; if c() then dummy(); else dummy(); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "61,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "61,4,64,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "61"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "61"
+       , "4"
+       , "64"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "61,19,61,69")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "61"
+           , "19"
+           , "61"
+           , "69"
+           )
            ; !"Check rule set for VarNeeded after x < x + undef"
          | "var x; x := 0; if c() then f(x); else x := 0; end f(x);"
          , "var x; x := 0; if c() then f(x); else x := 0; end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "66,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "66,4,69,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "66"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "66"
+       , "4"
+       , "69"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "66,19,66,69")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "66"
+           , "19"
+           , "66"
+           , "69"
+           )
            ; !"Check rule set for VarNeeded after x < undef + x"
          | "var x; x := 0; if c() then x := 0; else f(x); end f(x);"
          , "var x; x := 0; if c() then x := 0; else f(x); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "71,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "71,4,74,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "71"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "71"
+       , "4"
+       , "74"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "71,19,71,73")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "71"
+           , "19"
+           , "71"
+           , "73"
+           )
            ; !"Check rule set for VarNeeded after x < undef + undef"
          | "var x; x := 0; if c() then x := 0; else x := 0; end f(x);"
          , "var x; if c() then x := 0; else x := 0; end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "76,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "76,4,79,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "76"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "76"
+       , "4"
+       , "79"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "76,19,76,72")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "76"
+           , "19"
+           , "76"
+           , "72"
+           )
            ; !"Check rule set for VarNeeded after x < none + undef"
          | "var x; x := 0; if c() then dummy(); else x := 0; end f(x);"
          , "var x; x := 0; if c() then dummy(); else x := 0; end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "81,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "81,4,84,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "81"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "81"
+       , "4"
+       , "84"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "81,19,81,72")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "81"
+           , "19"
+           , "81"
+           , "72"
+           )
            ; !"Check rule set for VarNeeded after x < undef + none"
          | "var x; x := 0; if c() then x := 0; else dummy(); end f(x);"
          , "var x; x := 0; if c() then x := 0; else dummy(); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "86,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "86,4,89,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "86"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "86"
+       , "4"
+       , "89"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "86,19,86,69")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "86"
+           , "19"
+           , "86"
+           , "69"
+           )
            ; !"Check rule set for VarNeeded after empty < x + x"
          | "var x; x := 0; if c() then f(x); else f(x); end"
          , "var x; x := 0; if c() then f(x); else f(x); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "91,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "91,4,94,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "91"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "91"
+       , "4"
+       , "94"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "91,19,91,72")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "91"
+           , "19"
+           , "91"
+           , "72"
+           )
            ; !"Check rule set for VarNeeded after empty < x + none"
          | "var x; x := 0; if c() then f(x); else dummy(); end"
          , "var x; x := 0; if c() then f(x); else dummy(); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "96,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "96,4,99,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "96"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "96"
+       , "4"
+       , "99"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "96,19,96,72")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "96"
+           , "19"
+           , "96"
+           , "72"
+           )
            ; !"Check rule set for VarNeeded after empty < none + x"
          | "var x; x := 0; if c() then dummy(); else f(x); end"
          , "var x; x := 0; if c() then dummy(); else f(x); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "101,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "101,4,104,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "101"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "101"
+       , "4"
+       , "104"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "101,19,101,75")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "101"
+           , "19"
+           , "101"
+           , "75"
+           )
            ; !"Check rule set for VarNeeded after empty < none + none"
          | "var x; x := 0; if c() then dummy(); else dummy(); end"
          , "if c() then dummy(); else dummy(); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "106,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "106,4,109,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "106"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "106"
+       , "4"
+       , "109"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "106,19,106,73")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "106"
+           , "19"
+           , "106"
+           , "73"
+           )
            ; !"Check rule set for VarNeeded after empty < x + undef"
          | "var x; x := 0; if c() then f(x); else dummy(); x := 0; end"
          , "var x; x := 0; if c() then f(x); else dummy(); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "111,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "111,4,114,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "111"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "111"
+       , "4"
+       , "114"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "111,19,111,73")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "111"
+           , "19"
+           , "111"
+           , "73"
+           )
            ; !"Check rule set for VarNeeded after empty < undef + x"
          | "var x; x := 0; if c() then dummy(); x := 0; else f(x); end"
          , "var x; x := 0; if c() then dummy(); else f(x); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "116,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "116,4,119,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "116"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "116"
+       , "4"
+       , "119"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "116,19,116,77")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "116"
+           , "19"
+           , "116"
+           , "77"
+           )
            ; !"Check rule set for VarNeeded after empty < undef + undef"
          | "var x; x := 0; if c() then x := 0; else x := 0; end dummy();"
          , "dummy();"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "121,4,129,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "121,4,124,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "121"
+      , "4"
+      , "129"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "121"
+       , "4"
+       , "124"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "121,19,121,76")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "121"
+           , "19"
+           , "121"
+           , "76"
+           )
            ; !"Check rule set for VarNeeded after empty < none + undef"
          | "var x; x := 0; if c() then dummy(); else x := 0; dummy(); end dummy();"
          , "if c() then dummy(); else dummy(); end dummy();"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "126,4,129,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "126"
+      , "4"
+      , "129"
+      , "4"
+      )
     ; apply-dce-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "126,19,126,76")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+        , "126"
+        , "19"
+        , "126"
+        , "76"
+        )
         ; !"Check rule set for VarNeeded after empty < undef + none"
       | "var x; x := 0; if c() then x := 0; dummy(); else dummy(); end dummy();"
       , "if c() then dummy(); else dummy(); end dummy();"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-union-tests", "39,2,129,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-union-tests", "39,2,129,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dce-union-tests"
+      , "39"
+      , "2"
+      , "129"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dce-union-tests"
+      , "39"
+      , "2"
+      , "129"
+      , "4"
+      )
       ; fail
 
   dce-fix-and-union-tests =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-fix-and-union-tests", "131,2,161,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "131,28,161,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "131,28,131,29") ; id)
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "133,4,161,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "133,4,136,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+    , "dce-fix-and-union-tests"
+    , "131"
+    , "2"
+    , "161"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "131"
+      , "28"
+      , "161"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "131"
+       , "28"
+       , "131"
+       , "29"
+       )
+       ; id)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "133"
+      , "4"
+      , "161"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "133"
+       , "4"
+       , "136"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "133,19,133,49")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "133"
+           , "19"
+           , "133"
+           , "49"
+           )
            ; !"Check rule set after x; [x]*"
          | "var x; x := 0; while c() do f(x); end f(x);"
          , "var x; x := 0; while c() do f(x); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "138,4,161,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "138,4,141,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "138"
+      , "4"
+      , "161"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "138"
+       , "4"
+       , "141"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "138,19,138,52")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "138"
+           , "19"
+           , "138"
+           , "52"
+           )
            ; !"Check rule set after x; [none]*"
          | "var x; x := 0; while c() do dummy(); end f(x);"
          , "var x; x := 0; while c() do dummy(); end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "143,4,161,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "143,4,146,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "143"
+      , "4"
+      , "161"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "143"
+       , "4"
+       , "146"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "143,19,143,53")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "143"
+           , "19"
+           , "143"
+           , "53"
+           )
            ; !"Check rule set after x; [undef]*"
          | "var x; x := 0; while c() do x := 0; end f(x);"
          , "var x; x := 0; while c() do x := 0; end f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "148,4,161,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "148,4,151,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "148"
+      , "4"
+      , "161"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "148"
+       , "4"
+       , "151"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "148,19,148,53")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "148"
+           , "19"
+           , "148"
+           , "53"
+           )
            ; !"Check rule set after empty; [x]*"
          | "var x; x := 0; while c() do f(x); end"
          , "var x; x := 0; while c() do f(x); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "153,4,161,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "153,4,156,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "153"
+      , "4"
+      , "161"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "153"
+       , "4"
+       , "156"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "153,19,153,56")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "153"
+           , "19"
+           , "153"
+           , "56"
+           )
            ; !"Check rule set after empty; [none]*"
          | "var x; x := 0; while c() do dummy(); end"
          , "while c() do dummy(); end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "158,4,161,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "158"
+      , "4"
+      , "161"
+      , "4"
+      )
     ; apply-dce-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "158,19,158,57")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+        , "158"
+        , "19"
+        , "158"
+        , "57"
+        )
         ; !"Check rule set after empty; [undef]*"
       | "var x; x := 0; while c() do x := 0; dummy(); end"
       , "while c() do dummy(); end"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-fix-and-union-tests", "131,2,161,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-fix-and-union-tests", "131,2,161,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dce-fix-and-union-tests"
+      , "131"
+      , "2"
+      , "161"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dce-fix-and-union-tests"
+      , "131"
+      , "2"
+      , "161"
+      , "4"
+      )
       ; fail
 
   dce-break-tests =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-break-tests", "163,2,349,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "163,20,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "163,20,163,21") ; id)
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "165,4,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "165,4,185,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+    , "dce-break-tests"
+    , "163"
+    , "2"
+    , "349"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "163"
+      , "20"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "163"
+       , "20"
+       , "163"
+       , "21"
+       )
+       ; id)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "165"
+      , "4"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "165"
+       , "4"
+       , "185"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "165,19,165,44")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "165"
+           , "19"
+           , "165"
+           , "44"
+           )
            ; !"Check break scenario #1"
          | "var x; x := 0;
        while c() do
@@ -283,10 +955,28 @@ strategies
          f(x);
        end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "187,4,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "187,4,210,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "187"
+      , "4"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "187"
+       , "4"
+       , "210"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "187,19,187,44")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "187"
+           , "19"
+           , "187"
+           , "44"
+           )
            ; !"Check break scenario #2"
          | "var x; x := 0;
        while c() do
@@ -311,10 +1001,28 @@ strategies
        end
        f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "212,4,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "212,4,236,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "212"
+      , "4"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "212"
+       , "4"
+       , "236"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "212,19,212,44")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "212"
+           , "19"
+           , "212"
+           , "44"
+           )
            ; !"Check break scenario #3"
          | "var x; x := 0;
        while c() do
@@ -340,10 +1048,28 @@ strategies
          f(x);
        end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "238,4,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "238,4,258,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "238"
+      , "4"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "238"
+       , "4"
+       , "258"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "238,19,238,44")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "238"
+           , "19"
+           , "238"
+           , "44"
+           )
            ; !"Check break scenario #4"
          | "var x; x := 0;
        while c() do
@@ -365,10 +1091,28 @@ strategies
          f(x);
        end"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "260,4,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "260,4,283,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "260"
+      , "4"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "260"
+       , "4"
+       , "283"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "260,19,260,44")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "260"
+           , "19"
+           , "260"
+           , "44"
+           )
            ; !"Check break scenario #5"
          | "var x; x := 0;
        while c() do
@@ -393,10 +1137,28 @@ strategies
        end
        f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "285,4,349,4")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "285,4,310,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "285"
+      , "4"
+      , "349"
+      , "4"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+       , "285"
+       , "4"
+       , "310"
+       , "4"
+       )
        ; apply-dce-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "285,19,285,44")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+           , "285"
+           , "19"
+           , "285"
+           , "44"
+           )
            ; !"Check break scenario #6"
          | "var x; x := 0;
        while c() do
@@ -423,9 +1185,21 @@ strategies
        end
        f(x);"
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "312,4,349,4")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "312"
+      , "4"
+      , "349"
+      , "4"
+      )
     ; apply-dce-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "312,19,312,44")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+        , "312"
+        , "19"
+        , "312"
+        , "44"
+        )
         ; !"Check break scenario #7"
       | "var x; var y; var z; y := 1;
        while c() do
@@ -464,6 +1238,20 @@ strategies
        x := 1; z := 1;
        f(x, y, z);"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-break-tests", "163,2,349,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str", "dce-break-tests", "163,2,349,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dce-break-tests"
+      , "163"
+      , "2"
+      , "349"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/dr-dce-tests.str"
+      , "dce-break-tests"
+      , "163"
+      , "2"
+      , "349"
+      , "4"
+      )
       ; fail

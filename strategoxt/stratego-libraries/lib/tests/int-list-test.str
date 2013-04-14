@@ -10,84 +10,368 @@ imports
 
 strategies
   main-int-list-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "main-int-list-test", "6,2,12,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "7,4,12,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "main-int-list-test"
+    , "6"
+    , "2"
+    , "12"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "7"
+      , "4"
+      , "12"
+      , "4"
+      )
     ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "7,15,7,30")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "7"
+        , "15"
+        , "7"
+        , "30"
+        )
         ; !"int-list-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "8,1,11,12")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "8,1,8,9") ; sort-test)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "9,1,11,12")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "9,1,9,16") ; is-interval-test)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "10,1,11,12")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "10,1,10,20") ; is-not-interval-test)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "11,2,11,12")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "8"
+        , "1"
+        , "11"
+        , "12"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "8"
+           , "1"
+           , "8"
+           , "9"
+           )
+           ; sort-test)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+          , "9"
+          , "1"
+          , "11"
+          , "12"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "9"
+           , "1"
+           , "9"
+           , "16"
+           )
+           ; is-interval-test)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+          , "10"
+          , "1"
+          , "11"
+          , "12"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "10"
+           , "1"
+           , "10"
+           , "20"
+           )
+           ; is-not-interval-test)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+          , "11"
+          , "2"
+          , "11"
+          , "12"
+          )
         ; range-tests
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "main-int-list-test", "6,2,12,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "main-int-list-test", "6,2,12,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "main-int-list-test"
+      , "6"
+      , "2"
+      , "12"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "main-int-list-test"
+      , "6"
+      , "2"
+      , "12"
+      , "4"
+      )
       ; fail
 
   sort-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "sort-test", "14,2,15,54")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "15,4,15,54")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "sort-test"
+    , "14"
+    , "2"
+    , "15"
+    , "54"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "15"
+      , "4"
+      , "15"
+      , "54"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "15,15,15,26")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "15"
+        , "15"
+        , "15"
+        , "26"
+        )
         ; !"sort-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "15,28,15,35") ; int-sort
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "15,37,15,44")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "15"
+        , "28"
+        , "15"
+        , "35"
+        )
+        ; int-sort
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "15"
+        , "37"
+        , "15"
+        , "44"
+        )
         ; ![4, 3, 5]
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "15,46,15,53")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "15"
+        , "46"
+        , "15"
+        , "53"
+        )
         ; ![3, 4, 5]
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "sort-test", "14,2,15,54")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "sort-test", "14,2,15,54")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "sort-test"
+      , "14"
+      , "2"
+      , "15"
+      , "54"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "sort-test"
+      , "14"
+      , "2"
+      , "15"
+      , "54"
+      )
       ; fail
 
   is-interval-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "is-interval-test", "17,2,18,62")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "18,4,18,62")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "is-interval-test"
+    , "17"
+    , "2"
+    , "18"
+    , "62"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "18"
+      , "4"
+      , "18"
+      , "62"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "18,15,18,33")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "18"
+        , "15"
+        , "18"
+        , "33"
+        )
         ; !"is-interval-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "18,35,18,45") ; is-interval
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "18,47,18,54")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "18"
+        , "35"
+        , "18"
+        , "45"
+        )
+        ; is-interval
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "18"
+        , "47"
+        , "18"
+        , "54"
+        )
         ; ![2, 3, 4]
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "18,56,18,61")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "18"
+        , "56"
+        , "18"
+        , "61"
+        )
         ; !(2, 4)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "is-interval-test", "17,2,18,62")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "is-interval-test", "17,2,18,62")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "is-interval-test"
+      , "17"
+      , "2"
+      , "18"
+      , "62"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "is-interval-test"
+      , "17"
+      , "2"
+      , "18"
+      , "62"
+      )
       ; fail
 
   is-not-interval-test =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "is-not-interval-test", "20,2,21,69")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "21,4,21,69")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "is-not-interval-test"
+    , "20"
+    , "2"
+    , "21"
+    , "69"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "21"
+      , "4"
+      , "21"
+      , "69"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "21,15,21,33")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "21"
+        , "15"
+        , "21"
+        , "33"
+        )
         ; !"is-interval-test"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "21,35,21,50")
-        ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "21,39,21,49") ; is-interval)
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "21,52,21,59")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "21"
+        , "35"
+        , "21"
+        , "50"
+        )
+        ; not(s-step(
+              | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+              , "21"
+              , "39"
+              , "21"
+              , "49"
+              )
+              ; is-interval)
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "21"
+        , "52"
+        , "21"
+        , "59"
+        )
         ; ![2, 3, 5]
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "21,61,21,68")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "21"
+        , "61"
+        , "21"
+        , "68"
+        )
         ; ![2, 3, 5]
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "is-not-interval-test", "20,2,21,69")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "is-not-interval-test", "20,2,21,69")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "is-not-interval-test"
+      , "20"
+      , "2"
+      , "21"
+      , "69"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "is-not-interval-test"
+      , "20"
+      , "2"
+      , "21"
+      , "69"
+      )
       ; fail
 
   range-tests =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-tests", "23,2,35,55")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "24,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "24,6,24,88")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "range-tests"
+    , "23"
+    , "2"
+    , "35"
+    , "55"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "24"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "24"
+       , "6"
+       , "24"
+       , "88"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "24,17,24,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "24"
+           , "17"
+           , "24"
+           , "26"
+           )
            ; !"range 1"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "24,30,24,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "24,43,24,45")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "24"
+           , "30"
+           , "24"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "24"
+           , "43"
+           , "24"
+           , "45"
+           )
            ; !10
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "24,57,24,87")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "24"
+           , "57"
+           , "24"
+           , "87"
+           )
            ; ![ 0
               , 1
               , 2
@@ -100,15 +384,52 @@ strategies
               , 9
               ]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "25,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "25,6,25,73")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "25"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "25"
+       , "6"
+       , "25"
+       , "73"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "25,17,25,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "25"
+           , "17"
+           , "25"
+           , "26"
+           )
            ; !"range 2"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "25,30,25,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "25,43,25,50")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "25"
+           , "30"
+           , "25"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "25"
+           , "43"
+           , "25"
+           , "50"
+           )
            ; !(5, 10)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "25,57,25,72")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "25"
+           , "57"
+           , "25"
+           , "72"
+           )
            ; ![ 5
               , 6
               , 7
@@ -116,83 +437,340 @@ strategies
               , 9
               ]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "26,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "26,6,26,70")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "26"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "26"
+       , "6"
+       , "26"
+       , "70"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "26,17,26,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "26"
+           , "17"
+           , "26"
+           , "26"
+           )
            ; !"range 3"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "26,30,26,38")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "26"
+           , "30"
+           , "26"
+           , "38"
+           )
            ; range(|3)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "26,43,26,50")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "26"
+           , "43"
+           , "26"
+           , "50"
+           )
            ; !(0, 10)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "26,57,26,69")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "26"
+           , "57"
+           , "26"
+           , "69"
+           )
            ; ![0, 3, 6, 9]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "27,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "27,6,27,73")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "27"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "27"
+       , "6"
+       , "27"
+       , "73"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "27,17,27,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "27"
+           , "17"
+           , "27"
+           , "26"
+           )
            ; !"range 4"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "27,30,27,40")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "27"
+           , "30"
+           , "27"
+           , "40"
+           )
            ; range(|-30)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "27,43,27,54")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "27"
+           , "43"
+           , "27"
+           , "54"
+           )
            ; !(-10, -100)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "27,57,27,72")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "27"
+           , "57"
+           , "27"
+           , "72"
+           )
            ; ![-10, -40, -70]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "28,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "28,6,28,60")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "28"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "28"
+       , "6"
+       , "28"
+       , "60"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "28,17,28,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "28"
+           , "17"
+           , "28"
+           , "26"
+           )
            ; !"range 5"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "28,30,28,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "28,43,28,49")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "28"
+           , "30"
+           , "28"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "28"
+           , "43"
+           , "28"
+           , "49"
+           )
            ; !(5, 5)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "28,57,28,59")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "28"
+           , "57"
+           , "28"
+           , "59"
+           )
            ; ![]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "29,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "29,6,29,60")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "29"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "29"
+       , "6"
+       , "29"
+       , "60"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "29,17,29,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "29"
+           , "17"
+           , "29"
+           , "26"
+           )
            ; !"range 6"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "29,30,29,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "29,43,29,44")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "29"
+           , "30"
+           , "29"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "29"
+           , "43"
+           , "29"
+           , "44"
+           )
            ; !0
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "29,57,29,59")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "29"
+           , "57"
+           , "29"
+           , "59"
+           )
            ; ![]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "30,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "30,6,30,60")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "30"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "30"
+       , "6"
+       , "30"
+       , "60"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "30,17,30,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "30"
+           , "17"
+           , "30"
+           , "26"
+           )
            ; !"range 7"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "30,30,30,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "30,43,30,50")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "30"
+           , "30"
+           , "30"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "30"
+           , "43"
+           , "30"
+           , "50"
+           )
            ; !(0, -1)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "30,57,30,59")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "30"
+           , "57"
+           , "30"
+           , "59"
+           )
            ; ![]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "31,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "31,6,31,62")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "31"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "31"
+       , "6"
+       , "31"
+       , "62"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "31,17,31,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "31"
+           , "17"
+           , "31"
+           , "26"
+           )
            ; !"range 8"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "31,30,31,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "31,43,31,50")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "31"
+           , "30"
+           , "31"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "31"
+           , "43"
+           , "31"
+           , "50"
+           )
            ; !(-1, 0)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "31,57,31,61")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "31"
+           , "57"
+           , "31"
+           , "61"
+           )
            ; ![-1]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "32,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "32,6,32,87")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "32"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "32"
+       , "6"
+       , "32"
+       , "87"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "32,17,32,26")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "32"
+           , "17"
+           , "32"
+           , "26"
+           )
            ; !"range 9"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "32,30,32,39") ; range-mul2
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "32,43,32,51")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "32"
+           , "30"
+           , "32"
+           , "39"
+           )
+           ; range-mul2
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "32"
+           , "43"
+           , "32"
+           , "51"
+           )
            ; !(1, 256)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "32,57,32,86")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "32"
+           , "57"
+           , "32"
+           , "86"
+           )
            ; ![ 1
               , 2
               , 4
@@ -203,67 +781,299 @@ strategies
               , 128
               ]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "33,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "33,6,33,61")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "33"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "33"
+       , "6"
+       , "33"
+       , "61"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "33,17,33,27")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "33"
+           , "17"
+           , "33"
+           , "27"
+           )
            ; !"range 10"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "33,30,33,38") ; range-sqr
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "33,43,33,49")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "33"
+           , "30"
+           , "33"
+           , "38"
+           )
+           ; range-sqr
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "33"
+           , "43"
+           , "33"
+           , "49"
+           )
            ; !(3, 6)
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "33,57,33,60")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "33"
+           , "57"
+           , "33"
+           , "60"
+           )
            ; ![3]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "34,6,35,55")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "34,6,34,61")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "34"
+      , "6"
+      , "35"
+      , "55"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+       , "34"
+       , "6"
+       , "34"
+       , "61"
+       )
        ; apply-test(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "34,17,34,27")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "34"
+           , "17"
+           , "34"
+           , "27"
+           )
            ; !"range 11"
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "34,30,34,34") ; range
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "34,43,34,44")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "34"
+           , "30"
+           , "34"
+           , "34"
+           )
+           ; range
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "34"
+           , "43"
+           , "34"
+           , "44"
+           )
            ; !1
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "34,57,34,60")
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "34"
+           , "57"
+           , "34"
+           , "60"
+           )
            ; ![0]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,6,35,55")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "35"
+      , "6"
+      , "35"
+      , "55"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,17,35,27")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "35"
+        , "17"
+        , "35"
+        , "27"
+        )
         ; !"range 12"
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,30,35,42")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,30,35,34") ; range)
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,37,35,42")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "35"
+        , "30"
+        , "35"
+        , "42"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+           , "35"
+           , "30"
+           , "35"
+           , "34"
+           )
+           ; range)
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+          , "35"
+          , "37"
+          , "35"
+          , "42"
+          )
         ; length
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,45,35,48")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "35"
+        , "45"
+        , "35"
+        , "48"
+        )
         ; !100
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "35,51,35,54")
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "35"
+        , "51"
+        , "35"
+        , "54"
+        )
         ; !100
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-tests", "23,2,35,55")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-tests", "23,2,35,55")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "range-tests"
+      , "23"
+      , "2"
+      , "35"
+      , "55"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "range-tests"
+      , "23"
+      , "2"
+      , "35"
+      , "55"
+      )
       ; fail
 
   range-mul2 =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-mul2", "37,2,38,25")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "38,4,38,25")
-    ; range(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "38,10,38,24")
-        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "38,11,38,13") ; mul)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "38,18,38,19") ; id>
-                                                                                                        , 2
-                                                                                                        )
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "range-mul2"
+    , "37"
+    , "2"
+    , "38"
+    , "25"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "38"
+      , "4"
+      , "38"
+      , "25"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-mul2", "37,2,38,25")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-mul2", "37,2,38,25")
+    ; range(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "38"
+        , "10"
+        , "38"
+        , "24"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+            , "38"
+            , "11"
+            , "38"
+            , "13"
+            )
+            ; mul)> ( <s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+                       , "38"
+                       , "18"
+                       , "38"
+                       , "19"
+                       )
+                       ; id>
+                    , 2
+                    )
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "range-mul2"
+      , "37"
+      , "2"
+      , "38"
+      , "25"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "range-mul2"
+      , "37"
+      , "2"
+      , "38"
+      , "25"
+      )
       ; fail
 
   range-sqr =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-sqr", "40,2,41,28")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "41,4,41,28")
-    ; range(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "41,10,41,27")
-        ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "41,11,41,13") ; mul)> ( <s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "41,18,41,19") ; id>
-                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "41,24,41,25") ; id>
-                                                                                                        )
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+    , "range-sqr"
+    , "40"
+    , "2"
+    , "41"
+    , "28"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "41"
+      , "4"
+      , "41"
+      , "28"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-sqr", "40,2,41,28")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/int-list-test.str", "range-sqr", "40,2,41,28")
+    ; range(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+        , "41"
+        , "10"
+        , "41"
+        , "27"
+        )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+            , "41"
+            , "11"
+            , "41"
+            , "13"
+            )
+            ; mul)> ( <s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+                       , "41"
+                       , "18"
+                       , "41"
+                       , "19"
+                       )
+                       ; id>
+                    , <s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+                       , "41"
+                       , "24"
+                       , "41"
+                       , "25"
+                       )
+                       ; id>
+                    )
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "range-sqr"
+      , "40"
+      , "2"
+      , "41"
+      , "28"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/int-list-test.str"
+      , "range-sqr"
+      , "40"
+      , "2"
+      , "41"
+      , "28"
+      )
       ; fail

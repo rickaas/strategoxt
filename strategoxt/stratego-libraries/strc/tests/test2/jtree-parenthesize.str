@@ -11,23 +11,91 @@ imports
 
 strategies
   io-jtree-parenthesize =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "io-jtree-parenthesize", "4,2,5,29")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "5,4,5,29")
-    ; io-wrap(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "5,12,5,28") ; parenthesize-Java
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+    , "io-jtree-parenthesize"
+    , "4"
+    , "2"
+    , "5"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+      , "5"
+      , "4"
+      , "5"
+      , "29"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "io-jtree-parenthesize", "4,2,5,29")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "io-jtree-parenthesize", "4,2,5,29")
+    ; io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+        , "5"
+        , "12"
+        , "5"
+        , "28"
+        )
+        ; parenthesize-Java
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+      , "io-jtree-parenthesize"
+      , "4"
+      , "2"
+      , "5"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+      , "io-jtree-parenthesize"
+      , "4"
+      , "2"
+      , "5"
+      , "29"
+      )
       ; fail
 
   parenthesize-Java =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "parenthesize-Java", "7,2,8,30")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "8,4,8,30")
-    ; innermost(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "8,14,8,29") ; JavaParenthesize
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+    , "parenthesize-Java"
+    , "7"
+    , "2"
+    , "8"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+      , "8"
+      , "4"
+      , "8"
+      , "30"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "parenthesize-Java", "7,2,8,30")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "parenthesize-Java", "7,2,8,30")
+    ; innermost(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+        , "8"
+        , "14"
+        , "8"
+        , "29"
+        )
+        ; JavaParenthesize
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+      , "parenthesize-Java"
+      , "7"
+      , "2"
+      , "8"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+      , "parenthesize-Java"
+      , "7"
+      , "2"
+      , "8"
+      , "30"
+      )
       ; fail
 
 
@@ -39,14 +107,28 @@ rules
     , p_33
     , q_33
     , r_33
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "11,2,12,132")> QNewInstance(
-                                                                                                                                 Parenthetical(ArrayAccess(s_33, t_33))
-                                                                                                                               , p_33
-                                                                                                                               , q_33
-                                                                                                                               , r_33
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "11"
+          , "2"
+          , "12"
+          , "132"
+          )> QNewInstance(
+               Parenthetical(ArrayAccess(s_33, t_33))
+             , p_33
+             , q_33
+             , r_33
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "11,2,12,132")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "11,2,12,132")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "11"
+             , "2"
+             , "12"
+             , "132"
+             )
              ; fail
 
   JavaParenthesize :
@@ -55,14 +137,28 @@ rules
     , ArrayAccess(s_33, t_33)
     , q_33
     , r_33
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "14,2,15,132")> QNewInstance(
-                                                                                                                                 o_33
-                                                                                                                               , Parenthetical(ArrayAccess(s_33, t_33))
-                                                                                                                               , q_33
-                                                                                                                               , r_33
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "14"
+          , "2"
+          , "15"
+          , "132"
+          )> QNewInstance(
+               o_33
+             , Parenthetical(ArrayAccess(s_33, t_33))
+             , q_33
+             , r_33
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "14,2,15,132")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "14,2,15,132")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "14"
+             , "2"
+             , "15"
+             , "132"
+             )
              ; fail
 
   JavaParenthesize :
@@ -71,14 +167,28 @@ rules
     , p_33
     , ArrayAccess(s_33, t_33)
     , r_33
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "17,2,18,132")> QNewInstance(
-                                                                                                                                 o_33
-                                                                                                                               , p_33
-                                                                                                                               , Parenthetical(ArrayAccess(s_33, t_33))
-                                                                                                                               , r_33
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "17"
+          , "2"
+          , "18"
+          , "132"
+          )> QNewInstance(
+               o_33
+             , p_33
+             , Parenthetical(ArrayAccess(s_33, t_33))
+             , r_33
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "17,2,18,132")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "17,2,18,132")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "17"
+             , "2"
+             , "18"
+             , "132"
+             )
              ; fail
 
   JavaParenthesize :
@@ -87,14 +197,28 @@ rules
     , p_33
     , q_33
     , ArrayAccess(s_33, t_33)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "20,2,21,132")> QNewInstance(
-                                                                                                                                 o_33
-                                                                                                                               , p_33
-                                                                                                                               , q_33
-                                                                                                                               , Parenthetical(ArrayAccess(s_33, t_33))
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "20"
+          , "2"
+          , "21"
+          , "132"
+          )> QNewInstance(
+               o_33
+             , p_33
+             , q_33
+             , Parenthetical(ArrayAccess(s_33, t_33))
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "20,2,21,132")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "20,2,21,132")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "20"
+             , "2"
+             , "21"
+             , "132"
+             )
              ; fail
 
   JavaParenthesize :
@@ -103,14 +227,28 @@ rules
     , v_33
     , w_33
     , x_33
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "23,2,24,120")> QNewInstance(
-                                                                                                                                 Parenthetical(Field(y_33, z_33))
-                                                                                                                               , v_33
-                                                                                                                               , w_33
-                                                                                                                               , x_33
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "23"
+          , "2"
+          , "24"
+          , "120"
+          )> QNewInstance(
+               Parenthetical(Field(y_33, z_33))
+             , v_33
+             , w_33
+             , x_33
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "23,2,24,120")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "23,2,24,120")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "23"
+             , "2"
+             , "24"
+             , "120"
+             )
              ; fail
 
   JavaParenthesize :
@@ -119,14 +257,28 @@ rules
     , Field(y_33, z_33)
     , w_33
     , x_33
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "26,2,27,120")> QNewInstance(
-                                                                                                                                 u_33
-                                                                                                                               , Parenthetical(Field(y_33, z_33))
-                                                                                                                               , w_33
-                                                                                                                               , x_33
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "26"
+          , "2"
+          , "27"
+          , "120"
+          )> QNewInstance(
+               u_33
+             , Parenthetical(Field(y_33, z_33))
+             , w_33
+             , x_33
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "26,2,27,120")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "26,2,27,120")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "26"
+             , "2"
+             , "27"
+             , "120"
+             )
              ; fail
 
   JavaParenthesize :
@@ -135,14 +287,28 @@ rules
     , v_33
     , Field(y_33, z_33)
     , x_33
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "29,2,30,120")> QNewInstance(
-                                                                                                                                 u_33
-                                                                                                                               , v_33
-                                                                                                                               , Parenthetical(Field(y_33, z_33))
-                                                                                                                               , x_33
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "29"
+          , "2"
+          , "30"
+          , "120"
+          )> QNewInstance(
+               u_33
+             , v_33
+             , Parenthetical(Field(y_33, z_33))
+             , x_33
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "29,2,30,120")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "29,2,30,120")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "29"
+             , "2"
+             , "30"
+             , "120"
+             )
              ; fail
 
   JavaParenthesize :
@@ -151,14 +317,28 @@ rules
     , v_33
     , w_33
     , Field(y_33, z_33)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "32,2,33,120")> QNewInstance(
-                                                                                                                                 u_33
-                                                                                                                               , v_33
-                                                                                                                               , w_33
-                                                                                                                               , Parenthetical(Field(y_33, z_33))
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "32"
+          , "2"
+          , "33"
+          , "120"
+          )> QNewInstance(
+               u_33
+             , v_33
+             , w_33
+             , Parenthetical(Field(y_33, z_33))
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "32,2,33,120")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "32,2,33,120")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "32"
+             , "2"
+             , "33"
+             , "120"
+             )
              ; fail
 
   JavaParenthesize :
@@ -167,14 +347,28 @@ rules
     , b_34
     , c_34
     , d_34
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "35,2,36,122")> QNewInstance(
-                                                                                                                                 Parenthetical(Method(e_34, f_34))
-                                                                                                                               , b_34
-                                                                                                                               , c_34
-                                                                                                                               , d_34
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "35"
+          , "2"
+          , "36"
+          , "122"
+          )> QNewInstance(
+               Parenthetical(Method(e_34, f_34))
+             , b_34
+             , c_34
+             , d_34
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "35,2,36,122")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "35,2,36,122")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "35"
+             , "2"
+             , "36"
+             , "122"
+             )
              ; fail
 
   JavaParenthesize :
@@ -183,14 +377,28 @@ rules
     , Method(e_34, f_34)
     , c_34
     , d_34
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "38,2,39,122")> QNewInstance(
-                                                                                                                                 a_34
-                                                                                                                               , Parenthetical(Method(e_34, f_34))
-                                                                                                                               , c_34
-                                                                                                                               , d_34
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "38"
+          , "2"
+          , "39"
+          , "122"
+          )> QNewInstance(
+               a_34
+             , Parenthetical(Method(e_34, f_34))
+             , c_34
+             , d_34
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "38,2,39,122")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "38,2,39,122")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "38"
+             , "2"
+             , "39"
+             , "122"
+             )
              ; fail
 
   JavaParenthesize :
@@ -199,14 +407,28 @@ rules
     , b_34
     , Method(e_34, f_34)
     , d_34
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "41,2,42,122")> QNewInstance(
-                                                                                                                                 a_34
-                                                                                                                               , b_34
-                                                                                                                               , Parenthetical(Method(e_34, f_34))
-                                                                                                                               , d_34
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "41"
+          , "2"
+          , "42"
+          , "122"
+          )> QNewInstance(
+               a_34
+             , b_34
+             , Parenthetical(Method(e_34, f_34))
+             , d_34
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "41,2,42,122")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "41,2,42,122")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "41"
+             , "2"
+             , "42"
+             , "122"
+             )
              ; fail
 
   JavaParenthesize :
@@ -215,366 +437,828 @@ rules
     , b_34
     , c_34
     , Method(e_34, f_34)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "44,2,45,122")> QNewInstance(
-                                                                                                                                 a_34
-                                                                                                                               , b_34
-                                                                                                                               , c_34
-                                                                                                                               , Parenthetical(Method(e_34, f_34))
-                                                                                                                               )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+          , "JavaParenthesize"
+          , "44"
+          , "2"
+          , "45"
+          , "122"
+          )> QNewInstance(
+               a_34
+             , b_34
+             , c_34
+             , Parenthetical(Method(e_34, f_34))
+             )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "44,2,45,122")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "44,2,45,122")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "44"
+             , "2"
+             , "45"
+             , "122"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(PostIncr(k_34), h_34, i_34, j_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "47,2,48,114")> QNewInstance(
-                                                                                                                                                                              Parenthetical(PostIncr(k_34))
-                                                                                                                                                                            , h_34
-                                                                                                                                                                            , i_34
-                                                                                                                                                                            , j_34
-                                                                                                                                                                            )
+    QNewInstance(PostIncr(k_34), h_34, i_34, j_34) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "47"
+                                                       , "2"
+                                                       , "48"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            Parenthetical(PostIncr(k_34))
+                                                          , h_34
+                                                          , i_34
+                                                          , j_34
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "47,2,48,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "47,2,48,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "47"
+             , "2"
+             , "48"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(g_34, PostIncr(k_34), i_34, j_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "50,2,51,114")> QNewInstance(
-                                                                                                                                                                              g_34
-                                                                                                                                                                            , Parenthetical(PostIncr(k_34))
-                                                                                                                                                                            , i_34
-                                                                                                                                                                            , j_34
-                                                                                                                                                                            )
+    QNewInstance(g_34, PostIncr(k_34), i_34, j_34) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "50"
+                                                       , "2"
+                                                       , "51"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            g_34
+                                                          , Parenthetical(PostIncr(k_34))
+                                                          , i_34
+                                                          , j_34
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "50,2,51,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "50,2,51,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "50"
+             , "2"
+             , "51"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(g_34, h_34, PostIncr(k_34), j_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "53,2,54,114")> QNewInstance(
-                                                                                                                                                                              g_34
-                                                                                                                                                                            , h_34
-                                                                                                                                                                            , Parenthetical(PostIncr(k_34))
-                                                                                                                                                                            , j_34
-                                                                                                                                                                            )
+    QNewInstance(g_34, h_34, PostIncr(k_34), j_34) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "53"
+                                                       , "2"
+                                                       , "54"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            g_34
+                                                          , h_34
+                                                          , Parenthetical(PostIncr(k_34))
+                                                          , j_34
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "53,2,54,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "53,2,54,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "53"
+             , "2"
+             , "54"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(g_34, h_34, i_34, PostIncr(k_34)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "56,2,57,114")> QNewInstance(
-                                                                                                                                                                              g_34
-                                                                                                                                                                            , h_34
-                                                                                                                                                                            , i_34
-                                                                                                                                                                            , Parenthetical(PostIncr(k_34))
-                                                                                                                                                                            )
+    QNewInstance(g_34, h_34, i_34, PostIncr(k_34)) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "56"
+                                                       , "2"
+                                                       , "57"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            g_34
+                                                          , h_34
+                                                          , i_34
+                                                          , Parenthetical(PostIncr(k_34))
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "56,2,57,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "56,2,57,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "56"
+             , "2"
+             , "57"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(PostDecr(p_34), m_34, n_34, o_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "59,2,60,114")> QNewInstance(
-                                                                                                                                                                              Parenthetical(PostDecr(p_34))
-                                                                                                                                                                            , m_34
-                                                                                                                                                                            , n_34
-                                                                                                                                                                            , o_34
-                                                                                                                                                                            )
+    QNewInstance(PostDecr(p_34), m_34, n_34, o_34) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "59"
+                                                       , "2"
+                                                       , "60"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            Parenthetical(PostDecr(p_34))
+                                                          , m_34
+                                                          , n_34
+                                                          , o_34
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "59,2,60,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "59,2,60,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "59"
+             , "2"
+             , "60"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(l_34, PostDecr(p_34), n_34, o_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "62,2,63,114")> QNewInstance(
-                                                                                                                                                                              l_34
-                                                                                                                                                                            , Parenthetical(PostDecr(p_34))
-                                                                                                                                                                            , n_34
-                                                                                                                                                                            , o_34
-                                                                                                                                                                            )
+    QNewInstance(l_34, PostDecr(p_34), n_34, o_34) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "62"
+                                                       , "2"
+                                                       , "63"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            l_34
+                                                          , Parenthetical(PostDecr(p_34))
+                                                          , n_34
+                                                          , o_34
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "62,2,63,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "62,2,63,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "62"
+             , "2"
+             , "63"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(l_34, m_34, PostDecr(p_34), o_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "65,2,66,114")> QNewInstance(
-                                                                                                                                                                              l_34
-                                                                                                                                                                            , m_34
-                                                                                                                                                                            , Parenthetical(PostDecr(p_34))
-                                                                                                                                                                            , o_34
-                                                                                                                                                                            )
+    QNewInstance(l_34, m_34, PostDecr(p_34), o_34) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "65"
+                                                       , "2"
+                                                       , "66"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            l_34
+                                                          , m_34
+                                                          , Parenthetical(PostDecr(p_34))
+                                                          , o_34
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "65,2,66,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "65,2,66,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "65"
+             , "2"
+             , "66"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(l_34, m_34, n_34, PostDecr(p_34)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "68,2,69,114")> QNewInstance(
-                                                                                                                                                                              l_34
-                                                                                                                                                                            , m_34
-                                                                                                                                                                            , n_34
-                                                                                                                                                                            , Parenthetical(PostDecr(p_34))
-                                                                                                                                                                            )
+    QNewInstance(l_34, m_34, n_34, PostDecr(p_34)) -> <r-exit(
+                                                       | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                       , "JavaParenthesize"
+                                                       , "68"
+                                                       , "2"
+                                                       , "69"
+                                                       , "114"
+                                                       )> QNewInstance(
+                                                            l_34
+                                                          , m_34
+                                                          , n_34
+                                                          , Parenthetical(PostDecr(p_34))
+                                                          )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "68,2,69,114")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "68,2,69,114")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "68"
+             , "2"
+             , "69"
+             , "114"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(PreIncr(u_34), r_34, s_34, t_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "71,2,72,112")> QNewInstance(
-                                                                                                                                                                             Parenthetical(PreIncr(u_34))
-                                                                                                                                                                           , r_34
-                                                                                                                                                                           , s_34
-                                                                                                                                                                           , t_34
-                                                                                                                                                                           )
+    QNewInstance(PreIncr(u_34), r_34, s_34, t_34) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "71"
+                                                      , "2"
+                                                      , "72"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           Parenthetical(PreIncr(u_34))
+                                                         , r_34
+                                                         , s_34
+                                                         , t_34
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "71,2,72,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "71,2,72,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "71"
+             , "2"
+             , "72"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(q_34, PreIncr(u_34), s_34, t_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "74,2,75,112")> QNewInstance(
-                                                                                                                                                                             q_34
-                                                                                                                                                                           , Parenthetical(PreIncr(u_34))
-                                                                                                                                                                           , s_34
-                                                                                                                                                                           , t_34
-                                                                                                                                                                           )
+    QNewInstance(q_34, PreIncr(u_34), s_34, t_34) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "74"
+                                                      , "2"
+                                                      , "75"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           q_34
+                                                         , Parenthetical(PreIncr(u_34))
+                                                         , s_34
+                                                         , t_34
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "74,2,75,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "74,2,75,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "74"
+             , "2"
+             , "75"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(q_34, r_34, PreIncr(u_34), t_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "77,2,78,112")> QNewInstance(
-                                                                                                                                                                             q_34
-                                                                                                                                                                           , r_34
-                                                                                                                                                                           , Parenthetical(PreIncr(u_34))
-                                                                                                                                                                           , t_34
-                                                                                                                                                                           )
+    QNewInstance(q_34, r_34, PreIncr(u_34), t_34) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "77"
+                                                      , "2"
+                                                      , "78"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           q_34
+                                                         , r_34
+                                                         , Parenthetical(PreIncr(u_34))
+                                                         , t_34
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "77,2,78,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "77,2,78,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "77"
+             , "2"
+             , "78"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(q_34, r_34, s_34, PreIncr(u_34)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "80,2,81,112")> QNewInstance(
-                                                                                                                                                                             q_34
-                                                                                                                                                                           , r_34
-                                                                                                                                                                           , s_34
-                                                                                                                                                                           , Parenthetical(PreIncr(u_34))
-                                                                                                                                                                           )
+    QNewInstance(q_34, r_34, s_34, PreIncr(u_34)) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "80"
+                                                      , "2"
+                                                      , "81"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           q_34
+                                                         , r_34
+                                                         , s_34
+                                                         , Parenthetical(PreIncr(u_34))
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "80,2,81,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "80,2,81,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "80"
+             , "2"
+             , "81"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(PreDecr(z_34), w_34, x_34, y_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "83,2,84,112")> QNewInstance(
-                                                                                                                                                                             Parenthetical(PreDecr(z_34))
-                                                                                                                                                                           , w_34
-                                                                                                                                                                           , x_34
-                                                                                                                                                                           , y_34
-                                                                                                                                                                           )
+    QNewInstance(PreDecr(z_34), w_34, x_34, y_34) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "83"
+                                                      , "2"
+                                                      , "84"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           Parenthetical(PreDecr(z_34))
+                                                         , w_34
+                                                         , x_34
+                                                         , y_34
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "83,2,84,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "83,2,84,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "83"
+             , "2"
+             , "84"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(v_34, PreDecr(z_34), x_34, y_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "86,2,87,112")> QNewInstance(
-                                                                                                                                                                             v_34
-                                                                                                                                                                           , Parenthetical(PreDecr(z_34))
-                                                                                                                                                                           , x_34
-                                                                                                                                                                           , y_34
-                                                                                                                                                                           )
+    QNewInstance(v_34, PreDecr(z_34), x_34, y_34) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "86"
+                                                      , "2"
+                                                      , "87"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           v_34
+                                                         , Parenthetical(PreDecr(z_34))
+                                                         , x_34
+                                                         , y_34
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "86,2,87,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "86,2,87,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "86"
+             , "2"
+             , "87"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(v_34, w_34, PreDecr(z_34), y_34) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "89,2,90,112")> QNewInstance(
-                                                                                                                                                                             v_34
-                                                                                                                                                                           , w_34
-                                                                                                                                                                           , Parenthetical(PreDecr(z_34))
-                                                                                                                                                                           , y_34
-                                                                                                                                                                           )
+    QNewInstance(v_34, w_34, PreDecr(z_34), y_34) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "89"
+                                                      , "2"
+                                                      , "90"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           v_34
+                                                         , w_34
+                                                         , Parenthetical(PreDecr(z_34))
+                                                         , y_34
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "89,2,90,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "89,2,90,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "89"
+             , "2"
+             , "90"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(v_34, w_34, x_34, PreDecr(z_34)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "92,2,93,112")> QNewInstance(
-                                                                                                                                                                             v_34
-                                                                                                                                                                           , w_34
-                                                                                                                                                                           , x_34
-                                                                                                                                                                           , Parenthetical(PreDecr(z_34))
-                                                                                                                                                                           )
+    QNewInstance(v_34, w_34, x_34, PreDecr(z_34)) -> <r-exit(
+                                                      | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                      , "JavaParenthesize"
+                                                      , "92"
+                                                      , "2"
+                                                      , "93"
+                                                      , "112"
+                                                      )> QNewInstance(
+                                                           v_34
+                                                         , w_34
+                                                         , x_34
+                                                         , Parenthetical(PreDecr(z_34))
+                                                         )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "92,2,93,112")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "92,2,93,112")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "92"
+             , "2"
+             , "93"
+             , "112"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(Plus(e_35), b_35, c_35, d_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "95,2,96,106")> QNewInstance(
-                                                                                                                                                                          Parenthetical(Plus(e_35))
-                                                                                                                                                                        , b_35
-                                                                                                                                                                        , c_35
-                                                                                                                                                                        , d_35
-                                                                                                                                                                        )
+    QNewInstance(Plus(e_35), b_35, c_35, d_35) -> <r-exit(
+                                                   | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                   , "JavaParenthesize"
+                                                   , "95"
+                                                   , "2"
+                                                   , "96"
+                                                   , "106"
+                                                   )> QNewInstance(
+                                                        Parenthetical(Plus(e_35))
+                                                      , b_35
+                                                      , c_35
+                                                      , d_35
+                                                      )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "95,2,96,106")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "95,2,96,106")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "95"
+             , "2"
+             , "96"
+             , "106"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(a_35, Plus(e_35), c_35, d_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "98,2,99,106")> QNewInstance(
-                                                                                                                                                                          a_35
-                                                                                                                                                                        , Parenthetical(Plus(e_35))
-                                                                                                                                                                        , c_35
-                                                                                                                                                                        , d_35
-                                                                                                                                                                        )
+    QNewInstance(a_35, Plus(e_35), c_35, d_35) -> <r-exit(
+                                                   | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                   , "JavaParenthesize"
+                                                   , "98"
+                                                   , "2"
+                                                   , "99"
+                                                   , "106"
+                                                   )> QNewInstance(
+                                                        a_35
+                                                      , Parenthetical(Plus(e_35))
+                                                      , c_35
+                                                      , d_35
+                                                      )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "98,2,99,106")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "98,2,99,106")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "98"
+             , "2"
+             , "99"
+             , "106"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(a_35, b_35, Plus(e_35), d_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "101,2,102,106")> QNewInstance(
-                                                                                                                                                                            a_35
-                                                                                                                                                                          , b_35
-                                                                                                                                                                          , Parenthetical(Plus(e_35))
-                                                                                                                                                                          , d_35
-                                                                                                                                                                          )
+    QNewInstance(a_35, b_35, Plus(e_35), d_35) -> <r-exit(
+                                                   | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                   , "JavaParenthesize"
+                                                   , "101"
+                                                   , "2"
+                                                   , "102"
+                                                   , "106"
+                                                   )> QNewInstance(
+                                                        a_35
+                                                      , b_35
+                                                      , Parenthetical(Plus(e_35))
+                                                      , d_35
+                                                      )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "101,2,102,106")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "101,2,102,106")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "101"
+             , "2"
+             , "102"
+             , "106"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(a_35, b_35, c_35, Plus(e_35)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "104,2,105,106")> QNewInstance(
-                                                                                                                                                                            a_35
-                                                                                                                                                                          , b_35
-                                                                                                                                                                          , c_35
-                                                                                                                                                                          , Parenthetical(Plus(e_35))
-                                                                                                                                                                          )
+    QNewInstance(a_35, b_35, c_35, Plus(e_35)) -> <r-exit(
+                                                   | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                   , "JavaParenthesize"
+                                                   , "104"
+                                                   , "2"
+                                                   , "105"
+                                                   , "106"
+                                                   )> QNewInstance(
+                                                        a_35
+                                                      , b_35
+                                                      , c_35
+                                                      , Parenthetical(Plus(e_35))
+                                                      )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "104,2,105,106")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "104,2,105,106")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "104"
+             , "2"
+             , "105"
+             , "106"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(Minus(j_35), g_35, h_35, i_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "107,2,108,108")> QNewInstance(
-                                                                                                                                                                             Parenthetical(Minus(j_35))
-                                                                                                                                                                           , g_35
-                                                                                                                                                                           , h_35
-                                                                                                                                                                           , i_35
-                                                                                                                                                                           )
+    QNewInstance(Minus(j_35), g_35, h_35, i_35) -> <r-exit(
+                                                    | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                    , "JavaParenthesize"
+                                                    , "107"
+                                                    , "2"
+                                                    , "108"
+                                                    , "108"
+                                                    )> QNewInstance(
+                                                         Parenthetical(Minus(j_35))
+                                                       , g_35
+                                                       , h_35
+                                                       , i_35
+                                                       )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "107,2,108,108")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "107,2,108,108")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "107"
+             , "2"
+             , "108"
+             , "108"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(f_35, Minus(j_35), h_35, i_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "110,2,111,108")> QNewInstance(
-                                                                                                                                                                             f_35
-                                                                                                                                                                           , Parenthetical(Minus(j_35))
-                                                                                                                                                                           , h_35
-                                                                                                                                                                           , i_35
-                                                                                                                                                                           )
+    QNewInstance(f_35, Minus(j_35), h_35, i_35) -> <r-exit(
+                                                    | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                    , "JavaParenthesize"
+                                                    , "110"
+                                                    , "2"
+                                                    , "111"
+                                                    , "108"
+                                                    )> QNewInstance(
+                                                         f_35
+                                                       , Parenthetical(Minus(j_35))
+                                                       , h_35
+                                                       , i_35
+                                                       )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "110,2,111,108")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "110,2,111,108")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "110"
+             , "2"
+             , "111"
+             , "108"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(f_35, g_35, Minus(j_35), i_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "113,2,114,108")> QNewInstance(
-                                                                                                                                                                             f_35
-                                                                                                                                                                           , g_35
-                                                                                                                                                                           , Parenthetical(Minus(j_35))
-                                                                                                                                                                           , i_35
-                                                                                                                                                                           )
+    QNewInstance(f_35, g_35, Minus(j_35), i_35) -> <r-exit(
+                                                    | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                    , "JavaParenthesize"
+                                                    , "113"
+                                                    , "2"
+                                                    , "114"
+                                                    , "108"
+                                                    )> QNewInstance(
+                                                         f_35
+                                                       , g_35
+                                                       , Parenthetical(Minus(j_35))
+                                                       , i_35
+                                                       )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "113,2,114,108")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "113,2,114,108")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "113"
+             , "2"
+             , "114"
+             , "108"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(f_35, g_35, h_35, Minus(j_35)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "116,2,117,108")> QNewInstance(
-                                                                                                                                                                             f_35
-                                                                                                                                                                           , g_35
-                                                                                                                                                                           , h_35
-                                                                                                                                                                           , Parenthetical(Minus(j_35))
-                                                                                                                                                                           )
+    QNewInstance(f_35, g_35, h_35, Minus(j_35)) -> <r-exit(
+                                                    | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                    , "JavaParenthesize"
+                                                    , "116"
+                                                    , "2"
+                                                    , "117"
+                                                    , "108"
+                                                    )> QNewInstance(
+                                                         f_35
+                                                       , g_35
+                                                       , h_35
+                                                       , Parenthetical(Minus(j_35))
+                                                       )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "116,2,117,108")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "116,2,117,108")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "116"
+             , "2"
+             , "117"
+             , "108"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(Complement(o_35), l_35, m_35, n_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "119,2,120,118")> QNewInstance(
-                                                                                                                                                                                  Parenthetical(Complement(o_35))
-                                                                                                                                                                                , l_35
-                                                                                                                                                                                , m_35
-                                                                                                                                                                                , n_35
-                                                                                                                                                                                )
+    QNewInstance(Complement(o_35), l_35, m_35, n_35) -> <r-exit(
+                                                         | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                         , "JavaParenthesize"
+                                                         , "119"
+                                                         , "2"
+                                                         , "120"
+                                                         , "118"
+                                                         )> QNewInstance(
+                                                              Parenthetical(Complement(o_35))
+                                                            , l_35
+                                                            , m_35
+                                                            , n_35
+                                                            )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "119,2,120,118")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "119,2,120,118")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "119"
+             , "2"
+             , "120"
+             , "118"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(k_35, Complement(o_35), m_35, n_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "122,2,123,118")> QNewInstance(
-                                                                                                                                                                                  k_35
-                                                                                                                                                                                , Parenthetical(Complement(o_35))
-                                                                                                                                                                                , m_35
-                                                                                                                                                                                , n_35
-                                                                                                                                                                                )
+    QNewInstance(k_35, Complement(o_35), m_35, n_35) -> <r-exit(
+                                                         | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                         , "JavaParenthesize"
+                                                         , "122"
+                                                         , "2"
+                                                         , "123"
+                                                         , "118"
+                                                         )> QNewInstance(
+                                                              k_35
+                                                            , Parenthetical(Complement(o_35))
+                                                            , m_35
+                                                            , n_35
+                                                            )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "122,2,123,118")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "122,2,123,118")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "122"
+             , "2"
+             , "123"
+             , "118"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(k_35, l_35, Complement(o_35), n_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "125,2,126,118")> QNewInstance(
-                                                                                                                                                                                  k_35
-                                                                                                                                                                                , l_35
-                                                                                                                                                                                , Parenthetical(Complement(o_35))
-                                                                                                                                                                                , n_35
-                                                                                                                                                                                )
+    QNewInstance(k_35, l_35, Complement(o_35), n_35) -> <r-exit(
+                                                         | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                         , "JavaParenthesize"
+                                                         , "125"
+                                                         , "2"
+                                                         , "126"
+                                                         , "118"
+                                                         )> QNewInstance(
+                                                              k_35
+                                                            , l_35
+                                                            , Parenthetical(Complement(o_35))
+                                                            , n_35
+                                                            )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "125,2,126,118")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "125,2,126,118")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "125"
+             , "2"
+             , "126"
+             , "118"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(k_35, l_35, m_35, Complement(o_35)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "128,2,129,118")> QNewInstance(
-                                                                                                                                                                                  k_35
-                                                                                                                                                                                , l_35
-                                                                                                                                                                                , m_35
-                                                                                                                                                                                , Parenthetical(Complement(o_35))
-                                                                                                                                                                                )
+    QNewInstance(k_35, l_35, m_35, Complement(o_35)) -> <r-exit(
+                                                         | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                         , "JavaParenthesize"
+                                                         , "128"
+                                                         , "2"
+                                                         , "129"
+                                                         , "118"
+                                                         )> QNewInstance(
+                                                              k_35
+                                                            , l_35
+                                                            , m_35
+                                                            , Parenthetical(Complement(o_35))
+                                                            )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "128,2,129,118")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "128,2,129,118")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "128"
+             , "2"
+             , "129"
+             , "118"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(Not(t_35), q_35, r_35, s_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "131,2,132,104")> QNewInstance(
-                                                                                                                                                                           Parenthetical(Not(t_35))
-                                                                                                                                                                         , q_35
-                                                                                                                                                                         , r_35
-                                                                                                                                                                         , s_35
-                                                                                                                                                                         )
+    QNewInstance(Not(t_35), q_35, r_35, s_35) -> <r-exit(
+                                                  | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                  , "JavaParenthesize"
+                                                  , "131"
+                                                  , "2"
+                                                  , "132"
+                                                  , "104"
+                                                  )> QNewInstance(
+                                                       Parenthetical(Not(t_35))
+                                                     , q_35
+                                                     , r_35
+                                                     , s_35
+                                                     )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "131,2,132,104")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "131,2,132,104")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "131"
+             , "2"
+             , "132"
+             , "104"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(p_35, Not(t_35), r_35, s_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "134,2,135,104")> QNewInstance(
-                                                                                                                                                                           p_35
-                                                                                                                                                                         , Parenthetical(Not(t_35))
-                                                                                                                                                                         , r_35
-                                                                                                                                                                         , s_35
-                                                                                                                                                                         )
+    QNewInstance(p_35, Not(t_35), r_35, s_35) -> <r-exit(
+                                                  | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                  , "JavaParenthesize"
+                                                  , "134"
+                                                  , "2"
+                                                  , "135"
+                                                  , "104"
+                                                  )> QNewInstance(
+                                                       p_35
+                                                     , Parenthetical(Not(t_35))
+                                                     , r_35
+                                                     , s_35
+                                                     )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "134,2,135,104")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "134,2,135,104")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "134"
+             , "2"
+             , "135"
+             , "104"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(p_35, q_35, Not(t_35), s_35) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "137,2,138,104")> QNewInstance(
-                                                                                                                                                                           p_35
-                                                                                                                                                                         , q_35
-                                                                                                                                                                         , Parenthetical(Not(t_35))
-                                                                                                                                                                         , s_35
-                                                                                                                                                                         )
+    QNewInstance(p_35, q_35, Not(t_35), s_35) -> <r-exit(
+                                                  | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                  , "JavaParenthesize"
+                                                  , "137"
+                                                  , "2"
+                                                  , "138"
+                                                  , "104"
+                                                  )> QNewInstance(
+                                                       p_35
+                                                     , q_35
+                                                     , Parenthetical(Not(t_35))
+                                                     , s_35
+                                                     )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "137,2,138,104")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "137,2,138,104")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "137"
+             , "2"
+             , "138"
+             , "104"
+             )
              ; fail
 
   JavaParenthesize :
-    QNewInstance(p_35, q_35, r_35, Not(t_35)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "140,2,141,104")> QNewInstance(
-                                                                                                                                                                           p_35
-                                                                                                                                                                         , q_35
-                                                                                                                                                                         , r_35
-                                                                                                                                                                         , Parenthetical(Not(t_35))
-                                                                                                                                                                         )
+    QNewInstance(p_35, q_35, r_35, Not(t_35)) -> <r-exit(
+                                                  | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+                                                  , "JavaParenthesize"
+                                                  , "140"
+                                                  , "2"
+                                                  , "141"
+                                                  , "104"
+                                                  )> QNewInstance(
+                                                       p_35
+                                                     , q_35
+                                                     , r_35
+                                                     , Parenthetical(Not(t_35))
+                                                     )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "140,2,141,104")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str", "JavaParenthesize", "140,2,141,104")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test2/jtree-parenthesize.str"
+             , "JavaParenthesize"
+             , "140"
+             , "2"
+             , "141"
+             , "104"
+             )
              ; fail
 
 

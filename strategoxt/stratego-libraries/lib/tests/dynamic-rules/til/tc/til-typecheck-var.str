@@ -10,159 +10,711 @@ imports
 
 strategies
   typecheck-declaration =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-declaration", "5,2,7,45")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "6,4,7,45")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "6,4,6,18")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+    , "typecheck-declaration"
+    , "5"
+    , "2"
+    , "7"
+    , "45"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "6"
+      , "4"
+      , "7"
+      , "45"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+       , "6"
+       , "4"
+       , "6"
+       , "18"
+       )
        ; ?Declaration(x))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "7,6,7,45")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "7"
+      , "6"
+      , "7"
+      , "45"
+      )
     ; rules (
         TypeOf+x :
           x -> TypeName("int")
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-declaration", "5,2,7,45")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-declaration", "5,2,7,45")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-declaration"
+      , "5"
+      , "2"
+      , "7"
+      , "45"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-declaration"
+      , "5"
+      , "2"
+      , "7"
+      , "45"
+      )
       ; fail
 
   typecheck-declaration =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-declaration", "9,2,11,31")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "10,4,11,31")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "10,4,10,26")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+    , "typecheck-declaration"
+    , "9"
+    , "2"
+    , "11"
+    , "31"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "10"
+      , "4"
+      , "11"
+      , "31"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+       , "10"
+       , "4"
+       , "10"
+       , "26"
+       )
        ; ?DeclarationTyped(x, t))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "11,6,11,31")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "11"
+      , "6"
+      , "11"
+      , "31"
+      )
     ; rules ( TypeOf+x :
                 x -> t )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-declaration", "9,2,11,31")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-declaration", "9,2,11,31")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-declaration"
+      , "9"
+      , "2"
+      , "11"
+      , "31"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-declaration"
+      , "9"
+      , "2"
+      , "11"
+      , "31"
+      )
       ; fail
 
   TypecheckVar :
-    Var(x) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckVar", "13,2,15,24")> Var(x){t}
+    Var(x) -> <r-exit(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+               , "TypecheckVar"
+               , "13"
+               , "2"
+               , "15"
+               , "24"
+               )> Var(x){t}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckVar", "13,2,15,24")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckVar", "13,2,15,24")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckVar"
+             , "13"
+             , "2"
+             , "15"
+             , "24"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "15,10,15,24")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "15,10,15,19")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "15,11,15,16") ; TypeOf)> x) => t
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckVar", "13,2,15,24")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "15"
+          , "10"
+          , "15"
+          , "24"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "15"
+             , "10"
+             , "15"
+             , "19"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "15"
+                 , "11"
+                 , "15"
+                 , "16"
+                 )
+                 ; TypeOf)> x) => t
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckVar"
+             , "13"
+             , "2"
+             , "15"
+             , "24"
+             )
              ; fail
 
   TypecheckAssign :
-    Assign(x, e) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckAssign", "17,2,20,21")> Assign(x, e){TypeName("void")}
+    Assign(x, e) -> <r-exit(
+                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                     , "TypecheckAssign"
+                     , "17"
+                     , "2"
+                     , "20"
+                     , "21"
+                     )> Assign(x, e){TypeName("void")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckAssign", "17,2,20,21")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckAssign", "17,2,20,21")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckAssign"
+             , "17"
+             , "2"
+             , "20"
+             , "21"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "19,10,20,21")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "19,10,19,24")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "19,10,19,19")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "19,11,19,16") ; typeof)> e) => t)
-          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "20,7,20,21")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "20,7,20,16")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "20,8,20,13") ; TypeOf)> x) => t
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckAssign", "17,2,20,21")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "19"
+          , "10"
+          , "20"
+          , "21"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "19"
+             , "10"
+             , "19"
+             , "24"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                , "19"
+                , "10"
+                , "19"
+                , "19"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                    , "19"
+                    , "11"
+                    , "19"
+                    , "16"
+                    )
+                    ; typeof)> e) => t)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+            , "20"
+            , "7"
+            , "20"
+            , "21"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "20"
+             , "7"
+             , "20"
+             , "16"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "20"
+                 , "8"
+                 , "20"
+                 , "13"
+                 )
+                 ; TypeOf)> x) => t
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckAssign"
+             , "17"
+             , "2"
+             , "20"
+             , "21"
+             )
              ; fail
 
 
 strategies
   typecheck-exp =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-exp", "24,2,25,51")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "25,4,25,51")
-    ; typecheck-exp(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "25,18,25,50")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "25,18,25,29") ; TypecheckVar
-           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "25,34,25,50") ; typecheck-funcall)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+    , "typecheck-exp"
+    , "24"
+    , "2"
+    , "25"
+    , "51"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "25"
+      , "4"
+      , "25"
+      , "51"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-exp", "24,2,25,51")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-exp", "24,2,25,51")
+    ; typecheck-exp(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+        , "25"
+        , "18"
+        , "25"
+        , "50"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+           , "25"
+           , "18"
+           , "25"
+           , "29"
+           )
+           ; TypecheckVar
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+              , "25"
+              , "34"
+              , "25"
+              , "50"
+              )
+              ; typecheck-funcall)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-exp"
+      , "24"
+      , "2"
+      , "25"
+      , "51"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-exp"
+      , "24"
+      , "2"
+      , "25"
+      , "51"
+      )
       ; fail
 
   typecheck-funcall =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-funcall", "27,2,28,64")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,4,28,64")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,4,28,16") ; TypecheckRead
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,21,28,64")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,21,28,32") ; TypecheckS2I
-             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,37,28,64")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,37,28,48") ; TypecheckI2S
-                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "28,53,28,64") ; TypecheckB2S)))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-funcall", "27,2,28,64")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-funcall", "27,2,28,64")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+    , "typecheck-funcall"
+    , "27"
+    , "2"
+    , "28"
+    , "64"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "28"
+      , "4"
+      , "28"
+      , "64"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+       , "28"
+       , "4"
+       , "28"
+       , "16"
+       )
+       ; TypecheckRead
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "28"
+          , "21"
+          , "28"
+          , "64"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "28"
+             , "21"
+             , "28"
+             , "32"
+             )
+             ; TypecheckS2I
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                , "28"
+                , "37"
+                , "28"
+                , "64"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                   , "28"
+                   , "37"
+                   , "28"
+                   , "48"
+                   )
+                   ; TypecheckI2S
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                      , "28"
+                      , "53"
+                      , "28"
+                      , "64"
+                      )
+                      ; TypecheckB2S)))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-funcall"
+      , "27"
+      , "2"
+      , "28"
+      , "64"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-funcall"
+      , "27"
+      , "2"
+      , "28"
+      , "64"
+      )
       ; fail
 
   typecheck-proccall =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-proccall", "30,2,31,17")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "31,4,31,17")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+    , "typecheck-proccall"
+    , "30"
+    , "2"
+    , "31"
+    , "17"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "31"
+      , "4"
+      , "31"
+      , "17"
+      )
     ; TypecheckWrite
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-proccall", "30,2,31,17")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "typecheck-proccall", "30,2,31,17")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-proccall"
+      , "30"
+      , "2"
+      , "31"
+      , "17"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+      , "typecheck-proccall"
+      , "30"
+      , "2"
+      , "31"
+      , "17"
+      )
       ; fail
 
 
 strategies
   TypecheckS2I :
-    FunCall("string2int", [e]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckS2I", "35,2,37,41")> FunCall("string2int", [e]){TypeName("int")}
+    FunCall("string2int", [e]) -> <r-exit(
+                                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                                   , "TypecheckS2I"
+                                   , "35"
+                                   , "2"
+                                   , "37"
+                                   , "41"
+                                   )> FunCall("string2int", [e]){TypeName("int")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckS2I", "35,2,37,41")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckS2I", "35,2,37,41")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckS2I"
+             , "35"
+             , "2"
+             , "37"
+             , "41"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "37,10,37,41")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "37,10,37,19")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "37,11,37,16") ; typeof)> e) => TypeName("string")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckS2I", "35,2,37,41")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "37"
+          , "10"
+          , "37"
+          , "41"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "37"
+             , "10"
+             , "37"
+             , "19"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "37"
+                 , "11"
+                 , "37"
+                 , "16"
+                 )
+                 ; typeof)> e) => TypeName("string")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckS2I"
+             , "35"
+             , "2"
+             , "37"
+             , "41"
+             )
              ; fail
 
   TypecheckI2S :
-    FunCall("int2string", [e]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckI2S", "39,2,41,38")> FunCall("int2string", [e]){TypeName("string")}
+    FunCall("int2string", [e]) -> <r-exit(
+                                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                                   , "TypecheckI2S"
+                                   , "39"
+                                   , "2"
+                                   , "41"
+                                   , "38"
+                                   )> FunCall("int2string", [e]){TypeName("string")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckI2S", "39,2,41,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckI2S", "39,2,41,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckI2S"
+             , "39"
+             , "2"
+             , "41"
+             , "38"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "41,10,41,38")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "41,10,41,19")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "41,11,41,16") ; typeof)> e) => TypeName("int")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckI2S", "39,2,41,38")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "41"
+          , "10"
+          , "41"
+          , "38"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "41"
+             , "10"
+             , "41"
+             , "19"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "41"
+                 , "11"
+                 , "41"
+                 , "16"
+                 )
+                 ; typeof)> e) => TypeName("int")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckI2S"
+             , "39"
+             , "2"
+             , "41"
+             , "38"
+             )
              ; fail
 
   TypecheckB2S :
-    FunCall("bool2string", [e]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckB2S", "43,2,45,39")> FunCall("bool2string", [e]){TypeName("string")}
+    FunCall("bool2string", [e]) -> <r-exit(
+                                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                                    , "TypecheckB2S"
+                                    , "43"
+                                    , "2"
+                                    , "45"
+                                    , "39"
+                                    )> FunCall("bool2string", [e]){TypeName("string")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckB2S", "43,2,45,39")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckB2S", "43,2,45,39")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckB2S"
+             , "43"
+             , "2"
+             , "45"
+             , "39"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "45,10,45,39")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "45,10,45,19")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "45,11,45,16") ; typeof)> e) => TypeName("bool")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckB2S", "43,2,45,39")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "45"
+          , "10"
+          , "45"
+          , "39"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "45"
+             , "10"
+             , "45"
+             , "19"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "45"
+                 , "11"
+                 , "45"
+                 , "16"
+                 )
+                 ; typeof)> e) => TypeName("bool")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckB2S"
+             , "43"
+             , "2"
+             , "45"
+             , "39"
+             )
              ; fail
 
   TypecheckRead :
-    FunCall("read", []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckRead", "47,2,48,65")> FunCall("read", []){TypeName("string")}
+    FunCall("read", []) -> <r-exit(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                            , "TypecheckRead"
+                            , "47"
+                            , "2"
+                            , "48"
+                            , "65"
+                            )> FunCall("read", []){TypeName("string")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckRead", "47,2,48,65")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckRead", "47,2,48,65")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckRead"
+             , "47"
+             , "2"
+             , "48"
+             , "65"
+             )
              ; fail
 
   TypecheckRead :
-    FunCall("readint", []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckRead", "50,2,51,68")> FunCall("readint", []){TypeName("int")}
+    FunCall("readint", []) -> <r-exit(
+                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                               , "TypecheckRead"
+                               , "50"
+                               , "2"
+                               , "51"
+                               , "68"
+                               )> FunCall("readint", []){TypeName("int")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckRead", "50,2,51,68")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckRead", "50,2,51,68")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckRead"
+             , "50"
+             , "2"
+             , "51"
+             , "68"
+             )
              ; fail
 
 
 strategies
   TypecheckWrite :
-    ProcCall("write", [e]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "55,2,57,41")> ProcCall("write", [e]){TypeName("void")}
+    ProcCall("write", [e]) -> <r-exit(
+                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                               , "TypecheckWrite"
+                               , "55"
+                               , "2"
+                               , "57"
+                               , "41"
+                               )> ProcCall("write", [e]){TypeName("void")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "55,2,57,41")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "55,2,57,41")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckWrite"
+             , "55"
+             , "2"
+             , "57"
+             , "41"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "57,10,57,41")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "57,10,57,19")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "57,11,57,16") ; typeof)> e) => TypeName("string")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "55,2,57,41")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "57"
+          , "10"
+          , "57"
+          , "41"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "57"
+             , "10"
+             , "57"
+             , "19"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "57"
+                 , "11"
+                 , "57"
+                 , "16"
+                 )
+                 ; typeof)> e) => TypeName("string")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckWrite"
+             , "55"
+             , "2"
+             , "57"
+             , "41"
+             )
              ; fail
 
   TypecheckWrite :
-    ProcCall("writeint", [e]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "59,2,61,38")> ProcCall("writeint", [e]){TypeName("void")}
+    ProcCall("writeint", [e]) -> <r-exit(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                                  , "TypecheckWrite"
+                                  , "59"
+                                  , "2"
+                                  , "61"
+                                  , "38"
+                                  )> ProcCall("writeint", [e]){TypeName("void")}
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "59,2,61,38")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "59,2,61,38")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckWrite"
+             , "59"
+             , "2"
+             , "61"
+             , "38"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "61,10,61,38")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "61,10,61,19")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "61,11,61,16") ; typeof)> e) => TypeName("int")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str", "TypecheckWrite", "59,2,61,38")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+          , "61"
+          , "10"
+          , "61"
+          , "38"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "61"
+             , "10"
+             , "61"
+             , "19"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+                 , "61"
+                 , "11"
+                 , "61"
+                 , "16"
+                 )
+                 ; typeof)> e) => TypeName("int")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/tc/til-typecheck-var.str"
+             , "TypecheckWrite"
+             , "59"
+             , "2"
+             , "61"
+             , "38"
+             )
              ; fail

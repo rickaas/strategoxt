@@ -11,84 +11,380 @@ imports
 
 strategies
   io-til-eblock-desugar =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "io-til-eblock-desugar", "5,2,6,30")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "6,4,6,30")
-    ; io-wrap(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "6,12,6,29") ; til-eblock-desugar
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+    , "io-til-eblock-desugar"
+    , "5"
+    , "2"
+    , "6"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "6"
+      , "4"
+      , "6"
+      , "30"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "io-til-eblock-desugar", "5,2,6,30")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "io-til-eblock-desugar", "5,2,6,30")
+    ; io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+        , "6"
+        , "12"
+        , "6"
+        , "29"
+        )
+        ; til-eblock-desugar
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "io-til-eblock-desugar"
+      , "5"
+      , "2"
+      , "6"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "io-til-eblock-desugar"
+      , "5"
+      , "2"
+      , "6"
+      , "30"
+      )
       ; fail
 
   til-eblock-desugar =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "til-eblock-desugar", "8,2,23,33")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "9,4,23,33")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "9,4,9,33")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+    , "til-eblock-desugar"
+    , "8"
+    , "2"
+    , "23"
+    , "33"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "9"
+      , "4"
+      , "23"
+      , "33"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+       , "9"
+       , "4"
+       , "9"
+       , "33"
+       )
        ; bottomup(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "9,13,9,32")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+           , "9"
+           , "13"
+           , "9"
+           , "32"
+           )
            ; try(
-               s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "9,17,9,31") ; FunCallToEBlock
+               s-step(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+               , "9"
+               , "17"
+               , "9"
+               , "31"
+               )
+               ; FunCallToEBlock
              )
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "10,6,23,33")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "10,6,22,6")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "10"
+      , "6"
+      , "23"
+      , "33"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+       , "10"
+       , "6"
+       , "22"
+       , "6"
+       )
        ; innermost(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "11,8,21,21")
-           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "11,8,11,19") ; EBlockEBlock
-              <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "12,4,21,21")
-                 ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "12,4,12,15") ; NoStatements
-                    <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "13,4,21,21")
-                       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "13,4,13,28") ; MovePostStatementsInFront
-                          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "14,11,21,21")
-                             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "14,11,14,32") ; HoistEBlockFromFunCall
-                                <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "15,4,21,21")
-                                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "15,4,15,23") ; HoistEBlockFromBinOp
-                                      <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "16,4,21,21")
-                                         ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "16,4,16,24") ; HoistEBlockFromAssign
-                                            <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "17,4,21,21")
-                                               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "17,4,17,26") ; HoistEBlockFromProcCall
-                                                  <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "18,4,21,21")
-                                                     ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "18,4,18,23") ; HoistEBlockFromWrite
-                                                        <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "19,4,21,21")
-                                                           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "19,4,19,20") ; HoistEBlockFromIf
-                                                              <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "20,4,21,21")
-                                                                 ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "20,4,20,23") ; HoistEBlockFromWhile
-                                                                    <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "21,4,21,21") ; HoistEBlockFromFor))))))))))
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+           , "11"
+           , "8"
+           , "21"
+           , "21"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+              , "11"
+              , "8"
+              , "11"
+              , "19"
+              )
+              ; EBlockEBlock
+              <+ s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "12"
+                 , "4"
+                 , "21"
+                 , "21"
+                 )
+                 ; (s-step(
+                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                    , "12"
+                    , "4"
+                    , "12"
+                    , "15"
+                    )
+                    ; NoStatements
+                    <+ s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                       , "13"
+                       , "4"
+                       , "21"
+                       , "21"
+                       )
+                       ; (s-step(
+                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                          , "13"
+                          , "4"
+                          , "13"
+                          , "28"
+                          )
+                          ; MovePostStatementsInFront
+                          <+ s-step(
+                             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                             , "14"
+                             , "11"
+                             , "21"
+                             , "21"
+                             )
+                             ; (s-step(
+                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                , "14"
+                                , "11"
+                                , "14"
+                                , "32"
+                                )
+                                ; HoistEBlockFromFunCall
+                                <+ s-step(
+                                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                   , "15"
+                                   , "4"
+                                   , "21"
+                                   , "21"
+                                   )
+                                   ; (s-step(
+                                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                      , "15"
+                                      , "4"
+                                      , "15"
+                                      , "23"
+                                      )
+                                      ; HoistEBlockFromBinOp
+                                      <+ s-step(
+                                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                         , "16"
+                                         , "4"
+                                         , "21"
+                                         , "21"
+                                         )
+                                         ; (s-step(
+                                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                            , "16"
+                                            , "4"
+                                            , "16"
+                                            , "24"
+                                            )
+                                            ; HoistEBlockFromAssign
+                                            <+ s-step(
+                                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                               , "17"
+                                               , "4"
+                                               , "21"
+                                               , "21"
+                                               )
+                                               ; (s-step(
+                                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                  , "17"
+                                                  , "4"
+                                                  , "17"
+                                                  , "26"
+                                                  )
+                                                  ; HoistEBlockFromProcCall
+                                                  <+ s-step(
+                                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                     , "18"
+                                                     , "4"
+                                                     , "21"
+                                                     , "21"
+                                                     )
+                                                     ; (s-step(
+                                                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                        , "18"
+                                                        , "4"
+                                                        , "18"
+                                                        , "23"
+                                                        )
+                                                        ; HoistEBlockFromWrite
+                                                        <+ s-step(
+                                                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                           , "19"
+                                                           , "4"
+                                                           , "21"
+                                                           , "21"
+                                                           )
+                                                           ; (s-step(
+                                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                              , "19"
+                                                              , "4"
+                                                              , "19"
+                                                              , "20"
+                                                              )
+                                                              ; HoistEBlockFromIf
+                                                              <+ s-step(
+                                                                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                                 , "20"
+                                                                 , "4"
+                                                                 , "21"
+                                                                 , "21"
+                                                                 )
+                                                                 ; (s-step(
+                                                                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                                    , "20"
+                                                                    , "4"
+                                                                    , "20"
+                                                                    , "23"
+                                                                    )
+                                                                    ; HoistEBlockFromWhile
+                                                                    <+ s-step(
+                                                                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                                       , "21"
+                                                                       , "4"
+                                                                       , "21"
+                                                                       , "21"
+                                                                       )
+                                                                       ; HoistEBlockFromFor))))))))))
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "23,6,23,33")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "23"
+      , "6"
+      , "23"
+      , "33"
+      )
     ; bottomup(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "23,15,23,32")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+        , "23"
+        , "15"
+        , "23"
+        , "32"
+        )
         ; try(
-            s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "23,19,23,31") ; flatten-block
+            s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+            , "23"
+            , "19"
+            , "23"
+            , "31"
+            )
+            ; flatten-block
           )
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "til-eblock-desugar", "8,2,23,33")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "til-eblock-desugar", "8,2,23,33")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "til-eblock-desugar"
+      , "8"
+      , "2"
+      , "23"
+      , "33"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "til-eblock-desugar"
+      , "8"
+      , "2"
+      , "23"
+      , "33"
+      )
       ; fail
 
 
 rules
 
   FunCallToEBlock :
-    FunCall(f, e*) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "FunCallToEBlock", "27,2,30,17")> EBlock(
-                                                                                                                                                                  [ Declaration(x)
-                                                                                                                                                                  , Assign(x, FunCall(f, e*))
-                                                                                                                                                                  ]
-                                                                                                                                                                , Var(x)
-                                                                                                                                                                , []
-                                                                                                                                                                )
+    FunCall(f, e*) -> <r-exit(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                       , "FunCallToEBlock"
+                       , "27"
+                       , "2"
+                       , "30"
+                       , "17"
+                       )> EBlock(
+                            [ Declaration(x)
+                            , Assign(x, FunCall(f, e*))
+                            ]
+                          , Var(x)
+                          , []
+                          )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "FunCallToEBlock", "27,2,30,17")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "FunCallToEBlock", "27,2,30,17")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "FunCallToEBlock"
+             , "27"
+             , "2"
+             , "30"
+             , "17"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "30,10,30,17")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "30,10,30,12") ; new) => x
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "FunCallToEBlock", "27,2,30,17")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "30"
+          , "10"
+          , "30"
+          , "17"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "30"
+             , "10"
+             , "30"
+             , "12"
+             )
+             ; new) => x
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "FunCallToEBlock"
+             , "27"
+             , "2"
+             , "30"
+             , "17"
+             )
              ; fail
 
   NoStatements :
-    EBlock([], e, []) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "NoStatements", "32,2,33,25")> e
+    EBlock([], e, []) -> <r-exit(
+                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                          , "NoStatements"
+                          , "32"
+                          , "2"
+                          , "33"
+                          , "25"
+                          )> e
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "NoStatements", "32,2,33,25")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "NoStatements", "32,2,33,25")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "NoStatements"
+             , "32"
+             , "2"
+             , "33"
+             , "25"
+             )
              ; fail
 
   MovePostStatementsInFront :
@@ -96,21 +392,55 @@ rules
       st1*
     , e
     , st2*@[_|_]
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "MovePostStatementsInFront", "35,2,38,17")> EBlock(
-                                                                                                                                                               [ Declaration(x)
-                                                                                                                                                               , st1*
-                                                                                                                                                               , Assign(x, e)
-                                                                                                                                                               , st2*
-                                                                                                                                                               ]
-                                                                                                                                                             , Var(x)
-                                                                                                                                                             , []
-                                                                                                                                                             )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "MovePostStatementsInFront"
+          , "35"
+          , "2"
+          , "38"
+          , "17"
+          )> EBlock(
+               [ Declaration(x)
+               , st1*
+               , Assign(x, e)
+               , st2*
+               ]
+             , Var(x)
+             , []
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "MovePostStatementsInFront", "35,2,38,17")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "MovePostStatementsInFront", "35,2,38,17")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "MovePostStatementsInFront"
+             , "35"
+             , "2"
+             , "38"
+             , "17"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "38,10,38,17")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "38,10,38,12") ; new) => x
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "MovePostStatementsInFront", "35,2,38,17")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "38"
+          , "10"
+          , "38"
+          , "17"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "38"
+             , "10"
+             , "38"
+             , "12"
+             )
+             ; new) => x
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "MovePostStatementsInFront"
+             , "35"
+             , "2"
+             , "38"
+             , "17"
+             )
              ; fail
 
   EBlockEBlock :
@@ -118,116 +448,444 @@ rules
       st1*
     , EBlock(st2*, e, st3*)
     , st4*
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "EBlockEBlock", "40,2,42,40")> EBlock(
-                                                                                                                                                  [st1*, st2*]
-                                                                                                                                                , e
-                                                                                                                                                , [st3*, st4*]
-                                                                                                                                                )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "EBlockEBlock"
+          , "40"
+          , "2"
+          , "42"
+          , "40"
+          )> EBlock(
+               [st1*, st2*]
+             , e
+             , [st3*, st4*]
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "EBlockEBlock", "40,2,42,40")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "EBlockEBlock", "40,2,42,40")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "EBlockEBlock"
+             , "40"
+             , "2"
+             , "42"
+             , "40"
+             )
              ; fail
 
   HoistEBlockFromFunCall :
-    FunCall(f, e1*) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFunCall", "44,2,46,45")> EBlock(
-                                                                                                                                                                          st1*
-                                                                                                                                                                        , FunCall(f, e2*)
-                                                                                                                                                                        , []
-                                                                                                                                                                        )
+    FunCall(f, e1*) -> <r-exit(
+                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                        , "HoistEBlockFromFunCall"
+                        , "44"
+                        , "2"
+                        , "46"
+                        , "45"
+                        )> EBlock(
+                             st1*
+                           , FunCall(f, e2*)
+                           , []
+                           )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFunCall", "44,2,46,45")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFunCall", "44,2,46,45")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromFunCall"
+             , "44"
+             , "2"
+             , "46"
+             , "45"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "46,10,46,45")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "46,10,46,30")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "46,11,46,25") ; collect-eblocks)> e1*) => (st1*, e2*)
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFunCall", "44,2,46,45")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "46"
+          , "10"
+          , "46"
+          , "45"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "46"
+             , "10"
+             , "46"
+             , "30"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "46"
+                 , "11"
+                 , "46"
+                 , "25"
+                 )
+                 ; collect-eblocks)> e1*) => (st1*, e2*)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromFunCall"
+             , "44"
+             , "2"
+             , "46"
+             , "45"
+             )
              ; fail
 
   HoistEBlockFromBinOp :
-    op#([e1, e2]) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromBinOp", "48,2,51,50")> EBlock(
-                                                                                                                                                                      st1*
-                                                                                                                                                                    , op#([e1', e2'])
-                                                                                                                                                                    , []
-                                                                                                                                                                    )
+    op#([e1, e2]) -> <r-exit(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                      , "HoistEBlockFromBinOp"
+                      , "48"
+                      , "2"
+                      , "51"
+                      , "50"
+                      )> EBlock(
+                           st1*
+                         , op#([e1', e2'])
+                         , []
+                         )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromBinOp", "48,2,51,50")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromBinOp", "48,2,51,50")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromBinOp"
+             , "48"
+             , "2"
+             , "51"
+             , "50"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "50,10,51,50")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "50,10,50,23")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "50,11,50,19") ; is-bin-op)> op)
-          ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "51,3,51,50")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "51,3,51,28")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "51,4,51,18") ; collect-eblocks)> [e1, e2]) => (st1*, [e1', e2'])
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromBinOp", "48,2,51,50")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "50"
+          , "10"
+          , "51"
+          , "50"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "50"
+             , "10"
+             , "50"
+             , "23"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "50"
+                 , "11"
+                 , "50"
+                 , "19"
+                 )
+                 ; is-bin-op)> op)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+            , "51"
+            , "3"
+            , "51"
+            , "50"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "51"
+             , "3"
+             , "51"
+             , "28"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "51"
+                 , "4"
+                 , "51"
+                 , "18"
+                 )
+                 ; collect-eblocks)> [e1, e2]) => (st1*, [e1', e2'])
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromBinOp"
+             , "48"
+             , "2"
+             , "51"
+             , "50"
+             )
              ; fail
 
   is-bin-op =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "is-bin-op", "53,2,55,42")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,4,55,42")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,4,54,8")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+    , "is-bin-op"
+    , "53"
+    , "2"
+    , "55"
+    , "42"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "54"
+      , "4"
+      , "55"
+      , "42"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+       , "54"
+       , "4"
+       , "54"
+       , "8"
+       )
        ; ?"Or"
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,13,55,42")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,13,54,18")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "54"
+          , "13"
+          , "55"
+          , "42"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "54"
+             , "13"
+             , "54"
+             , "18"
+             )
              ; ?"And"
-             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,23,55,42")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,23,54,28")
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                , "54"
+                , "23"
+                , "55"
+                , "42"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                   , "54"
+                   , "23"
+                   , "54"
+                   , "28"
+                   )
                    ; ?"Neq"
-                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,33,55,42")
-                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,33,54,38")
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                      , "54"
+                      , "33"
+                      , "55"
+                      , "42"
+                      )
+                      ; (s-step(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                         , "54"
+                         , "33"
+                         , "54"
+                         , "38"
+                         )
                          ; ?"Equ"
-                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,43,55,42")
-                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,43,54,47")
+                         <+ s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                            , "54"
+                            , "43"
+                            , "55"
+                            , "42"
+                            )
+                            ; (s-step(
+                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                               , "54"
+                               , "43"
+                               , "54"
+                               , "47"
+                               )
                                ; ?"Gt"
-                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,52,55,42")
-                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,52,54,56")
+                               <+ s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                  , "54"
+                                  , "52"
+                                  , "55"
+                                  , "42"
+                                  )
+                                  ; (s-step(
+                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                     , "54"
+                                     , "52"
+                                     , "54"
+                                     , "56"
+                                     )
                                      ; ?"Lt"
-                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,61,55,42")
-                                        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "54,61,54,66")
+                                     <+ s-step(
+                                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                        , "54"
+                                        , "61"
+                                        , "55"
+                                        , "42"
+                                        )
+                                        ; (s-step(
+                                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                           , "54"
+                                           , "61"
+                                           , "54"
+                                           , "66"
+                                           )
                                            ; ?"Sub"
-                                           <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,7,55,42")
-                                              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,7,55,12")
+                                           <+ s-step(
+                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                              , "55"
+                                              , "7"
+                                              , "55"
+                                              , "42"
+                                              )
+                                              ; (s-step(
+                                                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                 , "55"
+                                                 , "7"
+                                                 , "55"
+                                                 , "12"
+                                                 )
                                                  ; ?"Add"
-                                                 <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,17,55,42")
-                                                    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,17,55,22")
+                                                 <+ s-step(
+                                                    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                    , "55"
+                                                    , "17"
+                                                    , "55"
+                                                    , "42"
+                                                    )
+                                                    ; (s-step(
+                                                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                       , "55"
+                                                       , "17"
+                                                       , "55"
+                                                       , "22"
+                                                       )
                                                        ; ?"Mod"
-                                                       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,27,55,42")
-                                                          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,27,55,32")
+                                                       <+ s-step(
+                                                          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                          , "55"
+                                                          , "27"
+                                                          , "55"
+                                                          , "42"
+                                                          )
+                                                          ; (s-step(
+                                                             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                             , "55"
+                                                             , "27"
+                                                             , "55"
+                                                             , "32"
+                                                             )
                                                              ; ?"Div"
-                                                             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "55,37,55,42")
+                                                             <+ s-step(
+                                                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                                                , "55"
+                                                                , "37"
+                                                                , "55"
+                                                                , "42"
+                                                                )
                                                                 ; ?"Mul"))))))))))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "is-bin-op", "53,2,55,42")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "is-bin-op", "53,2,55,42")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "is-bin-op"
+      , "53"
+      , "2"
+      , "55"
+      , "42"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "is-bin-op"
+      , "53"
+      , "2"
+      , "55"
+      , "42"
+      )
       ; fail
 
   HoistEBlockFromAssign :
     Assign(
       x
     , EBlock(st1*, e, st2*)
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromAssign", "57,2,58,72")> Block(
-                                                                                                                                                           [st1*, st2*, Assign(x, e)]
-                                                                                                                                                         )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "HoistEBlockFromAssign"
+          , "57"
+          , "2"
+          , "58"
+          , "72"
+          )> Block(
+               [st1*, st2*, Assign(x, e)]
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromAssign", "57,2,58,72")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromAssign", "57,2,58,72")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromAssign"
+             , "57"
+             , "2"
+             , "58"
+             , "72"
+             )
              ; fail
 
   HoistEBlockFromProcCall :
-    ProcCall(f, e1*) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromProcCall", "60,2,62,44")> Block(
-                                                                                                                                                                            [st*, ProcCall(f, e2*)]
-                                                                                                                                                                          )
+    ProcCall(f, e1*) -> <r-exit(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                         , "HoistEBlockFromProcCall"
+                         , "60"
+                         , "2"
+                         , "62"
+                         , "44"
+                         )> Block(
+                              [st*, ProcCall(f, e2*)]
+                            )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromProcCall", "60,2,62,44")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromProcCall", "60,2,62,44")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromProcCall"
+             , "60"
+             , "2"
+             , "62"
+             , "44"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "62,10,62,44")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "62,10,62,30")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "62,11,62,25") ; collect-eblocks)> e1*) => (st*, e2*)
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromProcCall", "60,2,62,44")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "62"
+          , "10"
+          , "62"
+          , "44"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "62"
+             , "10"
+             , "62"
+             , "30"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "62"
+                 , "11"
+                 , "62"
+                 , "25"
+                 )
+                 ; collect-eblocks)> e1*) => (st*, e2*)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromProcCall"
+             , "60"
+             , "2"
+             , "62"
+             , "44"
+             )
              ; fail
 
   HoistEBlockFromWrite :
-    Write(EBlock(st1*, e, st2*)) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromWrite", "64,2,65,64")> Block(
-                                                                                                                                                                                     [st1*, Write(e), st2*]
-                                                                                                                                                                                   )
+    Write(EBlock(st1*, e, st2*)) -> <r-exit(
+                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                                     , "HoistEBlockFromWrite"
+                                     , "64"
+                                     , "2"
+                                     , "65"
+                                     , "64"
+                                     )> Block(
+                                          [st1*, Write(e), st2*]
+                                        )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromWrite", "64,2,65,64")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromWrite", "64,2,65,64")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromWrite"
+             , "64"
+             , "2"
+             , "65"
+             , "64"
+             )
              ; fail
 
   HoistEBlockFromIf :
@@ -235,127 +893,424 @@ rules
       EBlock(st1*, e, st2*)
     , st3*
     , st4*
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromIf", "67,2,69,53")> Block(
-                                                                                                                                                       [ st1*
-                                                                                                                                                       , IfElse(
-                                                                                                                                                           e
-                                                                                                                                                         , [st2*, st3*]
-                                                                                                                                                         , [st2*, st4*]
-                                                                                                                                                         )
-                                                                                                                                                       ]
-                                                                                                                                                     )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "HoistEBlockFromIf"
+          , "67"
+          , "2"
+          , "69"
+          , "53"
+          )> Block(
+               [ st1*
+               , IfElse(
+                   e
+                 , [st2*, st3*]
+                 , [st2*, st4*]
+                 )
+               ]
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromIf", "67,2,69,53")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromIf", "67,2,69,53")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromIf"
+             , "67"
+             , "2"
+             , "69"
+             , "53"
+             )
              ; fail
 
   HoistEBlockFromIf :
     IfThen(
       EBlock(st1*, e, st2*)
     , st3*
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromIf", "71,2,73,46")> Block(
-                                                                                                                                                       [ st1*
-                                                                                                                                                       , IfElse(
-                                                                                                                                                           e
-                                                                                                                                                         , [st2*, st3*]
-                                                                                                                                                         , st2*
-                                                                                                                                                         )
-                                                                                                                                                       ]
-                                                                                                                                                     )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "HoistEBlockFromIf"
+          , "71"
+          , "2"
+          , "73"
+          , "46"
+          )> Block(
+               [ st1*
+               , IfElse(
+                   e
+                 , [st2*, st3*]
+                 , st2*
+                 )
+               ]
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromIf", "71,2,73,46")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromIf", "71,2,73,46")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromIf"
+             , "71"
+             , "2"
+             , "73"
+             , "46"
+             )
              ; fail
 
   HoistEBlockFromWhile :
     While(
       EBlock(st1*, e, st2*)
     , st3*
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromWhile", "75,2,77,44")> Block(
-                                                                                                                                                          [ st1*
-                                                                                                                                                          , While(
-                                                                                                                                                              e
-                                                                                                                                                            , [st2*, st3*, st1*]
-                                                                                                                                                            )
-                                                                                                                                                          ]
-                                                                                                                                                        )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "HoistEBlockFromWhile"
+          , "75"
+          , "2"
+          , "77"
+          , "44"
+          )> Block(
+               [ st1*
+               , While(
+                   e
+                 , [st2*, st3*, st1*]
+                 )
+               ]
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromWhile", "75,2,77,44")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromWhile", "75,2,77,44")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromWhile"
+             , "75"
+             , "2"
+             , "77"
+             , "44"
+             )
              ; fail
 
   HoistEBlockFromFor :
-    For(x, e1, e2, st1*) -> <r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFor", "79,2,82,57")> Block(
-                                                                                                                                                                           [ st2*
-                                                                                                                                                                           , For(x, e1', e2', st1*)
-                                                                                                                                                                           ]
-                                                                                                                                                                         )
+    For(x, e1, e2, st1*) -> <r-exit(
+                             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                             , "HoistEBlockFromFor"
+                             , "79"
+                             , "2"
+                             , "82"
+                             , "57"
+                             )> Block(
+                                  [ st2*
+                                  , For(x, e1', e2', st1*)
+                                  ]
+                                )
     where r-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFor", "79,2,82,57")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFor", "79,2,82,57")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromFor"
+             , "79"
+             , "2"
+             , "82"
+             , "57"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "82,10,82,57")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "82,10,82,35")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "82,11,82,25") ; collect-eblocks)> [e1, e2]) => (st2*, [e1', e2'])
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "HoistEBlockFromFor", "79,2,82,57")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "82"
+          , "10"
+          , "82"
+          , "57"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "82"
+             , "10"
+             , "82"
+             , "35"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "82"
+                 , "11"
+                 , "82"
+                 , "25"
+                 )
+                 ; collect-eblocks)> [e1, e2]) => (st2*, [e1', e2'])
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+             , "HoistEBlockFromFor"
+             , "79"
+             , "2"
+             , "82"
+             , "57"
+             )
              ; fail
 
   collect-eblocks =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "collect-eblocks", "84,2,88,17")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "85,4,88,17")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "85,4,85,24")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+    , "collect-eblocks"
+    , "84"
+    , "2"
+    , "88"
+    , "17"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "85"
+      , "4"
+      , "88"
+      , "17"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+       , "85"
+       , "4"
+       , "85"
+       , "24"
+       )
        ; fetch(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "85,10,85,23")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+           , "85"
+           , "10"
+           , "85"
+           , "23"
+           )
            ; ?EBlock(_, _, _)
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,6,88,17")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,6,86,73")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "86"
+      , "6"
+      , "88"
+      , "17"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+       , "86"
+       , "6"
+       , "86"
+       , "73"
+       )
        ; map(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,10,86,72")
-           ; {s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,11,86,71")
-              ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,11,86,25")
-                 ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,17,86,24")
-                         ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,17,86,19") ; new) => x))
-              ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,28,86,71")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+           , "86"
+           , "10"
+           , "86"
+           , "72"
+           )
+           ; {s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+              , "86"
+              , "11"
+              , "86"
+              , "71"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                 , "86"
+                 , "11"
+                 , "86"
+                 , "25"
+                 )
+                 ; where(s-step(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                         , "86"
+                         , "17"
+                         , "86"
+                         , "24"
+                         )
+                         ; (s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                            , "86"
+                            , "17"
+                            , "86"
+                            , "19"
+                            )
+                            ; new) => x))
+              ; s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                , "86"
+                , "28"
+                , "86"
+                , "71"
+                )
               ; !( [ Declaration(x)
                    , Assign(
                        x
-                     , <s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "86,58,86,59") ; id>
+                     , <s-step(
+                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                        , "86"
+                        , "58"
+                        , "86"
+                        , "59"
+                        )
+                        ; id>
                      )
                    ]
                  , Var(x)
                  )}
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "87,6,88,17")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "87,6,87,10") ; unzip)
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "88,6,88,17")
-    ; ( s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "88,7,88,12") ; concat
-      , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "88,15,88,16") ; id
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "87"
+      , "6"
+      , "88"
+      , "17"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "collect-eblocks", "84,2,88,17")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "collect-eblocks", "84,2,88,17")
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+       , "87"
+       , "6"
+       , "87"
+       , "10"
+       )
+       ; unzip)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "88"
+      , "6"
+      , "88"
+      , "17"
+      )
+    ; ( s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+        , "88"
+        , "7"
+        , "88"
+        , "12"
+        )
+        ; concat
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+        , "88"
+        , "15"
+        , "88"
+        , "16"
+        )
+        ; id
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "collect-eblocks"
+      , "84"
+      , "2"
+      , "88"
+      , "17"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "collect-eblocks"
+      , "84"
+      , "2"
+      , "88"
+      , "17"
+      )
       ; fail
 
   flatten-block =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "flatten-block", "91,2,97,4")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "92,4,97,4")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+    , "flatten-block"
+    , "91"
+    , "2"
+    , "97"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "92"
+      , "4"
+      , "97"
+      , "4"
+      )
     ; Block(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "93,6,96,11")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "93,6,94,52")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+        , "93"
+        , "6"
+        , "96"
+        , "11"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+           , "93"
+           , "6"
+           , "94"
+           , "52"
+           )
            ; foldr(
-               s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "93,12,93,14")
+               s-step(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+               , "93"
+               , "12"
+               , "93"
+               , "14"
+               )
                ; ![]
-             , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "93,17,94,50")
-               ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "93,17,93,55")
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+               , "93"
+               , "17"
+               , "94"
+               , "50"
+               )
+               ; (s-step(
+                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                  , "93"
+                  , "17"
+                  , "93"
+                  , "55"
+                  )
                   ; \ (Block(st2*), st3*) -> [st2*, st3*] \
-                  <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "94,24,94,50")
+                  <+ s-step(
+                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+                     , "94"
+                     , "24"
+                     , "94"
+                     , "50"
+                     )
                      ; \ (st, st*) -> [st|st*] \)
              ))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "95,8,96,11")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "95,8,95,33")
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "95"
+          , "8"
+          , "96"
+          , "11"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+           , "95"
+           , "8"
+           , "95"
+           , "33"
+           )
            ; partition(
-               s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "95,18,95,32")
+               s-step(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+               , "95"
+               , "18"
+               , "95"
+               , "32"
+               )
                ; ?Declaration(_)
              ))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "96,8,96,11")
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+          , "96"
+          , "8"
+          , "96"
+          , "11"
+          )
         ; conc
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "flatten-block", "91,2,97,4")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str", "flatten-block", "91,2,97,4")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "flatten-block"
+      , "91"
+      , "2"
+      , "97"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/til-eblock/til-eblock-desugar.str"
+      , "flatten-block"
+      , "91"
+      , "2"
+      , "97"
+      , "4"
+      )
       ; fail

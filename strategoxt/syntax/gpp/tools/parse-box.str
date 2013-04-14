@@ -13,54 +13,217 @@ imports
 
 strategies
   io-parse-box =
-    s-enter(|"strategoxt/syntax/gpp/tools/parse-box.str", "io-parse-box", "8,2,13,4")
-    ; s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "9,4,13,4")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/parse-box.str"
+    , "io-parse-box"
+    , "8"
+    , "2"
+    , "13"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "9"
+      , "4"
+      , "13"
+      , "4"
+      )
     ; xtc-io-wrap(
-        s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "10,6,12,34")
-        ; (s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "10,6,10,25")
+        s-step(
+        | "strategoxt/syntax/gpp/tools/parse-box.str"
+        , "10"
+        , "6"
+        , "12"
+        , "34"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/gpp/tools/parse-box.str"
+           , "10"
+           , "6"
+           , "10"
+           , "25"
+           )
            ; xtc-sglr(
-               s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "10,15,10,24")
+               s-step(
+               | "strategoxt/syntax/gpp/tools/parse-box.str"
+               , "10"
+               , "15"
+               , "10"
+               , "24"
+               )
                ; !"Box.tbl"
              ))
-        ; s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "11,6,12,34")
-        ; (s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "11,6,11,22") ; xtc-implode-asfix)
-        ; s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "12,6,12,34")
+        ; s-step(
+          | "strategoxt/syntax/gpp/tools/parse-box.str"
+          , "11"
+          , "6"
+          , "12"
+          , "34"
+          )
+        ; (s-step(
+           | "strategoxt/syntax/gpp/tools/parse-box.str"
+           , "11"
+           , "6"
+           , "11"
+           , "22"
+           )
+           ; xtc-implode-asfix)
+        ; s-step(
+          | "strategoxt/syntax/gpp/tools/parse-box.str"
+          , "12"
+          , "6"
+          , "12"
+          , "34"
+          )
         ; xtc-io-transform(
-            s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "12,23,12,33") ; box-desugar
+            s-step(
+            | "strategoxt/syntax/gpp/tools/parse-box.str"
+            , "12"
+            , "23"
+            , "12"
+            , "33"
+            )
+            ; box-desugar
           )
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/parse-box.str", "io-parse-box", "8,2,13,4")
-    + s-exit(|"strategoxt/syntax/gpp/tools/parse-box.str", "io-parse-box", "8,2,13,4")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "io-parse-box"
+      , "8"
+      , "2"
+      , "13"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "io-parse-box"
+      , "8"
+      , "2"
+      , "13"
+      , "4"
+      )
       ; fail
 
   box-desugar =
-    s-enter(|"strategoxt/syntax/gpp/tools/parse-box.str", "box-desugar", "15,2,20,4")
-    ; s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "16,4,20,4")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/parse-box.str"
+    , "box-desugar"
+    , "15"
+    , "2"
+    , "20"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "16"
+      , "4"
+      , "20"
+      , "4"
+      )
     ; topdown(
-        s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "17,6,19,6")
+        s-step(
+        | "strategoxt/syntax/gpp/tools/parse-box.str"
+        , "17"
+        , "6"
+        , "19"
+        , "6"
+        )
         ; try(
-            s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "18,8,18,25")
+            s-step(
+            | "strategoxt/syntax/gpp/tools/parse-box.str"
+            , "18"
+            , "8"
+            , "18"
+            , "25"
+            )
             ; S(
-                s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "18,10,18,24") ; un-double-quote
+                s-step(
+                | "strategoxt/syntax/gpp/tools/parse-box.str"
+                , "18"
+                , "10"
+                , "18"
+                , "24"
+                )
+                ; un-double-quote
               )
           )
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/parse-box.str", "box-desugar", "15,2,20,4")
-    + s-exit(|"strategoxt/syntax/gpp/tools/parse-box.str", "box-desugar", "15,2,20,4")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "box-desugar"
+      , "15"
+      , "2"
+      , "20"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "box-desugar"
+      , "15"
+      , "2"
+      , "20"
+      , "4"
+      )
       ; fail
 
   box-ensugar =
-    s-enter(|"strategoxt/syntax/gpp/tools/parse-box.str", "box-ensugar", "22,2,27,4")
-    ; s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "23,4,27,4")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/parse-box.str"
+    , "box-ensugar"
+    , "22"
+    , "2"
+    , "27"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "23"
+      , "4"
+      , "27"
+      , "4"
+      )
     ; topdown(
-        s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "24,6,26,6")
+        s-step(
+        | "strategoxt/syntax/gpp/tools/parse-box.str"
+        , "24"
+        , "6"
+        , "26"
+        , "6"
+        )
         ; try(
-            s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "25,8,25,22")
+            s-step(
+            | "strategoxt/syntax/gpp/tools/parse-box.str"
+            , "25"
+            , "8"
+            , "25"
+            , "22"
+            )
             ; S(
-                s-step(|"strategoxt/syntax/gpp/tools/parse-box.str", "25,10,25,21") ; double-quote
+                s-step(
+                | "strategoxt/syntax/gpp/tools/parse-box.str"
+                , "25"
+                , "10"
+                , "25"
+                , "21"
+                )
+                ; double-quote
               )
           )
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/parse-box.str", "box-ensugar", "22,2,27,4")
-    + s-exit(|"strategoxt/syntax/gpp/tools/parse-box.str", "box-ensugar", "22,2,27,4")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "box-ensugar"
+      , "22"
+      , "2"
+      , "27"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/parse-box.str"
+      , "box-ensugar"
+      , "22"
+      , "2"
+      , "27"
+      , "4"
+      )
       ; fail

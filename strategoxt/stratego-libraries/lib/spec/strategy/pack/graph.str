@@ -12,20 +12,48 @@ imports
 rules
 
   GnInit :
-    (root, graph, nodes) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnInit", "15,2,16,61")> ( [root]
-                                                                                                                                , [root]
-                                                                                                                                , graph
-                                                                                                                                , nodes
-                                                                                                                                , []
-                                                                                                                                )
+    (root, graph, nodes) -> <r-exit(
+                             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                             , "GnInit"
+                             , "15"
+                             , "2"
+                             , "16"
+                             , "61"
+                             )> ( [root]
+                                , [root]
+                                , graph
+                                , nodes
+                                , []
+                                )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnInit", "15,2,16,61")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnInit", "15,2,16,61")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnInit"
+             , "15"
+             , "2"
+             , "16"
+             , "61"
+             )
              ; fail
 
   GnInitRoots :
-    (roots, graph, nodes) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnInitRoots", "18,2,19,60")> (roots, roots, graph, nodes, [])
+    (roots, graph, nodes) -> <r-exit(
+                              | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                              , "GnInitRoots"
+                              , "18"
+                              , "2"
+                              , "19"
+                              , "60"
+                              )> (roots, roots, graph, nodes, [])
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnInitRoots", "18,2,19,60")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnInitRoots", "18,2,19,60")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnInitRoots"
+             , "18"
+             , "2"
+             , "19"
+             , "60"
+             )
              ; fail
 
   GnNext(get-node, out-edges, add-node) :
@@ -34,27 +62,138 @@ rules
     , graph
     , nodes
     , undef
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNext", "21,2,27,31")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "23,6,23,9") ; conc> (todo', todo)
-                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "23,28,23,31") ; conc> (todo', done)
-                                                                                                             , graph
-                                                                                                             , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "24,13,24,20") ; add-node> (name, node, nodes)
-                                                                                                             , undef
-                                                                                                             )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+          , "GnNext"
+          , "21"
+          , "2"
+          , "27"
+          , "31"
+          )> ( <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "23"
+                , "6"
+                , "23"
+                , "9"
+                )
+                ; conc> (todo', todo)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "23"
+                , "28"
+                , "23"
+                , "31"
+                )
+                ; conc> (todo', done)
+             , graph
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "24"
+                , "13"
+                , "24"
+                , "20"
+                )
+                ; add-node> (name, node, nodes)
+             , undef
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNext", "21,2,27,31")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNext", "21,2,27,31")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnNext"
+             , "21"
+             , "2"
+             , "27"
+             , "31"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "25,10,27,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "25,10,25,41")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "25,10,25,33")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "25,11,25,18") ; get-node)> (name, graph)) => node)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "26,10,27,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "26,10,26,34")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "26,10,26,25")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "26,11,26,19") ; out-edges)> node) => names)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "27,3,27,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "27,3,27,22")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "27,4,27,7") ; diff)> (names, done)) => todo'
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNext", "21,2,27,31")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+          , "25"
+          , "10"
+          , "27"
+          , "31"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "25"
+             , "10"
+             , "25"
+             , "41"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "25"
+                , "10"
+                , "25"
+                , "33"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                    , "25"
+                    , "11"
+                    , "25"
+                    , "18"
+                    )
+                    ; get-node)> (name, graph)) => node)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+            , "26"
+            , "10"
+            , "27"
+            , "31"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "26"
+             , "10"
+             , "26"
+             , "34"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "26"
+                , "10"
+                , "26"
+                , "25"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                    , "26"
+                    , "11"
+                    , "26"
+                    , "19"
+                    )
+                    ; out-edges)> node) => names)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+            , "27"
+            , "3"
+            , "27"
+            , "31"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "27"
+             , "3"
+             , "27"
+             , "22"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                 , "27"
+                 , "4"
+                 , "27"
+                 , "7"
+                 )
+                 ; diff)> (names, done)) => todo'
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnNext"
+             , "21"
+             , "2"
+             , "27"
+             , "31"
+             )
              ; fail
 
   GnNextChangeGraph(get-node, out-edges, add-node) :
@@ -63,27 +202,138 @@ rules
     , graph
     , nodes
     , undef
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNextChangeGraph", "29,2,35,31")> ( <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "31,6,31,9") ; conc> (todo', todo)
-                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "31,28,31,31") ; conc> (todo', done)
-                                                                                                                        , graph'
-                                                                                                                        , <s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "32,14,32,21") ; add-node> (name, node, nodes)
-                                                                                                                        , undef
-                                                                                                                        )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+          , "GnNextChangeGraph"
+          , "29"
+          , "2"
+          , "35"
+          , "31"
+          )> ( <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "31"
+                , "6"
+                , "31"
+                , "9"
+                )
+                ; conc> (todo', todo)
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "31"
+                , "28"
+                , "31"
+                , "31"
+                )
+                ; conc> (todo', done)
+             , graph'
+             , <s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "32"
+                , "14"
+                , "32"
+                , "21"
+                )
+                ; add-node> (name, node, nodes)
+             , undef
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNextChangeGraph", "29,2,35,31")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNextChangeGraph", "29,2,35,31")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnNextChangeGraph"
+             , "29"
+             , "2"
+             , "35"
+             , "31"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "33,10,35,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "33,10,33,50")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "33,10,33,33")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "33,11,33,18") ; get-node)> (name, graph)) => (node, graph'))
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "34,10,35,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "34,10,34,34")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "34,10,34,25")
-                ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "34,11,34,19") ; out-edges)> node) => names)
-          ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "35,3,35,31")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "35,3,35,22")
-             ; <(s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "35,4,35,7") ; diff)> (names, done)) => todo'
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnNextChangeGraph", "29,2,35,31")
+    where s-step(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+          , "33"
+          , "10"
+          , "35"
+          , "31"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "33"
+             , "10"
+             , "33"
+             , "50"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "33"
+                , "10"
+                , "33"
+                , "33"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                    , "33"
+                    , "11"
+                    , "33"
+                    , "18"
+                    )
+                    ; get-node)> (name, graph)) => (node, graph'))
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+            , "34"
+            , "10"
+            , "35"
+            , "31"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "34"
+             , "10"
+             , "34"
+             , "34"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                , "34"
+                , "10"
+                , "34"
+                , "25"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                    , "34"
+                    , "11"
+                    , "34"
+                    , "19"
+                    )
+                    ; out-edges)> node) => names)
+          ; s-step(
+            | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+            , "35"
+            , "3"
+            , "35"
+            , "31"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "35"
+             , "3"
+             , "35"
+             , "22"
+             )
+             ; <(s-step(
+                 | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                 , "35"
+                 , "4"
+                 , "35"
+                 , "7"
+                 )
+                 ; diff)> (names, done)) => todo'
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnNextChangeGraph"
+             , "29"
+             , "2"
+             , "35"
+             , "31"
+             )
              ; fail
 
   GnUndefined :
@@ -92,126 +342,598 @@ rules
     , graph
     , nodes
     , undef
-    ) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnUndefined", "37,2,39,45")> ( todo
-                                                                                                                  , done
-                                                                                                                  , graph
-                                                                                                                  , nodes
-                                                                                                                  , [name|undef]
-                                                                                                                  )
+    ) -> <r-exit(
+          | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+          , "GnUndefined"
+          , "37"
+          , "2"
+          , "39"
+          , "45"
+          )> ( todo
+             , done
+             , graph
+             , nodes
+             , [name|undef]
+             )
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnUndefined", "37,2,39,45")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnUndefined", "37,2,39,45")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnUndefined"
+             , "37"
+             , "2"
+             , "39"
+             , "45"
+             )
              ; fail
 
   GnExit :
-    ([], done, graph, nodes, undef) -> <r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnExit", "41,2,42,52")> (nodes, undef)
+    ([], done, graph, nodes, undef) -> <r-exit(
+                                        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+                                        , "GnExit"
+                                        , "41"
+                                        , "2"
+                                        , "42"
+                                        , "52"
+                                        )> (nodes, undef)
     where r-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnExit", "41,2,42,52")
-          <+ r-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "GnExit", "41,2,42,52")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+             , "GnExit"
+             , "41"
+             , "2"
+             , "42"
+             , "52"
+             )
              ; fail
 
 
 strategies
   graph-nodes-undef-roots(get-node, out-edges, add-node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-roots", "46,2,48,43")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,4,48,43")
-    ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,8,47,18") ; GnInitRoots
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,21,47,26") ; GnExit
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,29,48,42")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,29,47,65")
-           ; GnNext(
-               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,36,47,43") ; get-node
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,46,47,54") ; out-edges
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "47,57,47,64") ; add-node
-             )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "48,32,48,42") ; GnUndefined)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+    , "graph-nodes-undef-roots"
+    , "46"
+    , "2"
+    , "48"
+    , "43"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "47"
+      , "4"
+      , "48"
+      , "43"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-roots", "46,2,48,43")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-roots", "46,2,48,43")
+    ; for(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "47"
+        , "8"
+        , "47"
+        , "18"
+        )
+        ; GnInitRoots
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "47"
+        , "21"
+        , "47"
+        , "26"
+        )
+        ; GnExit
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "47"
+        , "29"
+        , "48"
+        , "42"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "47"
+           , "29"
+           , "47"
+           , "65"
+           )
+           ; GnNext(
+               s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "47"
+               , "36"
+               , "47"
+               , "43"
+               )
+               ; get-node
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "47"
+               , "46"
+               , "47"
+               , "54"
+               )
+               ; out-edges
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "47"
+               , "57"
+               , "47"
+               , "64"
+               )
+               ; add-node
+             )
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+              , "48"
+              , "32"
+              , "48"
+              , "42"
+              )
+              ; GnUndefined)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef-roots"
+      , "46"
+      , "2"
+      , "48"
+      , "43"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef-roots"
+      , "46"
+      , "2"
+      , "48"
+      , "43"
+      )
       ; fail
 
   graph-nodes-undef(get-node, out-edges, add-node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef", "50,2,52,38")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,4,52,38")
-    ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,8,51,13") ; GnInit
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,16,51,21") ; GnExit
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,24,52,37")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,24,51,60")
-           ; GnNext(
-               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,31,51,38") ; get-node
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,41,51,49") ; out-edges
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "51,52,51,59") ; add-node
-             )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "52,27,52,37") ; GnUndefined)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+    , "graph-nodes-undef"
+    , "50"
+    , "2"
+    , "52"
+    , "38"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "51"
+      , "4"
+      , "52"
+      , "38"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef", "50,2,52,38")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef", "50,2,52,38")
+    ; for(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "51"
+        , "8"
+        , "51"
+        , "13"
+        )
+        ; GnInit
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "51"
+        , "16"
+        , "51"
+        , "21"
+        )
+        ; GnExit
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "51"
+        , "24"
+        , "52"
+        , "37"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "51"
+           , "24"
+           , "51"
+           , "60"
+           )
+           ; GnNext(
+               s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "51"
+               , "31"
+               , "51"
+               , "38"
+               )
+               ; get-node
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "51"
+               , "41"
+               , "51"
+               , "49"
+               )
+               ; out-edges
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "51"
+               , "52"
+               , "51"
+               , "59"
+               )
+               ; add-node
+             )
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+              , "52"
+              , "27"
+              , "52"
+              , "37"
+              )
+              ; GnUndefined)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef"
+      , "50"
+      , "2"
+      , "52"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef"
+      , "50"
+      , "2"
+      , "52"
+      , "38"
+      )
       ; fail
 
   graph-nodes-undef-roots-chgr(get-node, out-edges, add-node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-roots-chgr", "54,2,56,38")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,4,56,38")
-    ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,8,55,18") ; GnInitRoots
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,21,55,26") ; GnExit
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,29,56,37")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,29,55,76")
-           ; GnNextChangeGraph(
-               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,47,55,54") ; get-node
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,57,55,65") ; out-edges
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "55,68,55,75") ; add-node
-             )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "56,27,56,37") ; GnUndefined)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+    , "graph-nodes-undef-roots-chgr"
+    , "54"
+    , "2"
+    , "56"
+    , "38"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "55"
+      , "4"
+      , "56"
+      , "38"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-roots-chgr", "54,2,56,38")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-roots-chgr", "54,2,56,38")
+    ; for(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "55"
+        , "8"
+        , "55"
+        , "18"
+        )
+        ; GnInitRoots
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "55"
+        , "21"
+        , "55"
+        , "26"
+        )
+        ; GnExit
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "55"
+        , "29"
+        , "56"
+        , "37"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "55"
+           , "29"
+           , "55"
+           , "76"
+           )
+           ; GnNextChangeGraph(
+               s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "55"
+               , "47"
+               , "55"
+               , "54"
+               )
+               ; get-node
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "55"
+               , "57"
+               , "55"
+               , "65"
+               )
+               ; out-edges
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "55"
+               , "68"
+               , "55"
+               , "75"
+               )
+               ; add-node
+             )
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+              , "56"
+              , "27"
+              , "56"
+              , "37"
+              )
+              ; GnUndefined)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef-roots-chgr"
+      , "54"
+      , "2"
+      , "56"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef-roots-chgr"
+      , "54"
+      , "2"
+      , "56"
+      , "38"
+      )
       ; fail
 
   graph-nodes-undef-chgr(get-node, out-edges, add-node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-chgr", "58,2,60,38")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,4,60,38")
-    ; for(
-        s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,8,59,13") ; GnInit
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,16,59,21") ; GnExit
-      , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,24,60,37")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,24,59,71")
-           ; GnNextChangeGraph(
-               s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,42,59,49") ; get-node
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,52,59,60") ; out-edges
-             , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "59,63,59,70") ; add-node
-             )
-           <+ s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "60,27,60,37") ; GnUndefined)
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+    , "graph-nodes-undef-chgr"
+    , "58"
+    , "2"
+    , "60"
+    , "38"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "59"
+      , "4"
+      , "60"
+      , "38"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-chgr", "58,2,60,38")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-undef-chgr", "58,2,60,38")
+    ; for(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "59"
+        , "8"
+        , "59"
+        , "13"
+        )
+        ; GnInit
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "59"
+        , "16"
+        , "59"
+        , "21"
+        )
+        ; GnExit
+      , s-step(
+        | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+        , "59"
+        , "24"
+        , "60"
+        , "37"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "59"
+           , "24"
+           , "59"
+           , "71"
+           )
+           ; GnNextChangeGraph(
+               s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "59"
+               , "42"
+               , "59"
+               , "49"
+               )
+               ; get-node
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "59"
+               , "52"
+               , "59"
+               , "60"
+               )
+               ; out-edges
+             , s-step(
+               | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+               , "59"
+               , "63"
+               , "59"
+               , "70"
+               )
+               ; add-node
+             )
+           <+ s-step(
+              | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+              , "60"
+              , "27"
+              , "60"
+              , "37"
+              )
+              ; GnUndefined)
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef-chgr"
+      , "58"
+      , "2"
+      , "60"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-undef-chgr"
+      , "58"
+      , "2"
+      , "60"
+      , "38"
+      )
       ; fail
 
   graph-nodes(get-node, out-edges, add-node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes", "75,1,77,30")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "76,4,77,30")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "76,4,76,51")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+    , "graph-nodes"
+    , "75"
+    , "1"
+    , "77"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "76"
+      , "4"
+      , "77"
+      , "30"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+       , "76"
+       , "4"
+       , "76"
+       , "51"
+       )
        ; graph-nodes-undef(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "76,22,76,29") ; get-node
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "76,32,76,40") ; out-edges
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "76,43,76,50") ; add-node
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "76"
+           , "22"
+           , "76"
+           , "29"
+           )
+           ; get-node
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "76"
+           , "32"
+           , "76"
+           , "40"
+           )
+           ; out-edges
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "76"
+           , "43"
+           , "76"
+           , "50"
+           )
+           ; add-node
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "77,4,77,30")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "77"
+      , "4"
+      , "77"
+      , "30"
+      )
     ; \ (nodes, undef) -> nodes \
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes", "75,1,77,30")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes", "75,1,77,30")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes"
+      , "75"
+      , "1"
+      , "77"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes"
+      , "75"
+      , "1"
+      , "77"
+      , "30"
+      )
       ; fail
 
   graph-nodes-roots(get-node, out-edges, add-node) =
-    s-enter(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-roots", "79,2,81,30")
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "80,4,81,30")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "80,4,80,57")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+    , "graph-nodes-roots"
+    , "79"
+    , "2"
+    , "81"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "80"
+      , "4"
+      , "81"
+      , "30"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+       , "80"
+       , "4"
+       , "80"
+       , "57"
+       )
        ; graph-nodes-undef-roots(
-           s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "80,28,80,35") ; get-node
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "80,38,80,46") ; out-edges
-         , s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "80,49,80,56") ; add-node
+           s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "80"
+           , "28"
+           , "80"
+           , "35"
+           )
+           ; get-node
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "80"
+           , "38"
+           , "80"
+           , "46"
+           )
+           ; out-edges
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+           , "80"
+           , "49"
+           , "80"
+           , "56"
+           )
+           ; add-node
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "81,4,81,30")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "81"
+      , "4"
+      , "81"
+      , "30"
+      )
     ; \ (nodes, undef) -> nodes \
-    < s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-roots", "79,2,81,30")
-    + s-exit(|"strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str", "graph-nodes-roots", "79,2,81,30")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-roots"
+      , "79"
+      , "2"
+      , "81"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/spec/strategy/pack/graph.str"
+      , "graph-nodes-roots"
+      , "79"
+      , "2"
+      , "81"
+      , "30"
+      )
       ; fail

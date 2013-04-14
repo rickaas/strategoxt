@@ -13,58 +13,262 @@ imports
 
 strategies
   main-xml-doc2xml-info =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "main-xml-doc2xml-info", "10,2,11,32")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "11,6,11,32")
-    ; io-wrap(
-        s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "11,15,11,30") ; xml-doc2xml-info
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "main-xml-doc2xml-info"
+    , "10"
+    , "2"
+    , "11"
+    , "32"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "11"
+      , "6"
+      , "11"
+      , "32"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "main-xml-doc2xml-info", "10,2,11,32")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "main-xml-doc2xml-info", "10,2,11,32")
+    ; io-wrap(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+        , "11"
+        , "15"
+        , "11"
+        , "30"
+        )
+        ; xml-doc2xml-info
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "main-xml-doc2xml-info"
+      , "10"
+      , "2"
+      , "11"
+      , "32"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "main-xml-doc2xml-info"
+      , "10"
+      , "2"
+      , "11"
+      , "32"
+      )
       ; fail
 
   xml-doc2xml-info =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-doc2xml-info", "16,2,25,25")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "17,6,25,25")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "17,6,17,21") ; rewrite-Document)
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "18,6,25,25")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "18,6,24,6")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "xml-doc2xml-info"
+    , "16"
+    , "2"
+    , "25"
+    , "25"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "17"
+      , "6"
+      , "25"
+      , "25"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "17"
+       , "6"
+       , "17"
+       , "21"
+       )
+       ; rewrite-Document)
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "18"
+      , "6"
+      , "25"
+      , "25"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "18"
+       , "6"
+       , "24"
+       , "6"
+       )
        ; topdown(
-           s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "19,8,23,8")
+           s-step(
+           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+           , "19"
+           , "8"
+           , "23"
+           , "8"
+           )
            ; try(
-               s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "20,10,22,21")
-               ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "20,10,20,24") ; rewrite-Element
-                  + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "21,10,22,21")
-                    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "21,10,21,26") ; rewrite-Attribute
-                       + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "22,10,22,21") ; rewrite-Text))
+               s-step(
+               | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+               , "20"
+               , "10"
+               , "22"
+               , "21"
+               )
+               ; (s-step(
+                  | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                  , "20"
+                  , "10"
+                  , "20"
+                  , "24"
+                  )
+                  ; rewrite-Element
+                  + s-step(
+                    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                    , "21"
+                    , "10"
+                    , "22"
+                    , "21"
+                    )
+                    ; (s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "21"
+                       , "10"
+                       , "21"
+                       , "26"
+                       )
+                       ; rewrite-Attribute
+                       + s-step(
+                         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                         , "22"
+                         , "10"
+                         , "22"
+                         , "21"
+                         )
+                         ; rewrite-Text))
              )
          ))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "25,6,25,25")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "25"
+      , "6"
+      , "25"
+      , "25"
+      )
     ; xml-apply-namespaces
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-doc2xml-info", "16,2,25,25")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-doc2xml-info", "16,2,25,25")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-doc2xml-info"
+      , "16"
+      , "2"
+      , "25"
+      , "25"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-doc2xml-info"
+      , "16"
+      , "2"
+      , "25"
+      , "25"
+      )
       ; fail
 
 
 strategies
   rewrite-Document :
-    Document(_, e, _) -> <r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Document", "29,2,30,35")> Document(e)
+    Document(_, e, _) -> <r-exit(
+                          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                          , "rewrite-Document"
+                          , "29"
+                          , "2"
+                          , "30"
+                          , "35"
+                          )> Document(e)
     where r-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Document", "29,2,30,35")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Document", "29,2,30,35")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "rewrite-Document"
+             , "29"
+             , "2"
+             , "30"
+             , "35"
+             )
              ; fail
 
   rewrite-Element =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Element", "32,2,36,77")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "33,8,36,77")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "33,8,33,27")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "rewrite-Element"
+    , "32"
+    , "2"
+    , "36"
+    , "77"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "33"
+      , "8"
+      , "36"
+      , "77"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "33"
+       , "8"
+       , "33"
+       , "27"
+       )
        ; ?Element(s, _, _, s)
-       < s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "34,8,34,34") ; rewrite-well-formed-Element
-       + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "35,10,36,77")
-         ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "35,10,35,29")
+       < s-step(
+         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+         , "34"
+         , "8"
+         , "34"
+         , "34"
+         )
+         ; rewrite-well-formed-Element
+       + s-step(
+         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+         , "35"
+         , "10"
+         , "36"
+         , "77"
+         )
+         ; (s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "35"
+            , "10"
+            , "35"
+            , "29"
+            )
             ; ?Element(s, _, _, e))
-         ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "36,10,36,77")
-         ; <(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "36,11,36,21") ; fatal-error)> ["error: start tag ", s, " doesn't match end tag ", e])
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Element", "32,2,36,77")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Element", "32,2,36,77")
+         ; s-step(
+           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+           , "36"
+           , "10"
+           , "36"
+           , "77"
+           )
+         ; <(s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "36"
+             , "11"
+             , "36"
+             , "21"
+             )
+             ; fatal-error)> ["error: start tag ", s, " doesn't match end tag ", e])
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "rewrite-Element"
+      , "32"
+      , "2"
+      , "36"
+      , "77"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "rewrite-Element"
+      , "32"
+      , "2"
+      , "36"
+      , "77"
+      )
       ; fail
 
   rewrite-well-formed-Element :
@@ -73,185 +277,758 @@ strategies
     , atts
     , children
     , QName(q, lname)
-    ) -> <r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-well-formed-Element", "41,2,42,142")> Element(
-                                                                                                                           Name(q, lname)
-                                                                                                                         , atts
-                                                                                                                         , <s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "42,96,42,131")
-                                                                                                                            ; try(
-                                                                                                                                s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "42,100,42,130")
-                                                                                                                                ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "42,100,42,106") ; is-list)
-                                                                                                                                ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "42,109,42,130")
-                                                                                                                                ; filter(
-                                                                                                                                    s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "42,116,42,129") ; is-xml-content
-                                                                                                                                  )
-                                                                                                                              )> children
-                                                                                                                         )
+    ) -> <r-exit(
+          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+          , "rewrite-well-formed-Element"
+          , "41"
+          , "2"
+          , "42"
+          , "142"
+          )> Element(
+               Name(q, lname)
+             , atts
+             , <s-step(
+                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                , "42"
+                , "96"
+                , "42"
+                , "131"
+                )
+                ; try(
+                    s-step(
+                    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                    , "42"
+                    , "100"
+                    , "42"
+                    , "130"
+                    )
+                    ; (s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "42"
+                       , "100"
+                       , "42"
+                       , "106"
+                       )
+                       ; is-list)
+                    ; s-step(
+                      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                      , "42"
+                      , "109"
+                      , "42"
+                      , "130"
+                      )
+                    ; filter(
+                        s-step(
+                        | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                        , "42"
+                        , "116"
+                        , "42"
+                        , "129"
+                        )
+                        ; is-xml-content
+                      )
+                  )> children
+             )
     where r-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-well-formed-Element", "41,2,42,142")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-well-formed-Element", "41,2,42,142")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "rewrite-well-formed-Element"
+             , "41"
+             , "2"
+             , "42"
+             , "142"
+             )
              ; fail
 
   rewrite-Element :
-    EmptyElement(QName(q, lname), atts) -> <r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Element", "44,2,45,75")> Element(
-                                                                                                                                                Name(q, lname)
-                                                                                                                                              , atts
-                                                                                                                                              , []
-                                                                                                                                              )
+    EmptyElement(QName(q, lname), atts) -> <r-exit(
+                                            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                            , "rewrite-Element"
+                                            , "44"
+                                            , "2"
+                                            , "45"
+                                            , "75"
+                                            )> Element(
+                                                 Name(q, lname)
+                                               , atts
+                                               , []
+                                               )
     where r-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Element", "44,2,45,75")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Element", "44,2,45,75")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "rewrite-Element"
+             , "44"
+             , "2"
+             , "45"
+             , "75"
+             )
              ; fail
 
   rewrite-Attribute :
-    Attribute(QName(q, lname), value) -> <r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Attribute", "47,2,48,96")> Attribute(
-                                                                                                                                                Name(q, lname)
-                                                                                                                                              , <s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "48,68,48,88") ; xml-attr-value2string> value
-                                                                                                                                              )
+    Attribute(QName(q, lname), value) -> <r-exit(
+                                          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                          , "rewrite-Attribute"
+                                          , "47"
+                                          , "2"
+                                          , "48"
+                                          , "96"
+                                          )> Attribute(
+                                               Name(q, lname)
+                                             , <s-step(
+                                                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                                , "48"
+                                                , "68"
+                                                , "48"
+                                                , "88"
+                                                )
+                                                ; xml-attr-value2string> value
+                                             )
     where r-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Attribute", "47,2,48,96")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Attribute", "47,2,48,96")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "rewrite-Attribute"
+             , "47"
+             , "2"
+             , "48"
+             , "96"
+             )
              ; fail
 
   rewrite-Text =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Text", "50,2,53,29")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "51,6,53,29")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "51,6,51,13")
-       ; ?Text(_))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "52,6,53,29")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "52,6,52,17") ; xml-unescape)
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "53,6,53,29")
-    ; !Text(
-         <s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "53,13,53,27") ; chardata2string>
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "rewrite-Text"
+    , "50"
+    , "2"
+    , "53"
+    , "29"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "51"
+      , "6"
+      , "53"
+      , "29"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "51"
+       , "6"
+       , "51"
+       , "13"
        )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Text", "50,2,53,29")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "rewrite-Text", "50,2,53,29")
+       ; ?Text(_))
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "52"
+      , "6"
+      , "53"
+      , "29"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "52"
+       , "6"
+       , "52"
+       , "17"
+       )
+       ; xml-unescape)
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "53"
+      , "6"
+      , "53"
+      , "29"
+      )
+    ; !Text(
+         <s-step(
+          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+          , "53"
+          , "13"
+          , "53"
+          , "27"
+          )
+          ; chardata2string>
+       )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "rewrite-Text"
+      , "50"
+      , "2"
+      , "53"
+      , "29"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "rewrite-Text"
+      , "50"
+      , "2"
+      , "53"
+      , "29"
+      )
       ; fail
 
   is-xml-content =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-xml-content", "55,2,56,56")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "56,4,56,56")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "56,4,56,23")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "is-xml-content"
+    , "55"
+    , "2"
+    , "56"
+    , "56"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "56"
+      , "4"
+      , "56"
+      , "56"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "56"
+       , "4"
+       , "56"
+       , "23"
+       )
        ; ?Element(_, _, _, _)
-       + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "56,27,56,56")
-         ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "56,27,56,34")
+       + s-step(
+         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+         , "56"
+         , "27"
+         , "56"
+         , "56"
+         )
+         ; (s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "56"
+            , "27"
+            , "56"
+            , "34"
+            )
             ; ?Text(_)
-            + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "56,38,56,56")
+            + s-step(
+              | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+              , "56"
+              , "38"
+              , "56"
+              , "56"
+              )
               ; ?EmptyElement(_, _)))
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-xml-content", "55,2,56,56")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-xml-content", "55,2,56,56")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-xml-content"
+      , "55"
+      , "2"
+      , "56"
+      , "56"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-xml-content"
+      , "55"
+      , "2"
+      , "56"
+      , "56"
+      )
       ; fail
 
 
 strategies
   xml-apply-namespaces =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces", "60,2,64,43")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "61,6,64,43")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "61,6,63,6")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "xml-apply-namespaces"
+    , "60"
+    , "2"
+    , "64"
+    , "43"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "61"
+      , "6"
+      , "64"
+      , "43"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "61"
+       , "6"
+       , "63"
+       , "6"
+       )
        ; rules (
            DefaultNamespace :
              () -> None()
            ResolvePrefix :
              "xml" -> "http://www.w3.org/XML/1998/namespace"
          ))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "64,6,64,43")
-    ; Document(
-        s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "64,15,64,42") ; xml-apply-namespaces-element
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "64"
+      , "6"
+      , "64"
+      , "43"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces", "60,2,64,43")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces", "60,2,64,43")
+    ; Document(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+        , "64"
+        , "15"
+        , "64"
+        , "42"
+        )
+        ; xml-apply-namespaces-element
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-apply-namespaces"
+      , "60"
+      , "2"
+      , "64"
+      , "43"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-apply-namespaces"
+      , "60"
+      , "2"
+      , "64"
+      , "43"
+      )
       ; fail
 
   xml-apply-namespaces-element =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces-element", "69,2,72,4")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "70,4,72,4")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "xml-apply-namespaces-element"
+    , "69"
+    , "2"
+    , "72"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "70"
+      , "4"
+      , "72"
+      , "4"
+      )
     ; rec x (
-        s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "71,6,71,49")
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+        , "71"
+        , "6"
+        , "71"
+        , "49"
+        )
         ; xml-apply-namespaces-element(
-            s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "71,35,71,48")
+            s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "71"
+            , "35"
+            , "71"
+            , "48"
+            )
             ; element-map(
-                s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "71,47,71,47") ; x
+                s-step(
+                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                , "71"
+                , "47"
+                , "71"
+                , "47"
+                )
+                ; x
               )
           )
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces-element", "69,2,72,4")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces-element", "69,2,72,4")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-apply-namespaces-element"
+      , "69"
+      , "2"
+      , "72"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-apply-namespaces-element"
+      , "69"
+      , "2"
+      , "72"
+      , "4"
+      )
       ; fail
 
   xml-apply-namespaces-element(x) =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces-element", "77,2,89,5")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "78,4,89,5")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "xml-apply-namespaces-element"
+    , "77"
+    , "2"
+    , "89"
+    , "5"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "78"
+      , "4"
+      , "89"
+      , "5"
+      )
     ; {|ResolvePrefix, DefaultNamespace:
-         s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "79,8,88,8")
-         ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "79,8,83,8")
+         s-step(
+         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+         , "79"
+         , "8"
+         , "88"
+         , "8"
+         )
+         ; (s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "79"
+            , "8"
+            , "83"
+            , "8"
+            )
             ; Element(
-                s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "80,10,80,11") ; id
-              , s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "81,10,81,56")
-                ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "81,10,81,32") ; collect-namespace-decls)
-                ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "81,35,81,56")
+                s-step(
+                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                , "80"
+                , "10"
+                , "80"
+                , "11"
+                )
+                ; id
+              , s-step(
+                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                , "81"
+                , "10"
+                , "81"
+                , "56"
+                )
+                ; (s-step(
+                   | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                   , "81"
+                   , "10"
+                   , "81"
+                   , "32"
+                   )
+                   ; collect-namespace-decls)
+                ; s-step(
+                  | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                  , "81"
+                  , "35"
+                  , "81"
+                  , "56"
+                  )
                 ; remove-namespace-attrs
-              , s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "82,10,82,11") ; id
+              , s-step(
+                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                , "82"
+                , "10"
+                , "82"
+                , "11"
+                )
+                ; id
               ))
-         ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "84,8,88,8")
+         ; s-step(
+           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+           , "84"
+           , "8"
+           , "88"
+           , "8"
+           )
          ; Element(
-             s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "85,10,85,24") ; apply-namespace
-           , s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "86,10,86,56")
+             s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "85"
+             , "10"
+             , "85"
+             , "24"
+             )
+             ; apply-namespace
+           , s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "86"
+             , "10"
+             , "86"
+             , "56"
+             )
              ; map(
-                 s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "86,14,86,55")
+                 s-step(
+                 | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                 , "86"
+                 , "14"
+                 , "86"
+                 , "55"
+                 )
                  ; Attribute(
-                     s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "86,24,86,50")
+                     s-step(
+                     | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                     , "86"
+                     , "24"
+                     , "86"
+                     , "50"
+                     )
                      ; try(
-                         s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "86,28,86,49") ; apply-prefix-namespace
+                         s-step(
+                         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                         , "86"
+                         , "28"
+                         , "86"
+                         , "49"
+                         )
+                         ; apply-prefix-namespace
                        )
-                   , s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "86,53,86,54") ; id
+                   , s-step(
+                     | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                     , "86"
+                     , "53"
+                     , "86"
+                     , "54"
+                     )
+                     ; id
                    )
                )
-           , s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "87,10,87,10") ; x
+           , s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "87"
+             , "10"
+             , "87"
+             , "10"
+             )
+             ; x
            )
       |}
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces-element", "77,2,89,5")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "xml-apply-namespaces-element", "77,2,89,5")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-apply-namespaces-element"
+      , "77"
+      , "2"
+      , "89"
+      , "5"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "xml-apply-namespaces-element"
+      , "77"
+      , "2"
+      , "89"
+      , "5"
+      )
       ; fail
 
   element-map(s : Element -> Content) =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "element-map", "94,2,95,34")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "95,4,95,34")
-    ; map(
-        s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "95,8,95,33")
-        ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "95,8,95,24")
-           ; ?Element(_, _, _)
-           < s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "95,28,95,28") ; s
-           + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "95,32,95,33") ; id)
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "element-map"
+    , "94"
+    , "2"
+    , "95"
+    , "34"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "95"
+      , "4"
+      , "95"
+      , "34"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "element-map", "94,2,95,34")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "element-map", "94,2,95,34")
+    ; map(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+        , "95"
+        , "8"
+        , "95"
+        , "33"
+        )
+        ; (s-step(
+           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+           , "95"
+           , "8"
+           , "95"
+           , "24"
+           )
+           ; ?Element(_, _, _)
+           < s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "95"
+             , "28"
+             , "95"
+             , "28"
+             )
+             ; s
+           + s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "95"
+             , "32"
+             , "95"
+             , "33"
+             )
+             ; id)
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "element-map"
+      , "94"
+      , "2"
+      , "95"
+      , "34"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "element-map"
+      , "94"
+      , "2"
+      , "95"
+      , "34"
+      )
       ; fail
 
   collect-namespace-decls =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "collect-namespace-decls", "97,2,111,4")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "98,6,111,4")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "98,6,103,6")
-       ; where(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "99,8,102,8")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "collect-namespace-decls"
+    , "97"
+    , "2"
+    , "111"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "98"
+      , "6"
+      , "111"
+      , "4"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "98"
+       , "6"
+       , "103"
+       , "6"
+       )
+       ; where(s-step(
+               | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+               , "99"
+               , "8"
+               , "102"
+               , "8"
+               )
                ; try(
-                   s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "100,12,101,52")
-                   ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "100,12,100,51")
+                   s-step(
+                   | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                   , "100"
+                   , "12"
+                   , "101"
+                   , "52"
+                   )
+                   ; (s-step(
+                      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                      , "100"
+                      , "12"
+                      , "100"
+                      , "51"
+                      )
                       ; getfirst(
-                          s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "100,21,100,50") ; is-default-namespace-attribute
+                          s-step(
+                          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                          , "100"
+                          , "21"
+                          , "100"
+                          , "50"
+                          )
+                          ; is-default-namespace-attribute
                         ))
-                   ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "101,12,101,52")
+                   ; s-step(
+                     | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                     , "101"
+                     , "12"
+                     , "101"
+                     , "52"
+                     )
                    ; Attribute(
-                       s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "101,22,101,23") ; id
-                     , s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "101,26,101,51") ; remember-default-namespace
+                       s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "101"
+                       , "22"
+                       , "101"
+                       , "23"
+                       )
+                       ; id
+                     , s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "101"
+                       , "26"
+                       , "101"
+                       , "51"
+                       )
+                       ; remember-default-namespace
                      )
                  )))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "104,6,111,4")
-    ; where(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "105,8,110,9")
-            ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "105,8,105,42")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "104"
+      , "6"
+      , "111"
+      , "4"
+      )
+    ; where(s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "105"
+            , "8"
+            , "110"
+            , "9"
+            )
+            ; (s-step(
+               | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+               , "105"
+               , "8"
+               , "105"
+               , "42"
+               )
                ; filter(
-                   s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "105,15,105,41") ; is-namespace-decl-attribute
+                   s-step(
+                   | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                   , "105"
+                   , "15"
+                   , "105"
+                   , "41"
+                   )
+                   ; is-namespace-decl-attribute
                  ))
-            ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "106,8,110,9")
+            ; s-step(
+              | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+              , "106"
+              , "8"
+              , "110"
+              , "9"
+              )
             ; map(
-                s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "106,12,110,8")
+                s-step(
+                | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                , "106"
+                , "12"
+                , "110"
+                , "8"
+                )
                 ; {prefix, value:
-                    s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "107,10,109,46")
-                    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "107,10,107,63")
+                    s-step(
+                    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                    , "107"
+                    , "10"
+                    , "109"
+                    , "46"
+                    )
+                    ; (s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "107"
+                       , "10"
+                       , "107"
+                       , "63"
+                       )
                        ; ?Attribute(
                             Name(
                               Some(Prefix("xmlns"))
@@ -259,124 +1036,538 @@ strategies
                             )
                           , value
                           ))
-                    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "108,10,109,46")
-                    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "108,10,108,84")
+                    ; s-step(
+                      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                      , "108"
+                      , "10"
+                      , "109"
+                      , "46"
+                      )
+                    ; (s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "108"
+                       , "10"
+                       , "108"
+                       , "84"
+                       )
                        ; if-verbose3(
-                           s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "108,22,108,83")
-                           ; <(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "108,23,108,66")
+                           s-step(
+                           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                           , "108"
+                           , "22"
+                           , "108"
+                           , "83"
+                           )
+                           ; <(s-step(
+                               | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                               , "108"
+                               , "23"
+                               , "108"
+                               , "66"
+                               )
                                ; debug(
-                                   s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "108,29,108,65")
+                                   s-step(
+                                   | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                   , "108"
+                                   , "29"
+                                   , "108"
+                                   , "65"
+                                   )
                                    ; !"debug: found namespace declaration"
                                  ))> (prefix, value)
                          ))
-                    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "109,10,109,46")
+                    ; s-step(
+                      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                      , "109"
+                      , "10"
+                      , "109"
+                      , "46"
+                      )
                     ; rules ( ResolvePrefix :
                                 prefix -> value )
                   }
               ))
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "collect-namespace-decls", "97,2,111,4")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "collect-namespace-decls", "97,2,111,4")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "collect-namespace-decls"
+      , "97"
+      , "2"
+      , "111"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "collect-namespace-decls"
+      , "97"
+      , "2"
+      , "111"
+      , "4"
+      )
       ; fail
 
   remember-default-namespace =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "remember-default-namespace", "114,2,118,39")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "115,6,118,39")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "115,7,115,33")
-       ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "115,7,115,9")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "remember-default-namespace"
+    , "114"
+    , "2"
+    , "118"
+    , "39"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "115"
+      , "6"
+      , "118"
+      , "39"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "115"
+       , "7"
+       , "115"
+       , "33"
+       )
+       ; (s-step(
+          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+          , "115"
+          , "7"
+          , "115"
+          , "9"
+          )
           ; ?""
-          < s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "115,13,115,19")
+          < s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "115"
+            , "13"
+            , "115"
+            , "19"
+            )
             ; !None()
-          + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "115,23,115,33")
+          + s-step(
+            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+            , "115"
+            , "23"
+            , "115"
+            , "33"
+            )
             ; !Some(
-                 <s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "115,30,115,31") ; id>
+                 <s-step(
+                  | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                  , "115"
+                  , "30"
+                  , "115"
+                  , "31"
+                  )
+                  ; id>
                )))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "116,6,118,39")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "116,6,116,8") ; ?ns)
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "117,6,118,39")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "117,6,117,64")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "116"
+      , "6"
+      , "118"
+      , "39"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "116"
+       , "6"
+       , "116"
+       , "8"
+       )
+       ; ?ns)
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "117"
+      , "6"
+      , "118"
+      , "39"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "117"
+       , "6"
+       , "117"
+       , "64"
+       )
        ; if-verbose3(
-           s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "117,18,117,63")
+           s-step(
+           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+           , "117"
+           , "18"
+           , "117"
+           , "63"
+           )
            ; debug(
-               s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "117,24,117,62")
+               s-step(
+               | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+               , "117"
+               , "24"
+               , "117"
+               , "62"
+               )
                ; !"debug: default namespace declaration"
              )
          ))
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "118,6,118,39")
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "118"
+      , "6"
+      , "118"
+      , "39"
+      )
     ; rules ( DefaultNamespace :
                 () -> ns )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "remember-default-namespace", "114,2,118,39")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "remember-default-namespace", "114,2,118,39")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "remember-default-namespace"
+      , "114"
+      , "2"
+      , "118"
+      , "39"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "remember-default-namespace"
+      , "114"
+      , "2"
+      , "118"
+      , "39"
+      )
       ; fail
 
   apply-namespace =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-namespace", "123,2,125,27")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "124,6,125,27")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "124,6,124,28") ; apply-default-namespace
-       + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "125,6,125,27") ; apply-prefix-namespace)
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-namespace", "123,2,125,27")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-namespace", "123,2,125,27")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "apply-namespace"
+    , "123"
+    , "2"
+    , "125"
+    , "27"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "124"
+      , "6"
+      , "125"
+      , "27"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "124"
+       , "6"
+       , "124"
+       , "28"
+       )
+       ; apply-default-namespace
+       + s-step(
+         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+         , "125"
+         , "6"
+         , "125"
+         , "27"
+         )
+         ; apply-prefix-namespace)
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "apply-namespace"
+      , "123"
+      , "2"
+      , "125"
+      , "27"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "apply-namespace"
+      , "123"
+      , "2"
+      , "125"
+      , "27"
+      )
       ; fail
 
   apply-default-namespace :
-    Name(None(), lname) -> <r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-default-namespace", "127,2,128,60")> Name(
-                                                                                                                                          <s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "128,33,128,48") ; DefaultNamespace> ()
-                                                                                                                                        , lname
-                                                                                                                                        )
+    Name(None(), lname) -> <r-exit(
+                            | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                            , "apply-default-namespace"
+                            , "127"
+                            , "2"
+                            , "128"
+                            , "60"
+                            )> Name(
+                                 <s-step(
+                                  | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                  , "128"
+                                  , "33"
+                                  , "128"
+                                  , "48"
+                                  )
+                                  ; DefaultNamespace> ()
+                               , lname
+                               )
     where r-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-default-namespace", "127,2,128,60")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-default-namespace", "127,2,128,60")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "apply-default-namespace"
+             , "127"
+             , "2"
+             , "128"
+             , "60"
+             )
              ; fail
 
   apply-prefix-namespace :
-    Name(Some(Prefix(prefix)), lname) -> <r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-prefix-namespace", "130,2,134,28")> Name(Some(value), lname)
+    Name(Some(Prefix(prefix)), lname) -> <r-exit(
+                                          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                          , "apply-prefix-namespace"
+                                          , "130"
+                                          , "2"
+                                          , "134"
+                                          , "28"
+                                          )> Name(Some(value), lname)
     where r-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-prefix-namespace", "130,2,134,28")
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-prefix-namespace", "130,2,134,28")
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "apply-prefix-namespace"
+             , "130"
+             , "2"
+             , "134"
+             , "28"
+             )
              ; fail
-    where s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "132,12,134,28")
-          ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "132,12,134,19")
-             ; <(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "132,14,133,86")
-                 ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "132,14,132,26") ; ResolvePrefix
-                    <+ s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "133,17,133,86")
-                       ; <(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "133,18,133,28") ; fatal-error)> [ "error: cannot resolve the namespace of prefix "
-                                                                                                                            , <s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "133,83,133,84") ; id>
-                                                                                                                            ]))> prefix) => value
-          <+ r-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "apply-prefix-namespace", "130,2,134,28")
+    where s-step(
+          | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+          , "132"
+          , "12"
+          , "134"
+          , "28"
+          )
+          ; (s-step(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "132"
+             , "12"
+             , "134"
+             , "19"
+             )
+             ; <(s-step(
+                 | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                 , "132"
+                 , "14"
+                 , "133"
+                 , "86"
+                 )
+                 ; (s-step(
+                    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                    , "132"
+                    , "14"
+                    , "132"
+                    , "26"
+                    )
+                    ; ResolvePrefix
+                    <+ s-step(
+                       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                       , "133"
+                       , "17"
+                       , "133"
+                       , "86"
+                       )
+                       ; <(s-step(
+                           | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                           , "133"
+                           , "18"
+                           , "133"
+                           , "28"
+                           )
+                           ; fatal-error)> [ "error: cannot resolve the namespace of prefix "
+                                           , <s-step(
+                                              | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+                                              , "133"
+                                              , "83"
+                                              , "133"
+                                              , "84"
+                                              )
+                                              ; id>
+                                           ]))> prefix) => value
+          <+ r-exit(
+             | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+             , "apply-prefix-namespace"
+             , "130"
+             , "2"
+             , "134"
+             , "28"
+             )
              ; fail
 
   remove-namespace-attrs =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "remove-namespace-attrs", "139,2,140,38")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "140,4,140,38")
-    ; filter(
-        s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "140,11,140,37")
-        ; not(s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "140,15,140,36") ; is-namespace-attribute)
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "remove-namespace-attrs"
+    , "139"
+    , "2"
+    , "140"
+    , "38"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "140"
+      , "4"
+      , "140"
+      , "38"
       )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "remove-namespace-attrs", "139,2,140,38")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "remove-namespace-attrs", "139,2,140,38")
+    ; filter(
+        s-step(
+        | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+        , "140"
+        , "11"
+        , "140"
+        , "37"
+        )
+        ; not(s-step(
+              | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+              , "140"
+              , "15"
+              , "140"
+              , "36"
+              )
+              ; is-namespace-attribute)
+      )
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "remove-namespace-attrs"
+      , "139"
+      , "2"
+      , "140"
+      , "38"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "remove-namespace-attrs"
+      , "139"
+      , "2"
+      , "140"
+      , "38"
+      )
       ; fail
 
   is-namespace-attribute =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-namespace-attribute", "145,2,147,37")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "146,8,147,37")
-    ; (s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "146,8,146,34") ; is-namespace-decl-attribute
-       + s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "147,8,147,37") ; is-default-namespace-attribute)
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-namespace-attribute", "145,2,147,37")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-namespace-attribute", "145,2,147,37")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "is-namespace-attribute"
+    , "145"
+    , "2"
+    , "147"
+    , "37"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "146"
+      , "8"
+      , "147"
+      , "37"
+      )
+    ; (s-step(
+       | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+       , "146"
+       , "8"
+       , "146"
+       , "34"
+       )
+       ; is-namespace-decl-attribute
+       + s-step(
+         | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+         , "147"
+         , "8"
+         , "147"
+         , "37"
+         )
+         ; is-default-namespace-attribute)
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-namespace-attribute"
+      , "145"
+      , "2"
+      , "147"
+      , "37"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-namespace-attribute"
+      , "145"
+      , "2"
+      , "147"
+      , "37"
+      )
       ; fail
 
   is-namespace-decl-attribute =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-namespace-decl-attribute", "149,2,150,48")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "150,4,150,48")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "is-namespace-decl-attribute"
+    , "149"
+    , "2"
+    , "150"
+    , "48"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "150"
+      , "4"
+      , "150"
+      , "48"
+      )
     ; ?Attribute(
          Name(Some(Prefix("xmlns")), _)
        , _
        )
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-namespace-decl-attribute", "149,2,150,48")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-namespace-decl-attribute", "149,2,150,48")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-namespace-decl-attribute"
+      , "149"
+      , "2"
+      , "150"
+      , "48"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-namespace-decl-attribute"
+      , "149"
+      , "2"
+      , "150"
+      , "48"
+      )
       ; fail
 
   is-default-namespace-attribute =
-    s-enter(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-default-namespace-attribute", "152,2,153,39")
-    ; s-step(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "153,4,153,39")
+    s-enter(
+    | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+    , "is-default-namespace-attribute"
+    , "152"
+    , "2"
+    , "153"
+    , "39"
+    )
+    ; s-step(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "153"
+      , "4"
+      , "153"
+      , "39"
+      )
     ; ?Attribute(Name(None(), "xmlns"), _)
-    < s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-default-namespace-attribute", "152,2,153,39")
-    + s-exit(|"_cellar/xml-front/trans/process/xml-doc2xml-info.str", "is-default-namespace-attribute", "152,2,153,39")
+    < s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-default-namespace-attribute"
+      , "152"
+      , "2"
+      , "153"
+      , "39"
+      )
+    + s-exit(
+      | "_cellar/xml-front/trans/process/xml-doc2xml-info.str"
+      , "is-default-namespace-attribute"
+      , "152"
+      , "2"
+      , "153"
+      , "39"
+      )
       ; fail

@@ -16,24 +16,115 @@ signature
 
 strategies
   main-build_3 =
-    s-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "main-build_3", "12,2,14,41")
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "13,4,14,41")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "13,4,13,23")
-       ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "13,4,13,14")
+    s-enter(
+    | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+    , "main-build_3"
+    , "12"
+    , "2"
+    , "14"
+    , "41"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+      , "13"
+      , "4"
+      , "14"
+      , "41"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+       , "13"
+       , "4"
+       , "13"
+       , "23"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+          , "13"
+          , "4"
+          , "13"
+          , "14"
+          )
           ; !""#([1, 2])) => (1, 2))
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "14,4,14,41")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "14,4,14,12")
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+      , "14"
+      , "4"
+      , "14"
+      , "41"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+       , "14"
+       , "4"
+       , "14"
+       , "12"
+       )
        ; !Foo(1, 2))
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "14,15,14,41")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "14,15,14,21") ; to-foo2)
-    ; s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "14,24,14,41")
-    ; (s-step(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "14,24,14,28") ; debug) => Foo2(1, 2)
-    < s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "main-build_3", "12,2,14,41")
-    + s-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "main-build_3", "12,2,14,41")
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+      , "14"
+      , "15"
+      , "14"
+      , "41"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+       , "14"
+       , "15"
+       , "14"
+       , "21"
+       )
+       ; to-foo2)
+    ; s-step(
+      | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+      , "14"
+      , "24"
+      , "14"
+      , "41"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+       , "14"
+       , "24"
+       , "14"
+       , "28"
+       )
+       ; debug) => Foo2(1, 2)
+    < s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+      , "main-build_3"
+      , "12"
+      , "2"
+      , "14"
+      , "41"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+      , "main-build_3"
+      , "12"
+      , "2"
+      , "14"
+      , "41"
+      )
       ; fail
 
   to-foo2 :
-    _#(kids) -> <r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "to-foo2", "16,2,17,28")> "Foo2"#(kids)
+    _#(kids) -> <r-exit(
+                 | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+                 , "to-foo2"
+                 , "16"
+                 , "2"
+                 , "17"
+                 , "28"
+                 )> "Foo2"#(kids)
     where r-enter(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "to-foo2", "16,2,17,28")
-          <+ r-exit(|"strategoxt/stratego-libraries/java-backend/test/basic/build_3.str", "to-foo2", "16,2,17,28")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/java-backend/test/basic/build_3.str"
+             , "to-foo2"
+             , "16"
+             , "2"
+             , "17"
+             , "28"
+             )
              ; fail

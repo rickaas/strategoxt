@@ -11,28 +11,144 @@ imports
 
 strategies
   test1 =
-    s-enter(|"_cellar/xtc/src/test1.str", "test1", "5,2,12,4")
-    ; s-step(|"_cellar/xtc/src/test1.str", "6,4,12,4")
+    s-enter(
+    | "_cellar/xtc/src/test1.str"
+    , "test1"
+    , "5"
+    , "2"
+    , "12"
+    , "4"
+    )
+    ; s-step(
+      | "_cellar/xtc/src/test1.str"
+      , "6"
+      , "4"
+      , "12"
+      , "4"
+      )
     ; xtc-io-wrap(
-        s-step(|"_cellar/xtc/src/test1.str", "7,6,11,30")
-        ; (s-step(|"_cellar/xtc/src/test1.str", "7,6,7,14") ; read-from)
-        ; s-step(|"_cellar/xtc/src/test1.str", "8,8,11,30")
-        ; (s-step(|"_cellar/xtc/src/test1.str", "8,8,8,19")
-           ; !( <s-step(|"_cellar/xtc/src/test1.str", "8,11,8,12") ; id>
-              , <s-step(|"_cellar/xtc/src/test1.str", "8,16,8,17") ; id>
+        s-step(
+        | "_cellar/xtc/src/test1.str"
+        , "7"
+        , "6"
+        , "11"
+        , "30"
+        )
+        ; (s-step(
+           | "_cellar/xtc/src/test1.str"
+           , "7"
+           , "6"
+           , "7"
+           , "14"
+           )
+           ; read-from)
+        ; s-step(
+          | "_cellar/xtc/src/test1.str"
+          , "8"
+          , "8"
+          , "11"
+          , "30"
+          )
+        ; (s-step(
+           | "_cellar/xtc/src/test1.str"
+           , "8"
+           , "8"
+           , "8"
+           , "19"
+           )
+           ; !( <s-step(
+                 | "_cellar/xtc/src/test1.str"
+                 , "8"
+                 , "11"
+                 , "8"
+                 , "12"
+                 )
+                 ; id>
+              , <s-step(
+                 | "_cellar/xtc/src/test1.str"
+                 , "8"
+                 , "16"
+                 , "8"
+                 , "17"
+                 )
+                 ; id>
               ))
-        ; s-step(|"_cellar/xtc/src/test1.str", "9,8,11,30")
-        ; (s-step(|"_cellar/xtc/src/test1.str", "9,8,9,15") ; write-to)
-        ; s-step(|"_cellar/xtc/src/test1.str", "10,8,11,30")
-        ; (s-step(|"_cellar/xtc/src/test1.str", "10,8,10,34")
-           ; where(s-step(|"_cellar/xtc/src/test1.str", "10,14,10,33")
-                   ; (s-step(|"_cellar/xtc/src/test1.str", "10,14,10,25") ; xtc-new-file) => name))
-        ; s-step(|"_cellar/xtc/src/test1.str", "11,8,11,30")
+        ; s-step(
+          | "_cellar/xtc/src/test1.str"
+          , "9"
+          , "8"
+          , "11"
+          , "30"
+          )
+        ; (s-step(
+           | "_cellar/xtc/src/test1.str"
+           , "9"
+           , "8"
+           , "9"
+           , "15"
+           )
+           ; write-to)
+        ; s-step(
+          | "_cellar/xtc/src/test1.str"
+          , "10"
+          , "8"
+          , "11"
+          , "30"
+          )
+        ; (s-step(
+           | "_cellar/xtc/src/test1.str"
+           , "10"
+           , "8"
+           , "10"
+           , "34"
+           )
+           ; where(s-step(
+                   | "_cellar/xtc/src/test1.str"
+                   , "10"
+                   , "14"
+                   , "10"
+                   , "33"
+                   )
+                   ; (s-step(
+                      | "_cellar/xtc/src/test1.str"
+                      , "10"
+                      , "14"
+                      , "10"
+                      , "25"
+                      )
+                      ; xtc-new-file) => name))
+        ; s-step(
+          | "_cellar/xtc/src/test1.str"
+          , "11"
+          , "8"
+          , "11"
+          , "30"
+          )
         ; xtc-transform(
-            s-step(|"_cellar/xtc/src/test1.str", "11,22,11,29")
+            s-step(
+            | "_cellar/xtc/src/test1.str"
+            , "11"
+            , "22"
+            , "11"
+            , "29"
+            )
             ; !"test2"
           )
       )
-    < s-exit(|"_cellar/xtc/src/test1.str", "test1", "5,2,12,4")
-    + s-exit(|"_cellar/xtc/src/test1.str", "test1", "5,2,12,4")
+    < s-exit(
+      | "_cellar/xtc/src/test1.str"
+      , "test1"
+      , "5"
+      , "2"
+      , "12"
+      , "4"
+      )
+    + s-exit(
+      | "_cellar/xtc/src/test1.str"
+      , "test1"
+      , "5"
+      , "2"
+      , "12"
+      , "4"
+      )
       ; fail

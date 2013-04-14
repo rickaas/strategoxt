@@ -29,154 +29,680 @@ signature
 
 strategies
   propconst-program =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-program", "23,2,24,21")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "24,4,24,21")
-    ; Program(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "24,12,24,20") ; propconst
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst-program"
+    , "23"
+    , "2"
+    , "24"
+    , "21"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "24"
+      , "4"
+      , "24"
+      , "21"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-program", "23,2,24,21")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-program", "23,2,24,21")
+    ; Program(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "24"
+        , "12"
+        , "24"
+        , "20"
+        )
+        ; propconst
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-program"
+      , "23"
+      , "2"
+      , "24"
+      , "21"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-program"
+      , "23"
+      , "2"
+      , "24"
+      , "21"
+      )
       ; fail
 
   propconst =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst", "26,2,28,41")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "27,4,28,41")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "27,4,27,20") ; propconst-special
-       <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "28,7,28,41")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "28,7,28,20")
-             ; all(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "28,11,28,19") ; propconst))
-          ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "28,23,28,41")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst"
+    , "26"
+    , "2"
+    , "28"
+    , "41"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "27"
+      , "4"
+      , "28"
+      , "41"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+       , "27"
+       , "4"
+       , "27"
+       , "20"
+       )
+       ; propconst-special
+       <+ s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+          , "28"
+          , "7"
+          , "28"
+          , "41"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+             , "28"
+             , "7"
+             , "28"
+             , "20"
+             )
+             ; all(s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                   , "28"
+                   , "11"
+                   , "28"
+                   , "19"
+                   )
+                   ; propconst))
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+            , "28"
+            , "23"
+            , "28"
+            , "41"
+            )
           ; try(
-              s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "28,27,28,40") ; propconst-eval
+              s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+              , "28"
+              , "27"
+              , "28"
+              , "40"
+              )
+              ; propconst-eval
             ))
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst", "26,2,28,41")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst", "26,2,28,41")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst"
+      , "26"
+      , "2"
+      , "28"
+      , "41"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst"
+      , "26"
+      , "2"
+      , "28"
+      , "41"
+      )
       ; fail
 
   propconst-special =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-special", "30,2,35,13")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "31,4,35,13")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "31,4,31,12") ; PropConst
-       <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "32,7,35,13")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "32,7,32,21") ; propconst-stats
-             <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "33,7,35,13")
-                ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "33,7,33,27") ; propconst-declaration
-                   <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "34,7,35,13")
-                      ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "34,7,34,22") ; propconst-assign
-                         <+ s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "35,7,35,13") ; EvalAdd))))
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-special", "30,2,35,13")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-special", "30,2,35,13")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst-special"
+    , "30"
+    , "2"
+    , "35"
+    , "13"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "31"
+      , "4"
+      , "35"
+      , "13"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+       , "31"
+       , "4"
+       , "31"
+       , "12"
+       )
+       ; PropConst
+       <+ s-step(
+          | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+          , "32"
+          , "7"
+          , "35"
+          , "13"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+             , "32"
+             , "7"
+             , "32"
+             , "21"
+             )
+             ; propconst-stats
+             <+ s-step(
+                | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                , "33"
+                , "7"
+                , "35"
+                , "13"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                   , "33"
+                   , "7"
+                   , "33"
+                   , "27"
+                   )
+                   ; propconst-declaration
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                      , "34"
+                      , "7"
+                      , "35"
+                      , "13"
+                      )
+                      ; (s-step(
+                         | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                         , "34"
+                         , "7"
+                         , "34"
+                         , "22"
+                         )
+                         ; propconst-assign
+                         <+ s-step(
+                            | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                            , "35"
+                            , "7"
+                            , "35"
+                            , "13"
+                            )
+                            ; EvalAdd))))
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-special"
+      , "30"
+      , "2"
+      , "35"
+      , "13"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-special"
+      , "30"
+      , "2"
+      , "35"
+      , "13"
+      )
       ; fail
 
   propconst-stats =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-stats", "37,2,38,42")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "38,4,38,42")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst-stats"
+    , "37"
+    , "2"
+    , "38"
+    , "42"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "38"
+      , "4"
+      , "38"
+      , "42"
+      )
     ; Stats(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "38,10,38,41")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "38"
+        , "10"
+        , "38"
+        , "41"
+        )
         ; {|PropConst:
-             s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "38,25,38,38")
+             s-step(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+             , "38"
+             , "25"
+             , "38"
+             , "38"
+             )
              ; map(
-                 s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "38,29,38,37") ; propconst
+                 s-step(
+                 | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                 , "38"
+                 , "29"
+                 , "38"
+                 , "37"
+                 )
+                 ; propconst
                )
           |}
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-stats", "37,2,38,42")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-stats", "37,2,38,42")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-stats"
+      , "37"
+      , "2"
+      , "38"
+      , "42"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-stats"
+      , "37"
+      , "2"
+      , "38"
+      , "42"
+      )
       ; fail
 
   propconst-declaration =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-declaration", "40,2,42,35")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "41,4,42,35")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "41,4,41,17")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst-declaration"
+    , "40"
+    , "2"
+    , "42"
+    , "35"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "41"
+      , "4"
+      , "42"
+      , "35"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+       , "41"
+       , "4"
+       , "41"
+       , "17"
+       )
        ; ?VarDecl(x, t))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "42,6,42,35")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "42"
+      , "6"
+      , "42"
+      , "35"
+      )
     ; rules ( PropConst+x :-
                 Var(x) )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-declaration", "40,2,42,35")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-declaration", "40,2,42,35")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-declaration"
+      , "40"
+      , "2"
+      , "42"
+      , "35"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-declaration"
+      , "40"
+      , "2"
+      , "42"
+      , "35"
+      )
       ; fail
 
   propconst-assign =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-assign", "44,2,52,36")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "45,4,52,36")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "45,4,45,29")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst-assign"
+    , "44"
+    , "2"
+    , "52"
+    , "36"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "45"
+      , "4"
+      , "52"
+      , "36"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+       , "45"
+       , "4"
+       , "45"
+       , "29"
+       )
        ; Assign(
-           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "45,11,45,12") ; ?x
-         , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "45,15,45,28")
-           ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "45,15,45,23") ; propconst) => e
+           s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+           , "45"
+           , "11"
+           , "45"
+           , "12"
+           )
+           ; ?x
+         , s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+           , "45"
+           , "15"
+           , "45"
+           , "28"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+              , "45"
+              , "15"
+              , "45"
+              , "23"
+              )
+              ; propconst) => e
          ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "46,6,52,36")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "46,6,46,33")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "46"
+      , "6"
+      , "52"
+      , "36"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+       , "46"
+       , "6"
+       , "46"
+       , "33"
+       )
        ; debug(
-           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "46,12,46,32")
+           s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+           , "46"
+           , "12"
+           , "46"
+           , "32"
+           )
            ; !"propconst-assign: "
          ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "47,6,52,36")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "47,6,51,8")
-       ; if s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "47,9,47,20")
-            ; <(s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "47,10,47,17") ; is-value)> e then
-           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "48,8,48,41")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "47"
+      , "6"
+      , "52"
+      , "36"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+       , "47"
+       , "6"
+       , "51"
+       , "8"
+       )
+       ; if s-step(
+            | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+            , "47"
+            , "9"
+            , "47"
+            , "20"
+            )
+            ; <(s-step(
+                | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                , "47"
+                , "10"
+                , "47"
+                , "17"
+                )
+                ; is-value)> e then
+           s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+           , "48"
+           , "8"
+           , "48"
+           , "41"
+           )
            ; rules (
                PropConst.x :
                  Var(x) -> e
              )
          else
-           s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "50,8,50,37")
+           s-step(
+           | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+           , "50"
+           , "8"
+           , "50"
+           , "37"
+           )
            ; rules ( PropConst.x :-
                        Var(x) )
          end)
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "52,6,52,36")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "52"
+      , "6"
+      , "52"
+      , "36"
+      )
     ; dr-print-rule-set(|"PropConst")
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-assign", "44,2,52,36")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-assign", "44,2,52,36")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-assign"
+      , "44"
+      , "2"
+      , "52"
+      , "36"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-assign"
+      , "44"
+      , "2"
+      , "52"
+      , "36"
+      )
       ; fail
 
   is-value =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "is-value", "54,2,55,10")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "55,4,55,10")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "is-value"
+    , "54"
+    , "2"
+    , "55"
+    , "10"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "55"
+      , "4"
+      , "55"
+      , "10"
+      )
     ; ?Int(_)
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "is-value", "54,2,55,10")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "is-value", "54,2,55,10")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "is-value"
+      , "54"
+      , "2"
+      , "55"
+      , "10"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "is-value"
+      , "54"
+      , "2"
+      , "55"
+      , "10"
+      )
       ; fail
 
   propconst-eval =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-eval", "57,2,58,10")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "58,4,58,10")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "propconst-eval"
+    , "57"
+    , "2"
+    , "58"
+    , "10"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "58"
+      , "4"
+      , "58"
+      , "10"
+      )
     ; EvalAdd
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-eval", "57,2,58,10")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "propconst-eval", "57,2,58,10")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-eval"
+      , "57"
+      , "2"
+      , "58"
+      , "10"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "propconst-eval"
+      , "57"
+      , "2"
+      , "58"
+      , "10"
+      )
       ; fail
 
   EvalAdd :
-    Add(Int(i), Int(j)) -> <r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "EvalAdd", "60,2,61,43")> Int(
-                                                                                                                             <s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "61,32,61,35") ; addS> (i, j)
-                                                                                                                           )
+    Add(Int(i), Int(j)) -> <r-exit(
+                            | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                            , "EvalAdd"
+                            , "60"
+                            , "2"
+                            , "61"
+                            , "43"
+                            )> Int(
+                                 <s-step(
+                                  | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+                                  , "61"
+                                  , "32"
+                                  , "61"
+                                  , "35"
+                                  )
+                                  ; addS> (i, j)
+                               )
     where r-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "EvalAdd", "60,2,61,43")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "EvalAdd", "60,2,61,43")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+             , "EvalAdd"
+             , "60"
+             , "2"
+             , "61"
+             , "43"
+             )
              ; fail
 
 
 strategies
   main =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "main", "65,2,68,4")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "66,4,68,4")
-    ; test-suite(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "66,15,66,23")
-        ; !"test72"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "67,6,67,10") ; test1
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "main"
+    , "65"
+    , "2"
+    , "68"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "66"
+      , "4"
+      , "68"
+      , "4"
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "main", "65,2,68,4")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "main", "65,2,68,4")
+    ; test-suite(
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "66"
+        , "15"
+        , "66"
+        , "23"
+        )
+        ; !"test72"
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "67"
+        , "6"
+        , "67"
+        , "10"
+        )
+        ; test1
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "main"
+      , "65"
+      , "2"
+      , "68"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "main"
+      , "65"
+      , "2"
+      , "68"
+      , "4"
+      )
       ; fail
 
   test1 =
-    s-enter(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "test1", "70,2,81,1")
-    ; s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "71,4,81,1")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+    , "test1"
+    , "70"
+    , "2"
+    , "81"
+    , "1"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "71"
+      , "4"
+      , "81"
+      , "1"
+      )
     ; apply-test(
-        s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "71,15,71,22")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "71"
+        , "15"
+        , "71"
+        , "22"
+        )
         ; !"test1"
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "72,3,72,11") ; propconst
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "73,3,76,26")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "72"
+        , "3"
+        , "72"
+        , "11"
+        )
+        ; propconst
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "73"
+        , "3"
+        , "76"
+        , "26"
+        )
         ; !Stats(
              [ VarDecl("a", TpInt)
              , Assign("a", Int("2"))
@@ -190,7 +716,13 @@ strategies
              , Assign("b", Var("a"))
              ]
            )
-      , s-step(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "77,3,80,26")
+      , s-step(
+        | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+        , "77"
+        , "3"
+        , "80"
+        , "26"
+        )
         ; !Stats(
              [ VarDecl("a", TpInt)
              , Assign("a", Int("2"))
@@ -205,6 +737,20 @@ strategies
              ]
            )
       )
-    < s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "test1", "70,2,81,1")
-    + s-exit(|"strategoxt/stratego-libraries/strc/tests/test1/test72.str", "test1", "70,2,81,1")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "test1"
+      , "70"
+      , "2"
+      , "81"
+      , "1"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/tests/test1/test72.str"
+      , "test1"
+      , "70"
+      , "2"
+      , "81"
+      , "1"
+      )
       ; fail

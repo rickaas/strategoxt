@@ -12,67 +12,287 @@ imports
 rules
 
   EmptyScope :
-    Scope([], s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "EmptyScope", "6,2,7,20")> s
+    Scope([], s) -> <r-exit(
+                     | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                     , "EmptyScope"
+                     , "6"
+                     , "2"
+                     , "7"
+                     , "20"
+                     )> s
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "EmptyScope", "6,2,7,20")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "EmptyScope", "6,2,7,20")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "EmptyScope"
+             , "6"
+             , "2"
+             , "7"
+             , "20"
+             )
              ; fail
 
   FuseScope :
-    Scope(xs, Scope(ys, s)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "FuseScope", "9,2,10,55")> Scope(
-                                                                                                                                                <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "10,38,10,41") ; conc> (xs, ys)
-                                                                                                                                              , s
-                                                                                                                                              )
+    Scope(xs, Scope(ys, s)) -> <r-exit(
+                                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                                , "FuseScope"
+                                , "9"
+                                , "2"
+                                , "10"
+                                , "55"
+                                )> Scope(
+                                     <s-step(
+                                      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                                      , "10"
+                                      , "38"
+                                      , "10"
+                                      , "41"
+                                      )
+                                      ; conc> (xs, ys)
+                                   , s
+                                   )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "FuseScope", "9,2,10,55")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "FuseScope", "9,2,10,55")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "FuseScope"
+             , "9"
+             , "2"
+             , "10"
+             , "55"
+             )
              ; fail
 
   WidenScope :
-    Seq(Scope(xs, s1), s2) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "WidenScope", "12,2,14,25")> Scope(xs, Seq(s1, s2))
+    Seq(Scope(xs, s1), s2) -> <r-exit(
+                               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                               , "WidenScope"
+                               , "12"
+                               , "2"
+                               , "14"
+                               , "25"
+                               )> Scope(xs, Seq(s1, s2))
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "WidenScope", "12,2,14,25")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "WidenScope", "12,2,14,25")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "WidenScope"
+             , "12"
+             , "2"
+             , "14"
+             , "25"
+             )
              ; fail
 
   WidenScope :
-    Seq(s1, Scope(xs, s2)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "WidenScope", "16,2,18,25")> Scope(xs, Seq(s1, s2))
+    Seq(s1, Scope(xs, s2)) -> <r-exit(
+                               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                               , "WidenScope"
+                               , "16"
+                               , "2"
+                               , "18"
+                               , "25"
+                               )> Scope(xs, Seq(s1, s2))
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "WidenScope", "16,2,18,25")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "WidenScope", "16,2,18,25")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "WidenScope"
+             , "16"
+             , "2"
+             , "18"
+             , "25"
+             )
              ; fail
 
   CleanupScope :
-    Scope(xs, s) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "CleanupScope", "20,2,22,48")> Scope(ys, s)
+    Scope(xs, s) -> <r-exit(
+                     | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                     , "CleanupScope"
+                     , "20"
+                     , "2"
+                     , "22"
+                     , "48"
+                     )> Scope(ys, s)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "CleanupScope", "20,2,22,48")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "CleanupScope", "20,2,22,48")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "CleanupScope"
+             , "20"
+             , "2"
+             , "22"
+             , "48"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,10,22,48")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,10,22,38")
-             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,10,22,32")
-                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,11,22,15") ; isect)> ( xs
-                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,24,22,28") ; tvars> s
-                                                                                                                                )) => ys)
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,41,22,48")
-          ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "22,45,22,47") ; ?xs)
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "CleanupScope", "20,2,22,48")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+          , "22"
+          , "10"
+          , "22"
+          , "48"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "22"
+             , "10"
+             , "22"
+             , "38"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                , "22"
+                , "10"
+                , "22"
+                , "32"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                    , "22"
+                    , "11"
+                    , "22"
+                    , "15"
+                    )
+                    ; isect)> ( xs
+                              , <s-step(
+                                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                                 , "22"
+                                 , "24"
+                                 , "22"
+                                 , "28"
+                                 )
+                                 ; tvars> s
+                              )) => ys)
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+            , "22"
+            , "41"
+            , "22"
+            , "48"
+            )
+          ; not(s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                , "22"
+                , "45"
+                , "22"
+                , "47"
+                )
+                ; ?xs)
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "CleanupScope"
+             , "20"
+             , "2"
+             , "22"
+             , "48"
+             )
              ; fail
 
   NarrowScope :
-    Scope(xs, Seq(s1, s2)) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "NarrowScope", "24,2,28,39")> Scope(
-                                                                                                                                                  ys
-                                                                                                                                                , Seq(s1, Scope(zs, s2))
-                                                                                                                                                )
+    Scope(xs, Seq(s1, s2)) -> <r-exit(
+                               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                               , "NarrowScope"
+                               , "24"
+                               , "2"
+                               , "28"
+                               , "39"
+                               )> Scope(
+                                    ys
+                                  , Seq(s1, Scope(zs, s2))
+                                  )
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "NarrowScope", "24,2,28,39")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "NarrowScope", "24,2,28,39")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "NarrowScope"
+             , "24"
+             , "2"
+             , "28"
+             , "39"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "27,10,28,39")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "27,10,27,39")
-             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "27,10,27,33")
-                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "27,11,27,15") ; isect)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "27,20,27,24") ; tvars> s1
-                                                                                                                                , xs
-                                                                                                                                )) => ys)
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "28,10,28,39")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "28,10,28,30")
-             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "28,10,28,24")
-                ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "28,11,28,14") ; diff)> (xs, ys)) => zs)
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "28,33,28,39")
-          ; not(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "28,37,28,38") ; [])
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str", "NarrowScope", "24,2,28,39")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+          , "27"
+          , "10"
+          , "28"
+          , "39"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "27"
+             , "10"
+             , "27"
+             , "39"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                , "27"
+                , "10"
+                , "27"
+                , "33"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                    , "27"
+                    , "11"
+                    , "27"
+                    , "15"
+                    )
+                    ; isect)> ( <s-step(
+                                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                                 , "27"
+                                 , "20"
+                                 , "27"
+                                 , "24"
+                                 )
+                                 ; tvars> s1
+                              , xs
+                              )) => ys)
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+            , "28"
+            , "10"
+            , "28"
+            , "39"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "28"
+             , "10"
+             , "28"
+             , "30"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                , "28"
+                , "10"
+                , "28"
+                , "24"
+                )
+                ; <(s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                    , "28"
+                    , "11"
+                    , "28"
+                    , "14"
+                    )
+                    ; diff)> (xs, ys)) => zs)
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+            , "28"
+            , "33"
+            , "28"
+            , "39"
+            )
+          ; not(s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+                , "28"
+                , "37"
+                , "28"
+                , "38"
+                )
+                ; [])
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/opt/scope-laws.str"
+             , "NarrowScope"
+             , "24"
+             , "2"
+             , "28"
+             , "39"
+             )
              ; fail

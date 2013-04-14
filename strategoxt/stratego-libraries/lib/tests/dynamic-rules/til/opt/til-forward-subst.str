@@ -10,156 +10,801 @@ imports
 
 strategies
   io-til-forward-subst =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "io-til-forward-subst", "5,2,6,25")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "6,4,6,25")
-    ; io-wrap(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "6,12,6,24") ; forward-subst
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "io-til-forward-subst"
+    , "5"
+    , "2"
+    , "6"
+    , "25"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "6"
+      , "4"
+      , "6"
+      , "25"
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "io-til-forward-subst", "5,2,6,25")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "io-til-forward-subst", "5,2,6,25")
+    ; io-wrap(
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+        , "6"
+        , "12"
+        , "6"
+        , "24"
+        )
+        ; forward-subst
+      )
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "io-til-forward-subst"
+      , "5"
+      , "2"
+      , "6"
+      , "25"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "io-til-forward-subst"
+      , "5"
+      , "2"
+      , "6"
+      , "25"
+      )
       ; fail
 
   forward-subst =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst", "8,2,15,24")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "9,4,15,24")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "9,4,9,15") ; ForwardSubst
-       <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "10,7,15,24")
-          ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "10,7,10,31") ; forward-subst-declaration
-             <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "11,7,15,24")
-                ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "11,7,11,26") ; forward-subst-assign
-                   <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "12,7,15,24")
-                      ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "12,7,12,22") ; forward-subst-if
-                         <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "13,7,15,24")
-                            ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "13,7,13,25") ; forward-subst-block
-                               <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "14,7,15,24")
-                                  ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "14,7,14,25") ; forward-subst-while
-                                     <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "15,7,15,24")
-                                        ; all(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "15,11,15,23") ; forward-subst)))))))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst", "8,2,15,24")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst", "8,2,15,24")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "forward-subst"
+    , "8"
+    , "2"
+    , "15"
+    , "24"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "9"
+      , "4"
+      , "15"
+      , "24"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "9"
+       , "4"
+       , "9"
+       , "15"
+       )
+       ; ForwardSubst
+       <+ s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+          , "10"
+          , "7"
+          , "15"
+          , "24"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+             , "10"
+             , "7"
+             , "10"
+             , "31"
+             )
+             ; forward-subst-declaration
+             <+ s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                , "11"
+                , "7"
+                , "15"
+                , "24"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                   , "11"
+                   , "7"
+                   , "11"
+                   , "26"
+                   )
+                   ; forward-subst-assign
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                      , "12"
+                      , "7"
+                      , "15"
+                      , "24"
+                      )
+                      ; (s-step(
+                         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                         , "12"
+                         , "7"
+                         , "12"
+                         , "22"
+                         )
+                         ; forward-subst-if
+                         <+ s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                            , "13"
+                            , "7"
+                            , "15"
+                            , "24"
+                            )
+                            ; (s-step(
+                               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                               , "13"
+                               , "7"
+                               , "13"
+                               , "25"
+                               )
+                               ; forward-subst-block
+                               <+ s-step(
+                                  | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                  , "14"
+                                  , "7"
+                                  , "15"
+                                  , "24"
+                                  )
+                                  ; (s-step(
+                                     | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                     , "14"
+                                     , "7"
+                                     , "14"
+                                     , "25"
+                                     )
+                                     ; forward-subst-while
+                                     <+ s-step(
+                                        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                        , "15"
+                                        , "7"
+                                        , "15"
+                                        , "24"
+                                        )
+                                        ; all(s-step(
+                                              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                              , "15"
+                                              , "11"
+                                              , "15"
+                                              , "23"
+                                              )
+                                              ; forward-subst)))))))
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst"
+      , "8"
+      , "2"
+      , "15"
+      , "24"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst"
+      , "8"
+      , "2"
+      , "15"
+      , "24"
+      )
       ; fail
 
   forward-subst-block =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-block", "17,2,18,49")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "18,4,18,49")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "forward-subst-block"
+    , "17"
+    , "2"
+    , "18"
+    , "49"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "18"
+      , "4"
+      , "18"
+      , "49"
+      )
     ; Block(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "18,10,18,48")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+        , "18"
+        , "10"
+        , "18"
+        , "48"
+        )
         ; {|ForwardSubst:
-             s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "18,28,18,45")
+             s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+             , "18"
+             , "28"
+             , "18"
+             , "45"
+             )
              ; map(
-                 s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "18,32,18,44") ; forward-subst
+                 s-step(
+                 | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                 , "18"
+                 , "32"
+                 , "18"
+                 , "44"
+                 )
+                 ; forward-subst
                )
           |}
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-block", "17,2,18,49")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-block", "17,2,18,49")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-block"
+      , "17"
+      , "2"
+      , "18"
+      , "49"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-block"
+      , "17"
+      , "2"
+      , "18"
+      , "49"
+      )
       ; fail
 
   forward-subst-declaration =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-declaration", "20,2,22,28")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "21,4,22,28")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "21,5,21,46")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "21,5,21,19")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "forward-subst-declaration"
+    , "20"
+    , "2"
+    , "22"
+    , "28"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "21"
+      , "4"
+      , "22"
+      , "28"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "21"
+       , "5"
+       , "21"
+       , "46"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+          , "21"
+          , "5"
+          , "21"
+          , "19"
+          )
           ; ?Declaration(x)
-          <+ s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "21,24,21,46")
+          <+ s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+             , "21"
+             , "24"
+             , "21"
+             , "46"
+             )
              ; ?DeclarationTyped(x, t)))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "22,6,22,28")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "22"
+      , "6"
+      , "22"
+      , "28"
+      )
     ; new-ForwardSubst(|x, x)
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-declaration", "20,2,22,28")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-declaration", "20,2,22,28")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-declaration"
+      , "20"
+      , "2"
+      , "22"
+      , "28"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-declaration"
+      , "20"
+      , "2"
+      , "22"
+      , "28"
+      )
       ; fail
 
   forward-subst-assign =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-assign", "24,2,31,8")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "25,4,31,8")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "25,4,25,33")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "forward-subst-assign"
+    , "24"
+    , "2"
+    , "31"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "25"
+      , "4"
+      , "31"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "25"
+       , "4"
+       , "25"
+       , "33"
+       )
        ; Assign(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "25,11,25,12") ; ?x
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "25,15,25,32")
-           ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "25,15,25,27") ; forward-subst) => e
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "25"
+           , "11"
+           , "25"
+           , "12"
+           )
+           ; ?x
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "25"
+           , "15"
+           , "25"
+           , "32"
+           )
+           ; (s-step(
+              | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+              , "25"
+              , "15"
+              , "25"
+              , "27"
+              )
+              ; forward-subst) => e
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "26,6,31,8")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "26,6,26,30")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "26"
+      , "6"
+      , "31"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "26"
+       , "6"
+       , "26"
+       , "30"
+       )
        ; undefine-ForwardSubst(|x))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,6,31,8")
-    ; if s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,9,27,60")
-         ; <(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,10,27,57")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,10,27,20")
-                ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,14,27,19") ; is-var))
-             ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,23,27,57")
-             ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,23,27,33") ; is-pure-exp)
-             ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,36,27,57")
-             ; not(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "27,40,27,56")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "27"
+      , "6"
+      , "31"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+         , "27"
+         , "9"
+         , "27"
+         , "60"
+         )
+         ; <(s-step(
+             | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+             , "27"
+             , "10"
+             , "27"
+             , "57"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                , "27"
+                , "10"
+                , "27"
+                , "20"
+                )
+                ; not(s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                      , "27"
+                      , "14"
+                      , "27"
+                      , "19"
+                      )
+                      ; is-var))
+             ; s-step(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+               , "27"
+               , "23"
+               , "27"
+               , "57"
+               )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                , "27"
+                , "23"
+                , "27"
+                , "33"
+                )
+                ; is-pure-exp)
+             ; s-step(
+               | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+               , "27"
+               , "36"
+               , "27"
+               , "57"
+               )
+             ; not(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                   , "27"
+                   , "40"
+                   , "27"
+                   , "56"
+                   )
                    ; contains(|Var(x))))> e then
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "28,8,30,62")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "28,8,28,49")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "28,15,28,47")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "28,15,28,42") ; innermost-scope-ForwardSubst) => z))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "29,10,30,62")
-        ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "29,10,29,46")
-           ; where(s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "29,17,29,44")
-                   ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "29,17,29,36") ; get-var-dependencies) => deps))
-        ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "30,10,30,62")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+        , "28"
+        , "8"
+        , "30"
+        , "62"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "28"
+           , "8"
+           , "28"
+           , "49"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                   , "28"
+                   , "15"
+                   , "28"
+                   , "47"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                      , "28"
+                      , "15"
+                      , "28"
+                      , "42"
+                      )
+                      ; innermost-scope-ForwardSubst) => z))
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+          , "29"
+          , "10"
+          , "30"
+          , "62"
+          )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "29"
+           , "10"
+           , "29"
+           , "46"
+           )
+           ; where(s-step(
+                   | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                   , "29"
+                   , "17"
+                   , "29"
+                   , "44"
+                   )
+                   ; (s-step(
+                      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                      , "29"
+                      , "17"
+                      , "29"
+                      , "36"
+                      )
+                      ; get-var-dependencies) => deps))
+        ; s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+          , "30"
+          , "10"
+          , "30"
+          , "62"
+          )
         ; rules (
             ForwardSubst.z :
               Var(x) -> e
               depends on deps
           )
       end
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-assign", "24,2,31,8")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-assign", "24,2,31,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-assign"
+      , "24"
+      , "2"
+      , "31"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-assign"
+      , "24"
+      , "2"
+      , "31"
+      , "8"
+      )
       ; fail
 
   forward-subst-if =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-if", "33,2,35,79")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "34,4,35,79")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "34,4,34,32")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "forward-subst-if"
+    , "33"
+    , "2"
+    , "35"
+    , "79"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "34"
+      , "4"
+      , "35"
+      , "79"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "34"
+       , "4"
+       , "34"
+       , "32"
+       )
        ; IfElse(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "34,11,34,23") ; forward-subst
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "34,26,34,27") ; id
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "34,30,34,31") ; id
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "34"
+           , "11"
+           , "34"
+           , "23"
+           )
+           ; forward-subst
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "34"
+           , "26"
+           , "34"
+           , "27"
+           )
+           ; id
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "34"
+           , "30"
+           , "34"
+           , "31"
+           )
+           ; id
          ))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,7,35,78")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,7,35,35")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "35"
+      , "7"
+      , "35"
+      , "78"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "35"
+       , "7"
+       , "35"
+       , "35"
+       )
        ; IfElse(
-           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,14,35,15") ; id
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,18,35,30") ; forward-subst
-         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,33,35,34") ; id
-         )) /ForwardSubst\ (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,52,35,78")
+           s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "35"
+           , "14"
+           , "35"
+           , "15"
+           )
+           ; id
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "35"
+           , "18"
+           , "35"
+           , "30"
+           )
+           ; forward-subst
+         , s-step(
+           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+           , "35"
+           , "33"
+           , "35"
+           , "34"
+           )
+           ; id
+         )) /ForwardSubst\ (s-step(
+                            | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                            , "35"
+                            , "52"
+                            , "35"
+                            , "78"
+                            )
                             ; IfElse(
-                                s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,59,35,60") ; id
-                              , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,62,35,63") ; id
-                              , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "35,65,35,77") ; forward-subst
+                                s-step(
+                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                , "35"
+                                , "59"
+                                , "35"
+                                , "60"
+                                )
+                                ; id
+                              , s-step(
+                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                , "35"
+                                , "62"
+                                , "35"
+                                , "63"
+                                )
+                                ; id
+                              , s-step(
+                                | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                                , "35"
+                                , "65"
+                                , "35"
+                                , "77"
+                                )
+                                ; forward-subst
                               ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-if", "33,2,35,79")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-if", "33,2,35,79")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-if"
+      , "33"
+      , "2"
+      , "35"
+      , "79"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-if"
+      , "33"
+      , "2"
+      , "35"
+      , "79"
+      )
       ; fail
 
   forward-subst-while =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-while", "37,2,39,58")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "38,4,39,58")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "38,4,38,15")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "forward-subst-while"
+    , "37"
+    , "2"
+    , "39"
+    , "58"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "38"
+      , "4"
+      , "39"
+      , "58"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "38"
+       , "4"
+       , "38"
+       , "15"
+       )
        ; ?While(_, _))
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "39,7,39,57")
-    ; /ForwardSubst\* (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "39,23,39,57")
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "39"
+      , "7"
+      , "39"
+      , "57"
+      )
+    ; /ForwardSubst\* (s-step(
+                       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                       , "39"
+                       , "23"
+                       , "39"
+                       , "57"
+                       )
                        ; While(
-                           s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "39,29,39,41") ; forward-subst
-                         , s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "39,44,39,56") ; forward-subst
+                           s-step(
+                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                           , "39"
+                           , "29"
+                           , "39"
+                           , "41"
+                           )
+                           ; forward-subst
+                         , s-step(
+                           | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+                           , "39"
+                           , "44"
+                           , "39"
+                           , "56"
+                           )
+                           ; forward-subst
                          ))
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-while", "37,2,39,58")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "forward-subst-while", "37,2,39,58")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-while"
+      , "37"
+      , "2"
+      , "39"
+      , "58"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "forward-subst-while"
+      , "37"
+      , "2"
+      , "39"
+      , "58"
+      )
       ; fail
 
   innermost-scope-ForwardSubst =
-    s-enter(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "innermost-scope-ForwardSubst", "41,2,43,49")
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "42,4,43,49")
-    ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "42,4,42,24")
-       ; (s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "42,4,42,16") ; get-var-names) => vars)
-    ; s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "43,6,43,49")
+    s-enter(
+    | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+    , "innermost-scope-ForwardSubst"
+    , "41"
+    , "2"
+    , "43"
+    , "49"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "42"
+      , "4"
+      , "43"
+      , "49"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+       , "42"
+       , "4"
+       , "42"
+       , "24"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+          , "42"
+          , "4"
+          , "42"
+          , "16"
+          )
+          ; get-var-names) => vars)
+    ; s-step(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "43"
+      , "6"
+      , "43"
+      , "49"
+      )
     ; innermost-scope-ForwardSubst(
-        s-step(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "43,35,43,48")
+        s-step(
+        | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+        , "43"
+        , "35"
+        , "43"
+        , "48"
+        )
         ; elem-of(|vars)
       )
-    < s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "innermost-scope-ForwardSubst", "41,2,43,49")
-    + s-exit(|"strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str", "innermost-scope-ForwardSubst", "41,2,43,49")
+    < s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "innermost-scope-ForwardSubst"
+      , "41"
+      , "2"
+      , "43"
+      , "49"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/lib/tests/dynamic-rules/til/opt/til-forward-subst.str"
+      , "innermost-scope-ForwardSubst"
+      , "41"
+      , "2"
+      , "43"
+      , "49"
+      )
       ; fail

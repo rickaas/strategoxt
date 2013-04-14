@@ -20,105 +20,538 @@ signature
 
 strategies
   io-ppgen =
-    s-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "io-ppgen", "16,2,17,36")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "17,4,17,36")
-    ; xtc-io-wrap(
-        s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "17,16,17,28") ; ppgen-options
-      , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "17,31,17,35") ; ppgen
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ppgen.str"
+    , "io-ppgen"
+    , "16"
+    , "2"
+    , "17"
+    , "36"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "17"
+      , "4"
+      , "17"
+      , "36"
       )
-    < s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "io-ppgen", "16,2,17,36")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "io-ppgen", "16,2,17,36")
+    ; xtc-io-wrap(
+        s-step(
+        | "strategoxt/syntax/gpp/tools/ppgen.str"
+        , "17"
+        , "16"
+        , "17"
+        , "28"
+        )
+        ; ppgen-options
+      , s-step(
+        | "strategoxt/syntax/gpp/tools/ppgen.str"
+        , "17"
+        , "31"
+        , "17"
+        , "35"
+        )
+        ; ppgen
+      )
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "io-ppgen"
+      , "16"
+      , "2"
+      , "17"
+      , "36"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "io-ppgen"
+      , "16"
+      , "2"
+      , "17"
+      , "36"
+      )
       ; fail
 
   ppgen =
-    s-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "ppgen", "19,2,26,8")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "20,4,26,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "20,4,20,45")
-       ; <(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "20,5,20,19") ; pre-process-sdf)> ( <s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "20,24,20,37") ; get-input-type>
-                                                                                              , <s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "20,42,20,43") ; id>
-                                                                                              ))
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "21,6,26,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "21,6,21,14") ; read-from)
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "22,6,26,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "22,6,22,15") ; ppgenerate)
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "23,6,26,8")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "23,6,23,13") ; write-to)
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "24,6,26,8")
-    ; if s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "24,9,24,50")
-         ; not(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "24,13,24,49")
-               ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "24,13,24,40")
-                  ; <(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "24,14,24,23") ; get-config)> "--output-type") => AST()) then
-        s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "25,8,25,50")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ppgen.str"
+    , "ppgen"
+    , "19"
+    , "2"
+    , "26"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "20"
+      , "4"
+      , "26"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ppgen.str"
+       , "20"
+       , "4"
+       , "20"
+       , "45"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/gpp/tools/ppgen.str"
+           , "20"
+           , "5"
+           , "20"
+           , "19"
+           )
+           ; pre-process-sdf)> ( <s-step(
+                                  | "strategoxt/syntax/gpp/tools/ppgen.str"
+                                  , "20"
+                                  , "24"
+                                  , "20"
+                                  , "37"
+                                  )
+                                  ; get-input-type>
+                               , <s-step(
+                                  | "strategoxt/syntax/gpp/tools/ppgen.str"
+                                  , "20"
+                                  , "42"
+                                  , "20"
+                                  , "43"
+                                  )
+                                  ; id>
+                               ))
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "21"
+      , "6"
+      , "26"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ppgen.str"
+       , "21"
+       , "6"
+       , "21"
+       , "14"
+       )
+       ; read-from)
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "22"
+      , "6"
+      , "26"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ppgen.str"
+       , "22"
+       , "6"
+       , "22"
+       , "15"
+       )
+       ; ppgenerate)
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "23"
+      , "6"
+      , "26"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ppgen.str"
+       , "23"
+       , "6"
+       , "23"
+       , "13"
+       )
+       ; write-to)
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "24"
+      , "6"
+      , "26"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/syntax/gpp/tools/ppgen.str"
+         , "24"
+         , "9"
+         , "24"
+         , "50"
+         )
+         ; not(s-step(
+               | "strategoxt/syntax/gpp/tools/ppgen.str"
+               , "24"
+               , "13"
+               , "24"
+               , "49"
+               )
+               ; (s-step(
+                  | "strategoxt/syntax/gpp/tools/ppgen.str"
+                  , "24"
+                  , "13"
+                  , "24"
+                  , "40"
+                  )
+                  ; <(s-step(
+                      | "strategoxt/syntax/gpp/tools/ppgen.str"
+                      , "24"
+                      , "14"
+                      , "24"
+                      , "23"
+                      )
+                      ; get-config)> "--output-type") => AST()) then
+        s-step(
+        | "strategoxt/syntax/gpp/tools/ppgen.str"
+        , "25"
+        , "8"
+        , "25"
+        , "50"
+        )
         ; xtc-transform(
-            s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "25,22,25,35")
+            s-step(
+            | "strategoxt/syntax/gpp/tools/ppgen.str"
+            , "25"
+            , "22"
+            , "25"
+            , "35"
+            )
             ; !"pp-pp-table"
-          , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "25,38,25,49") ; pass-verbose
+          , s-step(
+            | "strategoxt/syntax/gpp/tools/ppgen.str"
+            , "25"
+            , "38"
+            , "25"
+            , "49"
+            )
+            ; pass-verbose
           )
       end
-    < s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "ppgen", "19,2,26,8")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "ppgen", "19,2,26,8")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "ppgen"
+      , "19"
+      , "2"
+      , "26"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "ppgen"
+      , "19"
+      , "2"
+      , "26"
+      , "8"
+      )
       ; fail
 
   pre-process-sdf :
-    (PlainText(), f) -> <r-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "28,2,28,68")> <s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "28,41,28,65") ; xtc-parse-sdf2-definition> f
+    (PlainText(), f) -> <r-exit(
+                         | "strategoxt/syntax/gpp/tools/ppgen.str"
+                         , "pre-process-sdf"
+                         , "28"
+                         , "2"
+                         , "28"
+                         , "68"
+                         )> <s-step(
+                             | "strategoxt/syntax/gpp/tools/ppgen.str"
+                             , "28"
+                             , "41"
+                             , "28"
+                             , "65"
+                             )
+                             ; xtc-parse-sdf2-definition> f
     where r-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "28,2,28,68")
-          <+ r-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "28,2,28,68")
+          <+ r-exit(
+             | "strategoxt/syntax/gpp/tools/ppgen.str"
+             , "pre-process-sdf"
+             , "28"
+             , "2"
+             , "28"
+             , "68"
+             )
              ; fail
 
   pre-process-sdf :
-    (ParseTree(), f) -> <r-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "29,2,29,60")> <s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "29,41,29,57") ; xtc-implode-asfix> f
+    (ParseTree(), f) -> <r-exit(
+                         | "strategoxt/syntax/gpp/tools/ppgen.str"
+                         , "pre-process-sdf"
+                         , "29"
+                         , "2"
+                         , "29"
+                         , "60"
+                         )> <s-step(
+                             | "strategoxt/syntax/gpp/tools/ppgen.str"
+                             , "29"
+                             , "41"
+                             , "29"
+                             , "57"
+                             )
+                             ; xtc-implode-asfix> f
     where r-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "29,2,29,60")
-          <+ r-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "29,2,29,60")
+          <+ r-exit(
+             | "strategoxt/syntax/gpp/tools/ppgen.str"
+             , "pre-process-sdf"
+             , "29"
+             , "2"
+             , "29"
+             , "60"
+             )
              ; fail
 
   pre-process-sdf :
-    (AST(), f) -> <r-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "30,2,30,40")> f
+    (AST(), f) -> <r-exit(
+                   | "strategoxt/syntax/gpp/tools/ppgen.str"
+                   , "pre-process-sdf"
+                   , "30"
+                   , "2"
+                   , "30"
+                   , "40"
+                   )> f
     where r-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "30,2,30,40")
-          <+ r-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "pre-process-sdf", "30,2,30,40")
+          <+ r-exit(
+             | "strategoxt/syntax/gpp/tools/ppgen.str"
+             , "pre-process-sdf"
+             , "30"
+             , "2"
+             , "30"
+             , "40"
+             )
              ; fail
 
   get-input-type =
-    s-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "get-input-type", "32,2,33,47")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "33,4,33,47")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "33,4,33,30")
-       ; <(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "33,5,33,14") ; get-config)> "--input-type"
-       <+ s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "33,36,33,47")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ppgen.str"
+    , "get-input-type"
+    , "32"
+    , "2"
+    , "33"
+    , "47"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "33"
+      , "4"
+      , "33"
+      , "47"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ppgen.str"
+       , "33"
+       , "4"
+       , "33"
+       , "30"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/gpp/tools/ppgen.str"
+           , "33"
+           , "5"
+           , "33"
+           , "14"
+           )
+           ; get-config)> "--input-type"
+       <+ s-step(
+          | "strategoxt/syntax/gpp/tools/ppgen.str"
+          , "33"
+          , "36"
+          , "33"
+          , "47"
+          )
           ; !PlainText())
-    < s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "get-input-type", "32,2,33,47")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "get-input-type", "32,2,33,47")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "get-input-type"
+      , "32"
+      , "2"
+      , "33"
+      , "47"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "get-input-type"
+      , "32"
+      , "2"
+      , "33"
+      , "47"
+      )
       ; fail
 
   ppgen-options =
-    s-enter(|"strategoxt/syntax/gpp/tools/ppgen.str", "ppgen-options", "35,2,47,6")
-    ; s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "36,6,47,6")
-    ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "36,6,39,6")
+    s-enter(
+    | "strategoxt/syntax/gpp/tools/ppgen.str"
+    , "ppgen-options"
+    , "35"
+    , "2"
+    , "47"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "36"
+      , "6"
+      , "47"
+      , "6"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/gpp/tools/ppgen.str"
+       , "36"
+       , "6"
+       , "39"
+       , "6"
+       )
        ; Option(
-           s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "36,13,36,16") ; "-A"
-         , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "37,8,37,56")
-           ; where(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "37,14,37,55")
-                   ; <(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "37,15,37,24") ; set-config)> ("--input-type", ParseTree()))
-         , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "38,8,38,42")
+           s-step(
+           | "strategoxt/syntax/gpp/tools/ppgen.str"
+           , "36"
+           , "13"
+           , "36"
+           , "16"
+           )
+           ; "-A"
+         , s-step(
+           | "strategoxt/syntax/gpp/tools/ppgen.str"
+           , "37"
+           , "8"
+           , "37"
+           , "56"
+           )
+           ; where(s-step(
+                   | "strategoxt/syntax/gpp/tools/ppgen.str"
+                   , "37"
+                   , "14"
+                   , "37"
+                   , "55"
+                   )
+                   ; <(s-step(
+                       | "strategoxt/syntax/gpp/tools/ppgen.str"
+                       , "37"
+                       , "15"
+                       , "37"
+                       , "24"
+                       )
+                       ; set-config)> ("--input-type", ParseTree()))
+         , s-step(
+           | "strategoxt/syntax/gpp/tools/ppgen.str"
+           , "38"
+           , "8"
+           , "38"
+           , "42"
+           )
            ; !"-A          Input is parse tree."
          )
-       + s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "40,6,47,6")
-         ; (s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "40,6,43,6")
+       + s-step(
+         | "strategoxt/syntax/gpp/tools/ppgen.str"
+         , "40"
+         , "6"
+         , "47"
+         , "6"
+         )
+         ; (s-step(
+            | "strategoxt/syntax/gpp/tools/ppgen.str"
+            , "40"
+            , "6"
+            , "43"
+            , "6"
+            )
             ; Option(
-                s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "40,13,40,16") ; "-a"
-              , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "41,8,41,50")
-                ; where(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "41,14,41,49")
-                        ; <(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "41,15,41,24") ; set-config)> ("--input-type", AST()))
-              , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "42,8,42,52")
+                s-step(
+                | "strategoxt/syntax/gpp/tools/ppgen.str"
+                , "40"
+                , "13"
+                , "40"
+                , "16"
+                )
+                ; "-a"
+              , s-step(
+                | "strategoxt/syntax/gpp/tools/ppgen.str"
+                , "41"
+                , "8"
+                , "41"
+                , "50"
+                )
+                ; where(s-step(
+                        | "strategoxt/syntax/gpp/tools/ppgen.str"
+                        , "41"
+                        , "14"
+                        , "41"
+                        , "49"
+                        )
+                        ; <(s-step(
+                            | "strategoxt/syntax/gpp/tools/ppgen.str"
+                            , "41"
+                            , "15"
+                            , "41"
+                            , "24"
+                            )
+                            ; set-config)> ("--input-type", AST()))
+              , s-step(
+                | "strategoxt/syntax/gpp/tools/ppgen.str"
+                , "42"
+                , "8"
+                , "42"
+                , "52"
+                )
                 ; !"-a          Input is abstract syntax tree."
               )
-            + s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "44,6,47,6")
+            + s-step(
+              | "strategoxt/syntax/gpp/tools/ppgen.str"
+              , "44"
+              , "6"
+              , "47"
+              , "6"
+              )
               ; Option(
-                  s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "44,13,44,16") ; "-t"
-                , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "45,8,45,51")
-                  ; where(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "45,14,45,50")
-                          ; <(s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "45,15,45,24") ; set-config)> ("--output-type", AST()))
-                , s-step(|"strategoxt/syntax/gpp/tools/ppgen.str", "46,8,46,53")
+                  s-step(
+                  | "strategoxt/syntax/gpp/tools/ppgen.str"
+                  , "44"
+                  , "13"
+                  , "44"
+                  , "16"
+                  )
+                  ; "-t"
+                , s-step(
+                  | "strategoxt/syntax/gpp/tools/ppgen.str"
+                  , "45"
+                  , "8"
+                  , "45"
+                  , "51"
+                  )
+                  ; where(s-step(
+                          | "strategoxt/syntax/gpp/tools/ppgen.str"
+                          , "45"
+                          , "14"
+                          , "45"
+                          , "50"
+                          )
+                          ; <(s-step(
+                              | "strategoxt/syntax/gpp/tools/ppgen.str"
+                              , "45"
+                              , "15"
+                              , "45"
+                              , "24"
+                              )
+                              ; set-config)> ("--output-type", AST()))
+                , s-step(
+                  | "strategoxt/syntax/gpp/tools/ppgen.str"
+                  , "46"
+                  , "8"
+                  , "46"
+                  , "53"
+                  )
                   ; !"-t          Output is abstract syntax tree."
                 )))
-    < s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "ppgen-options", "35,2,47,6")
-    + s-exit(|"strategoxt/syntax/gpp/tools/ppgen.str", "ppgen-options", "35,2,47,6")
+    < s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "ppgen-options"
+      , "35"
+      , "2"
+      , "47"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/gpp/tools/ppgen.str"
+      , "ppgen-options"
+      , "35"
+      , "2"
+      , "47"
+      , "6"
+      )
       ; fail

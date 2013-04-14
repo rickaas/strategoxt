@@ -11,174 +11,845 @@ imports
 
 strategies
   strc-c-compile =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-compile", "13,2,20,5")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "14,5,20,5")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "14,5,14,28")
-       ; where(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "14,11,14,27")
-               ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "14,12,14,21") ; get-config)> "-c")
-       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "15,5,20,5")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+    , "strc-c-compile"
+    , "13"
+    , "2"
+    , "20"
+    , "5"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "14"
+      , "5"
+      , "20"
+      , "5"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+       , "14"
+       , "5"
+       , "14"
+       , "28"
+       )
+       ; where(s-step(
+               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+               , "14"
+               , "11"
+               , "14"
+               , "27"
+               )
+               ; <(s-step(
+                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                   , "14"
+                   , "12"
+                   , "14"
+                   , "21"
+                   )
+                   ; get-config)> "-c")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "15"
+          , "5"
+          , "20"
+          , "5"
+          )
           ; log-timed(
-              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "16,7,17,29")
-              ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "16,7,16,27") ; strc-c-to-object-code)
-              ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "17,9,17,29")
+              s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "16"
+              , "7"
+              , "17"
+              , "29"
+              )
+              ; (s-step(
+                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                 , "16"
+                 , "7"
+                 , "16"
+                 , "27"
+                 )
+                 ; strc-c-to-object-code)
+              ; s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                , "17"
+                , "9"
+                , "17"
+                , "29"
+                )
               ; strc-link-object-code
             | "C compilation succeeded"
             , 1
             ))
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-compile", "13,2,20,5")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-compile", "13,2,20,5")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-c-compile"
+      , "13"
+      , "2"
+      , "20"
+      , "5"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-c-compile"
+      , "13"
+      , "2"
+      , "20"
+      , "5"
+      )
       ; fail
 
   strc-c-to-object-code :
-    FILE(cfile) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-to-object-code", "22,2,28,124")> FILE(ofile)
+    FILE(cfile) -> <r-exit(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                    , "strc-c-to-object-code"
+                    , "22"
+                    , "2"
+                    , "28"
+                    , "124"
+                    )> FILE(ofile)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-to-object-code", "22,2,28,124")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-to-object-code", "22,2,28,124")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "strc-c-to-object-code"
+             , "22"
+             , "2"
+             , "28"
+             , "124"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "24,10,28,124")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "24,10,24,43")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "24"
+          , "10"
+          , "28"
+          , "124"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "24"
+             , "10"
+             , "24"
+             , "43"
+             )
              ; log(|Notice(), "Compiling C code"))
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "25,3,28,124")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "25,3,25,34")
-             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "25,3,25,25")
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "25"
+            , "3"
+            , "28"
+            , "124"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "25"
+             , "3"
+             , "25"
+             , "34"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                , "25"
+                , "3"
+                , "25"
+                , "25"
+                )
                 ; strc-getoutfile(
-                    s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "25,19,25,24")
+                    s-step(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                    , "25"
+                    , "19"
+                    , "25"
+                    , "24"
+                    )
                     ; !".lo"
                   )) => ofile)
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "26,3,28,124")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "26,4,26,20") ; strc-call-backend)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "27,7,27,14") ; xtc-find> "libtool"
-                                                                                                                                     , ["--mode=compile", "--tag=CC", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "28,45,28,54") ; get-config> "--cc"|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "28,67,28,72") ; concat> [ <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "28,77,28,86") ; get-config> "-Xcc"
-                                                                                                                                                                                                                                                                                                                                                                                                           , ["-c", cfile, "-o", ofile]
-                                                                                                                                                                                                                                                                                                                                                                                                           ]]
-                                                                                                                                     )
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-c-to-object-code", "22,2,28,124")
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "26"
+            , "3"
+            , "28"
+            , "124"
+            )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "26"
+              , "4"
+              , "26"
+              , "20"
+              )
+              ; strc-call-backend)> ( <s-step(
+                                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                       , "27"
+                                       , "7"
+                                       , "27"
+                                       , "14"
+                                       )
+                                       ; xtc-find> "libtool"
+                                    , ["--mode=compile", "--tag=CC", <s-step(
+                                                                      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                                      , "28"
+                                                                      , "45"
+                                                                      , "28"
+                                                                      , "54"
+                                                                      )
+                                                                      ; get-config> "--cc"|<s-step(
+                                                                                            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                                                            , "28"
+                                                                                            , "67"
+                                                                                            , "28"
+                                                                                            , "72"
+                                                                                            )
+                                                                                            ; concat> [ <s-step(
+                                                                                                         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                                                                         , "28"
+                                                                                                         , "77"
+                                                                                                         , "28"
+                                                                                                         , "86"
+                                                                                                         )
+                                                                                                         ; get-config> "-Xcc"
+                                                                                                      , ["-c", cfile, "-o", ofile]
+                                                                                                      ]]
+                                    )
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "strc-c-to-object-code"
+             , "22"
+             , "2"
+             , "28"
+             , "124"
+             )
              ; fail
 
   strc-link-object-code :
-    FILE(ofile) -> <r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-object-code", "30,2,35,88")> FILE(target)
+    FILE(ofile) -> <r-exit(
+                    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                    , "strc-link-object-code"
+                    , "30"
+                    , "2"
+                    , "35"
+                    , "88"
+                    )> FILE(target)
     where r-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-object-code", "30,2,35,88")
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-object-code", "30,2,35,88")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "strc-link-object-code"
+             , "30"
+             , "2"
+             , "35"
+             , "88"
+             )
              ; fail
-    where s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "33,6,35,88")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "33,6,33,42")
+    where s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "33"
+          , "6"
+          , "35"
+          , "88"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "33"
+             , "6"
+             , "33"
+             , "42"
+             )
              ; log(|Notice(), "Linking object code"))
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,8,35,88")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,8,34,78")
-             ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,9,34,67")
-                ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,9,34,25")
-                   ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,10,34,19") ; get-config)> "-o"
-                   <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,30,34,67")
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "34"
+            , "8"
+            , "35"
+            , "88"
+            )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "34"
+             , "8"
+             , "34"
+             , "78"
+             )
+             ; (s-step(
+                | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                , "34"
+                , "9"
+                , "34"
+                , "67"
+                )
+                ; (s-step(
+                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                   , "34"
+                   , "9"
+                   , "34"
+                   , "25"
+                   )
+                   ; <(s-step(
+                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                       , "34"
+                       , "10"
+                       , "34"
+                       , "19"
+                       )
+                       ; get-config)> "-o"
+                   <+ s-step(
+                      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                      , "34"
+                      , "30"
+                      , "34"
+                      , "67"
+                      )
                       ; strc-getoutfile(
-                          s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "34,46,34,66") ; strc-get-final-suffix
+                          s-step(
+                          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                          , "34"
+                          , "46"
+                          , "34"
+                          , "66"
+                          )
+                          ; strc-get-final-suffix
                         ))) => target)
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "35,8,35,88")
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "35"
+            , "8"
+            , "35"
+            , "88"
+            )
           ; strc-if-lib(
-              s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "35,20,35,52")
+              s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "35"
+              , "20"
+              , "35"
+              , "52"
+              )
               ; strc-link-library(|ofile, target)
-            , s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "35,55,35,87")
+            , s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "35"
+              , "55"
+              , "35"
+              , "87"
+              )
               ; strc-link-program(|ofile, target)
             )
-          <+ r-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-object-code", "30,2,35,88")
+          <+ r-exit(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "strc-link-object-code"
+             , "30"
+             , "2"
+             , "35"
+             , "88"
+             )
              ; fail
 
   strc-link-program(|ofile, target) =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-program", "37,2,40,102")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "38,4,40,102")
-    ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "38,5,38,21") ; strc-call-backend)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "39,8,39,15") ; xtc-find> "libtool"
-                                                                                                                               , ["--mode=link", "--tag=CC", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "40,36,40,45") ; get-config> "--ld", ofile, "-o", target|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "40,79,40,88") ; get-config> "-Xlinker"]
-                                                                                                                               )
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-program", "37,2,40,102")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-program", "37,2,40,102")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+    , "strc-link-program"
+    , "37"
+    , "2"
+    , "40"
+    , "102"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "38"
+      , "4"
+      , "40"
+      , "102"
+      )
+    ; <(s-step(
+        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+        , "38"
+        , "5"
+        , "38"
+        , "21"
+        )
+        ; strc-call-backend)> ( <s-step(
+                                 | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                 , "39"
+                                 , "8"
+                                 , "39"
+                                 , "15"
+                                 )
+                                 ; xtc-find> "libtool"
+                              , ["--mode=link", "--tag=CC", <s-step(
+                                                             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                             , "40"
+                                                             , "36"
+                                                             , "40"
+                                                             , "45"
+                                                             )
+                                                             ; get-config> "--ld", ofile, "-o", target|<s-step(
+                                                                                                        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                                                                        , "40"
+                                                                                                        , "79"
+                                                                                                        , "40"
+                                                                                                        , "88"
+                                                                                                        )
+                                                                                                        ; get-config> "-Xlinker"]
+                              )
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-link-program"
+      , "37"
+      , "2"
+      , "40"
+      , "102"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-link-program"
+      , "37"
+      , "2"
+      , "40"
+      , "102"
+      )
       ; fail
 
 
 strategies
   strc-link-library(|ofile, target) =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-library", "47,2,57,8")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "48,6,57,8")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "48,6,50,171")
-       ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "48,7,48,10") ; call)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "49,10,49,17") ; xtc-find> "libtool"
-                                                                                                                     , ["--mode=link", "--tag=CC", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "50,38,50,47") ; get-config> "--ld", ofile, "-o", target, "-rpath", <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "50,90,50,100") ; strc-libdir> target, "-avoid-version", "-no-undefined"|<s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "50,148,50,157") ; get-config> "-Xlinker"]
-                                                                                                                     ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "51,6,57,8")
-    ; if s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "51,9,51,37")
-         ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "51,10,51,19") ; get-config)> DisableInstall() then
-        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "52,8,52,137")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+    , "strc-link-library"
+    , "47"
+    , "2"
+    , "57"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "48"
+      , "6"
+      , "57"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+       , "48"
+       , "6"
+       , "50"
+       , "171"
+       )
+       ; <(s-step(
+           | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+           , "48"
+           , "7"
+           , "48"
+           , "10"
+           )
+           ; call)> ( <s-step(
+                       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                       , "49"
+                       , "10"
+                       , "49"
+                       , "17"
+                       )
+                       ; xtc-find> "libtool"
+                    , ["--mode=link", "--tag=CC", <s-step(
+                                                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                   , "50"
+                                                   , "38"
+                                                   , "50"
+                                                   , "47"
+                                                   )
+                                                   ; get-config> "--ld", ofile, "-o", target, "-rpath", <s-step(
+                                                                                                         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                                                                         , "50"
+                                                                                                         , "90"
+                                                                                                         , "50"
+                                                                                                         , "100"
+                                                                                                         )
+                                                                                                         ; strc-libdir> target, "-avoid-version", "-no-undefined"|<s-step(
+                                                                                                                                                                   | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                                                                                                                                                   , "50"
+                                                                                                                                                                   , "148"
+                                                                                                                                                                   , "50"
+                                                                                                                                                                   , "157"
+                                                                                                                                                                   )
+                                                                                                                                                                   ; get-config> "-Xlinker"]
+                    ))
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "51"
+      , "6"
+      , "57"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+         , "51"
+         , "9"
+         , "51"
+         , "37"
+         )
+         ; <(s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "51"
+             , "10"
+             , "51"
+             , "19"
+             )
+             ; get-config)> DisableInstall() then
+        s-step(
+        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+        , "52"
+        , "8"
+        , "52"
+        , "137"
+        )
         ; log(
           | Info()
           , [ "Don't forget to install the library using: libtool --mode=install cp "
             , target
             , " "
-            , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "52,109,52,127") ; strc-libinstallpath> target
+            , <s-step(
+               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+               , "52"
+               , "109"
+               , "52"
+               , "127"
+               )
+               ; strc-libinstallpath> target
             ]
           )
       else
-        s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "54,8,56,97")
-        ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "54,8,54,41")
+        s-step(
+        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+        , "54"
+        , "8"
+        , "56"
+        , "97"
+        )
+        ; (s-step(
+           | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+           , "54"
+           , "8"
+           , "54"
+           , "41"
+           )
            ; log(|Info(), "Installing library"))
-        ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "55,10,56,97")
-        ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "55,11,55,14") ; call)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "56,14,56,21") ; xtc-find> "libtool"
-                                                                                                                       , [ "--mode=install"
-                                                                                                                         , "cp"
-                                                                                                                         , target
-                                                                                                                         , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "56,69,56,87") ; strc-libinstallpath> target
-                                                                                                                         ]
-                                                                                                                       )
+        ; s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "55"
+          , "10"
+          , "56"
+          , "97"
+          )
+        ; <(s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "55"
+            , "11"
+            , "55"
+            , "14"
+            )
+            ; call)> ( <s-step(
+                        | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                        , "56"
+                        , "14"
+                        , "56"
+                        , "21"
+                        )
+                        ; xtc-find> "libtool"
+                     , [ "--mode=install"
+                       , "cp"
+                       , target
+                       , <s-step(
+                          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                          , "56"
+                          , "69"
+                          , "56"
+                          , "87"
+                          )
+                          ; strc-libinstallpath> target
+                       ]
+                     )
       end
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-library", "47,2,57,8")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-link-library", "47,2,57,8")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-link-library"
+      , "47"
+      , "2"
+      , "57"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-link-library"
+      , "47"
+      , "2"
+      , "57"
+      , "8"
+      )
       ; fail
 
   strc-libdir =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-libdir", "64,2,69,15")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "65,4,69,15")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "65,4,66,12")
-       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "65,4,65,24")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "65,5,65,14") ; get-config)> LibDir())
-       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "66,6,66,12")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+    , "strc-libdir"
+    , "64"
+    , "2"
+    , "69"
+    , "15"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "65"
+      , "4"
+      , "69"
+      , "15"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+       , "65"
+       , "4"
+       , "66"
+       , "12"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "65"
+          , "4"
+          , "65"
+          , "24"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "65"
+              , "5"
+              , "65"
+              , "14"
+              )
+              ; get-config)> LibDir())
+       ; s-step(
+         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+         , "66"
+         , "6"
+         , "66"
+         , "12"
+         )
        ; abspath
-       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "68,7,69,15")
-          ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "68,7,68,13") ; dirname)
-          ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "69,9,69,15")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "68"
+          , "7"
+          , "69"
+          , "15"
+          )
+          ; (s-step(
+             | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+             , "68"
+             , "7"
+             , "68"
+             , "13"
+             )
+             ; dirname)
+          ; s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "69"
+            , "9"
+            , "69"
+            , "15"
+            )
           ; abspath)
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-libdir", "64,2,69,15")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-libdir", "64,2,69,15")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-libdir"
+      , "64"
+      , "2"
+      , "69"
+      , "15"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-libdir"
+      , "64"
+      , "2"
+      , "69"
+      , "15"
+      )
       ; fail
 
   strc-libinstallpath =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-libinstallpath", "76,2,79,13")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "77,4,79,13")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "77,4,78,12")
-       ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "77,4,77,63")
-          ; <(s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "77,5,77,16") ; conc-strings)> ( <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "77,21,77,30") ; get-config> LibDir()
-                                                                                                                                , "/"
-                                                                                                                                , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "77,49,77,61") ; base-filename>
-                                                                                                                                ))
-       ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "78,6,78,12")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+    , "strc-libinstallpath"
+    , "76"
+    , "2"
+    , "79"
+    , "13"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "77"
+      , "4"
+      , "79"
+      , "13"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+       , "77"
+       , "4"
+       , "78"
+       , "12"
+       )
+       ; (s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "77"
+          , "4"
+          , "77"
+          , "63"
+          )
+          ; <(s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "77"
+              , "5"
+              , "77"
+              , "16"
+              )
+              ; conc-strings)> ( <s-step(
+                                  | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                  , "77"
+                                  , "21"
+                                  , "77"
+                                  , "30"
+                                  )
+                                  ; get-config> LibDir()
+                               , "/"
+                               , <s-step(
+                                  | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+                                  , "77"
+                                  , "49"
+                                  , "77"
+                                  , "61"
+                                  )
+                                  ; base-filename>
+                               ))
+       ; s-step(
+         | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+         , "78"
+         , "6"
+         , "78"
+         , "12"
+         )
        ; abspath
-       <+ s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "79,7,79,13") ; abspath)
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-libinstallpath", "76,2,79,13")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-libinstallpath", "76,2,79,13")
+       <+ s-step(
+          | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+          , "79"
+          , "7"
+          , "79"
+          , "13"
+          )
+          ; abspath)
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-libinstallpath"
+      , "76"
+      , "2"
+      , "79"
+      , "13"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-libinstallpath"
+      , "76"
+      , "2"
+      , "79"
+      , "13"
+      )
       ; fail
 
 
 strategies
   strc-call-backend =
-    s-enter(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-call-backend", "84,2,87,9")
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "85,4,87,9")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "85,4,85,15")
+    s-enter(
+    | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+    , "strc-call-backend"
+    , "84"
+    , "2"
+    , "87"
+    , "9"
+    )
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "85"
+      , "4"
+      , "87"
+      , "9"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+       , "85"
+       , "4"
+       , "85"
+       , "15"
+       )
        ; ?(tool, args))
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "86,6,87,9")
-    ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "86,6,86,78")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "86"
+      , "6"
+      , "87"
+      , "9"
+      )
+    ; (s-step(
+       | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+       , "86"
+       , "6"
+       , "86"
+       , "78"
+       )
        ; log(
          | Notice()
-         , <s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "86,21,86,54")
-            ; (s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "86,21,86,37")
+         , <s-step(
+            | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+            , "86"
+            , "21"
+            , "86"
+            , "54"
+            )
+            ; (s-step(
+               | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+               , "86"
+               , "21"
+               , "86"
+               , "37"
+               )
                ; separate-by(|" "))
-            ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "86,41,86,54")
+            ; s-step(
+              | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+              , "86"
+              , "41"
+              , "86"
+              , "54"
+              )
             ; concat-strings> ["Command:", tool|args]
          ))
-    ; s-step(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "87,6,87,9")
+    ; s-step(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "87"
+      , "6"
+      , "87"
+      , "9"
+      )
     ; call
-    < s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-call-backend", "84,2,87,9")
-    + s-exit(|"strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str", "strc-call-backend", "84,2,87,9")
+    < s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-call-backend"
+      , "84"
+      , "2"
+      , "87"
+      , "9"
+      )
+    + s-exit(
+      | "strategoxt/stratego-libraries/strc/lib/stratego/strc/strc/compile-c.str"
+      , "strc-call-backend"
+      , "84"
+      , "2"
+      , "87"
+      , "9"
+      )
       ; fail
