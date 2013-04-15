@@ -31,6 +31,9 @@
 	<!-- Import the libraries builder -->
 	<include file="${libraries-dir}/build.xml" as="libraries" />
 
+	<!-- properties for compiling java -->
+	<property name="java.compile.debug" value="debug" />
+	<property name="java.compile.debug.level" value="source" />
 
 	<target name="test" depends="create-dirs">
 		<for param="deffile">
@@ -136,16 +139,16 @@
 		       source="1.5"
 		       target="1.5"
 		       nowarn="on"
-		       debug="true"
-		       debuglevel="source" />
+		       debug="${java.compile.debug}"
+		       debuglevel="${java.compile.debug.level}" />
 		<javac srcdir="${libraries-dir}/java-backend/java/runtime"
 		       destdir="${bin}"
 		       classpath="${libraries-dir}/java-backend/java/spoofax-libs.jar:${libraries-dir}/java-backend/java/runtime:${bin}:${compile-java.extra.classpath}"
 		       source="1.5"
 		       target="1.5"
 		       nowarn="on"
-		       debug="true"
-		       debuglevel="source" />
+		       debug="${java.compile.debug}"
+		       debuglevel="${java.compile.debug.level}" />
 	</target>
 
 	<target name="jar">
@@ -158,5 +161,12 @@
 			<fileset dir="${lib}" includes="**/*.tbl" />
 			<zipfileset includes="**/*" src="${libraries-dir}/java-backend/java/spoofax-libs.jar" />
 		</jar>
+	</target>
+	
+	<target name="jar-source">
+        <jar destfile="${jar.name}-source.jar">
+            <fileset dir="${lib}" />
+            <fileset dir="${libraries-dir}/java-backend/java/runtime" />
+        </jar>
 	</target>
 </project>
