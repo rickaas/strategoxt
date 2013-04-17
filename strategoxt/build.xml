@@ -31,10 +31,20 @@
 	<!-- Import the libraries builder -->
 	<include file="${libraries-dir}/build.xml" as="libraries" />
 
-	<!-- properties for compiling java -->
+	<!-- default properties for compiling java -->
 	<property name="java.compile.debug" value="debug" />
 	<property name="java.compile.debug.level" value="source" />
 
+	<!-- default value for stratego debug event instrumentation -->
+	<property name="str.instrumentation.enabled" value="false" />
+
+	<!-- stratego.spoofax.debug.library.base is a directory that contains all jars required to build an instrumented stratego library/program -->
+	<path id="libdsldi.jars">
+		<pathelement location="${stratego.spoofax.debug.library.base}/org.spoofax.debug.interfaces.jar"/>
+		<pathelement location="${stratego.spoofax.debug.library.base}/org.spoofax.debug.interfaces.java.jar"/>
+		<pathelement location="${stratego.spoofax.debug.library.base}/org.strategoxt.imp.debuggers.stratego.runtime.jar"/>
+	</path>
+	
 	<target name="test" depends="create-dirs">
 		<for param="deffile">
 			<path>
@@ -119,6 +129,13 @@
 	</target>
 
 	<target name="generate-java" depends="syntax">
+		<!-- before compiling str to Java, we might have to instrument the stratego code -->
+		<if>
+			<equals arg1="${str.instrumentation.enabled}" arg2="true" />
+			<then>
+				<antcall target="instrument-all" />
+			</then>
+		</if>
 		<!-- Compile libraries to Java -->
 		<antcall target="libraries.part-1">
 			<param name="basedir" value="${libraries-dir}" />
@@ -132,10 +149,12 @@
 	</target>
 
 	<target name="compile-java" depends="generate-java">
-		<echo message="Compile java: ${compile-java.extra.classpath} ++" />
+		<pathconvert property="libdsldi.jars.classpath" refid="libdsldi.jars"/>
+
+		<echo>Classpath is ${libdsldi.jars.classpath}</echo>
 		<javac srcdir="${lib}"
 		       destdir="${bin}"
-		       classpath="${libraries-dir}/java-backend/java/spoofax-libs.jar:${libraries-dir}/java-backend/java/runtime:${bin}:${compile-java.extra.classpath}"
+		       classpath="${libraries-dir}/java-backend/java/spoofax-libs.jar:${libraries-dir}/java-backend/java/runtime:${bin}:${libdsldi.jars.classpath}"
 		       source="1.5"
 		       target="1.5"
 		       nowarn="on"
@@ -143,7 +162,7 @@
 		       debuglevel="${java.compile.debug.level}" />
 		<javac srcdir="${libraries-dir}/java-backend/java/runtime"
 		       destdir="${bin}"
-		       classpath="${libraries-dir}/java-backend/java/spoofax-libs.jar:${libraries-dir}/java-backend/java/runtime:${bin}:${compile-java.extra.classpath}"
+		       classpath="${libraries-dir}/java-backend/java/spoofax-libs.jar:${libraries-dir}/java-backend/java/runtime:${bin}:${libdsldi.jars.classpath}"
 		       source="1.5"
 		       target="1.5"
 		       nowarn="on"

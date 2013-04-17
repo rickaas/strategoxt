@@ -247,24 +247,8 @@
 					<if>
 						<equals arg1="${str.instrumentation.enabled}" arg2="true" />
 						<then>
-							<strj-debug input="@{input}" output="@{output}">
-							</strj-debug>
-						</then>
-					</if>
-					<if>
-						<equals arg1="${str.debug.compile.enabled}" arg2="true" />
-						<then>
 							<!-- put the stratego library on the path -->
-							<property name="strj.java.args" value="-I ${str.debug.runtime.library} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies"/>
-							<!--  Cannot nest if in java
-							<arg value="-I" />
-							<arg value="${str.debug.runtime.library}" />
-							-->
-							<!-- add import in generated java code-->
-							<!--
-							<arg value="-la" />
-							<arg value="org.strategoxt.imp.debuggers.stratego.runtime" />
-							-->
+							<property name="strj.java.args" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies"/>
 						</then>
 					</if>
 					<property name="strj.java.args" value=""/> <!-- if the property is already set; setting it again has no effect -->
@@ -285,35 +269,6 @@
 				</action>
 				<deps>
 					<str-deps />
-				</deps>
-			</uptodate-mio>
-		</sequential>
-	</macrodef>
-
-	<!-- Instrument strategoxt source with debug events before calling strj -->
-	<!-- All .str files will be overwritten, make sure you commit/stash your local modification -->
-	<macrodef name="strj-debug">
-		<!-- arguments for strj -->
-		<attribute name="input" />
-		<attribute name="output" />
-		<!-- arguments for instrumentation -->
-		<element name="strj-dsldi-args" optional="true" />
-		<element name="strj-dsldi-deps" optional="true" />
-		<sequential>
-			<!-- The directory of the input file will be used as the "input-dir" argument -->
-			<!-- The "output-dir" is the same as the "input-dir", all .str-files will be overwritten -->
-			<dirname file="@{input}" property="@{input}.dirname" />
-			<dirname file="@{output}" property="@{output}.dirname" />
-			<uptodate-mio input="@{input}" output="@{output}" type="strj-debug">
-				<action>
-					<strategoxt-dsldi input-dir="${@{input}.dirname}" output-dir="${@{output}.dirname}" >
-						<str-dsldi-args>
-							<strj-dsldi-args />
-						</str-dsldi-args>
-					</strategoxt-dsldi>
-				</action>
-				<deps>
-					<strj-dsldi-deps />
 				</deps>
 			</uptodate-mio>
 		</sequential>
