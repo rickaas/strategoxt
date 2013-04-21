@@ -11,6 +11,11 @@
 	<property name="revision" value="0" />
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
+	<!-- Put Stratego debug runtime library on path during strj when instrumentaton is enabled -->
+	<condition property="str.linkagainst.debug.runtime" value="true" else="">
+		<equals arg1="true" arg2="${str.instrumentation.enabled}" />
+	</condition>
+        
 	<macrodef name="pack-sdf">
 		<attribute name="input" />
 		<attribute name="output" />
@@ -245,7 +250,7 @@
 			<uptodate-mio input="@{input}" output="@{output}" type="strj">
 				<action>
 					<if>
-						<equals arg1="${str.instrumentation.enabled}" arg2="true" />
+						<equals arg1="${str.linkagainst.debug.runtime}" arg2="true" />
 						<then>
 							<!-- put the stratego library on the path -->
 							<property name="strj.java.args" value="-I ${stratego.spoofax.debug.library.base} -la org.strategoxt.imp.debuggers.stratego.runtime.strategies"/>
